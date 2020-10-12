@@ -1,0 +1,53 @@
+.menu{
+    display: flex;
+    width: 85vw;
+    margin-left: 7.5vw;
+    margin-right: 7.5vw;
+    justify-content: space-between;
+}
+
+.optionMenu{
+    display: flex;
+}
+
+
+.menu a, .appName, .menu p{
+    display: block;
+    text-decoration: none;
+    color: white;
+}
+
+.menu a{
+    font-size: 1.3vw;
+    margin-top: 6.5vh;
+    margin-right: 5vw;
+}
+
+.appName{
+    font-size: 3vw;
+    font-weight: bold;
+}
+
+.menu p{
+    font-weight: bold;
+    margin: 0;
+}
+
+.logOut{
+    display: flex;
+}
+
+.logOut a{
+    margin-right: 1vw;
+}
+
+.logOut span{
+    display: inline-block;
+    margin-top: 6.3vh;
+    margin-right: 5vw;
+    width: 1.5vw;
+    height: 1.5vw;
+    background-image: url('./img/login.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
