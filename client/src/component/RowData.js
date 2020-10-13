@@ -1,5 +1,5 @@
 import React from 'react';
-import './TeacherDataStyle.css'
+import '../style/RowDataStyle.css'
 // npm install --save-dev @iconify/react @iconify/icons-ion
 import { Icon, InlineIcon } from '@iconify/react';
 import iosArrowBack from '@iconify/icons-ion/ios-arrow-back';
@@ -10,13 +10,12 @@ class TeacherData extends React.Component {
         this.state = {  }
     }
     render() { 
-        return ( <a href='' className="teacherData">
-            <div className="teacherDetails">
-                <p>{this.props.name}</p>
-                <p>{this.props.schoolName}</p>
-                <div className='classes'>{this.props.classes.map((val)=>{return <p>{val}</p>})}</div>
+        return ( <a href='' className="rowData">
+            <div className="Details">
+                {this.props.categors.map((categor, index)=>{return categor !== 'כיתות' ? <p className={'item'+index}>{this.props.data[categor]}</p> :
+                    <div className={'item'+index+' classes'}> {this.props.data[categor].map((val)=>{return <p>{val}</p>})} </div>
+                })}
             </div>
-            
             <p><Icon icon={iosArrowBack} /></p>
         </a> );
     }

@@ -1,4 +1,4 @@
-.teacherData{
+.rowData{
     display: flex;
     width: 85vw;
     margin-left: 7.5vw;
@@ -13,28 +13,51 @@
     opacity: 1;
 }
 
-.teacherData p{
+.rowData p{
     font-size: 1.1vw;
-    margin-right: 5vw;
     color: black;
 }
 
-.a{
+a{
     text-decoration: none;
 }
 
-.teacherDetails{
-    display: flex;
+.Details{
+    display: grid;
+    grid-template-columns: 12.5vw 12.5vw 50vw;
 }
 
+.item0, .item1, .item2{
+    text-align: right;
+    padding-right: 2.5vw;
+}
+
+.item0 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+
+.item1 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+  }
+
+.item2 {
+    grid-column-start: 3;
+    grid-column-end: 4;
+  }
+
+.classes{
+    display: flex;
+}
 .classes p{
-    margin-right: 0.5vw;
+    margin-right: 0.75vw;
 }
 
 .classes p:first-child{
-    margin-right: 5vw;
+    margin-right: 0vw;
 }
 
-.teacherData p:last-child{
+.rowData p:last-child{
     margin-left: 1.15vw;
 }

@@ -1,12 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import TeachersList from './TeachersList'
+import TeachersList from './pages/TeachersList'
+import StudentsList from './pages/StudentsList'
 
 function App() {
   return (
     <div className="App">
-      <TeachersList />
+      <StudentsList />
     </div>
   );
 }
