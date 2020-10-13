@@ -10,7 +10,7 @@ function App() {
       <StudentsList />
 
       {/* <Games/> */}
-      {/* /*<TeachersList />*/ }
+      {/* <TeachersList /> */}
 
     </div>
   );

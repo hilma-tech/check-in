@@ -13,9 +13,9 @@ class Menu extends React.Component {
         <div className='pageMenu'>
             <div className='menu'>
                 <div className='optionMenu'>
-                    <h1 className='appName'>
+                    <h2 className='appName'>
                         CheckIn
-                    </h1>
+                    </h2>
                     {this.state.pagesNames.map((pageName)=>{
                         return pageName !== this.props.pageName ? <a href={'/'+pageName}>{pageName}</a> :
                         <a href={'/'+pageName} className='optionBold'>{pageName}</a>
