@@ -12,9 +12,9 @@ class Menu extends React.Component {
         <div className='pageMenu'>
             <div className='menu'>
                 <div className='optionMenu'>
-                    <h2 className='appName'>
+                    <h3 className='appName'>
                         CheckIn
-                    </h2>
+                    </h3>
                     {this.state.pagesNames.map((pageName)=>{
                         return pageName !== this.props.pageName ? <a href={'/'+pageName}>{pageName}</a> :
                         <a href={'/'+pageName} className='optionBold'>{pageName}</a>
