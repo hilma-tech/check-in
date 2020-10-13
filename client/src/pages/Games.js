@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "../style/GamesStyle.css";
-import iconf from "../img/iconf.svg";
+import optionicon from "../img/optionicon.svg";
+import addicon from "../img/addicon.svg";
+import searchicon from "../img/search.svg";
 
 const images = [
   {
@@ -20,35 +22,55 @@ class Games extends Component {
   render() {
     return (
       <>
+        {/* <div className="gridContainer"> */}
         <h5 className="title">משחקים</h5>
-        <div className="gridContainer">
+        <img className="searchIcon" src={searchicon}/>
+        <hr/>
           <div className="grid">
+        {/* <h6 className="search">search</h6> */}
             <div className="imageContainer item3">
-              <img className="optionIcon" src={iconf} />
+              <img className="addImg" src={addicon} />
+              <h2></h2>
+              <h1>הוסף משחק</h1>
+            </div>
+            <div className="imageContainer item3">
+              <img className="optionIcon" src={optionicon} />
               <img className="gameImg" src={images[0].url} />
               <h2></h2>
               <h1>{images[0].name}</h1>
             </div>
             <div className="imageContainer item3">
-              <img className="optionIcon" src={iconf} />
+              <img className="optionIcon" src={optionicon} />
               <img className="gameImg" src={images[0].url} />
               <h2></h2>
               <h1>{images[0].name}</h1>
             </div>
             <div className="imageContainer item3">
-              <img className="optionIcon" src={iconf} />
+              <img className="optionIcon" src={optionicon} />
               <img className="gameImg" src={images[0].url} />
               <h2></h2>
               <h1>{images[0].name}</h1>
             </div>
             <div className="imageContainer item3">
-              <img className="optionIcon" src={iconf} />
+              <img className="optionIcon" src={optionicon} />
+              <img className="gameImg" src={images[0].url} />
+              <h2></h2>
+              <h1>{images[0].name}</h1>
+            </div>
+            <div className="imageContainer item3">
+              <img className="optionIcon" src={optionicon} />
+              <img className="gameImg" src={images[0].url} />
+              <h2></h2>
+              <h1>{images[0].name}</h1>
+            </div>
+            <div className="imageContainer item3">
+              <img className="optionIcon" src={optionicon} />
               <img className="gameImg" src={images[0].url} />
               <h2></h2>
               <h1>{images[0].name}</h1>
             </div>
           </div>
-        </div>
+        {/* </div> */}
       </>
     );
   }
