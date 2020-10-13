@@ -6,7 +6,7 @@ import iosArrowBack from '@iconify/icons-ion/ios-arrow-back';
 
 class TeacherData extends React.Component {
     constructor(props) {
-        super(props);
+        super();
         this.state = {  }
     }
     render() { 
