@@ -1,37 +1,79 @@
-import React, { Component } from 'react'
-import '../style/GamesStyle.css'
+import React, { Component } from "react";
+import "../style/GamesStyle.css";
+import optionicon from "../img/optionicon.svg";
+import addicon from "../img/addicon.svg";
+import searchicon from "../img/search.svg";
 
-
+const images = [
+  {
+    name: "Gorillaman",
+    url:
+      "https://c402277.ssl.cf1.rackcdn.com/photos/18330/images/hero_small/Mountain_Gorilla_Silverback_WW22557.jpg?1576515753",
+  },
+  { name: "Orangutan", url: "" },
+  { name: "Baboon", url: "" },
+];
 
 class Games extends Component {
-    constructor() {
-        super()
-    }
-    
-    
+  constructor() {
+    super();
+  }
 
-    render() {
-        return(
-            <div className="grid">
-                <div className="imageContainer item1">
-                    <h1>hello</h1>
-                    <img src="https://c402277.ssl.cf1.rackcdn.com/photos/18330/images/hero_small/Mountain_Gorilla_Silverback_WW22557.jpg?1576515753"/>
-                </div>
-                <div className="imageContainer item2">
-                    <h1>אורגנגוטן</h1>
-                    <img src="https://s28164.pcdn.co/files/Orangutan-0224-7457-1280x720.jpg"/>
-                </div>
-                <div className="imageContainer item3">
-                    <h1>בבון</h1>
-                    <img src="https://www.indianapoliszoo.com/wp-content/uploads/2018/04/CROPPED_Baboon-Dan_Boyd-1resizedresized.jpg"/>
-                </div>
-                <div className="imageContainer item4">
-                    <h1>בבון</h1>
-                    <img src="https://www.indianapoliszoo.com/wp-content/uploads/2018/04/CROPPED_Baboon-Dan_Boyd-1resizedresized.jpg"/>
-                </div>
+  render() {
+    return (
+      <>
+        {/* <div className="gridContainer"> */}
+        <h5 className="title">משחקים</h5>
+        <img className="searchIcon" src={searchicon}/>
+        <hr/>
+          <div className="grid">
+        {/* <h6 className="search">search</h6> */}
+            <div className="imageContainer item3">
+              <img className="addImg" src={addicon} />
+              <h2></h2>
+              <h1>הוסף משחק</h1>
             </div>
-        )
-    }
+            <div className="imageContainer item3">
+              <img className="optionIcon" src={optionicon} />
+              <img className="gameImg" src={images[0].url} />
+              <h2></h2>
+              <h1>{images[0].name}</h1>
+            </div>
+            <div className="imageContainer item3">
+              <img className="optionIcon" src={optionicon} />
+              <img className="gameImg" src={images[0].url} />
+              <h2></h2>
+              <h1>{images[0].name}</h1>
+            </div>
+            <div className="imageContainer item3">
+              <img className="optionIcon" src={optionicon} />
+              <img className="gameImg" src={images[0].url} />
+              <h2></h2>
+              <h1>{images[0].name}</h1>
+            </div>
+            <div className="imageContainer item3">
+              <img className="optionIcon" src={optionicon} />
+              <img className="gameImg" src={images[0].url} />
+              <h2></h2>
+              <h1>{images[0].name}</h1>
+            </div>
+            <div className="imageContainer item3">
+              <img className="optionIcon" src={optionicon} />
+              <img className="gameImg" src={images[0].url} />
+              <h2></h2>
+              <h1>{images[0].name}</h1>
+            </div>
+            <div className="imageContainer item3">
+              <img className="optionIcon" src={optionicon} />
+              <img className="gameImg" src={images[0].url} />
+              <h2></h2>
+              <h1>{images[0].name}</h1>
+            </div>
+          </div>
+        {/* </div> */}
+      </>
+    );
+  }
 }
 
 export default Games;
