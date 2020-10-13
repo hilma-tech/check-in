@@ -64,11 +64,13 @@ class TeachersList extends React.Component {
             
             <div className='PageTitles'>
                 <p>מורים</p>
-                <p onClick={this.activateSearch} style={{display: this.state.displayIconSearch}}><Icon icon={searchOutline} /></p>
-                <form style={{display: this.state.displaySearch}}>
-                    <input type="text" name='search' value={this.state.searchVal} placeholder="חיפוש" onChange={this.handelChang}/> 
-                    <button type='submit'><Icon icon={searchOutline} /></button>
-                </form>
+                <p className='searchIcon' onClick={this.activateSearch} style={{display: this.state.displayIconSearch}}><Icon icon={searchOutline} /></p>
+                <div style={{display: this.state.displaySearch}}>
+                    <form className='search' >
+                        <input type="text" name='search' value={this.state.searchVal} placeholder="חיפוש" onChange={this.handelChang}/> 
+                        <p className='searchIcon'><Icon icon={searchOutline} /></p>
+                    </form>
+                </div>
             </div>
             <GeneralTable allData={this.state.listDataTeachers} 
                             categors={this.state.categors} />

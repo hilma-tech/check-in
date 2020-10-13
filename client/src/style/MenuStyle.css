@@ -49,7 +49,7 @@
     margin-right: 5vw;
     width: 1.5vw;
     height: 1.5vw;
-    background-image: url('./img/login.png');
+    background-image: url('/icons/login.png');
     background-repeat: no-repeat;
     background-size: cover;
 }

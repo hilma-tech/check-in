@@ -5,7 +5,7 @@ import '../style/MenuStyle.css'
 
 class Menu extends React.Component {
     constructor(props) {
-        super(props);//pageName
+        super(props);
         this.state = { pagesNames : ['משחקים', 'בתי ספר', 'מורים', 'תלמידים'] }
     }
     render() { 
