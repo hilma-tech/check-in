@@ -15,15 +15,15 @@ class Menu extends React.Component {
                     <h3 className='appName'>
                         CheckIn
                     </h3>
-                    {this.state.pagesNames.map((pageName)=>{
-                        return pageName !== this.props.pageName ? <a href={'/'+pageName}>{pageName}</a> :
-                        <a href={'/'+pageName} className='optionBold'>{pageName}</a>
+                    {this.state.pagesNames.map((pageName, index)=>{
+                        return pageName !== this.props.pageName ? <a key={index} href={'/'+pageName}>{pageName}</a> :
+                        <a key={index} href={'/'+pageName} className='optionBold'>{pageName}</a>
                     })}
                 </div>
                 
                 <div className='logOut'>
                     <span></span>
-                    <a href=''>התנתק</a>
+                    <a href='/login'>התנתק</a>
                 </div>
             </div> 
         </div>);

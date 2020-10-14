@@ -3,7 +3,7 @@ import Menu from '../component/Menu';
 import GeneralTable from '../component/GeneralTable';
 import '../style/TableStyle.css'
 // npm install --save-dev @iconify/react @iconify/icons-ion
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import searchOutline from '@iconify/icons-ion/search-outline';
 
 class StudentsList extends React.Component {
@@ -51,7 +51,6 @@ class StudentsList extends React.Component {
         displayIconSearch: 'inline-block'}
     }
     handelChang = (e) => {
-        console.log('e.target.value ', e.target.value);
         this.setState({searchVal: e.target.value})
     }
     activateSearch = () =>{
