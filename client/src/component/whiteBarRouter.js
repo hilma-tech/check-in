@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Games from "../pages/Games.js"
-import Suspended from "../pages/SuspendedGames.js"
+import SuspendedGames from "../pages/SuspendedGames.js"
 import {
     BrowserRouter as Router,
     Switch,
@@ -9,16 +9,17 @@ import {
 } from "react-router-dom";
 
 export default class WhiteRouter extends Component {
-    constructor() {
-        super()
-    }
+    // constructor() {
+    //     super()
+    // }
     render() {
+        console.log("hi")
         return(
             <div>
                 <Router>
                     <Switch>
-                        <Route path="/" exact component={Games}/>
-                        <Route path="/suspended" component={Suspended}/>
+                        <Route path="/משחקים" exact component={Games}/>
+                        <Route path="/משחקים/suspended" component={SuspendedGames}/>
                     </Switch>
                 </Router>
             </div>

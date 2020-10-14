@@ -3,7 +3,7 @@ import Menu from '../component/Menu';
 import GeneralTable from '../component/GeneralTable';
 import '../style/TableStyle.css'
 // npm install --save-dev @iconify/react @iconify/icons-ion
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import searchOutline from '@iconify/icons-ion/search-outline';
 
 class TeachersList extends React.Component {
@@ -51,7 +51,6 @@ class TeachersList extends React.Component {
         displayIconSearch: 'inline-block' }
     }
     handelChang = (e) => {
-        console.log('e.target.value ', e.target);
         this.setState({searchVal: e.target.value})
     }
     activateSearch = () =>{
@@ -64,11 +63,13 @@ class TeachersList extends React.Component {
             
             <div className='PageTitles'>
                 <p>מורים</p>
-                <p onClick={this.activateSearch} style={{display: this.state.displayIconSearch}}><Icon icon={searchOutline} /></p>
-                <form style={{display: this.state.displaySearch}}>
-                    <input type="text" name='search' value={this.state.searchVal} placeholder="חיפוש" onChange={this.handelChang}/> 
-                    <button type='submit'><Icon icon={searchOutline} /></button>
-                </form>
+                <p className='searchIcon' onClick={this.activateSearch} style={{display: this.state.displayIconSearch}}><Icon icon={searchOutline} /></p>
+                <div style={{display: this.state.displaySearch}}>
+                    <form className='search' >
+                        <input type="text" name='search' value={this.state.searchVal} placeholder="חיפוש" onChange={this.handelChang}/> 
+                        <p className='searchIcon'><Icon icon={searchOutline} /></p>
+                    </form>
+                </div>
             </div>
             <GeneralTable allData={this.state.listDataTeachers} 
                             categors={this.state.categors} />

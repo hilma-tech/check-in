@@ -10,7 +10,7 @@ class GeneralTable extends React.Component {
         return ( 
             <div>
                 <div className='TableTitles'>
-                    {this.props.categors.map((val, index)=>{return <p className={'item'+index}>{val}</p>})}
+                    {this.props.categors.map((val, index)=>{return <p key={index} className={'item'+index}>{val}</p>})}
                 </div>
                 <div className='AllData'>
                     {this.props.allData.map((val, index)=>{return <RowData key={index} 
