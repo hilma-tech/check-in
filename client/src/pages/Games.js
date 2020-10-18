@@ -5,6 +5,7 @@ import addicon from "../img/addicon.svg";
 import searchicon from "../img/search.svg";
 import WhiteBar from "../pages/WhiteNavBar.js";
 import Menu from "../component/Menu.js";
+import { withRouter } from 'react-router-dom'
 
 const images = [
   {
@@ -22,10 +23,10 @@ class Games extends Component {
     this.state = { name: "hewwo" };
   }
   onClickAddGame = () =>{
-    window.location.replace('addGame');
+    this.props.history.push('addGame');
   }
   onClickEditGame = () =>{
-    window.location.replace('gamesEdit');
+    this.props.history.push('gamesEdit');
   }
   render() {
     return (
@@ -106,4 +107,4 @@ class Games extends Component {
   }
 }
 
-export default Games;
+export default withRouter(Games);

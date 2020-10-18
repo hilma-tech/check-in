@@ -3,7 +3,6 @@ import { BrowserRouter as Router,
   Switch,
   Route,
   Redirect } from 'react-router-dom'
-// import Games from './pages/Games.js';
 import './App.css';
 import TeachersList from './pages/TeachersList'
 import StudentsList from './pages/StudentsList'

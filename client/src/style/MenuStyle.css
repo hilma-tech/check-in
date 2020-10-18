@@ -12,13 +12,13 @@
 }
 
 
-.menu a, .appName, .menu p{
+.menu .menuBluePages, .appName, .menu p, .logOut a{
     display: block;
     text-decoration: none;
     color: white;
 }
 
-.menu a{
+.menu .menuBluePages, .logOut a{
     font-size: 1.3vw;
     margin-top: 6.5vh;
     margin-right: 5vw;
