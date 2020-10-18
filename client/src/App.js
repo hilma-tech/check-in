@@ -23,7 +23,7 @@ function App() {
           <Route path='/' exact> {/* for now */}
             <Redirect to='/מורים'/>
           </Route>
-          <Route path='/משחקים' exact>
+          <Route path='/משחקים' >
             <GamesRouter/>
           </Route>
           <Route path='/בתי ספר' exact>

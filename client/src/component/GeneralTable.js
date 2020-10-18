@@ -1,5 +1,5 @@
 import React from 'react';
-import RowData from './RowData'
+import RowData from './RowData';
 
 class GeneralTable extends React.Component {
     constructor(props) {

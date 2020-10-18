@@ -1,20 +1,77 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import WhiteBar from "../pages/WhiteNavBar.js";
+import "../style/GamesStyle.css";
+import optionicon from "../img/optionicon.svg";
+import addicon from "../img/addicon.svg";
+import searchicon from "../img/search.svg";
+import Menu from "../component/Menu.js";
+
+const images = [
+  {
+    name: "Gorillaman",
+    url:
+      "https://c402277.ssl.cf1.rackcdn.com/photos/18330/images/hero_small/Mountain_Gorilla_Silverback_WW22557.jpg?1576515753",
+  },
+  { name: "Orangutan", url: "" },
+  { name: "Baboon", url: "" },
+];
 
 console.log("suspended");
 
 class SuspendedGames extends Component {
-    constructor() {
-        super()
-        this.state={name: ''}
-    }
-    render() {
-        console.log("entered")
-        return(
-            <div>
-                <h1>hewwo</h1>
+  constructor() {
+    super();
+    this.state = { hi: "" };
+  }
+  render() {
+    return (
+      <div>
+        <div>
+          <Menu />
+        </div>
+        <div>
+          <WhiteBar active="suspended" />
+        </div>
+        <div id="wholepage">
+          <div id="searchbar">
+            <h5 className="title">משחקים</h5>
+            <img className="searchIcon" src={searchicon} />
+          </div>
+          <div className="grid">
+            <div className="imageContainer item3">
+              <img className="addImg" src={addicon} alt="" />
+              <h2></h2>
+              <h1>הוסף משחק</h1>
             </div>
-        )
-    }
+            <div className="imageContainer item3">
+              <img className="optionIcon" alt="" src={optionicon} />
+              <img className="gameImg" alt="" src={images[0].url} />
+              <h2></h2>
+              <h1>{images[0].name}</h1>
+            </div>
+            <div className="imageContainer item3">
+              <img className="optionIcon" alt="" src={optionicon} />
+              <img className="gameImg" alt="" src={images[0].url} />
+              <h2></h2>
+              <h1>{images[0].name}</h1>
+            </div>
+            <div className="imageContainer item3">
+              <img className="optionIcon" alt="" src={optionicon} />
+              <img className="gameImg" alt="" src={images[0].url} />
+              <h2></h2>
+              <h1>{images[0].name}</h1>
+            </div>
+            <div className="imageContainer item3">
+              <img className="optionIcon" alt="" src={optionicon} />
+              <img className="gameImg" alt="" src={images[0].url} />
+              <h2></h2>
+              <h1>{images[0].name}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default SuspendedGames;

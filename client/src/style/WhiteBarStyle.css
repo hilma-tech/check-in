@@ -14,11 +14,16 @@
 
 }
 
-h6 {
+.pageName {
     display: inline-block;
     margin: 0px;
     margin-left: 6vw;
     margin-right: 6vw;
     font-size: 3vh;
     align-self: center;
+    font-weight: 100;
+}
+
+.bold {
+    font-weight: bold;
 }
