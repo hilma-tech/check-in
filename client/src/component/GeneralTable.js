@@ -3,7 +3,7 @@ import RowData from './RowData'
 
 class GeneralTable extends React.Component {
     constructor(props) {
-        super(props);
+        super();
         this.state = {  }
     }
     render() { 
@@ -17,7 +17,7 @@ class GeneralTable extends React.Component {
                                                                             data={val}
                                                                             categors={this.props.categors}/>})}
                 </div>
-                <div className='addingButton'><p>+</p></div>
+                <div className='addingButton'></div>
             </div>
          );
     }

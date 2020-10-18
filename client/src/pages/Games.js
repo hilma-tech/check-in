@@ -18,7 +18,12 @@ class Games extends Component {
   constructor() {
     super();
   }
-
+  onClickAddGame = () =>{
+    window.location.replace('addGame');
+  }
+  onClickEditGame = () =>{
+    window.location.replace('gamesEdit');
+  }
   render() {
     return (
       <>
@@ -28,46 +33,60 @@ class Games extends Component {
         <hr/>
           <div className="grid">
         {/* <h6 className="search">search</h6> */}
-            <div className="imageContainer item3">
-              <img className="addImg" src={addicon} />
-              <h2></h2>
-              <h1>הוסף משחק</h1>
+            <div onClick={this.onClickAddGame}>
+              <div className="imageContainer item3">
+                <img className="addImg" src={addicon} />
+                <h2></h2>
+                <h1>הוסף משחק</h1>
+              </div>
             </div>
-            <div className="imageContainer item3">
-              <img className="optionIcon" src={optionicon} />
-              <img className="gameImg" src={images[0].url} />
-              <h2></h2>
-              <h1>{images[0].name}</h1>
+            <div onClick={this.onClickEditGame}>
+              <div className="imageContainer item3">
+                <img className="optionIcon" src={optionicon} />
+                <img className="gameImg" src={images[0].url} />
+                <h2></h2>
+                <h1>{images[0].name}</h1>
+              </div>
             </div>
-            <div className="imageContainer item3">
-              <img className="optionIcon" src={optionicon} />
-              <img className="gameImg" src={images[0].url} />
-              <h2></h2>
-              <h1>{images[0].name}</h1>
+            <div onClick={this.onClickEditGame}>
+              <div className="imageContainer item3">
+                <img className="optionIcon" src={optionicon} />
+                <img className="gameImg" src={images[0].url} />
+                <h2></h2>
+                <h1>{images[0].name}</h1>
+              </div>
             </div>
-            <div className="imageContainer item3">
-              <img className="optionIcon" src={optionicon} />
-              <img className="gameImg" src={images[0].url} />
-              <h2></h2>
-              <h1>{images[0].name}</h1>
+            <div onClick={this.onClickEditGame}>
+              <div className="imageContainer item3">
+                <img className="optionIcon" src={optionicon} />
+                <img className="gameImg" src={images[0].url} />
+                <h2></h2>
+                <h1>{images[0].name}</h1>
+              </div>
             </div>
-            <div className="imageContainer item3">
-              <img className="optionIcon" src={optionicon} />
-              <img className="gameImg" src={images[0].url} />
-              <h2></h2>
-              <h1>{images[0].name}</h1>
+            <div onClick={this.onClickEditGame}>
+              <div className="imageContainer item3">
+                <img className="optionIcon" src={optionicon} />
+                <img className="gameImg" src={images[0].url} />
+                <h2></h2>
+                <h1>{images[0].name}</h1>
+              </div>
             </div>
-            <div className="imageContainer item3">
-              <img className="optionIcon" src={optionicon} />
-              <img className="gameImg" src={images[0].url} />
-              <h2></h2>
-              <h1>{images[0].name}</h1>
+            <div onClick={this.onClickEditGame}>
+              <div className="imageContainer item3">
+                <img className="optionIcon" src={optionicon} />
+                <img className="gameImg" src={images[0].url} />
+                <h2></h2>
+                <h1>{images[0].name}</h1>
+              </div>
             </div>
-            <div className="imageContainer item3">
-              <img className="optionIcon" src={optionicon} />
-              <img className="gameImg" src={images[0].url} />
-              <h2></h2>
-              <h1>{images[0].name}</h1>
+            <div onClick={this.onClickEditGame}>
+              <div className="imageContainer item3">
+                <img className="optionIcon" src={optionicon} />
+                <img className="gameImg" src={images[0].url} />
+                <h2></h2>
+                <h1>{images[0].name}</h1>
+              </div>
             </div>
           </div>
         {/* </div> */}

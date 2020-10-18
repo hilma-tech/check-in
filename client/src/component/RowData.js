@@ -1,24 +1,28 @@
 import React from 'react';
 import '../style/RowDataStyle.css'
-// npm install --save-dev @iconify/react @iconify/icons-ion
+import { withRouter } from 'react-router-dom'
 import { Icon } from '@iconify/react';
 import iosArrowBack from '@iconify/icons-ion/ios-arrow-back';
 
-class TeacherData extends React.Component {
+class RowData extends React.Component{
     constructor(props) {
-        super(props);
+        super();
         this.state = {  }
     }
+    onClickEdit = () =>{
+        console.log(this.props.history.push(this.props.location.pathname + 'Edit'));
+    }
     render() { 
-        return ( <a href={'/' + this.props.data[this.props.categors[0]]} className="rowData">
+        return ( <div onClick={this.onClickEdit} className="rowData">
             <div className="Details">
                 {this.props.categors.map((categor, index)=>{return categor !== 'כיתות' ? <p className={'item'+index} key={index}>{this.props.data[categor]}</p> :
                     <div key={index} className={'item'+index+' classes'}> {this.props.data[categor].map((val, categorIndex)=>{return <p key={categorIndex}>{val}</p>})} </div>
                 })}
             </div>
             <p><Icon icon={iosArrowBack} /></p>
-        </a> );
+        </div> );
     }
 }
- 
-export default TeacherData;
+
+
+export default withRouter(RowData);

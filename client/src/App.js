@@ -15,19 +15,33 @@ function App() {
       <Router>
         <Switch>
           <Route path='/' exact> {/* for now */}
-            <Redirect to='/מורים'/>
+            <Redirect to='/teachers'/>
           </Route>
-          <Route path='/משחקים' exact>
+          <Route path='/games'>
             <Games/>
           </Route>
-          <Route path='/בתי ספר' exact>
+          <Route path='/schools' exact>
             <SchoolsList/>
           </Route>
-          <Route path='/מורים' exact>
+          <Route path='/teachers' exact>
             <TeachersList />
           </Route>
-          <Route path='/תלמידים' exact>
+          <Route path='/students' exact>
             <StudentsList />
+          </Route>
+
+
+          <Route path='/gamesEdit' exact>
+            <h4>game edit</h4>
+          </Route>
+          <Route path='/schoolsEdit' exact>
+            <h4>school edit</h4>
+          </Route>
+          <Route path='/teachersEdit' exact>
+            <h4>teacher edit</h4>
+          </Route>
+          <Route path='/studentsEdit' exact>
+            <h4>student edit</h4>
           </Route>
         </Switch>
       </Router>

@@ -69,20 +69,17 @@
     position: fixed;
     top: 85vh;
     right: 90.75vw;
+
+
+    display: inline-block;
+    background-image: url('/icons/addicon.svg');
     width: 3.5vw;
     height: 3.5vw;
-    background: #043163 0% 0% no-repeat padding-box;
-    color: white;
-    border-radius: 90px;
-    opacity: 1;
+    margin-top: 2vh;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
-.addingButton p{
-    text-align: center;
-    margin: 0;
-    font-size: 2.8vw;
-    font-weight: bold;
-}
 
 .search{
     display: flex;
@@ -96,14 +93,15 @@
     text-decoration: none;
 }
 
-.search svg{
-    color: #043163;
-    font-weight: bold;
-}
-
 .searchIcon{
     display: inline;
     margin: 0;
-    margin-top: 1vh;
+    margin-top: 1.2vh;
     margin-left: 0.3vw;
+
+    background-image: url('/icons/search.svg');
+    width: 3vw;
+    height: 3.4vh;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
