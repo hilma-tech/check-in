@@ -3,6 +3,8 @@ import "../style/GamesStyle.css";
 import optionicon from "../img/optionicon.svg";
 import addicon from "../img/addicon.svg";
 import searchicon from "../img/search.svg";
+import WhiteBar from "../pages/WhiteNavBar.js";
+import Menu from "../component/Menu.js";
 
 const images = [
   {
@@ -17,6 +19,7 @@ const images = [
 class Games extends Component {
   constructor() {
     super();
+    this.state = { name: "hewwo" };
   }
   onClickAddGame = () =>{
     window.location.replace('addGame');
@@ -27,10 +30,17 @@ class Games extends Component {
   render() {
     return (
       <>
-        {/* <div className="gridContainer"> */}
-        <h5 className="title">משחקים</h5>
-        <img className="searchIcon" src={searchicon}/>
-        <hr/>
+        <div>
+          <Menu />
+        </div>
+        <div>
+          <WhiteBar />
+        </div>
+        <div id="wholepage">
+          <div id="searchbar">
+            <h5 className="title">משחקים</h5>
+            <img className="searchIcon" src={searchicon} />
+          </div>
           <div className="grid">
         {/* <h6 className="search">search</h6> */}
             <div onClick={this.onClickAddGame}>
@@ -89,6 +99,7 @@ class Games extends Component {
               </div>
             </div>
           </div>
+        </div>
         {/* </div> */}
       </>
     );
