@@ -31,10 +31,10 @@ class Games extends Component {
     this.state = { name: "hewwo" };
   }
   onClickAddGame = () => {
-    this.props.history.push("addGame");
+    this.props.history.push("/addGame");
   };
   onClickEditGame = () => {
-    this.props.history.push("gamesEdit");
+    this.props.history.push("/gamesEdit");
   };
   render() {
     return (

@@ -8,7 +8,7 @@ import TeachersList from './pages/TeachersList'
 import StudentsList from './pages/StudentsList'
 import GamesRouter from "../src/component/whiteBarRouter.js"
 import SchoolsList from './pages/SchoolsList'
-import Games from './pages/Games'
+import AddGame from './pages/AddGame'
 
 function App() {
   return (
@@ -36,6 +36,9 @@ function App() {
             <StudentsList />
           </Route>
 
+          <Route path='/addGame' exact>
+            <AddGame/>
+          </Route>
 
           <Route path='/gamesEdit' exact>
             <h4>game edit</h4>

@@ -12,10 +12,10 @@ class WhiteNavBar extends Component {
 
     movePageFunc = (props) => {
         if (props.target.id === "suspended") {
-            this.props.history.push("/משחקים/suspended")
+            this.props.history.push("/games/suspended")
         }    
         else {
-            this.props.history.push("/משחקים")
+            this.props.history.push("/games")
         }
     }
 

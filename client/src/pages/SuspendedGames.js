@@ -23,7 +23,6 @@ const images = [
   },
 ];
 
-console.log("suspended");
 
 class SuspendedGames extends Component {
   constructor() {
