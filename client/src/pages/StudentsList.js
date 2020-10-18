@@ -2,13 +2,12 @@ import React from 'react';
 import Menu from '../component/Menu';
 import GeneralTable from '../component/GeneralTable';
 import '../style/TableStyle.css'
-// npm install --save-dev @iconify/react @iconify/icons-ion
-import { Icon } from '@iconify/react';
-import searchOutline from '@iconify/icons-ion/search-outline';
+
+
 
 class StudentsList extends React.Component {
     constructor(props) {
-        super(props)
+        super()
         this.state = { categors:['שם התלמיד','בית ספר','כיתה'],
             listDataStudents: [{
             id: 1,
@@ -58,16 +57,16 @@ class StudentsList extends React.Component {
     }
     render() { 
         return ( 
-        <div className='page15' dir="rtl">
+        <div className='StudentsList' dir="rtl">
             <Menu pageName='תלמידים'/>
             
             <div className='PageTitles'>
                 <p>תלמידים</p>
-                <p className='searchIcon' onClick={this.activateSearch} style={{display: this.state.displayIconSearch}}><Icon icon={searchOutline} /></p>
+                <p className='searchIcon' onClick={this.activateSearch} style={{display: this.state.displayIconSearch}}></p>
                 <div style={{display: this.state.displaySearch}}>
                     <form className='search' >
                         <input type="text" name='search' value={this.state.searchVal} placeholder="חיפוש" onChange={this.handelChang}/> 
-                        <p className='searchIcon'><Icon icon={searchOutline} /></p>
+                        <p className='searchIcon'></p>
                     </form>
                 </div>
             </div>

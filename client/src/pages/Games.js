@@ -5,6 +5,7 @@ import addicon from "../img/addicon.svg";
 import searchicon from "../img/search.svg";
 import WhiteBar from "../pages/WhiteNavBar.js";
 import Menu from "../component/Menu.js";
+import { withRouter } from "react-router-dom";
 
 const images = [
   {
@@ -29,7 +30,12 @@ class Games extends Component {
     super();
     this.state = { name: "hewwo" };
   }
-
+  onClickAddGame = () => {
+    this.props.history.push("addGame");
+  };
+  onClickEditGame = () => {
+    this.props.history.push("gamesEdit");
+  };
   render() {
     return (
       <>
@@ -45,18 +51,22 @@ class Games extends Component {
             <img className="searchIcon" src={searchicon} />
           </div>
           <div className="grid">
-            <div className="imageContainer item3">
-              <img className="addImg" src={addicon} alt="" />
-              <h2 className="gameTitleBackground"></h2>
-              <h1 className="gameTitle">הוסף משחק</h1>
+            <div onClick={this.onClickAddGame}>
+              <div className="imageContainer item3">
+                <img className="addImg" src={addicon} alt="" />
+                <h2 className="gameTitleBackground"></h2>
+                <h1 className="gameTitle">הוסף משחק</h1>
+              </div>
             </div>
             {images.map((image) => {
               return (
-                <div className="imageContainer item3">
-                  <img className="optionIcon" alt="" src={optionicon} />
-                  <img className="gameImg" alt="" src={image.url} />
-                  <h2 className="gameTitleBackground"></h2>
-                  <h1 className="gameTitle">{image.name}</h1>
+                <div onClick={this.onClickEditGame}>
+                  <div className="imageContainer item3">
+                    <img className="optionIcon" alt="" src={optionicon} />
+                    <img className="gameImg" alt="" src={image.url} />
+                    <h2 className="gameTitleBackground"></h2>
+                    <h1 className="gameTitle">{image.name}</h1>
+                  </div>
                 </div>
               );
             })}
@@ -68,4 +78,4 @@ class Games extends Component {
   }
 }
 
-export default Games;
+export default withRouter(Games);
