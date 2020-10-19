@@ -8,7 +8,7 @@ import TeachersList from './pages/TeachersList'
 import StudentsList from './pages/StudentsList'
 import GamesRouter from "../src/component/whiteBarRouter.js"
 import SchoolsList from './pages/SchoolsList'
-import AddGame from './pages/AddGame'
+import AddGame from './pages/AddGame.jsx'
 
 function App() {
   return (

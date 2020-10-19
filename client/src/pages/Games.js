@@ -3,7 +3,7 @@ import "../style/GamesStyle.css";
 import optionicon from "../img/optionicon.svg";
 import addicon from "../img/addicon.svg";
 import searchicon from "../img/search.svg";
-import WhiteBar from "../pages/WhiteNavBar.js";
+import WhiteBar from "../component/WhiteNavBar.js";
 import Menu from "../component/Menu.js";
 import { withRouter } from "react-router-dom";
 
