@@ -12,39 +12,6 @@
     margin-right: 1vw;
 }
 
-.editSchoolForm{
-    display: grid;
-    grid-template-columns: 50vw 20vw 15vw 15vw;
-    grid-template-rows: auto 3vh;
-    margin-top: 1vh;
-}
-
-
-.editSchoolFormData {
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 1;
-    grid-row-end: 2;
-}
-
-
-
-.deletSchoolButton {
-    grid-column-start: 3;
-    grid-column-end: 4;
-    grid-row-start: 2;
-    grid-row-end: 3;
-  }
-
-.saveSchoolButton {
-    grid-column-start: 4;
-    grid-column-end: 5;
-    grid-row-start: 2;
-    grid-row-end: 3;
-  
-    color: #043163;
-}
-
 .editSchoolClassTeacherButtons{
     display: flex;
 }
