@@ -1,0 +1,86 @@
+.formContainer {
+  display: flex;
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 80%;
+  line-height: 8vh;
+  margin: 0px;
+}
+
+.formBreak {
+  width: 10vh;
+}
+
+.fieldTitle {
+  margin: 0px;
+  font-size: 3vh;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+  font-weight: 600;
+  color: #043163;
+}
+
+::placeholder {
+  margin: 0px;
+  margin-right: 3vw;
+  color: #043163;
+  font-weight: lighter;
+}
+
+.inputField {
+  margin: 0px;
+  background: rgba(188, 188, 203, 0.2) 0% 0% no-repeat padding-box;
+  border-radius: 0.5vw;
+  border: 0px;
+  height: 4vh;
+  color: #043163;
+  width: 150%;
+}
+
+.extendedField {
+  margin: 0px;
+  height: 8vh;
+}
+
+.addField {
+  margin: 0px;
+  color: #043163;
+  font-weight: 500;
+  font-size: 3vh;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+}
+
+.select {
+    width: 50vw;
+    padding-bottom: 5vh;
+    
+}
+
+
+.hiddenInput {
+    display: none;
+    height: 0px;
+    margin: 0px;
+    width: 0px;
+}
+
+.cameraIcon {
+    margin: 0px;
+    padding: 0px;
+}
+
+.addSomethingNew{
+    display: flex;
+    align-items: center;
+}
+.addIcon{
+    width: 1.5vw;
+    height: 1.5vw;
+}
+
+.addTitle{
+    padding-right: 1vw;
+    color: rgba(4, 49, 99, 1);
+}

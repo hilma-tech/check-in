@@ -8,9 +8,9 @@ import TeachersList from './pages/TeachersList'
 import StudentsList from './pages/StudentsList'
 import GamesRouter from './component/whiteBarRouter'
 import SchoolsList from './pages/SchoolsList'
+import AddGame from './pages/AddGame.jsx'
 import EditSchool from './pages/editSchool'
 import Menu from './component/Menu'
-import AddGame from './pages/AddGame'
 
 
 function App() {
