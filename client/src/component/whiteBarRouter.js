@@ -18,8 +18,8 @@ export default class WhiteRouter extends Component {
             <div>
                 <Router>
                     <Switch>
-                        <Route path="/משחקים" exact component={Games}/>
-                        <Route path="/משחקים/suspended" component={SuspendedGames}/>
+                        <Route path="/games" exact component={Games}/>
+                        <Route path="/games/suspended" component={SuspendedGames}/>
                     </Switch>
                 </Router>
             </div>

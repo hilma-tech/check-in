@@ -20,7 +20,7 @@ class Menu extends React.Component {
                 <div className='optionMenu'>
                     <div className='appName'></div>
                     {this.state.pagesNames.map((pageName, index)=>{
-                        return !window.location.pathname.includes(this.state[pageName]) ? <a className='menuBluePages' key={index} href={'/'+this.state[pageName]}>{pageName}</a> :
+                        return !this.props.location.pathname.includes(this.state[pageName]) ? <a className='menuBluePages' key={index} href={'/'+this.state[pageName]}>{pageName}</a> :
                         <a key={index} href={'/'+this.state[pageName]} className='optionBold menuBluePages'>{pageName}</a>
 
                     })}
@@ -35,4 +35,4 @@ class Menu extends React.Component {
     }
 }
  
-export default Menu;
+export default withRouter(Menu);

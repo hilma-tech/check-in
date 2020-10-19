@@ -1,5 +1,4 @@
 import React from 'react';
-import Menu from '../component/Menu';
 import GeneralTable from '../component/GeneralTable';
 import '../style/TableStyle.css'
 
@@ -50,8 +49,6 @@ class SchoolsList extends React.Component {
     render() { 
         return ( 
         <div className='SchoolsList' dir="rtl">
-            <Menu pageName='בתי ספר'/>
-            
             <div className='PageTitles'>
                 <p>בתי ספר</p>
                 <p className='searchIcon' onClick={this.activateSearch} style={{display: this.state.displayIconSearch}}></p>

@@ -4,7 +4,6 @@ import optionicon from "../img/optionicon.svg";
 import addicon from "../img/addicon.svg";
 import searchicon from "../img/search.svg";
 import WhiteBar from "../pages/WhiteNavBar.js";
-import Menu from "../component/Menu.js";
 import { withRouter } from "react-router-dom";
 
 const images = [
@@ -39,9 +38,6 @@ class Games extends Component {
   render() {
     return (
       <>
-        <div>
-          <Menu />
-        </div>
         <div>
           <WhiteBar active="games" />
         </div>

@@ -6,9 +6,10 @@ import { BrowserRouter as Router,
 import './App.css';
 import TeachersList from './pages/TeachersList'
 import StudentsList from './pages/StudentsList'
-import GamesRouter from "../src/component/whiteBarRouter.js"
+import GamesRouter from './component/whiteBarRouter'
 import SchoolsList from './pages/SchoolsList'
-import Games from './pages/Games'
+import EditSchool from './pages/editSchool'
+import Menu from './component/Menu'
 
 function App() {
   return (
@@ -17,14 +18,14 @@ function App() {
       {/* <Routerr/> */}
       {/* <Games/> */}
       {/* <TeachersList /> */}
-
       <Router>
+        <Menu />
         <Switch>
           <Route path='/' exact> {/* for now */}
             <Redirect to='/teachers'/>
           </Route>
           <Route path='/games'>
-          <GamesRouter/>
+            <GamesRouter/>
           </Route>
           <Route path='/schools' exact>
             <SchoolsList/>
@@ -36,12 +37,14 @@ function App() {
             <StudentsList />
           </Route>
 
-
+          <Route path='/addGame' exact>
+            <h4>add game</h4>
+          </Route>
           <Route path='/gamesEdit' exact>
             <h4>game edit</h4>
           </Route>
           <Route path='/schoolsEdit' exact>
-            <h4>school edit</h4>
+            <EditSchool />
           </Route>
           <Route path='/teachersEdit' exact>
             <h4>teacher edit</h4>

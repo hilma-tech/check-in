@@ -3,7 +3,6 @@ import WhiteBar from "../pages/WhiteNavBar.js";
 import "../style/GamesStyle.css";
 import optionicon from "../img/optionicon.svg";
 import searchicon from "../img/search.svg";
-import Menu from "../component/Menu.js";
 
 const images = [
   {
@@ -33,9 +32,6 @@ class SuspendedGames extends Component {
   render() {
     return (
       <div>
-        <div>
-          <Menu />
-        </div>
         <div>
           <WhiteBar active="suspended" />
         </div>
