@@ -20,3 +20,48 @@
 .editSchoolClassAddExistTeacher{
     padding-left: 3vw;
 }
+
+.editSchoolAddClass{
+    font-weight: bold;
+    font-size: 1vw;
+    color: white;
+    width: 8vw;
+    height: 5vh;
+    background-color: #043163;
+    border-radius: 10px;
+    opacity: 1;
+    border-color: white;
+    border-style: solid;
+}
+
+.editSchoolForm{
+    display: grid;
+    grid-template-columns: 3vw 42vw;
+}
+
+.editSchoolNameLable, .editSchoolNameInput, .editSchoolClassesLable, .editSchoolAddClass {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+
+.editSchoolClassesInput, .editSchoolClassTeacherLable, .editSchoolClassTeacherButtons, .allEditSchoolClassTeacherSelect {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.editSchoolNameLable, .editSchoolClassesLable, .editSchoolClassTeacherLable {
+    text-align: start;
+    padding-top: 1.5vh;
+    padding-bottom: 1.5vh;
+}
+
+.editSchoolClassTeacherSelect{
+    padding-bottom: 0.5vh;
+    font-size: 1.1vw;
+}
+
+.editSchoolNameLable, .editSchoolNameInput, .editSchoolClassesLable, .editSchoolClassTeacherLable, .editSchoolClassesInput, .editSchoolClassTeacherLable{
+    height: 3vh;
+    font-size: 1.1vw;
+}

@@ -5,13 +5,13 @@ export default function SelectStyle(){
           borderBottom: '1px solid  rgba(255, 255, 255, 0)',
           padding: 5,
           color: '#043163', 
-          backgroundColor: '#BCBCCB'
+          backgroundColor: 'rgba(188, 188, 203, 0.2)'
         }),
       
         control: (_, { selectProps: { width }}) => ({
           width: width,
           color: '#043163',
-          background: '#BCBCCB 0% 0% no-repeat padding-box',
+          background: 'rgba(188, 188, 203, 0.2) 0% 0% no-repeat padding-box',
           borderRadius: '10px',
           display: 'flex',  
         }),
@@ -20,18 +20,18 @@ export default function SelectStyle(){
           const opacity = state.isDisabled ? 0.5 : 1;
           const transition = 'opacity 300ms';
       
-          return { ...provided, opacity, transition, backgroundColor: '#BCBCCB', color: '#043163'};
+          return { ...provided, opacity, transition, backgroundColor: 'rgba(188, 188, 203, 0.2)', color: '#043163'};
         },
         option: (styles) => {
             return {
               ...styles,
-                backgroundColor: '#BCBCCB',
+                backgroundColor: 'rgba(188, 188, 203, 0.2)',
                 color: '#043163',
               }},
         placeholder: (styles) => {
             return {
                 ...styles,
-                backgroundColor: '#BCBCCB',
+                backgroundColor: 'rgba(188, 188, 203, 0.2)',
                 color: '#043163',
               }},
         dropdownIndicator: (styles) => {

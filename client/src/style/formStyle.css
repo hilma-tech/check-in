@@ -1,5 +1,5 @@
 .formData {
-    margin-right: 5vw;
+    margin-right: 9vw;
     width: 45vw;
     color: #043163;
 }
@@ -47,7 +47,7 @@
 }
 
 .inputFields{
-    background: #BCBCCB 0% 0% no-repeat padding-box;
+    background: rgba(188, 188, 203, 0.2) 0% 0% no-repeat padding-box;
     border-radius: 10px;
     opacity: 0.2;
     border-color: rgba(255, 255, 255, 0);

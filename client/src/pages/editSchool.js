@@ -22,7 +22,9 @@ class editSchool extends Component {
             return { classes: tempData }
         })
     }
-    
+    handelSchoolNameChange = (e) => {
+        this.setState({schoolName: e.target.value})
+    }
     render() {
         return (
             <div>
@@ -31,15 +33,15 @@ class editSchool extends Component {
                     <h1 className="pageName bold editSchoolPageName">עריכת בית ספר</h1>
                 </header>
                 <form className='form'>
-                    <div className='formData'>
-                        <label for='schoolName' className='editSchoolNameLable'>שם בית ספר</label>
-                        <input value={this.state.schoolName} name='schoolName' className='editSchoolNameInput inputFields'></input>
+                    <div className='formData editSchoolForm'>
+                        <label for='schoolName' className='editSchoolNameLable'>שם בית ספר:</label>
+                        <input value={this.state.schoolName} name='schoolName' onChange={this.handelSchoolNameChange} className='editSchoolNameInput inputFields'></input>
 
-                        <label for='schoolClasses' className='editSchoolClassesLable'>כיתות</label>
-                        {this.state.classes.map((claseeData, claseeDataIndex) => {
-                            return <ClassData key={claseeData.id} claseeData={claseeData} claseeDataIndex={claseeDataIndex}/>
+                        <label for='schoolClasses' className='editSchoolClassesLable'>כיתות:</label>
+                        {this.state.classes.map((classData) => {
+                            return <ClassData key={classData.id} classData={classData}/>
                         })}
-                        <button type='button' onClick={this.addClassToSchool}>הוסף כיתה</button>
+                        <button type='button' className='editSchoolAddClass' onClick={this.addClassToSchool}>הוסף כיתה</button>
                     </div>
                     <button className='deletButton'>מחק בית ספר</button>
                     <button className='saveButton'>שמור</button>

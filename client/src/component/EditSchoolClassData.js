@@ -5,7 +5,11 @@ import SelectStyle from '../style/selectStyle'
 class ClassData extends React.Component {
     constructor(props) {
         super();
-        this.state = { teachers: ['נורית כהן'] }
+        this.state = { 
+            classDataName: props.classData.name,
+            numTeachers: props.classData.numTeachers,
+            teachers: ['נורית כהן'] 
+        }
     }
     makeTeacherOption = () => {
         let options = []
@@ -21,26 +25,30 @@ class ClassData extends React.Component {
         }
         return teachersSelections
     }
-    addTeacherToClass = (classIndex) => {
+    addTeacherToClass = () => {
         this.setState((prevState) => {
-            let tempData = [...prevState.classes]
+            let tempData = prevState.numTeachers
             //זה משום מה עושה את השורה הבאה פעמים אז הוספתי 0.5 ככה שזה בסוף יוסיף 1
-            tempData[classIndex].numTeachers = tempData[classIndex].numTeachers + 0.5;
-            return { classes: tempData }
+            tempData++
+            return { numTeachers: tempData }
         })
+    }
+    handelClassNameChange = (e) => {
+        this.setState({classDataName: e.target.value})
     }
     render() { 
         return ( 
             <>
-                <input value={this.props.claseeData.name} name='schoolClasses' className='editSchoolClassesInput inputFields'></input>
-                <label for='schoolClassTeacher' className='editSchoolClassTeacherLable'>מורים</label>
-                <div>
+                <img src='/icons/ionic-ios-arrow-down.svg'></img>
+                <input value={this.state.classDataName} onChange={this.handelClassNameChange} name='schoolClasses' className='editSchoolClassesInput inputFields'></input>
+                <label for='schoolClassTeacher' className='editSchoolClassTeacherLable'>מורים:</label>
+                <div className='allEditSchoolClassTeacherSelect'>
                     {
-                        this.returnTeahcersSelections(this.props.claseeData.numTeachers)
+                        this.returnTeahcersSelections(this.state.numTeachers)
                     }
                 </div>
                 <div className='editSchoolClassTeacherButtons'>
-                    <div className='editSchoolClassAddExistTeacher addSomethingNew' onClick={() => { this.addTeacherToClass(this.props.claseeDataIndex) }}>
+                    <div className='editSchoolClassAddExistTeacher addSomethingNew' onClick={() => { this.addTeacherToClass() }}>
                         <img className='addIcon' src='/icons/addicon.svg'></img>
                         <p className='addTitle'>הוסף מורה קיים</p>
                     </div>
