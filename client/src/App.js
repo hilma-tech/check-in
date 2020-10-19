@@ -10,6 +10,8 @@ import GamesRouter from './component/whiteBarRouter'
 import SchoolsList from './pages/SchoolsList'
 import EditSchool from './pages/editSchool'
 import Menu from './component/Menu'
+import AddGame from './pages/AddGame'
+
 
 function App() {
   return (
@@ -38,7 +40,7 @@ function App() {
           </Route>
 
           <Route path='/addGame' exact>
-            <h4>add game</h4>
+            <AddGame/>
           </Route>
           <Route path='/gamesEdit' exact>
             <h4>game edit</h4>
