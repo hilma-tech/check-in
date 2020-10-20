@@ -22,6 +22,7 @@ function App() {
       {/* <TeachersList /> */}
       <Router>
         <Menu />
+        <div className="everyPage">
         <Switch>
           <Route path='/' exact> {/* for now */}
             <Redirect to='/teachers'/>
@@ -55,6 +56,7 @@ function App() {
             <h4>student edit</h4>
           </Route>
         </Switch>
+        </div>
       </Router>
     </div>
   );
