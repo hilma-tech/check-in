@@ -1,34 +1,34 @@
 import React, { Component } from "react";
 import Select from "react-select";
+import WhiteBar from "../component/ArrowNavBar"
 import "../style/AddGameStyle.css";
-import "../style/formStyle.css"
+import "../style/formStyle.css";
 import FieldSelection from "../component/FieldSelection";
-
 
 const mainGameInfo = ["תיאור המשחק:", "דרישות המשחק:"];
 
-let fieldIds = [
-  {id: 0, name: null},
-];
+let fieldIds = [{ id: 0, name: null }];
 
 class AddGame extends Component {
   constructor() {
     super();
-    this.state= {
+    this.state = {
       numberOfFields: 1,
       fieldData: null,
-    }
+    };
   }
 
   saveFieldData = (fieldData) => {
-    this.setState({fieldData: fieldData})
-  }
+    this.setState({ fieldData: fieldData });
+  };
 
   render() {
     console.log('addGame');
     console.log(this.state.fieldData);
     return (
       <>
+    <div className="pageContainer">
+          <WhiteBar/>
         <div className="formContainer">
           <form className="formData">
             <label className="fieldTitle">
@@ -88,6 +88,9 @@ class AddGame extends Component {
           </div>
           <br/>
           <button className='saveButton'>שמור</button>
+
+          </div>
+
         </div>
       </>
     );

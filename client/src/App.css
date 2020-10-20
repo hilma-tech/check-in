@@ -39,3 +39,9 @@
     transform: rotate(360deg);
   }
 }
+
+
+.everyPage {
+  position: relative;
+  margin-top: 15vh;
+}
