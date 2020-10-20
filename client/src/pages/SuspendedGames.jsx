@@ -43,9 +43,9 @@ class SuspendedGames extends Component {
             {images.map((image) => {
               return (
                 <div className="imageContainer item3">
-                  <img className="optionIcon" alt="" src={optionicon} />
+                  <img className="clockIcon" alt="" src='/icons/ionic-ios-stopwatch.svg' />
                   <img className="gameImg" alt="" src={image.url} />
-                  <h2 className="gameTitleBackground"></h2>
+                  <h2 className="holdGameTitleBackground"></h2>
                   <h1 className="gameTitle">{image.name}</h1>
                 </div>
               );

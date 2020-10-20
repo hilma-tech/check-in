@@ -4,18 +4,19 @@ import { BrowserRouter as Router,
   Route,
   Redirect } from 'react-router-dom'
 import './App.css';
-import TeachersList from './pages/TeachersList'
-import StudentsList from './pages/StudentsList'
+import TeachersList from './pages/TeachersList.jsx'
+import StudentsList from './pages/StudentsList.jsx'
 import GamesRouter from './component/whiteBarRouter'
-import SchoolsList from './pages/SchoolsList'
+import SchoolsList from './pages/SchoolsList.jsx'
 import AddGame from './pages/AddGame.jsx'
-import EditSchool from './pages/editSchool'
+import EditSchool from './pages/editSchool.jsx'
 import Menu from './component/Menu'
 
 
 function App() {
   return (
     <div className="App">
+      <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@600;800&display=swap" rel="stylesheet"></link>
       {/* <StudentsList /> */}
       {/* <Routerr/> */}
       {/* <Games/> */}

@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import Select from "react-select";
 import "../style/AddGameStyle.css";
+import "../style/formStyle.css"
 import FieldSelection from "../component/FieldSelection";
 
 
 const mainGameInfo = ["תיאור המשחק:", "דרישות המשחק:"];
-
-let insertion = [];
 
 let fieldIds = [
   {id: 0, name: null},
@@ -17,39 +16,42 @@ class AddGame extends Component {
     super();
     this.state= {
       numberOfFields: 1,
+      fieldData: null,
     }
+  }
+
+  saveFieldData = (fieldData) => {
+    this.setState({fieldData: fieldData})
   }
 
   render() {
     console.log('addGame');
+    console.log(this.state.fieldData);
     return (
       <>
         <div className="formContainer">
-          <form className="gameForm">
+          <form className="formData">
             <label className="fieldTitle">
               שם המשחק:
-              <br className="formBreak" />
               <input
-                className="inputField"
+                className="inputFields"
                 type="text"
                 placeholder="הכנס את שם המשחק..."
               />
             </label>
-            <br />
+            
             {/* maps extended details of the game */}
             {mainGameInfo.map((field) => {
               return (
                 <>
                   <label className="fieldTitle">
                     {field}
-                    <br />
                     <input
-                      className="inputField extendedField"
+                      className="inputFields extendedField"
                       type="text"
                       placeholder=""
                     />
                   </label>
-                  <br />
                 </>
               );
             })}
@@ -67,14 +69,14 @@ class AddGame extends Component {
           </form>
           {/* game fields */}
           {fieldIds.map((fieldObj) => {
-            return <FieldSelection fieldId={fieldObj.id} />;
+            return <FieldSelection fieldId={fieldObj.id} fieldState={this.saveFieldData}/>;
           })}
           {/* add fields */}
           <div
             className="addSomethingNew"
+            id='addNewField'
             onClick={() => {
               fieldIds.push({id: fieldIds.length, name: null})
-              console.log(fieldIds);
               this.setState(
                 (prevState) => {
                   return {numberOfFields: prevState.numberOfFields+1}
@@ -84,6 +86,8 @@ class AddGame extends Component {
             <img className="addIcon" src="/icons/addicon.svg"></img>
             <p className="addTitle">הוסף שדה</p>
           </div>
+          <br/>
+          <button className='saveButton'>שמור</button>
         </div>
       </>
     );
