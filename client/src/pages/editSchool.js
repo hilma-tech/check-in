@@ -27,7 +27,7 @@ class editSchool extends Component {
     }
     render() {
         return (
-            <div>
+            <div className='editSchool'>
                 <header className="navbar">
                     <span className='goBackFromEditSchool pageName'></span>
                     <h1 className="pageName bold editSchoolPageName">עריכת בית ספר</h1>

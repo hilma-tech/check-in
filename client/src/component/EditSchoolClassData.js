@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import SelectStyle from '../style/selectStyle'
+import '../style/AnimationW3School.css'
 
 class ClassData extends React.Component {
     constructor(props) {
@@ -8,7 +9,8 @@ class ClassData extends React.Component {
         this.state = { 
             classDataName: props.classData.name,
             numTeachers: props.classData.numTeachers,
-            teachers: ['נורית כהן'] 
+            teachers: ['נורית כהן'],
+            showClass: true,
         }
     }
     makeTeacherOption = () => {
@@ -36,26 +38,31 @@ class ClassData extends React.Component {
     handelClassNameChange = (e) => {
         this.setState({classDataName: e.target.value})
     }
+    transitionIcon = () => {
+        this.setState((prevState)=>{return {showClass: !prevState.showClass}})
+    }
     render() { 
         return ( 
             <>
-                <img src='/icons/ionic-ios-arrow-down.svg'></img>
+                <img src='/icons/ionic-ios-arrow-down.svg' className={this.state.showClass ? 'showClassButton' : 'hideClassButton'} onClick={this.transitionIcon}></img>
                 <input value={this.state.classDataName} onChange={this.handelClassNameChange} name='schoolClasses' className='editSchoolClassesInput inputFields'></input>
-                <label for='schoolClassTeacher' className='editSchoolClassTeacherLable'>מורים:</label>
-                <div className='allEditSchoolClassTeacherSelect'>
-                    {
-                        this.returnTeahcersSelections(this.state.numTeachers)
-                    }
-                </div>
-                <div className='editSchoolClassTeacherButtons'>
-                    <div className='editSchoolClassAddExistTeacher addSomethingNew' onClick={() => { this.addTeacherToClass() }}>
-                        <img className='addIcon' src='/icons/addicon.svg'></img>
-                        <p className='addTitle'>הוסף מורה קיים</p>
-                    </div>
-                    <div className='addSomethingNew'>
-                        <img className='addIcon' src='/icons/addicon.svg'></img>
-                        <p className='addTitle'>הוסף מורה חדש</p>
-                    </div>
+                <div className={this.state.showClass ? 'w3-animate-fading w3-animate-opacity showSchoolClassTeacher': 'hideSchoolClassTeacher'}>
+                        <label for='schoolClassTeacher' className='editSchoolClassTeacherLable'>מורים:</label>
+                        <div className='allEditSchoolClassTeacherSelect'>
+                            {
+                                this.returnTeahcersSelections(this.state.numTeachers)
+                            }
+                        </div>
+                        <div className='editSchoolClassTeacherButtons'>
+                            <div className='editSchoolClassAddExistTeacher addSomethingNew' onClick={() => { this.addTeacherToClass() }}>
+                                <img className='addIcon' src='/icons/addicon.svg'></img>
+                                <p className='addTitle'>הוסף מורה קיים</p>
+                            </div>
+                            <div className='addSomethingNew'>
+                                <img className='addIcon' src='/icons/addicon.svg'></img>
+                                <p className='addTitle'>הוסף מורה חדש</p>
+                            </div>
+                        </div>
                 </div>
             </>
          );

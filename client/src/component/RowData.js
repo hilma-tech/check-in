@@ -10,7 +10,7 @@ class RowData extends React.Component{
         this.state = {  }
     }
     onClickEdit = () =>{
-        console.log(this.props.history.push(this.props.location.pathname + 'Edit'));
+        this.props.history.push(this.props.location.pathname + 'Edit');
     }
     render() { 
         return ( <div onClick={this.onClickEdit} className="rowData">

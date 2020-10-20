@@ -9,6 +9,7 @@
 }
 
 .editSchoolPageName{
+    color: #043163;
     margin-right: 1vw;
 }
 
@@ -44,23 +45,57 @@
 }
 
 
-.editSchoolClassesInput, .editSchoolClassTeacherLable, .editSchoolClassTeacherButtons, .allEditSchoolClassTeacherSelect {
+.showSchoolClassTeacher{
+    display: grid;
     grid-column-start: 2;
     grid-column-end: 3;
 }
 
 .editSchoolNameLable, .editSchoolClassesLable, .editSchoolClassTeacherLable {
     text-align: start;
-    padding-top: 1.5vh;
-    padding-bottom: 1.5vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
 }
 
 .editSchoolClassTeacherSelect{
-    padding-bottom: 0.5vh;
-    font-size: 1.1vw;
+    padding-bottom: 1vh;
+    font-size: 2vw;
 }
 
 .editSchoolNameLable, .editSchoolNameInput, .editSchoolClassesLable, .editSchoolClassTeacherLable, .editSchoolClassesInput, .editSchoolClassTeacherLable{
-    height: 3vh;
-    font-size: 1.1vw;
+    height: 5vh;
+    padding-right: 1vw;
+    font-size: 2vw;
+}
+
+
+
+.hideClassButton{
+    transform: rotate(90deg);
+    transition: 0.5s;
+}
+
+.showClassButton{
+    transition: 0.5s;
+}
+
+
+.hideClassButton , .showClassButton{
+    margin-right: 0.5vw;
+    margin-top: 2vh;
+    width: 2vw;
+    height: 2vh;
+}
+
+.hideSchoolClassTeacher{
+    display: none;
+}
+
+.editSchoolClassTeacherButtons .addSomethingNew .addIcon{
+    width: 1.2vw;
+    height: 1.2vw;
+}
+
+.editSchoolClassTeacherButtons .addSomethingNew .addTitle{
+    font-size: 1.2vw;
 }

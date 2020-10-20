@@ -21,6 +21,7 @@ class AddGame extends Component {
   }
 
   render() {
+    console.log('addGame');
     return (
       <>
         <div className="formContainer">

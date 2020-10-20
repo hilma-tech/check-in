@@ -30,16 +30,18 @@ class Games extends Component {
     this.state = { name: "hewwo" };
   }
   onClickAddGame = () => {
-    this.props.history.push("/addGame");
+    this.props.history.push(this.props.location.pathname + 'Add');
+    window.location.pathname = this.props.location.pathname + 'Add';
   };
   onClickEditGame = () => {
-    this.props.history.push("/gamesEdit");
+    this.props.history.push(this.props.location.pathname + 'Edit');
+    window.location.pathname = this.props.location.pathname + 'Edit';
   };
   render() {
     return (
       <>
         <div>
-          <WhiteBar active="games" />
+          <WhiteBar active="games"/>
         </div>
         <div id="wholepage">
           <div id="searchbar">

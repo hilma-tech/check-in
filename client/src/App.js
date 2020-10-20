@@ -39,7 +39,7 @@ function App() {
             <StudentsList />
           </Route>
 
-          <Route path='/addGame' exact>
+          <Route path='/gamesAdd' exact>
             <AddGame/>
           </Route>
           <Route path='/gamesEdit' exact>
