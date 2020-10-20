@@ -37,13 +37,13 @@
     align-items: center;
 }
 .addIcon{
-    width: 1.1vw;
-    height: 1.1vw;
+    width: 2vw;
+    height: 2vw;
 }
 
 .addTitle{
     padding-right: 0.5vw;
-    font-size: 1.1vw;
+    font-size: 2vw;
 }
 
 .inputFields{

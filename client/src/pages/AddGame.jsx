@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import Select from "react-select";
 import "../style/AddGameStyle.css";
+import "../style/formStyle.css"
 import FieldSelection from "../component/FieldSelection";
 
 
 const mainGameInfo = ["תיאור המשחק:", "דרישות המשחק:"];
-
-let insertion = [];
 
 let fieldIds = [
   {id: 0, name: null},
@@ -17,10 +16,16 @@ class AddGame extends Component {
     super();
     this.state= {
       numberOfFields: 1,
+      fieldData: null,
     }
   }
 
+  saveFieldData = (fieldData) => {
+    this.setState({fieldData: fieldData})
+  }
+
   render() {
+    console.log(this.state.fieldData);
     return (
       <>
         <div className="formContainer">
@@ -66,14 +71,13 @@ class AddGame extends Component {
           </form>
           {/* game fields */}
           {fieldIds.map((fieldObj) => {
-            return <FieldSelection fieldId={fieldObj.id} />;
+            return <FieldSelection fieldId={fieldObj.id} fieldState={this.saveFieldData}/>;
           })}
           {/* add fields */}
           <div
             className="addSomethingNew"
             onClick={() => {
               fieldIds.push({id: fieldIds.length, name: null})
-              console.log(fieldIds);
               this.setState(
                 (prevState) => {
                   return {numberOfFields: prevState.numberOfFields+1}
@@ -83,6 +87,7 @@ class AddGame extends Component {
             <img className="addIcon" src="/icons/addicon.svg"></img>
             <p className="addTitle">הוסף שדה</p>
           </div>
+          <p>{this.state.message}</p>
         </div>
       </>
     );

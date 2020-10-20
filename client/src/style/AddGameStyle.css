@@ -53,34 +53,33 @@
 }
 
 .select {
-    width: 50vw;
-    padding-bottom: 5vh;
-    
+  width: 50vw;
+  padding-bottom: 5vh;
 }
 
-
 .hiddenInput {
-    display: none;
-    height: 0px;
-    margin: 0px;
-    width: 0px;
+  display: none;
+  height: 0px;
+  margin: 0px;
+  width: 0px;
 }
 
 .cameraIcon {
-    margin: 0px;
-    padding: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 
-.addSomethingNew{
-    display: flex;
-    align-items: center;
+.addSomethingNew {
+  display: flex;
+  align-items: center;
 }
-.addIcon{
-    width: 1.5vw;
-    height: 1.5vw;
+.addIcon {
+  width: 2vw;
+  height: 20vw;
 }
 
-.addTitle{
-    padding-right: 1vw;
-    color: rgba(4, 49, 99, 1);
+.addTitle {
+  padding-right: 1vw;
+  color: rgba(4, 49, 99, 1);
 }
+
