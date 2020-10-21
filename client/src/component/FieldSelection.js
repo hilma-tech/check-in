@@ -1,135 +1,104 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import SelectStyle from '../style/selectStyle';
-import '../style/formStyle.css'
-
-const options = [
-  { value: "text", label: "טקסט" },
-  { value: "choice", label: "בחירה" },
-  { value: "image", label: "תמונה" },
-  { value: "multi-choice", label: "בחירה מרובה" },
-];
+import SelectStyle from "../style/selectStyle";
+import "../style/formStyle.css";
 
 class FieldSelection extends Component {
   constructor() {
     super();
     this.state = {
-      // is the type of input user chose
-      type: "text",
-      // is the name of input user chose
-      name: "",
-      //is the value user entered into input
-      field: "",
-      fullInfo: ["text", "", "", 0],
+      options: [
+        { value: "text", label: "טקסט" },
+        { value: "choice", label: "בחירה" },
+        { value: "image", label: "תמונה" },
+        { value: "multi-choice", label: "בחירה מרובה" },
+      ],
     };
   }
 
-  // handles choice of input type
-  //also saves current choice of input to state
-  handleChange = (option) => {
-    if (option.value === "text") {
-      this.setState({ type: "text" });
-      this.state.fullInfo[0] = option.value;
-      this.sendData();
-    } else if (option.value === "image") {
-      this.setState({ type: "image" });
-      this.state.fullInfo[0] = option.value;
-      this.sendData();
-    } else if (option.value === "choice") {
-      this.setState({ type: "choice" });
-      this.state.fullInfo[0] = option.value;
-      this.sendData();
-    } else {
-      this.setState({ type: "multi-choice" });
-      this.state.fullInfo[0] = option.value;
-      this.sendData();
-    }
-  };
-
   // creates input based on "type"
   fieldCreator = () => {
-    if (this.state.type === "text") {
-      return <label className="fieldTitle">
-                <input onBlur={this.editFieldValue} className='inputFields' type="text" />
-              </label>
-    } else if (this.state.type === "image") {
+    if (this.props.changeInputType === "text") {
       return (
         <label className="fieldTitle">
           <input
-            onFocusCapture={this.editFieldValue}
+            onBlur={this.sendFieldValue}
+            className="inputFields"
+            type="text"
+          />
+        </label>
+      );
+    } else if (this.props.changeInputType === "image") {
+      return (
+        <label className="fieldTitle">
+          <input
+            onChange={this.sendFieldValue}
             type="file"
             className="hiddenInput inputFields"
           />
-          <img onFocusCapture={this.editFieldValue} type="file"className="cameraIcon" src="/icons/camera-icon.svg" />
-        </label>
-      );
-    } else if (this.state.type === "choice") {
-      return (
-        <label className="fieldTitle">
-          <input onBlur={this.editFieldValue} className='inputFields' type="text" />
-          {/* <input onBlur={this.editFieldValue} type="text" />
-          <input onBlur={this.editFieldValue} type="text" />
-          <input onBlur={this.editFieldValue} type="text" />
-          <input onBlur={this.editFieldValue} type="text" />
-          <input onBlur={this.editFieldValue} type="text" /> */}
+          <img
+            className="cameraIcon"
+            src={(this.props.imagePath) ? this.props.imagePath : "/icons/camera-icon.svg"}
+          />
         </label>
       );
     } else {
+      const sixArray = [0, 1, 2, 3, 4, 5];
       return (
         <label className="fieldTitle">
-          <input onBlur={this.editFieldValue}  className='inputFields' type="text" />
-          {/* <input onBlur={this.editFieldValue} type="text" />
-      <input onBlur={this.editFieldValue} type="text" />
-      <input onBlur={this.editFieldValue} type="text" />
-      <input onBlur={this.editFieldValue} type="text" />
-      <input onBlur={this.editFieldValue} type="text" /> */}
+          {sixArray.map((inputId) => {
+            return (
+              <input
+                onBlur={this.sendFieldValue}
+                className="inputFields"
+                type="text"
+                id={inputId}
+              />
+            );
+          })}
         </label>
       );
     }
   };
 
-  //saves name to state
-  editNameValue = (props) => {
-    this.setState({ name: props.target.value });
-    this.state.fullInfo[1] = props.target.value;
-    this.sendData();
-  };
-  //saves input value ENETERED BY USER to state
-  editFieldValue = (props) => {
-    this.setState({ field: props.target.value });
-    this.state.fullInfo[2] = props.target.value;
-    this.sendData();
-    console.log("fieldvalue", props.target.value)
+  //sends name to parent
+  sendNameValue = (props) => {
+    this.props.name(props.target.value, this.props.fieldId);
   };
 
-  sendData = () => {
-    this.props.fieldState(this.state.fullInfo);
-    console.log(this.state.fullInfo);
+  //sends selection to parent
+  sendSelection = (props) => {
+    this.props.selection(props.value, this.props.fieldId);
+  };
+
+  //sends input value ENETERED BY USER to parent
+  sendFieldValue = (props) => {
+    this.props.fieldValue(props.target.value, this.props.fieldId, props.target.id, props.target.files);
+    console.log("field value", props.target.files[0]);
   };
 
   render() {
-    this.state.fullInfo[3] = this.props.fieldId;
     return (
-      <div className='fieldSelection'>
-        <form id='fieldName'>
+      <div className="fieldSelection">
+        <form id="fieldName">
           {/* name of field */}
           <input
             className="inputFields"
             type="text"
             placeholder="רשום את שם השדה"
-            onBlur={this.editNameValue}
+            onBlur={this.sendNameValue}
           />
         </form>
         {/* selected field type */}
         <Select
-          id='fieldType'
+          id="fieldType"
           styles={SelectStyle()}
-          options={options}
-          onChange={this.handleChange}
+          options={this.state.options}
+          onChange={this.sendSelection}
           defaultValue={{ value: "text", label: "טקסט" }}
         />
         {/* field for user interaction */}
-        <form id='fieldData'>{this.fieldCreator()}</form>
+        <form id="fieldData">{this.fieldCreator()}</form>
       </div>
     );
   }

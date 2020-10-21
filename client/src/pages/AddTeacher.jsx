@@ -3,16 +3,15 @@ import Select from "react-select";
 import WhiteBar from "../component/ArrowNavBar";
 import "../style/AddGameStyle.css";
 import "../style/formStyle.css";
-import FieldSelection from "../component/FieldSelection";
+//import FieldSelection from "../component/FieldSelection";
 
 const mainGameInfo = ["תיאור המשחק:", "דרישות המשחק:"];
 
-class AddGame extends Component {
+class AddTeacher extends Component {
   constructor() {
     super();
     this.state = {
       numberOfFields: 1,
-      fieldsData: [{ id: 0, name: null, selection: "text", value: [false] }],
     };
   }
 
@@ -58,20 +57,8 @@ class AddGame extends Component {
         return { fieldsData: prevState.fieldsData };
       });
     }
-    console.log("full state data", this.state.fieldsData);
+    console.log("full state data", inputFiles[0]);
   };
-
-  addNewFieldData = () => {
-      this.setState((prevState) => {
-        prevState.fieldsData.push({
-        id: this.state.fieldsData.length,
-        name: null,
-        selection: "text",
-        value: [],
-      })
-      return(prevState.fieldsData)})
-    }
-  
 
   render() {
     return (
@@ -89,8 +76,8 @@ class AddGame extends Component {
                 />
               </label>
 
-              {/* maps extended details of the game */}
-              {mainGameInfo.map((field) => {
+              {/* maps extended details of the Teacher */}
+              {mainTeacherInfo.map((field) => {
                 return (
                   <>
                     <label className="fieldTitle">
@@ -116,7 +103,7 @@ class AddGame extends Component {
                 <br />
               </label>
             </form>
-            {/* game fields */}
+            {/* Teacher fields */}
             {this.state.fieldsData.map((fieldObj) => {
               return (
                 <FieldSelection
@@ -133,7 +120,18 @@ class AddGame extends Component {
             <div
               className="addSomethingNew"
               id="addNewField"
-              onClick={this.addNewFieldData}
+              onClick={() => {
+                this.state.fieldsData.push({
+                  id: this.state.fieldsData.length,
+                  name: null,
+                  selection: "text",
+                  value: [],
+                });
+                // saves number of fields and serves as a render trigger to display added field
+                this.setState((prevState) => {
+                  return { numberOfFields: prevState.numberOfFields + 1 };
+                });
+              }}
             >
               <img className="addIcon" src="/icons/addicon.svg"></img>
               <p className="addTitle">הוסף שדה</p>
@@ -147,4 +145,4 @@ class AddGame extends Component {
   }
 }
 
-export default AddGame;
+export default AddTeacher;
