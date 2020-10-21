@@ -18,11 +18,9 @@ class ArrowNavBar extends Component {
     }
   }
 
-  backToMain = () => {
+  backToGames = () => {
     if (this.props.location.pathname) {
-      this.props.history.push("/games/suspended");
-    } else {
-      this.props.history.push("/games");
+      this.props.history.push("/games");;
     }
   };
 
@@ -31,7 +29,7 @@ class ArrowNavBar extends Component {
       <>
         <div className="sticky">
           <div className="navbar">
-            <span className="goBackToMainPage pageName" onClick={this.backToMain}></span>
+            <span className="arrow pageName" onClick={this.backToGames}></span>
             <h1 className="pageName bold editSchoolPageName">
               {this.findPageName()}
             </h1>
