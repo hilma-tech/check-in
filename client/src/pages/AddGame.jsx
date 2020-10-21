@@ -35,7 +35,8 @@ class AddGame extends Component {
               שם המשחק:
               <input
                 className="inputFields"
-                type="text"
+                id='gameName'
+                type='text'
                 placeholder="הכנס את שם המשחק..."
               />
             </label>
@@ -46,9 +47,9 @@ class AddGame extends Component {
                 <>
                   <label className="fieldTitle">
                     {field}
-                    <input
+                    <textarea
                       className="inputFields extendedField"
-                      type="text"
+                      // type="text"
                       placeholder=""
                     />
                   </label>
@@ -58,8 +59,9 @@ class AddGame extends Component {
             <label className="fieldTitle">
               תמונה:
               <input type="file" className="hiddenInput" />
-              <br />
-              <img className="cameraIcon" src="/icons/camera-icon.svg" />
+              <div className='borderCameraIcon'>
+                <img className="cameraIcon" src="/icons/camera-icon.svg" />
+              </div>
             </label>
             <br />
             <label className="fieldTitle">
@@ -69,7 +71,10 @@ class AddGame extends Component {
           </form>
           {/* game fields */}
           {fieldIds.map((fieldObj) => {
-            return <FieldSelection fieldId={fieldObj.id} fieldState={this.saveFieldData}/>;
+            return <div className='fieldSelectionWithClose'>
+                    <img className="removeFieldIcon" src="/icons/ionic-ios-close.svg" />
+                    <FieldSelection fieldId={fieldObj.id} fieldState={this.saveFieldData}/>
+                   </div>;
           })}
           {/* add fields */}
           <div

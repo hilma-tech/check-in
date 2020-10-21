@@ -21,6 +21,7 @@ class FieldSelection extends Component {
       //is the value user entered into input
       field: "",
       fullInfo: ["text", "", "", 0],
+      fieldClassSize: ''
     };
   }
 
@@ -28,19 +29,19 @@ class FieldSelection extends Component {
   //also saves current choice of input to state
   handleChange = (option) => {
     if (option.value === "text") {
-      this.setState({ type: "text" });
+      this.setState({ type: "text", fieldClassSize: ''});
       this.state.fullInfo[0] = option.value;
       this.sendData();
     } else if (option.value === "image") {
-      this.setState({ type: "image" });
+      this.setState({ type: "image", fieldClassSize: 'photoFildSize '});
       this.state.fullInfo[0] = option.value;
       this.sendData();
     } else if (option.value === "choice") {
-      this.setState({ type: "choice" });
+      this.setState({ type: "choice", fieldClassSize: 'selectionsFildSize '});
       this.state.fullInfo[0] = option.value;
       this.sendData();
     } else {
-      this.setState({ type: "multi-choice" });
+      this.setState({ type: "multi-choice", fieldClassSize: 'selectionsFildSize '});
       this.state.fullInfo[0] = option.value;
       this.sendData();
     }
@@ -60,29 +61,22 @@ class FieldSelection extends Component {
             type="file"
             className="hiddenInput inputFields"
           />
-          <img onFocusCapture={this.editFieldValue} type="file"className="cameraIcon" src="/icons/camera-icon.svg" />
-        </label>
-      );
-    } else if (this.state.type === "choice") {
-      return (
-        <label className="fieldTitle">
-          <input onBlur={this.editFieldValue} className='inputFields' type="text" />
-          {/* <input onBlur={this.editFieldValue} type="text" />
-          <input onBlur={this.editFieldValue} type="text" />
-          <input onBlur={this.editFieldValue} type="text" />
-          <input onBlur={this.editFieldValue} type="text" />
-          <input onBlur={this.editFieldValue} type="text" /> */}
+          <div className='borderCameraIcon'>
+            <img onFocusCapture={this.editFieldValue} type="file"className="cameraIcon" src="/icons/camera-icon.svg" />
+          </div>
         </label>
       );
     } else {
       return (
         <label className="fieldTitle">
-          <input onBlur={this.editFieldValue}  className='inputFields' type="text" />
-          {/* <input onBlur={this.editFieldValue} type="text" />
-      <input onBlur={this.editFieldValue} type="text" />
-      <input onBlur={this.editFieldValue} type="text" />
-      <input onBlur={this.editFieldValue} type="text" />
-      <input onBlur={this.editFieldValue} type="text" /> */}
+          <div className='gridFieldInputs'>
+            <input onBlur={this.editFieldValue} className='inputFields' type="text" />
+            <input onBlur={this.editFieldValue} className='inputFields' type="text" />
+            <input onBlur={this.editFieldValue} className='inputFields' type="text" />
+            <input onBlur={this.editFieldValue} className='inputFields' type="text" />
+            <input onBlur={this.editFieldValue} className='inputFields' type="text" />
+            <input onBlur={this.editFieldValue} className='inputFields' type="text" />
+          </div>
         </label>
       );
     }
@@ -110,7 +104,7 @@ class FieldSelection extends Component {
   render() {
     this.state.fullInfo[3] = this.props.fieldId;
     return (
-      <div className='fieldSelection'>
+      <div className={this.state.fieldClassSize + 'fieldSelection'}>
         <form id='fieldName'>
           {/* name of field */}
           <input
@@ -127,8 +121,9 @@ class FieldSelection extends Component {
           options={options}
           onChange={this.handleChange}
           defaultValue={{ value: "text", label: "טקסט" }}
-        />
+          />
         {/* field for user interaction */}
+          
         <form id='fieldData'>{this.fieldCreator()}</form>
       </div>
     );

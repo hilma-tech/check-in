@@ -12,7 +12,7 @@ class GameNavBar extends Component {
 
   movePageFunc = (props) => {
     if (props.target.id === "suspended") {
-      this.props.history.push("/games/suspended");
+      this.props.history.push(this.props.match.url +"/suspended");
     } else {
       this.props.history.push("/games");
     }

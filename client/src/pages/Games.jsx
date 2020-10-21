@@ -6,6 +6,7 @@ import searchicon from "../img/search.svg";
 import WhiteBar from "../component/GameNavBar.js";
 import { withRouter } from "react-router-dom";
 
+
 const images = [
   {
     name: "Gorilla",
@@ -31,11 +32,9 @@ class Games extends Component {
   }
   onClickAddGame = () => {
     this.props.history.push(this.props.location.pathname + 'Add');
-    window.location.pathname = this.props.location.pathname + 'Add';
   };
   onClickEditGame = () => {
     this.props.history.push(this.props.location.pathname + 'Edit');
-    window.location.pathname = this.props.location.pathname + 'Edit';
   };
   render() {
     return (

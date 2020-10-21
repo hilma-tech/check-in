@@ -17,7 +17,8 @@
 
 .extendedField {
   margin: 0px;
-  height: 8vh;
+  resize: none;
+  height: 70px;
 }
 
 .addField {
@@ -43,7 +44,19 @@
 .cameraIcon {
   margin: 0px;
   padding: 0px;
-  margin-top: 1vh;
+  
+  width: 5vw;
+}
+
+.borderCameraIcon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #043163;
+  width: 22vw;
+  border-radius: 2vw;
+  height: 15vw;
+  
 }
 
 #addNewField{
@@ -52,11 +65,10 @@
 
 .fieldSelection{
   display: flex;
-  margin-right: 9vw;
+  margin-right: 1vw;
   width: 75vw;
   margin-bottom: 1vh;
-  align-items: center;
-
+  /* align-items: center; */
 }
 
 
@@ -70,7 +82,7 @@
   height: 36px;
   width: 20vw;
   margin: 0;
-  padding: 0;
+  padding:0;
 }
 
 #fieldType{
@@ -85,4 +97,46 @@
 
 #fieldData .fieldTitle{
   height: 36px;
+  margin-top: 0;  
+}
+
+.fieldTitle #gameName{
+  height: 25px;
+}
+
+.gridFieldInputs{
+  display: grid;
+  width: 35vw;
+  margin-right: 0.5vw;
+  grid-template-columns: 17vw 17vw;
+}
+
+.gridFieldInputs .inputFields{
+  height: 34px;
+  width: 16.25vw;
+}
+
+.photoFildSize{
+  height: 15.5vw;
+}
+
+.selectionsFildSize{
+  height: 115px;
+  padding-bottom: 2vh;
+}
+
+.textFildSize{
+  height: 16vw;
+}
+
+.fieldSelectionWithClose{
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.removeFieldIcon{
+  width: 10px;
+  height: 40px;
+  margin-right: 6vw;
 }

@@ -10,12 +10,18 @@ class GeneralTable extends React.Component {
         return ( 
             <div>
                 <div className='TableTitles'>
-                    {this.props.categors.map((val, index)=>{return <p key={index} className={'item'+index}>{val}</p>})}
+                    {
+                        //Return the table's categors row
+                        this.props.categors.map((val, index)=>{return <p key={index} className={'item'+index}>{val}</p>})
+                    }
                 </div>
                 <div className='AllData'>
-                    {this.props.allData.map((val, index)=>{return <RowData key={index} 
+                    {
+                        //Make the rows in the table 
+                        this.props.allData.map((val, index)=>{return <RowData key={index} 
                                                                             data={val}
-                                                                            categors={this.props.categors}/>})}
+                                                                            categors={this.props.categors}/>})
+                    }
                 </div>
                 <div className='addingButton'></div>
             </div>

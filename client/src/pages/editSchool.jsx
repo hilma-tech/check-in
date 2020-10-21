@@ -10,28 +10,63 @@ class editSchool extends Component {
     super();
     this.state = {
       schoolName: "עשה חיל",
-      classes: [{ id: 1, name: "ד'2", numTeachers: 1 }],
+      //List of all the classes in the school. The numTeachers represent the number of teachers in the class.
+      classes: [{ id: 1, name: "ד'2", chosenTeachers: []}], 
     };
   }
 
+  /*
+    Get the element information, then prevent the refresh and take the state that now save in the class
+    copy the classes array from him add to him default class (without name and with 1 teacher to choose)
+    and return to setState the new classes array (with the new class).
+  */
   addClassToSchool = (e) => {
-    console.log("addClassToSchool");
     e.preventDefault();
     this.setState((prevState) => {
       let tempData = [
         ...prevState.classes,
         {
           id: prevState.classes.length + 1,
-          name: "הכנס שם כיתה",
+          name: '',
           numTeachers: 1,
+          chosenTeachers: []
         },
       ];
       return { classes: tempData };
     });
   };
-  handelSchoolNameChange = (e) => {
+
+
+
+//Need to change but update the class name.
+//It's call when the user change the value.
+chooseTeacher = (e) => {
+  let index = e.name
+  let value = e.value;
+  let id = e.id;
+  this.setState((prevState) => {
+    let tempData = [...prevState.classes]
+    tempData[index].chosenTeachers.push({id: id, name:value})
+    return { classes: tempData }})
+}
+
+
+//Get the element and set the schoolName by the info that the user type.
+handleChange = (e) => {
+  if(e.target.name === 'schoolName'){
     this.setState({ schoolName: e.target.value });
-  };
+  } else {
+    let req = e.target.name.split('_')
+    let value = e.target.value;
+    this.setState((prevState)=>
+      {
+        let tempData = [...prevState.classes]
+        tempData[parseInt(req[1])].name = value
+        return {classes: tempData}})
+    }
+};
+
+
   render() {
     return (
       <div>
@@ -42,22 +77,29 @@ class editSchool extends Component {
               שם בית ספר:
             </label>
             <input
-              value={this.state.schoolName}
+              value={this.state.schoolName} //The input will show schoolName.
               name="schoolName"
-              onChange={this.handelSchoolNameChange}
+              onChange={this.handleChange} //In charge of on the set state of schoolName.
               className="editSchoolNameInput inputFields"
             ></input>
 
             <label for="schoolClasses" className="editSchoolClassesLable">
               כיתות:
             </label>
-            {this.state.classes.map((classData) => {
-              return <ClassData key={classData.id} classData={classData} />;
+            
+            {//Pass on all the classes in the list and make them the class component (with the name and the teacher's selects).
+            this.state.classes.map((classData, classIndex) => {
+              //The component get the class data as props.classData.
+              return <ClassData key={classData.id} 
+                                classData={classData} 
+                                classIndex={classIndex} 
+                                handleChange={this.handleChange} 
+                                chooseTeacher={this.chooseTeacher} />;
             })}
             <button
               type="button"
               className="editSchoolAddClass"
-              onClick={this.addClassToSchool}
+              onClick={this.addClassToSchool} //Add class to the list.
             >
               הוסף כיתה
             </button>

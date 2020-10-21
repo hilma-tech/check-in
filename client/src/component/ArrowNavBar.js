@@ -13,7 +13,7 @@ class ArrowNavBar extends Component {
   findPageName = () => {
     switch(this.props.location.pathname) {
       case "/schoolsEdit": return ("עריכת בית ספר");
-      case "/addGame" : return ("הוספת משחק");
+      case "/gamesAdd" : return ("הוספת משחק");
   
     }
   }

@@ -8,8 +8,9 @@ import {
     Link,
     Redirect
 } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
-export default class WhiteRouter extends Component {
+export default withRouter (class WhiteRouter extends Component {
     // constructor() {
     //     super()
     // }
@@ -17,13 +18,13 @@ export default class WhiteRouter extends Component {
         console.log("hi")
         return(
             <div>
-                <Router>
+                
                     <Switch>
-                        <Route path="/games" exact component={Games}/>
-                        <Route path="/games/suspended" component={SuspendedGames}/>
+                        <Route path={this.props.match.path} exact component={Games}/>
+                        <Route path={this.props.match.path + "/suspended"} component={SuspendedGames}/>
                     </Switch>
-                </Router>
+            
             </div>
         )
     }
-}
+})

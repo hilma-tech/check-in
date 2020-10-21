@@ -9,13 +9,18 @@ class RowData extends React.Component{
         super();
         this.state = {  }
     }
+
+    //When we press on row it's pass to the edit page of the item
     onClickEdit = () =>{
         this.props.history.push(this.props.location.pathname + 'Edit');
     }
+
     render() { 
         return ( <div onClick={this.onClickEdit} className="rowData">
             <div className="Details">
-                {this.props.categors.map((categor, index)=>{return categor !== 'כיתות' ? <p className={'item'+index} key={index}>{this.props.data[categor]}</p> :
+                {
+                    //Order the data (the keys are the categores). If there is class array it's map the class array and return all the classes.
+                    this.props.categors.map((categor, index)=>{return categor !== 'כיתות' ? <p className={'item'+index} key={index}>{this.props.data[categor]}</p> :
                     <div key={index} className={'item'+index+' classes'}> {this.props.data[categor].map((val, categorIndex)=>{return <p key={categorIndex}>{val}</p>})} </div>
                 })}
             </div>

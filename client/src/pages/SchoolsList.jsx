@@ -40,9 +40,13 @@ class SchoolsList extends React.Component {
         displaySearch: 'none',
         displayIconSearch: 'inline-block'}
     }
-    handelChang = (e) => {
+
+    //Save the user search value as searchVal in state.
+    handleChang = (e) => {
         this.setState({searchVal: e.target.value})
     }
+
+    //When the user press the search icon it's start to show the input text for the searching.
     activateSearch = () =>{
         this.setState({displaySearch: 'inline-block', displayIconSearch: 'none'})
     }
@@ -54,11 +58,14 @@ class SchoolsList extends React.Component {
                 <p className='searchIcon' onClick={this.activateSearch} style={{display: this.state.displayIconSearch}}></p>
                 <div style={{display: this.state.displaySearch}}>
                     <form className='search' >
-                        <input type="text" name='search' value={this.state.searchVal} placeholder="חיפוש" onChange={this.handelChang}/> 
+                        <input type="text" name='search' value={this.state.searchVal} placeholder="חיפוש" onChange={this.handleChang}/> 
                         <p className='searchIcon'></p>
                     </form>
                 </div>
             </div>
+            {/*
+                Create the school table with the general teble.
+            */}
             <GeneralTable allData={this.state.listDataSchools} 
                             categors={this.state.categors} />
         </div> );

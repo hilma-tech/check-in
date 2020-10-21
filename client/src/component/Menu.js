@@ -19,7 +19,15 @@ class Menu extends React.Component {
             <div className='menu'>
                 <div className='optionMenu'>
                     <div className='appName'></div>
-                    {this.state.pagesNames.map((pageName, index)=>{
+                    {
+                    /*
+                    עובר על מערך השמות של העמודים
+                    תוך כדי מעבר בודק אם המשתמש נמצא בעמוד שמכיל את השם של העמוד באנגלית
+                    (זה מחזיר את השם באנגלית state כששמים את השם של העמוד בעברית בוך האובייקט )
+                    של עיצוב כתב מודגש className כאשר הוא מוצא את האופציה של העמוד הוא מוסיך לו 
+                    וככה זה מראה רק את השם של העמוד שבחרנו מודגש ואת שאר העמודים זה מראה רגיל
+                    */
+                    this.state.pagesNames.map((pageName, index)=>{
                         return !this.props.location.pathname.includes(this.state[pageName]) ? <a className='menuBluePages' key={index} href={'/'+this.state[pageName]}>{pageName}</a> :
                         <a key={index} href={'/'+this.state[pageName]} className='optionBold menuBluePages'>{pageName}</a>
 
@@ -27,6 +35,7 @@ class Menu extends React.Component {
                 </div>
                 
                 <div className='logOut'>
+                    {/*The img option cut the image so i used th background-image */}
                     <span></span>
                     <a href=''>התנתק</a>
                 </div>
