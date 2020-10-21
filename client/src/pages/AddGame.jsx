@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Select from "react-select";
 import WhiteBar from "../component/ArrowNavBar";
 import "../style/AddGameStyle.css";
 import "../style/formStyle.css";
@@ -13,6 +12,9 @@ class AddGame extends Component {
     this.state = {
       numberOfFields: 1,
       fieldsData: [{ id: 0, name: null, selection: "text", value: [false] }],
+      gameName: "",
+      gameDescription: "",
+      gameRequirements: "",
     };
   }
 
@@ -71,7 +73,17 @@ class AddGame extends Component {
       })
       return(prevState.fieldsData)})
     }
-  
+//need to add image info as well
+    updateBasicInfo = (props) => {
+      switch (props.target.id) {
+        case "gameName": this.setState({gameName: props.target.value})
+        break;
+        case "gameDescription": this.setState({gameDescription: props.target.value})
+        break;
+        case "gameRequirements": this.setState({gameRequirements: props.target.value})
+      }
+     
+    }
 
   render() {
     return (
@@ -83,27 +95,31 @@ class AddGame extends Component {
               <label className="fieldTitle">
                 שם המשחק:
                 <input
+                id="gameName"
                   className="inputFields"
                   type="text"
                   placeholder="הכנס את שם המשחק..."
+                  onBlur={this.updateBasicInfo}
                 />
               </label>
-
-              {/* maps extended details of the game */}
-              {mainGameInfo.map((field) => {
-                return (
-                  <>
-                    <label className="fieldTitle">
-                      {field}
-                      <input
+              <label className="fieldTitle">
+                      תיאור המשחק:
+                      <textarea
                         className="inputFields extendedField"
-                        type="text"
                         placeholder=""
+                        id="gameDescription"
+                        onBlur={this.updateBasicInfo}
                       />
-                    </label>
-                  </>
-                );
-              })}
+              </label>
+              <label className="fieldTitle">
+                      דרישות המשחק:
+                      <textarea
+                        className="inputFields extendedField"
+                        placeholder=""
+                        id="gameRequirements"
+                        onBlur={this.updateBasicInfo}
+                      />
+              </label>
               <label className="fieldTitle">
                 תמונה:
                 <input type="file" className="hiddenInput" />

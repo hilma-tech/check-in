@@ -14,7 +14,7 @@ class ArrowNavBar extends Component {
     switch(this.props.location.pathname) {
       case "/schoolsEdit": return ("עריכת בית ספר");
       case "/gamesAdd" : return ("הוספת משחק");
-  
+      case "/teachersAdd" : return ("הוספת מורה")
     }
   }
 
