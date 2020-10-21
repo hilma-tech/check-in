@@ -5,8 +5,6 @@ import "../style/AddGameStyle.css";
 import "../style/formStyle.css";
 //import FieldSelection from "../component/FieldSelection";
 
-const mainGameInfo = ["תיאור המשחק:", "דרישות המשחק:"];
-
 class AddTeacher extends Component {
   constructor() {
     super();
@@ -37,7 +35,7 @@ class AddTeacher extends Component {
         return { fieldsData: prevState.fieldsData };
       });
       //only relevant to image
-    } else if(inputFiles){
+    } else if (inputFiles) {
       this.setState((prevState) => {
         prevState.fieldsData[fieldId].value = [];
         prevState.fieldsData[fieldId].value[0] = {
@@ -47,7 +45,7 @@ class AddTeacher extends Component {
         return { fieldsData: prevState.fieldsData };
       });
       //only relevant to text
-    } else{
+    } else {
       this.setState((prevState) => {
         prevState.fieldsData[fieldId].value = [];
         prevState.fieldsData[fieldId].value[0] = {
@@ -68,43 +66,22 @@ class AddTeacher extends Component {
           <div className="formContainer">
             <form className="formData">
               <label className="fieldTitle">
-                שם המשחק:
+                שם המורה:
                 <input
                   className="inputFields"
                   type="text"
-                  placeholder="הכנס את שם המשחק..."
+                  placeholder="הכנס את שם המורה..."
                 />
               </label>
-
-              {/* maps extended details of the Teacher */}
-              {mainTeacherInfo.map((field) => {
-                return (
-                  <>
-                    <label className="fieldTitle">
-                      {field}
-                      <input
-                        className="inputFields extendedField"
-                        type="text"
-                        placeholder=""
-                      />
-                    </label>
-                  </>
-                );
-              })}
-              <label className="fieldTitle">
-                תמונה:
-                <input type="file" className="hiddenInput" />
-                <br />
-                <img className="cameraIcon" src="/icons/camera-icon.svg" />
-              </label>
-              <br />
-              <label className="fieldTitle">
-                שדות:
-                <br />
-              </label>
+              <br/>
+              {/* בית ספר */}
+              <Select />
+              <br/>
+              {/* כיתה */}
+              <Select />
             </form>
             {/* Teacher fields */}
-            {this.state.fieldsData.map((fieldObj) => {
+            {/* {this.state.fieldsData.map((fieldObj) => {
               return (
                 <FieldSelection
                   fieldId={fieldObj.id}
@@ -115,7 +92,7 @@ class AddTeacher extends Component {
                   imagePath={this.state.fieldsData[0].value[0].value}
                 />
               );
-            })}
+            })} */}
             {/* add fields */}
             <div
               className="addSomethingNew"
@@ -134,9 +111,25 @@ class AddTeacher extends Component {
               }}
             >
               <img className="addIcon" src="/icons/addicon.svg"></img>
-              <p className="addTitle">הוסף שדה</p>
+              <p className="addTitle">הוסף כיתה</p>
             </div>
             <br />
+            <label className="fieldTitle">
+              אימייל:
+              <input
+                className="inputFields"
+                type="text"
+                placeholder="הכנס את שם המורה..."
+              />
+            </label>
+            <label className="fieldTitle">
+              סיסמא:
+              <input
+                className="inputFields"
+                type="text"
+                placeholder="הכנס את שם המורה..."
+              />
+            </label>
             <button className="saveButton">שמור</button>
           </div>
         </div>
