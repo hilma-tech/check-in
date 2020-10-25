@@ -1,0 +1,13 @@
+.addStudentForm{
+    display: grid;
+    text-align: start;
+}
+
+
+.addStudentForm .inputFields{
+    height: 25px;
+}
+
+.studentClass{
+    margin-bottom: 5px;
+}

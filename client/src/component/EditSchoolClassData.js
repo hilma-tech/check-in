@@ -8,32 +8,33 @@ class ClassData extends React.Component {
         super();
         this.state = { 
             showClass: true,
-            numTeachers: 1
         }
-        this.props = props
-        this.teachers= [{id: 1, name:'נורית כהן'},{id: 2, name:'נורית כהן'}] // Will need to get the list from QSL
+        this.teachers= [{id: 1, name:'נורית cכהן'},{id: 2, name:'נורsית כהן'},{id: 3, name:'נוריתa כהן'}] // Will need to get the list from QSL
     }
 
     //Return the techer list as list of object for the Select.
-    makeTeacherOption = () => {
+    makeTeacherOption = (selectKey) => {
         let options = []
         this.teachers.map((teachersDats) => {
             if (this.props.classData.chosenTeachers.filter((teacher) => {return teacher.id === teachersDats.id}).length === 0){
-                options.push({ value: teachersDats.name, label: teachersDats.name, name: this.props.classIndex,id: teachersDats.id}) 
+                options.push({ value: teachersDats.name, label: teachersDats.name, name: this.props.classIndex,id: teachersDats.id, selectKey: selectKey}) 
             }
         })
         return options
     }
 
     //Meke list of select with the teachers. The len is sent becouse in the select the this.state didn't work.
-    returnTeahcersSelections = (numberOfTeachers) => {
+    returnTeahcersSelections = () => {
         let teachersSelections = [];
-        let selectOptions = this.makeTeacherOption();
-        for (let i = 0; i < numberOfTeachers; i++) {
+        let numTeachers = this.props.classData.chosenTeachers.length
+        for (let i = 0; i < numTeachers; i++) {
+            let teacerDefaultValue = this.props.classData.chosenTeachers[i].name
+            let selectOptions = this.makeTeacherOption(i);
             teachersSelections.push(<Select className='editSchoolClassTeacherSelect' 
-                                            placeholder='בחר...' 
                                             styles={SelectStyle()} 
-                                            options={selectOptions} 
+                                            options={selectOptions}
+                                            selectKey = {i}
+                                            defaultValue={{ value: teacerDefaultValue, label: teacerDefaultValue }}
                                             onChange={this.props.chooseTeacher}/>)
         }
         return teachersSelections
@@ -48,12 +49,7 @@ class ClassData extends React.Component {
         Add to numTeachers one and then when the returnTeahcersSelections function will return it's will return
         one more teacher's select.
     */
-   addTeacherToClass = () => {
-    this.setState((prevState) => {
-        let tempData = prevState.numTeachers
-        tempData++
-        return { numTeachers: tempData }})
-    }
+   
 
     render() { 
         return ( 
@@ -65,11 +61,11 @@ class ClassData extends React.Component {
                         <label for='schoolClassTeacher' className='editSchoolClassTeacherLable'>מורים:</label>
                         <div className='allEditSchoolClassTeacherSelect'>
                             {
-                                this.returnTeahcersSelections(this.state.numTeachers)
+                                this.returnTeahcersSelections()
                             }
                         </div>
                         <div className='editSchoolClassTeacherButtons'>
-                            <div className='editSchoolClassAddExistTeacher addSomethingNew' onClick={this.addTeacherToClass}>
+                            <div className='editSchoolClassAddExistTeacher addSomethingNew' onClick={()=>{this.props.addTeacherToClass(this.props.classIndex)}}>
                                 <img className='addIcon' src='/icons/addicon.svg'></img>
                                 <p className='addTitle'>הוסף מורה קיים</p>
                             </div>

@@ -43,29 +43,36 @@ class editSchool extends Component {
 chooseTeacher = (e) => {
   let index = e.name
   let value = e.value;
+  let selectKey = e.selectKey;
   let id = e.id;
   this.setState((prevState) => {
     let tempData = [...prevState.classes]
-    tempData[index].chosenTeachers.push({id: id, name:value})
+    tempData[index].chosenTeachers[selectKey] = {id: id, name:value}
     return { classes: tempData }})
 }
 
 
-//Get the element and set the schoolName by the info that the user type.
-handleChange = (e) => {
-  if(e.target.name === 'schoolName'){
-    this.setState({ schoolName: e.target.value });
-  } else {
-    let req = e.target.name.split('_')
-    let value = e.target.value;
-    this.setState((prevState)=>
-      {
-        let tempData = [...prevState.classes]
-        tempData[parseInt(req[1])].name = value
-        return {classes: tempData}})
-    }
-};
+  //Get the element and set the schoolName by the info that the user type.
+  handleChange = (e) => {
+    if(e.target.name === 'schoolName'){
+      this.setState({ schoolName: e.target.value });
+    } else {
+      let [fieldChangeName, classChangeIndex]= e.target.name.split('_')
+      let classNameValue = e.target.value;
+      this.setState((prevState)=>
+        {
+          let tempData = [...prevState.classes]
+          tempData[parseInt(classChangeIndex)][fieldChangeName] = classNameValue
+          return {classes: tempData}})
+      }
+  };
 
+  addTeacherToClass = (classIndex) => {
+    this.setState((prevState) => {
+        let tempData = [...prevState.classes]
+        tempData[classIndex].chosenTeachers.push({id: -1, name: 'בחר...'}) //id -1 did not exist and he wont show him
+        return { classes: tempData }})
+    }
 
   render() {
     return (
@@ -93,6 +100,7 @@ handleChange = (e) => {
               return <ClassData key={classData.id} 
                                 classData={classData} 
                                 classIndex={classIndex} 
+                                addTeacherToClass={this.addTeacherToClass}
                                 handleChange={this.handleChange} 
                                 chooseTeacher={this.chooseTeacher} />;
             })}
