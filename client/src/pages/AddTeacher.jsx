@@ -1,61 +1,68 @@
 import React, { Component } from "react";
 import Select from "react-select";
 import WhiteBar from "../component/ArrowNavBar";
+import ClassSelection from "../component/ClassSelection";
 import "../style/AddGameStyle.css";
 import "../style/formStyle.css";
-//import FieldSelection from "../component/FieldSelection";
+import SelectStyle from "../style/selectStyle";
 
 class AddTeacher extends Component {
   constructor() {
     super();
+    this.schoolOptions = [
+      { value: "maalot", label: "מעלות התורה" },
+      { value: "orot", label: "אורות בנות" },
+      { value: "shaalei", label: "שעלי תורה" },
+    ];
+    this.classOptions = [
+      { value: "a3", label: "א'3" },
+      { value: "b2", label: "ב'2" },
+      { value: "f1", label: "ו'1" },
+      { value: "c6", label: "ג'6" },
+    ];
     this.state = {
-      numberOfFields: 1,
+      teacherName: "",
+      schoolName: "",
+      fieldsData: [{ id: 0, value: "" }],
+      email: "",
+      password: ""
     };
   }
 
-  saveFieldName = (fieldName, fieldId) => {
-    this.state.fieldsData[fieldId].name = fieldName;
-  };
+  saveTeacherName = (props) => {
+    console.log(props.target.value)
+  }
 
-  saveSelection = (selection, fieldId) => {
+  saveSchoolName = (props) => {
+    console.log(props.value)
+  }
+
+  saveValue = (newValue, id) => {
     this.setState((prevState) => {
-      prevState.fieldsData[fieldId].selection = selection;
-      return { fieldsData: prevState.fieldsData };
+      let updateData = [...prevState.fieldsData];
+      updateData[id].value = newValue;
+      console.log("newValue:", updateData);
+      return { fieldsData: updateData };
     });
   };
 
-  saveFieldValue = (fieldValue, fieldId, inputId, inputFiles) => {
-    //only relevant to choice/multi-choice
-    if (inputId) {
-      this.setState((prevState) => {
-        prevState.fieldsData[fieldId].value[inputId] = {
-          id: inputId,
-          value: fieldValue,
-        };
-        return { fieldsData: prevState.fieldsData };
+  saveEmail = (props) => {
+    console.log(props.target.value)
+  }
+
+  savePassword = (props) => {
+    console.log(props.target.value)
+  }
+
+  addNewFieldData = () => {
+    this.setState((prevState) => {
+      let tempFieldsData = [...prevState.fieldsData];
+      tempFieldsData.push({
+        id: this.state.fieldsData.length,
+        value: [false],
       });
-      //only relevant to image
-    } else if (inputFiles) {
-      this.setState((prevState) => {
-        prevState.fieldsData[fieldId].value = [];
-        prevState.fieldsData[fieldId].value[0] = {
-          id: 0,
-          value: inputFiles[0].name,
-        };
-        return { fieldsData: prevState.fieldsData };
-      });
-      //only relevant to text
-    } else {
-      this.setState((prevState) => {
-        prevState.fieldsData[fieldId].value = [];
-        prevState.fieldsData[fieldId].value[0] = {
-          id: 0,
-          value: fieldValue,
-        };
-        return { fieldsData: prevState.fieldsData };
-      });
-    }
-    console.log("full state data", inputFiles[0]);
+      return { fieldsData: tempFieldsData };
+    });
   };
 
   render() {
@@ -65,71 +72,77 @@ class AddTeacher extends Component {
           <WhiteBar />
           <div className="formContainer">
             <form className="formData">
+              {/* מורה */}
               <label className="fieldTitle">
                 שם המורה:
                 <input
                   className="inputFields"
                   type="text"
                   placeholder="הכנס את שם המורה..."
+                  onBlur={this.saveTeacherName}
                 />
               </label>
-              <br/>
+
               {/* בית ספר */}
-              <Select />
-              <br/>
-              {/* כיתה */}
-              <Select />
-            </form>
-            {/* Teacher fields */}
-            {/* {this.state.fieldsData.map((fieldObj) => {
-              return (
-                <FieldSelection
-                  fieldId={fieldObj.id}
-                  name={this.saveFieldName}
-                  selection={this.saveSelection}
-                  fieldValue={this.saveFieldValue}
-                  changeInputType={this.state.fieldsData[fieldObj.id].selection}
-                  imagePath={this.state.fieldsData[0].value[0].value}
+              <label className="fieldTitle">
+                בית ספר:
+                <Select
+                onChange={this.saveSchoolName}
+                  options={this.schoolOptions}
+                  styles={SelectStyle()}
+                  defaultValue={{ value: "default", label: "בחר..." }}
                 />
-              );
-            })} */}
-            {/* add fields */}
+              </label>
+              {/* כיתה */}
+              <label className="fieldTitle">כיתה:</label>
+              {this.state.fieldsData.map((fieldObj) => {
+                return (
+                  <>
+                    <ClassSelection
+                      id={fieldObj.id}
+                      saveValue={this.saveValue}
+                      options={this.classOptions}
+                      onChange={this.saveChange}
+                      defaultValue={{ value: "default", label: "בחר..." }}
+                    />
+                    <br />
+                  </>
+                );
+              })}
+            </form>
+
+            {/* הוספת כיתה */}
             <div
               className="addSomethingNew"
               id="addNewField"
-              onClick={() => {
-                this.state.fieldsData.push({
-                  id: this.state.fieldsData.length,
-                  name: null,
-                  selection: "text",
-                  value: [],
-                });
-                // saves number of fields and serves as a render trigger to display added field
-                this.setState((prevState) => {
-                  return { numberOfFields: prevState.numberOfFields + 1 };
-                });
-              }}
+              onClick={this.addNewFieldData}
             >
               <img className="addIcon" src="/icons/addicon.svg"></img>
               <p className="addTitle">הוסף כיתה</p>
             </div>
-            <br />
-            <label className="fieldTitle">
-              אימייל:
-              <input
-                className="inputFields"
-                type="text"
-                placeholder="הכנס את שם המורה..."
-              />
-            </label>
-            <label className="fieldTitle">
-              סיסמא:
-              <input
-                className="inputFields"
-                type="text"
-                placeholder="הכנס את שם המורה..."
-              />
-            </label>
+
+            <form className="formData">
+              {/* אימייל */}
+              <label className="fieldTitle">
+                אימייל:
+                <input
+                onBlur={this.saveEmail}
+                  className="inputFields"
+                  type="text"
+                  placeholder="הכנס כתובת מייל..."
+                />
+              </label>
+              {/* סיסמא */}
+              <label className="fieldTitle">
+                סיסמא:
+                <input
+                onBlur={this.savePassword}
+                  className="inputFields"
+                  type="text"
+                  placeholder="הכנס סיסמא..."
+                />
+              </label>
+            </form>
             <button className="saveButton">שמור</button>
           </div>
         </div>

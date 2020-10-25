@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import WhiteBar from "../component/ArrowNavBar";
 import "../style/AddGameStyle.css";
 import "../style/formStyle.css";
-import FieldSelection from "../component/FieldSelection";
+import GameFieldSelection from "../component/GameFieldSelection";
 
 const mainGameInfo = ["תיאור המשחק:", "דרישות המשחק:"];
 
@@ -10,7 +10,6 @@ class AddGame extends Component {
   constructor() {
     super();
     this.state = {
-      numberOfFields: 1,
       fieldsData: [{ id: 0, name: null, selection: "text", value: [false] }],
       gameName: "",
       gameDescription: "",
@@ -139,7 +138,7 @@ class AddGame extends Component {
           {this.state.fieldsData.map((fieldObj) => {
             return (<div className='fieldSelectionWithClose'>
                     <img className="removeFieldIcon" src="/icons/ionic-ios-close.svg" />
-                    <FieldSelection
+                    <GameFieldSelection
                       fieldId={fieldObj.id}
                       name={this.saveFieldName}
                       selection={this.saveSelection}
