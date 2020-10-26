@@ -1,20 +1,20 @@
-import React, { Component } from "react";
+import React from 'react';
+import ArrowNavBar from '../component/ArrowNavBar'
 import ClassData from "../component/schoolClassData";
-import WhiteBar from "../component/ArrowNavBar.js"
-import "../style/editSchoolStyle.css";
 import "../style/formStyle.css";
-import "../style/WhiteBarStyle.css";
+import { withRouter } from "react-router-dom";
 
-class editSchool extends Component {
-  constructor(props) {
-    super();
-    this.state = {
-      schoolName: "עשה חיל",
-      //List of all the classes in the school. The numTeachers represent the number of teachers in the class.
-      classes: [{ id: 1, name: "ד'2", chosenTeachers: []}], 
-    };
-  }
 
+class AddSchool extends React.Component {
+    constructor(props) {
+        super();
+        this.state = {
+            schoolNameError: {toShow: 'none', mess: ''},
+            schoolName: '',
+            //List of all the classes in the school. The numTeachers represent the number of teachers in the class.
+            classes: [], 
+          };
+    }
   /*
     Get the element information, then prevent the refresh and take the state that now save in the class
     copy the classes array from him add to him default class (without name and with 1 teacher to choose)
@@ -36,8 +36,6 @@ class editSchool extends Component {
     });
   };
 
-
-
   //Need to change but update the class name.
   //It's call when the user change the value.
   chooseTeacher = (e) => {
@@ -50,7 +48,6 @@ class editSchool extends Component {
       tempData[index].chosenTeachers[selectKey] = {id: id, name:value}
       return { classes: tempData }})
   }
-
 
   //Get the element and set the schoolName by the info that the user type.
   handleChange = (e) => {
@@ -74,15 +71,52 @@ class editSchool extends Component {
         return { classes: tempData }})
     }
 
-  render() {
-    return (
-      <div>
-        <WhiteBar/>
-        <form className="form">
+    saveData = (e) => {
+        e.preventDefault();
+        /* data validetion  */
+        // ----------school name validetion-------------------
+        if(this.state.schoolName.length === 0){
+            this.setState((prevState) => {
+                prevState.schoolNameError.toShow = 'inline-block'
+                prevState.schoolNameError.mess = 'חייב להכניס שם בית ספר'
+                return {schoolNameError: prevState.schoolNameError}
+            })
+            return;
+        } else if ((/[a-z]/).test(this.state.schoolName) || (/[A-Z]/).test(this.state.schoolName) || (/[!@#$%^&*()_+-\=\[\]{};:\\|,.<>\/?~`]/).test(this.state.schoolName)){
+            this.setState((prevState) => {
+                prevState.schoolNameError.toShow = 'inline-block'
+                prevState.schoolNameError.mess = 'שם בית הספר לא תקין'
+                return {schoolNameError: prevState.schoolNameError}
+            })
+            return;
+        } else if (this.state.schoolName.includes('"') || this.state.schoolName.includes("'") ){
+            if (!(/[\u0590-\u05FF]+["']+[\u0590-\u05FF]/).test(this.state.schoolName)){
+                this.setState((prevState) => {
+                    prevState.schoolNameError.toShow = 'inline-block'
+                    prevState.schoolNameError.mess = 'שם בית הספר לא תקין'
+                    return {schoolNameError: prevState.schoolNameError}
+                })
+            }
+            return;
+        } else{
+            this.setState({schoolNameError: {toShow: 'none', mess: ''}})
+        }
+
+
+
+        //after all the validetion we need to send the data to sql
+        this.props.history.goBack() // after saving go back
+    }
+
+    render() { 
+        return ( <div>
+            <ArrowNavBar />
+            <form className="form">
           <div className="formData editSchoolForm">
             <label for="schoolName" className="editSchoolNameLable">
               שם בית ספר:
             </label>
+            <p class='error' style={{display: this.state.schoolNameError.toShow}}>{this.state.schoolNameError.mess}</p>
             <input
               value={this.state.schoolName} //The input will show schoolName.
               name="schoolName"
@@ -112,12 +146,10 @@ class editSchool extends Component {
               הוסף כיתה
             </button>
           </div>
-          <button className="deletButton">מחק בית ספר</button>
-          <button className="saveButton">שמור</button>
+          <button className="saveButton" onClick={this.saveData}>שמור</button>
         </form>
-      </div>
-    );
-  }
+        </div> );
+    }
 }
-
-export default editSchool;
+ 
+export default withRouter(AddSchool);

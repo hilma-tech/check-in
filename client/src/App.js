@@ -13,6 +13,7 @@ import AddTeacher from './pages/AddTeacher.jsx'
 import EditSchool from './pages/editSchool.jsx'
 import Menu from './component/Menu'
 import AddStudent from './pages/AddStudent.jsx'
+import AddSchool from './pages/AddSchool.jsx'
 
 
 function App() {
@@ -53,7 +54,7 @@ function App() {
             <AddGame/>
           </Route>
           <Route path='/schoolsAdd' exact>
-            <h5>schoolsAdd</h5>
+            <AddSchool />
           </Route>
 
           <Route path='/gamesEdit' exact>
