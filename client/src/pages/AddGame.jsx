@@ -158,7 +158,7 @@ class AddGame extends Component {
           {this.state.fieldsData.map((fieldObj) => {
             return (<div className='fieldSelectionWithClose'>
                     <GameFieldSelection
-                     key={fieldObj.id}
+                      key={fieldObj.id}
                       fieldId={fieldObj.id}
                       name={this.saveFieldName}
                       selection={this.saveSelection}

@@ -12,9 +12,6 @@ class GameFieldSelection extends Component {
         { value: "image", label: "תמונה" },
         { value: "multi-choice", label: "בחירה מרובה" },
       ];
-    this.state = {
-      fieldClassSize: ''
-    };
   }
 
 getFieldClassSize = (select) => {
@@ -84,7 +81,6 @@ getFieldClassSize = (select) => {
   //sends selection to parent
   sendSelection = (props) => {
     this.props.selection(props.value, this.props.fieldId);
-    this.setState({fieldClassSize: this.getFieldClassSize(props.value)})
   };
 
   //sends input value ENETERED BY USER to parent
@@ -97,8 +93,9 @@ getFieldClassSize = (select) => {
   }
 
   render() {
+    let fieldClassSize = this.getFieldClassSize(this.props.changeInputType)
     return (
-      <div className={this.state.fieldClassSize + 'fieldSelection'}>
+      <div className={fieldClassSize + 'fieldSelection'}>
                             <img onClick={this.removeField} className="removeFieldIcon" src="/icons/ionic-ios-close.svg" />
 
         <form id='fieldName'>
@@ -116,7 +113,7 @@ getFieldClassSize = (select) => {
           styles={SelectStyle()}
           options={this.options}
           onChange={this.sendSelection}
-          defaultValue={{ value: "text", label: "טקסט" }}
+          defaultValue={this.options.filter((option)=>{return this.props.changeInputType === option.value})[0]}
           />
         {/* field for user interaction */}
           
