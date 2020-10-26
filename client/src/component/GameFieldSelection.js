@@ -4,7 +4,7 @@ import SelectStyle from "../style/selectStyle";
 import "../style/formStyle.css";
 
 class GameFieldSelection extends Component {
-  constructor(props) {
+  constructor() {
     super();
     this.options=[
         { value: "text", label: "טקסט" },
@@ -18,6 +18,7 @@ class GameFieldSelection extends Component {
   }
 
 getFieldClassSize = (select) => {
+
   if (select=== "text") {
     return '';
   } else if (select=== "image") {
@@ -45,9 +46,7 @@ getFieldClassSize = (select) => {
             onChange={this.sendFieldValue}
             type="file"
             className="hiddenInput inputFields"
-          />
-
-          
+          />         
           <div className='borderCameraIcon'>
             <img
               className="cameraIcon"
@@ -93,9 +92,15 @@ getFieldClassSize = (select) => {
     this.props.fieldValue(props.target.value, this.props.fieldId, props.target.id, props.target.files);
   };
 
+  removeField = () => {
+    this.props.removal(this.props.fieldId)
+  }
+
   render() {
     return (
       <div className={this.state.fieldClassSize + 'fieldSelection'}>
+                            <img onClick={this.removeField} className="removeFieldIcon" src="/icons/ionic-ios-close.svg" />
+
         <form id='fieldName'>
           {/* name of field */}
           <input

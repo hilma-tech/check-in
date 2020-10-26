@@ -86,7 +86,7 @@
   /* text */
   color: #043163;
   text-align: right;
-  font: normal normal bold 3vw "Segoe UI", Arial;
+  font: normal normal bold 3vw  'Assistant', sans-serif;
   letter-spacing: 0.52px;
   opacity: 1;
   /* positioning */

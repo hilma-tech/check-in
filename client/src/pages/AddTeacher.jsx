@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import Select from "react-select";
 import WhiteBar from "../component/ArrowNavBar";
 import ClassSelection from "../component/ClassSelection";
-import "../style/AddGameStyle.css";
 import "../style/formStyle.css";
+import "../style/AddGameStyle.css";
+import "../style/AddTeacherStyle.css"
 import SelectStyle from "../style/selectStyle";
 
 class AddTeacher extends Component {
@@ -25,34 +26,40 @@ class AddTeacher extends Component {
       schoolName: "",
       fieldsData: [{ id: 0, value: "" }],
       email: "",
-      password: ""
+      password: "",
     };
   }
 
   saveTeacherName = (props) => {
-    console.log(props.target.value)
-  }
+    let myprops = props.target
+    this.setState({teacherName: myprops.value})
+  };
 
   saveSchoolName = (props) => {
-    console.log(props.value)
-  }
+    this.setState((prevState)=> {
+      let prevSchool= prevState.schoolName
+      prevSchool = props.value
+      return {schoolName: prevSchool}
+    })
+  };
 
   saveValue = (newValue, id) => {
     this.setState((prevState) => {
       let updateData = [...prevState.fieldsData];
       updateData[id].value = newValue;
-      console.log("newValue:", updateData);
       return { fieldsData: updateData };
     });
   };
 
   saveEmail = (props) => {
-    console.log(props.target.value)
-  }
+    let myprops = props.target
+    this.setState({email: myprops.value})
+  };
 
   savePassword = (props) => {
-    console.log(props.target.value)
-  }
+    let myprops = props.target
+    this.setState({password: myprops.value})
+  };
 
   addNewFieldData = () => {
     this.setState((prevState) => {
@@ -73,10 +80,11 @@ class AddTeacher extends Component {
           <div className="formContainer">
             <form className="formData">
               {/* מורה */}
-              <label className="fieldTitle">
+              <label className="fieldTitle ">
                 שם המורה:
+                
                 <input
-                  className="inputFields"
+                  className="inputFields spaceFromTitles"
                   type="text"
                   placeholder="הכנס את שם המורה..."
                   onBlur={this.saveTeacherName}
@@ -87,28 +95,31 @@ class AddTeacher extends Component {
               <label className="fieldTitle">
                 בית ספר:
                 <Select
-                onChange={this.saveSchoolName}
+                className="spaceFromTitles thinnerFont"
+                  onChange={this.saveSchoolName}
                   options={this.schoolOptions}
                   styles={SelectStyle()}
-                  defaultValue={{ value: "default", label: "בחר..." }}
+                  defaultValue={{ value: "default", label: "שייך לבית ספר" }}
                 />
               </label>
               {/* כיתה */}
               <label className="fieldTitle">כיתה:</label>
+              <div className="spaceFromTitles">
               {this.state.fieldsData.map((fieldObj) => {
                 return (
-                  <>
+                  <div className=" thinnerFont">
                     <ClassSelection
+                    
                       id={fieldObj.id}
                       saveValue={this.saveValue}
                       options={this.classOptions}
                       onChange={this.saveChange}
-                      defaultValue={{ value: "default", label: "בחר..." }}
                     />
                     <br />
-                  </>
+                  </div>
                 );
               })}
+              </div>
             </form>
 
             {/* הוספת כיתה */}
@@ -126,18 +137,18 @@ class AddTeacher extends Component {
               <label className="fieldTitle">
                 אימייל:
                 <input
-                onBlur={this.saveEmail}
-                  className="inputFields"
+                  onBlur={this.saveEmail}
+                  className="inputFields spaceFromTitles"
                   type="text"
                   placeholder="הכנס כתובת מייל..."
                 />
               </label>
               {/* סיסמא */}
-              <label className="fieldTitle">
+              <label className="fieldTitle pageEnd">
                 סיסמא:
                 <input
-                onBlur={this.savePassword}
-                  className="inputFields"
+                  onBlur={this.savePassword}
+                  className="inputFields spaceFromTitles"
                   type="text"
                   placeholder="הכנס סיסמא..."
                 />
