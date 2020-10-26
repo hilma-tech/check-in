@@ -106,7 +106,27 @@ class AddGame extends Component {
      
     }
 
+    saveData = () => {
+      let dataArray = [this.state.gameName, this.state.gameDescription, this.state.gameRequirements, this.state.fieldsData.map(field => {return field.value})]
+      dataArray.map(value => {
+        if(/([/|.|\w|\s|-])*\.(?:pn|jp)g/.test(value)){
+          console.log("image");
+          return;
+        } else if (value.length === 0) {
+        console.log("empty")
+        return;
+      } else if (/[\u0590-\u09fe]/g.test(value) === false) {
+        console.log("not hebrew");
+        return;
+      } else {
+      console.log(value);
+    }
+  })
+      
+    }
+
   render() {
+    console.log("game state",this.state)
     return (
       <>
     <div className="pageContainer">
@@ -121,6 +141,7 @@ class AddGame extends Component {
                   type="text"
                   placeholder="הכנס את שם המשחק..."
                   onBlur={this.updateBasicInfo}
+                  onChange={this.validation}
                 />
               </label>
               <label className="fieldTitle">
@@ -179,7 +200,7 @@ class AddGame extends Component {
             <p className="addTitle">הוסף שדה</p>
             </div>
           <br />
-          <button className="saveButton">שמור</button>
+          <button className="saveButton" onClick={this.saveData}>שמור</button>
           </div>
         </div>
       </>
