@@ -11,20 +11,22 @@ class AddGame extends Component {
     super();
    
     this.state = {
+      newKey: 1,
       fieldsData: [{ id: 0, name: null, selection: "text", value: [false] }],
       gameName: "",
       gameDescription: "",
       gameRequirements: "",
+      image: ""
     };
   }
 
   saveFieldName = (fieldName, fieldId) => {
-    this.state.fieldsData[fieldId].name = fieldName;
+    this.state.fieldsData.filter(field => field.id == fieldId)[0].name = fieldName;
   };
 
   saveSelection = (selection, fieldId) => {
     this.setState((prevState) => {
-      prevState.fieldsData[fieldId].selection = selection;
+      prevState.fieldsData.filter(field => field.id == fieldId)[0].selection = selection;
       return { fieldsData: prevState.fieldsData };
     });
   };
@@ -66,14 +68,31 @@ class AddGame extends Component {
       this.setState((prevState) => {
         let tempFieldsData = [...prevState.fieldsData]
         tempFieldsData.push({
-        id: this.state.fieldsData.length,
+        id: this.state.newKey,
         name: null,
         selection: "text",
         value: [],
       })
       return({fieldsData: tempFieldsData})})
+      this.setState((prevState)=>{
+        console.log("key", prevState.newKey);
+        let nextKey = prevState.newKey
+        nextKey = nextKey+1
+        return ({newKey: nextKey})
+      })
     }
-//need to add image info as well
+
+    triggerRemoval = (fieldId) => {
+      this.setState(
+        (prevState) => {
+          let oldFieldArray = prevState.fieldsData
+          let newArray = oldFieldArray.filter(field => field.id !== fieldId)
+          console.log(newArray);
+          return {fieldsData: newArray}
+        }
+      )
+    }
+
     updateBasicInfo = (props) => {
       switch (props.target.id) {
         case "gameName": this.setState({gameName: props.target.value})
@@ -81,6 +100,8 @@ class AddGame extends Component {
         case "gameDescription": this.setState({gameDescription: props.target.value})
         break;
         case "gameRequirements": this.setState({gameRequirements: props.target.value})
+        break;
+        case "image" : this.setState({image: props.target.value})
       }
      
     }
@@ -90,7 +111,6 @@ class AddGame extends Component {
       <>
     <div className="pageContainer">
           <WhiteBar />
-
           <div className="formContainer">
             <form className="formData">
               <label className="fieldTitle">
@@ -123,7 +143,7 @@ class AddGame extends Component {
               </label>  
             <label className="fieldTitle">
               תמונה:
-              <input type="file" className="hiddenInput" />
+              <input type="file" id="image" className="hiddenInput" onChange={this.updateBasicInfo} />
               <div className='borderCameraIcon'>
                 <img className="cameraIcon" src="/icons/camera-icon.svg" />
               </div>
@@ -137,13 +157,14 @@ class AddGame extends Component {
           {/* game fields */}
           {this.state.fieldsData.map((fieldObj) => {
             return (<div className='fieldSelectionWithClose'>
-                    <img className="removeFieldIcon" src="/icons/ionic-ios-close.svg" />
                     <GameFieldSelection
+                     key={fieldObj.id}
                       fieldId={fieldObj.id}
                       name={this.saveFieldName}
                       selection={this.saveSelection}
                       fieldValue={this.saveFieldValue}
-                      changeInputType={this.state.fieldsData[fieldObj.id].selection}
+                      removal={this.triggerRemoval}
+                      changeInputType={this.state.fieldsData.filter(field => field.id == fieldObj.id)[0].selection}
                       imagePath={this.state.fieldsData[0].value[0].value}
                     />
                    </div>);
