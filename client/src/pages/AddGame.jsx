@@ -4,11 +4,12 @@ import "../style/AddGameStyle.css";
 import "../style/formStyle.css";
 import GameFieldSelection from "../component/GameFieldSelection";
 
-const mainGameInfo = ["תיאור המשחק:", "דרישות המשחק:"];
+
 
 class AddGame extends Component {
   constructor() {
     super();
+   
     this.state = {
       fieldsData: [{ id: 0, name: null, selection: "text", value: [false] }],
       gameName: "",
@@ -59,7 +60,6 @@ class AddGame extends Component {
         return { fieldsData: prevState.fieldsData };
       });
     }
-    console.log("full state data", this.state.fieldsData);
   };
 
   addNewFieldData = () => {

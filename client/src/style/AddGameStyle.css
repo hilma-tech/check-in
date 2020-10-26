@@ -2,7 +2,7 @@
   display: grid;
   margin-top: 2vh;
   font-size: 3vh;
-  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+  font-family: 'Assistant', sans-serif;
   font-weight: 600;
   color: #043163;
   text-align: start;
@@ -26,7 +26,7 @@
   color: #043163;
   font-weight: 500;
   font-size: 3vh;
-  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+  font-family: 'Assistant', sans-serif;
 }
 
 .select {

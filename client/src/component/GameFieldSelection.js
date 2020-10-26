@@ -4,21 +4,21 @@ import SelectStyle from "../style/selectStyle";
 import "../style/formStyle.css";
 
 class GameFieldSelection extends Component {
-  constructor(props) {
+  constructor() {
+    super();
     this.options=[
         { value: "text", label: "טקסט" },
         { value: "choice", label: "בחירה" },
         { value: "image", label: "תמונה" },
         { value: "multi-choice", label: "בחירה מרובה" },
       ];
-    super();
     this.state = {
       fieldClassSize: ''
     };
   }
 
 getFieldClassSize = (select) => {
-  console.log(select);
+
   if (select=== "text") {
     return '';
   } else if (select=== "image") {
@@ -92,7 +92,7 @@ getFieldClassSize = (select) => {
   //sends input value ENETERED BY USER to parent
   sendFieldValue = (props) => {
     this.props.fieldValue(props.target.value, this.props.fieldId, props.target.id, props.target.files);
-    console.log("field value", props.target.files[0]);
+
   };
 
   render() {

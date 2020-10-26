@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import SelectStyle from "../style/selectStyle";
 import "../style/formStyle.css";
+import SelectStyle from "../style/selectStyle";
 
 class ClassSelection extends Component {
   constructor() {
@@ -9,7 +9,7 @@ class ClassSelection extends Component {
   }
 
   sendValue = (props) => {
-    this.props.saveValue(props.value, this.props.id)
+    this.props.saveValue(props.value, this.props.id);
   };
 
   render() {
@@ -19,7 +19,7 @@ class ClassSelection extends Component {
           options={this.props.options}
           styles={SelectStyle()}
           onChange={this.sendValue}
-          defaultValue={{ value: "default", label: "בחר..." }}
+          defaultValue={{ value: "default", label: "בחר כיתה" }}
         />
       </>
     );
