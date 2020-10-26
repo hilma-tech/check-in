@@ -3,22 +3,21 @@ import Select from "react-select";
 import SelectStyle from "../style/selectStyle";
 import "../style/formStyle.css";
 
-class GameFieldSelection extends Component {
-  constructor() {
+class FieldSelection extends Component {
+  constructor(props) {
     super();
-    this.options=[
+    this.state = {
+      options: [
         { value: "text", label: "טקסט" },
         { value: "choice", label: "בחירה" },
         { value: "image", label: "תמונה" },
         { value: "multi-choice", label: "בחירה מרובה" },
-      ];
-    this.state = {
+      ],
       fieldClassSize: ''
     };
   }
 
 getFieldClassSize = (select) => {
-
   if (select=== "text") {
     return '';
   } else if (select=== "image") {
@@ -110,7 +109,7 @@ getFieldClassSize = (select) => {
         <Select
           id="fieldType"
           styles={SelectStyle()}
-          options={this.options}
+          options={this.state.options}
           onChange={this.sendSelection}
           defaultValue={{ value: "text", label: "טקסט" }}
           />
@@ -121,4 +120,4 @@ getFieldClassSize = (select) => {
     );
   }
 }
-export default GameFieldSelection;
+export default FieldSelection;
