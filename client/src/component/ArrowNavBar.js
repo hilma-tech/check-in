@@ -13,14 +13,19 @@ class ArrowNavBar extends Component {
   findPageName = () => {
     switch(this.props.location.pathname) {
       case "/schoolsEdit": return ("עריכת בית ספר");
+      case "/gamesEdit": return ("עריכת משחק");
+      case "/teachersEdit": return ("עריכת מורה");
+      case "/studentsEdit": return ("עריכת תלמיד");
       case "/gamesAdd" : return ("הוספת משחק");
-      case "/teachersAdd" : return ("הוספת מורה")
+      case "/teachersAdd" : return ("הוספת מורה");
+      case "/studentsAdd" : return ("הוספת תלמיד");
+      case "/schoolsAdd" : return ("הוספת בית ספר");
     }
   }
 
   backToGames = () => {
     if (this.props.location.pathname) {
-      this.props.history.push("/games");;
+      this.props.history.goBack()
     }
   };
 

@@ -15,7 +15,6 @@ export default withRouter (class WhiteRouter extends Component {
     //     super()
     // }
     render() {
-        console.log("hi")
         return(
             <div>
                 

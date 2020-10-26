@@ -15,9 +15,9 @@ class ClassData extends React.Component {
     //Return the techer list as list of object for the Select.
     makeTeacherOption = (selectKey) => {
         let options = []
-        this.teachers.map((teachersDats) => {
-            if (this.props.classData.chosenTeachers.filter((teacher) => {return teacher.id === teachersDats.id}).length === 0){
-                options.push({ value: teachersDats.name, label: teachersDats.name, name: this.props.classIndex,id: teachersDats.id, selectKey: selectKey}) 
+        this.teachers.map((teacherData) => {
+            if (this.props.classData.chosenTeachers.filter((teacher) => {return teacher.id === teacherData.id}).length === 0){
+                options.push({ value: teacherData.name, label: teacherData.name, name: this.props.classIndex,id: teacherData.id, selectKey: selectKey}) 
             }
         })
         return options

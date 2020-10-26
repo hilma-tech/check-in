@@ -59,7 +59,6 @@ class AddGame extends Component {
         return { fieldsData: prevState.fieldsData };
       });
     }
-    console.log("full state data", this.state.fieldsData);
   };
 
   addNewFieldData = () => {
