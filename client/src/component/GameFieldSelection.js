@@ -96,7 +96,7 @@ getFieldClassSize = (select) => {
     let fieldClassSize = this.getFieldClassSize(this.props.changeInputType)
     return (
       <div className={fieldClassSize + 'fieldSelection'}>
-                            <img onClick={this.removeField} className="removeFieldIcon" src="/icons/ionic-ios-close.svg" />
+        <img onClick={this.removeField} className="removeFieldIcon" src="/icons/ionic-ios-close.svg" />
 
         <form id='fieldName'>
           {/* name of field */}
