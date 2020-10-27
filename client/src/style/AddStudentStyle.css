@@ -1,14 +1,31 @@
 .addStudentForm{
-    display: grid;
+    /* display: grid; */
     text-align: start;
     margin-top: 2vh;
 }
 
 
 .addStudentForm .inputFields{
-    height: 25px;
+    height: 30px;
+    margin: 2vh;
+    width: 45vw;
+    margin-right: 0;
 }
 
 .studentClass{
     margin-bottom: 5px;
+    width: 42vw;
+}
+
+.addStudentLabel, .schoolSelection{
+    margin-bottom: 2vh;
+}
+
+.addClassToStudent{
+    margin-bottom: 5vh;
+}
+
+#addStudentSchoolSelection{
+    margin-top: 2vh;
+    width: 46vw;
 }

@@ -61,10 +61,10 @@
 }
 
 .error{
-    background-color: red;
-    color: #ffff;
-    margin: 0;
-    margin-bottom: 1vh;
-    /* text-align: start; */
-    width: 18vw;
+    font-size: 1vw;
+    color: red;
+    margin: 1vh;
+    text-align: start;
+    width: 40vw;
+    height: 2.5vh;
 }
