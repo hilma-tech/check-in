@@ -6,23 +6,23 @@ import "../style/formStyle.css";
 class GameFieldSelection extends Component {
   constructor() {
     super();
-    this.options=[
-        { value: "text", label: "טקסט" },
-        { value: "choice", label: "בחירה" },
-        { value: "image", label: "תמונה" },
-        { value: "multi-choice", label: "בחירה מרובה" },
-      ];
+    this.options = [
+      { value: "text", label: "טקסט" },
+      { value: "choice", label: "בחירה" },
+      { value: "image", label: "תמונה" },
+      { value: "multi-choice", label: "בחירה מרובה" },
+    ];
   }
 
-getFieldClassSize = (select) => {
-
-  if (select=== "text") {
-    return '';
-  } else if (select=== "image") {
-    return 'photoFildSize ';
-  }else {
-    return 'selectionsFildSize ';
-}}
+  getFieldClassSize = (select) => {
+    if (select === "text") {
+      return "";
+    } else if (select === "image") {
+      return "photoFildSize ";
+    } else {
+      return "selectionsFildSize ";
+    }
+  };
 
   // creates input based on "type"
   fieldCreator = () => {
@@ -33,6 +33,7 @@ getFieldClassSize = (select) => {
             onBlur={this.sendFieldValue}
             className="inputFields"
             type="text"
+            defaultValue={this.props.originalValue[0].value}
           />
         </label>
       );
@@ -43,30 +44,51 @@ getFieldClassSize = (select) => {
             onChange={this.sendFieldValue}
             type="file"
             className="hiddenInput inputFields"
-          />         
-          <div className='borderCameraIcon'>
+          />
+          <div className="borderCameraIcon">
             <img
               className="cameraIcon"
-              src={(this.props.imagePath) ? this.props.imagePath : "/icons/camera-icon.svg"}
-              />
+              src={
+                this.props.imagePath
+                  ? this.props.imagePath
+                  : "/icons/camera-icon.svg"
+              }
+            />
           </div>
         </label>
       );
     } else {
       const sixArray = [0, 1, 2, 3, 4, 5];
+      // mapping to put in the right values
       return (
         <label className="fieldTitle">
-          <div className='gridFieldInputs'>    
+          <div className="gridFieldInputs">
             {sixArray.map((inputId) => {
-              return (
-                <input
-                onBlur={this.sendFieldValue}
-                className="inputFields"
-                type="text"
-                id={inputId}
-                />
+              let input = this.props.originalValue.filter(
+                (valueArray) => valueArray.id === inputId
+              );
+              if (input[0]) {
+                return (
+                  <input
+                    defaultValue={input[0].value}
+                    onBlur={this.sendFieldValue}
+                    className="inputFields"
+                    type="text"
+                    id={inputId}
+                  />
                 );
-              })}
+              } else {
+                return (
+                  <input
+                    
+                    onBlur={this.sendFieldValue}
+                    className="inputFields"
+                    type="text"
+                    id={inputId}
+                  />
+                );
+              }
+            })}
           </div>
         </label>
       );
@@ -85,26 +107,35 @@ getFieldClassSize = (select) => {
 
   //sends input value ENETERED BY USER to parent
   sendFieldValue = (props) => {
-    this.props.fieldValue(props.target.value, this.props.fieldId, props.target.id, props.target.files);
+    this.props.fieldValue(
+      props.target.value,
+      this.props.fieldId,
+      props.target.id,
+      props.target.files
+    );
   };
 
   removeField = () => {
-    this.props.removal(this.props.fieldId)
-  }
+    this.props.removal(this.props.fieldId);
+  };
 
   render() {
-    let fieldClassSize = this.getFieldClassSize(this.props.changeInputType)
+    let fieldClassSize = this.getFieldClassSize(this.props.changeInputType);
     return (
-      <div className={fieldClassSize + 'fieldSelection'}>
-        <img onClick={this.removeField} className="removeFieldIcon" src="/icons/ionic-ios-close.svg" />
+      <div className={fieldClassSize + "fieldSelection"}>
+        <img
+          onClick={this.removeField}
+          className="removeFieldIcon"
+          src="/icons/ionic-ios-close.svg"
+        />
 
-        <form id='fieldName'>
+        <form id="fieldName">
           {/* name of field */}
           <input
             className="inputFields"
             type="text"
-            placeholder="רשום את שם השדה"
             onBlur={this.sendNameValue}
+            defaultValue={this.props.originalName}
           />
         </form>
         {/* selected field type */}
@@ -113,11 +144,15 @@ getFieldClassSize = (select) => {
           styles={SelectStyle()}
           options={this.options}
           onChange={this.sendSelection}
-          defaultValue={this.options.filter((option)=>{return this.props.changeInputType === option.value})[0]}
-          />
+          defaultValue={
+            this.options.filter((option) => {
+              return this.props.changeInputType === option.value;
+            })[0]
+          }
+        />
         {/* field for user interaction */}
-          
-        <form id='fieldData'>{this.fieldCreator()}</form>
+
+        <form id="fieldData">{this.fieldCreator()}</form>
       </div>
     );
   }

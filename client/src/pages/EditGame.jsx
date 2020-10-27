@@ -4,17 +4,40 @@ import "../style/AddGameStyle.css";
 import "../style/formStyle.css";
 import GameFieldSelection from "../component/GameFieldSelection";
 
-class AddGame extends Component {
+class EditGame extends Component {
   constructor() {
     super();
 
     this.state = {
-      newKey: 1,
-      fieldsData: [{ id: 0, name: null, selection: "text", value: [{id:0, value:""}] }],
-      gameName: "",
-      gameDescription: "",
-      gameRequirements: "",
-      image: "",
+      newKey: 3,
+      fieldsData: [
+        {
+          id: 0,
+          name: "בלה בלה",
+          selection: "text",
+          value: [{ id: 0, value: "חשבו על חייכם" }],
+        },
+        {
+          id: 1,
+          name: "שני",
+          selection: "choice",
+          value: [
+            { id: 0, value: "שלום" },
+            { id: 1, value: "הלו" },
+            { id: 5, value: "ברוכה הבאה" },
+          ],
+        },
+        {
+          id: 2,
+          name: "שלישי",
+          selection: "image",
+          value: [{ id: 0, value: "blah.png" }],
+        },
+      ],
+      gameName: "עננים",
+      gameDescription: "הרבה והמון",
+      gameRequirements: "טובות ורעות",
+      image: "Screenshot from 2020-10-13 13-12-59.png",
     };
   }
 
@@ -88,7 +111,6 @@ class AddGame extends Component {
     this.setState((prevState) => {
       let oldFieldArray = prevState.fieldsData;
       let newArray = oldFieldArray.filter((field) => field.id !== fieldId);
-      console.log(newArray);
       return { fieldsData: newArray };
     });
   };
@@ -120,10 +142,10 @@ class AddGame extends Component {
         console.log("empty");
         return;
       } else if (/[\u0590-\u09fe]/g.test(value) === false) {
-        console.log("not hebrew");
+        //console.log(value,"not hebrew");
         return;
       } else {
-        return;
+        //console.log(value);
       }
     });
     this.validateFields();
@@ -133,12 +155,9 @@ class AddGame extends Component {
     this.state.fieldsData.map((fields) => {
       if (fields.selection !== "image") {
         fields.value.map((field) => {
-          console.log("bloop",field.value.length);
-          // if(field !== true){
           if (field.value.length === 0) {
             console.log("empty");
-              
-           /* }  */return;
+            return;
           } else if (/[\u0590-\u09fe]/g.test(field.value) === false) {
             console.log(field.value,"not hebrew");
             return;
@@ -149,7 +168,6 @@ class AddGame extends Component {
       }
     });
   };
-  
 
   render() {
     return (
@@ -166,7 +184,8 @@ class AddGame extends Component {
                   type="text"
                   placeholder="הכנס את שם המשחק..."
                   onBlur={this.updateBasicInfo}
-                  onChange={this.saveData}
+                  onChange={this.validation}
+                  defaultValue={this.state.gameName}
                 />
               </label>
               <label className="fieldTitle">
@@ -176,6 +195,7 @@ class AddGame extends Component {
                   placeholder=""
                   id="gameDescription"
                   onBlur={this.updateBasicInfo}
+                  defaultValue={this.state.gameDescription}
                 />
               </label>
               <label className="fieldTitle">
@@ -185,6 +205,7 @@ class AddGame extends Component {
                   placeholder=""
                   id="gameRequirements"
                   onBlur={this.updateBasicInfo}
+                  defaultValue={this.state.gameRequirements}
                 />
               </label>
               <label className="fieldTitle">
@@ -216,13 +237,13 @@ class AddGame extends Component {
                     selection={this.saveSelection}
                     fieldValue={this.saveFieldValue}
                     removal={this.triggerRemoval}
-                    originalName={fieldObj.name}
-                    originalValue={fieldObj.value}
                     changeInputType={
                       this.state.fieldsData.filter(
                         (field) => field.id == fieldObj.id
                       )[0].selection
                     }
+                    originalName={fieldObj.name}
+                    originalValue={fieldObj.value}
                     imagePath={this.state.fieldsData[0].value[0].value}
                   />
                 </div>
@@ -248,4 +269,4 @@ class AddGame extends Component {
   }
 }
 
-export default AddGame;
+export default EditGame;
