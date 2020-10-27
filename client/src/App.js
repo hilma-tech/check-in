@@ -14,63 +14,76 @@ import EditSchool from './pages/editSchool.jsx'
 import Menu from './component/Menu'
 import AddStudent from './pages/AddStudent.jsx'
 import EditGame from './pages/EditGame.jsx';
+import AddSchool from './pages/AddSchool.jsx'
+import SignIn from './pages/SignIn.jsx'
 
 
 function App() {
   return (
     <div className="App">
       <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@600;800&display=swap" rel="stylesheet"></link>
-      {/* <StudentsList /> */}
-      {/* <Routerr/> */}
-      {/* <Games/> */}
-      {/* <TeachersList /> */}
+
       <Router>
-        <Menu />
-        <div className="everyPage">
         <Switch>
+          <Route path='/signin' exact>
+            <SignIn/>
+          </Route>
+        <div className="everyPage">
           <Route path='/' exact> {/* for now */}
             <Redirect to='/teachers'/>
           </Route>
           <Route path='/games'>
+          <Menu />
             <GamesRouter/>
           </Route>
           <Route path='/schools' exact>
+          <Menu />
             <SchoolsList/>
           </Route>
           <Route path='/teachers' exact>
+          <Menu />
             <TeachersList />
           </Route>
           <Route path='/students' exact>
+          <Menu />
             <StudentsList />
           </Route>
 
           <Route path='/studentsAdd' exact>
+          <Menu />
             <AddStudent />
           </Route>
           <Route path='/teachersAdd' exact>
+          <Menu />
             <AddTeacher/>
           </Route>
           <Route path='/gamesAdd' exact>
+          <Menu />
             <AddGame/>
           </Route>
           <Route path='/schoolsAdd' exact>
-            <h5>schoolsAdd</h5>
+          <Menu />
+            <AddSchool />
           </Route>
 
           <Route path='/gamesEdit' exact>
+          <Menu />
             <EditGame/>
           </Route>
           <Route path='/schoolsEdit' exact>
+          <Menu />
             <EditSchool />
           </Route>
           <Route path='/teachersEdit' exact>
+          <Menu />
             <h4>teacher edit</h4>
           </Route>
           <Route path='/studentsEdit' exact>
+          <Menu />
             <h4>student edit</h4>
           </Route>
-        </Switch>
         </div>
+        </Switch>
       </Router>
     </div>
   );

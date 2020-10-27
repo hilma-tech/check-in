@@ -60,3 +60,11 @@
     opacity: 1;
 }
 
+.error{
+    background-color: red;
+    color: #ffff;
+    margin: 0;
+    margin-bottom: 1vh;
+    /* text-align: start; */
+    width: 18vw;
+}

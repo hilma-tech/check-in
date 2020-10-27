@@ -15,7 +15,7 @@ class EditGame extends Component {
           id: 0,
           name: "בלה בלה",
           selection: "text",
-          value: [{ id: 0, value: "רשום את שמך" }],
+          value: [{ id: 0, value: "חשבו על חייכם" }],
         },
         {
           id: 1,
@@ -24,7 +24,7 @@ class EditGame extends Component {
           value: [
             { id: 0, value: "שלום" },
             { id: 1, value: "הלו" },
-            { id: 2, value: "ברוכה הבאה" },
+            { id: 5, value: "ברוכה הבאה" },
           ],
         },
         {
@@ -101,7 +101,6 @@ class EditGame extends Component {
       return { fieldsData: tempFieldsData };
     });
     this.setState((prevState) => {
-      console.log("key", prevState.newKey);
       let nextKey = prevState.newKey;
       nextKey = nextKey + 1;
       return { newKey: nextKey };
@@ -112,7 +111,6 @@ class EditGame extends Component {
     this.setState((prevState) => {
       let oldFieldArray = prevState.fieldsData;
       let newArray = oldFieldArray.filter((field) => field.id !== fieldId);
-      console.log(newArray);
       return { fieldsData: newArray };
     });
   };
@@ -138,22 +136,35 @@ class EditGame extends Component {
       this.state.gameName,
       this.state.gameDescription,
       this.state.gameRequirements,
-      this.state.fieldsData.map((field) => {
-        return field.value;
-      }),
     ];
     dataArray.map((value) => {
-      if (/([/|.|\w|\s|-])*\.(?:pn|jp)g/.test(value)) {
-        console.log("image");
-        return;
-      } else if (value.length === 0) {
+      if (value.length === 0) {
         console.log("empty");
         return;
       } else if (/[\u0590-\u09fe]/g.test(value) === false) {
-        console.log("not hebrew");
+        //console.log(value,"not hebrew");
         return;
       } else {
-        console.log(value);
+        //console.log(value);
+      }
+    });
+    this.validateFields();
+  };
+
+  validateFields = () => {
+    this.state.fieldsData.map((fields) => {
+      if (fields.selection !== "image") {
+        fields.value.map((field) => {
+          if (field.value.length === 0) {
+            console.log("empty");
+            return;
+          } else if (/[\u0590-\u09fe]/g.test(field.value) === false) {
+            console.log(field.value,"not hebrew");
+            return;
+          } else {
+            return;
+          }
+        });
       }
     });
   };
@@ -231,6 +242,8 @@ class EditGame extends Component {
                         (field) => field.id == fieldObj.id
                       )[0].selection
                     }
+                    originalName={fieldObj.name}
+                    originalValue={fieldObj.value}
                     imagePath={this.state.fieldsData[0].value[0].value}
                   />
                 </div>
