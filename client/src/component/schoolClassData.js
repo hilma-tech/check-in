@@ -2,6 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import SelectStyle from '../style/selectStyle'
 import '../style/AnimationW3School.css'
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 class ClassData extends React.Component {
     constructor(props) {
@@ -30,12 +31,15 @@ class ClassData extends React.Component {
         for (let i = 0; i < numTeachers; i++) {
             let teacerDefaultValue = this.props.classData.chosenTeachers[i].name
             let selectOptions = this.makeTeacherOption(i);
-            teachersSelections.push(<Select className='editSchoolClassTeacherSelect' 
-                                            styles={SelectStyle()} 
-                                            options={selectOptions}
-                                            selectKey = {i}
-                                            defaultValue={{ value: teacerDefaultValue, label: teacerDefaultValue }}
-                                            onChange={this.props.chooseTeacher}/>)
+            teachersSelections.push(<div className='TeachersSelect' key={this.props.classData.chosenTeachers[i].id}>
+                                        {/* <img className="removeTeachersSelectIcon" onClick={()=>this.props.removeTeacherToClass(this.props.classIndex,i)} src="/icons/ionic-ios-close.svg" /> */}
+                                        <Select className='editSchoolClassTeacherSelect' 
+                                                styles={SelectStyle()} 
+                                                options={selectOptions}
+                                                selectKey = {i}
+                                                defaultValue={{ value: teacerDefaultValue, label: teacerDefaultValue }}
+                                                onChange={this.props.chooseTeacher}/>
+                                        <img className="removeTeachersSelectIcon" onClick={()=>this.props.removeTeacherToClass(this.props.classIndex,i)} src="/icons/delete.svg" /></div>)
         }
         return teachersSelections
     }
@@ -44,11 +48,6 @@ class ClassData extends React.Component {
     transitionIcon = () => {
         this.setState((prevState)=>{return {showClass: !prevState.showClass}})
     }
-
-       /*
-        Add to numTeachers one and then when the returnTeahcersSelections function will return it's will return
-        one more teacher's select.
-    */
    
 
     render() { 

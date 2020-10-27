@@ -50,6 +50,7 @@
 .editSchoolClassTeacherSelect{
     padding-bottom: 1vh;
     font-size: 2vw;
+    width: 38.5vw;
 }
 
 .editSchoolNameLable, .editSchoolNameInput, .editSchoolClassesLable, .editSchoolClassTeacherLable, .editSchoolClassesInput, .editSchoolClassTeacherLable{
@@ -88,4 +89,14 @@
 
 .editSchoolClassTeacherButtons .addSomethingNew .addTitle{
     font-size: 1.2vw;
+}
+
+
+.TeachersSelect{
+    display: flex;
+}
+
+.removeTeachersSelectIcon{
+    width: 1.5vw;
+    margin: 1vw;
 }
