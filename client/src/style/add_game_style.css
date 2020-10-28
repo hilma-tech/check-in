@@ -134,9 +134,10 @@
 }
 
 .removeFieldIcon{
-  width: 10px;
+  width: 15px;
   height: 40px;
-  margin-right: 6vw;
+  margin-right: 5vw;
+  margin-left: 0.75vw;
 }
 
 .gameField .gameFieldError{

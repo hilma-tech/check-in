@@ -24,12 +24,10 @@ class GameFieldSelection extends Component {
     }
   };
 
-  debugValue = () => {
-    return this.props.originalValue[0].value
-  }
 
   // creates input based on "type"
   fieldCreator = () => {
+    console.log('check ',this.props.originalValue[0]);
     if (this.props.changeInputType === "text") {
       return (
         <label className="fieldTitle">
@@ -37,7 +35,7 @@ class GameFieldSelection extends Component {
             onBlur={this.sendFieldValue}
             className="inputFields"
             type="text"
-            defaultValue={this.debugValue}
+            defaultValue={this.props.originalValue[0].value}
           />
         </label>
       );
@@ -132,7 +130,7 @@ class GameFieldSelection extends Component {
           <img
             onClick={this.removeField}
             className="removeFieldIcon"
-            src="/icons/ionic-ios-close.svg"
+            src="/icons/delete.svg"
           />
 
           <form id="fieldName">

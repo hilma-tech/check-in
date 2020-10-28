@@ -75,7 +75,7 @@ class AddGame extends Component {
         id: this.state.newKey,
         name: null,
         selection: "text",
-        value: [],
+        value: [{id:0, value: ''}],
         errorMessage: { toShow: 'none', mess: '' }
       });
       return { fieldsData: tempFieldsData };
@@ -236,6 +236,7 @@ class AddGame extends Component {
             </form>
             {/* game fields */}
             {this.state.fieldsData.map((fieldObj) => {
+              console.log("fieldObj",fieldObj)
               return (
                 <div className="fieldSelectionWithClose">
                   <GameFieldSelection

@@ -99,7 +99,8 @@ class EditGame extends Component {
         id: this.state.newKey,
         name: null,
         selection: "text",
-        value: [],
+        value: [{id: 0, value: ""}
+      ],
         errorMessage: { toShow: 'none', mess: '' }
       });
       return { fieldsData: tempFieldsData };
