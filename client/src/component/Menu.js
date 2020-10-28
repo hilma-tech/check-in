@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
-import '../style/MenuStyle.css'
+import '../style/menu_style.css'
 
 
 class Menu extends React.Component {

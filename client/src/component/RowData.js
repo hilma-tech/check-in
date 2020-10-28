@@ -1,5 +1,5 @@
 import React from 'react';
-import '../style/RowDataStyle.css'
+import '../style/row_data_style.css'
 import { withRouter } from 'react-router-dom'
 import { Icon } from '@iconify/react';
 import iosArrowBack from '@iconify/icons-ion/ios-arrow-back';

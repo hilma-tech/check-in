@@ -138,3 +138,7 @@
   height: 40px;
   margin-right: 6vw;
 }
+
+.gameField .gameFieldError{
+  margin-right: 9vw;
+}

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import "../style/formStyle.css";
-import SelectStyle from "../style/selectStyle";
+import "../style/form_style.css";
+import SelectStyle from "../style/select_style";
 
 class ClassSelection extends Component {
   constructor() {

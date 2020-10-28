@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import SelectStyle from "../style/selectStyle";
-import "../style/formStyle.css";
+import SelectStyle from "../style/select_style";
+import "../style/form_style.css";
 
 class GameFieldSelection extends Component {
   constructor() {
@@ -25,7 +25,7 @@ class GameFieldSelection extends Component {
   };
 
   debugValue = () => {
-      return this.props.originalValue[0].value
+    return this.props.originalValue[0].value
   }
 
   // creates input based on "type"
@@ -84,7 +84,7 @@ class GameFieldSelection extends Component {
               } else {
                 return (
                   <input
-                    
+
                     onBlur={this.sendFieldValue}
                     className="inputFields"
                     type="text"
@@ -126,38 +126,41 @@ class GameFieldSelection extends Component {
   render() {
     let fieldClassSize = this.getFieldClassSize(this.props.changeInputType);
     return (
-      <div className={fieldClassSize + "fieldSelection"}>
-        <img
-          onClick={this.removeField}
-          className="removeFieldIcon"
-          src="/icons/ionic-ios-close.svg"
-        />
-
-        <form id="fieldName">
-          {/* name of field */}
-          <input
-            className="inputFields"
-            type="text"
-            onBlur={this.sendNameValue}
-            placeholder="רשום את שם השדה"
-            defaultValue={this.props.originalName}
+      <div className='gameField'>
+        <p className='error gameFieldError' style={{ display: this.props.errorMessage.toShow }}>{this.props.errorMessage.mess}</p>
+        <div className={fieldClassSize + "fieldSelection"}>
+          <img
+            onClick={this.removeField}
+            className="removeFieldIcon"
+            src="/icons/ionic-ios-close.svg"
           />
-        </form>
-        {/* selected field type */}
-        <Select
-          id="fieldType"
-          styles={SelectStyle()}
-          options={this.options}
-          onChange={this.sendSelection}
-          defaultValue={
-            this.options.filter((option) => {
-              return this.props.changeInputType === option.value;
-            })[0]
-          }
-        />
-        {/* field for user interaction */}
 
-        <form id="fieldData">{this.fieldCreator()}</form>
+          <form id="fieldName">
+            {/* name of field */}
+            <input
+              className="inputFields"
+              type="text"
+              onBlur={this.sendNameValue}
+              placeholder="רשום את שם השדה"
+              defaultValue={this.props.originalName}
+            />
+          </form>
+          {/* selected field type */}
+          <Select
+            id="fieldType"
+            styles={SelectStyle()}
+            options={this.options}
+            onChange={this.sendSelection}
+            defaultValue={
+              this.options.filter((option) => {
+                return this.props.changeInputType === option.value;
+              })[0]
+            }
+          />
+          {/* field for user interaction */}
+
+          <form id="fieldData">{this.fieldCreator()}</form>
+        </div>
       </div>
     );
   }

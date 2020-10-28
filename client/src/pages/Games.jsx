@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../style/GamesStyle.css";
+import "../style/games_style.css";
 import optionicon from "../img/optionicon.svg";
 import addicon from "../img/addicon.svg";
 import searchicon from "../img/search.svg";

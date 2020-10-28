@@ -32,7 +32,7 @@
 
 .sticky {
     position: fixed;
-    top: 15vh;
+    top: 12vh;
     height: 7vh;
     width: 100%;
     z-index: 78;
@@ -40,7 +40,7 @@
 }
 
 .spacer {
-    height: 7vh;
+    height: 4.5vh;
 }
 
 .arrow {

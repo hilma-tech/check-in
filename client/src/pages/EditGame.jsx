@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import WhiteBar from "../component/ArrowNavBar";
-import "../style/AddGameStyle.css";
-import "../style/formStyle.css";
+import "../style/add_game_style.css";
+import "../style/form_style.css";
 import GameFieldSelection from "../component/GameFieldSelection";
 
 class EditGame extends Component {
@@ -10,12 +10,15 @@ class EditGame extends Component {
 
     this.state = {
       newKey: 3,
+      // The first message is for gameName, after ther are gameDescription and gameRequirements
+      errorMessages: [{ toShow: 'none', mess: '' }, { toShow: 'none', mess: '' }, { toShow: 'none', mess: '' }],
       fieldsData: [
         {
           id: 0,
           name: "בלה בלה",
           selection: "text",
           value: [{ id: 0, value: "חשבו על חייכם" }],
+          errorMessage: { toShow: 'none', mess: '' }
         },
         {
           id: 1,
@@ -97,6 +100,7 @@ class EditGame extends Component {
         name: null,
         selection: "text",
         value: [],
+        errorMessage: { toShow: 'none', mess: '' }
       });
       return { fieldsData: tempFieldsData };
     });
@@ -137,14 +141,27 @@ class EditGame extends Component {
       this.state.gameDescription,
       this.state.gameRequirements,
     ];
-    dataArray.map((value) => {
+    dataArray.map((value, index) => {
       if (value.length === 0) {
         console.log("empty");
-        return;
+        this.setState((prevState)=>{
+          prevState.errorMessages[index].toShow = 'block'
+          prevState.errorMessages[index].mess = '** שדה זה חייב להיות מלא **'
+          return {errorMessages: prevState.errorMessages}
+        })
       } else if (/[\u0590-\u09fe]/g.test(value) === false) {
         //console.log(value,"not hebrew");
-        return;
+        this.setState((prevState)=>{
+          prevState.errorMessages[index].toShow = 'block'
+          prevState.errorMessages[index].mess = '** שדה זה חייב להיות בעברית **'
+          return {errorMessages: prevState.errorMessages}
+        })
       } else {
+        this.setState((prevState)=>{
+          prevState.errorMessages[index].toShow = 'none'
+          prevState.errorMessages[index].mess = ''
+          return {errorMessages: prevState.errorMessages}
+        })
         //console.log(value);
       }
     });
@@ -152,17 +169,29 @@ class EditGame extends Component {
   };
 
   validateFields = () => {
-    this.state.fieldsData.map((fields) => {
+    this.state.fieldsData.map((fields, index) => {
       if (fields.selection !== "image") {
         fields.value.map((field) => {
           if (field.value.length === 0) {
             console.log("empty");
-            return;
+            this.setState((prevState)=>{
+              prevState.fieldsData[index].errorMessage.toShow ='block'
+              prevState.fieldsData[index].errorMessage.mess ='** חייב למלא את כל השדות **'
+              return {fieldsData: prevState.fieldsData}
+            })
           } else if (/[\u0590-\u09fe]/g.test(field.value) === false) {
             console.log(field.value,"not hebrew");
-            return;
+            this.setState((prevState)=>{
+              prevState.fieldsData[index].errorMessage.toShow ='block'
+              prevState.fieldsData[index].errorMessage.mess ='** חייב למלא את השדות בעברית **'
+              return {fieldsData: prevState.fieldsData}
+            })
           } else {
-            return;
+            this.setState((prevState)=>{
+              prevState.fieldsData[index].errorMessage.toShow ='none'
+              prevState.fieldsData[index].errorMessage.mess =''
+              return {fieldsData: prevState.fieldsData}
+            })
           }
         });
       }
@@ -178,6 +207,7 @@ class EditGame extends Component {
             <form className="formData">
               <label className="fieldTitle">
                 שם המשחק:
+                <p className='error' style={{display:this.state.errorMessages[0].toShow}}>{this.state.errorMessages[0].mess}</p>
                 <input
                   id="gameName"
                   className="inputFields"
@@ -190,6 +220,7 @@ class EditGame extends Component {
               </label>
               <label className="fieldTitle">
                 תיאור המשחק:
+                <p className='error' style={{display:this.state.errorMessages[1].toShow}}>{this.state.errorMessages[1].mess}</p>
                 <textarea
                   className="inputFields extendedField"
                   placeholder=""
@@ -200,6 +231,7 @@ class EditGame extends Component {
               </label>
               <label className="fieldTitle">
                 דרישות המשחק:
+                <p className='error' style={{display:this.state.errorMessages[2].toShow}}>{this.state.errorMessages[2].mess}</p>
                 <textarea
                   className="inputFields extendedField"
                   placeholder=""
@@ -244,6 +276,7 @@ class EditGame extends Component {
                     }
                     originalName={fieldObj.name}
                     originalValue={fieldObj.value}
+                    errorMessage={fieldObj.errorMessage}
                     imagePath={this.state.fieldsData[0].value[0].value}
                   />
                 </div>
