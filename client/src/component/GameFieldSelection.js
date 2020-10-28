@@ -24,6 +24,10 @@ class GameFieldSelection extends Component {
     }
   };
 
+  debugValue = () => {
+      return this.props.originalValue[0].value
+  }
+
   // creates input based on "type"
   fieldCreator = () => {
     if (this.props.changeInputType === "text") {
@@ -33,7 +37,7 @@ class GameFieldSelection extends Component {
             onBlur={this.sendFieldValue}
             className="inputFields"
             type="text"
-            defaultValue={this.props.originalValue[0].value}
+            defaultValue={this.debugValue}
           />
         </label>
       );
@@ -135,6 +139,7 @@ class GameFieldSelection extends Component {
             className="inputFields"
             type="text"
             onBlur={this.sendNameValue}
+            placeholder="רשום את שם השדה"
             defaultValue={this.props.originalName}
           />
         </form>

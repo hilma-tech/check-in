@@ -2,7 +2,6 @@ import React from 'react';
 import Select from 'react-select';
 import SelectStyle from '../style/selectStyle'
 import '../style/AnimationW3School.css'
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 class ClassData extends React.Component {
     constructor(props) {
