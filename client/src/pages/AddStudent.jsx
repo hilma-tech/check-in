@@ -1,8 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
-import SelectStyle from '../style/selectStyle'
-import "../style/formStyle.css";
-import "../style/AddStudentStyle.css";
+import SelectStyle from '../style/select_style'
+import "../style/form_style.css";
+import "../style/add_student_style.css";
 import ArrowNavBar from '../component/ArrowNavBar'
 
 class AddStudent extends React.Component {

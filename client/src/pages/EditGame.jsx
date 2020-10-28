@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import WhiteBar from "../component/ArrowNavBar";
-import "../style/AddGameStyle.css";
-import "../style/formStyle.css";
+import "../style/add_game_style.css";
+import "../style/form_style.css";
 import GameFieldSelection from "../component/GameFieldSelection";
 
 class EditGame extends Component {

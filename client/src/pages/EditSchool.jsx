@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import ClassData from "../component/schoolClassData";
+import ClassData from "../component/SchoolClassData";
 import WhiteBar from "../component/ArrowNavBar.js"
-import "../style/editSchoolStyle.css";
-import "../style/formStyle.css";
-import "../style/WhiteBarStyle.css";
+import "../style/edit_school_style.css";
+import "../style/form_style.css";
+import "../style/white_bar_style.css";
 
 class editSchool extends Component {
   constructor(props) {

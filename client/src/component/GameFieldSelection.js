@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import SelectStyle from "../style/selectStyle";
-import "../style/formStyle.css";
+import SelectStyle from "../style/select_style";
+import "../style/form_style.css";
 
 class GameFieldSelection extends Component {
   constructor() {

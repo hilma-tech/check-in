@@ -1,7 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
-import SelectStyle from '../style/selectStyle'
-import '../style/AnimationW3School.css'
+import SelectStyle from '../style/select_style'
+import '../style/animation_w3school.css'
 
 class ClassData extends React.Component {
     constructor(props) {

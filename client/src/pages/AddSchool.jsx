@@ -1,7 +1,7 @@
 import React from 'react';
 import ArrowNavBar from '../component/ArrowNavBar'
-import ClassData from "../component/schoolClassData";
-import "../style/formStyle.css";
+import ClassData from "../component/SchoolClassData";
+import "../style/form_style.css";
 import { withRouter } from "react-router-dom";
 
 
