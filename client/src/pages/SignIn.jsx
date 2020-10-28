@@ -55,9 +55,9 @@ class SignIn extends Component {
           />
           <br />
           <button className="signInButton" onClick={this.signIn}>
-            Sign In
+            כניסה
           </button>
-          <h3 className="forgot">Forgot password?</h3>
+          <h3 className="forgot">שכחת סיסמא?</h3>
           <img className="hilmalogo" src={hilmaicon} />
         </div>
       </div>
