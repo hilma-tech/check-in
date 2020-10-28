@@ -10,7 +10,9 @@ class AddGame extends Component {
 
     this.state = {
       newKey: 1,
-      fieldsData: [{ id: 0, name: null, selection: "text", value: [{id:0, value:""}] }],
+      // The first message is for gameName, after ther are gameDescription and gameRequirements
+      errorMessages: [{ toShow: 'none', mess: '' }, { toShow: 'none', mess: '' }, { toShow: 'none', mess: '' }],
+      fieldsData: [{ id: 0, name: null, selection: "text", value: [{id:0, value:""}], errorMessage: { toShow: 'none', mess: '' }}],
       gameName: "",
       gameDescription: "",
       gameRequirements: "",
@@ -74,6 +76,7 @@ class AddGame extends Component {
         name: null,
         selection: "text",
         value: [],
+        errorMessage: { toShow: 'none', mess: '' }
       });
       return { fieldsData: tempFieldsData };
     });
@@ -115,35 +118,58 @@ class AddGame extends Component {
       this.state.gameDescription,
       this.state.gameRequirements,
     ];
-    dataArray.map((value) => {
+    dataArray.map((value, index) => {
       if (value.length === 0) {
         console.log("empty");
-        return;
+        this.setState((prevState)=>{
+          prevState.errorMessages[index].toShow = 'block'
+          prevState.errorMessages[index].mess = '** שדה זה חייב להיות מלא **'
+          return {errorMessages: prevState.errorMessages}
+        })
       } else if (/[\u0590-\u09fe]/g.test(value) === false) {
         console.log("not hebrew");
-        return;
+        this.setState((prevState)=>{
+          prevState.errorMessages[index].toShow = 'block'
+          prevState.errorMessages[index].mess = '** שדה זה חייב להיות בעברית **'
+          return {errorMessages: prevState.errorMessages}
+        })
       } else {
-        return;
+        this.setState((prevState)=>{
+          prevState.errorMessages[index].toShow = 'none'
+          prevState.errorMessages[index].mess = ''
+          return {errorMessages: prevState.errorMessages}
+        })
       }
     });
     this.validateFields();
   };
 
   validateFields = () => {
-    this.state.fieldsData.map((fields) => {
+    this.state.fieldsData.map((fields, index) => {
       if (fields.selection !== "image") {
         fields.value.map((field) => {
           console.log("bloop",field.value.length);
           // if(field !== true){
           if (field.value.length === 0) {
             console.log("empty");
-              
-           /* }  */return;
+            this.setState((prevState)=>{
+              prevState.fieldsData[index].errorMessage.toShow ='block'
+              prevState.fieldsData[index].errorMessage.mess ='** חייב למלא את כל השדות **'
+              return {fieldsData: prevState.fieldsData}
+            })
           } else if (/[\u0590-\u09fe]/g.test(field.value) === false) {
             console.log(field.value,"not hebrew");
-            return;
+            this.setState((prevState)=>{
+              prevState.fieldsData[index].errorMessage.toShow ='block'
+              prevState.fieldsData[index].errorMessage.mess ='** חייב למלא את השדות בעברית **'
+              return {fieldsData: prevState.fieldsData}
+            })
           } else {
-            return;
+            this.setState((prevState)=>{
+              prevState.fieldsData[index].errorMessage.toShow ='none'
+              prevState.fieldsData[index].errorMessage.mess =''
+              return {fieldsData: prevState.fieldsData}
+            })
           }
         });
       }
@@ -160,6 +186,7 @@ class AddGame extends Component {
             <form className="formData">
               <label className="fieldTitle">
                 שם המשחק:
+                <p className='error' style={{display:this.state.errorMessages[0].toShow}}>{this.state.errorMessages[0].mess}</p>
                 <input
                   id="gameName"
                   className="inputFields"
@@ -171,6 +198,7 @@ class AddGame extends Component {
               </label>
               <label className="fieldTitle">
                 תיאור המשחק:
+                <p className='error' style={{display:this.state.errorMessages[1].toShow}}>{this.state.errorMessages[1].mess}</p>
                 <textarea
                   className="inputFields extendedField"
                   placeholder=""
@@ -180,6 +208,7 @@ class AddGame extends Component {
               </label>
               <label className="fieldTitle">
                 דרישות המשחק:
+                <p className='error' style={{display:this.state.errorMessages[2].toShow}}>{this.state.errorMessages[2].mess}</p>
                 <textarea
                   className="inputFields extendedField"
                   placeholder=""
@@ -218,6 +247,7 @@ class AddGame extends Component {
                     removal={this.triggerRemoval}
                     originalName={fieldObj.name}
                     originalValue={fieldObj.value}
+                    errorMessage={fieldObj.errorMessage}
                     changeInputType={
                       this.state.fieldsData.filter(
                         (field) => field.id == fieldObj.id
