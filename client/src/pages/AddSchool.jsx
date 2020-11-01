@@ -3,6 +3,7 @@ import ArrowNavBar from '../component/ArrowNavBar'
 import ClassData from "../component/SchoolClassData";
 import "../style/form_style.css";
 import { withRouter } from "react-router-dom";
+import { nameValidation, classNameValidation } from '../component/ValidationFunctions'
 
 
 class AddSchool extends React.Component {
@@ -96,73 +97,39 @@ class AddSchool extends React.Component {
         let allOk = true
         /* data validetion  */
         // ----------school name validetion-------------------
-        if (this.state.schoolName.length === 0) {
+        let nameSchoolMess = nameValidation(this.state.schoolName)
+        if (nameSchoolMess.length !== 0) {
             this.setState((prevState) => {
                 prevState.schoolNameError.toShow = 'inline-block'
-                prevState.schoolNameError.mess = '** חייב להכניס שם בית ספר **'
+                prevState.schoolNameError.mess = nameSchoolMess
                 return { schoolNameError: prevState.schoolNameError }
             })
             allOk = false
-        } else if ((/[a-z]/).test(this.state.schoolName) || (/[A-Z]/).test(this.state.schoolName) || (/[!@#$%^&*()_+\=\[\]{};:\\|<>\/?~`]/).test(this.state.schoolName)) {
-            this.setState((prevState) => {
-                prevState.schoolNameError.toShow = 'inline-block'
-                prevState.schoolNameError.mess = '** שם בית הספר לא תקין **'
-                return { schoolNameError: prevState.schoolNameError }
-            })
-            allOk = false
-        } else if (this.state.schoolName.includes('"') || this.state.schoolName.includes("'") || this.state.schoolName.includes('.') || this.state.schoolName.includes(',') || this.state.schoolName.includes('-')) {
-            if (!(/[\u0590-\u05FF]+["',-]+[\u0590-\u05FF]/).test(this.state.schoolName) || !(/[\u0590-\u05FF]+[.]/).test(this.state.schoolName)) {
-                this.setState((prevState) => {
-                    prevState.schoolNameError.toShow = 'inline-block'
-                    prevState.schoolNameError.mess = '** שם בית הספר לא תקין **'
-                    return { schoolNameError: prevState.schoolNameError }
-                })
-                allOk = false
-            }
         } else {
             this.setState({ schoolNameError: { toShow: 'none', mess: '' } })
+            allOk = true
         }
 
+
+        // ----------classes name validetion-------------------
         for (let i = 0; i < this.state.classes.length; i++) {
-            if (this.state.classes[i].name.length === 0) {
+            let nameClassMess = classNameValidation(this.state.classes[i].name)
+            if (nameClassMess.length !== 0) {
                 this.setState((prevState) => {
                     prevState.classes[i].classNameError.toShow = 'inline-block'
-                    prevState.classes[i].classNameError.mess = '** חייב להכניס שם של כיתה **'
+                    prevState.classes[i].classNameError.mess = nameClassMess
                     return { classes: prevState.classes }
                 })
                 allOk = false
-            } else if (this.state.classes[i].name.length > 10) {
-                this.setState((prevState) => {
-                    prevState.classes[i].classNameError.toShow = 'inline-block'
-                    prevState.classes[i].classNameError.mess = '** שם הכיתה ארוך מידי **'
-                    return { classes: prevState.classes }
-                })
-                allOk = false
-            } else if ((/[a-z]/).test(this.state.classes[i].name) || (/[A-Z]/).test(this.state.classes[i].name) || (/[!@#$%^&*()_+,\=\[\]{};:\\|<>\/?~`]/).test(this.state.classes[i].name)) {
-                this.setState((prevState) => {
-                    prevState.classes[i].classNameError.toShow = 'inline-block'
-                    prevState.classes[i].classNameError.mess = '** שם הכיתה לא תקין **'
-                    return { classes: prevState.classes }
-                })
-                allOk = false
-            } else if (this.state.classes[i].name.includes('"') || this.state.classes[i].name.includes("'") || this.state.classes[i].name.includes('.') || this.state.classes[i].name.includes('-')) {
-                if (!((/[\u0590-\u05FF]+[",-]+[\u0590-\u05FF]/).test(this.state.classes[i].name) || (/[\u0590-\u05FF]+[']/).test(this.state.classes[i].name) || (/[\u0590-\u05FF]+[.]/).test(this.state.classes[i].name))) {
-                    this.setState((prevState) => {
-                        prevState.classes[i].classNameError.toShow = 'inline-block'
-                        prevState.classes[i].classNameError.mess = '** שם הכיתה לא תקין **'
-                        return { classes: prevState.classes }
-                    })
-                    allOk = false
-                }
             } else {
                 this.setState((prevState) => {
                     prevState.classes[i].classNameError.toShow = 'none'
                     prevState.classes[i].classNameError.mess = ''
                     return { classes: prevState.classes }
                 })
+                allOk = true
             }
         }
-
 
         //after all the validetion we need to send the data to sql
         if (allOk) {

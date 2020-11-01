@@ -2,6 +2,7 @@ import React from "react";
 import { Component } from "react";
 import "../style/sign_in.css";
 import hilmaicon from "../img/hilmawhite.svg";
+import { withRouter } from "react-router-dom";
 
 class SignIn extends Component {
   constructor() {
@@ -45,13 +46,22 @@ class SignIn extends Component {
           prevState.errorMessages[index].mess = ''
           return {errorMessages: prevState.errorMessages}
         })
+        this.props.history.push('/games')
       }
     });
   };
 
+  // preventBack = () => {
+  //   { window.history.forward(); }
+  //   setTimeout(this.preventBack(), 0);
+  //   // window.onunload = function () { null };
+  // }
+
+
   render() {
+    // this.preventBack()
     return (
-      <div className="background">
+      <div className="background" /* onunload="this.preventBack()" */>
         <div className="centeredPage">
           <h1 className="webName" dir="ltr">CheckIn</h1>
           <p className='error' style={{display:this.state.errorMessages[0].toShow}}>{this.state.errorMessages[0].mess}</p>
@@ -63,7 +73,7 @@ class SignIn extends Component {
           <br />
           <p className='error' style={{display:this.state.errorMessages[1].toShow}}>{this.state.errorMessages[1].mess}</p>
           <input
-            
+            type='password'
             className="password input"
             placeholder="סיסמא"
             onBlur={this.updatePass}
@@ -80,4 +90,4 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn;
+export default withRouter(SignIn);

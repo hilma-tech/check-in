@@ -25,13 +25,13 @@ function App() {
 
       <Router>
         <Switch>
+          <Route path='/' exact>
+            <Redirect to='/signin'/>
+          </Route>
           <Route path='/signin' exact>
             <SignIn/>
           </Route>
         <div className="everyPage">
-          <Route path='/' exact> {/* for now */}
-            <Redirect to='/teachers'/>
-          </Route>
           <Route path='/games'>
           <Menu />
             <GamesRouter/>
