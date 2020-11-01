@@ -32,6 +32,7 @@ getFieldClassSize = (select) => {
       return (
         <label className="fieldTitle">
           <input
+          defaultValue="hi"
             onBlur={this.sendFieldValue}
             className="inputFields"
             type="text"
@@ -46,8 +47,6 @@ getFieldClassSize = (select) => {
             type="file"
             className="hiddenInput inputFields"
           />
-
-          
           <div className='borderCameraIcon'>
             <img
               className="cameraIcon"
@@ -93,9 +92,18 @@ getFieldClassSize = (select) => {
     this.props.fieldValue(props.target.value, this.props.fieldId, props.target.id, props.target.files);
   };
 
+  removeField = () => {
+    this.props.removal(this.props.fieldId);
+  };
+
   render() {
     return (
       <div className={this.state.fieldClassSize + 'fieldSelection'}>
+        <img
+            onClick={this.removeField}
+            className="removeFieldIcon"
+            src="/icons/delete.svg"
+          />
         <form id='fieldName'>
           {/* name of field */}
           <input

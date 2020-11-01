@@ -10,6 +10,7 @@ class SignIn extends Component {
     this.state = {
       username: "",
       password: "",
+      errorMessages: [ { toShow: 'none', mess: '' }, { toShow: 'none', mess: '' }],
     };
   }
 
@@ -21,22 +22,34 @@ class SignIn extends Component {
     this.setState({ password: props.target.value });
   };
 
-  signIn = () => {
-    let user = this.state.username;
-    let pass = this.state.password;
-    //length
-    if (user.length < 8) {
-      console.log("username short");
-    } else if (pass.length < 8) {
-      console.log("password short");
-    } else if (!(/([a-zA-Z])/).test(user)) {
-      console.log("user must include letters");
+  saveData = () => {
+    let dataArray = [
+      this.state.username,
+      this.state.password,
+    ];
+    dataArray.map((value, index) => {
+      if (value.length === 0) {
+        this.setState((prevState)=>{
+          prevState.errorMessages[index].toShow = 'block'
+          prevState.errorMessages[index].mess = '** שדה זה חייב להיות מלא **'
+          return {errorMessages: prevState.errorMessages}
+        })
+      } else if (value.length < 8) {
+        this.setState((prevState)=>{
+          prevState.errorMessages[index].toShow = 'block'
+          prevState.errorMessages[index].mess = '** שדה זה חייב להיות בעל 8 תווים לפחות **'
+          return {errorMessages: prevState.errorMessages}
+        })
     } else {
-      console.log("all good!");
-      this.props.history.push('/games');
-    }
-
-  }
+        this.setState((prevState)=>{
+          prevState.errorMessages[index].toShow = 'none'
+          prevState.errorMessages[index].mess = ''
+          return {errorMessages: prevState.errorMessages}
+        })
+        this.props.history.push('/games')
+      }
+    });
+  };
 
   // preventBack = () => {
   //   { window.history.forward(); }
@@ -51,12 +64,14 @@ class SignIn extends Component {
       <div className="background" /* onunload="this.preventBack()" */>
         <div className="centeredPage">
           <h1 className="webName" dir="ltr">CheckIn</h1>
+          <p className='error' style={{display:this.state.errorMessages[0].toShow}}>{this.state.errorMessages[0].mess}</p>
           <input
             className="username input"
             placeholder="שם משתמש"
             onBlur={this.updateUser}
           />
           <br />
+          <p className='error' style={{display:this.state.errorMessages[1].toShow}}>{this.state.errorMessages[1].mess}</p>
           <input
             type='password'
             className="password input"
@@ -64,10 +79,10 @@ class SignIn extends Component {
             onBlur={this.updatePass}
           />
           <br />
-          <button className="signInButton" onClick={this.signIn}>
-            Sign In
+          <button className="signInButton" onClick={this.saveData}>
+            כניסה
           </button>
-          <h3 className="forgot">Forgot password?</h3>
+          <h3 className="forgot">שכחת סיסמא?</h3>
           <img className="hilmalogo" src={hilmaicon} />
         </div>
       </div>

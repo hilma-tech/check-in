@@ -48,7 +48,7 @@ class AddGame extends Component {
       //only relevant to image
     } else if (inputFiles) {
       this.setState((prevState) => {
-        prevState.fieldsData[fieldId].value = [];
+        
         prevState.fieldsData[fieldId].value[0] = {
           id: 0,
           value: inputFiles[0].name,
@@ -91,7 +91,7 @@ class AddGame extends Component {
     this.setState((prevState) => {
       let oldFieldArray = prevState.fieldsData;
       let newArray = oldFieldArray.filter((field) => field.id !== fieldId);
-      console.log(newArray);
+      
       return { fieldsData: newArray };
     });
   };
@@ -120,14 +120,14 @@ class AddGame extends Component {
     ];
     dataArray.map((value, index) => {
       if (value.length === 0) {
-        console.log("empty");
+       
         this.setState((prevState)=>{
           prevState.errorMessages[index].toShow = 'block'
           prevState.errorMessages[index].mess = '** שדה זה חייב להיות מלא **'
           return {errorMessages: prevState.errorMessages}
         })
       } else if (/[\u0590-\u09fe]/g.test(value) === false) {
-        console.log("not hebrew");
+        
         this.setState((prevState)=>{
           prevState.errorMessages[index].toShow = 'block'
           prevState.errorMessages[index].mess = '** שדה זה חייב להיות בעברית **'
@@ -148,17 +148,17 @@ class AddGame extends Component {
     this.state.fieldsData.map((fields, index) => {
       if (fields.selection !== "image") {
         fields.value.map((field) => {
-          console.log("bloop",field.value.length);
+          
           // if(field !== true){
           if (field.value.length === 0) {
-            console.log("empty");
+            
             this.setState((prevState)=>{
               prevState.fieldsData[index].errorMessage.toShow ='block'
               prevState.fieldsData[index].errorMessage.mess ='** חייב למלא את כל השדות **'
               return {fieldsData: prevState.fieldsData}
             })
           } else if (/[\u0590-\u09fe]/g.test(field.value) === false) {
-            console.log(field.value,"not hebrew");
+            
             this.setState((prevState)=>{
               prevState.fieldsData[index].errorMessage.toShow ='block'
               prevState.fieldsData[index].errorMessage.mess ='** חייב למלא את השדות בעברית **'
@@ -236,7 +236,7 @@ class AddGame extends Component {
             </form>
             {/* game fields */}
             {this.state.fieldsData.map((fieldObj) => {
-              console.log("fieldObj",fieldObj)
+              
               return (
                 <div className="fieldSelectionWithClose">
                   <GameFieldSelection
@@ -254,8 +254,7 @@ class AddGame extends Component {
                         (field) => field.id == fieldObj.id
                       )[0].selection
                     }
-                    imagePath={this.state.fieldsData[0].value[0].value}
-                  />
+                    />
                 </div>
               );
             })}
