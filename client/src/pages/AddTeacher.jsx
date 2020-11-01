@@ -72,6 +72,15 @@ class AddTeacher extends Component {
     });
   };
 
+  triggerRemoval = (id) => {
+    this.setState((prevState) => {
+      let oldFieldArray = prevState.fieldsData;
+      let newArray = oldFieldArray.filter((field) => field.id !== id);
+      
+      return { fieldsData: newArray };
+    });
+  };
+
   render() {
     return (
       <>
@@ -109,8 +118,9 @@ class AddTeacher extends Component {
                 return (
                   <div className=" thinnerFont">
                     <ClassSelection
-                    
+                      
                       id={fieldObj.id}
+                      removal={this.triggerRemoval}
                       saveValue={this.saveValue}
                       options={this.classOptions}
                       onChange={this.saveChange}

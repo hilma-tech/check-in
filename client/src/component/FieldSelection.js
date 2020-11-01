@@ -92,9 +92,18 @@ getFieldClassSize = (select) => {
     this.props.fieldValue(props.target.value, this.props.fieldId, props.target.id, props.target.files);
   };
 
+  removeField = () => {
+    this.props.removal(this.props.fieldId);
+  };
+
   render() {
     return (
       <div className={this.state.fieldClassSize + 'fieldSelection'}>
+        <img
+            onClick={this.removeField}
+            className="removeFieldIcon"
+            src="/icons/delete.svg"
+          />
         <form id='fieldName'>
           {/* name of field */}
           <input
