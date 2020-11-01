@@ -32,6 +32,7 @@ getFieldClassSize = (select) => {
       return (
         <label className="fieldTitle">
           <input
+          defaultValue="hi"
             onBlur={this.sendFieldValue}
             className="inputFields"
             type="text"
@@ -46,8 +47,6 @@ getFieldClassSize = (select) => {
             type="file"
             className="hiddenInput inputFields"
           />
-
-          
           <div className='borderCameraIcon'>
             <img
               className="cameraIcon"

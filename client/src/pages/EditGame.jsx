@@ -10,7 +10,7 @@ class EditGame extends Component {
 
     this.state = {
       newKey: 3,
-      // The first message is for gameName, after ther are gameDescription and gameRequirements
+      // The first message is for gameName, after there are gameDescription and gameRequirements
       errorMessages: [{ toShow: 'none', mess: '' }, { toShow: 'none', mess: '' }, { toShow: 'none', mess: '' }],
       fieldsData: [
         {
