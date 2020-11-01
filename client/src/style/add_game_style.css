@@ -1,6 +1,7 @@
 .fieldTitle {
   display: grid;
   margin-top: 2vh;
+  
   font-size: 3vh;
   font-family: 'Assistant', sans-serif;
   font-weight: 600;
@@ -142,4 +143,13 @@
 
 .gameField .gameFieldError{
   margin-right: 9vw;
+}
+
+.imageWidth {
+  width: 22vw;
+
+}
+
+.marginTop {
+  margin-top: 2vh;
 }
