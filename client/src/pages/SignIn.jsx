@@ -2,6 +2,7 @@ import React from "react";
 import { Component } from "react";
 import "../style/sign_in.css";
 import hilmaicon from "../img/hilmawhite.svg";
+import { withRouter } from "react-router-dom";
 
 class SignIn extends Component {
   constructor() {
@@ -21,24 +22,33 @@ class SignIn extends Component {
   };
 
   signIn = () => {
-      let user = this.state.username;
-      let pass = this.state.password;
+    let user = this.state.username;
+    let pass = this.state.password;
     //length
-      if (user.length<8) {
-          console.log("username short");
-      } else if (pass.length<8) {
-          console.log("password short");
-      } else if (user !== /^(a-zA-Z)+$/) {
-          console.log("user must include letters");
-      } else {
-          console.log("all good!");
-      }
+    if (user.length < 8) {
+      console.log("username short");
+    } else if (pass.length < 8) {
+      console.log("password short");
+    } else if (!(/([a-zA-Z])/).test(user)) {
+      console.log("user must include letters");
+    } else {
+      console.log("all good!");
+      this.props.history.push('/games');
+    }
 
   }
 
+  // preventBack = () => {
+  //   { window.history.forward(); }
+  //   setTimeout(this.preventBack(), 0);
+  //   // window.onunload = function () { null };
+  // }
+
+
   render() {
+    // this.preventBack()
     return (
-      <div className="background">
+      <div className="background" /* onunload="this.preventBack()" */>
         <div className="centeredPage">
           <h1 className="webName" dir="ltr">CheckIn</h1>
           <input
@@ -48,7 +58,7 @@ class SignIn extends Component {
           />
           <br />
           <input
-            
+            type='password'
             className="password input"
             placeholder="סיסמא"
             onBlur={this.updatePass}
@@ -65,4 +75,4 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn;
+export default withRouter(SignIn);
