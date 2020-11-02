@@ -1,8 +1,8 @@
 .rowData{
     display: flex;
-    width: 85vw;
-    margin-left: 7.5vw;
-    margin-right: 7.5vw;
+    width: 85%;
+    margin-left: 7.5%;
+    margin-right: 7.5%;
     margin-top: 0.5vw;
     justify-content: space-between;
 

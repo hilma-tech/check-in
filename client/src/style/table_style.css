@@ -6,9 +6,9 @@
 
 .PageTitles{
     display: flex;
-    width: 83vw;
-    margin-left: 8.5vw;
-    margin-right: 8.5vw;
+    width: 83%;
+    margin-left: 8.5%;
+    margin-right: 8.5%;
     justify-content: space-between;
     align-items: center;
     height: 8vh;
@@ -25,10 +25,10 @@
 
 .TableTitles{
     display: grid;
-    width: 85vw;
-    margin-left: 7.5vw;
-    margin-right: 7.5vw;
-    grid-template-columns: 12.5vw 12.5vw 70vw;
+    width: 85%;
+    margin-left: 7.5%;
+    margin-right: 7.5%;
+    grid-template-columns: 12.5vw 12.5vw 60vw;
 
     background: #D9E5F2 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #00000029;
@@ -104,4 +104,10 @@
     height: 3.4vh;
     background-repeat: no-repeat;
     background-size: 100% 100%;
+}
+
+
+.StudentsList, .TeachersList{
+    padding: 0;
+    margin: 0;
 }
