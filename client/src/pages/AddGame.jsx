@@ -189,18 +189,17 @@ class AddGame extends Component {
                 <p className='error' style={{display:this.state.errorMessages[0].toShow}}>{this.state.errorMessages[0].mess}</p>
                 <input
                   id="gameName"
-                  className="inputFields"
+                  className="inputFields marginTop"
                   type="text"
                   placeholder="הכנס את שם המשחק..."
                   onBlur={this.updateBasicInfo}
-                  onChange={this.saveData}
-                />
-              </label>
+                  />
+                  </label>
               <label className="fieldTitle">
                 תיאור המשחק:
                 <p className='error' style={{display:this.state.errorMessages[1].toShow}}>{this.state.errorMessages[1].mess}</p>
                 <textarea
-                  className="inputFields extendedField"
+                  className="inputFields marginTop extendedField"
                   placeholder=""
                   id="gameDescription"
                   onBlur={this.updateBasicInfo}
@@ -210,21 +209,21 @@ class AddGame extends Component {
                 דרישות המשחק:
                 <p className='error' style={{display:this.state.errorMessages[2].toShow}}>{this.state.errorMessages[2].mess}</p>
                 <textarea
-                  className="inputFields extendedField"
+                  className="inputFields marginTop extendedField"
                   placeholder=""
                   id="gameRequirements"
                   onBlur={this.updateBasicInfo}
                 />
               </label>
-              <label className="fieldTitle">
+              <label className="fieldTitle imageWidth">
                 תמונה:
+                <div className="borderCameraIcon marginTop">
                 <input
                   type="file"
                   id="image"
-                  className="hiddenInput"
+                  className="hiddenInput "
                   onChange={this.updateBasicInfo}
                 />
-                <div className="borderCameraIcon">
                   <img className="cameraIcon" src="/icons/camera-icon.svg" />
                 </div>
               </label>
@@ -237,8 +236,9 @@ class AddGame extends Component {
             {/* game fields */}
             {this.state.fieldsData.map((fieldObj) => {
               
+              
               return (
-                <div className="fieldSelectionWithClose">
+                <div className="fieldSelectionWithClose marginTop">
                   <GameFieldSelection
                     key={fieldObj.id}
                     fieldId={fieldObj.id}
@@ -249,11 +249,7 @@ class AddGame extends Component {
                     originalName={fieldObj.name}
                     originalValue={fieldObj.value}
                     errorMessage={fieldObj.errorMessage}
-                    changeInputType={
-                      this.state.fieldsData.filter(
-                        (field) => field.id == fieldObj.id
-                      )[0].selection
-                    }
+                    changeInputType={fieldObj.selection}
                     />
                 </div>
               );

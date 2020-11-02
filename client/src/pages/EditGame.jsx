@@ -144,14 +144,14 @@ class EditGame extends Component {
     ];
     dataArray.map((value, index) => {
       if (value.length === 0) {
-        console.log("empty");
+      
         this.setState((prevState)=>{
           prevState.errorMessages[index].toShow = 'block'
           prevState.errorMessages[index].mess = '** שדה זה חייב להיות מלא **'
           return {errorMessages: prevState.errorMessages}
         })
       } else if (/[\u0590-\u09fe]/g.test(value) === false) {
-        //console.log(value,"not hebrew");
+        
         this.setState((prevState)=>{
           prevState.errorMessages[index].toShow = 'block'
           prevState.errorMessages[index].mess = '** שדה זה חייב להיות בעברית **'
@@ -163,7 +163,7 @@ class EditGame extends Component {
           prevState.errorMessages[index].mess = ''
           return {errorMessages: prevState.errorMessages}
         })
-        //console.log(value);
+       
       }
     });
     this.validateFields();
@@ -174,14 +174,14 @@ class EditGame extends Component {
       if (fields.selection !== "image") {
         fields.value.map((field) => {
           if (field.value.length === 0) {
-            console.log("empty");
+            
             this.setState((prevState)=>{
               prevState.fieldsData[index].errorMessage.toShow ='block'
               prevState.fieldsData[index].errorMessage.mess ='** חייב למלא את כל השדות **'
               return {fieldsData: prevState.fieldsData}
             })
           } else if (/[\u0590-\u09fe]/g.test(field.value) === false) {
-            console.log(field.value,"not hebrew");
+            
             this.setState((prevState)=>{
               prevState.fieldsData[index].errorMessage.toShow ='block'
               prevState.fieldsData[index].errorMessage.mess ='** חייב למלא את השדות בעברית **'
@@ -211,7 +211,7 @@ class EditGame extends Component {
                 <p className='error' style={{display:this.state.errorMessages[0].toShow}}>{this.state.errorMessages[0].mess}</p>
                 <input
                   id="gameName"
-                  className="inputFields"
+                  className="inputFields marginTop"
                   type="text"
                   placeholder="הכנס את שם המשחק..."
                   onBlur={this.updateBasicInfo}
@@ -223,7 +223,7 @@ class EditGame extends Component {
                 תיאור המשחק:
                 <p className='error' style={{display:this.state.errorMessages[1].toShow}}>{this.state.errorMessages[1].mess}</p>
                 <textarea
-                  className="inputFields extendedField"
+                  className="inputFields marginTop extendedField"
                   placeholder=""
                   id="gameDescription"
                   onBlur={this.updateBasicInfo}
@@ -234,14 +234,14 @@ class EditGame extends Component {
                 דרישות המשחק:
                 <p className='error' style={{display:this.state.errorMessages[2].toShow}}>{this.state.errorMessages[2].mess}</p>
                 <textarea
-                  className="inputFields extendedField"
+                  className="inputFields marginTop extendedField"
                   placeholder=""
                   id="gameRequirements"
                   onBlur={this.updateBasicInfo}
                   defaultValue={this.state.gameRequirements}
                 />
               </label>
-              <label className="fieldTitle">
+              <label className="fieldTitle imageWidth">
                 תמונה:
                 <input
                   type="file"
@@ -249,7 +249,7 @@ class EditGame extends Component {
                   className="hiddenInput"
                   onChange={this.updateBasicInfo}
                 />
-                <div className="borderCameraIcon">
+                <div className="borderCameraIcon marginTop ">
                   <img className="cameraIcon" src="/icons/camera-icon.svg" />
                 </div>
               </label>
@@ -262,7 +262,7 @@ class EditGame extends Component {
             {/* game fields */}
             {this.state.fieldsData.map((fieldObj) => {
               return (
-                <div className="fieldSelectionWithClose">
+                <div className="fieldSelectionWithClose marginTop ">
                   <GameFieldSelection
                     key={fieldObj.id}
                     fieldId={fieldObj.id}
@@ -270,11 +270,7 @@ class EditGame extends Component {
                     selection={this.saveSelection}
                     fieldValue={this.saveFieldValue}
                     removal={this.triggerRemoval}
-                    changeInputType={
-                      this.state.fieldsData.filter(
-                        (field) => field.id == fieldObj.id
-                      )[0].selection
-                    }
+                    changeInputType={fieldObj.selection}
                     originalName={fieldObj.name}
                     originalValue={fieldObj.value}
                     errorMessage={fieldObj.errorMessage}

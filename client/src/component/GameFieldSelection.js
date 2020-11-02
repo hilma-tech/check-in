@@ -24,10 +24,9 @@ class GameFieldSelection extends Component {
     }
   };
 
-
   // creates input based on "type"
   fieldCreator = () => {
-    console.log('check ', this.props.originalValue[0]);
+    
     if (this.props.changeInputType === "text") {
       return (
         <label className="fieldTitle">
@@ -41,7 +40,7 @@ class GameFieldSelection extends Component {
       );
     } else if (this.props.changeInputType === "image") {
       return (
-        <label className="fieldTitle">
+        <label className="fieldTitle imageWidth">
           <input
             onChange={this.sendFieldValue}
             type="file"
@@ -82,7 +81,6 @@ class GameFieldSelection extends Component {
               } else {
                 return (
                   <input
-
                     onBlur={this.sendFieldValue}
                     className="inputFields"
                     type="text"
@@ -123,11 +121,19 @@ class GameFieldSelection extends Component {
 
   render() {
     let fieldClassSize = this.getFieldClassSize(this.props.changeInputType);
-    console.log('props',this.props);
-    let errorMess = this.props.errorMessage !== undefined ? this.props.errorMessage : { toShow: 'none', mess: '' };
+    
+    let errorMess =
+      this.props.errorMessage !== undefined
+        ? this.props.errorMessage
+        : { toShow: "none", mess: "" };
     return (
-      <div className='gameField'>
-        <p className='error gameFieldError' style={{ display: errorMess.toShow }}>{errorMess.mess}</p>
+      <div className="gameField">
+        <p
+          className="error gameFieldError"
+          style={{ display: errorMess.toShow }}
+        >
+          {errorMess.mess}
+        </p>
         <div className={fieldClassSize + "fieldSelection"}>
           <img
             onClick={this.removeField}
