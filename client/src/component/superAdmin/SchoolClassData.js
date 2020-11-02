@@ -1,7 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
-import SelectStyle from '../style/select_style'
-import '../style/animation_w3school.css'
+import addicon from "../../img/addicon.svg";
+import SelectStyle from '../../style/select_style'
+import '../../style/animation_w3school.css'
 
 class ClassData extends React.Component {
     constructor(props) {
@@ -69,11 +70,11 @@ class ClassData extends React.Component {
                     </div>
                     <div className='editSchoolClassTeacherButtons'>
                         <div className='editSchoolClassAddExistTeacher addSomethingNew' onClick={() => { this.props.addTeacherToClass(this.props.classIndex) }}>
-                            <img className='addIcon' src='/icons/addicon.svg'></img>
+                            <img className='addIcon' src={addicon}></img>
                             <p className='addTitle'>הוסף מורה קיים</p>
                         </div>
                         <div className='addSomethingNew'>
-                            <img className='addIcon' src='/icons/addicon.svg'></img>
+                            <img className='addIcon' src={addicon}></img>
                             <p className='addTitle'>הוסף מורה חדש</p>
                         </div>
                     </div>

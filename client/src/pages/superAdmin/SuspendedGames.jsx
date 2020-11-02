@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import WhiteBar from "../component/GameNavBar";
-import "../style/games_style.css";
-import optionicon from "../img/optionicon.svg";
-import searchicon from "../img/search.svg";
+import WhiteBar from "../../component/superAdmin/GameNavBar";
+import "../../style/games_style.css";
+
+import searchicon from "../../img/search.svg";
 
 const images = [
   {

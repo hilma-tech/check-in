@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import "../style/form_style.css";
-import "../style/add_game_style.css"
-import SelectStyle from "../style/select_style";
-import "../style/class_selection_style.css"
+import "../../style/form_style.css";
+import "../../style/add_game_style.css"
+import SelectStyle from "../../style/select_style";
+import "../../style/class_selection_style.css"
 
 class ClassSelection extends Component {
   constructor() {

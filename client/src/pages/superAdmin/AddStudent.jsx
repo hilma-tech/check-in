@@ -1,9 +1,10 @@
 import React from 'react';
 import Select from 'react-select';
-import SelectStyle from '../style/select_style'
-import "../style/form_style.css";
-import "../style/add_student_style.css";
-import ArrowNavBar from '../component/ArrowNavBar'
+import SelectStyle from '../../style/select_style'
+import "../../style/form_style.css";
+import "../../style/add_student_style.css";
+import addicon from "../../img/addicon.svg";
+import ArrowNavBar from '../../component/superAdmin/ArrowNavBar'
 
 class AddStudent extends React.Component {
     constructor(props) {
@@ -231,7 +232,7 @@ class AddStudent extends React.Component {
                     }
 
                     <div className='addSomethingNew addClassToStudent' onClick={this.addClassOption}>
-                        <img className='addIcon' src='/icons/addicon.svg'></img>
+                        <img className='addIcon' src={addicon}></img>
                         <p className='addTitle'>הוסף כיתה</p>
                     </div>
                 </form>

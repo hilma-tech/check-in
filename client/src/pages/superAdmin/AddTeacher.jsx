@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import WhiteBar from "../component/ArrowNavBar";
-import ClassSelection from "../component/ClassSelection";
-import "../style/form_style.css";
-import "../style/add_game_style.css";
-import "../style/add_teacher_style.css";
-import SelectStyle from "../style/select_style";
+import addicon from "../../img/addicon.svg";
+import WhiteBar from "../../component/superAdmin/ArrowNavBar";
+import ClassSelection from "../../component/superAdmin/ClassSelection";
+import "../../style/form_style.css";
+import "../../style/add_game_style.css";
+import "../../style/add_teacher_style.css";
+import SelectStyle from "../../style/select_style";
 import {
   nameValidation,
   mustInputValidation,
   passwordValidation,
-} from "../component/ValidationFunctions";
+  emailValidation
+} from "../../component/superAdmin/ValidationFunctions";
 
 class AddTeacher extends Component {
   constructor() {
@@ -93,13 +95,13 @@ class AddTeacher extends Component {
      let nameTeacherMess = nameValidation(this.state.teacherName);
      if (nameTeacherMess.length !== 0) {
        this.setState((prevState) => {
-         prevState.schoolNameError.toShow = "inline-block";
-         prevState.schoolNameError.mess = nameTeacherMess;
-         return { schoolNameError: prevState.schoolNameError };
+         prevState.teacherNameError.toShow = "inline-block";
+         prevState.teacherNameError.mess = nameTeacherMess;
+         return { teacherNameError: prevState.teacherNameError };
        });
        allOk = false;
      } else {
-       this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+       this.setState({ teacherNameError: { toShow: "none", mess: "" } });
        allOk = true;
      }
     // ----------school name validetion-------------------
@@ -115,18 +117,30 @@ class AddTeacher extends Component {
       this.setState({ schoolNameError: { toShow: "none", mess: "" } });
       allOk = true;
     }
-    //------------email validation MISSING!---------------
-    // ----------password validetion-------------------
-    let passwordMess = passwordValidation(this.state.schoolName);
-    if (passwordMess.length !== 0) {
+    //------------email validation---------------
+    let emailMess = emailValidation(this.state.email);
+    if (emailMess.length !== 0) {
       this.setState((prevState) => {
-        prevState.schoolNameError.toShow = "inline-block";
-        prevState.schoolNameError.mess = passwordMess;
-        return { schoolNameError: prevState.schoolNameError };
+        prevState.emailNameError.toShow = "inline-block";
+        prevState.emailNameError.mess = emailMess;
+        return { emailNameError: prevState.emailNameError };
       });
       allOk = false;
     } else {
-      this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+      this.setState({ emailNameError: { toShow: "none", mess: "" } });
+      allOk = true;
+    }
+    // ----------password validetion-------------------
+    let passwordMess = passwordValidation(this.state.password);
+    if (passwordMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.passwordNameError.toShow = "inline-block";
+        prevState.passwordNameError.mess = passwordMess;
+        return { passwordNameError: prevState.passwordNameError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ passwordNameError: { toShow: "none", mess: "" } });
       allOk = true;
     }
 
@@ -192,7 +206,7 @@ class AddTeacher extends Component {
               id="addNewField"
               onClick={this.addNewFieldData}
             >
-              <img className="addIcon" src="/icons/addicon.svg"></img>
+              <img className="addIcon" src={addicon}></img>
               <p className="addTitle">הוסף כיתה</p>
             </div>
 

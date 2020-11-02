@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Games from "../pages/Games.jsx"
-import SuspendedGames from "../pages/SuspendedGames.jsx"
+import Games from "../../pages/superAdmin/Games.jsx"
+import SuspendedGames from "../../pages/superAdmin/SuspendedGames.jsx"
 import {
     BrowserRouter as Router,
     Switch,

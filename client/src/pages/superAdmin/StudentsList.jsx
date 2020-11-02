@@ -1,51 +1,52 @@
 import React from 'react';
-import GeneralTable from '../component/GeneralTable';
-import '../style/table_style.css'
+import GeneralTable from '../../component/superAdmin/GeneralTable';
+import '../../style/table_style.css'
 
 
-class TeachersList extends React.Component {
+
+class StudentsList extends React.Component {
     constructor(props) {
         super()
-        this.state = { categors:['שם המורה','בית ספר','כיתות'],
-            listDataTeachers: [{
+        this.state = { categors:['שם התלמיד','בית ספר','כיתה'],
+            listDataStudents: [{
             id: 1,
-            'שם המורה':'נורית כהן',
+            'שם התלמיד':'אחיה כהן',
             'בית ספר': 'עשה חיל',
-            'כיתות': ["א'2","ג'2"]
+            'כיתה':"א'2"
         },
         {
             id: 2,
-            'שם המורה':'נורית כהן',
+            'שם התלמיד':'אחיה כהן',
             'בית ספר': 'עשה חיל',
-            'כיתות': ["א'2","ג'2"]
+            'כיתה':"א'2"
         },{
             id: 3,
-            'שם המורה':'נורית כהן',
+            'שם התלמיד':'אחיה כהן',
             'בית ספר': 'עשה חיל',
-            'כיתות': ["א'2","ג'2"]
+            'כיתה':"א'2"
         },{
             id: 4,
-            'שם המורה':'נורית כהן',
+            'שם התלמיד':'אחיה כהן',
             'בית ספר': 'עשה חיל',
-            'כיתות': ["א'2","ג'2"]
+            'כיתה':"א'2"
         },{
             id: 5,
-            'שם המורה':'נורית כהן',
+            'שם התלמיד':'אחיה כהן',
             'בית ספר': 'עשה חיל',
-            'כיתות': ["א'2","ג'2"]
+            'כיתה':"א'2"
         },{
             id: 6,
-            'שם המורה':'נורית כהן',
+            'שם התלמיד':'אחיה כהן',
             'בית ספר': 'עשה חיל',
-            'כיתות': ["א'2","ג'2"]
+            'כיתה':"א'2"
         },{
             id: 7,
-            'שם המורה':'נורית כהן',
+            'שם התלמיד':'אחיה כהן',
             'בית ספר': 'עשה חיל',
-            'כיתות': ["א'2","ג'2"]
+            'כיתה':"א'2"
         }], searchVal: '',
         displaySearch: 'none',
-        displayIconSearch: 'inline-block' }
+        displayIconSearch: 'inline-block'}
     }
 
     //Save the user search value as searchVal in state.
@@ -59,9 +60,9 @@ class TeachersList extends React.Component {
     }
     render() { 
         return ( 
-        <div className='TeachersList' dir="rtl">
+        <div className='StudentsList' dir="rtl">
             <div className='PageTitles'>
-                <p>מורים</p>
+                <p>תלמידים</p>
                 <p className='searchIcon' onClick={this.activateSearch} style={{display: this.state.displayIconSearch}}></p>
                 <div style={{display: this.state.displaySearch}}>
                     <form className='search' >
@@ -73,11 +74,11 @@ class TeachersList extends React.Component {
             {/*
                 Create the school table with the general teble.
             */}
-            <GeneralTable allData={this.state.listDataTeachers} 
+            <GeneralTable allData={this.state.listDataStudents} 
                             categors={this.state.categors} />
             
         </div> );
     }
 }
  
-export default TeachersList;
+export default StudentsList;
