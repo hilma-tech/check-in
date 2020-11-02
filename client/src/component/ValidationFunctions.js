@@ -60,9 +60,9 @@ export function passwordValidation(password) {
 
 //Check validation for email
 export function emailValidation(email) {
-    if (input.length === 0) {
+    if (email.length === 0) {
         return '** חייב להכניס שדה זה **'
-    } else if (!(/[a-zA-Z0-9]+@+[a-zA-Z]+.+[a-zA-Z0-9]/).test(password)) {
+    } else if (!(/[a-zA-Z0-9]+@+[a-zA-Z]+.+[a-zA-Z0-9]/).test(email)) {
         return '** כתובת איימל לא תקינה **'
     } else {
         return ''
