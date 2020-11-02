@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import WhiteBar from "../component/GameNavBar.js";
-import "../style/GamesStyle.css";
+import WhiteBar from "../component/GameNavBar";
+import "../style/games_style.css";
 import optionicon from "../img/optionicon.svg";
 import searchicon from "../img/search.svg";
 

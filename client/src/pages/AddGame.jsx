@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import WhiteBar from "../component/ArrowNavBar";
-import "../style/AddGameStyle.css";
-import "../style/formStyle.css";
+import "../style/add_game_style.css";
+import "../style/form_style.css";
 import GameFieldSelection from "../component/GameFieldSelection";
 
 class AddGame extends Component {
@@ -10,7 +10,9 @@ class AddGame extends Component {
 
     this.state = {
       newKey: 1,
-      fieldsData: [{ id: 0, name: null, selection: "text", value: [{id:0, value:""}] }],
+      // The first message is for gameName, after ther are gameDescription and gameRequirements
+      errorMessages: [{ toShow: 'none', mess: '' }, { toShow: 'none', mess: '' }, { toShow: 'none', mess: '' }],
+      fieldsData: [{ id: 0, name: null, selection: "text", value: [{id:0, value:""}], errorMessage: { toShow: 'none', mess: '' }}],
       gameName: "",
       gameDescription: "",
       gameRequirements: "",
@@ -46,7 +48,7 @@ class AddGame extends Component {
       //only relevant to image
     } else if (inputFiles) {
       this.setState((prevState) => {
-        prevState.fieldsData[fieldId].value = [];
+        
         prevState.fieldsData[fieldId].value[0] = {
           id: 0,
           value: inputFiles[0].name,
@@ -73,7 +75,8 @@ class AddGame extends Component {
         id: this.state.newKey,
         name: null,
         selection: "text",
-        value: [],
+        value: [{id:0, value: ''}],
+        errorMessage: { toShow: 'none', mess: '' }
       });
       return { fieldsData: tempFieldsData };
     });
@@ -88,7 +91,7 @@ class AddGame extends Component {
     this.setState((prevState) => {
       let oldFieldArray = prevState.fieldsData;
       let newArray = oldFieldArray.filter((field) => field.id !== fieldId);
-      console.log(newArray);
+      
       return { fieldsData: newArray };
     });
   };
@@ -115,35 +118,58 @@ class AddGame extends Component {
       this.state.gameDescription,
       this.state.gameRequirements,
     ];
-    dataArray.map((value) => {
+    dataArray.map((value, index) => {
       if (value.length === 0) {
-        console.log("empty");
-        return;
+       
+        this.setState((prevState)=>{
+          prevState.errorMessages[index].toShow = 'block'
+          prevState.errorMessages[index].mess = '** שדה זה חייב להיות מלא **'
+          return {errorMessages: prevState.errorMessages}
+        })
       } else if (/[\u0590-\u09fe]/g.test(value) === false) {
-        console.log("not hebrew");
-        return;
+        
+        this.setState((prevState)=>{
+          prevState.errorMessages[index].toShow = 'block'
+          prevState.errorMessages[index].mess = '** שדה זה חייב להיות בעברית **'
+          return {errorMessages: prevState.errorMessages}
+        })
       } else {
-        return;
+        this.setState((prevState)=>{
+          prevState.errorMessages[index].toShow = 'none'
+          prevState.errorMessages[index].mess = ''
+          return {errorMessages: prevState.errorMessages}
+        })
       }
     });
     this.validateFields();
   };
 
   validateFields = () => {
-    this.state.fieldsData.map((fields) => {
+    this.state.fieldsData.map((fields, index) => {
       if (fields.selection !== "image") {
         fields.value.map((field) => {
-          console.log("bloop",field.value.length);
+          
           // if(field !== true){
           if (field.value.length === 0) {
-            console.log("empty");
-              
-           /* }  */return;
+            
+            this.setState((prevState)=>{
+              prevState.fieldsData[index].errorMessage.toShow ='block'
+              prevState.fieldsData[index].errorMessage.mess ='** חייב למלא את כל השדות **'
+              return {fieldsData: prevState.fieldsData}
+            })
           } else if (/[\u0590-\u09fe]/g.test(field.value) === false) {
-            console.log(field.value,"not hebrew");
-            return;
+            
+            this.setState((prevState)=>{
+              prevState.fieldsData[index].errorMessage.toShow ='block'
+              prevState.fieldsData[index].errorMessage.mess ='** חייב למלא את השדות בעברית **'
+              return {fieldsData: prevState.fieldsData}
+            })
           } else {
-            return;
+            this.setState((prevState)=>{
+              prevState.fieldsData[index].errorMessage.toShow ='none'
+              prevState.fieldsData[index].errorMessage.mess =''
+              return {fieldsData: prevState.fieldsData}
+            })
           }
         });
       }
@@ -160,19 +186,20 @@ class AddGame extends Component {
             <form className="formData">
               <label className="fieldTitle">
                 שם המשחק:
+                <p className='error' style={{display:this.state.errorMessages[0].toShow}}>{this.state.errorMessages[0].mess}</p>
                 <input
                   id="gameName"
-                  className="inputFields"
+                  className="inputFields marginTop"
                   type="text"
                   placeholder="הכנס את שם המשחק..."
                   onBlur={this.updateBasicInfo}
-                  onChange={this.saveData}
-                />
-              </label>
+                  />
+                  </label>
               <label className="fieldTitle">
                 תיאור המשחק:
+                <p className='error' style={{display:this.state.errorMessages[1].toShow}}>{this.state.errorMessages[1].mess}</p>
                 <textarea
-                  className="inputFields extendedField"
+                  className="inputFields marginTop extendedField"
                   placeholder=""
                   id="gameDescription"
                   onBlur={this.updateBasicInfo}
@@ -180,22 +207,23 @@ class AddGame extends Component {
               </label>
               <label className="fieldTitle">
                 דרישות המשחק:
+                <p className='error' style={{display:this.state.errorMessages[2].toShow}}>{this.state.errorMessages[2].mess}</p>
                 <textarea
-                  className="inputFields extendedField"
+                  className="inputFields marginTop extendedField"
                   placeholder=""
                   id="gameRequirements"
                   onBlur={this.updateBasicInfo}
                 />
               </label>
-              <label className="fieldTitle">
+              <label className="fieldTitle imageWidth">
                 תמונה:
+                <div className="borderCameraIcon marginTop">
                 <input
                   type="file"
                   id="image"
-                  className="hiddenInput"
+                  className="hiddenInput "
                   onChange={this.updateBasicInfo}
                 />
-                <div className="borderCameraIcon">
                   <img className="cameraIcon" src="/icons/camera-icon.svg" />
                 </div>
               </label>
@@ -207,8 +235,10 @@ class AddGame extends Component {
             </form>
             {/* game fields */}
             {this.state.fieldsData.map((fieldObj) => {
+              
+              
               return (
-                <div className="fieldSelectionWithClose">
+                <div className="fieldSelectionWithClose marginTop">
                   <GameFieldSelection
                     key={fieldObj.id}
                     fieldId={fieldObj.id}
@@ -218,13 +248,9 @@ class AddGame extends Component {
                     removal={this.triggerRemoval}
                     originalName={fieldObj.name}
                     originalValue={fieldObj.value}
-                    changeInputType={
-                      this.state.fieldsData.filter(
-                        (field) => field.id == fieldObj.id
-                      )[0].selection
-                    }
-                    imagePath={this.state.fieldsData[0].value[0].value}
-                  />
+                    errorMessage={fieldObj.errorMessage}
+                    changeInputType={fieldObj.selection}
+                    />
                 </div>
               );
             })}

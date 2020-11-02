@@ -1,8 +1,9 @@
 import React from 'react';
 import ArrowNavBar from '../component/ArrowNavBar'
-import ClassData from "../component/schoolClassData";
-import "../style/formStyle.css";
+import ClassData from "../component/SchoolClassData";
+import "../style/form_style.css";
 import { withRouter } from "react-router-dom";
+import { nameValidation, classNameValidation } from '../component/ValidationFunctions'
 
 
 class AddSchool extends React.Component {
@@ -29,7 +30,8 @@ class AddSchool extends React.Component {
                     id: prevState.classes.length + 1,
                     name: '',
                     numTeachers: 1,
-                    chosenTeachers: []
+                    chosenTeachers: [],
+                    classNameError: { toShow: 'none', mess: '' },
                 },
             ];
             return { classes: tempData };
@@ -68,60 +70,71 @@ class AddSchool extends React.Component {
     addTeacherToClass = (classIndex) => {
         this.setState((prevState) => {
             let tempData = [...prevState.classes]
-            tempData[classIndex].chosenTeachers.push({ id: -1*tempData[classIndex].chosenTeachers.length, name: 'בחר...'}) //id -1 did not exist and he wont show him
+            tempData[classIndex].chosenTeachers.push({ id: -1 * tempData[classIndex].chosenTeachers.length, name: 'בחר...' }) //id -1 did not exist and he wont show him
             return { classes: tempData }
         })
     }
 
-    removeTeacherToClass = (classIndex, teacherIndex) => {
+    removeTeacherFromClass = (classIndex, teacherIndex) => {
         this.setState((prevState) => {
             let tempData = [...prevState.classes]
-            let newSelectsList = []
-            for(let i =0; i<tempData[classIndex].chosenTeachers.length; i++){
-                if(i!== teacherIndex){
-                    newSelectsList.push(tempData[classIndex].chosenTeachers[i])
-                }
-            }
-            tempData[classIndex].chosenTeachers = newSelectsList//filter((classValue, index)=>{return index !== teacherIndex}) //id -1 did not exist and he wont show him
+            tempData[classIndex].chosenTeachers.splice(teacherIndex, 1)
+            return { classes: tempData }
+        })
+    }
+
+
+    removeClass = (classIndex) => {
+        this.setState((prevState) => {
+            let tempData = [...prevState.classes]
+            tempData.splice(classIndex, 1);
             return { classes: tempData }
         })
     }
 
     saveData = (e) => {
         e.preventDefault();
+        let allOk = true
         /* data validetion  */
         // ----------school name validetion-------------------
-        if (this.state.schoolName.length === 0) {
+        let nameSchoolMess = nameValidation(this.state.schoolName)
+        if (nameSchoolMess.length !== 0) {
             this.setState((prevState) => {
                 prevState.schoolNameError.toShow = 'inline-block'
-                prevState.schoolNameError.mess = 'חייב להכניס שם בית ספר'
+                prevState.schoolNameError.mess = nameSchoolMess
                 return { schoolNameError: prevState.schoolNameError }
             })
-            return;
-        } else if ((/[a-z]/).test(this.state.schoolName) || (/[A-Z]/).test(this.state.schoolName) || (/[!@#$%^&*()_+-\=\[\]{};:\\|,.<>\/?~`]/).test(this.state.schoolName)) {
-            this.setState((prevState) => {
-                prevState.schoolNameError.toShow = 'inline-block'
-                prevState.schoolNameError.mess = 'שם בית הספר לא תקין'
-                return { schoolNameError: prevState.schoolNameError }
-            })
-            return;
-        } else if (this.state.schoolName.includes('"') || this.state.schoolName.includes("'")) {
-            if (!(/[\u0590-\u05FF]+["']+[\u0590-\u05FF]/).test(this.state.schoolName)) {
-                this.setState((prevState) => {
-                    prevState.schoolNameError.toShow = 'inline-block'
-                    prevState.schoolNameError.mess = 'שם בית הספר לא תקין'
-                    return { schoolNameError: prevState.schoolNameError }
-                })
-            }
-            return;
+            allOk = false
         } else {
             this.setState({ schoolNameError: { toShow: 'none', mess: '' } })
+            allOk = true
         }
 
 
+        // ----------classes name validetion-------------------
+        for (let i = 0; i < this.state.classes.length; i++) {
+            let nameClassMess = classNameValidation(this.state.classes[i].name)
+            if (nameClassMess.length !== 0) {
+                this.setState((prevState) => {
+                    prevState.classes[i].classNameError.toShow = 'inline-block'
+                    prevState.classes[i].classNameError.mess = nameClassMess
+                    return { classes: prevState.classes }
+                })
+                allOk = false
+            } else {
+                this.setState((prevState) => {
+                    prevState.classes[i].classNameError.toShow = 'none'
+                    prevState.classes[i].classNameError.mess = ''
+                    return { classes: prevState.classes }
+                })
+                allOk = true
+            }
+        }
 
         //after all the validetion we need to send the data to sql
-        this.props.history.goBack() // after saving go back
+        if (allOk) {
+            this.props.history.goBack() // after saving go back
+        }
     }
 
     render() {
@@ -153,7 +166,8 @@ class AddSchool extends React.Component {
                                 addTeacherToClass={this.addTeacherToClass}
                                 handleChange={this.handleChange}
                                 chooseTeacher={this.chooseTeacher}
-                                removeTeacherToClass={this.removeTeacherToClass} />;
+                                removeTeacherFromClass={this.removeTeacherFromClass}
+                                removeClass={this.removeClass} />;
                         })}
                     <button
                         type="button"

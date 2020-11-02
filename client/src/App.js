@@ -6,11 +6,11 @@ import { BrowserRouter as Router,
 import './App.css';
 import TeachersList from './pages/TeachersList.jsx'
 import StudentsList from './pages/StudentsList.jsx'
-import GamesRouter from './component/whiteBarRouter'
+import GamesRouter from './component/WhiteBarRouter'
 import SchoolsList from './pages/SchoolsList.jsx'
 import AddGame from './pages/AddGame.jsx'
 import AddTeacher from './pages/AddTeacher.jsx'
-import EditSchool from './pages/editSchool.jsx'
+import EditSchool from './pages/EditSchool.jsx'
 import Menu from './component/Menu'
 import AddStudent from './pages/AddStudent.jsx'
 import EditGame from './pages/EditGame.jsx';
@@ -25,13 +25,13 @@ function App() {
 
       <Router>
         <Switch>
+          <Route path='/' exact>
+            <Redirect to='/signin'/>
+          </Route>
           <Route path='/signin' exact>
             <SignIn/>
           </Route>
         <div className="everyPage">
-          <Route path='/' exact> {/* for now */}
-            <Redirect to='/teachers'/>
-          </Route>
           <Route path='/games'>
           <Menu />
             <GamesRouter/>

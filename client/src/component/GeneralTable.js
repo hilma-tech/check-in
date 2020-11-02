@@ -16,7 +16,7 @@ class GeneralTable extends React.Component {
                 <div className='TableTitles'>
                     {
                         //Return the table's categors row
-                        this.props.categors.map((val, index)=>{return <p key={index} className={'item'+index}>{val}</p>})
+                        this.props.categors.map((val, index)=>{return <p key={index} className={'item'+index+' bold'}>{val}</p>})
                     }
                 </div>
                 <div className='AllData'>

@@ -22,6 +22,7 @@
     opacity: 1;
     border-color: white;
     border-style: solid;
+    margin-top: 2vh;
 }
 
 .editSchoolForm{
@@ -29,7 +30,7 @@
     grid-template-columns: 3vw 42vw;
 }
 
-.editSchoolNameLable, .editSchoolNameInput, .editSchoolClassesLable, .editSchoolAddClass {
+.editSchoolNameLable, .editSchoolNameInput, .editSchoolClassesLable, .editSchoolAddClass, .TeachersSelect {
     grid-column-start: 1;
     grid-column-end: 3;
 }
@@ -53,7 +54,13 @@
     width: 38.5vw;
 }
 
-.editSchoolNameLable, .editSchoolNameInput, .editSchoolClassesLable, .editSchoolClassTeacherLable, .editSchoolClassesInput, .editSchoolClassTeacherLable{
+.editSchoolClassesInput{
+    padding-bottom: 1vh;
+    font-size: 2vw;
+    width: 40vw;
+}
+
+.editSchoolNameLable, .editSchoolNameInput, .editSchoolClassesLable, .editSchoolClassTeacherLable, .editSchoolClassesInput{
     height: 5vh;
     padding-right: 1vw;
     font-size: 2vw;
@@ -94,9 +101,23 @@
 
 .TeachersSelect{
     display: flex;
+    width: 45vw;
 }
 
 .removeTeachersSelectIcon{
     width: 1.5vw;
     margin: 1vw;
 }
+
+.removeClass{
+    width: 1.5vw;
+    margin: 0.5vw;
+}
+
+/* .classNameError{
+    background-color: red;
+    color: #ffff;
+    margin: 1vh;
+    width: 18vw;
+    height: 5vh;
+} */

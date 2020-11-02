@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import Select from "react-select";
 import WhiteBar from "../component/ArrowNavBar";
 import ClassSelection from "../component/ClassSelection";
-import "../style/formStyle.css";
-import "../style/AddGameStyle.css";
-import "../style/AddTeacherStyle.css"
-import SelectStyle from "../style/selectStyle";
+import "../style/form_style.css";
+import "../style/add_game_style.css";
+import "../style/add_teacher_style.css"
+import SelectStyle from "../style/select_style";
 
 class AddTeacher extends Component {
   constructor() {
@@ -72,6 +72,15 @@ class AddTeacher extends Component {
     });
   };
 
+  triggerRemoval = (id) => {
+    this.setState((prevState) => {
+      let oldFieldArray = prevState.fieldsData;
+      let newArray = oldFieldArray.filter((field) => field.id !== id);
+      
+      return { fieldsData: newArray };
+    });
+  };
+
   render() {
     return (
       <>
@@ -109,8 +118,9 @@ class AddTeacher extends Component {
                 return (
                   <div className=" thinnerFont">
                     <ClassSelection
-                    
+                      
                       id={fieldObj.id}
+                      removal={this.triggerRemoval}
                       saveValue={this.saveValue}
                       options={this.classOptions}
                       onChange={this.saveChange}
