@@ -4,8 +4,13 @@ import WhiteBar from "../component/ArrowNavBar";
 import ClassSelection from "../component/ClassSelection";
 import "../style/form_style.css";
 import "../style/add_game_style.css";
-import "../style/add_teacher_style.css"
+import "../style/add_teacher_style.css";
 import SelectStyle from "../style/select_style";
+import {
+  nameValidation,
+  mustInputValidation,
+  passwordValidation,
+} from "../component/ValidationFunctions";
 
 class AddTeacher extends Component {
   constructor() {
@@ -31,16 +36,16 @@ class AddTeacher extends Component {
   }
 
   saveTeacherName = (props) => {
-    let myprops = props.target
-    this.setState({teacherName: myprops.value})
+    let myprops = props.target;
+    this.setState({ teacherName: myprops.value });
   };
 
   saveSchoolName = (props) => {
-    this.setState((prevState)=> {
-      let prevSchool= prevState.schoolName
-      prevSchool = props.value
-      return {schoolName: prevSchool}
-    })
+    this.setState((prevState) => {
+      let prevSchool = prevState.schoolName;
+      prevSchool = props.value;
+      return { schoolName: prevSchool };
+    });
   };
 
   saveValue = (newValue, id) => {
@@ -52,13 +57,13 @@ class AddTeacher extends Component {
   };
 
   saveEmail = (props) => {
-    let myprops = props.target
-    this.setState({email: myprops.value})
+    let myprops = props.target;
+    this.setState({ email: myprops.value });
   };
 
   savePassword = (props) => {
-    let myprops = props.target
-    this.setState({password: myprops.value})
+    let myprops = props.target;
+    this.setState({ password: myprops.value });
   };
 
   addNewFieldData = () => {
@@ -76,12 +81,61 @@ class AddTeacher extends Component {
     this.setState((prevState) => {
       let oldFieldArray = prevState.fieldsData;
       let newArray = oldFieldArray.filter((field) => field.id !== id);
-      
+
       return { fieldsData: newArray };
     });
   };
 
-  validateFields = () => {}
+  validateInputFields = (e) => {
+    e.preventDefault();
+    let allOk = true;
+     // ----------teacher name validetion-------------------
+     let nameTeacherMess = nameValidation(this.state.teacherName);
+     if (nameTeacherMess.length !== 0) {
+       this.setState((prevState) => {
+         prevState.schoolNameError.toShow = "inline-block";
+         prevState.schoolNameError.mess = nameTeacherMess;
+         return { schoolNameError: prevState.schoolNameError };
+       });
+       allOk = false;
+     } else {
+       this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+       allOk = true;
+     }
+    // ----------school name validetion-------------------
+    let nameSchoolMess = mustInputValidation(this.state.schoolName);
+    if (nameSchoolMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.schoolNameError.toShow = "inline-block";
+        prevState.schoolNameError.mess = nameSchoolMess;
+        return { schoolNameError: prevState.schoolNameError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+      allOk = true;
+    }
+    //------------email validation MISSING!---------------
+    // ----------password validetion-------------------
+    let passwordMess = passwordValidation(this.state.schoolName);
+    if (passwordMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.schoolNameError.toShow = "inline-block";
+        prevState.schoolNameError.mess = passwordMess;
+        return { schoolNameError: prevState.schoolNameError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+      allOk = true;
+    }
+
+
+    //after all the validetion we need to send the data to sql
+    if (allOk) {
+      this.props.history.goBack(); // after saving go back
+    }
+  };
 
   render() {
     return (
@@ -93,7 +147,6 @@ class AddTeacher extends Component {
               {/* מורה */}
               <label className="fieldTitle ">
                 שם המורה:
-                
                 <input
                   className="inputFields spaceFromTitles"
                   type="text"
@@ -106,7 +159,7 @@ class AddTeacher extends Component {
               <label className="fieldTitle">
                 בית ספר:
                 <Select
-                className="spaceFromTitles thinnerFont"
+                  className="spaceFromTitles thinnerFont"
                   onChange={this.saveSchoolName}
                   options={this.schoolOptions}
                   styles={SelectStyle()}
@@ -116,21 +169,20 @@ class AddTeacher extends Component {
               {/* כיתה */}
               <label className="fieldTitle">כיתה:</label>
               <div className="spaceFromTitles">
-              {this.state.fieldsData.map((fieldObj) => {
-                return (
-                  <div className=" thinnerFont">
-                    <ClassSelection
-                      
-                      id={fieldObj.id}
-                      removal={this.triggerRemoval}
-                      saveValue={this.saveValue}
-                      options={this.classOptions}
-                      onChange={this.saveChange}
-                    />
-                    <br />
-                  </div>
-                );
-              })}
+                {this.state.fieldsData.map((fieldObj) => {
+                  return (
+                    <div className=" thinnerFont">
+                      <ClassSelection
+                        id={fieldObj.id}
+                        removal={this.triggerRemoval}
+                        saveValue={this.saveValue}
+                        options={this.classOptions}
+                        onChange={this.saveChange}
+                      />
+                      <br />
+                    </div>
+                  );
+                })}
               </div>
             </form>
 
