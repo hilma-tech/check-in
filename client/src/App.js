@@ -16,6 +16,7 @@ import AddStudent from './pages/superAdmin/AddStudent.jsx'
 import EditGame from './pages/superAdmin/EditGame.jsx';
 import AddSchool from './pages/superAdmin/AddSchool.jsx'
 import SignIn from './pages/superAdmin/SignIn.jsx'
+import Classes from './pages/teacher/Classes.jsx'
 
 
 function App() {
@@ -30,6 +31,10 @@ function App() {
           </Route>
           <Route path='/signin' exact>
             <SignIn/>
+          </Route>
+          {/* teacher classes */}
+        <Route path='/classes' exact>
+            <Classes/>
           </Route>
         <div className="everyPage">
           <Route path='/games'>
@@ -83,6 +88,7 @@ function App() {
             <h4>student edit</h4>
           </Route>
         </div>
+        
         </Switch>
       </Router>
     </div>

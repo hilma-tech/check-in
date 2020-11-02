@@ -1,0 +1,20 @@
+.smallMenuBar {
+    background-color: #043163;
+    display: flex;
+    height: 20vh;
+    justify-content: space-between;
+  }
+  
+  .smallMenu {
+    margin: 0px;
+    margin-top: 3vh;
+    margin-right: 2.5vh;
+    height: 4vh;
+    width: 4vh;
+  }
+  
+  .smallLogo {
+    margin-top: 2vh;
+    margin-left: 4vh;
+    height: 6vh;
+  }

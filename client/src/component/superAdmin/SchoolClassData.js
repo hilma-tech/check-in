@@ -69,10 +69,11 @@ class ClassData extends React.Component {
                         }
                     </div>
                     <div className='editSchoolClassTeacherButtons'>
-                        <div className='editSchoolClassAddExistTeacher addSomethingNew' onClick={() => { this.props.addTeacherToClass(this.props.classIndex) }}>
+                        <div style={this.teachers.length === this.props.classData.chosenTeachers.length ? {display: 'none'} : {display:'flex'}} className='editSchoolClassAddExistTeacher addSomethingNew' onClick={() => {
+                             this.props.addTeacherToClass(this.props.classIndex) }}>
                             <img className='addIcon' src={addicon}></img>
                             <p className='addTitle'>הוסף מורה קיים</p>
-                        </div>
+                        </div> 
                         <div className='addSomethingNew'>
                             <img className='addIcon' src={addicon}></img>
                             <p className='addTitle'>הוסף מורה חדש</p>
