@@ -1,4 +1,14 @@
 .classSelection {
     display: flex;
-    width:40vw;
+    width:45vw;
+}
+
+.classSelection .removeFieldIcon{
+    margin-right: 0.5vw;
+    width: 2vw;
+}
+
+
+.classSelectionInAddTecher{
+    width: 43vw;
 }

@@ -22,17 +22,18 @@ class ClassSelection extends Component {
     return (
       <>
       <div className='  gameField classSelection'>
-      <img
-            onClick={this.removeField}
-            className="removeFieldIcon"
-            src="/icons/delete.svg"
-          />
         <Select
+        className='classSelectionInAddTecher'
           options={this.props.options}
           styles={SelectStyle()}
           onChange={this.sendValue}
           defaultValue={{ value: "default", label: "בחר כיתה" }}
         />
+      <img
+            onClick={this.removeField}
+            className="removeFieldIcon"
+            src="/icons/delete.svg"
+          />
         </div>
       </>
     );
