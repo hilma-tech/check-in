@@ -81,6 +81,8 @@ class AddTeacher extends Component {
     });
   };
 
+  validateFields = () => {}
+
   render() {
     return (
       <>
