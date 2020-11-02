@@ -50,13 +50,24 @@ export function passwordValidation(password) {
         return '** חייב להכניס סיסמא **'
     } else if (password.length < 30 || password.length < 8) {
         return '** סיסמא לא תקינה **'
-    } else if (!(/[!@#$"%^,.&*()_+\=\[\]{}'-;:\\|<>\/?~`\s]/).test(password)) {
+    }else if (!(/[!@#$"%^,.&*()_+\=\[\]{}'-;:\\|<>\/?~`\s]/).test(password)) {
         return '** סיסמא לא תקינה **'
     } else {
         return ''
     }
 }
 
+
+//Check validation for email
+export function emailValidation(email) {
+    if (email.length === 0) {
+        return '** חייב להכניס שדה זה **'
+    } else if (!(/[a-zA-Z0-9]+@+[a-zA-Z]+.+[a-zA-Z0-9]/).test(email)) {
+        return '** כתובת איימל לא תקינה **'
+    } else {
+        return ''
+    }
+}
 
 //Check validation for inputs that the user must field
 //it's not matter how he field them... 
