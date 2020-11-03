@@ -1,6 +1,6 @@
 import React from 'react';
-import GeneralTable from '../../component/superAdmin/GeneralTable';
-import '../../style/table_style.css'
+import GeneralTable from '../../component/superAdmin/GeneralTable.jsx';
+import '../../style/superAdmin/table_style.css'
 
 
 class TeachersList extends React.Component {

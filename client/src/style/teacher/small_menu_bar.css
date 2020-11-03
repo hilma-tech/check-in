@@ -1,7 +1,7 @@
 .smallMenuBar {
     background-color: #043163;
     display: flex;
-    height: 20vh;
+    height: 16vh;
     justify-content: space-between;
   }
   
@@ -16,5 +16,5 @@
   .smallLogo {
     margin-top: 2vh;
     margin-left: 4vh;
-    height: 6vh;
+    height: 5vh;
   }

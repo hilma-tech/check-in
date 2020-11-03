@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import WhiteBar from "../../component/superAdmin/GameNavBar";
-import "../../style/games_style.css";
+import WhiteBar from "../../component/superAdmin/GameNavBar.jsx";
+import "../../style/superAdmin/games_style.css";
 
 import searchicon from "../../img/search.svg";
 

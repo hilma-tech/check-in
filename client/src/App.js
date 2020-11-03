@@ -6,17 +6,18 @@ import { BrowserRouter as Router,
 import './App.css';
 import TeachersList from './pages/superAdmin/TeachersList.jsx'
 import StudentsList from './pages/superAdmin/StudentsList.jsx'
-import GamesRouter from './component/superAdmin/WhiteBarRouter'
+import GamesRouter from './component/superAdmin/WhiteBarRouter.jsx'
 import SchoolsList from './pages/superAdmin/SchoolsList.jsx'
 import AddGame from './pages/superAdmin/AddGame.jsx'
 import AddTeacher from './pages/superAdmin/AddTeacher.jsx'
 import EditSchool from './pages/superAdmin/EditSchool.jsx'
-import Menu from './component/superAdmin/Menu'
+import Menu from './component/superAdmin/Menu.jsx'
 import AddStudent from './pages/superAdmin/AddStudent.jsx'
 import EditGame from './pages/superAdmin/EditGame.jsx';
 import AddSchool from './pages/superAdmin/AddSchool.jsx'
 import SignIn from './pages/superAdmin/SignIn.jsx'
 import Classes from './pages/teacher/Classes.jsx'
+import Students from './pages/teacher/Student.jsx'
 
 
 function App() {
@@ -35,6 +36,9 @@ function App() {
           {/* teacher classes */}
         <Route path='/classes' exact>
             <Classes/>
+          </Route>
+          <Route path='/teachers/students' exact>
+            <Students/>
           </Route>
         <div className="everyPage">
           <Route path='/games'>

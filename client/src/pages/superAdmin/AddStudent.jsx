@@ -1,10 +1,10 @@
 import React from 'react';
 import Select from 'react-select';
-import SelectStyle from '../../style/select_style'
-import "../../style/form_style.css";
-import "../../style/add_student_style.css";
+import SelectStyle from '../../style/superAdmin/select_style'
+import "../../style/superAdmin/form_style.css";
+import "../../style/superAdmin/add_student_style.css";
 import addicon from "../../img/addicon.svg";
-import ArrowNavBar from '../../component/superAdmin/ArrowNavBar'
+import ArrowNavBar from '../../component/superAdmin/ArrowNavBar.jsx'
 
 class AddStudent extends React.Component {
     constructor(props) {

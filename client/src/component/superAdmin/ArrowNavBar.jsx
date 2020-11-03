@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../../style/white_bar_style.css";
+import "../../style/superAdmin/white_bar_style.css";
 import { withRouter } from "react-router-dom";
 
 class ArrowNavBar extends Component {

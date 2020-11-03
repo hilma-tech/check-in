@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import "../../style/games_style.css";
+import "../../style/superAdmin/games_style.css";
 import optionicon from "../../img/optionicon.svg";
 import addicon from "../../img/addicon.svg";
 import searchicon from "../../img/search.svg";
-import WhiteBar from "../../component/superAdmin/GameNavBar.js";
+import WhiteBar from "../../component/superAdmin/GameNavBar.jsx";
 import { withRouter } from "react-router-dom";
 
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import menu from "../../img/menuWhite.svg";
-import "../../style/small_menu_bar.css"
+import "../../style/teacher/small_menu_bar.css"
 
 class SmallMenuBar extends Component {
     constructor() {

@@ -1,8 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
 import addicon from "../../img/addicon.svg";
-import SelectStyle from '../../style/select_style'
-import '../../style/animation_w3school.css'
+import SelectStyle from '../../style/superAdmin/select_style'
+import '../../style/superAdmin/animation_w3school.css'
 
 class ClassData extends React.Component {
     constructor(props) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import RowData from './RowData';
+import RowData from './RowData.jsx';
 import { withRouter } from "react-router-dom";
 
 class GeneralTable extends React.Component {

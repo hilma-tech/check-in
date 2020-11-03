@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import WhiteBar from "../../component/superAdmin/ArrowNavBar";
-import "../../style/add_game_style.css";
-import "../../style/form_style.css";
+import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx";
+import "../../style/superAdmin/add_game_style.css";
+import "../../style/superAdmin/form_style.css";
 import addicon from "../../img/addicon.svg";
-import GameFieldSelection from "../../component/superAdmin/GameFieldSelection";
+import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.jsx";
 
 class EditGame extends Component {
   constructor() {

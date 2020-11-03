@@ -4,8 +4,8 @@ import pinkcircle from "../../img/dottedcirclePink.svg";
 import purplecircle from "../../img/dottedcirclePurple.svg";
 import greencircle from "../../img/dottedcircleGreen.svg";
 import bluecircle from "../../img/dottedcircleBlue.svg"
-import "../../style/classes.css";
-import SmallMenuBar from "../../component/teacher/SmallMenuBar";
+import "../../style/teacher/classes.css";
+import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 
 class Classes extends Component {
   constructor() {
@@ -37,5 +37,4 @@ class Classes extends Component {
     );
   }
 }
-
 export default Classes;
