@@ -1,0 +1,38 @@
+.smallNav {
+    display: flex;
+    justify-content: space-between;
+    width: 84vw;
+    height: 7vh;
+    margin-right: 8vw;
+}
+
+.smallNavName {
+    font-weight: 200;
+    font-size: 3vh;
+    color: white;
+}
+
+.smallBackground {
+    background-color: #043163;
+    
+}
+
+.smallLeftUnderline {
+    border: 2px solid white;
+    margin-top: -0.1vh;
+    width: 30vw;
+    margin-left: -0vw;
+}
+
+.smallMiddleUnderline {
+    border: 2px solid white;
+    margin-top: -0.1vh;
+    width: 30vw;
+}
+
+.smallRightUnderline {
+    border: 2px solid white;
+    margin-top: -0.1vh;
+    width: 30vw;
+    margin-right: -0vw;
+}

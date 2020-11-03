@@ -1,7 +1,7 @@
 import React from "react";
 import { Component } from "react";
-import "../style/sign_in.css";
-import hilmaicon from "../img/hilmawhite.svg";
+import "../../style/superAdmin/sign_in.css";
+import hilmaicon from "../../img/hilmawhite.svg";
 import { withRouter } from "react-router-dom";
 
 class SignIn extends Component {

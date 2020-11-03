@@ -1,7 +1,9 @@
 import React from 'react';
 import Select from 'react-select';
-import SelectStyle from '../style/select_style'
 import Fade from '@material-ui/core/Fade';
+import addicon from "../../img/addicon.svg";
+import SelectStyle from '../../style/superAdmin/select_style'
+
 
 class ClassData extends React.Component {
     constructor(props) {

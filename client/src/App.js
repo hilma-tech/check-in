@@ -4,18 +4,20 @@ import { BrowserRouter as Router,
   Route,
   Redirect } from 'react-router-dom'
 import './App.css';
-import TeachersList from './pages/TeachersList.jsx'
-import StudentsList from './pages/StudentsList.jsx'
-import GamesRouter from './component/WhiteBarRouter'
-import SchoolsList from './pages/SchoolsList.jsx'
-import AddGame from './pages/AddGame.jsx'
-import AddTeacher from './pages/AddTeacher.jsx'
-import EditSchool from './pages/EditSchool.jsx'
-import Menu from './component/Menu'
-import AddStudent from './pages/AddStudent.jsx'
-import EditGame from './pages/EditGame.jsx';
-import AddSchool from './pages/AddSchool.jsx'
-import SignIn from './pages/SignIn.jsx'
+import TeachersList from './pages/superAdmin/TeachersList.jsx'
+import StudentsList from './pages/superAdmin/StudentsList.jsx'
+import GamesRouter from './component/superAdmin/WhiteBarRouter.jsx'
+import SchoolsList from './pages/superAdmin/SchoolsList.jsx'
+import AddGame from './pages/superAdmin/AddGame.jsx'
+import AddTeacher from './pages/superAdmin/AddTeacher.jsx'
+import EditSchool from './pages/superAdmin/EditSchool.jsx'
+import Menu from './component/superAdmin/Menu.jsx'
+import AddStudent from './pages/superAdmin/AddStudent.jsx'
+import EditGame from './pages/superAdmin/EditGame.jsx';
+import AddSchool from './pages/superAdmin/AddSchool.jsx'
+import SignIn from './pages/superAdmin/SignIn.jsx'
+import Classes from './pages/teacher/Classes.jsx'
+import Students from './pages/teacher/Student.jsx'
 
 
 function App() {
@@ -30,6 +32,13 @@ function App() {
           </Route>
           <Route path='/signin' exact>
             <SignIn/>
+          </Route>
+          {/* teacher classes */}
+        <Route path='/classes' exact>
+            <Classes/>
+          </Route>
+          <Route path='/teachers/students' exact>
+            <Students/>
           </Route>
         <div className="everyPage">
           <Route path='/games'>
@@ -83,6 +92,7 @@ function App() {
             <h4>student edit</h4>
           </Route>
         </div>
+        
         </Switch>
       </Router>
     </div>

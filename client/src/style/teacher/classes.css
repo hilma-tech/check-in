@@ -1,0 +1,49 @@
+@font-face{
+  font-family: Gan-CLM;
+  src: url(../../Gan\ CLM\ Bold.ttf)
+}
+
+.griddler {
+  margin-top: 12vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: minmax(30vh, auto);
+  justify-items: center;
+  align-items: center;
+}
+
+.className {
+  width: 22vw;
+  position: absolute;
+  margin: 0px;
+  margin-top: -15vh;
+  margin-right: 6vw;
+  font-size: 8vh;
+  font-family: Gan-CLM;
+  letter-spacing: 0px;
+  z-index: 6;
+  justify-self: center;
+}
+
+.circle {
+  /* position: absolute; */
+  height: 20vh;
+  z-index: 3;
+}
+
+.circleCont {
+  position: relative;
+}
+
+.green {
+  color: #188749;
+}
+.pink {
+  color: #C20865;
+}
+.purple {
+  color: #8051AB;
+}
+.blue {
+  color: #0faebd;
+}

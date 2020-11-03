@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import WhiteBar from "../component/GameNavBar";
-import "../style/games_style.css";
+import "../../style/superAdmin/games_style.css";
+import optionicon from "../../img/optionicon.svg";
+import addicon from "../../img/addicon.svg";
+import WhiteBar from "../../component/superAdmin/GameNavBar.jsx";
+import { withRouter } from "react-router-dom";
 import Slide from '@material-ui/core/Slide';
 
 const images = [
@@ -19,18 +22,27 @@ const images = [
     url:
       "https://upload.wikimedia.org/wikipedia/commons/3/35/Olive_baboon_Ngorongoro.jpg",
   },
+  {
+    name: "Giraffe",
+    url: "https://www.andrewscamera.com/img/s/v-10/p1348222310-3.jpg"
+  }
 ];
 
-
-class SuspendedGames extends Component {
+class Games extends Component {
   constructor() {
     super();
     this.state = {
-      hi: "",
+      name: "hewwo",
       searchVal: '',
       displaySearch: false,
     };
   }
+  onClickAddGame = () => {
+    this.props.history.push(this.props.location.pathname + 'Add');
+  };
+  onClickEditGame = () => {
+    this.props.history.push(this.props.location.pathname + 'Edit');
+  };
 
   //Save the user search value as searchVal in state.
   handleChang = (e) => {
@@ -43,13 +55,13 @@ class SuspendedGames extends Component {
   }
   render() {
     return (
-      <div>
+      <>
         <div>
-          <WhiteBar active="suspended" />
+          <WhiteBar active="games" />
         </div>
         <div id="wholepage">
           <div id="searchbar">
-            <h5 className="title">משחקים מושהים</h5>
+            <h5 className="title">משחקים</h5>
             <form className='search' >
               <Slide direction="right" in={this.state.displaySearch} mountOnEnter unmountOnExit>
                 <input type="text" name='search' value={this.state.searchVal} placeholder="חיפוש" onChange={this.handleChang} />
@@ -58,21 +70,31 @@ class SuspendedGames extends Component {
             </form>
           </div>
           <div className="grid">
+            <div onClick={this.onClickAddGame}>
+              <div className="imageContainer item3">
+                <img className="addImg" src={addicon} alt="" />
+                <h2 className="gameTitleBackground"></h2>
+                <h1 className="gameTitle">הוסף משחק</h1>
+              </div>
+            </div>
             {images.map((image) => {
               return (
-                <div className="imageContainer item3">
-                  <img className="clockIcon" alt="" src='/icons/ionic-ios-stopwatch.svg' />
-                  <img className="gameImg" alt="" src={image.url} />
-                  <h2 className="holdGameTitleBackground"></h2>
-                  <h1 className="gameTitle">{image.name}</h1>
+                <div onClick={this.onClickEditGame}>
+                  <div className="imageContainer item3">
+                    <img className="optionIcon" alt="" src={optionicon} />
+                    <img className="gameImg" alt="" src={image.url} />
+                    <h2 className="gameTitleBackground"></h2>
+                    <h1 className="gameTitle">{image.name}</h1>
+                  </div>
                 </div>
               );
             })}
           </div>
         </div>
-      </div>
+        {/* </div> */}
+      </>
     );
   }
 }
 
-export default SuspendedGames;
+export default withRouter(Games);

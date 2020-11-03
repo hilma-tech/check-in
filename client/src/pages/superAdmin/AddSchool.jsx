@@ -1,9 +1,9 @@
 import React from 'react';
-import ArrowNavBar from '../component/ArrowNavBar'
-import ClassData from "../component/SchoolClassData";
-import "../style/form_style.css";
+import ArrowNavBar from '../../component/superAdmin/ArrowNavBar.jsx'
+import ClassData from "../../component/superAdmin/SchoolClassData.jsx";
+import "../../style/superAdmin/form_style.css";
 import { withRouter } from "react-router-dom";
-import { nameValidation, classNameValidation } from '../component/ValidationFunctions'
+import { nameValidation, classNameValidation } from '../../component/superAdmin/ValidationFunctions'
 
 
 class AddSchool extends React.Component {

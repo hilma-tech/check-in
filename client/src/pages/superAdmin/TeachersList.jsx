@@ -1,42 +1,50 @@
 import React from 'react';
-import GeneralTable from '../component/GeneralTable';
-import '../style/table_style.css'
 import Slide from '@material-ui/core/Slide';
+import GeneralTable from '../../component/superAdmin/GeneralTable.jsx';
+import '../../style/superAdmin/table_style.css'
 
-class SchoolsList extends React.Component {
+
+class TeachersList extends React.Component {
     constructor(props) {
         super()
         this.state = {
-            categors: ['שם בית הספר', 'עיר'],
-            listDataSchools: [{
+            categors: ['שם המורה', 'בית ספר', 'כיתות'],
+            listDataTeachers: [{
                 id: 1,
-                'שם בית הספר': 'עשה חיל',
-                'עיר': 'אפרת'
+                'שם המורה': 'נורית כהן',
+                'בית ספר': 'עשה חיל',
+                'כיתות': ["א'2", "ג'2"]
             },
             {
                 id: 2,
-                'שם בית הספר': 'עשה חיל',
-                'עיר': 'אפרת'
+                'שם המורה': 'נורית כהן',
+                'בית ספר': 'עשה חיל',
+                'כיתות': ["א'2", "ג'2"]
             }, {
                 id: 3,
-                'שם בית הספר': 'עשה חיל',
-                'עיר': 'אפרת'
+                'שם המורה': 'נורית כהן',
+                'בית ספר': 'עשה חיל',
+                'כיתות': ["א'2", "ג'2"]
             }, {
                 id: 4,
-                'שם בית הספר': 'עשה חיל',
-                'עיר': 'אפרת'
+                'שם המורה': 'נורית כהן',
+                'בית ספר': 'עשה חיל',
+                'כיתות': ["א'2", "ג'2"]
             }, {
                 id: 5,
-                'שם בית הספר': 'עשה חיל',
-                'עיר': 'אפרת'
+                'שם המורה': 'נורית כהן',
+                'בית ספר': 'עשה חיל',
+                'כיתות': ["א'2", "ג'2"]
             }, {
                 id: 6,
-                'שם בית הספר': 'עשה חיל',
-                'עיר': 'אפרת'
+                'שם המורה': 'נורית כהן',
+                'בית ספר': 'עשה חיל',
+                'כיתות': ["א'2", "ג'2"]
             }, {
                 id: 7,
-                'שם בית הספר': 'עשה חיל',
-                'עיר': 'אפרת'
+                'שם המורה': 'נורית כהן',
+                'בית ספר': 'עשה חיל',
+                'כיתות': ["א'2", "ג'2"]
             }], searchVal: '',
             displaySearch: false,
         }
@@ -53,9 +61,9 @@ class SchoolsList extends React.Component {
     }
     render() {
         return (
-            <div className='SchoolsList' dir="rtl">
+            <div className='TeachersList' dir="rtl">
                 <div className='PageTitles'>
-                    <p>בתי ספר</p>
+                    <p>מורים</p>
                     <form className='search' >
                         <Slide direction="right" in={this.state.displaySearch} mountOnEnter unmountOnExit>
                             <input type="text" name='search' value={this.state.searchVal} placeholder="חיפוש" onChange={this.handleChang} />
@@ -66,10 +74,11 @@ class SchoolsList extends React.Component {
                 {/*
                 Create the school table with the general teble.
             */}
-                <GeneralTable allData={this.state.listDataSchools}
+                <GeneralTable allData={this.state.listDataTeachers}
                     categors={this.state.categors} />
+
             </div>);
     }
 }
 
-export default SchoolsList;
+export default TeachersList;

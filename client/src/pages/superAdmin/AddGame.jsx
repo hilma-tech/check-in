@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import WhiteBar from "../component/ArrowNavBar";
-import "../style/add_game_style.css";
-import "../style/form_style.css";
-import GameFieldSelection from "../component/GameFieldSelection";
 import TextareaAutosize from 'react-textarea-autosize'
+import addicon from "../../img/addicon.svg";
+import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx";
+import "../../style/superAdmin/add_game_style.css";
+import "../../style/superAdmin/form_style.css";
+import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.jsx";
 
 class AddGame extends Component {
   constructor() {
@@ -260,7 +261,7 @@ class AddGame extends Component {
               id="addNewField"
               onClick={this.addNewFieldData}
             >
-              <img className="addIcon" src="/icons/addicon.svg"></img>
+              <img className="addIcon" src={addicon}></img>
               <p className="addTitle">הוסף שדה</p>
             </div>
             <br />
