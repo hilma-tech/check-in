@@ -34,6 +34,10 @@ class AddTeacher extends Component {
       fieldsData: [{ id: 0, value: "" }],
       email: "",
       password: "",
+      teacherNameError: { toShow: "none", mess: "" },
+      schoolNameError: { toShow: "none", mess: "" },
+      emailNameError: { toShow: "none", mess: "" },
+      passwordNameError: { toShow: "none", mess: "" }
     };
   }
 
@@ -91,19 +95,19 @@ class AddTeacher extends Component {
   validateInputFields = (e) => {
     e.preventDefault();
     let allOk = true;
-     // ----------teacher name validetion-------------------
-     let nameTeacherMess = nameValidation(this.state.teacherName);
-     if (nameTeacherMess.length !== 0) {
-       this.setState((prevState) => {
-         prevState.teacherNameError.toShow = "inline-block";
-         prevState.teacherNameError.mess = nameTeacherMess;
-         return { teacherNameError: prevState.teacherNameError };
-       });
-       allOk = false;
-     } else {
-       this.setState({ teacherNameError: { toShow: "none", mess: "" } });
-       allOk = true;
-     }
+    // ----------teacher name validetion-------------------
+    let nameTeacherMess = nameValidation(this.state.teacherName);
+    if (nameTeacherMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.teacherNameError.toShow = "inline-block";
+        prevState.teacherNameError.mess = nameTeacherMess;
+        return { teacherNameError: prevState.teacherNameError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ teacherNameError: { toShow: "none", mess: "" } });
+      allOk = true;
+    }
     // ----------school name validetion-------------------
     let nameSchoolMess = mustInputValidation(this.state.schoolName);
     if (nameSchoolMess.length !== 0) {
@@ -161,17 +165,19 @@ class AddTeacher extends Component {
               {/* מורה */}
               <label className="fieldTitle ">
                 שם המורה:
-                <input
-                  className="inputFields spaceFromTitles"
-                  type="text"
-                  placeholder="הכנס את שם המורה..."
-                  onBlur={this.saveTeacherName}
-                />
+              <p className='error' style={{display:this.state.teacherNameError.toShow}}>{this.state.teacherNameError.mess}</p>
+              <input
+                className="inputFields spaceFromTitles"
+                type="text"
+                placeholder="הכנס את שם המורה..."
+                onBlur={this.saveTeacherName}
+              />
               </label>
 
               {/* בית ספר */}
               <label className="fieldTitle">
                 בית ספר:
+                <p className='error' style={{display:this.state.schoolNameError.toShow}}>{this.state.schoolNameError.mess}</p>
                 <Select
                   className="spaceFromTitles thinnerFont"
                   onChange={this.saveSchoolName}
@@ -214,6 +220,7 @@ class AddTeacher extends Component {
               {/* אימייל */}
               <label className="fieldTitle">
                 אימייל:
+              <p className='error' style={{display:this.state.emailNameError.toShow}}>{this.state.emailNameError.mess}</p>
                 <input
                   onBlur={this.saveEmail}
                   className="inputFields spaceFromTitles"
@@ -224,6 +231,7 @@ class AddTeacher extends Component {
               {/* סיסמא */}
               <label className="fieldTitle pageEnd">
                 סיסמא:
+              <p className='error' style={{display:this.state.passwordNameError.toShow}}>{this.state.passwordNameError.mess}</p>
                 <input
                   onBlur={this.savePassword}
                   className="inputFields spaceFromTitles"
@@ -232,7 +240,7 @@ class AddTeacher extends Component {
                 />
               </label>
             </form>
-            <button className="saveButton">שמור</button>
+            <button className="saveButton" onClick={this.validateInputFields}>שמור</button>
           </div>
         </div>
       </>
