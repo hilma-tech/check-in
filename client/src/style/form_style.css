@@ -50,10 +50,9 @@
 .inputFields{
     background: rgba(188, 188, 203, 0.2) 0% 0% no-repeat padding-box;
     border-radius: 10px;
-    opacity: 0.2;
     border-color: rgba(255, 255, 255, 0);
     border-style: solid;
-    padding-right: 3px;
+    padding-right:  0.5vw;
     text-align: right;
     letter-spacing: 0px;
     color: #043163;
@@ -67,4 +66,8 @@
     text-align: start;
     width: 40vw;
     height: 2.5vh;
+}
+
+.fieldName{
+    padding-right: 0.5vw !important;
 }

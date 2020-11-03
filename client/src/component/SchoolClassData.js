@@ -1,7 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import SelectStyle from '../style/select_style'
-import '../style/animation_w3school.css'
+import Fade from '@material-ui/core/Fade';
 
 class ClassData extends React.Component {
     constructor(props) {
@@ -52,7 +52,7 @@ class ClassData extends React.Component {
         return (
             <>
                 <p class='error' style={{ display: this.props.classData.classNameError.toShow }}>{this.props.classData.classNameError.mess}</p>
-                
+
                 <div className='TeachersSelect' >
                     <img src='/icons/ionic-ios-arrow-down.svg' className={this.state.showClass ? 'showClassButton' : 'hideClassButton'} onClick={this.transitionIcon}></img>
                     <input value={this.props.classData.name} onChange={this.props.handleChange} placeholder='הכנס שם בית ספר' name={'name_' + this.props.classIndex} placeholder='הכנס שם כיתה' className='editSchoolClassesInput inputFields'></input>
@@ -60,24 +60,27 @@ class ClassData extends React.Component {
 
                 </div>
                 {/*w3-animate-opacity class make sure that the fading will happens only once. */}
-                <div className={this.state.showClass ? 'w3-animate-fading w3-animate-opacity showSchoolClassTeacher' : 'hideSchoolClassTeacher'}>
-                    <label for='schoolClassTeacher' className='editSchoolClassTeacherLable'>מורים:</label>
-                    <div className='allEditSchoolClassTeacherSelect'>
-                        {
-                            this.returnTeahcersSelections()
-                        }
-                    </div>
-                    <div className='editSchoolClassTeacherButtons'>
-                        <div className='editSchoolClassAddExistTeacher addSomethingNew' onClick={() => { this.props.addTeacherToClass(this.props.classIndex) }}>
-                            <img className='addIcon' src='/icons/addicon.svg'></img>
-                            <p className='addTitle'>הוסף מורה קיים</p>
+                <Fade in={this.state.showClass}>
+                    <div className={this.state.showClass ? 'showSchoolClassTeacher' : 'hideSchoolClassTeacher'}>
+                        <label for='schoolClassTeacher' className='editSchoolClassTeacherLable'>מורים:</label>
+                        <div className='allEditSchoolClassTeacherSelect'>
+                            {
+                                this.returnTeahcersSelections()
+                            }
                         </div>
-                        <div className='addSomethingNew'>
-                            <img className='addIcon' src='/icons/addicon.svg'></img>
-                            <p className='addTitle'>הוסף מורה חדש</p>
+                        <div className='editSchoolClassTeacherButtons'>
+                            {this.props.canAddExistTeacher ?
+                            <div className='editSchoolClassAddExistTeacher addSomethingNew' onClick={() => { this.props.addTeacherToClass(this.props.classIndex) }}>
+                                <img className='addIcon' src='/icons/addicon.svg'></img>
+                                <p className='addTitle'>הוסף מורה קיים</p>
+                            </div> : <></>}
+                            <div className='addSomethingNew'>
+                                <img className='addIcon' src='/icons/addicon.svg'></img>
+                                <p className='addTitle'>הוסף מורה חדש</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </Fade>
             </>
         );
     }

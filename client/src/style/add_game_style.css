@@ -14,12 +14,13 @@
   margin-right: 3vw;
   color: #043163;
   font-weight: lighter;
+  font-family: 'Assistant', sans-serif;
 }
 
 .extendedField {
   margin: 0px;
+  min-height: 35px;
   resize: none;
-  height: 70px;
 }
 
 .addField {
@@ -152,4 +153,10 @@
 
 .marginTop {
   margin-top: 2vh;
+}
+
+textarea::placeholder{
+  margin: 0;
+  font-family: 'Assistant', sans-serif;
+  font-weight: lighter;
 }

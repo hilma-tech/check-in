@@ -73,7 +73,7 @@ class GameFieldSelection extends Component {
                   <input
                     defaultValue={input[0].value}
                     onBlur={this.sendFieldValue}
-                    className="inputFields"
+                    className="inputFields fieldName"
                     type="text"
                     id={inputId}
                   />

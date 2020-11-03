@@ -3,6 +3,7 @@ import WhiteBar from "../component/ArrowNavBar";
 import "../style/add_game_style.css";
 import "../style/form_style.css";
 import GameFieldSelection from "../component/GameFieldSelection";
+import TextareaAutosize from 'react-textarea-autosize'
 
 class AddGame extends Component {
   constructor() {
@@ -175,7 +176,6 @@ class AddGame extends Component {
       }
     });
   };
-  
 
   render() {
     return (
@@ -198,19 +198,19 @@ class AddGame extends Component {
               <label className="fieldTitle">
                 תיאור המשחק:
                 <p className='error' style={{display:this.state.errorMessages[1].toShow}}>{this.state.errorMessages[1].mess}</p>
-                <textarea
+                <TextareaAutosize
                   className="inputFields marginTop extendedField"
-                  placeholder=""
+                  placeholder="הכנס תיאור משחק..."
                   id="gameDescription"
-                  onBlur={this.updateBasicInfo}
+                  onChange={this.updateBasicInfo}
                 />
               </label>
               <label className="fieldTitle">
                 דרישות המשחק:
                 <p className='error' style={{display:this.state.errorMessages[2].toShow}}>{this.state.errorMessages[2].mess}</p>
-                <textarea
+                <TextareaAutosize
                   className="inputFields marginTop extendedField"
-                  placeholder=""
+                  placeholder="הכנס דרישות משחק..."
                   id="gameRequirements"
                   onBlur={this.updateBasicInfo}
                 />

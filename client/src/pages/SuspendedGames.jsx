@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import WhiteBar from "../component/GameNavBar";
 import "../style/games_style.css";
-import optionicon from "../img/optionicon.svg";
-import searchicon from "../img/search.svg";
+import Slide from '@material-ui/core/Slide';
 
 const images = [
   {
@@ -26,7 +25,21 @@ const images = [
 class SuspendedGames extends Component {
   constructor() {
     super();
-    this.state = { hi: "" };
+    this.state = {
+      hi: "",
+      searchVal: '',
+      displaySearch: false,
+    };
+  }
+
+  //Save the user search value as searchVal in state.
+  handleChang = (e) => {
+    this.setState({ searchVal: e.target.value })
+  }
+
+  //When the user press the search icon it's start to show the input text for the searching.
+  activateSearch = () => {
+    this.setState({ displaySearch: true})
   }
   render() {
     return (
@@ -37,7 +50,12 @@ class SuspendedGames extends Component {
         <div id="wholepage">
           <div id="searchbar">
             <h5 className="title">משחקים מושהים</h5>
-            <img className="searchIcon" src={searchicon} />
+            <form className='search' >
+              <Slide direction="right" in={this.state.displaySearch} mountOnEnter unmountOnExit>
+                <input type="text" name='search' value={this.state.searchVal} placeholder="חיפוש" onChange={this.handleChang} />
+              </Slide>
+              <p className='searchIcon' onClick={this.activateSearch}></p>
+            </form>
           </div>
           <div className="grid">
             {images.map((image) => {

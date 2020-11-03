@@ -161,6 +161,7 @@ class AddSchool extends React.Component {
                         this.state.classes.map((classData, classIndex) => {
                             //The component get the class data as props.classData.
                             return <ClassData key={classData.id}
+                                canAddExistTeacher={false}
                                 classData={classData}
                                 classIndex={classIndex}
                                 addTeacherToClass={this.addTeacherToClass}

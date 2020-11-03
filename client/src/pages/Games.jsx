@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import "../style/games_style.css";
 import optionicon from "../img/optionicon.svg";
 import addicon from "../img/addicon.svg";
-import searchicon from "../img/search.svg";
 import WhiteBar from "../component/GameNavBar.js";
 import { withRouter } from "react-router-dom";
-
+import Slide from '@material-ui/core/Slide';
 
 const images = [
   {
@@ -23,12 +22,20 @@ const images = [
     url:
       "https://upload.wikimedia.org/wikipedia/commons/3/35/Olive_baboon_Ngorongoro.jpg",
   },
+  {
+    name: "Giraffe",
+    url: "https://www.andrewscamera.com/img/s/v-10/p1348222310-3.jpg"
+  }
 ];
 
 class Games extends Component {
   constructor() {
     super();
-    this.state = { name: "hewwo" };
+    this.state = {
+      name: "hewwo",
+      searchVal: '',
+      displaySearch: false,
+    };
   }
   onClickAddGame = () => {
     this.props.history.push(this.props.location.pathname + 'Add');
@@ -36,16 +43,31 @@ class Games extends Component {
   onClickEditGame = () => {
     this.props.history.push(this.props.location.pathname + 'Edit');
   };
+
+  //Save the user search value as searchVal in state.
+  handleChang = (e) => {
+    this.setState({ searchVal: e.target.value })
+  }
+
+  //When the user press the search icon it's start to show the input text for the searching.
+  activateSearch = () => {
+    this.setState({ displaySearch: true})
+  }
   render() {
     return (
       <>
         <div>
-          <WhiteBar active="games"/>
+          <WhiteBar active="games" />
         </div>
         <div id="wholepage">
           <div id="searchbar">
             <h5 className="title">משחקים</h5>
-            <img className="searchIcon" src={searchicon} />
+            <form className='search' >
+              <Slide direction="right" in={this.state.displaySearch} mountOnEnter unmountOnExit>
+                <input type="text" name='search' value={this.state.searchVal} placeholder="חיפוש" onChange={this.handleChang} />
+              </Slide>
+              <p className='searchIcon' onClick={this.activateSearch}></p>
+            </form>
           </div>
           <div className="grid">
             <div onClick={this.onClickAddGame}>

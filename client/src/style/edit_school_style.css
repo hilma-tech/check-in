@@ -79,10 +79,11 @@
 
 
 .hideClassButton , .showClassButton{
-    margin-right: 0.5vw;
-    margin-top: 2vh;
-    width: 2vw;
-    height: 2vh;
+    margin-right: 1vw;
+    margin-top: 1.5vh;
+    margin-left: 0.5vw;
+    width: 1.5vw;
+    height: 3.5vh;
 }
 
 .hideSchoolClassTeacher{
@@ -114,10 +115,6 @@
     margin: 0.5vw;
 }
 
-/* .classNameError{
-    background-color: red;
-    color: #ffff;
-    margin: 1vh;
-    width: 18vw;
-    height: 5vh;
-} */
+.TeachersSelect{
+    margin-top: 1vh;
+}

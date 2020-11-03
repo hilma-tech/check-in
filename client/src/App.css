@@ -2,7 +2,6 @@
   text-align: center;
   height: 10vh;
   font-family: 'Assistant', sans-serif;
-
 }
 
 .App-logo {
@@ -44,4 +43,9 @@
 .everyPage {
   position: relative;
   margin-top: 15vh;
+}
+
+
+input:focus, textarea:focus, button:focus{
+  outline: none;
 }

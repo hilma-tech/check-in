@@ -24,7 +24,7 @@ class AddTeacher extends Component {
     this.state = {
       teacherName: "",
       schoolName: "",
-      fieldsData: [{ id: 0, value: "" }],
+      fieldsData: [{ id: 0, value: '' }],
       email: "",
       password: "",
     };
@@ -118,11 +118,11 @@ class AddTeacher extends Component {
                 return (
                   <div className=" thinnerFont">
                     <ClassSelection
-                      
+                      key={fieldObj.id}
                       id={fieldObj.id}
                       removal={this.triggerRemoval}
                       saveValue={this.saveValue}
-                      options={this.classOptions}
+                      options={this.classOptions.filter((classOption)=>{return (this.state.fieldsData.filter((chosenOption)=>{return chosenOption.value === classOption.value}).length === 0)})}
                       onChange={this.saveChange}
                     />
                     <br />

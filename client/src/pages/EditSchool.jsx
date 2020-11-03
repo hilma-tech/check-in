@@ -87,7 +87,7 @@ class editSchool extends Component {
     })
   }
 
-  
+
   removeClass = (classIndex) => {
     this.setState((prevState) => {
       let tempData = [...prevState.classes]
@@ -102,78 +102,78 @@ class editSchool extends Component {
     /* data validetion  */
     // ----------school name validetion-------------------
     if (this.state.schoolName.length === 0) {
-        this.setState((prevState) => {
-            prevState.schoolNameError.toShow = 'inline-block'
-            prevState.schoolNameError.mess = '** חייב להכניס שם בית ספר **'
-            return { schoolNameError: prevState.schoolNameError }
-        })
-        allOk = false
+      this.setState((prevState) => {
+        prevState.schoolNameError.toShow = 'inline-block'
+        prevState.schoolNameError.mess = '** חייב להכניס שם בית ספר **'
+        return { schoolNameError: prevState.schoolNameError }
+      })
+      allOk = false
     } else if ((/[a-z]/).test(this.state.schoolName) || (/[A-Z]/).test(this.state.schoolName) || (/[!@#$%^&*()_+\=\[\]{};:\\|<>\/?~`]/).test(this.state.schoolName)) {
+      this.setState((prevState) => {
+        prevState.schoolNameError.toShow = 'inline-block'
+        prevState.schoolNameError.mess = '** שם בית הספר לא תקין **'
+        return { schoolNameError: prevState.schoolNameError }
+      })
+      allOk = false
+    } else if (this.state.schoolName.includes('"') || this.state.schoolName.includes("'") || this.state.schoolName.includes('.') || this.state.schoolName.includes(',') || this.state.schoolName.includes('-')) {
+      if (!(/[\u0590-\u05FF]+["',-]+[\u0590-\u05FF]/).test(this.state.schoolName) || !(/[\u0590-\u05FF]+[.]/).test(this.state.schoolName)) {
         this.setState((prevState) => {
-            prevState.schoolNameError.toShow = 'inline-block'
-            prevState.schoolNameError.mess = '** שם בית הספר לא תקין **'
-            return { schoolNameError: prevState.schoolNameError }
+          prevState.schoolNameError.toShow = 'inline-block'
+          prevState.schoolNameError.mess = '** שם בית הספר לא תקין **'
+          return { schoolNameError: prevState.schoolNameError }
         })
         allOk = false
-    } else if (this.state.schoolName.includes('"') || this.state.schoolName.includes("'") || this.state.schoolName.includes('.') || this.state.schoolName.includes(',') || this.state.schoolName.includes('-')) {
-        if (!(/[\u0590-\u05FF]+["',-]+[\u0590-\u05FF]/).test(this.state.schoolName) || !(/[\u0590-\u05FF]+[.]/).test(this.state.schoolName)) {
-            this.setState((prevState) => {
-                prevState.schoolNameError.toShow = 'inline-block'
-                prevState.schoolNameError.mess = '** שם בית הספר לא תקין **'
-                return { schoolNameError: prevState.schoolNameError }
-            })
-            allOk = false
-        }
+      }
     } else {
-        this.setState({ schoolNameError: { toShow: 'none', mess: '' } })
+      this.setState({ schoolNameError: { toShow: 'none', mess: '' } })
     }
 
     for (let i = 0; i < this.state.classes.length; i++) {
-        if (this.state.classes[i].name.length === 0) {
-            this.setState((prevState) => {
-                prevState.classes[i].classNameError.toShow = 'inline-block'
-                prevState.classes[i].classNameError.mess = '** חייב להכניס שם של כיתה **'
-                return { classes: prevState.classes }
-            })
-            allOk = false
-        } else if (this.state.classes[i].name.length > 10) {
-            this.setState((prevState) => {
-                prevState.classes[i].classNameError.toShow = 'inline-block'
-                prevState.classes[i].classNameError.mess = '** שם הכיתה ארוך מידי **'
-                return { classes: prevState.classes }
-            })
-            allOk = false
-        } else if ((/[a-z]/).test(this.state.classes[i].name) || (/[A-Z]/).test(this.state.classes[i].name) || (/[!@#$%^&*()_+,\=\[\]{};:\\|<>\/?~`]/).test(this.state.classes[i].name)) {
-            this.setState((prevState) => {
-                prevState.classes[i].classNameError.toShow = 'inline-block'
-                prevState.classes[i].classNameError.mess = '** שם הכיתה לא תקין **'
-                return { classes: prevState.classes }
-            })
-            allOk = false
-        } else if (this.state.classes[i].name.includes('"') || this.state.classes[i].name.includes("'") || this.state.classes[i].name.includes('.') || this.state.classes[i].name.includes('-')) {
-            if (!((/[\u0590-\u05FF]+[",-]+[\u0590-\u05FF]/).test(this.state.classes[i].name) || (/[\u0590-\u05FF]+[']/).test(this.state.classes[i].name) || (/[\u0590-\u05FF]+[.]/).test(this.state.classes[i].name))) {
-                this.setState((prevState) => {
-                    prevState.classes[i].classNameError.toShow = 'inline-block'
-                    prevState.classes[i].classNameError.mess = '** שם הכיתה לא תקין **'
-                    return { classes: prevState.classes }
-                })
-                allOk = false
-            }
-        } else {
-            this.setState((prevState) => {
-                prevState.classes[i].classNameError.toShow = 'none'
-                prevState.classes[i].classNameError.mess = ''
-                return { classes: prevState.classes }
-            })
+      if (this.state.classes[i].name.length === 0) {
+        this.setState((prevState) => {
+          prevState.classes[i].classNameError.toShow = 'inline-block'
+          prevState.classes[i].classNameError.mess = '** חייב להכניס שם של כיתה **'
+          return { classes: prevState.classes }
+        })
+        allOk = false
+      } else if (this.state.classes[i].name.length > 10) {
+        this.setState((prevState) => {
+          prevState.classes[i].classNameError.toShow = 'inline-block'
+          prevState.classes[i].classNameError.mess = '** שם הכיתה ארוך מידי **'
+          return { classes: prevState.classes }
+        })
+        allOk = false
+      } else if ((/[a-z]/).test(this.state.classes[i].name) || (/[A-Z]/).test(this.state.classes[i].name) || (/[!@#$%^&*()_+,\=\[\]{};:\\|<>\/?~`]/).test(this.state.classes[i].name)) {
+        this.setState((prevState) => {
+          prevState.classes[i].classNameError.toShow = 'inline-block'
+          prevState.classes[i].classNameError.mess = '** שם הכיתה לא תקין **'
+          return { classes: prevState.classes }
+        })
+        allOk = false
+      } else if (this.state.classes[i].name.includes('"') || this.state.classes[i].name.includes("'") || this.state.classes[i].name.includes('.') || this.state.classes[i].name.includes('-')) {
+        if (!((/[\u0590-\u05FF]+[",-]+[\u0590-\u05FF]/).test(this.state.classes[i].name) || (/[\u0590-\u05FF]+[']/).test(this.state.classes[i].name) || (/[\u0590-\u05FF]+[.]/).test(this.state.classes[i].name))) {
+          this.setState((prevState) => {
+            prevState.classes[i].classNameError.toShow = 'inline-block'
+            prevState.classes[i].classNameError.mess = '** שם הכיתה לא תקין **'
+            return { classes: prevState.classes }
+          })
+          allOk = false
         }
+      } else {
+        this.setState((prevState) => {
+          prevState.classes[i].classNameError.toShow = 'none'
+          prevState.classes[i].classNameError.mess = ''
+          return { classes: prevState.classes }
+        })
+      }
     }
 
 
     //after all the validetion we need to send the data to sql
     if (allOk) {
-        this.props.history.goBack() // after saving go back
+      this.props.history.goBack() // after saving go back
     }
-}
+  }
 
 
   render() {
@@ -201,6 +201,7 @@ class editSchool extends Component {
               this.state.classes.map((classData, classIndex) => {
                 //The component get the class data as props.classData.
                 return <ClassData key={classData.id}
+                  canAddExistTeacher={true}
                   classData={classData}
                   classIndex={classIndex}
                   addTeacherToClass={this.addTeacherToClass}
