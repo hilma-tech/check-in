@@ -5,6 +5,8 @@ import addicon from "../../img/addicon.svg";
 import WhiteBar from "../../component/superAdmin/GameNavBar.jsx";
 import { withRouter } from "react-router-dom";
 import Slide from '@material-ui/core/Slide';
+import PopUp from '../../component/superAdmin/GamePopUpMenu.jsx'
+import Fade from "@material-ui/core/Fade";
 
 const images = [
   {
@@ -35,13 +37,14 @@ class Games extends Component {
       name: "hewwo",
       searchVal: '',
       displaySearch: false,
+      display: false
     };
   }
   onClickAddGame = () => {
     this.props.history.push(this.props.location.pathname + 'Add');
   };
   onClickEditGame = () => {
-    this.props.history.push(this.props.location.pathname + 'Edit');
+    //this.props.history.push(this.props.location.pathname + 'Edit');
   };
 
   //Save the user search value as searchVal in state.
@@ -81,6 +84,9 @@ class Games extends Component {
               return (
                 <div onClick={this.onClickEditGame}>
                   <div className="imageContainer item3">
+                    {/* <Fade in={false}>
+                      <PopUp/> 
+                    </Fade> */}
                     <img className="optionIcon" alt="" src={optionicon} />
                     <img className="gameImg" alt="" src={image.url} />
                     <h2 className="gameTitleBackground"></h2>
