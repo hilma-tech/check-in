@@ -17,7 +17,6 @@ class SmallNavBar extends Component {
   }
 
   render() {
-      console.log(window.location.pathname);
     return (
       <>
         <div className="smallBackground">
