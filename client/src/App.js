@@ -15,7 +15,7 @@ import Menu from './component/superAdmin/Menu.jsx'
 import AddStudent from './pages/superAdmin/AddStudent.jsx'
 import EditGame from './pages/superAdmin/EditGame.jsx';
 import AddSchool from './pages/superAdmin/AddSchool.jsx'
-import SignIn from './pages/superAdmin/SignIn.jsx'
+import SignIn from './pages/SignIn.jsx'
 import Classes from './pages/teacher/Classes.jsx'
 import Students from './pages/teacher/Student.jsx'
 // 
@@ -39,60 +39,60 @@ function App() {
             <Draft/>
           </Route>
           {/* teacher classes */}
-        <Route path='/classes' exact>
+        <Route path='/teacher/classes' exact>
             <Classes/>
           </Route>
-          <Route path='/teachers/students' exact>
+          <Route path='/teacher/students' exact>
             <Students/>
           </Route>
         <div className="everyPage">
-          <Route path='/games'>
+          <Route path='/superAdmin/games'>
           <Menu />
             <GamesRouter/>
           </Route>
-          <Route path='/schools' exact>
+          <Route path='/superAdmin/schools' exact>
           <Menu />
             <SchoolsList/>
           </Route>
-          <Route path='/teachers' exact>
+          <Route path='/superAdmin/teachers' exact>
           <Menu />
             <TeachersList />
           </Route>
-          <Route path='/students' exact>
+          <Route path='/superAdmin/students' exact>
           <Menu />
             <StudentsList />
           </Route>
 
-          <Route path='/studentsAdd' exact>
+          <Route path='/superAdmin/studentsAdd' exact>
           <Menu />
             <AddStudent />
           </Route>
-          <Route path='/teachersAdd' exact>
+          <Route path='/superAdmin/teachersAdd' exact>
           <Menu />
             <AddTeacher/>
           </Route>
-          <Route path='/gamesAdd' exact>
+          <Route path='/superAdmin/gamesAdd' exact>
           <Menu />
             <AddGame/>
           </Route>
-          <Route path='/schoolsAdd' exact>
+          <Route path='/superAdmin/schoolsAdd' exact>
           <Menu />
             <AddSchool />
           </Route>
 
-          <Route path='/gamesEdit' exact>
+          <Route path='/superAdmin/gamesEdit' exact>
           <Menu />
             <EditGame/>
           </Route>
-          <Route path='/schoolsEdit' exact>
+          <Route path='/superAdmin/schoolsEdit' exact>
           <Menu />
             <EditSchool />
           </Route>
-          <Route path='/teachersEdit' exact>
+          <Route path='/superAdmin/teachersEdit' exact>
           <Menu />
             <h4>teacher edit</h4>
           </Route>
-          <Route path='/studentsEdit' exact>
+          <Route path='/superAdmin/studentsEdit' exact>
           <Menu />
             <h4>student edit</h4>
           </Route>

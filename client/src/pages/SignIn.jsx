@@ -1,7 +1,7 @@
 import React from "react";
 import { Component } from "react";
-import "../../style/superAdmin/sign_in.css";
-import hilmaicon from "../../img/hilmawhite.svg";
+import "../style/superAdmin/sign_in.css";
+import hilmaicon from "../img/hilmawhite.svg";
 import { withRouter } from "react-router-dom";
 
 class SignIn extends Component {
@@ -46,7 +46,7 @@ class SignIn extends Component {
           prevState.errorMessages[index].mess = ''
           return {errorMessages: prevState.errorMessages}
         })
-        this.props.history.push('/games')
+        this.props.history.push('/superAdmin/games')
       }
     });
   };

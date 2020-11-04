@@ -29,8 +29,8 @@ class Menu extends React.Component {
                             וככה זה מראה רק את השם של העמוד שבחרנו מודגש ואת שאר העמודים זה מראה רגיל
                             */
                             this.state.pagesNames.map((pageName, index) => {
-                                return !this.props.location.pathname.includes(this.state[pageName]) ? <a className='menuBluePages' key={index} href={'/' + this.state[pageName]}>{pageName}</a> :
-                                    <a key={index} href={'/' + this.state[pageName]} className='optionBold menuBluePages'>{pageName}</a>
+                                return !this.props.location.pathname.includes(this.state[pageName]) ? <a className='menuBluePages' key={index} href={'/superAdmin/' + this.state[pageName]}>{pageName}</a> :
+                                    <a key={index} href={'/superAdmin/' + this.state[pageName]} className='optionBold menuBluePages'>{pageName}</a>
 
                             })}
                     </div>
