@@ -13,6 +13,7 @@ import {
   passwordValidation,
   emailValidation
 } from "../../component/superAdmin/ValidationFunctions";
+import { withRouter } from "react-router-dom";
 
 class AddTeacher extends Component {
   constructor() {
@@ -165,19 +166,20 @@ class AddTeacher extends Component {
               {/* מורה */}
               <label className="fieldTitle ">
                 שם המורה:
-              <p className='error' style={{display:this.state.teacherNameError.toShow}}>{this.state.teacherNameError.mess}</p>
+              </label>
+              <p className='error' style={{ display: this.state.teacherNameError.toShow }}>{this.state.teacherNameError.mess}</p>
               <input
-                className="inputFields spaceFromTitles"
+                className="inputFields"
                 type="text"
                 placeholder="הכנס את שם המורה..."
                 onBlur={this.saveTeacherName}
               />
-              </label>
 
               {/* בית ספר */}
               <label className="fieldTitle">
                 בית ספר:
-                <p className='error' style={{display:this.state.schoolNameError.toShow}}>{this.state.schoolNameError.mess}</p>
+              </label>
+                <p className='error' style={{ display: this.state.schoolNameError.toShow }}>{this.state.schoolNameError.mess}</p>
                 <Select
                   className="spaceFromTitles thinnerFont"
                   onChange={this.saveSchoolName}
@@ -185,7 +187,6 @@ class AddTeacher extends Component {
                   styles={SelectStyle()}
                   defaultValue={{ value: "default", label: "שייך לבית ספר" }}
                 />
-              </label>
               {/* כיתה */}
               <label className="fieldTitle">כיתה:</label>
               <div className="spaceFromTitles">
@@ -199,7 +200,7 @@ class AddTeacher extends Component {
                         options={this.classOptions}
                         onChange={this.saveChange}
                       />
-                      <br />
+                      {/* <br /> */}
                     </div>
                   );
                 })}
@@ -220,25 +221,25 @@ class AddTeacher extends Component {
               {/* אימייל */}
               <label className="fieldTitle">
                 אימייל:
-              <p className='error' style={{display:this.state.emailNameError.toShow}}>{this.state.emailNameError.mess}</p>
-                <input
-                  onBlur={this.saveEmail}
-                  className="inputFields spaceFromTitles"
-                  type="text"
-                  placeholder="הכנס כתובת מייל..."
-                />
               </label>
+              <p className='error' style={{ display: this.state.emailNameError.toShow }}>{this.state.emailNameError.mess}</p>
+              <input
+                onBlur={this.saveEmail}
+                className="inputFields spaceFromTitles"
+                type="text"
+                placeholder="הכנס כתובת מייל..."
+              />
               {/* סיסמא */}
-              <label className="fieldTitle pageEnd">
+              <label className="fieldTitle">
                 סיסמא:
-              <p className='error' style={{display:this.state.passwordNameError.toShow}}>{this.state.passwordNameError.mess}</p>
-                <input
-                  onBlur={this.savePassword}
-                  className="inputFields spaceFromTitles"
-                  type="text"
-                  placeholder="הכנס סיסמא..."
-                />
               </label>
+              <p className='error' style={{ display: this.state.passwordNameError.toShow }}>{this.state.passwordNameError.mess}</p>
+              <input
+                onBlur={this.savePassword}
+                className="inputFields"
+                type="text"
+                placeholder="הכנס סיסמא..."
+              />
             </form>
             <button className="saveButton" onClick={this.validateInputFields}>שמור</button>
           </div>
@@ -248,4 +249,4 @@ class AddTeacher extends Component {
   }
 }
 
-export default AddTeacher;
+export default withRouter(AddTeacher);

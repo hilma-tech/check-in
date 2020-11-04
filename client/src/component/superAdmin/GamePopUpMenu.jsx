@@ -12,12 +12,12 @@ class GamePopUpMenu extends Component {
     return (
       <div className="popUp">
         <div className="optionRow">
-            <EditIcon style={{height: "3.5vh", width: "4vh", marginRight: "0.5vw"}}/>
+            <EditIcon style={{height: "1.5vw", width: "1.5vw", marginRight: "0.5vw", marginTop:'0.3vw', color:'#043163'}}/>
           <h1 className="popUpOpt">ערוך</h1>
         </div>
         <hr className="divider"/>
         <div className="optionRow">
-        <DeleteIcon style={{height: "4vh", width: "4vh", marginRight: "0.5vw"}}/>
+        <DeleteIcon style={{height: "1.5vw", width: "1.5vw", marginRight: "0.5vw", marginTop:'0.3vw', color:'#043163'}}/>
           <h1 className="popUpOpt">מחק</h1>
         </div>
         <hr className="divider"/>

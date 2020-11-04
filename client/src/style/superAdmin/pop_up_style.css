@@ -5,17 +5,17 @@
     opacity: 1;
     background-color: white;
     border-radius: 10%;
-    height: 15vh;
-    width: 17vh;
+    height: 8.5vw;
+    width: 7.8vw;
     z-index: 10;
     margin: 0px;
-    margin-right: 9.5vw;
-    margin-top: 2vh;
+    margin-right: 10vw;
+    margin-top: 1vw;
 }
 
 .popUpOpt {
     margin: 0px;
-    font-size: 3vh;
+    font-size: 1.5vw;
     font-weight: 200;
     text-align: right;
     margin-right: 1vw;
@@ -24,7 +24,7 @@
 .divider {
     border: 0.5px solid #dbdbdb;
     width: 80%;
-    margin: 0.5vh;
+    margin: 0.5vw;
     align-self: center;
 }
 
@@ -34,9 +34,9 @@
 }
 
 .popUpIcon {
-    height:3vh;
-    width: 4vh;
-    margin-top: 0.2vh;
+    height:1.2vw;
+    width: 1.2vw;
+    margin-top: 0.3vw;
     margin-right: 0.5vw;
 }
 

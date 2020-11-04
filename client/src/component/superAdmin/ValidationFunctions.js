@@ -4,14 +4,14 @@ export function userNameValidation(userName) {
         return '** חייב להכניס שם משתמש **'
     } else if (userName.length > 30 || userName.length < 8) {
         return '** שם משתמש לא תקין **'
-    } else if (!(/[!@#$"%^,.&*()_+\=\[\]{}'-;:\\|<>\/?~`\s]/).test(userName)) {
+    } else if ((/[!@#$"%^,.&*()_+\=\[\]{}'-;:\\|<>\/?~`\s]/).test(userName)) {
         return '** שם משתמש לא תקין **'
     } else {
         return ''
     }
 }
 
-//Check validation for names (teacher, student or school)
+//Check validation for names (teacher, student, school or games)
 export function nameValidation(name) {
     if (name.length === 0) {
         return '** חייב להכניס שדה זה **'
@@ -48,9 +48,9 @@ export function classNameValidation(name) {
 export function passwordValidation(password) {
     if (password.length === 0) {
         return '** חייב להכניס סיסמא **'
-    } else if (password.length < 30 || password.length < 8) {
+    } else if (password.length > 30 || password.length < 8) {
         return '** סיסמא לא תקינה **'
-    }else if (!(/[!@#$"%^,.&*()_+\=\[\]{}'-;:\\|<>\/?~`\s]/).test(password)) {
+    }else if ((/[!@#$"%^,.&*()_+\=\[\]{}'-;:\\|<>\/?~`\s]/).test(password)) {
         return '** סיסמא לא תקינה **'
     } else {
         return ''

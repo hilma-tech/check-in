@@ -2,6 +2,8 @@
     margin-right: 9vw;
     width: 45vw;
     color: #043163;
+    text-align: start;
+    margin-top: 2vh;
 }
 
 .deletButton {
@@ -38,13 +40,13 @@
     align-items: center;
 }
 .addIcon{
-    width: 2vw;
-    height: 2vw;
+    width: 1.5vw;
+    height: 1.5vw;
 }
 
 .addTitle{
     padding-right: 0.5vw;
-    font-size: 2.5vh;
+    font-size: 2vw;
 }
 
 .inputFields{
@@ -53,10 +55,15 @@
     border-color: rgba(255, 255, 255, 0);
     border-style: solid;
     padding-right:  0.5vw;
-    text-align: right;
-    letter-spacing: 0px;
     color: #043163;
-    opacity: 1;
+    height: 30px;
+    margin: 1vh;
+    width: 45vw;
+    margin-right: 0;
+}
+
+.nameInputField{
+    font-size: 3vw;
 }
 
 .error{
@@ -71,3 +78,4 @@
 .fieldName{
     padding-right: 0.5vw !important;
 }
+

@@ -5,6 +5,9 @@ import "../../style/superAdmin/form_style.css";
 import "../../style/superAdmin/add_student_style.css";
 import addicon from "../../img/addicon.svg";
 import ArrowNavBar from '../../component/superAdmin/ArrowNavBar.jsx'
+import { withRouter } from "react-router-dom";
+import {userNameValidation, nameValidation, passwordValidation,mustInputValidation} from '../../component/superAdmin/ValidationFunctions'
+
 
 class AddStudent extends React.Component {
     constructor(props) {
@@ -101,52 +104,24 @@ class AddStudent extends React.Component {
         let allOk = true
         /* data validetion  */
         // ----------student name validetion-------------------
-        if (this.state.studentName.length === 0) {
+        let studentNameErrorMess = nameValidation(this.state.studentName)
+        if (studentNameErrorMess.length !== 0) {
             this.setState((prevState) => {
                 prevState.studentNameError.toShow = 'block'
-                prevState.studentNameError.mess = '** חייב להכניס שם תלמיד **'
+                prevState.studentNameError.mess = studentNameErrorMess
                 return { studentNameError: prevState.studentNameError }
             })
             allOk = false
-        } else if ((/[a-z]/).test(this.state.studentName) || (/[A-Z]/).test(this.state.studentName) || (/[!@#$"%^,.&*()_+\=\[\]{};:\\|<>\/?~`]/).test(this.state.studentName)) {
-            this.setState((prevState) => {
-                prevState.studentNameError.toShow = 'block'
-                prevState.studentNameError.mess = '** שם תלמיד לא תקין **'
-                return { studentNameError: prevState.studentNameError }
-            })
-            allOk = false
-        } else if (this.state.studentName.includes("'") || this.state.studentName.includes('-')) {
-            if (!((/[\u0590-\u05FF]+[-]+[\u0590-\u05FF]/).test(this.state.studentName) || (/[\u0590-\u05FF]+[']/).test(this.state.studentName))) {
-                this.setState((prevState) => {
-                    prevState.studentNameError.toShow = 'block'
-                    prevState.studentNameError.mess = '** שם תלמיד לא תקין **'
-                    return { studentNameError: prevState.studentNameError }
-                })
-                allOk = false
-            }
         } else {
             this.setState({ studentNameError: { toShow: 'none', mess: '' } })
         }
         
         // ----------user name validetion-------------------
-        if (this.state.userName.length === 0){
+        let userNameErrorMess = userNameValidation(this.state.userName)
+        if (userNameErrorMess.length !== 0){
             this.setState((prevState) => {
                 prevState.userNameError.toShow = 'block'
-                prevState.userNameError.mess = '** חייב להכניס שם משתמש **'
-                return { userNameError: prevState.userNameError }
-            })
-            allOk = false
-        } else if (this.state.userName.length > 30 || this.state.userName.length < 8){
-            this.setState((prevState) => {
-                prevState.userNameError.toShow = 'block'
-                prevState.userNameError.mess = '** שם משתמש לא תקין **'
-                return { userNameError: prevState.userNameError }
-            })
-            allOk = false
-        } else if (!(/[!@#$"%^,.&*()_+\=\[\]{}'-;:\\|<>\/?~`\s]/).test(this.state.userName)){
-            this.setState((prevState) => {
-                prevState.userNameError.toShow = 'block'
-                prevState.userNameError.mess = '** שם משתמש לא תקין **'
+                prevState.userNameError.mess = userNameErrorMess
                 return { userNameError: prevState.userNameError }
             })
             allOk = false
@@ -155,24 +130,11 @@ class AddStudent extends React.Component {
         }
 
         // ---------------password validetion-------------------
-        if (this.state.password.length === 0){
+        let passwordErrorMess = passwordValidation(this.state.password)
+        if (passwordErrorMess.length !== 0){
             this.setState((prevState) => {
                 prevState.passwordError.toShow = 'block'
-                prevState.passwordError.mess = '** חייב להכניס סיסמא **'
-                return { passwordError: prevState.passwordError }
-            })
-            allOk = false
-        } else if (this.state.password.length < 30 || this.state.password.length < 8){
-            this.setState((prevState) => {
-                prevState.passwordError.toShow = 'block'
-                prevState.passwordError.mess = '** סיסמא לא תקינה **'
-                return { passwordError: prevState.passwordError }
-            })
-            allOk = false
-        } else if (!(/[!@#$"%^,.&*()_+\=\[\]{}'-;:\\|<>\/?~`\s]/).test(this.state.password)){
-            this.setState((prevState) => {
-                prevState.passwordError.toShow = 'block'
-                prevState.passwordError.mess = '** סיסמא לא תקינה **'
+                prevState.passwordError.mess = passwordErrorMess
                 return { passwordError: prevState.passwordError }
             })
             allOk = false
@@ -181,10 +143,11 @@ class AddStudent extends React.Component {
         }
 
         // ---------------school name validetion-------------------
-        if (this.state.school.length === 0){
+        let schoolNameErrorMess = mustInputValidation(this.state.school)
+        if (schoolNameErrorMess.length !== 0){
             this.setState((prevState) => {
                 prevState.schoolNameError.toShow = 'block'
-                prevState.schoolNameError.mess = '** חייב לבחור שם בית ספר **'
+                prevState.schoolNameError.mess = schoolNameErrorMess
                 return { schoolNameError: prevState.schoolNameError }
             })
             allOk = false
@@ -203,7 +166,7 @@ class AddStudent extends React.Component {
         return (
             <div>
                 <ArrowNavBar />
-                <form className='formData addStudentForm'>
+                <form className='formData'>
                     <label for='studentName'>שם התלמיד:</label>
                     <p class='error' style={{ display: this.state.studentNameError.toShow }}>{this.state.studentNameError.mess}</p>
                     <input className='inputFields' value={this.state.studentName} onChange={this.handlehanges} placeholder='הכנס את שם התלמיד...' name='studentName'></input>
@@ -242,4 +205,4 @@ class AddStudent extends React.Component {
     }
 }
 
-export default AddStudent;
+export default withRouter(AddStudent);
