@@ -1,37 +1,45 @@
 import React from "react";
 import { Component } from "react";
-import pinkcircle from "../../img/dottedcirclePink.svg";
-import purplecircle from "../../img/dottedcirclePurple.svg";
-import greencircle from "../../img/dottedcircleGreen.svg";
-import bluecircle from "../../img/dottedcircleBlue.svg"
 import "../../style/teacher/classes.css";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 
 class Classes extends Component {
   constructor() {
     super();
+    this.colors = [
+      "#188749",
+      "#f4c90a",
+      "#f90258",
+      "#8051AB",
+      "#0faebd",
+      "#fab27f",
+      "#160955",
+      "#d985b6",
+      "#5055ee",
+      "#69bda2",
+      "#C20865",
+      "#68af1c",
+      "#ae03e9",
+      "#066cbb",
+      "#f46615",
+      "#9c001b",
+      "#411045",
+    ];
+    this.classes = ["א'3", "ב'2", "ג'1", "ד'8", "ה'5", "ו'4", "י'1"];
   }
+
   render() {
     return (
       <>
-        <SmallMenuBar/>
+        <SmallMenuBar />
         <div className="griddler">
-          <div className="circleCont green">
-            <object className="circle" data={greencircle}></object>
-            <h3 className="className">א'3</h3>
-          </div>
-          <div className="circleCont purple">
-            <object className="circle" data={purplecircle}></object>
-            <h3 className="className">א'6</h3>
-          </div>
-          <div className="circleCont pink">
-            <object className="circle" data={pinkcircle}></object>
-            <h3 className="className">ב'1</h3>
-          </div>
-          <div className="circleCont blue">
-            <object className="circle" data={bluecircle}></object>
-            <h3 className="className">ד'4</h3>
-          </div>
+          {this.classes.map((name, index) => {
+            return (
+              <div className="circleCont" style={{borderColor: this.colors[index]}}>
+                <h3 className="className" style={{color: this.colors[index]}}>{name}</h3>
+              </div>
+            );
+          })}
         </div>
       </>
     );

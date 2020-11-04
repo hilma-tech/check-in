@@ -18,6 +18,8 @@ import AddSchool from './pages/superAdmin/AddSchool.jsx'
 import SignIn from './pages/superAdmin/SignIn.jsx'
 import Classes from './pages/teacher/Classes.jsx'
 import Students from './pages/teacher/Student.jsx'
+// 
+import Draft from './dumps/draft.jsx'
 
 
 function App() {
@@ -32,6 +34,9 @@ function App() {
           </Route>
           <Route path='/signin' exact>
             <SignIn/>
+          </Route>
+          <Route path='/draft' exact>
+            <Draft/>
           </Route>
           {/* teacher classes */}
         <Route path='/classes' exact>

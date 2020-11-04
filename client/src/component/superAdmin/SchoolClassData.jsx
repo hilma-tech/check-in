@@ -1,7 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
 import Fade from '@material-ui/core/Fade';
-import addicon from "../../img/addicon.svg";
 import SelectStyle from '../../style/superAdmin/select_style'
 
 
