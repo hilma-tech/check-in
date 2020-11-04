@@ -46,6 +46,8 @@ class Games extends Component {
   onClickAddGame = () => {
     this.props.history.push(this.props.location.pathname + "Add");
   };
+
+  //TEMPORARILY COMMENTED OUT, WILL BE RETURN UPON PROPER ROUTING
   onClickEditGame = () => {
     //this.props.history.push(this.props.location.pathname + 'Edit');
   };

@@ -14,7 +14,7 @@ class GameNavBar extends Component {
     if (props.target.id === "suspended") {
       this.props.history.push(this.props.match.url +"/suspended");
     } else {
-      this.props.history.push("/games");
+      this.props.history.push("/superAdmin/games");
     }
   };
 

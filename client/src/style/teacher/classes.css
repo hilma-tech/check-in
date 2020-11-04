@@ -1,6 +1,6 @@
-@font-face{
+@font-face {
   font-family: Gan-CLM;
-  src: url(../../Gan\ CLM\ Bold.ttf)
+  src: url(../../Gan\ CLM\ Bold.ttf);
 }
 
 .griddler {
@@ -13,14 +13,10 @@
 }
 
 .className {
-  
   margin: 0px;
-  
   font-size: 20vw;
-  
   font-family: Gan-CLM;
   letter-spacing: 0px;
-  
   justify-self: center;
 }
 

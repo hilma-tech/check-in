@@ -16,12 +16,10 @@ class editSchool extends Component {
       classes: [{ id: 1, name: "ד'2", chosenTeachers: [], classNameError: { toShow: 'none', mess: '' }, }],
     };
   }
-
   /*
-    Get the element information, then prevent the refresh and take the state that now save in the class
-    copy the classes array from him add to him default class (without name and with 1 teacher to choose)
-    and return to setState the new classes array (with the new class).
-  */
+      Get e, prevent refresh and take the classes in state, 
+      copy the array to add a default class and setstate with new array
+    */
   addClassToSchool = (e) => {
     e.preventDefault();
     this.setState((prevState) => {

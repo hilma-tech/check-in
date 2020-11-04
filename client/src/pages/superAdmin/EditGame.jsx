@@ -1,12 +1,15 @@
 import React, { Component } from "react";
-import TextareaAutosize from 'react-textarea-autosize'
+import TextareaAutosize from "react-textarea-autosize";
 import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import "../../style/superAdmin/add_game_style.css";
 import "../../style/superAdmin/form_style.css";
 import addicon from "../../img/addicon.svg";
 import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.jsx";
 import { withRouter } from "react-router-dom";
-import { mustInputValidation, nameValidation } from '../../component/superAdmin/ValidationFunctions'
+import {
+  mustInputValidation,
+  nameValidation,
+} from "../../component/superAdmin/ValidationFunctions";
 
 class EditGame extends Component {
   constructor() {
@@ -14,16 +17,16 @@ class EditGame extends Component {
 
     this.state = {
       newKey: 3,
-      gameNameErrorMessages: { toShow: 'none', mess: '' },
-      gameDescriptionErrorMessages: { toShow: 'none', mess: '' },
-      gameRequirementsErrorMessages: { toShow: 'none', mess: '' },
+      gameNameErrorMessages: { toShow: "none", mess: "" },
+      gameDescriptionErrorMessages: { toShow: "none", mess: "" },
+      gameRequirementsErrorMessages: { toShow: "none", mess: "" },
       fieldsData: [
         {
           id: 0,
           name: "בלה בלה",
           selection: "text",
           value: [{ id: 0, value: "חשבו על חייכם" }],
-          errorMessage: { toShow: 'none', mess: '' }
+          errorMessage: { toShow: "none", mess: "" },
         },
         {
           id: 1,
@@ -34,14 +37,14 @@ class EditGame extends Component {
             { id: 1, value: "הלו" },
             { id: 5, value: "ברוכה הבאה" },
           ],
-          errorMessage: { toShow: 'none', mess: '' }
+          errorMessage: { toShow: "none", mess: "" },
         },
         {
           id: 2,
           name: "שלישי",
           selection: "image",
           value: [{ id: 0, value: "blah.png" }],
-          errorMessage: { toShow: 'none', mess: '' }
+          errorMessage: { toShow: "none", mess: "" },
         },
       ],
       gameName: "עננים",
@@ -104,11 +107,10 @@ class EditGame extends Component {
       let tempFieldsData = [...prevState.fieldsData];
       tempFieldsData.push({
         id: this.state.newKey,
-        name: '',
+        name: "",
         selection: "text",
-        value: [{id: 0, value: ""}
-      ],
-        errorMessage: { toShow: 'none', mess: '' }
+        value: [{ id: 0, value: "" }],
+        errorMessage: { toShow: "none", mess: "" },
       });
       return { fieldsData: tempFieldsData };
     });
@@ -146,100 +148,98 @@ class EditGame extends Component {
   saveData = () => {
     let allOK = true;
     let fieldOK = true;
-    let errMess = ''
+    let errMess = "";
 
     //-------------- game name validation ----------------
-    errMess = nameValidation(this.state.gameName)
+    errMess = nameValidation(this.state.gameName);
     if (errMess.length !== 0) {
       allOK = false;
       this.setState((prevState) => {
-        prevState.gameNameErrorMessages.toShow = 'block'
-        prevState.gameNameErrorMessages.mess = errMess
-        return { errorMessages: prevState.gameNameErrorMessages }
-      })
+        prevState.gameNameErrorMessages.toShow = "block";
+        prevState.gameNameErrorMessages.mess = errMess;
+        return { errorMessages: prevState.gameNameErrorMessages };
+      });
     } else {
       this.setState((prevState) => {
-        prevState.gameNameErrorMessages = { toShow: 'none', mess: '' }
-        return { errorMessages: prevState.gameNameErrorMessages }
-      })
+        prevState.gameNameErrorMessages = { toShow: "none", mess: "" };
+        return { errorMessages: prevState.gameNameErrorMessages };
+      });
     }
     //-------------- game description validation ----------------
-    errMess = mustInputValidation(this.state.gameDescription)
+    errMess = mustInputValidation(this.state.gameDescription);
     if (errMess.length !== 0) {
       allOK = false;
       this.setState((prevState) => {
-        prevState.gameDescriptionErrorMessages.toShow = 'block'
-        prevState.gameDescriptionErrorMessages.mess = errMess
-        return { errorMessages: prevState.gameDescriptionErrorMessages }
-      })
+        prevState.gameDescriptionErrorMessages.toShow = "block";
+        prevState.gameDescriptionErrorMessages.mess = errMess;
+        return { errorMessages: prevState.gameDescriptionErrorMessages };
+      });
     } else {
       this.setState((prevState) => {
-        prevState.gameDescriptionErrorMessages = { toShow: 'none', mess: '' }
-        return { errorMessages: prevState.gameDescriptionErrorMessages }
-      })
+        prevState.gameDescriptionErrorMessages = { toShow: "none", mess: "" };
+        return { errorMessages: prevState.gameDescriptionErrorMessages };
+      });
     }
     //-------------- game requirements validation ----------------
-    errMess = mustInputValidation(this.state.gameRequirements)
+    errMess = mustInputValidation(this.state.gameRequirements);
     if (errMess.length !== 0) {
       allOK = false;
       this.setState((prevState) => {
-        prevState.gameRequirementsErrorMessages.toShow = 'block'
-        prevState.gameRequirementsErrorMessages.mess = errMess
-        return { errorMessages: prevState.gameRequirementsErrorMessages }
-      })
+        prevState.gameRequirementsErrorMessages.toShow = "block";
+        prevState.gameRequirementsErrorMessages.mess = errMess;
+        return { errorMessages: prevState.gameRequirementsErrorMessages };
+      });
     } else {
       this.setState((prevState) => {
-        prevState.gameRequirementsErrorMessages = { toShow: 'none', mess: '' }
-        return { errorMessages: prevState.gameRequirementsErrorMessages }
-      })
+        prevState.gameRequirementsErrorMessages = { toShow: "none", mess: "" };
+        return { errorMessages: prevState.gameRequirementsErrorMessages };
+      });
     }
 
     fieldOK = this.validateFields();
 
     //after all the validetion we need to send the data to sql
     if (allOK && fieldOK) {
-      this.props.history.goBack() // after saving go back
+      this.props.history.goBack(); // after saving go back
     }
-  }
-
+  };
 
   validateFields = () => {
-    let errMess = ''
+    let errMess = "";
     let isOk = true;
     this.state.fieldsData.map((fields, index) => {
       if (fields.selection !== "image") {
-        errMess = nameValidation(fields.name)
+        errMess = nameValidation(fields.name);
         if (errMess.length !== 0) {
           this.setState((prevState) => {
-            prevState.fieldsData[index].errorMessage.toShow = 'block'
-            prevState.fieldsData[index].errorMessage.mess = errMess
-            return { fieldsData: prevState.fieldsData }
-          })
+            prevState.fieldsData[index].errorMessage.toShow = "block";
+            prevState.fieldsData[index].errorMessage.mess = errMess;
+            return { fieldsData: prevState.fieldsData };
+          });
           isOk = false;
         } else {
           fields.value.map((field) => {
-            errMess = mustInputValidation(field.value)
+            errMess = mustInputValidation(field.value);
             if (errMess.length !== 0) {
               this.setState((prevState) => {
-                prevState.fieldsData[index].errorMessage.toShow = 'block'
-                prevState.fieldsData[index].errorMessage.mess = errMess
-                return { fieldsData: prevState.fieldsData }
-              })
+                prevState.fieldsData[index].errorMessage.toShow = "block";
+                prevState.fieldsData[index].errorMessage.mess = errMess;
+                return { fieldsData: prevState.fieldsData };
+              });
               isOk = false;
             } else {
               this.setState((prevState) => {
-                prevState.fieldsData[index].errorMessage.toShow = 'none'
-                prevState.fieldsData[index].errorMessage.mess = ''
-                return { fieldsData: prevState.fieldsData }
-              })
+                prevState.fieldsData[index].errorMessage.toShow = "none";
+                prevState.fieldsData[index].errorMessage.mess = "";
+                return { fieldsData: prevState.fieldsData };
+              });
             }
           });
         }
       }
     });
     return isOk;
-  }
-
+  };
 
   render() {
     return (
@@ -250,7 +250,12 @@ class EditGame extends Component {
             <form className="formData">
               <label className="fieldTitle">
                 שם המשחק:
-                <p className='error' style={{ display: this.state.gameNameErrorMessages.toShow }}>{this.state.gameNameErrorMessages.mess}</p>
+                <p
+                  className="error"
+                  style={{ display: this.state.gameNameErrorMessages.toShow }}
+                >
+                  {this.state.gameNameErrorMessages.mess}
+                </p>
                 <input
                   id="gameName"
                   className="inputFields marginTop"
@@ -263,7 +268,14 @@ class EditGame extends Component {
               </label>
               <label className="fieldTitle">
                 תיאור המשחק:
-                <p className='error' style={{ display: this.state.gameDescriptionErrorMessages.toShow }}>{this.state.gameDescriptionErrorMessages.mess}</p>
+                <p
+                  className="error"
+                  style={{
+                    display: this.state.gameDescriptionErrorMessages.toShow,
+                  }}
+                >
+                  {this.state.gameDescriptionErrorMessages.mess}
+                </p>
                 <TextareaAutosize
                   className="inputFields marginTop extendedField"
                   placeholder="הכנס תיאור משחק..."
@@ -274,7 +286,14 @@ class EditGame extends Component {
               </label>
               <label className="fieldTitle">
                 דרישות המשחק:
-                <p className='error' style={{ display: this.state.gameRequirementsErrorMessages.toShow }}>{this.state.gameRequirementsErrorMessages.mess}</p>
+                <p
+                  className="error"
+                  style={{
+                    display: this.state.gameRequirementsErrorMessages.toShow,
+                  }}
+                >
+                  {this.state.gameRequirementsErrorMessages.mess}
+                </p>
                 <TextareaAutosize
                   className="inputFields marginTop extendedField"
                   placeholder="הכנס דרישות משחק..."
