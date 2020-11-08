@@ -12,7 +12,7 @@ import {
   mustInputValidation,
   passwordValidation,
   emailValidation
-} from "../../component/superAdmin/ValidationFunctions";
+} from "../../tools/ValidationFunctions";
 import { withRouter } from "react-router-dom";
 
 class AddTeacher extends Component {

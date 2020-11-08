@@ -3,7 +3,7 @@ import ArrowNavBar from '../../component/superAdmin/ArrowNavBar.jsx'
 import ClassData from "../../component/superAdmin/SchoolClassData.jsx";
 import "../../style/superAdmin/form_style.css";
 import { withRouter } from "react-router-dom";
-import { nameValidation, classNameValidation } from '../../component/superAdmin/ValidationFunctions'
+import { nameValidation, classNameValidation } from '../../tools/ValidationFunctions'
 
 
 class AddSchool extends React.Component {

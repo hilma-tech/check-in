@@ -10,20 +10,13 @@ import {
 } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
-export default withRouter (class WhiteRouter extends Component {
-    // constructor() {
-    //     super()
-    // }
+export default withRouter(class WhiteRouter extends Component {
     render() {
-        return(
-            <div>
-                
-                    <Switch>
-                        <Route path={this.props.match.path} exact component={Games}/>
-                        <Route path={this.props.match.path + "/suspended"} component={SuspendedGames}/>
-                    </Switch>
-            
-            </div>
+        return (
+            <Switch>
+                <Route path={this.props.match.path} exact component={Games} />
+                <Route path={this.props.match.path + "/suspended"} component={SuspendedGames} />
+            </Switch>
         )
     }
 })
