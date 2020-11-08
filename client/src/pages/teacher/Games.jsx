@@ -1,7 +1,23 @@
-import React, { Component } from 'react'
+import React from 'react';
+import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
+import SmallNavBar from "../../component/teacher/SmallNavBar.jsx";
 
-export default class Games extends Component {
-    render() {
-        return <h1>hi</h1>
+class Games extends React.Component {
+    constructor() {
+        super();
+        this.state = {  }
+    }
+    render() { 
+        return ( 
+        <div>
+            <SmallMenuBar />
+            <SmallNavBar />
+            <img
+              className="smallBackArrow"
+              src="/icons/awesome-arrow-right.svg"
+            />
+        </div> );
     }
 }
+ 
+export default Games;

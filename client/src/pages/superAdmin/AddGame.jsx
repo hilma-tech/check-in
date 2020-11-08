@@ -6,10 +6,7 @@ import "../../style/superAdmin/add_game_style.css";
 import "../../style/superAdmin/form_style.css";
 import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.jsx";
 import { withRouter } from "react-router-dom";
-import {
-  mustInputValidation,
-  nameValidation,
-} from "../../component/superAdmin/ValidationFunctions";
+import { mustInputValidation, nameValidation } from '../../tools/ValidationFunctions'
 
 class AddGame extends Component {
   constructor() {

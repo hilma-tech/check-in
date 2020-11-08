@@ -20,12 +20,14 @@ class SmallNavBar extends Component {
   };
 
   determineUnderline = () => {
-    if (window.location.pathname === "/teacher/games") {
+    if (window.location.pathname === "/teacher/classes/a'3/games") {
       return "smallRightUnderline";
-    } else if (window.location.pathname === "/teacher/students") {
+    } else if (window.location.pathname === "/teacher/classes/a'3/students") {
       return "smallMiddleUnderline";
-    } else {
+    } else if (window.location.pathname === "/teacher/classes/a'3/students") {
       return "smallLeftUnderline";
+    } else {
+      return "smallRightUnderline";
     }
   };
 

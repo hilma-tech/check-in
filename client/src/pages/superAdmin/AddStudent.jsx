@@ -6,12 +6,8 @@ import "../../style/superAdmin/add_student_style.css";
 import addicon from "../../img/addicon.svg";
 import ArrowNavBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import { withRouter } from "react-router-dom";
-import {
-  userNameValidation,
-  nameValidation,
-  passwordValidation,
-  mustInputValidation,
-} from "../../component/superAdmin/ValidationFunctions";
+import {userNameValidation, nameValidation, passwordValidation,mustInputValidation} from '../../tools/ValidationFunctions'
+
 
 class AddStudent extends React.Component {
   constructor(props) {
