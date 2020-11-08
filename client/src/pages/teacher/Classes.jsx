@@ -1,6 +1,6 @@
 import React from "react";
 import { Component } from "react";
-import "../../style/teacher/classes.css";
+import "../../style/teacher/classes.scss";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 
 class Classes extends Component {

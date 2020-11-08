@@ -4,6 +4,9 @@ import { Switch, Route, withRouter } from "react-router-dom"
 import SmallNavRouter from './SmallNavRouter.jsx';
 
 class ClassesRouter extends Component {
+    constructor() {
+        super()
+    }
     render() {
       return (
         <div>

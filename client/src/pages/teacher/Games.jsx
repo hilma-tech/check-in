@@ -11,7 +11,7 @@ class Games extends React.Component {
         return ( 
         <div>
             <SmallMenuBar />
-            <SmallNavBar />
+            <SmallNavBar active="games"/>
             <img
               className="smallBackArrow"
               src="/icons/awesome-arrow-right.svg"

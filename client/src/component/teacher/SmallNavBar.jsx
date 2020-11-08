@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import "../../style/teacher/small_nav_bar.css";
 
 class SmallNavBar extends Component {
@@ -10,13 +11,15 @@ class SmallNavBar extends Component {
   }
 
   movePageFunc = (props) => {
+    let newPath = this.props.match.url.split('/')
     if (props.target.id === "games") {
-      this.props.history.push(this.props.match.url + "/games");
+      newPath[newPath.length - 1] = "games"
     } else if (props.target.id === "students") {
-      this.props.history.push(this.props.match.url + "/students");
+      newPath[newPath.length - 1] = "students"
     } else {
-      this.props.history.push("/teacher/permissions");
+      newPath[newPath.length - 1] = "permissions"
     }
+    this.props.history.push(newPath.join('/'));
   };
 
   determineUnderline = () => {
@@ -24,7 +27,7 @@ class SmallNavBar extends Component {
       return "smallRightUnderline";
     } else if (window.location.pathname === "/teacher/classes/a'3/students") {
       return "smallMiddleUnderline";
-    } else if (window.location.pathname === "/teacher/classes/a'3/students") {
+    } else if (window.location.pathname === "/teacher/classes/a'3/permissions") {
       return "smallLeftUnderline";
     } else {
       return "smallRightUnderline";
@@ -64,4 +67,4 @@ class SmallNavBar extends Component {
     );
   }
 }
-export default SmallNavBar;
+export default withRouter(SmallNavBar) ;

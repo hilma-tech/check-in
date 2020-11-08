@@ -6,11 +6,14 @@ import Permissions from '../../pages/teacher/Permissions.jsx'
 
 
 class SmallNavRouter extends Component {
+    constructor() {
+        super()
+    }
     render() {
       return (
         <div>
           <Switch>
-            <Route path={this.props.match.path} exact >
+            <Route path={this.props.match.path} exact>
                 <Redirect to={this.props.match.path + "/games"}/>
                 </Route>
             <Route path={this.props.match.path + "/games"} component={Games}/>
