@@ -1,4 +1,6 @@
 import React from 'react';
+import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
+import SmallNavBar from "../../component/teacher/SmallNavBar.jsx";
 
 class Games extends React.Component {
     constructor() {

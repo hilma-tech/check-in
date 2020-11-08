@@ -1,13 +1,7 @@
 import React, { Component } from "react";
-import Games from "../../pages/superAdmin/Games.jsx"
-import SuspendedGames from "../../pages/superAdmin/SuspendedGames.jsx"
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    Redirect
-} from "react-router-dom";
+import Games from "../../pages/superAdmin/Games.jsx";
+import SuspendedGames from "../../pages/superAdmin/SuspendedGames.jsx";
+import { Switch, Route } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
 export default withRouter(class WhiteRouter extends Component {
@@ -19,4 +13,5 @@ export default withRouter(class WhiteRouter extends Component {
             </Switch>
         )
     }
-})
+  }
+);

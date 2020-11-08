@@ -2,14 +2,10 @@ import React, { Component } from "react";
 import "../../style/teacher/small_nav_bar.css";
 
 class SmallNavBar extends Component {
-  constructor() {
-    super();
-  }
-
   determineUnderline = () => {
-      if (window.location.pathname === "/teachers/games") {
+      if (window.location.pathname === "/teacher/games") {
           return "smallRightUnderline"
-      } else if (window.location.pathname === "/teachers/students") {
+      } else if (window.location.pathname === "/teacher/students") {
           return "smallMiddleUnderline"
       } else {
           return "smallLeftUnderline"
