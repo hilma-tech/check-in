@@ -20,11 +20,6 @@
   justify-self: center;
 }
 
-.circle {
-  height: 20vh;
-  z-index: -2;
-}
-
 .circleCont {
   display: flex;
   justify-content: center;
