@@ -18,10 +18,8 @@ import AddStudent from "./pages/superAdmin/AddStudent.jsx";
 import EditGame from "./pages/superAdmin/EditGame.jsx";
 import AddSchool from "./pages/superAdmin/AddSchool.jsx";
 import SignIn from "./pages/SignIn.jsx";
-import Classes from "./pages/teacher/Classes.jsx";
-import Students from "./pages/teacher/Student.jsx";
-//
 import Draft from "./dumps/draft.jsx";
+import ClassesRouter from "./component/teacher/ClassesRouter.jsx";
 
 function App() {
   return (
@@ -43,11 +41,8 @@ function App() {
             <Draft />
           </Route>
           {/* teacher classes */}
-          <Route path="/teacher/classes" exact>
-            <Classes />
-          </Route>
-          <Route path="/teacher/students" exact>
-            <Students />
+          <Route path="/teacher/classes">
+            <ClassesRouter/>
           </Route>
           <div className="everyPage">
             <Route path="/superAdmin/games">
