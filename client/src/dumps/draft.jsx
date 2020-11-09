@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Fade from '@material-ui/core/Fade'
-import './draft.css'
+import './draft.scss'
 
 class Draft extends Component {
   constructor() {
@@ -11,7 +11,7 @@ class Draft extends Component {
       <>
       <Fade in={true}>
         <div>
-            <h1 className="practiceFont">עשה חיל</h1>
+            <h1 className="practiceFont">שדגכעדגכדגשכדסבנצילעט8ור</h1>
         </div>
         </Fade>
       </>
