@@ -1,1 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="224" height="80" viewBox="0 0 224 80"><defs><style>.a{fill:#fff;font-size:60px;font-family:SegoeUI-Bold, Segoe UI;font-weight:700;}</style></defs><text class="a" transform="translate(0 65)"><tspan x="0" y="0">CheckIn</tspan></text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="224" height="80" viewBox="0 0 224 80">
+    <defs>
+        <style>
+        .a{fill:#fff;font-size:60px;font-family:Segoe UI;font-weight:700;}
+        </style>
+    </defs>
+    <text class="a" transform="translate(0 65)" >
+        <tspan x="0" y="0" >CheckIn</tspan>
+    </text>
+</svg>

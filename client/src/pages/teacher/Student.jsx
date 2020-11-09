@@ -14,6 +14,13 @@ class Students extends Component {
       "יונה אהרון",
     ];
   }
+
+moveToStudent = (props) => {
+  console.log(props.target.id)
+  sessionStorage.setItem("currStudent", props.target.id);
+  this.props.history.push(this.props.location.pathname + "/:" + props.target.id);
+}
+
   render() {
     return (
       <>
@@ -29,10 +36,10 @@ class Students extends Component {
             {/* search bar */}
             <div className="smallAlign">
               <h4 className="linkToTeachers">לרשימת המורים של כיתה זו</h4>
-              {this.students.map((studentName) => {
+              {this.students.map((studentName, index) => {
                 return (
-                  <div className="smallStudentCont">
-                    <h1 className="smallStudentName">{studentName}</h1>
+                  <div className="smallStudentCont"  onClick={this.moveToStudent} >
+                    <h1 className="smallStudentName" id={index}>{studentName}</h1>
                   </div>
                 );
               })}

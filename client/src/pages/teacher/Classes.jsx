@@ -31,12 +31,19 @@ class Classes extends Component {
   render() {
     return (
       <>
-        <SmallMenuBar />
+        <div className="smallSticky">
+          <SmallMenuBar />
+        </div>
         <div className="griddler">
           {this.classes.map((name, index) => {
             return (
-              <div className="circleCont" style={{borderColor: this.colors[index]}}>
-                <h3 className="className" style={{color: this.colors[index]}}>{name}</h3>
+              <div
+                className="circleCont"
+                style={{ borderColor: this.colors[index] }}
+              >
+                <h3 className="className" style={{ color: this.colors[index] }}>
+                  {name}
+                </h3>
               </div>
             );
           })}
