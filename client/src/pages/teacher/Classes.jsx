@@ -1,6 +1,6 @@
 import React from "react";
 import { Component } from "react";
-import "../../style/teacher/classes.css";
+import "../../style/teacher/classes.scss";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 
 class Classes extends Component {
@@ -25,7 +25,7 @@ class Classes extends Component {
       "#9c001b",
       "#411045",
     ];
-    this.classes = ["א'3", "ב'2", "ג'1", "ד'8", "'5", "ו'4", "י'1"];
+    this.classes = ["א'3", "ב'2", "ג'1", "ד'8", "ה'5", "ו'4", "י'1"];
   }
 
   render() {

@@ -9,9 +9,7 @@ import "./App.css";
 import SignIn from "./pages/SignIn.jsx";
 import SuperAdminRoute from './tools/SuperAdminRoute.jsx'
 import TeacherRoute from './tools/TeacherRoute.jsx'
-//
 import Draft from "./dumps/draft.jsx";
-
 function App() {
   return (
     <div className="App">

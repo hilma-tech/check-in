@@ -1,0 +1,27 @@
+@import '../font.scss';
+
+.griddler {
+  margin-top: 12vh;
+  display: grid;
+  grid-template-columns: 35vw 35vw;
+  grid-auto-rows: minmax(40vw, auto);
+  justify-content: space-evenly;
+}
+
+.className {
+  margin: 0px;
+  font-size: 15vw;
+  font-family: Gan-CLM;
+  letter-spacing: 0px;
+  justify-self: center;
+}
+
+.circleCont {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 90%;
+  width: 35vw;
+  height: 35vw;
+  border: 2px dashed;
+}

@@ -20,7 +20,7 @@ class Students extends Component {
         <div className="smallBackground">
           <div className= "smallPage">
             <SmallMenuBar />
-            <SmallNavBar />
+            <SmallNavBar active="students" />
             <img
               className="smallBackArrow"
               src="/icons/awesome-arrow-right.svg"

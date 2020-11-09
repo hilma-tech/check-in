@@ -36,15 +36,16 @@ class Games extends React.Component {
                 <SmallMenuBar />
                 <SmallNavBar />
                 <div className="smallAlign">
-                    <div>
+                    <div className='gamesChooseDistractions'>
                         <img
                             className="smallBackArrow"
                             src="/icons/awesome-arrow-right.svg"
                         />
+                        <p className='gamesChooseDistractionsText'>
                         בחר/י משחק כדי לערוך אותו,
                         על מנת להוסיף משחק חדש לכיתה זו
                         לחץ/י על סמל הפלוס
-                        
+                        </p>
                     </div>
                     <div className='chosenGamesForClass'>
                         {
@@ -56,7 +57,7 @@ class Games extends React.Component {
                             })
                         }
                     </div>
-                    <p>משחקים שיתן להוסיף:</p>
+                    <p className='gameListTitle'>משחקים שיתן להוסיף:</p>
                     <div className='listGamesForClass'>
                         {
                             this.state.gamesList.map((gameData) => {
