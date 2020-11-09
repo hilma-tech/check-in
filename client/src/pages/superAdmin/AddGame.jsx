@@ -7,6 +7,8 @@ import "../../style/superAdmin/form_style.css";
 import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.jsx";
 import { withRouter } from "react-router-dom";
 import { mustInputValidation, nameValidation } from '../../tools/ValidationFunctions'
+import {FilesUploader, FileInput} from '@hilma/fileshandler-client'
+
 
 class AddGame extends Component {
   constructor() {
@@ -30,6 +32,7 @@ class AddGame extends Component {
       gameRequirements: "",
       image: "",
     };
+    this.filesUploader = new FilesUploader;
   }
 
   saveFieldName = (fieldName, fieldId) => {
@@ -279,12 +282,7 @@ class AddGame extends Component {
               <label className="fieldTitle imageWidth">
                 תמונה:
                 <div className="borderCameraIcon marginTop">
-                  <input
-                    type="file"
-                    id="image"
-                    className="hiddenInput "
-                    onChange={this.updateBasicInfo}
-                  />
+                  <FileInput id="image" className="hiddenInput" type="image" onChange={this.updateBasicInfo} filesUploader={this.filesUploader}/>
                   <img className="cameraIcon" src="/icons/camera-icon.svg" />
                 </div>
               </label>

@@ -7,7 +7,7 @@
   height: 7vh;
   /* margin-right: 8vw; */
   position: fixed;
-  top: 24vh;
+  top: 23.5vh;
   background-color: #043163;
   z-index: 100;
 }
@@ -27,7 +27,7 @@
   border: 3px solid white;
   top: 29vh;
   width: 30vw;
-  margin-left: -0vw;
+  margin-right: 70vw;
   z-index: 101;
 }
 

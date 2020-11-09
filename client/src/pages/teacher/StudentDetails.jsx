@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PageTitle from "../../component/teacher/PageTitle";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar";
 import "../../style/teacher/student_details_style.css";
 
@@ -11,6 +12,8 @@ class StudentDetails extends Component {
       <>
         <div className="smallPage">
           <SmallMenuBar />
+          <PageTitle title="תלמידים" titleTwo="כיתה א'1"/>
+          {/* <PageTitle title="כיתה א'1"/> */}
           <img
             className="deetBackArrow"
             src="/icons/awesome-arrow-right.svg"

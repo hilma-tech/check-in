@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 import "./App.scss";
 import SignIn from "./pages/SignIn.jsx";
-import SuperAdminRoute from './tools/SuperAdminRoute.jsx'
-import TeacherRoute from './tools/TeacherRoute.jsx'
+import SuperAdminRoute from './routing/superAdmin/SuperAdminRoute.jsx'
+import TeacherRoute from './routing/teacher/TeacherRoute.jsx'
 import Draft from "./dumps/draft.jsx";
 function App() {
   return (

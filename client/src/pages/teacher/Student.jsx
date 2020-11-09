@@ -19,7 +19,7 @@ class Students extends Component {
 moveToStudent = (props) => {
   console.log(props.target.id)
   sessionStorage.setItem("currStudent", props.target.id);
-  this.props.history.push(this.props.location.pathname + "/:" + props.target.id);
+  this.props.history.push(this.props.location.pathname + '/studentInfo');
 }
 
   render() {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import ClassesRouter from '../component/teacher/ClassesRouter.jsx'
+import ClassesRouter from './ClassesRouter.jsx'
 
 class TeacherRoute extends React.Component {
   render() {
@@ -8,6 +8,9 @@ class TeacherRoute extends React.Component {
       <Switch>
         <Route path="/teacher/classes">
           <ClassesRouter />
+        </Route>
+        <Route path="/teacher/manager">
+          <h6>Manager router</h6>
         </Route>
       </Switch>
     );

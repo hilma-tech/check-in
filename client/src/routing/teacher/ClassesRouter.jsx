@@ -2,6 +2,7 @@ import Classes from '../../pages/teacher/Classes'
 import React, {Component} from 'react'
 import { Switch, Route, withRouter } from "react-router-dom"
 import SmallNavRouter from './SmallNavRouter.jsx';
+import StudentDetails from '../../pages/teacher/StudentDetails.jsx'
 
 class ClassesRouter extends Component {
     constructor() {
@@ -11,11 +12,9 @@ class ClassesRouter extends Component {
       return (
         <div>
           <Switch>
-            <Route path={this.props.match.path} exact component={Classes} />
-            <Route
-              path={this.props.match.path + "/a'3"}
-              component={SmallNavRouter}
-            />
+            <Route path='/teacher/classes' exact component={Classes} />
+            <Route path={"/teacher/classes/students/studentInfo"} exact component={StudentDetails} />
+            <SmallNavRouter />
           </Switch>
         </div>
       );

@@ -9,7 +9,7 @@
 }
 
 .top {
-    margin-top: 7vh;
+    margin-top: 38vh;
 }
 
 .detail {
@@ -25,7 +25,7 @@
 .deetBackArrow {
     float: right;
     margin-right: 8vw;
-    margin-top: 3vh;
+    margin-top: 34vh;
     background-color: #F2F7FC;
 }
 
@@ -33,7 +33,7 @@
     float: right;
     margin: 0px;
     margin-right: 2.5vw;
-    margin-top: 2vh;
+    margin-top: 33vh;
     font-weight: 600;
     font-size: 3.5vh;
     color: #043163;
