@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import Games from '../../pages/teacher/Games.jsx'
 import Students from "../../pages/teacher/Student.jsx"
 import Permissions from '../../pages/teacher/Permissions.jsx'
-
+import StudentDetails from '../../pages/teacher/StudentDetails'
 
 class SmallNavRouter extends Component {
     constructor() {
@@ -21,6 +21,7 @@ class SmallNavRouter extends Component {
               path={this.props.match.path + "/students"}
               component={Students}
             />
+            <Route path={this.props.match.path + "/:id"} component={StudentDetails}/>
             <Route path={this.props.match.path + "/permissions"}
               component={Permissions}/>
           </Switch>

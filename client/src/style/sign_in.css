@@ -19,7 +19,7 @@
 .webName {
   color: #043163;
   font-family: "Segoe UI";
-    margin: 3vh;
+  margin: 3vh;
   font-size: 8vh;
 }
 
@@ -39,6 +39,7 @@
   height: 6vh;
   border-radius: 3vw;
   padding-right: 1.5vw;
+  font-size: 2.5vh;
 }
 
 .signInButton {
@@ -60,6 +61,36 @@
 }
 
 .hilmalogo {
-    padding-top: 8vh;
-    height: 9vh;
+  padding-top: 8vh;
+  height: 9vh;
+}
+
+@media only screen and (max-width: 600px) {
+  .centeredPage {
+    margin: 0vh;
+    position: absolute;
+    margin-right: 10%;
+    margin-top: 25vh;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    background-color: #d1e4fa00;
+  }
+  
+  .background {
+    background-color: #a2cdffa9;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+  }
+  
+  .input {
+    font-size: 4vh;
+  }
+  
+  .signInButton {
+    font-size: 4vh;
+    
+  }
+  
 }
