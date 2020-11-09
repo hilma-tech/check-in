@@ -2,6 +2,7 @@ import React from "react";
 import { Component } from "react";
 import "../../style/teacher/classes.scss";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
+import { withRouter } from "react-router-dom";
 
 class Classes extends Component {
   constructor() {
@@ -27,6 +28,10 @@ class Classes extends Component {
     ];
     this.classes = ["א'3", "ב'2", "ג'1", "ד'8", "ה'5", "ו'4", "י'1"];
   }
+  
+  moveToClass = () => {
+    this.props.history.push(this.props.location.pathname + '/games');
+  }
 
   render() {
     return (
@@ -37,7 +42,7 @@ class Classes extends Component {
         <div className="griddler">
           {this.classes.map((name, index) => {
             return (
-              <div
+              <div onClick={this.moveToClass}
                 className="circleCont"
                 style={{ borderColor: this.colors[index] }}
               >
@@ -52,4 +57,4 @@ class Classes extends Component {
     );
   }
 }
-export default Classes;
+export default withRouter(Classes);
