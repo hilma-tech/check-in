@@ -58,6 +58,7 @@ class Games extends React.Component {
                         }
                     </div>
                     <p className='gameListTitle'>משחקים שיתן להוסיף:</p>
+                    {/* add search option */}
                     <div className='listGamesForClass'>
                         {
                             this.state.gamesList.map((gameData) => {

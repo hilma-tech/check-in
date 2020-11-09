@@ -85,10 +85,10 @@
 
 .gamesChooseDistractionsText{
   margin-top: 0;
-  /* float: left; */
 }
 
 .gameListTitle{
   color: #043163;
   font-size: 5vw;
+  margin-right: 9vw;
 }

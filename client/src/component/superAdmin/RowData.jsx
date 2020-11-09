@@ -13,6 +13,7 @@ class RowData extends React.Component {
   //When we press on row it's passed to the edit page of the item
   onClickEdit = () => {
     this.props.history.push(this.props.location.pathname + "Edit");
+ 
   };
 
   render() {
