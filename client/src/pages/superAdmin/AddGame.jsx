@@ -30,7 +30,7 @@ class AddGame extends Component {
       gameName: "",
       gameDescription: "",
       gameRequirements: "",
-      image: "",
+      image: false,
     };
     this.filesUploader = new FilesUploader;
   }
@@ -121,10 +121,12 @@ class AddGame extends Component {
       case "gameRequirements":
         this.setState({ gameRequirements: props.target.value });
         break;
-      case "image":
-        this.setState({ image: props.target.value });
     }
   };
+
+  updateImage = (value) =>{
+    this.setState({ image: value.link });
+  }
 
   saveData = () => {
     let allOK = true;
@@ -282,8 +284,8 @@ class AddGame extends Component {
               <label className="fieldTitle imageWidth">
                 תמונה:
                 <div className="borderCameraIcon marginTop">
-                  <FileInput id="image" className="hiddenInput" type="image" onChange={this.updateBasicInfo} filesUploader={this.filesUploader}/>
-                  <img className="cameraIcon" src="/icons/camera-icon.svg" />
+                  <FileInput id="image" className="hiddenInput" type="image" onChange={this.updateImage} filesUploader={this.filesUploader}/>
+                  <img className={typeof this.state.image === 'string' ? "chosenImg" : "cameraIcon"} src={this.state.image || "/icons/camera-icon.svg"} />
                 </div>
               </label>
               <br />
