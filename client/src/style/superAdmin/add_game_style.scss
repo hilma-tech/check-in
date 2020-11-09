@@ -1,8 +1,10 @@
+@import "../fonts/fonts.scss";
+
 .fieldTitle {
   display: grid;
   margin-top: 2vh;
   font-size: 3vh;
-  font-family: 'Assistant', sans-serif;
+  font-family: Assistant;
   font-weight: 600;
   color: #043163;
   text-align: start;
@@ -13,7 +15,7 @@
   margin-right: 3vw;
   color: #043163;
   font-weight: lighter;
-  font-family: 'Assistant', sans-serif;
+  font-family: Assistant;
 }
 
 .extendedField {
@@ -27,7 +29,7 @@
   color: #043163;
   font-weight: 500;
   font-size: 3vh;
-  font-family: 'Assistant', sans-serif;
+  font-family: Assistant;
 }
 
 .select {
@@ -156,6 +158,6 @@
 
 textarea::placeholder{
   margin: 0;
-  font-family: 'Assistant', sans-serif;
+  font-family: Assistant;
   font-weight: lighter;
 }

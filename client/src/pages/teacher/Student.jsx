@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PageTitle from "../../component/teacher/PageTitle.jsx";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 import SmallNavBar from "../../component/teacher/SmallNavBar.jsx";
 import "../../style/teacher/students.css";
@@ -27,6 +28,7 @@ moveToStudent = (props) => {
         <div className="smallBackground">
           <div className= "smallPage">
             <SmallMenuBar />
+            <PageTitle title="כיתה א'2"/>
             <SmallNavBar active="students" />
             <img
               className="smallBackArrow"

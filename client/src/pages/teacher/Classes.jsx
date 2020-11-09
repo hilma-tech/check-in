@@ -2,6 +2,7 @@ import React from "react";
 import { Component } from "react";
 import "../../style/teacher/classes.scss";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
+import PageTitle from "../../component/teacher/PageTitle";
 
 class Classes extends Component {
   constructor() {
@@ -34,6 +35,7 @@ class Classes extends Component {
         <div className="smallSticky">
           <SmallMenuBar />
         </div>
+        <PageTitle className="officialTitle" title="שלום המורה נורית!"/>
         <div className="griddler">
           {this.classes.map((name, index) => {
             return (

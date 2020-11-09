@@ -1,3 +1,5 @@
+@import "../fonts/fonts.scss";
+
 .spaceFromTitles {
     margin-top: 3vh;
 }
@@ -15,7 +17,7 @@
     font-weight: 500;
     font-size: 2.5vh;
     width: 46vw;
-    font-family: 'Assistant', sans-serif;
+    font-family: Assistant;
 }
 
 .pageEnd {

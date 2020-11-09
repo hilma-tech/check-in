@@ -1,9 +1,15 @@
 .smallNav {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  align-items: center;
   width: 84vw;
+  width: 100vw;
   height: 7vh;
-  margin-right: 8vw;
+  /* margin-right: 8vw; */
+  position: fixed;
+  top: 24vh;
+  background-color: #043163;
+  z-index: 100;
 }
 
 .smallNavName {
@@ -17,22 +23,29 @@
 }
 
 .smallLeftUnderline {
-  border: 2px solid white;
-  margin-top: -0.1vh;
+  position: fixed;
+  border: 3px solid white;
+  top: 29vh;
   width: 30vw;
   margin-left: -0vw;
+  z-index: 101;
 }
 
 .smallMiddleUnderline {
-  border: 2px solid white;
-  margin-top: -0.1vh;
+  position: fixed;
+  border: 3px solid white;
+  top: 29vh;
   width: 30vw;
+  margin-right: 35vw;
+  z-index: 101;
 }
 
 .smallRightUnderline {
-  border: 2px solid white;
-  margin-top: -0.1vh;
+  position: fixed;
+  border: 3px solid white;
+  top: 29vh;
   width: 30vw;
   margin-right: -0vw;
   margin-bottom: 0;
+  z-index: 101;
 }

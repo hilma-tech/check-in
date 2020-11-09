@@ -5,7 +5,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import "./App.css";
+import "./App.scss";
 import SignIn from "./pages/SignIn.jsx";
 import SuperAdminRoute from './tools/SuperAdminRoute.jsx'
 import TeacherRoute from './tools/TeacherRoute.jsx'

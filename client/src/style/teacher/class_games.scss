@@ -1,3 +1,5 @@
+@import "../fonts/fonts.scss";
+
 .classGameTitleBackground{
   /* background and border */
   border-radius: 0px 0px 2vw 2vw;
@@ -13,7 +15,7 @@
 
 .classGameTitle {
   /*text*/
-  font: normal normal normal 5vw Arial, "Segoefont";
+  font: normal normal normal 5vw Assistant;
   letter-spacing: 0.52px;
   color: #ffffff;
   padding: 0.5vw 0vw;
@@ -47,8 +49,6 @@
 }
 
 .classGameIconClose{
-  opacity: 1;
-  z-index: 3;
   position: absolute;
   float: left;
   top: 1vw;
@@ -58,8 +58,6 @@
 }
 
 .classGameIconAdd{
-  opacity: 1;
-  z-index: 3;
   position: absolute;
   float: left;
   top: 0vw;
@@ -75,7 +73,6 @@
 
 .gamesChooseDistractions{
   text-align: center;
-  /* background-color: violet; */
   width: 92%;
   font-size: 5vw;
   color: #043163;
@@ -85,10 +82,13 @@
 
 .gamesChooseDistractionsText{
   margin-top: 0;
-  /* float: left; */
 }
 
 .gameListTitle{
   color: #043163;
   font-size: 5vw;
+}
+
+.smallAlign {
+  margin-top: 33vh;
 }

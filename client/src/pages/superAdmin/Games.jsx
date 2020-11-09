@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../../style/superAdmin/games_style.css";
+import "../../style/superAdmin/games_style.scss";
 import optionicon from "../../img/optionicon.svg";
 import addicon from "../../img/addicon.svg";
 import WhiteBar from "../../component/superAdmin/GameNavBar.jsx";

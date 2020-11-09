@@ -2,7 +2,8 @@ import React from 'react';
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 import SmallNavBar from "../../component/teacher/SmallNavBar.jsx";
 import ClassGames from '../../component/teacher/ClassGames.jsx'
-import '../../style/teacher/class_games.css'
+import '../../style/teacher/class_games.scss'
+import PageTitle from '../../component/teacher/PageTitle.jsx';
 
 class Games extends React.Component {
     constructor() {
@@ -34,6 +35,7 @@ class Games extends React.Component {
         return (
             <div>
                 <SmallMenuBar />
+                <PageTitle title="כיתה א'1"/>
                 <SmallNavBar />
                 <div className="smallAlign">
                     <div className='gamesChooseDistractions'>

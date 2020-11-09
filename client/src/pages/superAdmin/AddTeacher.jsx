@@ -4,8 +4,8 @@ import addicon from "../../img/addicon.svg";
 import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import ClassSelection from "../../component/superAdmin/ClassSelection.jsx";
 import "../../style/superAdmin/form_style.css";
-import "../../style/superAdmin/add_game_style.css";
-import "../../style/superAdmin/add_teacher_style.css";
+import "../../style/superAdmin/add_game_style.scss";
+import "../../style/superAdmin/add_teacher_style.scss";
 import SelectStyle from "../../style/superAdmin/select_style";
 import {
   nameValidation,

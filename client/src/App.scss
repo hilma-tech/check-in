@@ -1,7 +1,9 @@
+@import "./style/fonts/fonts.scss";
+
 .App {
   text-align: center;
   height: 10vh;
-  font-family: "Assistant", sans-serif;
+  font-family: Assistant;
 }
 
 .App-logo {

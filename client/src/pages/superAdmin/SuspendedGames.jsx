@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Slide from '@material-ui/core/Slide';
 import WhiteBar from "../../component/superAdmin/GameNavBar.jsx";
-import "../../style/superAdmin/games_style.css";
+import "../../style/superAdmin/games_style.scss";
 
 const images = [
   {

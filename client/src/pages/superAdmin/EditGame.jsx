@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx";
-import "../../style/superAdmin/add_game_style.css";
+import "../../style/superAdmin/add_game_style.scss";
 import "../../style/superAdmin/form_style.css";
 import addicon from "../../img/addicon.svg";
 import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.jsx";
