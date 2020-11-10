@@ -12,6 +12,7 @@ import TeacherRoute from './routing/teacher/TeacherRoute.jsx'
 import { provide } from '@hilma/tools';
 import Draft from "./dumps/draft.jsx";
 import { nameProvider } from "./stores/name.store";
+import { AuthProvider } from "@hilma/auth";
 
 function App() {
   return (
@@ -22,23 +23,25 @@ function App() {
       ></link>
 
       <Router>
-        <Switch>
-          <Route path="/" exact>
-            <Redirect to="/signin" />
-          </Route>
-          <Route path="/signin" exact>
-            <SignIn />
-          </Route>
-          <Route path="/superAdmin">
-            <SuperAdminRoute />
-          </Route>
-          <Route path="/teacher">
-            <TeacherRoute />
-          </Route>
-          <Route path="/draft" exact>
-            <Draft />
-          </Route>
-        </Switch>
+        <AuthProvider>
+          <Switch>
+            <Route path="/" exact>
+              <Redirect to="/signin" />
+            </Route>
+            <Route path="/signin" exact>
+              <SignIn />
+            </Route>
+            <Route path="/superAdmin">
+              <SuperAdminRoute />
+            </Route>
+            <Route path="/teacher">
+              <TeacherRoute />
+            </Route>
+            <Route path="/draft" exact>
+              <Draft />
+            </Route>
+          </Switch>
+        </AuthProvider>
       </Router>
     </div>
   );
