@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Select from "react-select";
 import SelectStyle from "../../style/superAdmin/select_style";
 import "../../style/superAdmin/form_style.css";
+import { FilesUploader, FileInput } from "@hilma/fileshandler-client";
 
 class GameFieldSelection extends Component {
   constructor() {
@@ -12,6 +13,7 @@ class GameFieldSelection extends Component {
       { value: "image", label: "תמונה" },
       { value: "multi-choice", label: "בחירה מרובה" },
     ];
+    this.imageUploader = new FilesUploader();
   }
 
   getFieldClassSize = (select) => {
@@ -26,7 +28,6 @@ class GameFieldSelection extends Component {
 
   // creates input based on "type"
   fieldCreator = () => {
-    
     if (this.props.changeInputType === "text") {
       return (
         <label className="fieldTitle">
@@ -41,17 +42,19 @@ class GameFieldSelection extends Component {
     } else if (this.props.changeInputType === "image") {
       return (
         <label className="fieldTitle imageWidth">
-          <input
-            onChange={this.sendFieldValue}
-            type="file"
+          <FileInput
+            id="image"
             className="hiddenInput inputFields"
+            type="image"
+            onChange={this.sendImageFieldValue}
+            filesUploader={this.imageUploader}
           />
           <div className="borderCameraIcon">
             <img
-              className="cameraIcon"
+              className={this.props.originalValue[0].value.length !== 0 ? "chosenImg" : "cameraIcon"}
               src={
-                this.props.imagePath
-                  ? this.props.imagePath
+                this.props.originalValue[0].value
+                  ? this.props.originalValue[0].value
                   : "/icons/camera-icon.svg"
               }
             />
@@ -115,13 +118,23 @@ class GameFieldSelection extends Component {
     );
   };
 
+  sendImageFieldValue = (value) => {
+    console.log(value);
+    this.props.fieldValue(
+      value.value,
+      this.props.fieldId,
+      null,
+      value.link
+    );
+  };
+
   removeField = () => {
     this.props.removal(this.props.fieldId);
   };
 
   render() {
     let fieldClassSize = this.getFieldClassSize(this.props.changeInputType);
-    
+
     let errorMess =
       this.props.errorMessage !== undefined
         ? this.props.errorMessage

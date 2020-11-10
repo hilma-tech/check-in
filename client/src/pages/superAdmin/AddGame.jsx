@@ -6,9 +6,13 @@ import "../../style/superAdmin/add_game_style.scss";
 import "../../style/superAdmin/form_style.css";
 import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.jsx";
 import { withRouter } from "react-router-dom";
-import { mustInputValidation, nameValidation } from '../../tools/ValidationFunctions'
-import {FilesUploader, FileInput} from '@hilma/fileshandler-client'
+import {
+  mustInputValidation,
+  nameValidation,
+} from "../../tools/ValidationFunctions";
+import { FilesUploader, FileInput } from "@hilma/fileshandler-client";
 
+const axios = require("axios").default;
 
 class AddGame extends Component {
   constructor() {
@@ -32,7 +36,7 @@ class AddGame extends Component {
       gameRequirements: "",
       image: false,
     };
-    this.filesUploader = new FilesUploader;
+    this.imageUploader = new FilesUploader();
   }
 
   saveFieldName = (fieldName, fieldId) => {
@@ -50,7 +54,7 @@ class AddGame extends Component {
     });
   };
 
-  saveFieldValue = (fieldValue, fieldId, inputId, inputFiles) => {
+  saveFieldValue = (fieldValue, fieldId, inputId, inputImage) => {
     //only relevant to choice/multi-choice
     if (inputId) {
       this.setState((prevState) => {
@@ -61,11 +65,11 @@ class AddGame extends Component {
         return { fieldsData: prevState.fieldsData };
       });
       //only relevant to image
-    } else if (inputFiles) {
+    } else if (inputImage) {
       this.setState((prevState) => {
         prevState.fieldsData[fieldId].value[0] = {
           id: 0,
-          value: inputFiles[0].name,
+          value: inputImage,
         };
         return { fieldsData: prevState.fieldsData };
       });
@@ -121,15 +125,24 @@ class AddGame extends Component {
       case "gameRequirements":
         this.setState({ gameRequirements: props.target.value });
         break;
-    }
-  };
-
-  updateImage = (value) =>{
-    this.setState({ image: value.link });
-  }
-
-  saveData = () => {
-    let allOK = true;
+      }
+    };
+    
+    updateImage = (value) => {
+      this.setState({ image: value.link });
+    };
+    
+    saveData = () => {
+      async function getUser() {
+        try {
+          const response = await axios.get("/api/game/hello");
+          console.log(response);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      getUser();
+      let allOK = true;
     let fieldOK = true;
     let errMess = "";
 
@@ -183,6 +196,7 @@ class AddGame extends Component {
 
     //after all the validetion we need to send the data to sql
     if (allOK && fieldOK) {
+      //fetch to the server
       this.props.history.goBack(); // after saving go back
     }
   };
@@ -284,8 +298,21 @@ class AddGame extends Component {
               <label className="fieldTitle imageWidth">
                 תמונה:
                 <div className="borderCameraIcon marginTop">
-                  <FileInput id="image" className="hiddenInput" type="image" onChange={this.updateImage} filesUploader={this.filesUploader}/>
-                  <img className={typeof this.state.image === 'string' ? "chosenImg" : "cameraIcon"} src={this.state.image || "/icons/camera-icon.svg"} />
+                  <FileInput
+                    id="image"
+                    className="hiddenInput"
+                    type="image"
+                    onChange={this.updateImage}
+                    filesUploader={this.imageUploader}
+                  />
+                  <img
+                    className={
+                      typeof this.state.image === "string"
+                        ? "chosenImg"
+                        : "cameraIcon"
+                    }
+                    src={this.state.image || "/icons/camera-icon.svg"}
+                  />
                 </div>
               </label>
               <br />
