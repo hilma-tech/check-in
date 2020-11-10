@@ -7,9 +7,11 @@ import {
 } from "react-router-dom";
 import "./App.scss";
 import SignIn from "./pages/SignIn.jsx";
-import SuperAdminRoute from './routing/superAdmin/SuperAdminRoute.jsx'
-import TeacherRoute from './routing/teacher/TeacherRoute.jsx'
+import SuperAdminRoute from "./routing/superAdmin/SuperAdminRoute.jsx";
+import TeacherRoute from "./routing/teacher/TeacherRoute.jsx";
 import Draft from "./dumps/draft.jsx";
+import { AuthProvider } from "@hilma/auth";
+
 function App() {
   return (
     <div className="App">
@@ -19,23 +21,25 @@ function App() {
       ></link>
 
       <Router>
-        <Switch>
-          <Route path="/" exact>
-            <Redirect to="/signin" />
-          </Route>
-          <Route path="/signin" exact>
-            <SignIn />
-          </Route>
-          <Route path="/superAdmin">
-            <SuperAdminRoute />
-          </Route>
-          <Route path="/teacher">
-            <TeacherRoute />
-          </Route>
-          <Route path="/draft" exact>
-            <Draft />
-          </Route>
-        </Switch>
+        <AuthProvider>
+          <Switch>
+            <Route path="/" exact>
+              <Redirect to="/signin" />
+            </Route>
+            <Route path="/signin" exact>
+              <SignIn />
+            </Route>
+            <Route path="/superAdmin">
+              <SuperAdminRoute />
+            </Route>
+            <Route path="/teacher">
+              <TeacherRoute />
+            </Route>
+            <Route path="/draft" exact>
+              <Draft />
+            </Route>
+          </Switch>
+        </AuthProvider>
       </Router>
     </div>
   );

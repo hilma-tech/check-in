@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@hilma/auth": "^0.2.36",
     "@hilma/fileshandler-client": "0.0.7",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
@@ -21,6 +22,7 @@
     "react-textarea-autosize": "^8.2.0",
     "sass": "^1.29.0"
   },
+  "proxy": "http://localhost:8080",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
