@@ -2,7 +2,6 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    opacity: 1;
     background-color: white;
     border-radius: 10%;
     height: 8.5vw;
@@ -10,6 +9,7 @@
     margin: 0px;
     margin-right: 10vw;
     margin-top: 1vw;
+    z-index: 80;
 }
 
 .popUpOpt {

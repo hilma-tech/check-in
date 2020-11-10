@@ -49,7 +49,7 @@ class Games extends Component {
 
   //TEMPORARILY COMMENTED OUT, WILL BE RETURN UPON PROPER ROUTING
   onClickEditGame = () => {
-    //this.props.history.push(this.props.location.pathname + 'Edit');
+    this.props.history.push(this.props.location.pathname + 'Edit');
   };
 
   //Save the user search value as searchVal in state.
@@ -98,7 +98,7 @@ class Games extends Component {
             </div>
             {this.state.images.map((image, index) => {
               return (
-                <div onClick={this.onClickEditGame}>
+                <div>
                   <div className="imageContainer item3">
                     <Fade
                       in={image.showOption}
@@ -110,8 +110,11 @@ class Games extends Component {
                       mountOnEnter
                       unmountOnExit
                     >
-                      <PopUp />
+                      <PopUp onClickEditGame={this.onClickEditGame}/>
                     </Fade>
+                    <img className="gameImg" alt="" src={image.url} />
+                    <h2 className="gameTitleBackground"></h2>
+                    <h1 className="gameTitle">{image.name}</h1>
                     <img
                       className="optionIcon"
                       onClick={() => {
@@ -124,9 +127,6 @@ class Games extends Component {
                       alt=""
                       src={optionicon}
                     />
-                    <img className="gameImg" alt="" src={image.url} />
-                    <h2 className="gameTitleBackground"></h2>
-                    <h1 className="gameTitle">{image.name}</h1>
                   </div>
                 </div>
               );

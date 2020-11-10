@@ -39,8 +39,9 @@ class SuspendedGames extends Component {
 
   //When the user press the search icon it's start to show the input text for the searching.
   activateSearch = () => {
-    this.setState({ displaySearch: true})
+    this.setState({ displaySearch: true })
   }
+
   render() {
     return (
       <div>
@@ -61,10 +62,10 @@ class SuspendedGames extends Component {
             {images.map((image) => {
               return (
                 <div className="imageContainer item3">
-                  <img className="clockIcon" alt="" src='/icons/ionic-ios-stopwatch.svg' />
                   <img className="gameImg" alt="" src={image.url} />
                   <h2 className="holdGameTitleBackground"></h2>
                   <h1 className="gameTitle">{image.name}</h1>
+                  <img className="clockIcon" alt="" src='/icons/ionic-ios-stopwatch.svg' />
                 </div>
               );
             })}
