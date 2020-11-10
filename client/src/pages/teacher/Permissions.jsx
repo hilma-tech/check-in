@@ -2,13 +2,21 @@ import React, { Component } from 'react'
 import PageTitle from '../../component/teacher/PageTitle'
 import SmallMenuBar from '../../component/teacher/SmallMenuBar'
 import SmallNavBar from '../../component/teacher/SmallNavBar'
+import ArrowBar from "../../component/teacher/ArrowBar.jsx";
 
 export default class Permissions extends Component {
     render() {
-        return <div>
-            <SmallMenuBar/>
-            <PageTitle title="כיתה א'3"/>
-            <SmallNavBar active="permissions"/>
-        </div>
+        return (
+            <div className="smallBackground">
+                <div className="smallPage">
+                    <SmallMenuBar />
+                    <PageTitle title="כיתה א'3" />
+                    <SmallNavBar active="permissions" />
+                    <ArrowBar page='permission' />
+                    <div className="smallAlign" style={{ top: '27.75vh' }}>
+                        <h2>hi</h2>
+                    </div>
+                </div>
+            </div>)
     }
 }

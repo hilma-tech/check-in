@@ -69,26 +69,10 @@
     display: grid;
     grid-template-columns: 40vw 40vw;
     justify-content: space-evenly;
-}
-
-.gamesChooseDistractions{
-  text-align: center;
-  width: 92%;
-  font-size: 5vw;
-  color: #043163;
-  margin-bottom: 2vh;
-  display: block;
-}
-
-.gamesChooseDistractionsText{
-  margin-top: 0;
-}
-
-.gameListTitle{
-  color: #043163;
-  font-size: 5vw;
-}
-
-.smallAlign {
-  margin-top: 33vh;
-}
+  }
+  
+  .gameListTitle{
+    color: #043163;
+    font-size: 5vw;
+    padding-right: 10vw;
+  }

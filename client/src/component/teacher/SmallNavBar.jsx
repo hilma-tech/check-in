@@ -61,7 +61,7 @@ class SmallNavBar extends Component {
               הרשאות
             </h2>
           </div>
-          <hr className={this.determineUnderline()} />
+          <p className={this.determineUnderline()}></p>
         </div>
       </>
     );
