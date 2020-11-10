@@ -1,14 +1,7 @@
-.smallBackArrow {
-    float: right;
-    margin-right: 8vw;
-    margin-top: 1.5vh;
-    background-color: #F2F7FC;
-}
-
 .smallAlign {
     text-align: right;
     background-color: #F2F7FC;
-    height: 100%;
+    position: relative;
 }
 
 .smallStudentCont {
@@ -35,9 +28,13 @@
     color: #043163;
     font-weight: 200;
     text-decoration: underline;
+    text-align: right;
 }
 
 .smallPage {
+    position: absolute;
     background-color: #F2F7FC;
     height: 100vh;
+    width: 100%;
+    top: 0;
 }

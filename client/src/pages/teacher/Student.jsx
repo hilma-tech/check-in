@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ArrowBar from "../../component/teacher/ArrowBar.jsx";
 import PageTitle from "../../component/teacher/PageTitle.jsx";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 import SmallNavBar from "../../component/teacher/SmallNavBar.jsx";
@@ -30,14 +31,8 @@ moveToStudent = (props) => {
             <SmallMenuBar />
             <PageTitle title="כיתה א'2"/>
             <SmallNavBar active="students" />
-            <img
-              className="smallBackArrow"
-              src="/icons/awesome-arrow-right.svg"
-            />
-            <br />
-            {/* search bar */}
-            <div className="smallAlign">
-              <h4 className="linkToTeachers">לרשימת המורים של כיתה זו</h4>
+            <ArrowBar page='students' />
+            <div className="smallAlign" style={{top:'37.75vh'}}>
               {this.students.map((studentName, index) => {
                 return (
                   <div className="smallStudentCont"  onClick={this.moveToStudent} >

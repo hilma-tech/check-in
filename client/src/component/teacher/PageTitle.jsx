@@ -7,7 +7,7 @@ class PageTitle extends Component {
             <>
                 <div className="titleContain">
                     <h1 className="officialTitle">{this.props.title}</h1>
-                    {this.props.titleTwo !== null ?
+                    {this.props.titleTwo !== undefined ?
                         <h1 className="officialTitle">{this.props.titleTwo}</h1>
                         :
                         <></>

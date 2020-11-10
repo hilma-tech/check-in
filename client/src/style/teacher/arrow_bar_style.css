@@ -1,0 +1,52 @@
+.smallBackArrow {
+    position: absolute;
+    margin-right: 8vw;
+    margin-top: 1.5vh;
+    right: 0;
+    background-color: #F2F7FC;
+}
+
+
+.gamesChooseDistractions{
+    background-color: #F2F7FC;
+    position: fixed;
+    top: 24.75vh;
+    width: 100%;
+    font-size: 5vw;
+    color: #043163;
+    padding-right: 4%;
+    height: 15vh;
+    z-index: 100;
+}
+
+.gamesChooseDistractionsText{
+    text-align: center;
+    margin-top: 0;
+    font-size: 5vw;
+    padding-top: 1.5vh;
+    width: 92vw;
+  }
+
+.studentsArrowBar{
+    background-color: #F2F7FC;
+    position: fixed;
+    top: 24.75vh;
+    width: 100%;
+    font-size: 5vw;
+    color: #043163;
+    padding-right: 4%;
+    height: 13vh;
+    z-index: 100;
+}
+
+.permissionArrowBar{
+    background-color: #F2F7FC;
+    position: fixed;
+    top: 24.75vh;
+    width: 100%;
+    font-size: 5vw;
+    color: #043163;
+    padding-right: 4%;
+    height: 5vh;
+    z-index: 100;
+}

@@ -4,6 +4,7 @@ import SmallNavBar from "../../component/teacher/SmallNavBar.jsx";
 import ClassGames from '../../component/teacher/ClassGames.jsx'
 import '../../style/teacher/class_games.scss'
 import PageTitle from '../../component/teacher/PageTitle.jsx';
+import ArrowBar from '../../component/teacher/ArrowBar.jsx';
 
 class Games extends React.Component {
     constructor() {
@@ -37,18 +38,8 @@ class Games extends React.Component {
                 <SmallMenuBar />
                 <PageTitle title="כיתה א'1"/>
                 <SmallNavBar />
-                <div className="smallAlign">
-                    <div className='gamesChooseDistractions'>
-                        <img
-                            className="smallBackArrow"
-                            src="/icons/awesome-arrow-right.svg"
-                        />
-                        <p className='gamesChooseDistractionsText'>
-                        בחר/י משחק כדי לערוך אותו,
-                        על מנת להוסיף משחק חדש לכיתה זו
-                        לחץ/י על סמל הפלוס
-                        </p>
-                    </div>
+                <ArrowBar page='games'/>
+                <div className="smallAlign" style={{top:'39.75vh'}}>
                     <div className='chosenGamesForClass'>
                         {
                             this.state.chosenGames.map((gameData) => {

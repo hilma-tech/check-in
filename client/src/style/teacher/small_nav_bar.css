@@ -2,12 +2,10 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 84vw;
   width: 100vw;
-  height: 7vh;
-  /* margin-right: 8vw; */
+  height: 6vh;
   position: fixed;
-  top: 23.5vh;
+  top: 18.75vh;
   background-color: #043163;
   z-index: 100;
 }
@@ -18,34 +16,34 @@
   color: white;
 }
 
-.smallBackground {
-  background-color: #043163;
-}
-
 .smallLeftUnderline {
   position: fixed;
-  border: 3px solid white;
-  top: 29vh;
+  background-color: white;
+  top: 24.25vh;
   width: 30vw;
+  height: 0.5vh;
+  margin: 0;
   margin-right: 70vw;
   z-index: 101;
 }
 
 .smallMiddleUnderline {
   position: fixed;
-  border: 3px solid white;
-  top: 29vh;
+  background-color: white;
+  top: 24.25vh;
   width: 30vw;
+  height: 0.5vh;
+  margin: 0;
   margin-right: 35vw;
   z-index: 101;
 }
 
 .smallRightUnderline {
   position: fixed;
-  border: 3px solid white;
-  top: 29vh;
+  background-color: white;
+  top: 24.25vh;
   width: 30vw;
-  margin-right: -0vw;
-  margin-bottom: 0;
+  height: 0.5vh;
+  margin: 0;
   z-index: 101;
 }
