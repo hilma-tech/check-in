@@ -9,7 +9,10 @@ import "./App.scss";
 import SignIn from "./pages/SignIn.jsx";
 import SuperAdminRoute from './routing/superAdmin/SuperAdminRoute.jsx'
 import TeacherRoute from './routing/teacher/TeacherRoute.jsx'
+import { provide } from '@hilma/tools';
 import Draft from "./dumps/draft.jsx";
+import { nameProvider } from "./stores/name.store";
+
 function App() {
   return (
     <div className="App">
@@ -41,4 +44,4 @@ function App() {
   );
 }
 
-export default App;
+export default provide(nameProvider)(App);

@@ -105,23 +105,12 @@ class AddGame extends Component {
     this.setState((prevState) => {
       let oldFieldArray = prevState.fieldsData;
       let newArray = oldFieldArray.filter((field) => field.id !== fieldId);
-
       return { fieldsData: newArray };
     });
   };
 
   updateBasicInfo = (props) => {
-    switch (props.target.id) {
-      case "gameName":
-        this.setState({ gameName: props.target.value });
-        break;
-      case "gameDescription":
-        this.setState({ gameDescription: props.target.value });
-        break;
-      case "gameRequirements":
-        this.setState({ gameRequirements: props.target.value });
-        break;
-    }
+    this.setState({ [props.target.id]: props.target.value });
   };
 
   updateImage = (value) =>{
@@ -138,6 +127,7 @@ class AddGame extends Component {
     if (errMess.length !== 0) {
       allOK = false;
       this.setState((prevState) => {
+        console.log(errMess);
         prevState.gameNameErrorMessages.toShow = "block";
         prevState.gameNameErrorMessages.mess = errMess;
         return { errorMessages: prevState.gameNameErrorMessages };
