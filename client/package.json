@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@hilma/auth": "^0.2.36",
+    "@hilma/auth": "^0.2.37",
     "@hilma/fileshandler-client": "0.0.7",
+    "@hilma/tools": "^0.1.15",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
@@ -12,6 +13,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.21.0",
     "mobx": "^6.0.3",
+    "mobx-react": "^7.0.4",
     "mobx-react-lite": "^3.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
