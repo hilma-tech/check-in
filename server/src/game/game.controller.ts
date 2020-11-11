@@ -10,7 +10,6 @@ export class GameController {
         private gameService: GameService)
     {
         // this.gameService.createGame()
-        
     }
 
     @Get("/hello")
@@ -31,7 +30,7 @@ export class GameController {
 
     @Get('/getGames')
     getGames(){
-        this.gameService.getAllGamesInfo()
+        return this.gameService.getGamesInfo()
     }
 
 }

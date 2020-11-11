@@ -31,9 +31,12 @@ export class GameService {
       game.suspended=false
     let res = await this.gameRepository.save(game);
   }
-  
-  async getAllGamesInfo(){
-    let gamesInfo = await this.gameRepository.find()
+
+  async getGamesInfo(){
+    let game = new Game
+    game.suspended = false
+    let gamesInfo = await this.gameRepository.find(game)
     console.log(gamesInfo);
+    return gamesInfo;
 }
 }
