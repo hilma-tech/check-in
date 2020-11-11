@@ -1,18 +1,22 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { log } from 'console';
+import { Controller, Get, Query, Post } from '@nestjs/common';
 import { Game } from './game.entity';
 import { GameService } from './game.service';
 
 @Controller('api/game')
 export class GameController {
-    @Get("/hello")
-    hello(){
-        console.log("meoww")
+    constructor(private gameService: GameService){
     }
-    async findAll(@Query('game') game: string) {
-        console.log(game);
+    // @Get("/hello")
+    // hello(){
+    //     console.log("meoww")
+    // }
+    // async findAll(@Query('game') game: string) {
+    //     console.log(game);
         
-        return this.findAll
+    //     return this.findAll
+    // }
+    @Get('/games')
+    getGames(){
+        this.gameService.getAllGamesInfo()
     }
-
 }

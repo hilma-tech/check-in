@@ -127,71 +127,32 @@ class EditGame extends Component {
   };
 
   updateBasicInfo = (props) => {
-    switch (props.target.id) {
-      case "gameName":
-        this.setState({ gameName: props.target.value });
-        break;
-      case "gameDescription":
-        this.setState({ gameDescription: props.target.value });
-        break;
-      case "gameRequirements":
-        this.setState({ gameRequirements: props.target.value });
-        break;
-      case "image":
-        this.setState({ image: props.target.value });
-    }
+        this.setState({ [props.target.id]: props.target.value });
   };
 
   saveData = () => {
     let allOK = true;
     let fieldOK = true;
-    let errMess = "";
+    let ValidationFunctions = [{ name: 'gameName', func: nameValidation, errMsg: '' },
+    { name: 'gameDescription', func: mustInputValidation, errMsg: '' },
+    { name: 'gameRequirements', func: mustInputValidation, errMsg: '' }]
 
-    //-------------- game name validation ----------------
-    errMess = nameValidation(this.state.gameName);
-    if (errMess.length !== 0) {
-      allOK = false;
-      this.setState((prevState) => {
-        prevState.gameNameErrorMessages.toShow = "block";
-        prevState.gameNameErrorMessages.mess = errMess;
-        return { errorMessages: prevState.gameNameErrorMessages };
-      });
-    } else {
-      this.setState((prevState) => {
-        prevState.gameNameErrorMessages = { toShow: "none", mess: "" };
-        return { errorMessages: prevState.gameNameErrorMessages };
-      });
-    }
-    //-------------- game description validation ----------------
-    errMess = mustInputValidation(this.state.gameDescription);
-    if (errMess.length !== 0) {
-      allOK = false;
-      this.setState((prevState) => {
-        prevState.gameDescriptionErrorMessages.toShow = "block";
-        prevState.gameDescriptionErrorMessages.mess = errMess;
-        return { errorMessages: prevState.gameDescriptionErrorMessages };
-      });
-    } else {
-      this.setState((prevState) => {
-        prevState.gameDescriptionErrorMessages = { toShow: "none", mess: "" };
-        return { errorMessages: prevState.gameDescriptionErrorMessages };
-      });
-    }
-    //-------------- game requirements validation ----------------
-    errMess = mustInputValidation(this.state.gameRequirements);
-    if (errMess.length !== 0) {
-      allOK = false;
-      this.setState((prevState) => {
-        prevState.gameRequirementsErrorMessages.toShow = "block";
-        prevState.gameRequirementsErrorMessages.mess = errMess;
-        return { errorMessages: prevState.gameRequirementsErrorMessages };
-      });
-    } else {
-      this.setState((prevState) => {
-        prevState.gameRequirementsErrorMessages = { toShow: "none", mess: "" };
-        return { errorMessages: prevState.gameRequirementsErrorMessages };
-      });
-    }
+    ValidationFunctions.forEach((validationData)=>{
+      validationData.errMsg = validationData.func(this.state[validationData.name])
+      if (validationData.errMsg.length !== 0) {
+        allOK = false;
+        this.setState((prevState) => {
+          prevState[(validationData.name + 'ErrorMessages')].toShow = "block";
+          prevState[(validationData.name + 'ErrorMessages')].mess = validationData.errMsg;
+          return { errorMessages: prevState[(validationData.name + 'ErrorMessages')] };
+        });
+      } else {
+        this.setState((prevState) => {
+          prevState[(validationData.name + 'ErrorMessages')] = { toShow: "none", mess: "" };
+          return { errorMessages: prevState[(validationData.name + 'ErrorMessages')] };
+        });
+      }
+    })
 
     fieldOK = this.validateFields();
 
