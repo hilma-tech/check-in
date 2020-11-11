@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { GameModule } from './game/game.module';
 import {TypeOrmModule} from '@nestjs/typeorm'
 
+
 @Module({
   imports: [GameModule, TypeOrmModule.forRoot()],
   controllers: [AppController],

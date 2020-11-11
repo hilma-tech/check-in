@@ -123,6 +123,15 @@ class AddGame extends Component {
 
   saveData = () => {
     let allOK = true;
+      async function getUser() {
+        try {
+          const response = await axios.post("/api/game/update",{number: 100});
+          console.log(response);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      getUser();
     let fieldOK = true;
     let ValidationFunctions = [{ name: 'gameName', func: nameValidation, errMsg: '' },
     { name: 'gameDescription', func: mustInputValidation, errMsg: '' },
