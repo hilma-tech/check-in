@@ -129,19 +129,20 @@ class AddGame extends Component {
     };
     
     updateImage = (value) => {
-      this.setState({ image: value.link });
-    };
-    
-    saveData = () => {
       async function getUser() {
         try {
-          const response = await axios.get("/api/game/hello");
+          const response = await axios.post("/api/game/update",{number: 100});
           console.log(response);
         } catch (error) {
           console.error(error);
         }
       }
       getUser();
+      this.setState({ image: value.link });
+    };
+    
+    saveData = () => {
+      
       let allOK = true;
     let fieldOK = true;
     let errMess = "";
