@@ -123,63 +123,111 @@ class AddGame extends Component {
 
   updateImage = (value) => {
     this.setState({ image: value.link });
-  }
+  };
 
   saveData = () => {
     let allOK = true;
-      let getUser = async () => {
-        try {
-          const response = await axios.post("/api/game/update",{number: 100});
-          console.log(response);
-        } catch (error) {
-          this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת נסה לבדוק את החיבור')
-        }
-      }
-      getUser();
-    let fieldOK = true;
-    let ValidationFunctions = [{ name: 'gameName', func: nameValidation, errMsg: '' },
-    { name: 'gameDescription', func: mustInputValidation, errMsg: '' },
-    { name: 'gameRequirements', func: mustInputValidation, errMsg: '' }]
-     getUser = async () => {
+    let getUser = async () => {
       try {
-        const response = await axios.get("/api/game/hello");
+        const response = await axios.post("/api/game/update", { number: 100 });
         console.log(response);
       } catch (error) {
         this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת נסה לבדוק את החיבור')
       }
     }
     getUser();
-
-    ValidationFunctions.forEach((validationData)=>{
-      validationData.errMsg = validationData.func(this.state[validationData.name])
-      if (validationData.errMsg.length !== 0) {
+    let fieldOK = true;
+    let ValidationFunctions = [{ name: 'gameName', func: nameValidation, errMsg: '' },
+    { name: 'gameDescription', func: mustInputValidation, errMsg: '' },
+    { name: 'gameRequirements', func: mustInputValidation, errMsg: '' }]
+    getUser = async () => {
+      let fieldOK = true;
+      let errMess = "";
+      let currGameInfo = {
+        game_name: this.state.gameName,
+        description: this.state.gameDescription,
+        requirements: this.state.gameRequirements,
+        suspended: false,
+      };
+      // let currImage = this.state.image;
+      // let imageUploader = this.imageUploader;
+      let addGameDb = async () => {
+        try {
+          const response = await axios.post("/api/game/save", currGameInfo);
+          console.log(response);
+        } catch (error) {
+          this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת נסה לבדוק את החיבור')
+        }
+      }
+      // async function addGameImg(){try {
+      //     const response = await imageUploader.post("/api/game/saveImg", currImage)
+      //     console.log(response);
+      //   } catch (error) {
+      //     console.log(error);
+      //   }}
+      addGameDb();
+      // addGameImg();
+      //-------------- game name validation ----------------
+      errMess = nameValidation(this.state.gameName);
+      if (errMess.length !== 0) {
         allOK = false;
         this.setState((prevState) => {
-          prevState[(validationData.name + 'ErrorMessages')].toShow = "block";
-          prevState[(validationData.name + 'ErrorMessages')].mess = validationData.errMsg;
-          return { errorMessages: prevState[(validationData.name + 'ErrorMessages')] };
+          console.log(errMess);
+          prevState.gameNameErrorMessages.toShow = "block";
+          prevState.gameNameErrorMessages.mess = errMess;
+          return { errorMessages: prevState.gameNameErrorMessages };
         });
       } else {
         this.setState((prevState) => {
-          prevState[(validationData.name + 'ErrorMessages')] = { toShow: "none", mess: "" };
-          return { errorMessages: prevState[(validationData.name + 'ErrorMessages')] };
+          prevState.gameNameErrorMessages = { toShow: "none", mess: "" };
+          return { errorMessages: prevState.gameNameErrorMessages };
         });
       }
-    })
+      //-------------- game description validation ----------------
+      errMess = mustInputValidation(this.state.gameDescription);
+      if (errMess.length !== 0) {
+        allOK = false;
+        this.setState((prevState) => {
+          prevState.gameDescriptionErrorMessages.toShow = "block";
+          prevState.gameDescriptionErrorMessages.mess = errMess;
+          return { errorMessages: prevState.gameDescriptionErrorMessages };
+        });
+      } else {
+        this.setState((prevState) => {
+          prevState.gameDescriptionErrorMessages = { toShow: "none", mess: "" };
+          return { errorMessages: prevState.gameDescriptionErrorMessages };
+        });
+      }
+      //-------------- game requirements validation ----------------
+      errMess = mustInputValidation(this.state.gameRequirements);
+      if (errMess.length !== 0) {
+        allOK = false;
+        this.setState((prevState) => {
+          prevState.gameRequirementsErrorMessages.toShow = "block";
+          prevState.gameRequirementsErrorMessages.mess = errMess;
+          return { errorMessages: prevState.gameRequirementsErrorMessages };
+        });
+      } else {
+        this.setState((prevState) => {
+          prevState.gameRequirementsErrorMessages = { toShow: "none", mess: "" };
+          return { errorMessages: prevState.gameRequirementsErrorMessages };
+        });
+      }
 
-    fieldOK = this.validateFields();
+      fieldOK = this.validateFields();
 
-    //after all the validetion we need to send the data to sql
-    if (allOK && fieldOK) {
-      //fetch to the server
-      this.props.history.goBack(); // after saving go back
-    }
-  };
+      //after all the validetion we need to send the data to sql
+      if (allOK && fieldOK) {
+        //fetch to the server
+        this.props.history.goBack(); // after saving go back
+      }
+    };
+  }
 
   validateFields = () => {
+    let errMess = "";
     let isOk = true;
     this.state.fieldsData.map((fields, index) => {
-      let errMess = "";
       if (fields.selection !== "image") {
         errMess = nameValidation(fields.name);
         if (errMess.length !== 0) {
