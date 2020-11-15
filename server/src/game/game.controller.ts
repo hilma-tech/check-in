@@ -1,3 +1,4 @@
+import { Game } from './game.entity';
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { GameService } from './game.service';
 import { GameDto } from './game.dto';
@@ -25,8 +26,9 @@ export class GameController {
   //   return { success: true };
   // }
 
-  // @Post("/create")
-  // createGame(){
-  //     this.gameService.createGame()
-  // }
+    @Get('/getGames')
+    getGames(){
+        return this.gameService.getGamesInfo()
+    }
+
 }

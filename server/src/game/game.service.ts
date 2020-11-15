@@ -1,5 +1,5 @@
-import { Body, Inject, Injectable } from '@nestjs/common';
-import { Repository, getRepository} from 'typeorm';
+import { Body, Injectable } from '@nestjs/common';
+import { Repository} from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm'
 import { Game } from './game.entity';
 import {GameDto} from './game.dto';
@@ -28,6 +28,13 @@ export class GameService {
       game.requirements=req.requirements
       game.suspended=false
     let res = await this.gameRepository.save(game);
-      
   }
+
+  async getGamesInfo(){
+    let game = new Game
+    game.suspended = false
+    let gamesInfo = await this.gameRepository.find(game)
+    console.log(gamesInfo);
+    return gamesInfo;
+}
 }

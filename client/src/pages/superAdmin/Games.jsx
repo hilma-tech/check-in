@@ -8,41 +8,32 @@ import Slide from "@material-ui/core/Slide";
 import PopUp from "../../component/superAdmin/GamePopUpMenu.jsx";
 import Fade from "@material-ui/core/Fade";
 
+const axios = require("axios").default;
+
 class Games extends Component {
   constructor() {
     super();
     this.state = {
-      images: [
-        {
-          name: "Gorilla",
-          url:
-            "https://c402277.ssl.cf1.rackcdn.com/photos/18330/images/hero_small/Mountain_Gorilla_Silverback_WW22557.jpg?1576515753",
-          showOption: false,
-        },
-        {
-          name: "Orangutan",
-          url:
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Orang_Utan%2C_Semenggok_Forest_Reserve%2C_Sarawak%2C_Borneo%2C_Malaysia.JPG/1200px-Orang_Utan%2C_Semenggok_Forest_Reserve%2C_Sarawak%2C_Borneo%2C_Malaysia.JPG",
-          showOption: false,
-        },
-        {
-          name: "Baboon",
-          url:
-            "https://upload.wikimedia.org/wikipedia/commons/3/35/Olive_baboon_Ngorongoro.jpg",
-          showOption: false,
-        },
-        {
-          name: "Giraffe",
-          url: "https://www.andrewscamera.com/img/s/v-10/p1348222310-3.jpg",
-          showOption: false,
-        },
-      ],
-      name: "hewwo",
+      games: [],
       searchVal: "",
       displaySearch: false,
       display: false,
     };
   }
+
+  componentDidMount(){
+    this.getGames()
+  }
+
+   getGames = async () => {
+    try {
+      const {data} = await axios.get("/api/game/getGames");
+      this.setState({games: data})
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   onClickAddGame = () => {
     this.props.history.push(this.props.location.pathname + "Add");
   };
@@ -96,7 +87,7 @@ class Games extends Component {
                 <h1 className="gameTitle">הוסף משחק</h1>
               </div>
             </div>
-            {this.state.images.map((image, index) => {
+            {this.state.games.map((image, index) => {
               return (
                 <div>
                   <div className="imageContainer item3">
@@ -112,16 +103,16 @@ class Games extends Component {
                     >
                       <PopUp onClickEditGame={this.onClickEditGame}/>
                     </Fade>
-                    <img className="gameImg" alt="" src={image.url} />
+                    <img className="gameImg" alt="" src={image.photo} />
                     <h2 className="gameTitleBackground"></h2>
-                    <h1 className="gameTitle">{image.name}</h1>
+                    <h1 className="gameTitle">{image.game_name}</h1>
                     <img
                       className="optionIcon"
                       onClick={() => {
                         this.setState((prevState) => {
-                          prevState.images[index].showOption = !prevState
-                            .images[index].showOption;
-                          return { images: prevState.images };
+                          prevState.games[index].showOption = !prevState
+                            .games[index].showOption;
+                          return { games: prevState.games };
                         });
                       }}
                       alt=""
