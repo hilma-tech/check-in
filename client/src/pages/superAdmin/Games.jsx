@@ -7,6 +7,10 @@ import { withRouter } from "react-router-dom";
 import Slide from "@material-ui/core/Slide";
 import PopUp from "../../component/superAdmin/GamePopUpMenu.jsx";
 import Fade from "@material-ui/core/Fade";
+import PopUpError from '../../component/popUpError'
+import { errorMsgContext } from "../../stores/error.store";
+import { observer } from "mobx-react"
+import { withContext } from '@hilma/tools';
 
 const axios = require("axios").default;
 
@@ -21,16 +25,16 @@ class Games extends Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getGames()
   }
 
-   getGames = async () => {
+  getGames = async () => {
     try {
-      const {data} = await axios.get("/api/game/getGames");
-      this.setState({games: data})
+      const { data } = await axios.get("/api/game/getGames");
+      this.setState({ games: data })
     } catch (error) {
-      console.error(error);
+      this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת נסה לרענן את העמוד');
     }
   }
 
@@ -101,7 +105,7 @@ class Games extends Component {
                       mountOnEnter
                       unmountOnExit
                     >
-                      <PopUp onClickEditGame={this.onClickEditGame}/>
+                      <PopUp onClickEditGame={this.onClickEditGame} />
                     </Fade>
                     <img className="gameImg" alt="" src={image.photo} />
                     <h2 className="gameTitleBackground"></h2>
@@ -124,10 +128,15 @@ class Games extends Component {
             })}
           </div>
         </div>
-        {/* </div> */}
+        <PopUpError />
       </>
     );
   }
 }
 
-export default withRouter(Games);
+const mapContextToProps = {
+  errorMsg: errorMsgContext,
+}
+
+
+export default withContext(mapContextToProps)(withRouter(observer(Games)));

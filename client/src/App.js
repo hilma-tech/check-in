@@ -12,6 +12,7 @@ import TeacherRoute from './routing/teacher/TeacherRoute.jsx'
 import { provide } from '@hilma/tools';
 import Draft from "./dumps/draft.jsx";
 import { nameProvider } from "./stores/name.store";
+import { errorMsgProvider } from "./stores/error.store";
 import { AuthProvider } from "@hilma/auth";
 
 function App() {
@@ -47,4 +48,4 @@ function App() {
   );
 }
 
-export default provide(nameProvider)(App);
+export default provide(nameProvider, errorMsgProvider)(App);
