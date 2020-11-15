@@ -1,0 +1,26 @@
+.popUpOkButton{
+    font-weight: bold;
+    font-size: 1.5vw;
+    color: white;
+    width: 8vw;
+    height: 5vh;
+    background-color: #043163;
+    border-radius: 0.5vw;
+    opacity: 1;
+    border-color: #04306300;
+
+}
+
+.popUpCanselButton{
+    font-weight: bold;
+    font-size: 1.5vw;
+    color: #043163;
+    width: 8vw;
+    height: 5vh;
+    border-color: #043163;
+    border-radius: 0.5vw;
+    opacity: 1;
+    background-color: white;
+    position: absolute;
+    right: 1.1vw;
+}

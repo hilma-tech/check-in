@@ -11,6 +11,10 @@ import {
   nameValidation,
 } from "../../tools/ValidationFunctions";
 import { FilesUploader, FileInput } from "@hilma/fileshandler-client";
+import PopUpError from '../../component/popUpError'
+import { errorMsgContext } from "../../stores/error.store";
+import { observer } from "mobx-react"
+import { withContext } from '@hilma/tools';
 
 const axios = require("axios").default;
 
@@ -123,12 +127,12 @@ class AddGame extends Component {
 
   saveData = () => {
     let allOK = true;
-      async function getUser() {
+      let getUser = async () => {
         try {
           const response = await axios.post("/api/game/update",{number: 100});
           console.log(response);
         } catch (error) {
-          console.error(error);
+          this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת נסה לבדוק את החיבור')
         }
       }
       getUser();
@@ -136,12 +140,12 @@ class AddGame extends Component {
     let ValidationFunctions = [{ name: 'gameName', func: nameValidation, errMsg: '' },
     { name: 'gameDescription', func: mustInputValidation, errMsg: '' },
     { name: 'gameRequirements', func: mustInputValidation, errMsg: '' }]
-    async function getUser() {
+     getUser = async () => {
       try {
         const response = await axios.get("/api/game/hello");
         console.log(response);
       } catch (error) {
-        console.error(error);
+        this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת נסה לבדוק את החיבור')
       }
     }
     getUser();
@@ -326,9 +330,15 @@ class AddGame extends Component {
             </button>
           </div>
         </div>
+        <PopUpError />
       </>
     );
   }
 }
 
-export default withRouter(AddGame);
+const mapContextToProps = {
+  errorMsg: errorMsgContext,
+}
+
+
+export default withContext(mapContextToProps)(withRouter(observer(AddGame)));

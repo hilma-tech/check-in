@@ -18,7 +18,7 @@ export function nameValidation(name) {
     } else if (name.length > 30) {
         return '** שדה זה לא יכול להכיל יותר מ-30 תווים **'
     } else if ((/[a-z]/).test(name) || (/[A-Z]/).test(name) || (/[!@#$%^&*()_+\=\[\]{};:\\|<>\/?~`]/).test(name)) {
-        return '** שדה זה חייב לא יכול להכיל אותיות באנגלית או תווים מיוחדים **'
+        return '** שדה זה לא יכול להכיל אותיות באנגלית או תווים מיוחדים **'
     } else if (name.includes('"') || name.includes("'") || name.includes('.') || name.includes(',') || name.includes('-')) {
         return '** שם זה לא תקין **'
     } else {
@@ -33,7 +33,7 @@ export function classNameValidation(name) {
     } else if (name.length > 10) {
         return '** שדה זה לא יכול להכיל יותר מ-10 תווים **'
     } else if ((/[a-z]/).test(name) || (/[A-Z]/).test(name) || (/[!@#$%^&*()_+,\=\[\]{};:\\|<>\/?~`]/).test(name)) {
-        return '** שדה זה חייב לא יכול להכיל אותיות באנגלית או תווים מיוחדים **'
+        return '** שדה זה לא יכול להכיל אותיות באנגלית או תווים מיוחדים **'
     } else if (name.includes('"') || name.includes("'") || name.includes('.') || name.includes('-')) {
         if (!((/[\u0590-\u05FF]+[",-]+[\u0590-\u05FF]/).test(name) || (/[\u0590-\u05FF]+[']/).test(name) || (/[\u0590-\u05FF]+[.]/).test(name))) {
             return '** שם זה לא תקין **'
