@@ -1,0 +1,64 @@
+.rowData {
+  display: flex;
+  width: 85%;
+  margin-left: 7.5%;
+  margin-right: 7.5%;
+  margin-top: 0.5vw;
+  justify-content: space-between;
+  background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #04316336;
+  border-radius: 5px;
+  opacity: 1;
+}
+
+.rowData p {
+  font-size: 1.1vw;
+  color: black;
+}
+
+a {
+  text-decoration: none;
+}
+
+.Details {
+  display: grid;
+  grid-template-columns: 12.5vw 12.5vw 50vw;
+}
+
+.item0,
+.item1,
+.item2 {
+  text-align: right;
+  padding-right: 2.5vw;
+}
+
+.item0 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.item1 {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+.item2 {
+  grid-column-start: 3;
+  grid-column-end: 4;
+}
+
+.classes {
+  display: flex;
+}
+.classes p {
+  margin-right: 0.75vw;
+}
+
+.classes p:first-child {
+  margin-right: 0vw;
+}
+
+.rowData p:last-child {
+  margin-left: 1.15vw;
+}

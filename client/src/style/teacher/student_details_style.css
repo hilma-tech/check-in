@@ -1,0 +1,40 @@
+.studentDeets {
+    width: 90vw;
+    height: 6vh;
+    margin-top: 3vh;
+    margin-right: 5vw;
+    border-radius: 2vw;
+    background-color: #E7EBEF;
+    box-shadow: 0px 3px 6px #04316329;
+}
+
+.top {
+    margin-top: 38vh;
+}
+
+.detail {
+    font-weight: 600;
+    text-align: right;
+    font-size: 3.5vh;
+    margin: 0px;
+    padding-right: 4vw;
+    padding-top: 0.5vh;
+    color: #043163;
+}
+
+.deetBackArrow {
+    float: right;
+    margin-right: 8vw;
+    margin-top: 34vh;
+    background-color: #F2F7FC;
+}
+
+.smallArrowTitle {
+    float: right;
+    margin: 0px;
+    margin-right: 2.5vw;
+    margin-top: 33vh;
+    font-weight: 600;
+    font-size: 3.5vh;
+    color: #043163;
+}

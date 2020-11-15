@@ -1,0 +1,49 @@
+.smallNav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100vw;
+  height: 6vh;
+  position: fixed;
+  top: 18.75vh;
+  background-color: #043163;
+  z-index: 100;
+}
+
+.smallNavName {
+  font-weight: 200;
+  font-size: 3vh;
+  color: white;
+}
+
+.smallLeftUnderline {
+  position: fixed;
+  background-color: white;
+  top: 24.25vh;
+  width: 30vw;
+  height: 0.5vh;
+  margin: 0;
+  margin-right: 70vw;
+  z-index: 101;
+}
+
+.smallMiddleUnderline {
+  position: fixed;
+  background-color: white;
+  top: 24.25vh;
+  width: 30vw;
+  height: 0.5vh;
+  margin: 0;
+  margin-right: 35vw;
+  z-index: 101;
+}
+
+.smallRightUnderline {
+  position: fixed;
+  background-color: white;
+  top: 24.25vh;
+  width: 30vw;
+  height: 0.5vh;
+  margin: 0;
+  z-index: 101;
+}

@@ -1,0 +1,40 @@
+.smallAlign {
+    text-align: right;
+    background-color: #F2F7FC;
+    position: relative;
+}
+
+.smallStudentCont {
+    width: 90vw;
+    height: 8vh;
+    margin-right: 5vw;
+    border-radius: 2vw;
+    background-color: white;
+    box-shadow: 0px 3px 6px #04316329;
+}
+
+.smallStudentName {
+    font-size: 3vh;
+    font-weight: 200;
+    padding-right: 6vw;
+    padding-top: 2vh;
+    color: #043163;
+}
+
+.linkToTeachers {
+    margin: 0vw;
+    margin-right: 8vw;
+    margin-top: 2vh;
+    color: #043163;
+    font-weight: 200;
+    text-decoration: underline;
+    text-align: right;
+}
+
+.smallPage {
+    position: absolute;
+    background-color: #F2F7FC;
+    height: 100vh;
+    width: 100%;
+    top: 0;
+}

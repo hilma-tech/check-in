@@ -3,6 +3,9 @@ import { Component } from "react";
 import "../style/sign_in.css";
 import hilmaicon from "../img/hilmawhite.svg";
 import { withRouter } from "react-router-dom";
+import { withContext } from '@hilma/tools';
+import { nameContext } from "../stores/name.store";
+import { observer } from "mobx-react"
 
 class SignIn extends Component {
   constructor() {
@@ -27,6 +30,7 @@ class SignIn extends Component {
       this.state.username,
       this.state.password,
     ];
+    // this.props.name.setName('aaaa')
     dataArray.map((value, index) => {
       if (value.length === 0) {
         this.setState((prevState)=>{
@@ -46,11 +50,11 @@ class SignIn extends Component {
           prevState.errorMessages[index].mess = ''
           return {errorMessages: prevState.errorMessages}
         })
-        this.props.history.push('/games')
+        this.props.history.push('/superAdmin/games')
       }
     });
   };
-
+  //EXPERIMENTATION
   // preventBack = () => {
   //   { window.history.forward(); }
   //   setTimeout(this.preventBack(), 0);
@@ -59,6 +63,7 @@ class SignIn extends Component {
 
 
   render() {
+    
     // this.preventBack()
     return (
       <div className="background" /* onunload="this.preventBack()" */>
@@ -84,10 +89,16 @@ class SignIn extends Component {
           </button>
           <h3 className="forgot">שכחת סיסמא?</h3>
           <img className="hilmalogo" src={hilmaicon} />
-        </div>
+        </div> 
+    {/* <p>{this.props.name.name}</p> */}
+
       </div>
     );
   }
 }
 
-export default withRouter(SignIn);
+const mapContextToProps = {
+  name: nameContext,
+}
+
+export default withContext(mapContextToProps)(withRouter(observer(SignIn)));

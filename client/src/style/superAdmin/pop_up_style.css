@@ -1,0 +1,40 @@
+.popUp {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10%;
+    height: 8.5vw;
+    width: 7.8vw;
+    margin: 0px;
+    margin-right: 10vw;
+    margin-top: 1vw;
+    z-index: 80;
+}
+
+.popUpOpt {
+    margin: 0px;
+    font-size: 1.5vw;
+    font-weight: 200;
+    text-align: right;
+    margin-right: 1vw;
+}
+
+.divider {
+    border: 0.5px solid #dbdbdb;
+    width: 80%;
+    margin: 0.5vw;
+    align-self: center;
+}
+
+.optionRow {
+    display: flex;
+    flex-direction: row;
+}
+
+.popUpIcon {
+    height:1.2vw;
+    width: 1.2vw;
+    margin-top: 0.3vw;
+    margin-right: 0.5vw;
+}

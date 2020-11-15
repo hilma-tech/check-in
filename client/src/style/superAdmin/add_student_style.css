@@ -1,0 +1,17 @@
+.studentClass{
+    margin-bottom: 7px;
+    width: 43vw;
+}
+
+.addStudentLabel, .schoolSelection{
+    margin-bottom: 2vh;
+}
+
+.addClassToStudent{
+    margin-bottom: 5vh;
+}
+
+#addStudentSchoolSelection{
+    margin-top: 2vh;
+    width: 46vw;
+}
