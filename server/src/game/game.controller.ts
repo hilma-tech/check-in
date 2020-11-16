@@ -2,10 +2,10 @@ import { Game } from './game.entity';
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { GameService } from './game.service';
 import { GameDto } from './game.dto';
-import {
-  UseFilesHandler,
-  FilesType,
-} from '@hilma/fileshandler-server';
+// import {
+//   UseFilesHandler,
+//   FilesType,
+// } from '@hilma/fileshandler-server';
 
 @Controller('api/game')
 export class GameController {
