@@ -20,6 +20,7 @@ class ArrowNavBar extends Component {
       case "/superAdmin/teachersAdd" : return ("הוספת מורה");
       case "/superAdmin/studentsAdd" : return ("הוספת תלמיד");
       case "/superAdmin/schoolsAdd" : return ("הוספת בית ספר");
+      default : return;
     }
   }
 

@@ -1,4 +1,4 @@
-import { Switch, Route, withRouter, Redirect } from "react-router-dom"
+import { Switch, Route, withRouter } from "react-router-dom"
 import React, {Component} from 'react'
 import Games from '../../pages/teacher/Games.jsx'
 import Students from "../../pages/teacher/Student.jsx"
@@ -6,9 +6,6 @@ import Permissions from '../../pages/teacher/Permissions.jsx'
 
 
 class SmallNavRouter extends Component {
-    constructor() {
-        super()
-    }
     render() {
       return (
           <Switch>

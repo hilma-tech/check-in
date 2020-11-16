@@ -53,14 +53,14 @@ class EditGame extends Component {
 
   saveFieldName = (fieldName, fieldId) => {
     this.state.fieldsData.filter(
-      (field) => field.id == fieldId
+      (field) => field.id === fieldId
     )[0].name = fieldName;
   };
 
   saveSelection = (selection, fieldId) => {
     this.setState((prevState) => {
       prevState.fieldsData.filter(
-        (field) => field.id == fieldId
+        (field) => field.id === fieldId
       )[0].selection = selection;
       return { fieldsData: prevState.fieldsData };
     });
@@ -269,7 +269,7 @@ class EditGame extends Component {
                   onChange={this.updateBasicInfo}
                 />
                 <div className="borderCameraIcon marginTop ">
-                  <img className="cameraIcon" src="/icons/camera-icon.svg" />
+                  <img alt="photography icon" className="cameraIcon" src="/icons/camera-icon.svg" />
                 </div>
               </label>
               <br />
@@ -304,7 +304,7 @@ class EditGame extends Component {
               id="addNewField"
               onClick={this.addNewFieldData}
             >
-              <img className="addIcon" src={addicon}></img>
+              <img alt="add icon" className="addIcon" src={addicon}></img>
               <p className="addTitle">הוסף שדה</p>
             </div>
             <br />

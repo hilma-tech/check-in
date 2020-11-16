@@ -213,7 +213,7 @@ class AddTeacher extends Component {
               id="addNewField"
               onClick={this.addNewFieldData}
             >
-              <img className="addIcon" src={addicon}></img>
+              <img className="addIcon" src={addicon} alt="add icon"></img>
               <p className="addTitle">הוסף כיתה</p>
             </div>
 

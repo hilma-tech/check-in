@@ -1,9 +1,6 @@
 import React from 'react';
 
 class ClassGames extends React.Component {
-    constructor() {
-        super();
-    }
     render() {
         return (
             <div className='gameContainer'>

@@ -1,7 +1,6 @@
 import { User } from '@hilma/auth-nest';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, ChildEntity } from 'typeorm';
 
-@Entity()
+@ChildEntity()
 export class SuperAdmin extends User {
-  
 }

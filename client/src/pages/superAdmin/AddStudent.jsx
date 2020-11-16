@@ -66,6 +66,7 @@ class AddStudent extends React.Component {
             }}
           />
           <img
+          alt="remove class button"
             className="removeClass"
             onClick={() => this.removeClass(i)}
             src="/icons/delete.svg"
@@ -241,7 +242,6 @@ class AddStudent extends React.Component {
           <Select
             className="schoolSelection"
             id="addStudentSchoolSelection"
-            placeholder="בחר..."
             styles={SelectStyle()}
             options={this.makeSchoolOption()}
             onChange={this.chooseSchool}
@@ -255,7 +255,7 @@ class AddStudent extends React.Component {
             className="addSomethingNew addClassToStudent"
             onClick={this.addClassOption}
           >
-            <img className="addIcon" src={addicon}></img>
+            <img className="addIcon" src={addicon} alt="add icon"></img>
             <p className="addTitle">הוסף כיתה</p>
           </div>
         </form>
