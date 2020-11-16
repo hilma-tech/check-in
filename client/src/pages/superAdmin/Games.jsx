@@ -93,7 +93,7 @@ class Games extends Component {
             </div>
             {this.state.games.map((image, index) => {
               return (
-                <div>
+                <div key={image.id}>
                   <div className="imageContainer item3">
                     <Fade
                       in={image.showOption}

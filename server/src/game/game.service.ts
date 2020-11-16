@@ -30,6 +30,7 @@ export class GameService {
     let res = await this.gameRepository.save(game);
   }
 
+
   async getGamesInfo(){
     let game = new Game
     game.suspended = false
