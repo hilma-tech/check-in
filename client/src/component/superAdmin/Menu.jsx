@@ -55,7 +55,7 @@ class Menu extends React.Component {
           >
             {/*The img option cut the image so i used the background-image */}
             <span></span>
-            <a>התנתק</a>
+            <button>התנתק</button>
           </div>
         </div>
       </div>

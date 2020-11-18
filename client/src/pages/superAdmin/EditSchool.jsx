@@ -106,7 +106,7 @@ class editSchool extends Component {
         return { schoolNameError: prevState.schoolNameError }
       })
       allOk = false
-    } else if ((/[a-z]/).test(this.state.schoolName) || (/[A-Z]/).test(this.state.schoolName) || (/[!@#$%^&*()_+\=\[\]{};:\\|<>\/?~`]/).test(this.state.schoolName)) {
+    } else if ((/[a-z]/).test(this.state.schoolName) || (/[A-Z]/).test(this.state.schoolName) || (/[!@#$%^&*()_+=[\]{};:\\|<>/?~`]/).test(this.state.schoolName)) {
       this.setState((prevState) => {
         prevState.schoolNameError.toShow = 'inline-block'
         prevState.schoolNameError.mess = '** שם בית הספר לא תקין **'
@@ -141,7 +141,7 @@ class editSchool extends Component {
           return { classes: prevState.classes }
         })
         allOk = false
-      } else if ((/[a-z]/).test(this.state.classes[i].name) || (/[A-Z]/).test(this.state.classes[i].name) || (/[!@#$%^&*()_+,\=\[\]{};:\\|<>\/?~`]/).test(this.state.classes[i].name)) {
+      } else if ((/[a-z]/).test(this.state.classes[i].name) || (/[A-Z]/).test(this.state.classes[i].name) || (/[!@#$%^&*()_+,=[\]{};:\\|<>/?~`]/).test(this.state.classes[i].name)) {
         this.setState((prevState) => {
           prevState.classes[i].classNameError.toShow = 'inline-block'
           prevState.classes[i].classNameError.mess = '** שם הכיתה לא תקין **'

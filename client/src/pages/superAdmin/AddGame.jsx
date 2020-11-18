@@ -45,14 +45,14 @@ class AddGame extends Component {
 
   saveFieldName = (fieldName, fieldId) => {
     this.state.fieldsData.filter(
-      (field) => field.id == fieldId
+      (field) => field.id === fieldId
     )[0].name = fieldName;
   };
 
   saveSelection = (selection, fieldId) => {
     this.setState((prevState) => {
       prevState.fieldsData.filter(
-        (field) => field.id == fieldId
+        (field) => field.id === fieldId
       )[0].selection = selection;
       return { fieldsData: prevState.fieldsData };
     });
@@ -136,10 +136,6 @@ class AddGame extends Component {
       }
     }
     getUser();
-    let fieldOK = true;
-    let ValidationFunctions = [{ name: 'gameName', func: nameValidation, errMsg: '' },
-    { name: 'gameDescription', func: mustInputValidation, errMsg: '' },
-    { name: 'gameRequirements', func: mustInputValidation, errMsg: '' }]
     getUser = async () => {
       let fieldOK = true;
       let errMess = "";
@@ -364,8 +360,8 @@ class AddGame extends Component {
             className='addSomethingNew'
               onClick={this.addNewFieldData}
             >
-              <img className='addIcon' src={addicon}></img>
-              <p className='addTitle'>הוסף שדה</p>
+              <img className="addIcon" src={addicon} alt="add icon"></img>
+              <p className="addTitle">הוסף שדה</p>
             </div>
           </form>
           <button className="saveButton" onClick={this.saveData}>

@@ -52,14 +52,14 @@ class EditGame extends Component {
 
   saveFieldName = (fieldName, fieldId) => {
     this.state.fieldsData.filter(
-      (field) => field.id == fieldId
+      (field) => field.id === fieldId
     )[0].name = fieldName;
   };
 
   saveSelection = (selection, fieldId) => {
     this.setState((prevState) => {
       prevState.fieldsData.filter(
-        (field) => field.id == fieldId
+        (field) => field.id === fieldId
       )[0].selection = selection;
       return { fieldsData: prevState.fieldsData };
     });

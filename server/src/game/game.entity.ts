@@ -5,18 +5,18 @@ export class Game {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({type: 'varchar', length: 50})
   game_name: string;
 
-  @Column()
+  @Column({type: 'varchar', length: 255})
   description: string;
 
-  @Column()
+  @Column({type: 'varchar', length: 255})
   requirements: string;
 
-  @Column()
+  @Column({type: 'varchar', length: 1000})
   photo: string;
 
-  @Column()
+  @Column({type: 'bit', default: false})
   suspended: boolean;
 }

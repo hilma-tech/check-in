@@ -2,14 +2,12 @@ import React from 'react';
 import '../../style/teacher/arrow_bar_style.css'
 
 class ArrowBar extends React.Component {
-    constructor() {
-        super();
-    }
     render() {
         if (this.props.page === 'games') {
             return (
                 <div className='gamesChooseDistractions'>
                     <img
+                    alt="small back arrow"
                         className="smallBackArrow"
                         src="/icons/awesome-arrow-right.svg"
                     />
@@ -23,6 +21,7 @@ class ArrowBar extends React.Component {
             return (
                 <div className='studentsArrowBar'>
                     <img
+                    alt="small back arrow"
                         className="smallBackArrow"
                         src="/icons/awesome-arrow-right.svg"
                     />
@@ -35,6 +34,7 @@ class ArrowBar extends React.Component {
             return (
                 <div className='permissionArrowBar'>
                     <img
+                    alt="small back arrow"
                         className="smallBackArrow"
                         src="/icons/awesome-arrow-right.svg"
                     />

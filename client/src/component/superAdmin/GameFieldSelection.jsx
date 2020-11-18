@@ -57,6 +57,7 @@ class GameFieldSelection extends Component {
                   ? this.props.originalValue[0].value
                   : "/icons/camera-icon.svg"
               }
+              alt="photography icon"
             />
           </div>
         </label>
@@ -150,6 +151,7 @@ class GameFieldSelection extends Component {
         <div className={fieldClassSize + ""}> 
         {/* fieldSelection */}
           <img
+          alt="remove field icon"
             onClick={this.removeField}
             className="removeFieldIcon"
             src="/icons/delete.svg"

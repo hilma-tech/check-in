@@ -1,24 +1,34 @@
 import { Game } from 'src/game/game.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+  ManyToOne,
+} from 'typeorm';
 
 @Entity()
 export class Field {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 50 })
   field_name: string;
 
-  @Column()
+  @Column({ type: 'int' })
   type: string;
 
-  @OneToOne(type => Game)
-    @JoinColumn()
-    photo: Game;
+  @Column({type: 'int'})
+  game_id: number;
 
-  @Column()
+  @ManyToOne(type => Game)
+  @JoinColumn({ name: 'game_id', referencedColumnName: 'id' })
+  game: Game;
+
+  @Column({ type: 'varchar', length: 150 })
   default_value: string;
 
-  @Column()
+  @Column({ type: 'int' })
   order: number;
 }

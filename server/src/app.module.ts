@@ -5,9 +5,11 @@ import { GameModule } from './game/game.module';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {FilesHandlerModule} from '@hilma/fileshandler-server'
 // import { SuperAdminModule } from './super-admin/super-admin.module';
+// import { FieldModule } from './field/field.module';
 import configuration from './config/configuration'
 import { ConfigModule } from '@nestjs/config';
-// import { FieldModule } from './field/field.module';
+import { FieldModule } from './field/field.module';
+import { SuperAdminModule } from './super-admin/super-admin.module';
 
 
 @Module({

@@ -4,9 +4,6 @@ import SmallMenuBar from "../../component/teacher/SmallMenuBar";
 import "../../style/teacher/student_details_style.css";
 
 class StudentDetails extends Component {
-  constructor() {
-    super();
-  }
   render() {
     return (
       <>
@@ -17,6 +14,7 @@ class StudentDetails extends Component {
           <img
             className="deetBackArrow"
             src="/icons/awesome-arrow-right.svg"
+            alt="small back arrow"
           />
           <h3 className="smallArrowTitle">כרטיס תלמיד</h3>
           <br />

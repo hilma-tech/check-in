@@ -93,7 +93,6 @@ class Games extends Component {
                 <h1 className="gameTitle">הוסף משחק</h1>
               </div>
             </div>
-            {console.log(this.props.games.gamesList)}
             {this.props.games.gamesList.map((image, index) => {
               return (
                 <div key={image.id}>

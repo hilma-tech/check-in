@@ -252,8 +252,8 @@ class AddStudent extends React.Component {
           className='addSomethingNew'
             onClick={this.addClassOption}
           >
-            <img className='addIcon' src={addicon}></img>
-            <p className='addTitle'>הוסף כיתה</p>
+            <img className="addIcon" src={addicon} alt="add icon"></img>
+            <p className="addTitle">הוסף כיתה</p>
           </div>
         </form>
         <button className="saveButton" onClick={this.saveButton}>
