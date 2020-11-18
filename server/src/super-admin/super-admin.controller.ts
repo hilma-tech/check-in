@@ -13,22 +13,21 @@ import { SuperAdmin } from './super-admin.entity';
 export class SuperAdminController {
   constructor(private readonly userService: UserService) {}
 
-//   @UseLocalAuth()
-//   @Post('/login')
-//   login(@RequestUser() userInfo, @Res() res) {
-//     console.log('userInfo', userInfo, 'res', res);
-//     let body = this.userService.login(userInfo, res);
-//     console.log('body', body);
+  //   @UseLocalAuth()
+  //   @Post('/login')
+  //   login(@RequestUser() userInfo, @Res() res) {
+  //     console.log('userInfo', userInfo, 'res', res);
+  //     let body = this.userService.login(userInfo, res);
+  //     console.log('body', body);
 
-//     res.send(body);
-//   }
+  //     res.send(body);
+  //   }
 
   @Post('/register')
   register(@Body() req) {
-      let username= req.username
-      let password= req.password
-      let user: Partial<SuperAdmin> = new SuperAdmin({ username, password });
-      console.log(user);
+    let username = req.username;
+    let password = req.password;
+    let user: Partial<SuperAdmin> = new SuperAdmin({ username, password });
     let userRole = new Role();
     userRole.id = 1; //you just the role id.
     user.roles = [userRole];

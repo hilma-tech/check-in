@@ -17,26 +17,30 @@ class Students extends Component {
     ];
   }
 
-moveToStudent = (props) => {
-  console.log(props.target.id)
-  sessionStorage.setItem("currStudent", props.target.id);
-  this.props.history.push(this.props.location.pathname + '/studentInfo');
-}
+  moveToStudent = (props) => {
+    sessionStorage.setItem("currStudent", props.target.id);
+    this.props.history.push(this.props.location.pathname + "/studentInfo");
+  };
 
   render() {
     return (
       <>
         <div className="smallBackground">
-          <div className= "smallPage">
+          <div className="smallPage">
             <SmallMenuBar />
-            <PageTitle title="כיתה א'2"/>
+            <PageTitle title="כיתה א'2" />
             <SmallNavBar active="students" />
-            <ArrowBar page='students' />
-            <div className="smallAlign" style={{top:'37.75vh'}}>
+            <ArrowBar page="students" />
+            <div className="smallAlign" style={{ top: "37.75vh" }}>
               {this.students.map((studentName, index) => {
                 return (
-                  <div className="smallStudentCont"  onClick={this.moveToStudent} >
-                    <h1 className="smallStudentName" id={index}>{studentName}</h1>
+                  <div
+                    className="smallStudentCont"
+                    onClick={this.moveToStudent}
+                  >
+                    <h1 className="smallStudentName" id={index}>
+                      {studentName}
+                    </h1>
                   </div>
                 );
               })}

@@ -39,7 +39,11 @@ class GameFieldSelection extends Component {
             onChange={this.sendImageFieldValue}
             />
             <img
-              className={this.props.originalValue[0].value.length !== 0 ? "chosenImg" : "cameraIcon"}
+              className={
+                this.props.originalValue[0].value.length !== 0
+                  ? "chosenImg"
+                  : "cameraIcon"
+              }
               src={
                 this.props.originalValue[0].value
                   ? this.props.originalValue[0].value
@@ -100,18 +104,16 @@ class GameFieldSelection extends Component {
       props.target.value,
       this.props.fieldId,
       props.target.id,
-      props.target.files
+      null
     );
   };
 
   sendImageFieldValue = (value) => {
-    console.log(value);
     this.props.fieldValue(
-      value.value,
-      this.props.fieldId,
-      null,
-      value.link
-    );
+      value.value, 
+      this.props.fieldId, 
+      null, 
+      value.link);
   };
 
   removeField = () => {

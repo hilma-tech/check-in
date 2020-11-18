@@ -1,14 +1,16 @@
-import { Controller } from '@nestjs/common';
-import { Body, Post } from '@nestjs/common';
-import {FieldService} from './field.service'
+import { Body, Controller, Post } from '@nestjs/common';
+import { FieldDto } from './field.dto';
+import { Field } from './field.entity';
+import { FieldService } from './field.service';
 
-@Controller('field')
+@Controller('api/field')
 export class FieldController {
     constructor(private fieldService: FieldService) {
+      
       }
 
-    @Post('/getFieldsgame')
-      getFieldsgame(@Body() gameId: number){
-          return this.fieldService.getGamefileds(gameId)
-      }
+    // @Post('/save')
+    // saveField(@Body() req: any) {
+    //     this.fieldService.saveField(req)
+    // }
 }

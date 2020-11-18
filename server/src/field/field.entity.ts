@@ -3,7 +3,6 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
   JoinColumn,
   ManyToOne,
 } from 'typeorm';
@@ -16,11 +15,11 @@ export class Field {
   @Column({ type: 'varchar', length: 50 })
   field_name: string;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'varchar' })
   type: string;
 
-  @Column({type: 'int'})
-  game_id: number;
+  @Column({type: 'int', default: 3})
+  game_id: any;
 
   @ManyToOne(type => Game)
   @JoinColumn({ name: 'game_id', referencedColumnName: 'id' })

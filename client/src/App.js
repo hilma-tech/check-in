@@ -14,7 +14,7 @@ import Draft from "./dumps/draft.jsx";
 import { nameProvider } from "./stores/name.store";
 import { errorMsgProvider } from "./stores/error.store";
 import { gamesProvider } from "./stores/games.store";
-import { AuthProvider } from "@hilma/auth";
+import { AuthProvider, PrivateRoute } from "@hilma/auth";
 
 function App() {
   return (
@@ -33,9 +33,9 @@ function App() {
             <Route path="/signin" exact>
               <SignIn />
             </Route>
-            <Route path="/superAdmin">
+            <PrivateRoute path="/superAdmin" componentName="SuperAdminRoute" redirectComponent={SignIn}>
               <SuperAdminRoute />
-            </Route>
+            </PrivateRoute>
             <Route path="/teacher">
               <TeacherRoute />
             </Route>

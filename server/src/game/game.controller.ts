@@ -1,31 +1,33 @@
 import { Game } from './game.entity';
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req, UploadedFiles } from '@nestjs/common';
 import { GameService } from './game.service';
 import { GameDto } from './game.dto';
-// import {
-//   UseFilesHandler,
-//   FilesType,
-// } from '@hilma/fileshandler-server';
+import { FieldService } from 'src/field/field.service';
+import {
+  UseFilesHandler,
+  FilesType,
+  ImageService,
+} from '@hilma/fileshandler-typeorm';
 
 @Controller('api/game')
 export class GameController {
-  constructor(private gameService: GameService) {
-    // this.gameService.createGame()
-    // this.temp()
-    // console.log('save');
+  constructor(private gameService: GameService, 
+    private fieldService: FieldService, 
+    private readonly imageService: ImageService) {
   }
 
   @Post('/save')
-  saveGame(@Body() req: GameDto) {
-    this.gameService.saveGame(req);
+  async saveGame(@Body() req: any) {
+    let id = await this.gameService.saveGame(req.game);
+    await this.fieldService.saveField({data: req.field, id: id})
   }
 
-  // @Post('/saveImg')
-  // @UseFilesHandler()
-  // saveImg(@Body() req: FilesType) {
-  //   console.log(req);
-  //   return { success: true };
-  // }
+  @Post('/saveImg')
+  @UseFilesHandler()
+  async saveImg(@UploadedFiles() files: FilesType) {
+    let service = await this.imageService.saveSingleFile(files)
+    console.log("req",files);
+  }
 
     @Post('/getGames')
     getGames(@Body() skipON: any){

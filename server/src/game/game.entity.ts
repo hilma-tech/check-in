@@ -5,18 +5,18 @@ export class Game {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({type: 'varchar', length: 50})
+  @Column({ type: 'varchar', length: 50, unique: true })
   game_name: string;
 
-  @Column({type: 'varchar', length: 255})
+  @Column({ type: 'varchar', length: 255 })
   description: string;
 
-  @Column({type: 'varchar', length: 255})
+  @Column({ type: 'varchar', length: 255 })
   requirements: string;
 
-  @Column({type: 'varchar', length: 1000})
+  @Column({ type: 'varchar', length: 1000, default: "blob:http://localhost:3000/8e4f6604-fef9-4190-bdd3-3628c7bc572c" })
   photo: string;
 
-  @Column({type: 'bit', default: false})
+  @Column({ type: 'bit', default: false })
   suspended: boolean;
 }
