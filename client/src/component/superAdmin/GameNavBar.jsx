@@ -25,14 +25,15 @@ class GameNavBar extends Component {
           <div className="navbar">
             <h6
               id="active"
-              className={
-                this.state.active === "games" ? "bold pageName" : "pageName"
-              }
-              onClick={this.state.active === "games" ? null : this.movePageFunc}
+              className="bold pageName"
+              // className={
+              //   this.state.active === "games" ? "bold pageName" : "pageName"
+              // }
+              // onClick={this.state.active === "games" ? null : this.movePageFunc}
             >
               משחקים
             </h6>
-            <h6
+            {/* <h6
               id="suspended"
               className={
                 this.state.active === "games" ? "pageName" : "bold pageName"
@@ -40,7 +41,7 @@ class GameNavBar extends Component {
               onClick={this.state.active === "games" ? this.movePageFunc : null}
             >
               משחקים מושהים
-            </h6>
+            </h6> */}
           </div>
         </div>
         <div className="spacer"></div>
