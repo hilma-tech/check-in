@@ -61,7 +61,7 @@ class ClassData extends React.Component {
             onChange={this.props.chooseTeacher}
           />
           <img
-          alt="remove button"
+            alt="remove button"
             className="removeTeachersSelectIcon"
             onClick={() =>
               this.props.removeTeacherFromClass(this.props.classIndex, i)
@@ -93,7 +93,7 @@ class ClassData extends React.Component {
 
         <div className="TeachersSelect">
           <img
-          alt="drop down list button"
+            alt="drop down list button"
             src="/icons/ionic-ios-arrow-down.svg"
             className={
               this.state.showClass ? "showClassButton" : "hideClassButton"
@@ -108,7 +108,7 @@ class ClassData extends React.Component {
             className="editSchoolClassesInput inputFields"
           ></input>
           <img
-          alt="remove class button"
+            alt="remove class button"
             className="removeClass"
             onClick={() => this.props.removeClass(this.props.classIndex)}
             src="/icons/delete.svg"
@@ -124,7 +124,7 @@ class ClassData extends React.Component {
           >
             <label
               for="schoolClassTeacher"
-              className="editSchoolClassTeacherLable"
+              className="labelFields"
             >
               מורים:
             </label>
@@ -143,8 +143,8 @@ class ClassData extends React.Component {
                   <p className="addTitle">הוסף מורה קיים</p>
                 </div>
               ) : (
-                <></>
-              )}
+                  <></>
+                )}
               <div className="addSomethingNew">
                 <img alt="add icon" className="addIcon" src="/icons/addicon.svg"></img>
                 <p className="addTitle">הוסף מורה חדש</p>

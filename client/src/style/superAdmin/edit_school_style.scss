@@ -1,0 +1,64 @@
+@import '../general_style.scss';
+
+.editSchoolClassTeacherButtons {
+  display: flex;
+}
+
+.editSchoolClassAddExistTeacher {
+  padding-left: 3vw;
+}
+
+.editSchoolAddClass {
+  @include blue-button-style;
+  width: 10vw;
+  margin-top: 1vh;
+}
+
+.showSchoolClassTeacher {
+  display: grid;
+  margin-right: 3.5vw;
+}
+
+.editSchoolClassTeacherSelect {
+  padding-bottom: 1vh;
+  font-size: 2vw;
+  width: 38.5vw;
+}
+
+.hideClassButton {
+  transform: rotate(90deg);
+  transition: 0.5s;
+}
+
+.showClassButton {
+  transition: 0.5s;
+}
+
+.hideClassButton,
+.showClassButton {
+  margin-right: 1vw;
+  margin-top: 3vh;
+  margin-left: 0.5vw;
+  width: 1.5vw;
+  height: 3.5vh;
+}
+
+.hideSchoolClassTeacher {
+  display: none;
+}
+
+.TeachersSelect {
+  display: flex;
+  width: 46vw;
+  margin-top: 1vh;
+}
+
+.removeTeachersSelectIcon {
+  width: 1.5vw;
+  margin: 0.75vw;
+}
+
+.removeClass {
+  width: 1.5vw;
+  margin: 0.5vw;
+}

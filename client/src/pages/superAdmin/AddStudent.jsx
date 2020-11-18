@@ -1,13 +1,12 @@
 import React from "react";
 import Select from "react-select";
 import SelectStyle from "../../style/superAdmin/select_style";
-import "../../style/superAdmin/form_style.css";
-import "../../style/superAdmin/add_student_style.css";
+import "../../style/superAdmin/form_style.scss";
 import addicon from "../../img/addicon.svg";
 import ArrowNavBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import { withRouter } from "react-router-dom";
 import {userNameValidation, nameValidation, passwordValidation,mustInputValidation} from '../../tools/ValidationFunctions'
-
+import "../../style/superAdmin/class_selection_style.css"
 
 class AddStudent extends React.Component {
   constructor(props) {
@@ -54,9 +53,9 @@ class AddStudent extends React.Component {
     let classesSelections = [];
     for (let i = 0; i < this.state.chosenClasses.length; i++) {
       classesSelections.push(
-        <div className="TeachersSelect" key={this.state.chosenClasses[i].id}>
+        <div key={this.state.chosenClasses[i].id} className='classSelection'>
           <Select
-            className="studentClass"
+          className='classSelectionInAddTecher'
             styles={SelectStyle()}
             options={this.makeClassesOption(i)}
             onChange={this.chooseClass}
@@ -66,8 +65,7 @@ class AddStudent extends React.Component {
             }}
           />
           <img
-          alt="remove class button"
-            className="removeClass"
+          className='removeFieldIcon'
             onClick={() => this.removeClass(i)}
             src="/icons/delete.svg"
           />
@@ -191,8 +189,8 @@ class AddStudent extends React.Component {
     return (
       <div>
         <ArrowNavBar />
-        <form className="formData">
-          <label for="studentName">שם התלמיד:</label>
+        <form className='formData'>
+          <label for="studentName" className='labelFields'>שם התלמיד:</label>
           <p
             class="error"
             style={{ display: this.state.studentNameError.toShow }}
@@ -200,31 +198,31 @@ class AddStudent extends React.Component {
             {this.state.studentNameError.mess}
           </p>
           <input
-            className="inputFields"
+            className='inputFields'
             value={this.state.studentName}
             onChange={this.handlechanges}
             placeholder="הכנס את שם התלמיד..."
             name="studentName"
           ></input>
 
-          <label for="userName">שם משתמש:</label>
+          <label for="userName" className='labelFields'>שם משתמש:</label>
           <p class="error" style={{ display: this.state.userNameError.toShow }}>
             {this.state.userNameError.mess}
           </p>
           <input
-            className="inputFields"
+          className='inputFields'
             value={this.state.userName}
             onChange={this.handlechanges}
             placeholder="הכנס שם משתמש"
             name="userName"
           ></input>
 
-          <label for="password">סיסמא:</label>
+          <label for="password" className='labelFields'>סיסמא:</label>
           <p class="error" style={{ display: this.state.passwordError.toShow }}>
             {this.state.passwordError.mess}
           </p>
           <input
-            className="inputFields"
+          className='inputFields'
             value={this.state.password}
             onChange={this.handlechanges}
             type="password"
@@ -232,7 +230,7 @@ class AddStudent extends React.Component {
             name="password"
           ></input>
 
-          <label className="addStudentLabel">בית ספר:</label>
+          <label className='labelFields'>בית ספר:</label>
           <p
             class="error"
             style={{ display: this.state.schoolNameError.toShow }}
@@ -240,28 +238,32 @@ class AddStudent extends React.Component {
             {this.state.schoolNameError.mess}
           </p>
           <Select
-            className="schoolSelection"
-            id="addStudentSchoolSelection"
+          className='selectStyle'
+            placeholder="בחר..."
             styles={SelectStyle()}
             options={this.makeSchoolOption()}
             onChange={this.chooseSchool}
             placeholder="שייך לבית ספר"
           />
 
-          <label className="addStudentLabel">כיתה:</label>
+          <label className='labelFields'>כיתה:</label>
           {this.returnClassesSelections()}
 
           <div
-            className="addSomethingNew addClassToStudent"
+          className='addSomethingNew'
             onClick={this.addClassOption}
           >
             <img className="addIcon" src={addicon} alt="add icon"></img>
             <p className="addTitle">הוסף כיתה</p>
           </div>
         </form>
-        <button className="saveButton" onClick={this.saveButton}>
-          שמור
-        </button>
+
+        <div className='spacerFromSaveButton'></div>
+          <div className='saveButtonBackground'>
+            <button className="saveButton" onClick={this.saveButton}>
+              שמור
+            </button>
+          </div>
       </div>
     );
   }

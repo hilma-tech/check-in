@@ -1,7 +1,7 @@
 import React from "react";
 import ArrowNavBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import ClassData from "../../component/superAdmin/SchoolClassData.jsx";
-import "../../style/superAdmin/form_style.css";
+import "../../style/superAdmin/form_style.scss";
 import { withRouter } from "react-router-dom";
 import { nameValidation, classNameValidation } from '../../tools/ValidationFunctions'
 
@@ -141,9 +141,8 @@ class AddSchool extends React.Component {
     return (
       <div>
         <ArrowNavBar />
-        <form className="form">
-          <div className="formData editSchoolForm">
-            <label for="schoolName" className="editSchoolNameLable">
+        <form className='formData'>
+            <label for="schoolName" className='labelFields'>
               שם בית ספר:
             </label>
             <p
@@ -153,13 +152,13 @@ class AddSchool extends React.Component {
               {this.state.schoolNameError.mess}
             </p>
             <input
+            className='inputFields'
               value={this.state.schoolName} //The input will show schoolName.
               name="schoolName"
               onChange={this.handleChange} //In charge of on the set state of schoolName.
-              className="editSchoolNameInput inputFields"
             ></input>
 
-            <label for="schoolClasses" className="editSchoolClassesLable">
+            <label for="schoolClasses" className='labelFields'>
               כיתות:
             </label>
 
@@ -184,15 +183,18 @@ class AddSchool extends React.Component {
             }
             <button
               type="button"
-              className="editSchoolAddClass"
+              className='editSchoolAddClass'
               onClick={this.addClassToSchool} //Add class to the list.
             >
               הוסף כיתה
             </button>
+
+          <div className='spacerFromSaveButton'></div>
+          <div className='saveButtonBackground'>
+            <button className="saveButton" onClick={this.saveData}>
+              שמור
+            </button>
           </div>
-          <button className="saveButton" onClick={this.saveData}>
-            שמור
-          </button>
         </form>
       </div>
     );

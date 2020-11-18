@@ -1,4 +1,5 @@
 @import "../fonts/fonts.scss";
+@import "../general_style.scss";
 
 .gameTitleBackground,
 .holdGameTitleBackground {
@@ -76,8 +77,6 @@
   align-items: center;
 }
 
-
-
 .title {
   /* text */
   color: #043163;
@@ -103,7 +102,7 @@
 }
 
 .optionIcon {
-  height: 2.5vw;
+  height: 1.5vw;
   width: 3.5vw;
 }
 
@@ -119,13 +118,20 @@
 
 #searchbar {
   display: flex;
+  margin-right: 2.5vw;
   align-items: center;
   justify-content: space-between;
+  width: 75vw;
   height: 12vh;
 }
 
 #wholepage {
-  width: 80vw;
+  width: 85vw;
   margin-right: 10vw;
   margin-left: 10vw;
+}
+
+.showMoreGamesB{
+  @include blue-button-style;
+  margin-bottom: 2vh;
 }

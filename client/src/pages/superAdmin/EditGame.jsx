@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import "../../style/superAdmin/add_game_style.scss";
-import "../../style/superAdmin/form_style.css";
+import "../../style/superAdmin/form_style.scss";
 import addicon from "../../img/addicon.svg";
 import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.jsx";
 import { withRouter } from "react-router-dom";
@@ -11,7 +11,6 @@ import { mustInputValidation, nameValidation } from '../../tools/ValidationFunct
 class EditGame extends Component {
   constructor() {
     super();
-
     this.state = {
       newKey: 3,
       gameNameErrorMessages: { toShow: "none", mess: "" },
@@ -127,7 +126,7 @@ class EditGame extends Component {
   };
 
   updateBasicInfo = (props) => {
-        this.setState({ [props.target.id]: props.target.value });
+    this.setState({ [props.target.id]: props.target.value });
   };
 
   saveData = () => {
@@ -137,7 +136,7 @@ class EditGame extends Component {
     { name: 'gameDescription', func: mustInputValidation, errMsg: '' },
     { name: 'gameRequirements', func: mustInputValidation, errMsg: '' }]
 
-    ValidationFunctions.forEach((validationData)=>{
+    ValidationFunctions.forEach((validationData) => {
       validationData.errMsg = validationData.func(this.state[validationData.name])
       if (validationData.errMsg.length !== 0) {
         allOK = false;
@@ -204,84 +203,80 @@ class EditGame extends Component {
       <>
         <div className="pageContainer">
           <WhiteBar />
-          <div className="formContainer">
-            <form className="formData">
-              <label className="fieldTitle">
-                שם המשחק:
-                <p
-                  className="error"
-                  style={{ display: this.state.gameNameErrorMessages.toShow }}
-                >
-                  {this.state.gameNameErrorMessages.mess}
-                </p>
-                <input
-                  id="gameName"
-                  className="inputFields marginTop"
-                  type="text"
-                  placeholder="הכנס את שם המשחק..."
-                  onBlur={this.updateBasicInfo}
-                  onChange={this.validation}
-                  defaultValue={this.state.gameName}
-                />
+          <form className='formData'>
+            <label className='labelFields'>
+              שם המשחק:
               </label>
-              <label className="fieldTitle">
-                תיאור המשחק:
-                <p
-                  className="error"
-                  style={{
-                    display: this.state.gameDescriptionErrorMessages.toShow,
-                  }}
-                >
-                  {this.state.gameDescriptionErrorMessages.mess}
-                </p>
-                <TextareaAutosize
-                  className="inputFields marginTop extendedField"
-                  placeholder="הכנס תיאור משחק..."
-                  id="gameDescription"
-                  onBlur={this.updateBasicInfo}
-                  defaultValue={this.state.gameDescription}
-                />
+            <p
+              className="error"
+              style={{ display: this.state.gameNameErrorMessages.toShow }}
+            >
+              {this.state.gameNameErrorMessages.mess}
+            </p>
+            <input
+              className='inputFields'
+              id="gameName"
+              type="text"
+              placeholder="הכנס את שם המשחק..."
+              onBlur={this.updateBasicInfo}
+              onChange={this.validation}
+              defaultValue={this.state.gameName}
+            />
+            <label className='labelFields'>
+              תיאור המשחק:
               </label>
-              <label className="fieldTitle">
-                דרישות המשחק:
-                <p
-                  className="error"
-                  style={{
-                    display: this.state.gameRequirementsErrorMessages.toShow,
-                  }}
-                >
-                  {this.state.gameRequirementsErrorMessages.mess}
-                </p>
-                <TextareaAutosize
-                  className="inputFields marginTop extendedField"
-                  placeholder="הכנס דרישות משחק..."
-                  id="gameRequirements"
-                  onBlur={this.updateBasicInfo}
-                  defaultValue={this.state.gameRequirements}
-                />
+            <p
+              className="error"
+              style={{
+                display: this.state.gameDescriptionErrorMessages.toShow,
+              }}
+            >
+              {this.state.gameDescriptionErrorMessages.mess}
+            </p>
+            <TextareaAutosize
+              className='inputFields'
+              placeholder="הכנס תיאור משחק..."
+              id="gameDescription"
+              onBlur={this.updateBasicInfo}
+              defaultValue={this.state.gameDescription}
+            />
+            <label className='labelFields'>
+              דרישות המשחק:
               </label>
-              <label className="fieldTitle imageWidth">
-                תמונה:
-                <input
-                  type="file"
-                  id="image"
-                  className="hiddenInput"
-                  onChange={this.updateBasicInfo}
-                />
-                <div className="borderCameraIcon marginTop ">
-                  <img alt="photography icon" className="cameraIcon" src="/icons/camera-icon.svg" />
-                </div>
+            <p
+              className="error"
+              style={{
+                display: this.state.gameRequirementsErrorMessages.toShow,
+              }}
+            >
+              {this.state.gameRequirementsErrorMessages.mess}
+            </p>
+            <TextareaAutosize
+              className='inputFields'
+              placeholder="הכנס דרישות משחק..."
+              id="gameRequirements"
+              onBlur={this.updateBasicInfo}
+              defaultValue={this.state.gameRequirements}
+            />
+            <label className='labelFields'>
+              תמונה:
               </label>
-              <br />
-              <label className="fieldTitle">
-                שדות:
-                <br />
+            <input
+              className='hiddenInput'
+              type="file"
+              id="image"
+              onChange={this.updateBasicInfo}
+            />
+            <div className='borderCameraIcon'>
+              <img className='cameraIcon' src="/icons/camera-icon.svg" />
+            </div>
+            <label className='labelFields'>
+              שדות:
               </label>
-            </form>
             {/* game fields */}
             {this.state.fieldsData.map((fieldObj) => {
               return (
-                <div className="fieldSelectionWithClose marginTop ">
+                <div>
                   <GameFieldSelection
                     key={fieldObj.id}
                     fieldId={fieldObj.id}
@@ -300,14 +295,16 @@ class EditGame extends Component {
             })}
             {/* add fields */}
             <div
-              className="addSomethingNew"
-              id="addNewField"
+              className='addSomethingNew'
               onClick={this.addNewFieldData}
             >
-              <img alt="add icon" className="addIcon" src={addicon}></img>
-              <p className="addTitle">הוסף שדה</p>
+              <img className='addIcon' src={addicon}></img>
+              <p className='addTitle'>הוסף שדה</p>
             </div>
-            <br />
+          </form>
+
+          <div className='spacerFromSaveButton'></div>
+          <div className='saveButtonBackground'>
             <button className="saveButton" onClick={this.saveData}>
               שמור
             </button>

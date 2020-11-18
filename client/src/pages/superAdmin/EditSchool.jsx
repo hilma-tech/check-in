@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import ClassData from "../../component/superAdmin/SchoolClassData.jsx";
 import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx"
-import "../../style/superAdmin/edit_school_style.css";
-import "../../style/superAdmin/form_style.css";
+import "../../style/superAdmin/edit_school_style.scss";
+import "../../style/superAdmin/form_style.scss";
 import "../../style/superAdmin/white_bar_style.css";
 
 class editSchool extends Component {
@@ -178,46 +178,49 @@ class editSchool extends Component {
     return (
       <div>
         <WhiteBar />
-        <form className="form">
-          <div className="formData editSchoolForm">
-            <label for="schoolName" className="editSchoolNameLable">
-              שם בית ספר:
+        <form className='formData'>
+          <label for="schoolName" className='labelFields'>
+            שם בית ספר:
             </label>
-            <p class='error' style={{ display: this.state.schoolNameError.toShow }}>{this.state.schoolNameError.mess}</p>
-            <input
-              value={this.state.schoolName} //The input will show schoolName.
-              name="schoolName"
-              onChange={this.handleChange} //In charge of on the set state of schoolName.
-              className="editSchoolNameInput inputFields"
-            ></input>
+          <p class='error' style={{ display: this.state.schoolNameError.toShow }}>{this.state.schoolNameError.mess}</p>
+          <input
+            className='inputFields'
+            value={this.state.schoolName} //The input will show schoolName.
+            name="schoolName"
+            onChange={this.handleChange} //In charge of on the set state of schoolName.
+          ></input>
 
-            <label for="schoolClasses" className="editSchoolClassesLable">
-              כיתות:
+          <label className='labelFields' for="schoolClasses">
+            כיתות:
             </label>
 
-            {//Pass on all the classes in the list and make them the class component (with the name and the teacher's selects).
-              this.state.classes.map((classData, classIndex) => {
-                //The component get the class data as props.classData.
-                return <ClassData key={classData.id}
-                  canAddExistTeacher={true}
-                  classData={classData}
-                  classIndex={classIndex}
-                  addTeacherToClass={this.addTeacherToClass}
-                  handleChange={this.handleChange}
-                  chooseTeacher={this.chooseTeacher}
-                  removeTeacherFromClass={this.removeTeacherFromClass}
-                  removeClass={this.removeClass} />;
-              })}
-            <button
-              type="button"
-              className="editSchoolAddClass"
-              onClick={this.addClassToSchool} //Add class to the list.
-            >
-              הוסף כיתה
+          {//Pass on all the classes in the list and make them the class component (with the name and the teacher's selects).
+            this.state.classes.map((classData, classIndex) => {
+              //The component get the class data as props.classData.
+              return <ClassData key={classData.id}
+                canAddExistTeacher={true}
+                classData={classData}
+                classIndex={classIndex}
+                addTeacherToClass={this.addTeacherToClass}
+                handleChange={this.handleChange}
+                chooseTeacher={this.chooseTeacher}
+                removeTeacherFromClass={this.removeTeacherFromClass}
+                removeClass={this.removeClass} />;
+            })}
+          <button
+            className='editSchoolAddClass'
+            type="button"
+            onClick={this.addClassToSchool} //Add class to the list.
+          >
+            הוסף כיתה
+            </button>
+          <div className='spacerFromSaveButton'></div>
+          <div className='saveButtonBackground'>
+            <button className="deletButton">מחק בית ספר</button>
+            <button className="saveButton" onClick={this.saveData}>
+              שמור
             </button>
           </div>
-          <button className="deletButton">מחק בית ספר</button>
-          <button className="saveButton" onClick={this.saveData}>שמור</button>
         </form>
       </div>
     );

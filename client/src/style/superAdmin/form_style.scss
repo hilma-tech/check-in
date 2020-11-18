@@ -1,0 +1,81 @@
+@import "../general_style.scss";
+@import '../fonts/fonts.scss';
+
+.formData {
+    @include form-container;
+}
+
+.selectStyle{
+    margin: 1vh;
+    width: 46vw;
+}
+
+.deletButton {
+    position: fixed;
+    top: 92vh;
+    left: 15vw;
+    width: 9vw;
+    height: 5vh;
+    font-size: 1vw;
+    @include white-button-style;
+}
+
+.saveButtonBackground{
+    position: fixed;
+    top: 92vh;
+    height: 8vh;
+    width: 100vw;
+    background-color: white;
+}
+
+.spacerFromSaveButton{
+    height: 8vh;  
+}
+
+.saveButton {
+    position: fixed;
+    font-weight: bold;
+    top: 92vh;
+    left: 5vw;
+    width: 8vw;
+    height: 5vh;
+    @include blue-button-style;
+}
+
+.addSomethingNew{
+    margin: 0;
+    margin-bottom: 1vh;
+    @include adding-button;
+}
+.addIcon{
+    width: 1.25vw;
+    height: 1.25vw;
+}
+
+.addTitle{
+    padding-right: 0.5vw;
+    font-size: 1.5vw;
+    margin: 0;
+}
+
+.inputFields{
+    @include inputs-style;
+    margin: 1vh;
+    width: 45vw;
+}
+
+.labelFields{
+    @include labels-style;
+    font-weight: 600;
+    width: 45vw;
+}
+
+.error{
+    @include error-msg-style;
+}
+
+textarea {
+    resize: none;
+    font-family: Assistant;
+    min-height: 6vw;
+  }

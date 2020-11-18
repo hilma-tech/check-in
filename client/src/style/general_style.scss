@@ -1,0 +1,80 @@
+@import './fonts/fonts.scss';
+
+@mixin error-msg-style {
+    font-size: 1vw;
+    color: red;
+    margin: 1vh;
+    text-align: start;
+    width: 40vw;
+    height: 2.5vh;
+};
+
+@mixin form-container {
+    margin-right: 9vw;
+    width: 45vw;
+    color: #043163;
+    text-align: start;
+    margin-top: 2vh;
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin white-button-style {
+    font-weight: bold;
+    background-color: white;
+    color: #043163;
+    border-color: white;
+    border-style: solid;
+    border-radius: 0.5vw;
+}
+
+@mixin blue-button-style {
+    font-weight: bold;
+    font-size: 1.5vw;
+    color: white;
+    background-color: #043163;
+    border-color:  #043163;
+    border-style: solid;
+    border-radius: 0.5vw;
+}
+
+@mixin labels-style {
+    font-size: 1.4vw;
+    padding-right:  0.5vw;
+    color: #043163;
+    margin-right: 0;
+    height: 30px;
+}
+
+@mixin inputs-style {
+    background: rgba(188, 188, 203, 0.2) 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    border-color: rgba(255, 255, 255, 0);
+    border-style: solid;
+    font-size: 1.5vw;
+    padding-right:  0.5vw;
+    color: #043163;
+    margin-right: 0;
+    height: 35px;
+    font-weight: lighter;
+}
+
+@mixin adding-button {
+    display: flex;
+    align-items: center;
+}
+
+::placeholder {
+    font-size: 1.5vw;
+    margin: 0px;
+    margin-right: 3vw;
+    color: #043163;
+    font-weight: lighter;
+    font-family: Assistant;
+}
+
+textarea::placeholder{
+    margin: 0;
+    font-family: Assistant;
+    font-weight: lighter;
+}

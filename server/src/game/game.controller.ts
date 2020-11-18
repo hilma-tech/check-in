@@ -29,9 +29,13 @@ export class GameController {
     console.log("req",files);
   }
 
-    @Get('/getGames')
-    getGames(){
-        return this.gameService.getGamesInfo()
+    @Post('/getGames')
+    getGames(@Body() skipON: any){
+        return this.gameService.getGamesInfo(skipON)
     }
 
+    // @Get('/aaa')
+    // temp(){
+    //     return this.gameService.saving()
+    // }
 }
