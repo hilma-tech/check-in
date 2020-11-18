@@ -7,7 +7,7 @@
   "database": "checkin",
   "entities": [
     "dist/**/*.entity{.ts,.js}",
-    "node_modules/@hilma/fileshandler-server/**/*.entity.{ts,js}",
+    "node_modules/@hilma/fileshandler-typeorm/**/*.entity.{ts,js}",
     "node_modules/@hilma/auth-nest/dist/**/*.entity{.ts,.js}"
   ],
   "synchronize": true

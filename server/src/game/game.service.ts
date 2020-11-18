@@ -21,6 +21,13 @@ export class GameService {
 //     let res = await this.gameRepository.save(game);
 //   }
 
+    async saveImg(@Body() req:any) {
+      let game = new Game
+      game.photo= req
+      game.id=53
+      let res = await this.gameRepository.save(game)
+    }
+
   async saveGame(@Body() req: GameDto) {
       let game = new Game
       game.game_name= req.game_name
@@ -28,6 +35,7 @@ export class GameService {
       game.requirements=req.requirements
       game.suspended=false
     let res = await this.gameRepository.save(game);
+    return res.id;
   }
 
 
@@ -35,7 +43,6 @@ export class GameService {
     let game = new Game
     game.suspended = false
     let gamesInfo = await this.gameRepository.find(game)
-    console.log(gamesInfo);
     return gamesInfo;
 }
 }
