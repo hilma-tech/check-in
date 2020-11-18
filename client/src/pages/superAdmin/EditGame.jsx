@@ -273,7 +273,6 @@ class EditGame extends Component {
             <label className='labelFields'>
               שדות:
               </label>
-          </form>
           {/* game fields */}
           {this.state.fieldsData.map((fieldObj) => {
             return (
@@ -290,19 +289,19 @@ class EditGame extends Component {
                   originalValue={fieldObj.value}
                   errorMessage={fieldObj.errorMessage}
                   imagePath={this.state.fieldsData[0].value[0].value}
-                />
+                  />
               </div>
             );
           })}
           {/* add fields */}
           <div
           className='addSomethingNew'
-            onClick={this.addNewFieldData}
+          onClick={this.addNewFieldData}
           >
             <img className='addIcon' src={addicon}></img>
             <p className='addTitle'>הוסף שדה</p>
           </div>
-          <br />
+          </form>
           <button className="saveButton" onClick={this.saveData}>
             שמור
             </button>

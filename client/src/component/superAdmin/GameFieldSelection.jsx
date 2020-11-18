@@ -3,6 +3,7 @@ import Select from "react-select";
 import SelectStyle from "../../style/superAdmin/select_style";
 import "../../style/superAdmin/form_style.scss";
 import { FilesUploader, FileInput } from "@hilma/fileshandler-client";
+import '../../style/superAdmin/game_field_selection_style.scss';
 
 class GameFieldSelection extends Component {
   constructor() {
@@ -16,40 +17,27 @@ class GameFieldSelection extends Component {
     this.imageUploader = new FilesUploader();
   }
 
-  getFieldClassSize = (select) => {
-    if (select === "text") {
-      return "";
-    } else if (select === "image") {
-      return "photoFildSize ";
-    } else {
-      return "selectionsFildSize ";
-    }
-  };
-
   // creates input based on "type"
   fieldCreator = () => {
     if (this.props.changeInputType === "text") {
       return (
-        <label className="fieldTitle">
           <input
             onBlur={this.sendFieldValue}
-            className="inputFields"
+            className="fieldSelectionInput"
             type="text"
             defaultValue={this.props.originalValue[0].value}
           />
-        </label>
       );
     } else if (this.props.changeInputType === "image") {
       return (
-        <label className="fieldTitle imageWidth">
+        <label className="borderCameraIcon">
           <FileInput
             id="image"
-            className="hiddenInput inputFields"
+            className="hiddenInput"
             type="image"
-            onChange={this.sendImageFieldValue}
             filesUploader={this.imageUploader}
-          />
-          <div className="borderCameraIcon">
+            onChange={this.sendImageFieldValue}
+            />
             <img
               className={this.props.originalValue[0].value.length !== 0 ? "chosenImg" : "cameraIcon"}
               src={
@@ -59,15 +47,13 @@ class GameFieldSelection extends Component {
               }
               alt="photography icon"
             />
-          </div>
         </label>
       );
     } else {
       const sixArray = [0, 1, 2, 3, 4, 5];
       // mapping to put in the right values
       return (
-        <label className="fieldTitle">
-          <div className="gridFieldInputs">
+        <label className='gridFieldInputs'>
             {sixArray.map((inputId) => {
               let input = this.props.originalValue.filter(
                 (valueArray) => valueArray.id === inputId
@@ -77,7 +63,7 @@ class GameFieldSelection extends Component {
                   <input
                     defaultValue={input[0].value}
                     onBlur={this.sendFieldValue}
-                    className="inputFields fieldName"
+                    className="fieldSelectionInput"
                     type="text"
                     id={inputId}
                   />
@@ -86,14 +72,13 @@ class GameFieldSelection extends Component {
                 return (
                   <input
                     onBlur={this.sendFieldValue}
-                    className="inputFields"
+                    className="fieldSelectionInput"
                     type="text"
                     id={inputId}
                   />
                 );
               }
             })}
-          </div>
         </label>
       );
     }
@@ -134,8 +119,6 @@ class GameFieldSelection extends Component {
   };
 
   render() {
-    let fieldClassSize = this.getFieldClassSize(this.props.changeInputType);
-
     let errorMess =
       this.props.errorMessage !== undefined
         ? this.props.errorMessage
@@ -148,40 +131,40 @@ class GameFieldSelection extends Component {
         >
           {errorMess.mess}
         </p>
-        <div className={fieldClassSize + ""}> 
-        {/* fieldSelection */}
+        <div className="gameFieldSelection">
+          {/* fieldSelection */}
           <img
-          alt="remove field icon"
+            alt="remove field icon"
             onClick={this.removeField}
             className="removeFieldIcon"
             src="/icons/delete.svg"
           />
 
-          <form>
+          <form className='fieldSelection'>
             {/* name of field */}
             <input
-              className="inputFields"
+              className="fieldSelectionInput"
               type="text"
               onBlur={this.sendNameValue}
               placeholder="רשום את שם השדה"
               defaultValue={this.props.originalName}
             />
-          
-          {/* selected field type */}
-          <Select
-            id="fieldType"
-            styles={SelectStyle()}
-            options={this.options}
-            onChange={this.sendSelection}
-            defaultValue={
-              this.options.filter((option) => {
-                return this.props.changeInputType === option.value;
-              })[0]
-            }
-          />
-          {/* field for user interaction */}
 
-          {this.fieldCreator()}</form>
+            {/* selected field type */}
+            <Select
+              id="fieldType"
+              styles={SelectStyle()}
+              options={this.options}
+              onChange={this.sendSelection}
+              defaultValue={
+                this.options.filter((option) => {
+                  return this.props.changeInputType === option.value;
+                })[0]
+              }
+            />
+            {/* field for user interaction */}
+
+            {this.fieldCreator()}</form>
         </div>
       </div>
     );

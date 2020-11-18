@@ -1,0 +1,33 @@
+@import '../general_style.scss';
+
+.fieldSelection {
+    display: grid;
+    grid-template-columns: 20vw 12vw 38vw;
+    grid-column-gap: 0.75vw;
+    margin-bottom: 1vh;
+}
+
+.gameFieldSelection {
+    display: flex;   
+    align-items: flex-start;
+    width: 85vw;
+}
+
+.fieldSelectionInput{
+    padding: 0;
+    border: none;
+    @include inputs-style;
+}
+
+.gridFieldInputs{
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: 18.5vw 18.5vw;
+  grid-row-gap: 0.5vw;
+}
+
+.removeFieldIcon {
+    width: 15px;
+    margin-left: 0.75vw;
+    margin-top: 12px;
+}

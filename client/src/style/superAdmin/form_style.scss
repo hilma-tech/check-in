@@ -1,4 +1,5 @@
 @import "../general_style.scss";
+@import '../fonts/fonts.scss';
 
 .formData {
     @include form-container;
@@ -38,6 +39,7 @@
 }
 
 .addTitle{
+    margin-top: 0.75vw;
     padding-right: 0.5vw;
     font-size: 1.5vw;
 }
@@ -60,4 +62,6 @@
 
 textarea {
     resize: none;
+    font-family: Assistant;
+    min-height: 6vw;
   }

@@ -43,7 +43,7 @@
     padding-right:  0.5vw;
     color: #043163;
     margin-right: 0;
-    height: 36px;
+    height: 35px;
 }
 
 @mixin inputs-style {
@@ -51,7 +51,12 @@
     border-radius: 10px;
     border-color: rgba(255, 255, 255, 0);
     border-style: solid;
-    @include labels-style;
+    font-size: 1.5vw;
+    padding-right:  0.5vw;
+    color: #043163;
+    margin-right: 0;
+    height: 35px;
+    font-weight: lighter;
 }
 
 @mixin adding-button {
