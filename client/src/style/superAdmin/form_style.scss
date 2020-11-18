@@ -1,0 +1,63 @@
+@import "../general_style.scss";
+
+.formData {
+    @include form-container;
+}
+
+.selectStyle{
+    margin: 1vh;
+    width: 46vw;
+}
+
+.deletButton {
+    position: fixed;
+    top: 92vh;
+    left: 15vw;
+    width: 9vw;
+    height: 5vh;
+    font-size: 1vw;
+    @include white-button-style;
+}
+
+.saveButton {
+    position: fixed;
+    font-weight: bold;
+    top: 92vh;
+    left: 5vw;
+    width: 8vw;
+    height: 5vh;
+    @include blue-button-style;
+}
+
+.addSomethingNew{
+    @include adding-button;
+}
+.addIcon{
+    width: 1.5vw;
+    height: 1.5vw;
+}
+
+.addTitle{
+    padding-right: 0.5vw;
+    font-size: 1.5vw;
+}
+
+.inputFields{
+    @include inputs-style;
+    margin: 1vh;
+    width: 45vw;
+}
+
+.labelFields{
+    @include labels-style;
+    font-weight: 600;
+    width: 45vw;
+}
+
+.error{
+    @include error-msg-style;
+}
+
+textarea {
+    resize: none;
+  }

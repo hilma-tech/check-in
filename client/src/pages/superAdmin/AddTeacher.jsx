@@ -3,7 +3,7 @@ import Select from "react-select";
 import addicon from "../../img/addicon.svg";
 import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import ClassSelection from "../../component/superAdmin/ClassSelection.jsx";
-import "../../style/superAdmin/form_style.css";
+import "../../style/superAdmin/form_style.scss";
 import "../../style/superAdmin/add_game_style.scss";
 import "../../style/superAdmin/add_teacher_style.scss";
 import SelectStyle from "../../style/superAdmin/select_style";
@@ -161,35 +161,35 @@ class AddTeacher extends Component {
       <>
         <div className="pageContainer">
           <WhiteBar />
-          <div className="formContainer">
-            <form className="formData">
+          <div>
+            <form className='formData'>
               {/* מורה */}
-              <label className="fieldTitle ">
+              <label className='labelFields'>
                 שם המורה:
               </label>
               <p className='error' style={{ display: this.state.teacherNameError.toShow }}>{this.state.teacherNameError.mess}</p>
               <input
-                className="inputFields"
+                className='inputFields'
                 type="text"
                 placeholder="הכנס את שם המורה..."
                 onBlur={this.saveTeacherName}
               />
 
               {/* בית ספר */}
-              <label className="fieldTitle">
+              <label className='labelFields'>
                 בית ספר:
               </label>
-                <p className='error' style={{ display: this.state.schoolNameError.toShow }}>{this.state.schoolNameError.mess}</p>
-                <Select
-                  className="spaceFromTitles thinnerFont"
-                  onChange={this.saveSchoolName}
-                  options={this.schoolOptions}
-                  styles={SelectStyle()}
-                  defaultValue={{ value: "default", label: "שייך לבית ספר" }}
-                />
+              <p className='error' style={{ display: this.state.schoolNameError.toShow }}>{this.state.schoolNameError.mess}</p>
+              <Select
+                className='selectStyle'
+                onChange={this.saveSchoolName}
+                options={this.schoolOptions}
+                styles={SelectStyle()}
+                defaultValue={{ value: "default", label: "שייך לבית ספר" }}
+              />
               {/* כיתה */}
-              <label className="fieldTitle">כיתה:</label>
-              <div className="spaceFromTitles">
+              <label className='labelFields'>כיתה:</label>
+              <div>
                 {this.state.fieldsData.map((fieldObj) => {
                   return (
                     <div className=" thinnerFont">
@@ -205,38 +205,37 @@ class AddTeacher extends Component {
                   );
                 })}
               </div>
+            </form >
+            <form className='formData'>
+              {/* הוספת כיתה */}
+              <div
+                className='addSomethingNew'
+                onClick={this.addNewFieldData}
+              >
+                <img className='addIcon' src={addicon}></img>
+                <p className='addTitle'>הוסף כיתה</p>
+              </div>
             </form>
-
-            {/* הוספת כיתה */}
-            <div
-              className="addSomethingNew"
-              id="addNewField"
-              onClick={this.addNewFieldData}
-            >
-              <img className="addIcon" src={addicon}></img>
-              <p className="addTitle">הוסף כיתה</p>
-            </div>
-
-            <form className="formData">
+            <form className='formData'>
               {/* אימייל */}
-              <label className="fieldTitle">
+              <label className='labelFields'>
                 אימייל:
               </label>
               <p className='error' style={{ display: this.state.emailNameError.toShow }}>{this.state.emailNameError.mess}</p>
               <input
+                className='inputFields'
                 onBlur={this.saveEmail}
-                className="inputFields spaceFromTitles"
                 type="text"
                 placeholder="הכנס כתובת מייל..."
               />
               {/* סיסמא */}
-              <label className="fieldTitle">
+              <label className='labelFields'>
                 סיסמא:
               </label>
               <p className='error' style={{ display: this.state.passwordNameError.toShow }}>{this.state.passwordNameError.mess}</p>
               <input
+                className='inputFields'
                 onBlur={this.savePassword}
-                className="inputFields"
                 type="text"
                 placeholder="הכנס סיסמא..."
               />

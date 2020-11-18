@@ -122,7 +122,7 @@ class ClassData extends React.Component {
           >
             <label
               for="schoolClassTeacher"
-              className="editSchoolClassTeacherLable"
+              className="labelFields"
             >
               מורים:
             </label>

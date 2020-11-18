@@ -9,6 +9,7 @@ import PopUp from "../../component/superAdmin/GamePopUpMenu.jsx";
 import Fade from "@material-ui/core/Fade";
 import PopUpError from '../../component/popUpError'
 import { errorMsgContext } from "../../stores/error.store";
+import { gamesContext } from "../../stores/games.store";
 import { observer } from "mobx-react"
 import { withContext } from '@hilma/tools';
 
@@ -18,7 +19,6 @@ class Games extends Component {
   constructor() {
     super();
     this.state = {
-      games: [],
       searchVal: "",
       displaySearch: false,
       display: false,
@@ -26,13 +26,15 @@ class Games extends Component {
   }
 
   componentDidMount() {
-    this.getGames()
+    this.props.games.resetShowOptions()
+    if(this.props.games.gamesList.length === 0){
+      this.getGames()
+    }
   }
 
-  getGames = async () => {
+  getGames = () => {
     try {
-      const { data } = await axios.get("/api/game/getGames");
-      this.setState({ games: data })
+      this.props.games.setGames()
     } catch (error) {
       this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת נסה לרענן את העמוד');
     }
@@ -91,7 +93,8 @@ class Games extends Component {
                 <h1 className="gameTitle">הוסף משחק</h1>
               </div>
             </div>
-            {this.state.games.map((image, index) => {
+            {console.log(this.props.games.gamesList)}
+            {this.props.games.gamesList.map((image, index) => {
               return (
                 <div key={image.id}>
                   <div className="imageContainer item3">
@@ -112,13 +115,7 @@ class Games extends Component {
                     <h1 className="gameTitle">{image.game_name}</h1>
                     <img
                       className="optionIcon"
-                      onClick={() => {
-                        this.setState((prevState) => {
-                          prevState.games[index].showOption = !prevState
-                            .games[index].showOption;
-                          return { games: prevState.games };
-                        });
-                      }}
+                      onClick={() => {this.props.games.setShowOption(index)}}
                       alt=""
                       src={optionicon}
                     />
@@ -127,6 +124,12 @@ class Games extends Component {
               );
             })}
           </div>
+          <button
+            className='showMoreGamesB'
+            onClick={this.getGames}
+            style={{ display: this.props.games.haveMoreGames ? 'inline-block' : 'none' }}>
+            הצג עוד
+            </button>
         </div>
         <PopUpError />
       </>
@@ -136,6 +139,7 @@ class Games extends Component {
 
 const mapContextToProps = {
   errorMsg: errorMsgContext,
+  games: gamesContext
 }
 
 

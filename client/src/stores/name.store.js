@@ -3,7 +3,6 @@ import { makeObservable, observable, computed,  action  } from 'mobx'
 
 class Name {
     name = ""
-
     constructor() {
         makeObservable(this, {
             name: observable,
