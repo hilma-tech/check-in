@@ -191,28 +191,28 @@ class AddTeacher extends Component {
               <div>
                 {this.state.fieldsData.map((fieldObj) => {
                   return (
-                      <ClassSelection
-                        key={fieldObj.id}
-                        id={fieldObj.id}
-                        removal={this.triggerRemoval}
-                        saveValue={this.saveValue}
-                        options={this.classOptions}
-                        onChange={this.saveChange}
-                      />
+                    <ClassSelection
+                      key={fieldObj.id}
+                      id={fieldObj.id}
+                      removal={this.triggerRemoval}
+                      saveValue={this.saveValue}
+                      options={this.classOptions}
+                      onChange={this.saveChange}
+                    />
                   );
                 })}
               </div>
             </form >
-              {/* הוספת כיתה */}
-              <div
-                style={{marginRight: '9vw'}}
-                className='addSomethingNew'
-                onClick={this.addNewFieldData}
-              >
-                <img className='addIcon' src={addicon}></img>
-                <p className='addTitle'>הוסף כיתה</p>
-              </div>
-            <form className='formData' style={{marginTop: '0'}}>
+            {/* הוספת כיתה */}
+            <div
+              style={{ marginRight: '9vw' }}
+              className='addSomethingNew'
+              onClick={this.addNewFieldData}
+            >
+              <img className='addIcon' src={addicon}></img>
+              <p className='addTitle'>הוסף כיתה</p>
+            </div>
+            <form className='formData' style={{ marginTop: '0' }}>
               {/* אימייל */}
               <label className='labelFields'>
                 אימייל:
@@ -236,7 +236,13 @@ class AddTeacher extends Component {
                 placeholder="הכנס סיסמא..."
               />
             </form>
-            <button className="saveButton" onClick={this.validateInputFields}>שמור</button>
+
+            <div className='spacerFromSaveButton'></div>
+            <div className='saveButtonBackground'>
+              <button className="saveButton" onClick={this.validateInputFields}>
+                שמור
+            </button>
+            </div>
           </div>
         </div>
       </>

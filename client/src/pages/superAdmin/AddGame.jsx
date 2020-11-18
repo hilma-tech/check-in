@@ -312,27 +312,27 @@ class AddGame extends Component {
               id="gameRequirements"
               onBlur={this.updateBasicInfo}
             />
-                <label className="">
-                <label className='labelFields'>תמונה:</label>
-                <div className="borderCameraIcon marginTop">
-                  <FileInput
-                    id="image"
-                    className="hiddenInput"
-                    type="image"
-                    onChange={this.updateImage}
-                    filesUploader={this.imageUploader}
-                  />
-                  <img
+            <label className="">
+              <label className='labelFields'>תמונה:</label>
+              <div className="borderCameraIcon marginTop">
+                <FileInput
+                  id="image"
+                  className="hiddenInput"
+                  type="image"
+                  onChange={this.updateImage}
+                  filesUploader={this.imageUploader}
+                />
+                <img
                   alt="photograph icon"
-                    className={
-                      typeof this.state.image === "string"
-                        ? "chosenImg"
-                        : "cameraIcon"
-                    }
-                    src={this.state.image || "/icons/camera-icon.svg"}
-                  />
-                </div>
-              </label>
+                  className={
+                    typeof this.state.image === "string"
+                      ? "chosenImg"
+                      : "cameraIcon"
+                  }
+                  src={this.state.image || "/icons/camera-icon.svg"}
+                />
+              </div>
+            </label>
             <label className='labelFields'>
               שדות:
               </label>
@@ -357,16 +357,19 @@ class AddGame extends Component {
             })}
             {/* add fields */}
             <div
-            className='addSomethingNew'
+              className='addSomethingNew'
               onClick={this.addNewFieldData}
             >
               <img className="addIcon" src={addicon} alt="add icon"></img>
               <p className="addTitle">הוסף שדה</p>
             </div>
           </form>
-          <button className="saveButton" onClick={this.saveData}>
-            שמור
+          <div className='spacerFromSaveButton'></div>
+          <div className='saveButtonBackground'>
+            <button className="saveButton" onClick={this.saveData}>
+              שמור
             </button>
+          </div>
         </div>
         <PopUpError />
       </>

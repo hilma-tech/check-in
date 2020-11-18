@@ -188,9 +188,13 @@ class AddSchool extends React.Component {
             >
               הוסף כיתה
             </button>
-          <button className="saveButton" onClick={this.saveData}>
-            שמור
-          </button>
+
+          <div className='spacerFromSaveButton'></div>
+          <div className='saveButtonBackground'>
+            <button className="saveButton" onClick={this.saveData}>
+              שמור
+            </button>
+          </div>
         </form>
       </div>
     );

@@ -214,7 +214,7 @@ class EditGame extends Component {
               {this.state.gameNameErrorMessages.mess}
             </p>
             <input
-            className='inputFields'
+              className='inputFields'
               id="gameName"
               type="text"
               placeholder="הכנס את שם המשחק..."
@@ -234,7 +234,7 @@ class EditGame extends Component {
               {this.state.gameDescriptionErrorMessages.mess}
             </p>
             <TextareaAutosize
-            className='inputFields'
+              className='inputFields'
               placeholder="הכנס תיאור משחק..."
               id="gameDescription"
               onBlur={this.updateBasicInfo}
@@ -252,7 +252,7 @@ class EditGame extends Component {
               {this.state.gameRequirementsErrorMessages.mess}
             </p>
             <TextareaAutosize
-            className='inputFields'
+              className='inputFields'
               placeholder="הכנס דרישות משחק..."
               id="gameRequirements"
               onBlur={this.updateBasicInfo}
@@ -262,7 +262,7 @@ class EditGame extends Component {
               תמונה:
               </label>
             <input
-            className='hiddenInput'
+              className='hiddenInput'
               type="file"
               id="image"
               onChange={this.updateBasicInfo}
@@ -273,38 +273,42 @@ class EditGame extends Component {
             <label className='labelFields'>
               שדות:
               </label>
-          {/* game fields */}
-          {this.state.fieldsData.map((fieldObj) => {
-            return (
-              <div>
-                <GameFieldSelection
-                  key={fieldObj.id}
-                  fieldId={fieldObj.id}
-                  name={this.saveFieldName}
-                  selection={this.saveSelection}
-                  fieldValue={this.saveFieldValue}
-                  removal={this.triggerRemoval}
-                  changeInputType={fieldObj.selection}
-                  originalName={fieldObj.name}
-                  originalValue={fieldObj.value}
-                  errorMessage={fieldObj.errorMessage}
-                  imagePath={this.state.fieldsData[0].value[0].value}
+            {/* game fields */}
+            {this.state.fieldsData.map((fieldObj) => {
+              return (
+                <div>
+                  <GameFieldSelection
+                    key={fieldObj.id}
+                    fieldId={fieldObj.id}
+                    name={this.saveFieldName}
+                    selection={this.saveSelection}
+                    fieldValue={this.saveFieldValue}
+                    removal={this.triggerRemoval}
+                    changeInputType={fieldObj.selection}
+                    originalName={fieldObj.name}
+                    originalValue={fieldObj.value}
+                    errorMessage={fieldObj.errorMessage}
+                    imagePath={this.state.fieldsData[0].value[0].value}
                   />
-              </div>
-            );
-          })}
-          {/* add fields */}
-          <div
-          className='addSomethingNew'
-          onClick={this.addNewFieldData}
-          >
-            <img className='addIcon' src={addicon}></img>
-            <p className='addTitle'>הוסף שדה</p>
-          </div>
+                </div>
+              );
+            })}
+            {/* add fields */}
+            <div
+              className='addSomethingNew'
+              onClick={this.addNewFieldData}
+            >
+              <img className='addIcon' src={addicon}></img>
+              <p className='addTitle'>הוסף שדה</p>
+            </div>
           </form>
-          <button className="saveButton" onClick={this.saveData}>
-            שמור
+
+          <div className='spacerFromSaveButton'></div>
+          <div className='saveButtonBackground'>
+            <button className="saveButton" onClick={this.saveData}>
+              שמור
             </button>
+          </div>
         </div>
       </>
     );

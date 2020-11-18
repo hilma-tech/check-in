@@ -20,6 +20,18 @@
     @include white-button-style;
 }
 
+.saveButtonBackground{
+    position: fixed;
+    top: 92vh;
+    height: 8vh;
+    width: 100vw;
+    background-color: white;
+}
+
+.spacerFromSaveButton{
+    height: 8vh;  
+}
+
 .saveButton {
     position: fixed;
     font-weight: bold;
