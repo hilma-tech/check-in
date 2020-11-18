@@ -2,12 +2,11 @@ import React from "react";
 import Select from "react-select";
 import SelectStyle from "../../style/superAdmin/select_style";
 import "../../style/superAdmin/form_style.scss";
-import "../../style/superAdmin/add_student_style.css";
 import addicon from "../../img/addicon.svg";
 import ArrowNavBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import { withRouter } from "react-router-dom";
 import {userNameValidation, nameValidation, passwordValidation,mustInputValidation} from '../../tools/ValidationFunctions'
-
+import "../../style/superAdmin/class_selection_style.css"
 
 class AddStudent extends React.Component {
   constructor(props) {
@@ -54,8 +53,9 @@ class AddStudent extends React.Component {
     let classesSelections = [];
     for (let i = 0; i < this.state.chosenClasses.length; i++) {
       classesSelections.push(
-        <div key={this.state.chosenClasses[i].id}>
+        <div key={this.state.chosenClasses[i].id} className='classSelection'>
           <Select
+          className='classSelectionInAddTecher'
             styles={SelectStyle()}
             options={this.makeClassesOption(i)}
             onChange={this.chooseClass}
@@ -65,6 +65,7 @@ class AddStudent extends React.Component {
             }}
           />
           <img
+          className='removeFieldIcon'
             onClick={() => this.removeClass(i)}
             src="/icons/delete.svg"
           />

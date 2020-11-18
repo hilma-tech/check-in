@@ -1,10 +1,5 @@
 @import '../general_style.scss';
 
-// .editSchoolPageName {
-//   color: #043163;
-//   margin-right: 1vw;
-// }
-
 .editSchoolClassTeacherButtons {
   display: flex;
 }
@@ -16,56 +11,18 @@
 .editSchoolAddClass {
   @include blue-button-style;
   width: 10vw;
-} 
-
-.editSchoolForm {
-  display: grid;
-  grid-template-columns: 3vw 42vw;
-}
-
-.editSchoolNameLable,
-.editSchoolNameInput,
-.editSchoolClassesLable,
-.editSchoolAddClass,
-.TeachersSelect {
-  grid-column-start: 1;
-  grid-column-end: 3;
+  margin-top: 1vh;
 }
 
 .showSchoolClassTeacher {
   display: grid;
-  grid-column-start: 2;
-  grid-column-end: 3;
-}
-
-.editSchoolNameLable,
-.editSchoolClassesLable,
-.editSchoolClassTeacherLable {
-  text-align: start;
-  padding-top: 2vh;
-  padding-bottom: 2vh;
+  margin-right: 3.5vw;
 }
 
 .editSchoolClassTeacherSelect {
   padding-bottom: 1vh;
   font-size: 2vw;
   width: 38.5vw;
-}
-
-.editSchoolClassesInput {
-  padding-bottom: 1vh;
-  font-size: 2vw;
-  width: 40vw;
-}
-
-.editSchoolNameLable,
-.editSchoolNameInput,
-.editSchoolClassesLable,
-.editSchoolClassTeacherLable,
-.editSchoolClassesInput {
-  height: 5vh;
-  padding-right: 1vw;
-  font-size: 2vw;
 }
 
 .hideClassButton {
@@ -92,20 +49,16 @@
 
 .TeachersSelect {
   display: flex;
-  width: 45vw;
+  width: 46vw;
+  margin-top: 1vh;
 }
 
 .removeTeachersSelectIcon {
   width: 1.5vw;
-  margin: 1vw;
+  margin: 0.75vw;
 }
 
 .removeClass {
   width: 1.5vw;
   margin: 0.5vw;
 }
-
-.TeachersSelect {
-  margin-top: 1vh;
-}
-

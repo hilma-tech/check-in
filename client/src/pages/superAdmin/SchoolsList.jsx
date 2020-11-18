@@ -64,7 +64,8 @@ class SchoolsList extends React.Component {
       <div className="SchoolsList" dir="rtl">
         <div className="PageTitles">
           <p>בתי ספר</p>
-          <form className="search">
+          {/* for now */}
+          {/* <form className="search">
             <Slide
               direction="right"
               in={this.state.displaySearch}
@@ -80,7 +81,7 @@ class SchoolsList extends React.Component {
               />
             </Slide>
             <p className="searchIcon" onClick={this.activateSearch}></p>
-          </form>
+          </form> */}
         </div>
         {/*
                 Create the school table with the general teble.
