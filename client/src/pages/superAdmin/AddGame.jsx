@@ -339,9 +339,8 @@ class AddGame extends Component {
             {/* game fields */}
             {this.state.fieldsData.map((fieldObj) => {
               return (
-                <div>
                   <GameFieldSelection
-                    key={fieldObj.id}
+                  key={fieldObj.id}
                     fieldId={fieldObj.id}
                     name={this.saveFieldName}
                     selection={this.saveSelection}
@@ -352,7 +351,6 @@ class AddGame extends Component {
                     errorMessage={fieldObj.errorMessage}
                     changeInputType={fieldObj.selection}
                   />
-                </div>
               );
             })}
             {/* add fields */}

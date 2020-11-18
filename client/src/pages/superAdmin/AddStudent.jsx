@@ -192,7 +192,7 @@ class AddStudent extends React.Component {
         <form className='formData'>
           <label for="studentName" className='labelFields'>שם התלמיד:</label>
           <p
-            class="error"
+            className="error"
             style={{ display: this.state.studentNameError.toShow }}
           >
             {this.state.studentNameError.mess}
@@ -206,7 +206,7 @@ class AddStudent extends React.Component {
           ></input>
 
           <label for="userName" className='labelFields'>שם משתמש:</label>
-          <p class="error" style={{ display: this.state.userNameError.toShow }}>
+          <p className="error" style={{ display: this.state.userNameError.toShow }}>
             {this.state.userNameError.mess}
           </p>
           <input
@@ -218,7 +218,7 @@ class AddStudent extends React.Component {
           ></input>
 
           <label for="password" className='labelFields'>סיסמא:</label>
-          <p class="error" style={{ display: this.state.passwordError.toShow }}>
+          <p className="error" style={{ display: this.state.passwordError.toShow }}>
             {this.state.passwordError.mess}
           </p>
           <input
@@ -232,7 +232,7 @@ class AddStudent extends React.Component {
 
           <label className='labelFields'>בית ספר:</label>
           <p
-            class="error"
+            className="error"
             style={{ display: this.state.schoolNameError.toShow }}
           >
             {this.state.schoolNameError.mess}
