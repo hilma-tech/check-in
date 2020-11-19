@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import ClassData from "../../component/superAdmin/SchoolClassData.jsx";
 import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx"
-import "../../style/superAdmin/edit_school_style.css";
-import "../../style/superAdmin/form_style.css";
+import "../../style/superAdmin/edit_school_style.scss";
+import "../../style/superAdmin/form_style.scss";
 import "../../style/superAdmin/white_bar_style.css";
 
 class editSchool extends Component {
@@ -106,7 +106,7 @@ class editSchool extends Component {
         return { schoolNameError: prevState.schoolNameError }
       })
       allOk = false
-    } else if ((/[a-z]/).test(this.state.schoolName) || (/[A-Z]/).test(this.state.schoolName) || (/[!@#$%^&*()_+\=\[\]{};:\\|<>\/?~`]/).test(this.state.schoolName)) {
+    } else if ((/[a-z]/).test(this.state.schoolName) || (/[A-Z]/).test(this.state.schoolName) || (/[!@#$%^&*()_+=[\]{};:\\|<>/?~`]/).test(this.state.schoolName)) {
       this.setState((prevState) => {
         prevState.schoolNameError.toShow = 'inline-block'
         prevState.schoolNameError.mess = '** שם בית הספר לא תקין **'
@@ -141,7 +141,7 @@ class editSchool extends Component {
           return { classes: prevState.classes }
         })
         allOk = false
-      } else if ((/[a-z]/).test(this.state.classes[i].name) || (/[A-Z]/).test(this.state.classes[i].name) || (/[!@#$%^&*()_+,\=\[\]{};:\\|<>\/?~`]/).test(this.state.classes[i].name)) {
+      } else if ((/[a-z]/).test(this.state.classes[i].name) || (/[A-Z]/).test(this.state.classes[i].name) || (/[!@#$%^&*()_+,=[\]{};:\\|<>/?~`]/).test(this.state.classes[i].name)) {
         this.setState((prevState) => {
           prevState.classes[i].classNameError.toShow = 'inline-block'
           prevState.classes[i].classNameError.mess = '** שם הכיתה לא תקין **'
@@ -178,20 +178,19 @@ class editSchool extends Component {
     return (
       <div>
         <WhiteBar />
-        <form className="form">
-          <div className="formData editSchoolForm">
-            <label for="schoolName" className="editSchoolNameLable">
+        <form className='formData'>
+            <label for="schoolName" className='labelFields'>
               שם בית ספר:
             </label>
             <p class='error' style={{ display: this.state.schoolNameError.toShow }}>{this.state.schoolNameError.mess}</p>
             <input
+            className='inputFields'
               value={this.state.schoolName} //The input will show schoolName.
               name="schoolName"
               onChange={this.handleChange} //In charge of on the set state of schoolName.
-              className="editSchoolNameInput inputFields"
             ></input>
 
-            <label for="schoolClasses" className="editSchoolClassesLable">
+            <label className='labelFields' for="schoolClasses">
               כיתות:
             </label>
 
@@ -209,13 +208,12 @@ class editSchool extends Component {
                   removeClass={this.removeClass} />;
               })}
             <button
+            className='editSchoolAddClass'
               type="button"
-              className="editSchoolAddClass"
               onClick={this.addClassToSchool} //Add class to the list.
             >
               הוסף כיתה
             </button>
-          </div>
           <button className="deletButton">מחק בית ספר</button>
           <button className="saveButton" onClick={this.saveData}>שמור</button>
         </form>

@@ -11,11 +11,12 @@ import { GameDto } from './game.dto';
 export class GameController {
   constructor(private gameService: GameService) {
     // this.gameService.createGame()
+    // this.temp()
+    // console.log('save');
   }
 
   @Post('/save')
   saveGame(@Body() req: GameDto) {
-    console.log(req);
     this.gameService.saveGame(req);
   }
 
@@ -26,9 +27,13 @@ export class GameController {
   //   return { success: true };
   // }
 
-    @Get('/getGames')
-    getGames(){
-        return this.gameService.getGamesInfo()
+    @Post('/getGames')
+    getGames(@Body() skipON: any){
+        return this.gameService.getGamesInfo(skipON)
     }
 
+    // @Get('/aaa')
+    // temp(){
+    //     return this.gameService.saving()
+    // }
 }

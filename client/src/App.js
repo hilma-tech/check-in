@@ -13,6 +13,7 @@ import { provide } from '@hilma/tools';
 import Draft from "./dumps/draft.jsx";
 import { nameProvider } from "./stores/name.store";
 import { errorMsgProvider } from "./stores/error.store";
+import { gamesProvider } from "./stores/games.store";
 import { AuthProvider } from "@hilma/auth";
 
 function App() {
@@ -48,4 +49,4 @@ function App() {
   );
 }
 
-export default provide(nameProvider, errorMsgProvider)(App);
+export default provide(nameProvider, errorMsgProvider,gamesProvider)(App);

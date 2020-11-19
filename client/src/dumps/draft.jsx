@@ -3,9 +3,7 @@ import Fade from '@material-ui/core/Fade'
 import './draft.scss'
 
 class Draft extends Component {
-  constructor() {
-    super();
-  }
+  
   render() {
     return (
       <>

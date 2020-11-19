@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Select from "react-select";
 import SelectStyle from "../../style/superAdmin/select_style";
-import "../../style/superAdmin/form_style.css";
+import "../../style/superAdmin/form_style.scss";
 import { FilesUploader, FileInput } from "@hilma/fileshandler-client";
 
 class GameFieldSelection extends Component {
@@ -57,6 +57,7 @@ class GameFieldSelection extends Component {
                   ? this.props.originalValue[0].value
                   : "/icons/camera-icon.svg"
               }
+              alt="photography icon"
             />
           </div>
         </label>
@@ -140,21 +141,23 @@ class GameFieldSelection extends Component {
         ? this.props.errorMessage
         : { toShow: "none", mess: "" };
     return (
-      <div className="gameField">
+      <div>
         <p
           className="error gameFieldError"
           style={{ display: errorMess.toShow }}
         >
           {errorMess.mess}
         </p>
-        <div className={fieldClassSize + "fieldSelection"}>
+        <div className={fieldClassSize + ""}> 
+        {/* fieldSelection */}
           <img
+          alt="remove field icon"
             onClick={this.removeField}
             className="removeFieldIcon"
             src="/icons/delete.svg"
           />
 
-          <form id="fieldName">
+          <form>
             {/* name of field */}
             <input
               className="inputFields"
@@ -163,7 +166,7 @@ class GameFieldSelection extends Component {
               placeholder="רשום את שם השדה"
               defaultValue={this.props.originalName}
             />
-          </form>
+          
           {/* selected field type */}
           <Select
             id="fieldType"
@@ -178,7 +181,7 @@ class GameFieldSelection extends Component {
           />
           {/* field for user interaction */}
 
-          <form id="fieldData">{this.fieldCreator()}</form>
+          {this.fieldCreator()}</form>
         </div>
       </div>
     );
