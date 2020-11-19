@@ -11,62 +11,64 @@ import Menu from "../../component/superAdmin/Menu.jsx";
 import AddStudent from "../../pages/superAdmin/AddStudent.jsx";
 import EditGame from "../../pages/superAdmin/EditGame.jsx";
 import AddSchool from "../../pages/superAdmin/AddSchool.jsx";
+import SignIn from "../../pages/SignIn.jsx";
+import { PrivateRoute } from "@hilma/auth";
 
 class SuperAdminRoute extends React.Component {
   render() {
     return (
       <div className="everyPage">
         <Switch>
-          <Route path="/superAdmin/games">
+          <PrivateRoute path="/superAdmin/games" componentName="SAdminHome" redirectComponent={SignIn}>
             <Menu />
             <GamesRouter />
-          </Route>
-          <Route path="/superAdmin/schools" exact>
+          </PrivateRoute>
+          <PrivateRoute path="/superAdmin/schools" exact componentName="SAdminSchools" redirectComponent={SignIn}>
             <Menu />
             <SchoolsList />
-          </Route>
-          <Route path="/superAdmin/teachers" exact>
+          </PrivateRoute>
+          <PrivateRoute path="/superAdmin/teachers" exact componentName="SAdminTeachers" redirectComponent={SignIn}>
             <Menu />
             <TeachersList />
-          </Route>
-          <Route path="/superAdmin/students" exact>
+          </PrivateRoute>
+          <PrivateRoute path="/superAdmin/students" exact componentName="SAdminStudents" redirectComponent={SignIn}>
             <Menu />
             <StudentsList />
-          </Route>
+          </PrivateRoute>
 
-          <Route path="/superAdmin/studentsAdd" exact>
+          <PrivateRoute path="/superAdmin/studentsAdd" exact componentName="SAdminAddStudents" redirectComponent={SignIn}>
             <Menu />
             <AddStudent />
-          </Route>
-          <Route path="/superAdmin/teachersAdd" exact>
+          </PrivateRoute>
+          <PrivateRoute path="/superAdmin/teachersAdd" exact componentName="SAdminAddTeachers" redirectComponent={SignIn}>
             <Menu />
             <AddTeacher />
-          </Route>
-          <Route path="/superAdmin/gamesAdd" exact>
+          </PrivateRoute>
+          <PrivateRoute path="/superAdmin/gamesAdd" exact componentName="SAdminAddGames" redirectComponent={SignIn}>
             <Menu />
             <AddGame />
-          </Route>
-          <Route path="/superAdmin/schoolsAdd" exact>
+          </PrivateRoute>
+          <PrivateRoute path="/superAdmin/schoolsAdd" exact componentName="SAdminAddSchools" redirectComponent={SignIn}>
             <Menu />
             <AddSchool />
-          </Route>
+          </PrivateRoute>
 
-          <Route path="/superAdmin/gamesEdit" exact>
+          <PrivateRoute path="/superAdmin/gamesEdit" exact componentName="SAdminEditGames" redirectComponent={SignIn}>
             <Menu />
             <EditGame />
-          </Route>
-          <Route path="/superAdmin/schoolsEdit" exact>
+          </PrivateRoute>
+          <PrivateRoute path="/superAdmin/schoolsEdit" exact componentName="SAdminEditSchools" redirectComponent={SignIn}>
             <Menu />
             <EditSchool />
-          </Route>
-          <Route path="/superAdmin/teachersEdit" exact>
+          </PrivateRoute>
+          <PrivateRoute path="/superAdmin/teachersEdit" exact componentName="SAdminEditTeachers" redirectComponent={SignIn}>
             <Menu />
             <h4>teacher edit</h4>
-          </Route>
-          <Route path="/superAdmin/studentsEdit" exact>
+          </PrivateRoute>
+          <PrivateRoute path="/superAdmin/studentsEdit" exact componentName="SAdminEditStudents" redirectComponent={SignIn}>
             <Menu />
             <h4>student edit</h4>
-          </Route>
+          </PrivateRoute>
         </Switch>
       </div>
     );

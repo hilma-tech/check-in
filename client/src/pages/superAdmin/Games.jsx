@@ -67,7 +67,8 @@ class Games extends Component {
         <div id="wholepage">
           <div id="searchbar">
             <h5 className="title">משחקים</h5>
-            <form className="search">
+            {/* for now */}
+            {/* <form className="search">
               <Slide
                 direction="right"
                 in={this.state.displaySearch}
@@ -83,7 +84,7 @@ class Games extends Component {
                 />
               </Slide>
               <p className="searchIcon" onClick={this.activateSearch}></p>
-            </form>
+            </form> */}
           </div>
           <div className="grid">
             <div onClick={this.onClickAddGame}>

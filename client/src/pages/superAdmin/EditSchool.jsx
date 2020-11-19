@@ -179,43 +179,48 @@ class editSchool extends Component {
       <div>
         <WhiteBar />
         <form className='formData'>
-            <label for="schoolName" className='labelFields'>
-              שם בית ספר:
+          <label for="schoolName" className='labelFields'>
+            שם בית ספר:
             </label>
-            <p class='error' style={{ display: this.state.schoolNameError.toShow }}>{this.state.schoolNameError.mess}</p>
-            <input
+          <p class='error' style={{ display: this.state.schoolNameError.toShow }}>{this.state.schoolNameError.mess}</p>
+          <input
             className='inputFields'
-              value={this.state.schoolName} //The input will show schoolName.
-              name="schoolName"
-              onChange={this.handleChange} //In charge of on the set state of schoolName.
-            ></input>
+            value={this.state.schoolName} //The input will show schoolName.
+            name="schoolName"
+            onChange={this.handleChange} //In charge of on the set state of schoolName.
+          ></input>
 
-            <label className='labelFields' for="schoolClasses">
-              כיתות:
+          <label className='labelFields' for="schoolClasses">
+            כיתות:
             </label>
 
-            {//Pass on all the classes in the list and make them the class component (with the name and the teacher's selects).
-              this.state.classes.map((classData, classIndex) => {
-                //The component get the class data as props.classData.
-                return <ClassData key={classData.id}
-                  canAddExistTeacher={true}
-                  classData={classData}
-                  classIndex={classIndex}
-                  addTeacherToClass={this.addTeacherToClass}
-                  handleChange={this.handleChange}
-                  chooseTeacher={this.chooseTeacher}
-                  removeTeacherFromClass={this.removeTeacherFromClass}
-                  removeClass={this.removeClass} />;
-              })}
-            <button
+          {//Pass on all the classes in the list and make them the class component (with the name and the teacher's selects).
+            this.state.classes.map((classData, classIndex) => {
+              //The component get the class data as props.classData.
+              return <ClassData key={classData.id}
+                canAddExistTeacher={true}
+                classData={classData}
+                classIndex={classIndex}
+                addTeacherToClass={this.addTeacherToClass}
+                handleChange={this.handleChange}
+                chooseTeacher={this.chooseTeacher}
+                removeTeacherFromClass={this.removeTeacherFromClass}
+                removeClass={this.removeClass} />;
+            })}
+          <button
             className='editSchoolAddClass'
-              type="button"
-              onClick={this.addClassToSchool} //Add class to the list.
-            >
-              הוסף כיתה
+            type="button"
+            onClick={this.addClassToSchool} //Add class to the list.
+          >
+            הוסף כיתה
             </button>
-          <button className="deletButton">מחק בית ספר</button>
-          <button className="saveButton" onClick={this.saveData}>שמור</button>
+          <div className='spacerFromSaveButton'></div>
+          <div className='saveButtonBackground'>
+            <button className="deletButton">מחק בית ספר</button>
+            <button className="saveButton" onClick={this.saveData}>
+              שמור
+            </button>
+          </div>
         </form>
       </div>
     );

@@ -21,7 +21,7 @@ class ClassSelection extends Component {
   render() {
     return (
       <>
-      <div className='  gameField classSelection'>
+      <div className='classSelection'>
         <Select
         className='classSelectionInAddTecher'
           options={this.props.options}
