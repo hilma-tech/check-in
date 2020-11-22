@@ -15,6 +15,7 @@ import { nameProvider } from "./stores/name.store";
 import { errorMsgProvider } from "./stores/error.store";
 import { gamesProvider } from "./stores/games.store";
 import { AuthProvider, PrivateRoute } from "@hilma/auth";
+import PopUpError from './component/popUpError'
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         href="https://fonts.googleapis.com/css2?family=Assistant:wght@600;800&display=swap"
         rel="stylesheet"
       ></link>
-
+  <PopUpError />
       <Router>
         <AuthProvider>
           <Switch>

@@ -7,6 +7,9 @@ import addicon from "../../img/addicon.svg";
 import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.jsx";
 import { withRouter } from "react-router-dom";
 import { mustInputValidation, nameValidation } from '../../tools/ValidationFunctions'
+import { errorMsgContext } from "../../stores/error.store";
+import { observer } from "mobx-react"
+import { withContext } from '@hilma/tools';
 
 const axios = require("axios").default;
 
@@ -53,22 +56,24 @@ class EditGame extends Component {
   }
 
   componentDidMount = async ()=>{
-    const { data } = await axios.post("/api/field/getGameField", { id: 69 });
-    console.log(data);
-    let tempFieldsData = []
-    data.map((fieldData) => {
-      let val = JSON.parse(fieldData.default_value)
-      tempFieldsData.push({
-          id: fieldData.id,
-          name: fieldData.field_name,
-          selection: fieldData.type,
-          value: val,
-          errorMessage: { toShow: "none", mess: "" },
+    try{
+      const { data } = await axios.post("/api/field/getGameField", { id: 69 });
+      console.log(data);
+      let tempFieldsData = []
+      data.map((fieldData) => {
+        let val = JSON.parse(fieldData.default_value)
+        tempFieldsData.push({
+            id: fieldData.id,
+            name: fieldData.field_name,
+            selection: fieldData.type,
+            value: val,
+            errorMessage: { toShow: "none", mess: "" },
+        })
       })
-    })
-    this.setState({fieldsData: tempFieldsData})
-    ///
-    ///getGameField
+      this.setState({fieldsData: tempFieldsData})
+    }catch (error){
+      this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת.');
+    }
   }
 
   saveFieldName = (fieldName, fieldId) => {
@@ -334,4 +339,8 @@ class EditGame extends Component {
   }
 }
 
-export default withRouter(EditGame);
+const mapContextToProps = {
+  errorMsg: errorMsgContext,
+}
+
+export default withContext(mapContextToProps)(withRouter(observer(EditGame)));
