@@ -8,6 +8,8 @@ import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.js
 import { withRouter } from "react-router-dom";
 import { mustInputValidation, nameValidation } from '../../tools/ValidationFunctions'
 
+const axios = require("axios").default;
+
 class EditGame extends Component {
   constructor() {
     super();
@@ -17,37 +19,56 @@ class EditGame extends Component {
       gameDescriptionErrorMessages: { toShow: "none", mess: "" },
       gameRequirementsErrorMessages: { toShow: "none", mess: "" },
       fieldsData: [
-        {
-          id: 0,
-          name: "בלה בלה",
-          selection: "text",
-          value: [{ id: 0, value: "חשבו על חייכם" }],
-          errorMessage: { toShow: "none", mess: "" },
-        },
-        {
-          id: 1,
-          name: "שני",
-          selection: "choice",
-          value: [
-            { id: 0, value: "שלום" },
-            { id: 1, value: "הלו" },
-            { id: 5, value: "ברוכה הבאה" },
-          ],
-          errorMessage: { toShow: "none", mess: "" },
-        },
-        {
-          id: 2,
-          name: "שלישי",
-          selection: "image",
-          value: [{ id: 0, value: "blah.png" }],
-          errorMessage: { toShow: "none", mess: "" },
-        },
+        // {
+        //   id: 0,
+        //   name: "בלה בלה",
+        //   selection: "text",
+        //   value: [{ id: 0, value: "חשבו על חייכם" }],
+        //   errorMessage: { toShow: "none", mess: "" },
+        // },
+        // {
+        //   id: 1,
+        //   name: "שני",
+        //   selection: "choice",
+        //   value: [
+        //     { id: 0, value: "שלום" },
+        //     { id: 1, value: "הלו" },
+        //     { id: 5, value: "ברוכה הבאה" },
+        //   ],
+        //   errorMessage: { toShow: "none", mess: "" },
+        // },
+        // {
+        //   id: 2,
+        //   name: "שלישי",
+        //   selection: "image",
+        //   value: [{ id: 0, value: "blah.png" }],
+        //   errorMessage: { toShow: "none", mess: "" },
+        // },
       ],
       gameName: "עננים",
       gameDescription: "הרבה והמון",
       gameRequirements: "טובות ורעות",
       image: "Screenshot from 2020-10-13 13-12-59.png",
     };
+  }
+
+  componentDidMount = async ()=>{
+    const { data } = await axios.post("/api/field/getGameField", { id: 69 });
+    console.log(data);
+    let tempFieldsData = []
+    data.map((fieldData) => {
+      let val = JSON.parse(fieldData.default_value)
+      tempFieldsData.push({
+          id: fieldData.id,
+          name: fieldData.field_name,
+          selection: fieldData.type,
+          value: val,
+          errorMessage: { toShow: "none", mess: "" },
+      })
+    })
+    this.setState({fieldsData: tempFieldsData})
+    ///
+    ///getGameField
   }
 
   saveFieldName = (fieldName, fieldId) => {
@@ -276,7 +297,6 @@ class EditGame extends Component {
             {/* game fields */}
             {this.state.fieldsData.map((fieldObj) => {
               return (
-                <div>
                   <GameFieldSelection
                     key={fieldObj.id}
                     fieldId={fieldObj.id}
@@ -290,7 +310,6 @@ class EditGame extends Component {
                     errorMessage={fieldObj.errorMessage}
                     imagePath={this.state.fieldsData[0].value[0].value}
                   />
-                </div>
               );
             })}
             {/* add fields */}
