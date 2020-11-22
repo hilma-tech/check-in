@@ -8,7 +8,7 @@ const axios = require("axios").default;
 class Games {
     gamesList = []
     haveMoreGames = true
-    successGettingGames = false;
+    successGettingGames = true;
     constructor() {
         makeObservable(this, {
             successGettingGames: observable,
