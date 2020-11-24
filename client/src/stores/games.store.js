@@ -30,6 +30,10 @@ class Games {
         }
     }
 
+    addGame = (newGame) => {
+        this.gamesList.push(newGame)
+    }
+
     setShowOption = (gameIndex) => {
         this.gamesList[gameIndex].showOption = !this.gamesList[gameIndex].showOption;
     }

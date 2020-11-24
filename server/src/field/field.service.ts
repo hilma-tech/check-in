@@ -16,8 +16,7 @@ export class FieldService {
   ) {}
 
   async saveField(@Body() req: any) {
-    console.log(req);
-    
+    console.log(req)
     req.data.map(async fieldObject => {
       let field = new Field();
       field.field_name = fieldObject.name;

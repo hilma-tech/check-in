@@ -3,7 +3,7 @@
   display: none;
   height: 0px;
   margin: 0px;
-  width: 0px;
+  width: 25vw;
 }
 
 .cameraIcon {
@@ -21,13 +21,21 @@
 }
 
 .borderCameraIcon{
+  border: 1px solid #043163;
+  margin: 0;
+  width: 25vw;
+  border-radius: 2vw;
+  height: 16vw;
+  margin-bottom: 1vh;
+}
+
+.borderCameraIconLabel{
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #043163;
-  width: 22vw;
-  border-radius: 2vw;
-  height: 15vw;
+  width: 100%;
+  height: 100%;
 }
 
 .gameField .gameFieldError{

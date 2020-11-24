@@ -30,7 +30,7 @@ class GameFieldSelection extends Component {
       );
     } else if (this.props.changeInputType === "image") {
       return (
-        <label className="borderCameraIcon">
+        <label className="cameraFieldBorder">
           <FileInput
             id="image"
             className="hiddenInput"

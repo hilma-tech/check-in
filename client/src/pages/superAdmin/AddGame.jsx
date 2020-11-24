@@ -15,6 +15,7 @@ import PopUpError from "../../component/popUpError";
 import { errorMsgContext } from "../../stores/error.store";
 import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
+import { gamesContext } from "../../stores/games.store";
 
 const axios = require("axios").default;
 
@@ -130,7 +131,7 @@ class AddGame extends Component {
   addGameImg = async () => {
     try {
       console.log("state",this.imageUploader);
-      const response = await this.imageUploader.post("/api/game/saveImg");
+      const response = await this.imageUploader.uploaderFiles  //post("/api/game/saveImg");
       console.log("res",response);
     } catch (error) {
       console.log(error);
@@ -140,16 +141,21 @@ class AddGame extends Component {
   addGameDb = async () => {
     let currGameInfo = {
       game_name: this.state.gameName,
+      photo: this.state.image,
       description: this.state.gameDescription,
       requirements: this.state.gameRequirements,
       suspended: false,
     };
     try {
-      const response = await axios.post("/api/game/save", {
+      const response = await this.imageUploader.post("/api/game/save",  JSON.stringify({
         game: currGameInfo,
         field: this.state.fieldsData,
-      });
+      }));
       // this.addGameFieldsDb(response.data[0].id);
+      console.log(response.data);
+      if(!this.props.games.haveMoreGames){
+        this.props.games.addGame(response.data)
+      }
     } catch (error) {
       this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסה לבדוק את החיבור");
     }
@@ -164,6 +170,7 @@ class AddGame extends Component {
 
   saveData = () => {
     this.addGameImg();
+
     let allOK = true;
     let fieldOK = true;
     let ValidationFunctions = [{ name: 'gameName', func: nameValidation, errMsg: '' },
@@ -289,9 +296,9 @@ class AddGame extends Component {
               id="gameRequirements"
               onBlur={this.updateBasicInfo}
             />
-            <label className="">
               <label className='labelFields'>תמונה:</label>
               <div className="borderCameraIcon marginTop">
+            <label className='borderCameraIconLabel'>
                 <FileInput
                   id="image"
                   className="hiddenInput"
@@ -303,13 +310,13 @@ class AddGame extends Component {
                   alt="photograph icon"
                   className={
                     typeof this.state.image === "string"
-                      ? "chosenImg"
-                      : "cameraIcon"
+                    ? "chosenImg"
+                    : "cameraIcon"
                   }
                   src={this.state.image || "/icons/camera-icon.svg"}
-                />
+                  />
+                  </label>
               </div>
-            </label>
             <label className='labelFields'>
               שדות:
               </label>
@@ -354,6 +361,7 @@ class AddGame extends Component {
 
 const mapContextToProps = {
   errorMsg: errorMsgContext,
+  games: gamesContext
 };
 
 export default withContext(mapContextToProps)(withFiles(withRouter(observer(AddGame))));

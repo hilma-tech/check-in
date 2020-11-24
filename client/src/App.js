@@ -26,7 +26,6 @@ function App() {
       ></link>
   <PopUpError />
       <Router>
-        <AuthProvider>
           <Switch>
             <Route path="/" exact>
               <Redirect to="/signin" />
@@ -44,10 +43,9 @@ function App() {
               <Draft />
             </Route>
           </Switch>
-        </AuthProvider>
       </Router>
     </div>
   );
 }
 
-export default provide(nameProvider, errorMsgProvider,gamesProvider)(App);
+export default provide(nameProvider, errorMsgProvider,gamesProvider, AuthProvider)(App);

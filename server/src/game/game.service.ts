@@ -33,9 +33,10 @@ export class GameService {
     game.game_name = req.game_name
     game.description = req.description
     game.requirements = req.requirements
+    game.photo = req.photo
     game.suspended = false
     let res = await this.gameRepository.save(game);
-    return res.id;
+    return res;
   }
 
   //   async saving() {
