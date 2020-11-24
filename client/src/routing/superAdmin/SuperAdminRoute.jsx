@@ -14,8 +14,9 @@ import AddSchool from "../../pages/superAdmin/AddSchool.jsx";
 import SignIn from "../../pages/SignIn.jsx";
 import { PrivateRoute, AuthProvider } from "@hilma/auth";
 
-
 class SuperAdminRoute extends React.Component {
+  
+
   render() {
     console.log("hiiiiiiiiii i am woring noww yayy")
     return (
@@ -37,22 +38,22 @@ class SuperAdminRoute extends React.Component {
        
               redirectComponent={GamesRouter}
               component={SchoolsList}
-            />
-            <PrivateRoute
+            /> */}
+            {/* <PrivateRoute
               path="/superAdmin/teachers"
               exact
               componentName="SAdminTeachers"
               redirectComponent={GamesRouter}
               component={TeachersList}
-            />
-            <PrivateRoute
+            /> */}
+            {/* <PrivateRoute
               path="/superAdmin/students"
               exact
               componentName="SAdminStudents"
               redirectComponent={GamesRouter}
               component={StudentsList}
-            />
-            <PrivateRoute
+            /> */}
+            {/* <PrivateRoute
               path="/superAdmin/studentsAdd"
               exact
               componentName="SAdminAddStudents"
@@ -80,16 +81,16 @@ class SuperAdminRoute extends React.Component {
               componentName="SAdminAddSchools"
               redirectComponent={GamesRouter}
               component={AddSchool}
-            />
+            /> */}
 
-            <PrivateRoute
+            {/* <PrivateRoute
               path="/superAdmin/gamesEdit"
               exact
               componentName="SAdminEditGames"
               redirectComponent={GamesRouter}
               component={EditGame}
-            />
-            <PrivateRoute
+            /> */}
+            {/* <PrivateRoute
               path="/superAdmin/schoolsEdit"
               exact
               componentName="SAdminEditSchools"

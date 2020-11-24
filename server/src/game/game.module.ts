@@ -6,10 +6,32 @@ import { Game } from './game.entity';
 import { Field } from 'src/field/field.entity';
 import { FieldService } from 'src/field/field.service';
 import { ImageService } from '@hilma/fileshandler-typeorm';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
+import { SuperAdminService } from 'src/super-admin/super-admin.service';
+import { SuperAdmin } from 'src/super-admin/super-admin.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Game]), TypeOrmModule.forFeature([Field])],
+  imports: [
+    JwtModule.register({}),
+    TypeOrmModule.forFeature([Game]),
+    TypeOrmModule.forFeature([Field]),
+    TypeOrmModule.forFeature([SuperAdmin]),
+  ],
   controllers: [GameController],
-  providers: [GameService, FieldService],
+  providers: [
+    GameService,
+    FieldService,
+    JwtStrategy,
+    {
+      provide: 'UserService',
+      useExisting: SuperAdminService,
+    },
+    SuperAdminService,
+    {
+      provide: USER_MODULE_OPTIONS,
+      useValue: {},
+    },
+  ],
 })
 export class GameModule {}

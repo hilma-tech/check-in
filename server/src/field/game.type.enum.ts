@@ -1,6 +1,6 @@
 export enum GameType {
     TEXT = "text",
     CHOICE = "choice",
-    PHOTO = "photo",
+    IMAGE = "image",
     MULTI_CHOICE = "multi-choice"
 }

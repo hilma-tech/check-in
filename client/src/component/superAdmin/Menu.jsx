@@ -21,6 +21,8 @@ class Menu extends React.Component {
       משחקים: "games",
     };
   }
+
+  
   render() {
     return (
       <div className="pageMenu">

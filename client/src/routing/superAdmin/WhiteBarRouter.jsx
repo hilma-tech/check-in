@@ -6,6 +6,14 @@ import { withRouter } from "react-router-dom";
 import { PrivateRoute } from "@hilma/auth";
 
 export default withRouter(class WhiteRouter extends Component {
+    componentDidMount() {
+    
+        window.history.pushState(null, document.title, window.location.href);
+        window.addEventListener('popstate', function (event){
+           window.history.pushState(null, document.title,  window.location.href);
+        });
+      
+     }
     render() {
         return (
             <Switch>

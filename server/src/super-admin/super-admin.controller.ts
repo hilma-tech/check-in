@@ -14,18 +14,10 @@ import { SuperAdmin } from './super-admin.entity';
 export class SuperAdminController {
   constructor(private readonly userService: UserService) {}
 
-  @UseJwtAuth(`superAdmin`)
-  @Get('/login')
-  exampleFunc(@RequestUser() SuperAdmin){
-    console.log("auth!");
-  }
-
     @UseLocalAuth()
     @Post('/login')
     login(@RequestUser() userInfo, @Res() res) {
-      // console.log('userInfo', userInfo, 'res', res);
       let body = this.userService.login(userInfo, res);
-      // console.log('body', body);
       res.send(body);
     }
 

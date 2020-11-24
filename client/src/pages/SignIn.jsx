@@ -22,6 +22,15 @@ class SignIn extends Component {
     };
   }
 
+  componentDidMount() {
+    
+    window.history.pushState(null, document.title, window.location.href);
+    window.addEventListener('popstate', function (event){
+       window.history.pushState(null, document.title,  window.location.href);
+    });
+  
+ }
+
   updateUser = (props) => {
     this.setState({ username: props.target.value });
   };
@@ -30,14 +39,9 @@ class SignIn extends Component {
     this.setState({ password: props.target.value });
   };
 
-  superAdminRegister = async () => {
+  superAdminLogin = async () => {
     let username = this.state.username;
     let password = this.state.password;
-    // try {
-    //   const response = await axios.get("/api/super-admin/login")
-    // } catch (error) {
-    //   console.log("err");
-    // }
     try {
       const response = await axios.post("/api/super-admin/login", {
         username: username,
@@ -49,36 +53,39 @@ class SignIn extends Component {
       console.log('/superadmin/games');
       window.location.pathname = "/superAdmin/games"
     } catch (error) {
-      this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן להתחבר.');
-    }
+      if(error.status === 401){
+        this.props.errorMsg.setErrorMsg('שם המשתמש והסיסמא אינם תואמים.');
+      } else {
+        this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן להתחבר.');
+      }
+      }
   };
 
   saveData = () => {
-    let dataArray = [this.state.username, this.state.password];
+    this.superAdminLogin();
     // this.props.name.setName('aaaa')
-    dataArray.map((value, index) => {
-      if (value.length === 0) {
-        this.setState((prevState) => {
-          prevState.errorMessages[index].toShow = "block";
-          prevState.errorMessages[index].mess = "** שדה זה חייב להיות מלא **";
-          return { errorMessages: prevState.errorMessages };
-        });
-      } else if (value.length < 8) {
-        this.setState((prevState) => {
-          prevState.errorMessages[index].toShow = "block";
-          prevState.errorMessages[index].mess =
-            "** שדה זה חייב להיות בעל 8 תווים לפחות **";
-          return { errorMessages: prevState.errorMessages };
-        });
-      } else {
-        // this.setState((prevState) => {
-        //   prevState.errorMessages[index].toShow = "none";
-        //   prevState.errorMessages[index].mess = "";
-        //   return { errorMessages: prevState.errorMessages };
-        // });
-        this.superAdminRegister();
-      }
-    });
+    // dataArray.map((value, index) => {
+    //   if (value.length === 0) {
+    //     this.setState((prevState) => {
+    //       prevState.errorMessages[index].toShow = "block";
+    //       prevState.errorMessages[index].mess = "** שדה זה חייב להיות מלא **";
+    //       return { errorMessages: prevState.errorMessages };
+    //     });
+    //   } else if (value.length < 8) {
+    //     this.setState((prevState) => {
+    //       prevState.errorMessages[index].toShow = "block";
+    //       prevState.errorMessages[index].mess =
+    //         "** שדה זה חייב להיות בעל 8 תווים לפחות **";
+    //       return { errorMessages: prevState.errorMessages };
+    //     });
+    //   } else {
+    //     this.setState((prevState) => {
+    //       prevState.errorMessages[index].toShow = "none";
+    //       prevState.errorMessages[index].mess = "";
+    //       return { errorMessages: prevState.errorMessages };
+    //     });
+    //   // }
+    // });
   };
   //EXPERIMENTATION
   // preventBack = () => {
