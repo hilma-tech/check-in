@@ -16,10 +16,13 @@ import { errorMsgProvider } from "./stores/error.store";
 import { gamesProvider } from "./stores/games.store";
 import { AuthProvider, PrivateRoute } from "@hilma/auth";
 import Menu from "./component/superAdmin/Menu";
+import PopUpError from './component/popUpError'
 
 function App() {
   return (
     <div className="App">
+      
+  <PopUpError />
       <Router>
         <AuthProvider>
           <Switch>

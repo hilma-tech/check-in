@@ -14,6 +14,7 @@ import AddSchool from "../../pages/superAdmin/AddSchool.jsx";
 import SignIn from "../../pages/SignIn.jsx";
 import { PrivateRoute, AuthProvider } from "@hilma/auth";
 
+
 class SuperAdminRoute extends React.Component {
   render() {
     return (

@@ -5,6 +5,7 @@ import hilmaicon from "../img/hilmawhite.svg";
 import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
 import { nameContext } from "../stores/name.store";
+import { errorMsgContext } from "../stores/error.store";
 import { observer } from "mobx-react";
 const axios = require("axios").default;
 
@@ -42,8 +43,9 @@ class SignIn extends Component {
         username: username,
         password: password,
       });
+      this.props.history.push("/superAdmin/games");
     } catch (error) {
-      console.log("err");
+      this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן להתחבר.');
     }
   };
 
@@ -71,7 +73,6 @@ class SignIn extends Component {
           return { errorMessages: prevState.errorMessages };
         });
         this.superAdminRegister();
-        this.props.history.push("/superAdmin/games");
       }
     });
   };
@@ -128,6 +129,7 @@ class SignIn extends Component {
 
 const mapContextToProps = {
   name: nameContext,
+  errorMsg: errorMsgContext,
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(SignIn)));
