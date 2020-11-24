@@ -33,9 +33,13 @@ class SignIn extends Component {
   superAdminRegister = async () => {
     let username = this.state.username;
     let password = this.state.password;
-
     try {
-      const response = await axios.post("/api/super-admin/register", {
+      const response = await axios.get("/api/super-admin/login")
+    } catch (error) {
+      console.log("err");
+    }
+    try {
+      const response = await axios.post("/api/super-admin/login", {
         username: username,
         password: password,
       });

@@ -27,10 +27,10 @@ export class GameController {
     return game
   }
 
-  @Put('/api/game/saveImg')
-  @UseFilesHandler()
-  async saveImg(@UploadedFiles() files: FilesType, @Body() req: any) {
-  }
+  // @Put('/api/game/saveImg')
+  // @UseFilesHandler()
+  // async saveImg(@UploadedFiles() files: FilesType, @Body() req: any) {
+  // }
 
   @Post('/getGames')
   getGames(@Body() skipON: any) {

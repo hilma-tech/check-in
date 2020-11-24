@@ -15,15 +15,13 @@ import { nameProvider } from "./stores/name.store";
 import { errorMsgProvider } from "./stores/error.store";
 import { gamesProvider } from "./stores/games.store";
 import { AuthProvider, PrivateRoute } from "@hilma/auth";
+import Menu from "./component/superAdmin/Menu";
 import PopUpError from './component/popUpError'
 
 function App() {
   return (
     <div className="App">
-      <link
-        href="https://fonts.googleapis.com/css2?family=Assistant:wght@600;800&display=swap"
-        rel="stylesheet"
-      ></link>
+      
   <PopUpError />
       <Router>
           <Switch>
@@ -34,6 +32,7 @@ function App() {
               <SignIn />
             </Route>
             <PrivateRoute path="/superAdmin" componentName="SuperAdminRoute" redirectComponent={SignIn}>
+              <Menu/>
               <SuperAdminRoute />
             </PrivateRoute>
             <Route path="/teacher">
