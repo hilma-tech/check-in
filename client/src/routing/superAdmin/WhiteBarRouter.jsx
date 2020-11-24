@@ -7,6 +7,14 @@ import { PrivateRoute } from "@hilma/auth";
 import SignIn from "../../pages/SignIn.jsx";
 
 export default withRouter(class WhiteRouter extends Component {
+    componentDidMount() {
+    
+        window.history.pushState(null, document.title, window.location.href);
+        window.addEventListener('popstate', function (event){
+           window.history.pushState(null, document.title,  window.location.href);
+        });
+      
+     }
     render() {
         return (
             <Switch>

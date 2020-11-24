@@ -10,7 +10,11 @@ import {
   mustInputValidation,
   nameValidation,
 } from "../../tools/ValidationFunctions";
-import { FilesUploader, FileInput, withFiles } from "@hilma/fileshandler-client";
+import {
+  FilesUploader,
+  FileInput,
+  withFiles,
+} from "@hilma/fileshandler-client";
 import PopUpError from "../../component/popUpError";
 import { errorMsgContext } from "../../stores/error.store";
 import { observer } from "mobx-react";
@@ -128,16 +132,24 @@ class AddGame extends Component {
     this.setState({ image: value.link });
   };
 
-  addGameImg = async () => {
-    try {
-      // console.log("state",this.imageUploader);
-      const response = await this.imageUploader.post("/api/game/saveImg");
-      // console.log("res",response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  
 
+  setUpValues = () => {
+    let newValue = []
+    let currFieldData = [];
+    this.state.fieldsData.map((obj) => {
+      obj.value.map(valueObj => newValue.push(valueObj.value))
+      let newField = {
+        name: obj.name,
+        selection: obj.selection,
+        value: newValue,
+        order: obj.order,
+      };
+      console.log(newField.value);
+      currFieldData.push(newField)
+    });
+    return currFieldData
+  }
   addGameDb = async () => {
     let currGameInfo = {
       game_name: this.state.gameName,
@@ -146,15 +158,20 @@ class AddGame extends Component {
       requirements: this.state.gameRequirements,
       suspended: false,
     };
+      const fieldData = this.setUpValues();
+    
     try {
-      const response = await this.imageUploader.post("/api/game/save",  JSON.stringify({
-        game: currGameInfo,
-        field: this.state.fieldsData,
-      }));
+      const response = await this.imageUploader.post(
+        "/api/game/save",
+        JSON.stringify({
+          game: currGameInfo,
+          field: fieldData,
+        })
+      );
       // this.addGameFieldsDb(response.data[0].id);
       console.log(response.data);
-      if(!this.props.games.haveMoreGames){
-        this.props.games.addGame(response.data)
+      if (!this.props.games.haveMoreGames) {
+        this.props.games.addGame(response.data);
       }
     } catch (error) {
       this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסה לבדוק את החיבור");
@@ -169,30 +186,42 @@ class AddGame extends Component {
   // }
 
   saveData = () => {
-    this.addGameImg();
+
 
     let allOK = true;
     let fieldOK = true;
-    let ValidationFunctions = [{ name: 'gameName', func: nameValidation, errMsg: '' },
-    { name: 'gameDescription', func: mustInputValidation, errMsg: '' },
-    { name: 'gameRequirements', func: mustInputValidation, errMsg: '' }]
+    let ValidationFunctions = [
+      { name: "gameName", func: nameValidation, errMsg: "" },
+      { name: "gameDescription", func: mustInputValidation, errMsg: "" },
+      { name: "gameRequirements", func: mustInputValidation, errMsg: "" },
+    ];
 
     ValidationFunctions.forEach((validationData) => {
-      validationData.errMsg = validationData.func(this.state[validationData.name])
+      validationData.errMsg = validationData.func(
+        this.state[validationData.name]
+      );
       if (validationData.errMsg.length !== 0) {
         allOK = false;
         this.setState((prevState) => {
-          prevState[(validationData.name + 'ErrorMessages')].toShow = "block";
-          prevState[(validationData.name + 'ErrorMessages')].mess = validationData.errMsg;
-          return { errorMessages: prevState[(validationData.name + 'ErrorMessages')] };
+          prevState[validationData.name + "ErrorMessages"].toShow = "block";
+          prevState[validationData.name + "ErrorMessages"].mess =
+            validationData.errMsg;
+          return {
+            errorMessages: prevState[validationData.name + "ErrorMessages"],
+          };
         });
       } else {
         this.setState((prevState) => {
-          prevState[(validationData.name + 'ErrorMessages')] = { toShow: "none", mess: "" };
-          return { errorMessages: prevState[(validationData.name + 'ErrorMessages')] };
+          prevState[validationData.name + "ErrorMessages"] = {
+            toShow: "none",
+            mess: "",
+          };
+          return {
+            errorMessages: prevState[validationData.name + "ErrorMessages"],
+          };
         });
       }
-    })
+    });
 
     fieldOK = this.validateFields();
 
@@ -246,25 +275,22 @@ class AddGame extends Component {
       <>
         <div className="pageContainer">
           <WhiteBar />
-          <form className='formData'>
-            <label className='labelFields'>
-              שם המשחק:
-              </label>
-            <p className="error"
+          <form className="formData">
+            <label className="labelFields">שם המשחק:</label>
+            <p
+              className="error"
               style={{ display: this.state.gameNameErrorMessages.toShow }}
             >
               {this.state.gameNameErrorMessages.mess}
             </p>
             <input
-              className='inputFields'
+              className="inputFields"
               id="gameName"
               type="text"
               placeholder="הכנס את שם המשחק..."
               onBlur={this.updateBasicInfo}
             />
-            <label className='labelFields'>
-              תיאור המשחק:
-              </label>
+            <label className="labelFields">תיאור המשחק:</label>
             <p
               className="error"
               style={{
@@ -274,14 +300,12 @@ class AddGame extends Component {
               {this.state.gameDescriptionErrorMessages.mess}
             </p>
             <TextareaAutosize
-              className='inputFields'
+              className="inputFields"
               placeholder="הכנס תיאור משחק..."
               id="gameDescription"
               onChange={this.updateBasicInfo}
             />
-            <label className='labelFields'>
-              דרישות המשחק:
-              </label>
+            <label className="labelFields">דרישות המשחק:</label>
             <p
               className="error"
               style={{
@@ -291,14 +315,14 @@ class AddGame extends Component {
               {this.state.gameRequirementsErrorMessages.mess}
             </p>
             <TextareaAutosize
-              className='inputFields'
+              className="inputFields"
               placeholder="הכנס דרישות משחק..."
               id="gameRequirements"
               onBlur={this.updateBasicInfo}
             />
-              <label className='labelFields'>תמונה:</label>
-              <div className="borderCameraIcon marginTop">
-            <label className='borderCameraIconLabel'>
+            <label className="labelFields">תמונה:</label>
+            <div className="borderCameraIcon marginTop">
+              <label className="borderCameraIconLabel">
                 <FileInput
                   id="image"
                   className="hiddenInput"
@@ -310,44 +334,39 @@ class AddGame extends Component {
                   alt="photograph icon"
                   className={
                     typeof this.state.image === "string"
-                    ? "chosenImg"
-                    : "cameraIcon"
+                      ? "chosenImg"
+                      : "cameraIcon"
                   }
                   src={this.state.image || "/icons/camera-icon.svg"}
-                  />
-                  </label>
-              </div>
-            <label className='labelFields'>
-              שדות:
+                />
               </label>
+            </div>
+            <label className="labelFields">שדות:</label>
             {/* game fields */}
             {this.state.fieldsData.map((fieldObj) => {
               return (
-                  <GameFieldSelection
+                <GameFieldSelection
                   key={fieldObj.id}
-                    fieldId={fieldObj.id}
-                    name={this.saveFieldName}
-                    selection={this.saveSelection}
-                    fieldValue={this.saveFieldValue}
-                    removal={this.triggerRemoval}
-                    originalName={fieldObj.name}
-                    originalValue={fieldObj.value}
-                    errorMessage={fieldObj.errorMessage}
-                    changeInputType={fieldObj.selection}
-                  />
+                  fieldId={fieldObj.id}
+                  name={this.saveFieldName}
+                  selection={this.saveSelection}
+                  fieldValue={this.saveFieldValue}
+                  removal={this.triggerRemoval}
+                  originalName={fieldObj.name}
+                  originalValue={fieldObj.value}
+                  errorMessage={fieldObj.errorMessage}
+                  changeInputType={fieldObj.selection}
+                />
               );
             })}
             {/* add fields */}
-            <div
-              className='addSomethingNew'
-              onClick={this.addNewFieldData}
-            >
+            <div className="addSomethingNew" onClick={this.addNewFieldData}>
               <img className="addIcon" src={addicon} alt="add icon"></img>
               <p className="addTitle">הוסף שדה</p>
             </div>
           </form>
-          <div className='spacerFromSaveButton'></div>
-          <div className='saveButtonBackground'>
+          <div className="spacerFromSaveButton"></div>
+          <div className="saveButtonBackground">
             <button className="saveButton" onClick={this.saveData}>
               שמור
             </button>
@@ -361,7 +380,9 @@ class AddGame extends Component {
 
 const mapContextToProps = {
   errorMsg: errorMsgContext,
-  games: gamesContext
+  games: gamesContext,
 };
 
-export default withContext(mapContextToProps)(withFiles(withRouter(observer(AddGame))));
+export default withContext(mapContextToProps)(
+  withFiles(withRouter(observer(AddGame)))
+);

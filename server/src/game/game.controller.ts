@@ -8,6 +8,7 @@ import {
   FilesType,
   ImageService,
 } from '@hilma/fileshandler-typeorm';
+import { UseJwtAuth } from '@hilma/auth-nest';
 
 
 @Controller('api/game')
@@ -17,9 +18,11 @@ export class GameController {
     private readonly imageService: ImageService) {
   }
 
+  @UseJwtAuth('superAdmin')
   @Post('/save')
   @UseFilesHandler()
   async saveGame(@UploadedFiles() files: FilesType, @Body() req: any) {
+   
     var service = await this.imageService.saveSingleFile(files)
     req.game.photo = service;
     let game = await this.gameService.saveGame(req.game);
@@ -27,18 +30,9 @@ export class GameController {
     return game
   }
 
-  // @Put('/api/game/saveImg')
-  // @UseFilesHandler()
-  // async saveImg(@UploadedFiles() files: FilesType, @Body() req: any) {
-  // }
-
+  @UseJwtAuth('superAdmin')
   @Post('/getGames')
   getGames(@Body() skipON: any) {
     return this.gameService.getGamesInfo(skipON)
   }
-
-  // @Get('/aaa')
-  // temp(){
-  //     return this.gameService.saving()
-  // }
 }
