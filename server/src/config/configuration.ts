@@ -11,9 +11,11 @@ export default () => ({
   roleAccess: {
     "superAdmin": {
       components: [
+        'SuperAdminMenu',
         'SuperAdminRoute',
         'SAdminAddGames',
         'SAdminGames',
+        'SAdminGamesList'
       ],
       defaultHomePage: 'SAdminGames',
     },

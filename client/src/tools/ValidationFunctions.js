@@ -4,6 +4,8 @@ export function userNameValidation(userName) {
         return '** חייב להכניס שם משתמש **'
     } else if (userName.length > 30 || userName.length < 8) {
         return '** שם משתמש לא תקין **'
+    } else if (userName.trim().length === 0) {
+        return '** שם משתמש לא תקין **'
     } else if ((/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`\s]/).test(userName)) {
         return '** שם משתמש לא תקין **'
     } else {
@@ -17,7 +19,9 @@ export function nameValidation(name) {
         return '** חייב להכניס שדה זה **'
     } else if (name.length > 30) {
         return '** שדה זה לא יכול להכיל יותר מ-30 תווים **'
-    } else if ((/[a-z]/).test(name) || (/[A-Z]/).test(name) || (/[!@#$%^&*()_+=[\]{};:\\|<>/?~`]/).test(name)) {
+    } else if (name.trim().length === 0) {
+        return '** שם זה לא תקין **'
+    }  else if ((/[a-z]/).test(name) || (/[A-Z]/).test(name) || (/[!@#$%^&*()_+=[\]{};:\\|<>/?~`]/).test(name)) {
         return '** שדה זה לא יכול להכיל אותיות באנגלית או תווים מיוחדים **'
     } else if (name.includes('"') || name.includes("'") || name.includes('.') || name.includes(',') || name.includes('-')) {
         return '** שם זה לא תקין **'
@@ -32,6 +36,8 @@ export function classNameValidation(name) {
         return '** חייב להכניס שדה זה **'
     } else if (name.length > 10) {
         return '** שדה זה לא יכול להכיל יותר מ-10 תווים **'
+    }  else if (name.trim().length === 0) {
+        return '** שם זה לא תקין **'
     } else if ((/[a-z]/).test(name) || (/[A-Z]/).test(name) || (/[!@#$%^&*()_+,=[\]{};:\\|<>/?~`]/).test(name)) {
         return '** שדה זה לא יכול להכיל אותיות באנגלית או תווים מיוחדים **'
     } else if (name.includes('"') || name.includes("'") || name.includes('.') || name.includes('-')) {
@@ -50,7 +56,9 @@ export function passwordValidation(password) {
         return '** חייב להכניס סיסמא **'
     } else if (password.length > 30 || password.length < 8) {
         return '** סיסמא לא תקינה **'
-    }else if ((/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`\s]/).test(password)) {
+    } else if (password.trim().length === 0) {
+        return '** סיסמא לא תקינה **'
+    } else if ((/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`\s]/).test(password)) {
         return '** סיסמא לא תקינה **'
     } else {
         return ''
@@ -62,7 +70,9 @@ export function passwordValidation(password) {
 export function emailValidation(email) {
     if (email.length === 0) {
         return '** חייב להכניס שדה זה **'
-    } else if (!(/[a-zA-Z0-9]+@+[a-zA-Z]+.+[a-zA-Z0-9]/).test(email)) {
+    } else if (email.trim().length === 0) {
+        return '** כתובת איימל לא תקינה **'
+    }  else if (!(/[a-zA-Z0-9]+@+[a-zA-Z]+.+[a-zA-Z0-9]/).test(email)) {
         return '** כתובת איימל לא תקינה **'
     } else {
         return ''
@@ -74,7 +84,9 @@ export function emailValidation(email) {
 export function mustInputValidation(input) {
     if (input.length === 0) {
         return '** חייב להכניס שדה זה **'
-    } else {
+    } else if (input.trim().length === 0) {
+        return  '** חייב להכניס שדה זה **'
+    }  else {
         return ''
     }
 }

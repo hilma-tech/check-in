@@ -22,31 +22,6 @@ class EditGame extends Component {
       gameDescriptionErrorMessages: { toShow: "none", mess: "" },
       gameRequirementsErrorMessages: { toShow: "none", mess: "" },
       fieldsData: [
-        // {
-        //   id: 0,
-        //   name: "בלה בלה",
-        //   selection: "text",
-        //   value: [{ id: 0, value: "חשבו על חייכם" }],
-        //   errorMessage: { toShow: "none", mess: "" },
-        // },
-        // {
-        //   id: 1,
-        //   name: "שני",
-        //   selection: "choice",
-        //   value: [
-        //     { id: 0, value: "שלום" },
-        //     { id: 1, value: "הלו" },
-        //     { id: 5, value: "ברוכה הבאה" },
-        //   ],
-        //   errorMessage: { toShow: "none", mess: "" },
-        // },
-        // {
-        //   id: 2,
-        //   name: "שלישי",
-        //   selection: "image",
-        //   value: [{ id: 0, value: "blah.png" }],
-        //   errorMessage: { toShow: "none", mess: "" },
-        // },
       ],
       gameName: "עננים",
       gameDescription: "הרבה והמון",

@@ -31,16 +31,17 @@ function App() {
             <Route path="/signin" exact>
               <SignIn />
             </Route>
-            <PrivateRoute path="/superAdmin" componentName="SuperAdminRoute" redirectComponent={SignIn}>
-              <Menu/>
-              <SuperAdminRoute />
-            </PrivateRoute>
-            <Route path="/teacher">
+            <PrivateRoute path="/superAdmin" 
+            componentName="SuperAdminRoute" 
+            redirectPath='/signin' 
+            // redirectComponent={SignIn}
+            component={SuperAdminRoute} />
+            {/* <Route path="/teacher">
               <TeacherRoute />
             </Route>
             <Route path="/draft" exact>
               <Draft />
-            </Route>
+            </Route> */}
           </Switch>
       </Router>
     </div>

@@ -21,12 +21,6 @@ export class GameService {
   //     let res = await this.gameRepository.save(game);
   //   }
 
-    async saveImg(@Body() req:any) {
-      let game = new Game
-      game.photo= req
-      game.id=53
-      let res = await this.gameRepository.save(game)
-    }
 
   async saveGame(@Body() req: GameDto) {
     let game = new Game

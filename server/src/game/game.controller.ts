@@ -20,8 +20,8 @@ export class GameController {
   @Post('/save')
   @UseFilesHandler()
   async saveGame(@UploadedFiles() files: FilesType, @Body() req: any) {
-    var service = await this.imageService.saveSingleFile(files)
-    req.game.photo = service;
+    var imgPath = await this.imageService.saveSingleFile(files)
+    req.game.photo = imgPath;
     let game = await this.gameService.saveGame(req.game);
     await this.fieldService.saveField({ data: req.field, id: game.id })
     return game

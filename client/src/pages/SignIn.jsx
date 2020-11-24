@@ -33,17 +33,21 @@ class SignIn extends Component {
   superAdminRegister = async () => {
     let username = this.state.username;
     let password = this.state.password;
-    try {
-      const response = await axios.get("/api/super-admin/login")
-    } catch (error) {
-      console.log("err");
-    }
+    // try {
+    //   const response = await axios.get("/api/super-admin/login")
+    // } catch (error) {
+    //   console.log("err");
+    // }
     try {
       const response = await axios.post("/api/super-admin/login", {
         username: username,
         password: password,
       });
+      console.log('response 1',response);
+      
       this.props.history.push("/superAdmin/games");
+      console.log('/superadmin/games');
+      window.location.pathname = "/superAdmin/games"
     } catch (error) {
       this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן להתחבר.');
     }
@@ -67,11 +71,11 @@ class SignIn extends Component {
           return { errorMessages: prevState.errorMessages };
         });
       } else {
-        this.setState((prevState) => {
-          prevState.errorMessages[index].toShow = "none";
-          prevState.errorMessages[index].mess = "";
-          return { errorMessages: prevState.errorMessages };
-        });
+        // this.setState((prevState) => {
+        //   prevState.errorMessages[index].toShow = "none";
+        //   prevState.errorMessages[index].mess = "";
+        //   return { errorMessages: prevState.errorMessages };
+        // });
         this.superAdminRegister();
       }
     });

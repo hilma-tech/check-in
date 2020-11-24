@@ -128,15 +128,15 @@ class AddGame extends Component {
     this.setState({ image: value.link });
   };
 
-  addGameImg = async () => {
-    try {
-      // console.log("state",this.imageUploader);
-      const response = await this.imageUploader.post("/api/game/saveImg");
-      // console.log("res",response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // addGameImg = async () => {
+  //   try {
+  //     // console.log("state",this.imageUploader);
+  //     const response = await this.imageUploader.post("/api/game/saveImg");
+  //     // console.log("res",response);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   addGameDb = async () => {
     let currGameInfo = {
@@ -156,6 +156,7 @@ class AddGame extends Component {
       if(!this.props.games.haveMoreGames){
         this.props.games.addGame(response.data)
       }
+      this.props.history.goBack(); // after saving go back
     } catch (error) {
       this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסה לבדוק את החיבור");
     }
@@ -169,7 +170,7 @@ class AddGame extends Component {
   // }
 
   saveData = () => {
-    this.addGameImg();
+    // this.addGameImg();
 
     let allOK = true;
     let fieldOK = true;
@@ -200,7 +201,6 @@ class AddGame extends Component {
     if (allOK && fieldOK) {
       //fetch to the server
       this.addGameDb();
-      this.props.history.goBack(); // after saving go back
     }
   };
 

@@ -58,6 +58,7 @@ class Games extends Component {
     this.setState({ displaySearch: true });
   };
   render() {
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     return (
       <>
         <div>
