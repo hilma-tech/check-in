@@ -16,13 +16,19 @@ export class FieldService {
   ) {}
 
   async saveField(@Body() req: any) {
-    console.log(req);
-    
+    // console.log(req);
+
     req.data.map(async fieldObject => {
       let field = new Field();
       field.field_name = fieldObject.name;
       field.type = fieldObject.selection;
-      field.default_value = JSON.stringify(fieldObject.value);
+      let newFieldArr = []
+      fieldObject.value.map(fieldSubObj => {
+        delete fieldSubObj.id;
+        newFieldArr.push(fieldSubObj)
+      })
+      field.default_value = JSON.stringify(newFieldArr);
+      // console.log(newFieldArr);
       field.order = fieldObject.order;
       field.game_id = req.id;
 

@@ -5,12 +5,5 @@ import { FieldService } from './field.service';
 
 @Controller('api/field')
 export class FieldController {
-    constructor(private fieldService: FieldService) {
-      
-      }
-
-    // @Post('/save')
-    // saveField(@Body() req: any) {
-    //     this.fieldService.saveField(req)
-    // }
+    constructor(private fieldService: FieldService) {}
 }

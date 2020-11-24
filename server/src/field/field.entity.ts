@@ -6,6 +6,7 @@ import {
   JoinColumn,
   ManyToOne,
 } from 'typeorm';
+import { GameType } from './game.type.enum';
 
 @Entity()
 export class Field {
@@ -15,8 +16,8 @@ export class Field {
   @Column({ type: 'varchar', length: 50 })
   field_name: string;
 
-  @Column({ type: 'varchar' })
-  type: string;
+  @Column({ type: 'enum', enum: GameType, default: GameType.TEXT })
+  type: GameType;
 
   @Column({type: 'int', default: 3})
   game_id: any;

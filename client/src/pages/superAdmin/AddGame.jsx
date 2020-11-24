@@ -129,9 +129,9 @@ class AddGame extends Component {
 
   addGameImg = async () => {
     try {
-      console.log("state",this.imageUploader);
+      // console.log("state",this.imageUploader);
       const response = await this.imageUploader.post("/api/game/saveImg");
-      console.log("res",response);
+      // console.log("res",response);
     } catch (error) {
       console.log(error);
     }

@@ -15,15 +15,11 @@ import { nameProvider } from "./stores/name.store";
 import { errorMsgProvider } from "./stores/error.store";
 import { gamesProvider } from "./stores/games.store";
 import { AuthProvider, PrivateRoute } from "@hilma/auth";
+import Menu from "./component/superAdmin/Menu";
 
 function App() {
   return (
     <div className="App">
-      <link
-        href="https://fonts.googleapis.com/css2?family=Assistant:wght@600;800&display=swap"
-        rel="stylesheet"
-      ></link>
-
       <Router>
         <AuthProvider>
           <Switch>
@@ -34,6 +30,7 @@ function App() {
               <SignIn />
             </Route>
             <PrivateRoute path="/superAdmin" componentName="SuperAdminRoute" redirectComponent={SignIn}>
+              <Menu/>
               <SuperAdminRoute />
             </PrivateRoute>
             <Route path="/teacher">

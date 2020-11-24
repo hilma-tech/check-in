@@ -50,7 +50,7 @@ export class GameService {
 
   async getGamesInfo(@Body() skipON: any) {
     let numGames = await this.gameRepository.count()
-    console.log(numGames,(skipON.gamesLength + 50));
+    // console.log(numGames,(skipON.gamesLength + 50));
     
     let haveMoreGames = numGames > (skipON.gamesLength + 50) ? true : false
     let gamesInfo = await this.gameRepository.find({
