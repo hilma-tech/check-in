@@ -9,6 +9,7 @@ import {
   ImageService,
 } from '@hilma/fileshandler-typeorm';
 import { UseJwtAuth } from '@hilma/auth-nest';
+import { async } from 'rxjs';
 
 
 @Controller('api/game')
@@ -22,8 +23,17 @@ export class GameController {
   @Post('/save')
   @UseFilesHandler()
   async saveGame(@UploadedFiles() files: FilesType, @Body() req: any) {
-    var imgPath = await this.imageService.saveSingleFile(files)
+    let imgPath = await this.imageService.save(files, req.game.photo.id)
+    console.log('imgPath ', imgPath);
     req.game.photo = imgPath;
+    
+    req.field.forEach(async (img, index) => {
+      if("image" === img.selection){
+        let imgPath = await this.imageService.save(files, img.value[0].id)
+        console.log('imgPath2 ', imgPath);
+        req.field[index].value[0].value = imgPath;
+      }
+    })
     let game = await this.gameService.saveGame(req.game);
     await this.fieldService.saveField({ data: req.field, id: game.id })
     return game

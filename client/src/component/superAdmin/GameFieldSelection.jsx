@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import Select from "react-select";
 import SelectStyle from "../../style/superAdmin/select_style";
 import "../../style/superAdmin/form_style.scss";
-import { FilesUploader, FileInput } from "@hilma/fileshandler-client";
+import { FilesUploader, FileInput ,withFiles} from "@hilma/fileshandler-client";
 import '../../style/superAdmin/game_field_selection_style.scss';
 
 class GameFieldSelection extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.options = [
       { value: "text", label: "טקסט" },
@@ -14,8 +14,10 @@ class GameFieldSelection extends Component {
       { value: "image", label: "תמונה" },
       { value: "multi-choice", label: "בחירה מרובה" },
     ];
-    this.imageUploader = new FilesUploader();
-  }
+    // this.imageUploader = new FilesUploader();
+    this.imageUploader = props.ourImageUploader;
+
+    }
 
   // creates input based on "type"
   fieldCreator = () => {
@@ -109,11 +111,13 @@ class GameFieldSelection extends Component {
   };
 
   sendImageFieldValue = (value) => {
+    console.log(this.imageUploader);
     this.props.fieldValue(
       value.value, 
       this.props.fieldId, 
       null, 
-      value.link);
+      value.link,
+      value.id);
   };
 
   removeField = () => {
@@ -172,4 +176,4 @@ class GameFieldSelection extends Component {
     );
   }
 }
-export default GameFieldSelection;
+export default withFiles(GameFieldSelection);
