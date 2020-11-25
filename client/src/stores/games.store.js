@@ -1,13 +1,17 @@
 import { createMobXContext } from '@hilma/tools'
 import { makeObservable, observable, computed, action } from 'mobx'
-
+import { errorMsgContext } from "./error.store";
+import { withContext } from '@hilma/tools';
+import { observer } from "mobx-react"
 const axios = require("axios").default;
 
 class Games {
     gamesList = []
     haveMoreGames = true
+    successGettingGames = true;
     constructor() {
         makeObservable(this, {
+            successGettingGames: observable,
             gamesList: observable,
             haveMoreGames: observable,
             setGames: action,
@@ -16,9 +20,18 @@ class Games {
         })
     }
     setGames = async () => {
-        const { data } = await axios.post("/api/game/getGames", { gamesLength: this.gamesList.length });
-        this.gamesList = this.gamesList.concat(data.gamesInfo)
-        this.haveMoreGames = data.haveMoreGames
+        try{
+            const { data } = await axios.post("/api/game/getGames", { gamesLength: this.gamesList.length });
+            this.gamesList = this.gamesList.concat(data.gamesInfo)
+            this.haveMoreGames = data.haveMoreGames;
+            this.successGettingGames = true
+        }catch (error){
+            this.successGettingGames = false
+        }
+    }
+
+    addGame = (newGame) => {
+        this.gamesList.push(newGame)
     }
 
     setShowOption = (gameIndex) => {

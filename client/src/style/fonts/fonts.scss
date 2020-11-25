@@ -1,7 +1,12 @@
 @font-face {
     font-family: Assistant;
-    src: url("/fonts/Assistant-VariableFont_wght.ttf")
-    
+    src: url("/fonts/Assistant-VariableFont_wght.ttf")   
+}
+
+@font-face {
+    font-family: Assistant;
+    src: url("/fonts/Assistant-SemiBold.ttf");
+    font-weight: 600;
 }
 
 @font-face {

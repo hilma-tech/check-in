@@ -1,5 +1,5 @@
 import { Game } from './game.entity';
-import { Body, Controller, Get, Post, Query, Req, UploadedFiles } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req, UploadedFiles, Put } from '@nestjs/common';
 import { GameService } from './game.service';
 import { GameDto } from './game.dto';
 import { FieldService } from 'src/field/field.service';
@@ -8,34 +8,40 @@ import {
   FilesType,
   ImageService,
 } from '@hilma/fileshandler-typeorm';
+import { UseJwtAuth } from '@hilma/auth-nest';
+import { async } from 'rxjs';
+
 
 @Controller('api/game')
 export class GameController {
-  constructor(private gameService: GameService, 
-    private fieldService: FieldService, 
+  constructor(private gameService: GameService,
+    private fieldService: FieldService,
     private readonly imageService: ImageService) {
   }
 
+  @UseJwtAuth('superAdmin')
   @Post('/save')
-  async saveGame(@Body() req: any) {
-    let id = await this.gameService.saveGame(req.game);
-    await this.fieldService.saveField({data: req.field, id: id})
-  }
-
-  @Post('/saveImg')
   @UseFilesHandler()
-  async saveImg(@UploadedFiles() files: FilesType) {
-    let service = await this.imageService.saveSingleFile(files)
-    console.log("req",files);
+  async saveGame(@UploadedFiles() files: FilesType, @Body() req: any) {
+    let imgPath = await this.imageService.save(files, req.game.photo.id)
+    console.log('imgPath ', imgPath);
+    req.game.photo = imgPath;
+    
+    req.field.forEach(async (img, index) => {
+      if("image" === img.selection){
+        let imgPath = await this.imageService.save(files, img.value[0].id)
+        console.log('imgPath2 ', imgPath);
+        req.field[index].value[0].value = imgPath;
+      }
+    })
+    let game = await this.gameService.saveGame(req.game);
+    await this.fieldService.saveField({ data: req.field, id: game.id })
+    return game
   }
 
-    @Post('/getGames')
-    getGames(@Body() skipON: any){
-        return this.gameService.getGamesInfo(skipON)
-    }
-
-    // @Get('/aaa')
-    // temp(){
-    //     return this.gameService.saving()
-    // }
+  @UseJwtAuth('superAdmin')
+  @Post('/getGames')
+  getGames(@Body() skipON: any) {
+    return this.gameService.getGamesInfo(skipON)
+  }
 }

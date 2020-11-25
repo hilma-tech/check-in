@@ -5,6 +5,7 @@ import hilmaicon from "../img/hilmawhite.svg";
 import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
 import { nameContext } from "../stores/name.store";
+import { errorMsgContext } from "../stores/error.store";
 import { observer } from "mobx-react";
 const axios = require("axios").default;
 
@@ -21,6 +22,15 @@ class SignIn extends Component {
     };
   }
 
+  componentDidMount() {
+    
+    window.history.pushState(null, document.title, window.location.href);
+    window.addEventListener('popstate', function (event){
+       window.history.pushState(null, document.title,  window.location.href);
+    });
+  
+ }
+
   updateUser = (props) => {
     this.setState({ username: props.target.value });
   };
@@ -29,47 +39,53 @@ class SignIn extends Component {
     this.setState({ password: props.target.value });
   };
 
-  superAdminRegister = async () => {
+  superAdminLogin = async () => {
     let username = this.state.username;
     let password = this.state.password;
-
     try {
-      const response = await axios.post("/api/super-admin/register", {
+      const response = await axios.post("/api/super-admin/login", {
         username: username,
         password: password,
       });
+      console.log('response 1',response);
+      
+      this.props.history.push("/superAdmin/games");
+      console.log('/superadmin/games');
+      window.location.pathname = "/superAdmin/games"
     } catch (error) {
-      console.log("err");
-    }
+      if(error.status === 401){
+        this.props.errorMsg.setErrorMsg('שם המשתמש והסיסמא אינם תואמים.');
+      } else {
+        this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן להתחבר.');
+      }
+      }
   };
 
   saveData = () => {
-    let dataArray = [this.state.username, this.state.password];
+    this.superAdminLogin();
     // this.props.name.setName('aaaa')
-    dataArray.map((value, index) => {
-      if (value.length === 0) {
-        this.setState((prevState) => {
-          prevState.errorMessages[index].toShow = "block";
-          prevState.errorMessages[index].mess = "** שדה זה חייב להיות מלא **";
-          return { errorMessages: prevState.errorMessages };
-        });
-      } else if (value.length < 8) {
-        this.setState((prevState) => {
-          prevState.errorMessages[index].toShow = "block";
-          prevState.errorMessages[index].mess =
-            "** שדה זה חייב להיות בעל 8 תווים לפחות **";
-          return { errorMessages: prevState.errorMessages };
-        });
-      } else {
-        this.setState((prevState) => {
-          prevState.errorMessages[index].toShow = "none";
-          prevState.errorMessages[index].mess = "";
-          return { errorMessages: prevState.errorMessages };
-        });
-        this.superAdminRegister();
-        this.props.history.push("/superAdmin/games");
-      }
-    });
+    // dataArray.map((value, index) => {
+    //   if (value.length === 0) {
+    //     this.setState((prevState) => {
+    //       prevState.errorMessages[index].toShow = "block";
+    //       prevState.errorMessages[index].mess = "** שדה זה חייב להיות מלא **";
+    //       return { errorMessages: prevState.errorMessages };
+    //     });
+    //   } else if (value.length < 8) {
+    //     this.setState((prevState) => {
+    //       prevState.errorMessages[index].toShow = "block";
+    //       prevState.errorMessages[index].mess =
+    //         "** שדה זה חייב להיות בעל 8 תווים לפחות **";
+    //       return { errorMessages: prevState.errorMessages };
+    //     });
+    //   } else {
+    //     this.setState((prevState) => {
+    //       prevState.errorMessages[index].toShow = "none";
+    //       prevState.errorMessages[index].mess = "";
+    //       return { errorMessages: prevState.errorMessages };
+    //     });
+    //   // }
+    // });
   };
   //EXPERIMENTATION
   // preventBack = () => {
@@ -124,6 +140,7 @@ class SignIn extends Component {
 
 const mapContextToProps = {
   name: nameContext,
+  errorMsg: errorMsgContext,
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(SignIn)));

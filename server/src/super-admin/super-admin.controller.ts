@@ -5,23 +5,21 @@ import {
   UserModule,
   User,
   Role,
+  UseJwtAuth,
 } from '@hilma/auth-nest';
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { SuperAdmin } from './super-admin.entity';
 
 @Controller('api/super-admin')
 export class SuperAdminController {
   constructor(private readonly userService: UserService) {}
 
-  //   @UseLocalAuth()
-  //   @Post('/login')
-  //   login(@RequestUser() userInfo, @Res() res) {
-  //     console.log('userInfo', userInfo, 'res', res);
-  //     let body = this.userService.login(userInfo, res);
-  //     console.log('body', body);
-
-  //     res.send(body);
-  //   }
+    @UseLocalAuth()
+    @Post('/login')
+    login(@RequestUser() userInfo, @Res() res) {
+      let body = this.userService.login(userInfo, res);
+      res.send(body);
+    }
 
   @Post('/register')
   register(@Body() req) {

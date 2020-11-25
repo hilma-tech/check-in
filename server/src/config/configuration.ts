@@ -9,25 +9,15 @@ export default () => ({
   app_name_he: "צ'ק אין", //hebrew
 
   roleAccess: {
-    SuperAdmin: {
+    "superAdmin": {
       components: [
+        'SuperAdminMenu',
         'SuperAdminRoute',
-        'SAdminHome',
-        'SAdminSchools',
-        'SAdminTeachers',
-        'SAdminStudents',
-        'SAdminAddStudents',
-        'SAdminAddTeachers',
         'SAdminAddGames',
-        'SAdminAddSchools',
-        'SAdminEditGames',
-        'SAdminEditSchools',
-        'SAdminEditTeachers',
-        'SAdminEditStudents',
-        'SAdminSuspendedGames',
         'SAdminGames',
+        'SAdminGamesList'
       ],
-      defaultHomePage: 'SAdminHome',
+      defaultHomePage: 'SAdminGames',
     },
   },
 });

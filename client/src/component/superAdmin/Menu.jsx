@@ -2,17 +2,27 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import "../../style/superAdmin/menu_style.css";
 
+import { LogoutContext } from '@hilma/auth';
+import { withContext } from "@hilma/tools";
+
+const mapContextToProps = {
+  logout: LogoutContext
+}
+
 class Menu extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
-      pagesNames: ["משחקים", "בתי ספר", "מורים", "תלמידים"],
+      // pagesNames: ["משחקים", "בתי ספר", "מורים", "תלמידים"],
+      pagesNames: ["משחקים"],
       תלמידים: "students",
       מורים: "teachers",
       "בתי ספר": "schools",
       משחקים: "games",
     };
   }
+
+  
   render() {
     return (
       <div className="pageMenu">
@@ -49,7 +59,8 @@ class Menu extends React.Component {
 
           <div
             className="logOut"
-            onClick={() => {
+            onClick={async () => {
+              await this.props.logout();
               this.props.history.push("/signin");
             }}
           >
@@ -63,4 +74,4 @@ class Menu extends React.Component {
   }
 }
 
-export default withRouter(Menu);
+export default withRouter(withContext(mapContextToProps)(Menu));

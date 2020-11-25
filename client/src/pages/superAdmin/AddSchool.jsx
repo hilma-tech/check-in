@@ -146,7 +146,7 @@ class AddSchool extends React.Component {
               שם בית ספר:
             </label>
             <p
-              class="error"
+              className="error"
               style={{ display: this.state.schoolNameError.toShow }}
             >
               {this.state.schoolNameError.mess}

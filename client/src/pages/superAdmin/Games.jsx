@@ -7,7 +7,6 @@ import { withRouter } from "react-router-dom";
 import Slide from "@material-ui/core/Slide";
 import PopUp from "../../component/superAdmin/GamePopUpMenu.jsx";
 import Fade from "@material-ui/core/Fade";
-import PopUpError from '../../component/popUpError'
 import { errorMsgContext } from "../../stores/error.store";
 import { gamesContext } from "../../stores/games.store";
 import { observer } from "mobx-react"
@@ -33,11 +32,11 @@ class Games extends Component {
   }
 
   getGames = () => {
-    try {
-      this.props.games.setGames()
-    } catch (error) {
-      this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת נסה לרענן את העמוד');
-    }
+      let getGames = this.props.games.setGames()
+      console.log( this.props.games.successGettingGames);
+      if (!this.props.games.successGettingGames){
+        this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת.');
+      }
   }
 
   onClickAddGame = () => {
@@ -59,6 +58,7 @@ class Games extends Component {
     this.setState({ displaySearch: true });
   };
   render() {
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     return (
       <>
         <div>
@@ -131,7 +131,6 @@ class Games extends Component {
             הצג עוד
             </button>
         </div>
-        <PopUpError />
       </>
     );
   }
