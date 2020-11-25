@@ -47,10 +47,8 @@ class SignIn extends Component {
         username: username,
         password: password,
       });
-      console.log('response 1',response);
       
       this.props.history.push("/superAdmin/games");
-      console.log('/superadmin/games');
       window.location.pathname = "/superAdmin/games"
     } catch (error) {
       if(error.status === 401){

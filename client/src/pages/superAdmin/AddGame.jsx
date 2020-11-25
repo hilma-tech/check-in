@@ -129,7 +129,6 @@ class AddGame extends Component {
   };
 
   updateImage = (value) => {
-    console.log(value.id);
     this.setState({ image: {id: value.id, value: value.link}});
   };
 
@@ -147,7 +146,6 @@ class AddGame extends Component {
         value:  obj.value,
         order: obj.order,
       };
-      console.log(newField.value);
       currFieldData.push(newField)
     });
     return currFieldData
@@ -163,7 +161,6 @@ class AddGame extends Component {
       const fieldData = this.setUpValues();
     
     try {
-      console.log(this.imageUploader);
       const response = await this.imageUploader.post(
         "/api/game/save",
         JSON.stringify({
@@ -172,7 +169,6 @@ class AddGame extends Component {
         })
       );
       // this.addGameFieldsDb(response.data[0].id);
-      console.log(response.data);
       if (!this.props.games.haveMoreGames) {
         this.props.games.addGame(response.data);
       }

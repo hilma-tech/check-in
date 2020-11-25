@@ -18,7 +18,6 @@ class SuperAdminRoute extends React.Component {
   
 
   render() {
-    console.log("hiiiiiiiiii i am woring noww yayy")
     return (
       <div className="everyPage">
         <Menu />

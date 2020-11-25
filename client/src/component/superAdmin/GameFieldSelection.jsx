@@ -111,7 +111,6 @@ class GameFieldSelection extends Component {
   };
 
   sendImageFieldValue = (value) => {
-    console.log(this.imageUploader);
     this.props.fieldValue(
       value.value, 
       this.props.fieldId, 
