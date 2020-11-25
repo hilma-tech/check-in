@@ -18,11 +18,10 @@ export class FieldService {
 
  
   async saveField(@Body() req: any) {
-    req.data.map(async fieldObject => {
+    req.data.map(async fieldObject => {  
       let field = new Field();
       field.field_name = fieldObject.name;
       field.type = fieldObject.selection;
-      console.log(fieldObject.selection);
       
       field.default_value = JSON.stringify(fieldObject.value);
       field.order = fieldObject.order;

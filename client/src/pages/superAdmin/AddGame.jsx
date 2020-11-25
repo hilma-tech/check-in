@@ -44,7 +44,7 @@ class AddGame extends Component {
       gameName: "",
       gameDescription: "",
       gameRequirements: "",
-      image: false,
+      image: {id: 0, value: false},
     };
     this.imageUploader = props.filesUploader;
   }
@@ -64,7 +64,7 @@ class AddGame extends Component {
     });
   };
 
-  saveFieldValue = (fieldValue, fieldId, inputId, inputImage) => {
+  saveFieldValue = (fieldValue, fieldId, inputId, inputImage, imgId) => {
     //only relevant to choice/multi-choice
     if (inputId) {
       this.setState((prevState) => {
@@ -78,8 +78,8 @@ class AddGame extends Component {
     } else if (inputImage) {
       this.setState((prevState) => {
         prevState.fieldsData[fieldId].value[0] = {
-          id: 0,
-          value: inputImage,
+          id: imgId,
+          value: inputImage
         };
         return { fieldsData: prevState.fieldsData };
       });
@@ -129,23 +129,23 @@ class AddGame extends Component {
   };
 
   updateImage = (value) => {
-    this.setState({ image: value.link });
+    this.setState({ image: {id: value.id, value: value.link}});
   };
 
   
 
   setUpValues = () => {
     let newValue = []
+    let imageUploader ={};
     let currFieldData = [];
     this.state.fieldsData.map((obj) => {
-      obj.value.map(valueObj => newValue.push(valueObj.value))
+      // obj.value.map(valueObj => {newValue.push(valueObj.value);})
       let newField = {
         name: obj.name,
         selection: obj.selection,
-        value: newValue,
+        value:  obj.value,
         order: obj.order,
       };
-      console.log(newField.value);
       currFieldData.push(newField)
     });
     return currFieldData
@@ -169,7 +169,6 @@ class AddGame extends Component {
         })
       );
       // this.addGameFieldsDb(response.data[0].id);
-      console.log(response.data);
       if (!this.props.games.haveMoreGames) {
         this.props.games.addGame(response.data);
       }
@@ -332,11 +331,11 @@ class AddGame extends Component {
                 <img
                   alt="photograph icon"
                   className={
-                    typeof this.state.image === "string"
+                    typeof this.state.image.value === "string"
                       ? "chosenImg"
                       : "cameraIcon"
                   }
-                  src={this.state.image || "/icons/camera-icon.svg"}
+                  src={this.state.image.value || "/icons/camera-icon.svg"}
                 />
               </label>
             </div>
@@ -355,6 +354,7 @@ class AddGame extends Component {
                   originalValue={fieldObj.value}
                   errorMessage={fieldObj.errorMessage}
                   changeInputType={fieldObj.selection}
+                  ourImageUploader={this.imageUploader}
                 />
               );
             })}

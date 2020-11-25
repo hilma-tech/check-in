@@ -11,6 +11,7 @@ import { errorMsgContext } from "../../stores/error.store";
 import { gamesContext } from "../../stores/games.store";
 import { observer } from "mobx-react"
 import { withContext } from '@hilma/tools';
+import LoadingPage from '../../component/LoadingPage.jsx'
 
 const axios = require("axios").default;
 
@@ -57,6 +58,7 @@ class Games extends Component {
     this.setState({ displaySearch: true });
   };
   render() {
+    let displayLoading = false;
     return (
       <>
         <div>
@@ -84,6 +86,10 @@ class Games extends Component {
               <p className="searchIcon" onClick={this.activateSearch}></p>
             </form> */}
           </div>
+          {this.props.games.haveMoreGames && this.props.games.gamesList.length===0 ?
+          displayLoading = true : displayLoading = false }
+          {this.props.games.haveMoreGames && this.props.games.gamesList.length===0 ?
+          <LoadingPage /> : 
           <div className="grid">
             <div onClick={this.onClickAddGame}>
               <div className="imageContainer item3">
@@ -122,10 +128,12 @@ class Games extends Component {
               );
             })}
           </div>
+          }
+          
           <button
             className='showMoreGamesB'
             onClick={this.getGames}
-            style={{ display: this.props.games.haveMoreGames ? 'inline-block' : 'none' }}>
+            style={{ display: this.props.games.haveMoreGames && !displayLoading ? 'inline-block' : 'none' }}>
             הצג עוד
             </button>
         </div>

@@ -18,7 +18,10 @@ import "../../style/superAdmin/disp.scss"
 
 class SuperAdminRoute extends React.Component {
   render() {
+<<<<<<< HEAD
   
+=======
+>>>>>>> 8724e282951af43e8fa785634119bcc97e58c89c
     return (
       <>
         
