@@ -1,0 +1,8 @@
+@import "../App.scss";
+
+.withMenu {
+    @include topOfPage($withMenu: true);
+    .disp {
+        display: flex;
+    }
+}

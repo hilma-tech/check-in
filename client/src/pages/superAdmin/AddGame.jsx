@@ -153,7 +153,7 @@ class AddGame extends Component {
   addGameDb = async () => {
     let currGameInfo = {
       game_name: this.state.gameName,
-      photo: this.state.image,
+      image: this.state.image,
       description: this.state.gameDescription,
       requirements: this.state.gameRequirements,
       suspended: false,

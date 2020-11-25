@@ -33,7 +33,6 @@ class Games extends Component {
 
   getGames = () => {
       let getGames = this.props.games.setGames()
-      console.log( this.props.games.successGettingGames);
       if (!this.props.games.successGettingGames){
         this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת.');
       }
@@ -58,7 +57,6 @@ class Games extends Component {
     this.setState({ displaySearch: true });
   };
   render() {
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     return (
       <>
         <div>
@@ -110,7 +108,7 @@ class Games extends Component {
                     >
                       <PopUp onClickEditGame={this.onClickEditGame} />
                     </Fade>
-                    <img className="gameImg" alt="" src={image.photo} />
+                    <img className="gameImg" alt="" src={image.image} />
                     <h2 className="gameTitleBackground"></h2>
                     <h1 className="gameTitle">{image.game_name}</h1>
                     <img

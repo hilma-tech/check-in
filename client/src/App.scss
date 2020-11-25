@@ -41,9 +41,15 @@
   }
 }
 
-.everyPage {
-  position: relative;
-  margin-top: 15vh;
+@mixin topOfPage($withMenu: false) {
+  
+    position: relative;
+    @if $withMenu {
+      margin-top: 15vh;
+    } @else {
+      margin-top: 0vh;
+    }
+  
 }
 
 input:focus,
