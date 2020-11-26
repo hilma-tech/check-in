@@ -11,6 +11,7 @@ import { errorMsgContext } from "../../stores/error.store";
 import { gamesContext } from "../../stores/games.store";
 import { observer } from "mobx-react"
 import { withContext } from '@hilma/tools';
+import LoadingPage from '../../component/LoadingPage.jsx'
 
 const axios = require("axios").default;
 
@@ -33,7 +34,6 @@ class Games extends Component {
 
   getGames = () => {
       let getGames = this.props.games.setGames()
-      console.log( this.props.games.successGettingGames);
       if (!this.props.games.successGettingGames){
         this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת.');
       }
@@ -58,7 +58,7 @@ class Games extends Component {
     this.setState({ displaySearch: true });
   };
   render() {
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    let displayLoading = false;
     return (
       <>
         <div>
@@ -86,6 +86,10 @@ class Games extends Component {
               <p className="searchIcon" onClick={this.activateSearch}></p>
             </form> */}
           </div>
+          {this.props.games.haveMoreGames && this.props.games.gamesList.length===0 ?
+          displayLoading = true : displayLoading = false }
+          {this.props.games.haveMoreGames && this.props.games.gamesList.length===0 ?
+          <LoadingPage /> : 
           <div className="grid">
             <div onClick={this.onClickAddGame}>
               <div className="imageContainer item3">
@@ -110,7 +114,7 @@ class Games extends Component {
                     >
                       <PopUp onClickEditGame={this.onClickEditGame} />
                     </Fade>
-                    <img className="gameImg" alt="" src={image.photo} />
+                    <img className="gameImg" alt="" src={image.image} />
                     <h2 className="gameTitleBackground"></h2>
                     <h1 className="gameTitle">{image.game_name}</h1>
                     <img
@@ -124,10 +128,12 @@ class Games extends Component {
               );
             })}
           </div>
+          }
+          
           <button
             className='showMoreGamesB'
             onClick={this.getGames}
-            style={{ display: this.props.games.haveMoreGames ? 'inline-block' : 'none' }}>
+            style={{ display: this.props.games.haveMoreGames && !displayLoading ? 'inline-block' : 'none' }}>
             הצג עוד
             </button>
         </div>

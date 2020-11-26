@@ -33,7 +33,6 @@ class EditGame extends Component {
   componentDidMount = async ()=>{
     try{
       const { data } = await axios.post("/api/field/getGameField", { id: 69 });
-      console.log(data);
       let tempFieldsData = []
       data.map((fieldData) => {
         let val = JSON.parse(fieldData.default_value)

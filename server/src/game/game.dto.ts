@@ -1,6 +1,6 @@
 export class GameDto {
   game_name: string;
-  photo: string;
+  image: string;
   description: string;
   requirements: string;
   suspended: boolean;

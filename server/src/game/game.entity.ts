@@ -15,7 +15,7 @@ export class Game {
   requirements: string;
 
   @Column({ type: 'varchar', length: 1000, default: "blob:http://localhost:3000/8e4f6604-fef9-4190-bdd3-3628c7bc572c" })
-  photo: string;
+  image: string;
 
   @Column({ type: 'bit', default: false })
   suspended: boolean;

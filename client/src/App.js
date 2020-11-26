@@ -17,6 +17,7 @@ import { gamesProvider } from "./stores/games.store";
 import { AuthProvider, PrivateRoute } from "@hilma/auth";
 import Menu from "./component/superAdmin/Menu";
 import PopUpError from './component/popUpError'
+import ErrorPage from "./pages/404Page";
 
 function App() {
   return (
@@ -42,6 +43,8 @@ function App() {
             <Route path="/draft" exact>
               <Draft />
             </Route> */}
+             <Route path="/:smth" component={ErrorPage} />
+          
           </Switch>
       </Router>
     </div>
