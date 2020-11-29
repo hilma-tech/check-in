@@ -1,24 +1,23 @@
 export default () => ({
   auth: {
     ttl: {},
-    secretOrKey: 'hi@$#$T46btrtges',
-    accessToken_cookie: 'klool'
+    secretOrKey: "hi@$#$T46btrtges",
+    accessToken_cookie: "klool"
   },
 
-  app_name: 'checkin', //english
-
+  app_name: "checkin", //english
   app_name_he: "צ'ק אין", //hebrew
 
   roleAccess: {
-    "superAdmin": {
+    superAdmin: {
       components: [
-        'SuperAdminMenu',
-        'SuperAdminRoute',
-        'SAdminAddGames',
-        'SAdminGames',
-        'SAdminGamesList'
+        "SuperAdminMenu",
+        "SuperAdminRoute",
+        "SAdminAddGames",
+        "SAdminGames",
+        "SAdminGamesList"
       ],
-      defaultHomePage: 'SAdminGames',
-    },
-  },
+      defaultHomePage: "SAdminGames"
+    }
+  }
 });
