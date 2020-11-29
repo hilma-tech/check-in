@@ -22,7 +22,6 @@ export class FieldService {
       let field = new Field();
       field.field_name = fieldObject.name;
       field.type = fieldObject.selection;
-      
       field.default_value = JSON.stringify(fieldObject.value);
       field.order = fieldObject.order;
       field.game_id = req.id;

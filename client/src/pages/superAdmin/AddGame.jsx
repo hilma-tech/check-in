@@ -159,7 +159,7 @@ class AddGame extends Component {
       suspended: false,
     };
       const fieldData = this.setUpValues();
-    
+    console.log(fieldData);
     try {
       const response = await this.imageUploader.post(
         "/api/game/save",

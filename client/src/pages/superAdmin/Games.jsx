@@ -27,16 +27,16 @@ class Games extends Component {
 
   componentDidMount() {
     this.props.games.resetShowOptions()
-    if(this.props.games.gamesList.length === 0){
+    if (this.props.games.gamesList.length === 0) {
       this.getGames()
     }
   }
 
   getGames = () => {
-      let getGames = this.props.games.setGames()
-      if (!this.props.games.successGettingGames){
-        this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת.');
-      }
+    let getGames = this.props.games.setGames()
+    if (!this.props.games.successGettingGames) {
+      this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת.');
+    }
   }
 
   onClickAddGame = () => {
@@ -86,50 +86,50 @@ class Games extends Component {
               <p className="searchIcon" onClick={this.activateSearch}></p>
             </form> */}
           </div>
-          {this.props.games.haveMoreGames && this.props.games.gamesList.length===0 ?
-          displayLoading = true : displayLoading = false }
-          {this.props.games.haveMoreGames && this.props.games.gamesList.length===0 ?
-          <LoadingPage /> : 
-          <div className="grid">
-            <div onClick={this.onClickAddGame}>
-              <div className="imageContainer item3">
-                <img className="addImg" src={addicon} alt="" />
-                <h2 className="gameTitleBackground"></h2>
-                <h1 className="gameTitle">הוסף משחק</h1>
-              </div>
-            </div>
-            {this.props.games.gamesList.map((image, index) => {
-              return (
-                <div key={image.id}>
-                  <div className="imageContainer item3">
-                    <Fade
-                      in={image.showOption}
-                      timeout={{
-                        appear: 500,
-                        enter: 400,
-                        exit: 100,
-                      }}
-                      mountOnEnter
-                      unmountOnExit
-                    >
-                      <PopUp onClickEditGame={this.onClickEditGame} />
-                    </Fade>
-                    <img className="gameImg" alt="" src={image.photo} />
-                    <h2 className="gameTitleBackground"></h2>
-                    <h1 className="gameTitle">{image.game_name}</h1>
-                    <img
-                      className="optionIcon"
-                      onClick={() => {this.props.games.setShowOption(index)}}
-                      alt=""
-                      src={optionicon}
-                    />
-                  </div>
+          {this.props.games.haveMoreGames && this.props.games.gamesList.length === 0 ?
+            displayLoading = true : displayLoading = false}
+          {this.props.games.haveMoreGames && this.props.games.gamesList.length === 0 ?
+            <LoadingPage /> :
+            <div className="grid">
+              <div onClick={this.onClickAddGame}>
+                <div className="imageContainer item3">
+                  <img className="addImg" src={addicon} alt="" />
+                  <h2 className="gameTitleBackground"></h2>
+                  <h1 className="gameTitle">הוסף משחק</h1>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+              {this.props.games.gamesList.map((image, index) => {
+                return (
+                  <div key={image.id}>
+                    <div className="imageContainer item3">
+                      <Fade
+                        in={image.showOption}
+                        timeout={{
+                          appear: 500,
+                          enter: 400,
+                          exit: 100,
+                        }}
+                        mountOnEnter
+                        unmountOnExit
+                      >
+                        <PopUp onClickEditGame={this.onClickEditGame} />
+                      </Fade>
+                      <img className="gameImg" alt="" src={image.photo} />
+                      <h2 className="gameTitleBackground"></h2>
+                      <h1 className="gameTitle">{image.game_name}</h1>
+                      <img
+                        className="optionIcon"
+                        onClick={() => { this.props.games.setShowOption(index) }}
+                        alt=""
+                        src={optionicon}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           }
-          
+
           <button
             className='showMoreGamesB'
             onClick={this.getGames}
