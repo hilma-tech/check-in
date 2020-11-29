@@ -51,4 +51,4 @@ function App() {
   );
 }
 
-export default provide(nameProvider, errorMsgProvider,gamesProvider, AuthProvider)(App);
+export default provide(nameProvider, errorMsgProvider,gamesProvider, [AuthProvider, {accessTokenCookie: 'klool'}])(App);

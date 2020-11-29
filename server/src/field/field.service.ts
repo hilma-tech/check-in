@@ -25,7 +25,7 @@ export class FieldService {
       
       field.default_value = JSON.stringify(fieldObject.value);
       field.order = fieldObject.order;
-      field.game_id = req.id;
+      field.game = req.id;
 
       let res = await this.fieldRepository.save(field);
     });

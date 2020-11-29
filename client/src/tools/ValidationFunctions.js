@@ -15,7 +15,7 @@ export function userNameValidation(userName) {
 
 //Check validation for names (teacher, student, school or games)
 export function nameValidation(name) {
-    if (name.length === 0) {
+    if (name.length === 0 || name === null) {
         return '** חייב להכניס שדה זה **'
     } else if (name.length > 30) {
         return '** שדה זה לא יכול להכיל יותר מ-30 תווים **'

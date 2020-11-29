@@ -12,6 +12,11 @@ export class GameService {
     private gameRepository: Repository<Game>,
   ) {}
 
+  async returnGames(skip, amount) {
+  return await this.gameRepository.find({ relations: ["fields"] ,
+  skip: skip,
+  take: amount});
+  }
   
   async saveGame(@Body() req: GameDto) {
     let game = new Game();
