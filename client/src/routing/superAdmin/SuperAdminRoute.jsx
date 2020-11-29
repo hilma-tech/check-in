@@ -12,7 +12,7 @@ import AddStudent from "../../pages/superAdmin/AddStudent.jsx";
 import EditGame from "../../pages/superAdmin/EditGame.jsx";
 import AddSchool from "../../pages/superAdmin/AddSchool.jsx";
 import SignIn from "../../pages/SignIn.jsx";
-import { PrivateRoute, AuthProvider } from "@hilma/auth";
+import { PrivateRoute } from "@hilma/auth";
 import ErrorPage from "../../pages/404Page.jsx";
 import "../../style/superAdmin/disp.scss"
 
@@ -21,9 +21,7 @@ class SuperAdminRoute extends React.Component {
   
     return (
       <>
-        
           <Menu  />
-        
         <Switch>
           <PrivateRoute
             path="/superAdmin/games"

@@ -21,10 +21,20 @@ export class FieldService {
       let field = new Field();
       field.field_name = fieldObject.name;
       field.type = fieldObject.selection;
-
-      field.default_value = JSON.stringify(fieldObject.value);
+      if (
+        fieldObject.selection === "image" ||
+        fieldObject.selection === "text"
+      ) {
+        field.default_value = fieldObject.value[0].value;
+      } else {
+        field.default_value = JSON.stringify(
+          fieldObject.value.map(valField => {
+            return valField.value;
+          })
+        );
+      }
       field.order = fieldObject.order;
-      field.game_id = req.id;
+      field.game = req.id;
 
       let res = await this.fieldRepository.save(field);
     });

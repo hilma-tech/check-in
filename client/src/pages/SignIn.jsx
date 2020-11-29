@@ -119,7 +119,7 @@ class SignIn extends Component {
           <button className="signInButton" onClick={this.saveData}>
             כניסה
           </button>
-          <h3 className="forgot">שכחת סיסמא?</h3>
+          {/* <h3 className="forgot">שכחת סיסמא?</h3> */}
           <img alt="hilma logo" className="hilmalogo" src={hilmaicon} />
         </div>
       </div>

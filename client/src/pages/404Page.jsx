@@ -14,7 +14,7 @@ class ErrorPage extends Component {
     return (
       <>
           <div className={dispo ? "disp" : "nodisp"}><Menu/></div>
-        <div dir="ltr" className="ErrorBackground withMenu">
+        <div dir="ltr" className="ErrorBackground ErrorWithMenu">
           <h1 className="ErrorNum">4 0 4</h1>
           <h3 className="ErrorExplanation">Page not found.</h3>
           <img className="hilmalogo" src={hilmaicon} />

@@ -19,12 +19,11 @@ export class Field {
   @Column({ type: 'enum', enum: GameType, default: GameType.TEXT })
   type: GameType;
 
-  @Column({type: 'int', default: 3})
-  game_id: any;
+  // @Column({type: 'int', default: 2})
+  // game_id: any;
 
-  @ManyToOne(type => Game)
-  @JoinColumn({ name: 'game_id', referencedColumnName: 'id' })
-  game: Game;
+  @ManyToOne(type => Game, game => game.id)
+  game: number;
 
   @Column({ type: 'varchar', length: 150 })
   default_value: string;

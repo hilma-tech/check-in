@@ -4,6 +4,7 @@ import addicon from "../../img/addicon.svg";
 import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import "../../style/superAdmin/add_game_style.scss";
 import "../../style/superAdmin/form_style.scss";
+import "../../style/with_menu.scss";
 import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.jsx";
 import { withRouter } from "react-router-dom";
 import {
@@ -44,7 +45,7 @@ class AddGame extends Component {
       gameName: "",
       gameDescription: "",
       gameRequirements: "",
-      image: {id: 0, value: false},
+      image: { id: 0, value: false },
     };
     this.imageUploader = props.filesUploader;
   }
@@ -79,7 +80,7 @@ class AddGame extends Component {
       this.setState((prevState) => {
         prevState.fieldsData[fieldId].value[0] = {
           id: imgId,
-          value: inputImage
+          value: inputImage,
         };
         return { fieldsData: prevState.fieldsData };
       });
@@ -129,27 +130,25 @@ class AddGame extends Component {
   };
 
   updateImage = (value) => {
-    this.setState({ image: {id: value.id, value: value.link}});
+    this.setState({ image: { id: value.id, value: value.link } });
   };
 
-  
-
   setUpValues = () => {
-    let newValue = []
-    let imageUploader ={};
+    let newValue = [];
+    let imageUploader = {};
     let currFieldData = [];
     this.state.fieldsData.map((obj) => {
       // obj.value.map(valueObj => {newValue.push(valueObj.value);})
       let newField = {
         name: obj.name,
         selection: obj.selection,
-        value:  obj.value,
+        value: obj.value,
         order: obj.order,
       };
-      currFieldData.push(newField)
+      currFieldData.push(newField);
     });
-    return currFieldData
-  }
+    return currFieldData;
+  };
   addGameDb = async () => {
     let currGameInfo = {
       game_name: this.state.gameName,
@@ -158,8 +157,8 @@ class AddGame extends Component {
       requirements: this.state.gameRequirements,
       suspended: false,
     };
-      const fieldData = this.setUpValues();
-    
+    const fieldData = this.setUpValues();
+
     try {
       const response = await this.imageUploader.post(
         "/api/game/save",
@@ -186,7 +185,6 @@ class AddGame extends Component {
   // }
 
   saveData = () => {
-
     let allOK = true;
     let fieldOK = true;
     let ValidationFunctions = [
@@ -271,107 +269,109 @@ class AddGame extends Component {
   render() {
     return (
       <>
-        <div className="pageContainer">
-          <WhiteBar />
-          <form className="formData">
-            <label className="labelFields">שם המשחק:</label>
-            <p
-              className="error"
-              style={{ display: this.state.gameNameErrorMessages.toShow }}
-            >
-              {this.state.gameNameErrorMessages.mess}
-            </p>
-            <input
-              className="inputFields"
-              id="gameName"
-              type="text"
-              placeholder="הכנס את שם המשחק..."
-              onBlur={this.updateBasicInfo}
-            />
-            <label className="labelFields">תיאור המשחק:</label>
-            <p
-              className="error"
-              style={{
-                display: this.state.gameDescriptionErrorMessages.toShow,
-              }}
-            >
-              {this.state.gameDescriptionErrorMessages.mess}
-            </p>
-            <TextareaAutosize
-              className="inputFields"
-              placeholder="הכנס תיאור משחק..."
-              id="gameDescription"
-              onChange={this.updateBasicInfo}
-            />
-            <label className="labelFields">דרישות המשחק:</label>
-            <p
-              className="error"
-              style={{
-                display: this.state.gameRequirementsErrorMessages.toShow,
-              }}
-            >
-              {this.state.gameRequirementsErrorMessages.mess}
-            </p>
-            <TextareaAutosize
-              className="inputFields"
-              placeholder="הכנס דרישות משחק..."
-              id="gameRequirements"
-              onBlur={this.updateBasicInfo}
-            />
-            <label className="labelFields">תמונה:</label>
-            <div className="borderCameraIcon marginTop">
-              <label className="borderCameraIconLabel">
-                <FileInput
-                  id="image"
-                  className="hiddenInput"
-                  type="image"
-                  onChange={this.updateImage}
-                  filesUploader={this.imageUploader}
-                />
-                <img
-                  alt="photograph icon"
-                  className={
-                    typeof this.state.image.value === "string"
-                      ? "chosenImg"
-                      : "cameraIcon"
-                  }
-                  src={this.state.image.value || "/icons/camera-icon.svg"}
-                />
-              </label>
+        <div className="withMenu">
+          <div className="pageContainer">
+            <WhiteBar />
+            <form className="formData">
+              <label className="labelFields">שם המשחק:</label>
+              <p
+                className="error"
+                style={{ display: this.state.gameNameErrorMessages.toShow }}
+              >
+                {this.state.gameNameErrorMessages.mess}
+              </p>
+              <input
+                className="inputFields"
+                id="gameName"
+                type="text"
+                placeholder="הכנס את שם המשחק..."
+                onBlur={this.updateBasicInfo}
+              />
+              <label className="labelFields">תיאור המשחק:</label>
+              <p
+                className="error"
+                style={{
+                  display: this.state.gameDescriptionErrorMessages.toShow,
+                }}
+              >
+                {this.state.gameDescriptionErrorMessages.mess}
+              </p>
+              <TextareaAutosize
+                className="inputFields"
+                placeholder="הכנס תיאור משחק..."
+                id="gameDescription"
+                onChange={this.updateBasicInfo}
+              />
+              <label className="labelFields">דרישות המשחק:</label>
+              <p
+                className="error"
+                style={{
+                  display: this.state.gameRequirementsErrorMessages.toShow,
+                }}
+              >
+                {this.state.gameRequirementsErrorMessages.mess}
+              </p>
+              <TextareaAutosize
+                className="inputFields"
+                placeholder="הכנס דרישות משחק..."
+                id="gameRequirements"
+                onBlur={this.updateBasicInfo}
+              />
+              <label className="labelFields">תמונה:</label>
+              <div className="borderCameraIcon marginTop">
+                <label className="borderCameraIconLabel">
+                  <FileInput
+                    id="image"
+                    className="hiddenInput"
+                    type="image"
+                    onChange={this.updateImage}
+                    filesUploader={this.imageUploader}
+                  />
+                  <img
+                    alt="photograph icon"
+                    className={
+                      typeof this.state.image.value === "string"
+                        ? "chosenImg"
+                        : "cameraIcon"
+                    }
+                    src={this.state.image.value || "/icons/camera-icon.svg"}
+                  />
+                </label>
+              </div>
+              <label className="labelFields">שדות:</label>
+              {/* game fields */}
+              {this.state.fieldsData.map((fieldObj) => {
+                return (
+                  <GameFieldSelection
+                    key={fieldObj.id}
+                    fieldId={fieldObj.id}
+                    name={this.saveFieldName}
+                    selection={this.saveSelection}
+                    fieldValue={this.saveFieldValue}
+                    removal={this.triggerRemoval}
+                    originalName={fieldObj.name}
+                    originalValue={fieldObj.value}
+                    errorMessage={fieldObj.errorMessage}
+                    changeInputType={fieldObj.selection}
+                    ourImageUploader={this.imageUploader}
+                  />
+                );
+              })}
+              {/* add fields */}
+              <div className="addSomethingNew" onClick={this.addNewFieldData}>
+                <img className="addIcon" src={addicon} alt="add icon"></img>
+                <p className="addTitle">הוסף שדה</p>
+              </div>
+            </form>
+            <div className="spacerFromSaveButton"></div>
+            <div className="saveButtonBackground">
+              <button className="saveButton" onClick={this.saveData}>
+                שמור
+              </button>
             </div>
-            <label className="labelFields">שדות:</label>
-            {/* game fields */}
-            {this.state.fieldsData.map((fieldObj) => {
-              return (
-                <GameFieldSelection
-                  key={fieldObj.id}
-                  fieldId={fieldObj.id}
-                  name={this.saveFieldName}
-                  selection={this.saveSelection}
-                  fieldValue={this.saveFieldValue}
-                  removal={this.triggerRemoval}
-                  originalName={fieldObj.name}
-                  originalValue={fieldObj.value}
-                  errorMessage={fieldObj.errorMessage}
-                  changeInputType={fieldObj.selection}
-                  ourImageUploader={this.imageUploader}
-                />
-              );
-            })}
-            {/* add fields */}
-            <div className="addSomethingNew" onClick={this.addNewFieldData}>
-              <img className="addIcon" src={addicon} alt="add icon"></img>
-              <p className="addTitle">הוסף שדה</p>
-            </div>
-          </form>
-          <div className="spacerFromSaveButton"></div>
-          <div className="saveButtonBackground">
-            <button className="saveButton" onClick={this.saveData}>
-              שמור
-            </button>
           </div>
+          <PopUpError />
         </div>
-        <PopUpError />
       </>
     );
   }

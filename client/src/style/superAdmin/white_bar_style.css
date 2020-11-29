@@ -20,7 +20,7 @@
   display: inline-block;
   margin: 0px;
   margin-left: 6vw;
-  margin-right: 6vw;
+  margin-right: 2vw;
   font-size: 3vh;
   align-self: center;
   font-weight: 100;
@@ -51,4 +51,5 @@
   background-size: 100% 100%;
   background-repeat: no-repeat;
   margin-left: 0;
+  margin-right: 6vw;
 }

@@ -17,8 +17,9 @@ import {
   FilesType,
   ImageService
 } from "@hilma/fileshandler-typeorm";
+import { Field } from "../field/field.entity";
 import { UseJwtAuth } from "@hilma/auth-nest";
-import { async } from "rxjs";
+import { createConnection, getConnection } from "typeorm";
 
 @Controller("api/game")
 export class GameController {
@@ -28,11 +29,16 @@ export class GameController {
     private readonly imageService: ImageService
   ) {}
 
+  @Get("/gameToFields")
+  async getGameFields() {
+    return await this.gameService.returnGames(0, 50);
+  }
+
   @UseJwtAuth("superAdmin")
   @Post("/save")
   @UseFilesHandler()
   async saveGame(@UploadedFiles() files: FilesType, @Body() req: any) {
-    let imgPath = await this.imageService.save(files, req.game.photo.id);
+    let imgPath = await this.imageService.save(files, req.game.image.id);
     req.game.image = imgPath;
 
     req.field.forEach(async (img, index) => {
