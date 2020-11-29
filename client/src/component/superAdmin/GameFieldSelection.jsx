@@ -168,8 +168,8 @@ class GameFieldSelection extends Component {
               }
             />
             {/* field for user interaction */}
-
-            {this.fieldCreator()}</form>
+              <div>
+            {this.fieldCreator()}</div></form>
         </div>
       </div>
     );
