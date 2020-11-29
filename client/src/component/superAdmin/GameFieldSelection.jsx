@@ -145,7 +145,7 @@ class GameFieldSelection extends Component {
             src="/icons/delete.svg"
           />
 
-          <form className='fieldSelection'>
+          <div className='fieldSelection'>
             {/* name of field */}
             <input
               className="fieldSelectionInput"
@@ -169,7 +169,7 @@ class GameFieldSelection extends Component {
             />
             {/* field for user interaction */}
 
-            {this.fieldCreator()}</form>
+            {this.fieldCreator()}</div>
         </div>
       </div>
     );
