@@ -1,0 +1,31 @@
+@import './fonts/fonts.scss';
+@import '../App.scss';
+
+.ErrorNum {
+    margin: 0vh;
+    padding-top: 9vh;
+    font-family: Dana_Yad;
+    font-size: 20vh;
+    color: white;
+}
+
+.ErrorWithMenu {
+    margin-top: 12vh;
+}
+
+.ErrorExplanation {
+    font-family: Assistant;
+    font-size: 5vh;
+    color: white;
+}
+
+.ErrorBackground {
+    width: 100vw;
+    height: 88vh;
+    background-color: rgb(0, 79, 143);
+}
+
+.hilmalogo {
+    padding-top: 8vh;
+    height: 9vh;
+  }

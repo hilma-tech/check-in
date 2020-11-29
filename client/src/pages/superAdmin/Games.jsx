@@ -114,7 +114,7 @@ class Games extends Component {
                       >
                         <PopUp onClickEditGame={this.onClickEditGame} />
                       </Fade>
-                      <img className="gameImg" alt="" src={image.photo} />
+                      <img className="gameImg" alt="" src={image.image} />
                       <h2 className="gameTitleBackground"></h2>
                       <h1 className="gameTitle">{image.game_name}</h1>
                       <img

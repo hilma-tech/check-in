@@ -12,13 +12,18 @@ export class GameService {
     private gameRepository: Repository<Game>,
   ) {}
 
+  async returnGames(skip, amount) {
+  return await this.gameRepository.find({ relations: ["fields"] ,
+  skip: skip,
+  take: amount});
+  }
   
   async saveGame(@Body() req: GameDto) {
     let game = new Game();
     game.game_name = req.game_name;
     game.description = req.description;
     game.requirements = req.requirements;
-    game.photo = req.photo;
+    game.image = req.image;
     game.suspended = false;
     let res = await this.gameRepository.save(game);
     return res;
