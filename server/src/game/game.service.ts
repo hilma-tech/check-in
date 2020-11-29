@@ -1,18 +1,17 @@
-import { assignMetadata, Body, Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Game } from './game.entity';
-import { GameDto } from './game.dto';
-import { UseJwtAuth } from '@hilma/auth-nest';
+import { assignMetadata, Body, Injectable } from "@nestjs/common";
+import { Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Game } from "./game.entity";
+import { GameDto } from "./game.dto";
+import { UseJwtAuth } from "@hilma/auth-nest";
 
 @Injectable()
 export class GameService {
   constructor(
     @InjectRepository(Game)
-    private gameRepository: Repository<Game>,
+    private gameRepository: Repository<Game>
   ) {}
 
-  
   async saveGame(@Body() req: GameDto) {
     let game = new Game();
     game.game_name = req.game_name;
@@ -24,14 +23,13 @@ export class GameService {
     return res;
   }
 
-  
   async getGamesInfo(@Body() skipON: any) {
     let numGames = await this.gameRepository.count();
     let haveMoreGames = numGames > skipON.gamesLength + 50 ? true : false;
     let gamesInfo = await this.gameRepository.find({
       where: [{ suspended: false }],
       skip: skipON.gamesLength,
-      take: 50,
+      take: 50
     });
     return { gamesInfo: gamesInfo, haveMoreGames: haveMoreGames };
   }
