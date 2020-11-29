@@ -1,10 +1,12 @@
 #active {
   color: #043163;
   display: inline;
+  margin-right: 6vw;
 }
 
 #suspended {
   color: #043163;
+  margin-right: 6vw;
 }
 
 .navbar {
@@ -20,14 +22,14 @@
   display: inline-block;
   margin: 0px;
   margin-left: 6vw;
-  margin-right: 6vw;
+  margin-right: 2vw;
   font-size: 3vh;
   align-self: center;
-  font-weight: 100;
+  color: #043163;
 }
 
 .bold {
-  font-weight: bold;
+  font-weight: 800;
 }
 
 .sticky {
@@ -51,4 +53,5 @@
   background-size: 100% 100%;
   background-repeat: no-repeat;
   margin-left: 0;
+  margin-right: 6vw;
 }
