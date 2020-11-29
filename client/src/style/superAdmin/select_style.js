@@ -1,11 +1,12 @@
 export default function SelectStyle() {
   const customStyles = {
     menu: (provided) => ({
-      ...provided,
+      // ...provided,
       borderBottom: "1px solid  rgba(255, 255, 255, 0)",
       padding: 5,
       color: "#043163",
       backgroundColor: "rgba(243, 243, 243, 1)",
+      marginTop: "0.5vh"
     }),
 
     control: (_) => ({
