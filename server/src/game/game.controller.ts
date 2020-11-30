@@ -10,7 +10,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { GameService } from './game.service';
-
+import {GameSaveReq, GetGameSkip} from './game.dtos'
 import { FieldService } from 'src/field/field.service';
 import {
   UseFilesHandler,
@@ -30,18 +30,20 @@ export class GameController {
     private readonly imageService: ImageService,
   ) {}
 
-  @Get('/gameToFields')
-  async getGameFields() {
-    return await this.gameService.returnGames(0, 50)
+  // @Get('/gameToFields')
+  // async getGameFields() {
+  //   return await this.gameService.returnGames(0, 50)
     
-  }
+  // }
 
   @UseJwtAuth('superAdmin')
   @Post('/save')
   @UseFilesHandler()
-  async saveGame(@UploadedFiles() files: FilesType, @Body() req: any) {
+  async saveGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
+    
+    
     let imgPath = await this.imageService.save(files, req.game.image.id);
-    req.game.image = imgPath;
+    req.game.image.value = imgPath;
 
     req.field.forEach(async (img, index) => {
       if ('image' === img.selection) {
@@ -56,7 +58,9 @@ export class GameController {
 
   @UseJwtAuth('superAdmin')
   @Post('/getGames')
-  getGames(@Body() skipON: any) {
+  getGames(@Body() skipON: GetGameSkip) {
+    
+    
     return this.gameService.getGamesInfo(skipON);
   }
 }

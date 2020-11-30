@@ -159,6 +159,7 @@ class AddGame extends Component {
     };
     const fieldData = this.setUpValues();
 
+    
     try {
       const response = await this.imageUploader.post(
         "/api/game/save",
@@ -192,7 +193,6 @@ class AddGame extends Component {
       { name: "gameDescription", func: mustInputValidation, errMsg: "" },
       { name: "gameRequirements", func: mustInputValidation, errMsg: "" },
     ];
-
     ValidationFunctions.forEach((validationData) => {
       validationData.errMsg = validationData.func(
         this.state[validationData.name]
@@ -261,8 +261,6 @@ class AddGame extends Component {
             }
           });
         }
-      } else {
-        console.log("bitc", fields.selection);
       }
     });
     return isOk;

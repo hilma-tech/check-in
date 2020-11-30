@@ -1,10 +1,9 @@
 import { UseJwtAuth } from '@hilma/auth-nest';
 import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Interface } from 'readline';
 import { Game } from 'src/game/game.entity';
 import { Repository } from 'typeorm';
-import { FieldDto } from './field.dto';
+import { SaveFieldDto } from './field.dtos';
 import { Field } from './field.entity';
 
 @Injectable()
@@ -17,7 +16,7 @@ export class FieldService {
   ) {}
 
  
-  async saveField(@Body() req: any) {
+  async saveField(@Body() req: SaveFieldDto) {
     req.data.map(async fieldObject => {  
       let field = new Field();
       field.field_name = fieldObject.name;
@@ -34,8 +33,8 @@ export class FieldService {
     });
   }
 
-  async getGamefields(@Body() gameId: any) {
-      let res = await this.fieldRepository.find({where:{game_id: gameId.id}})
-      return res;
-  }
+  // async getGamefields(@Body() gameId: any) {
+  //     let res = await this.fieldRepository.find({where:{game_id: gameId}})
+  //     return res;
+  // }
 }
