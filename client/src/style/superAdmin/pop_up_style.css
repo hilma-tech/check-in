@@ -1,10 +1,24 @@
-.popUp {
+/* .popUp {
     position: absolute;
     display: flex;
     flex-direction: column;
     background-color: white;
     border-radius: 10%;
     height: 8.5vw;
+    width: 7.8vw;
+    margin: 0px;
+    margin-right: 10vw;
+    margin-top: 1vw;
+    z-index: 80;
+} */
+
+.popUp {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 20px;
+    height: fit-content;
     width: 7.8vw;
     margin: 0px;
     margin-right: 10vw;
