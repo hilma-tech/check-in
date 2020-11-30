@@ -12,9 +12,20 @@ export class GameService {
   ) {}
 
   async returnGames(skip, amount) {
-  return await this.gameRepository.find({ relations: ["fields"] ,
-  skip: skip,
-  take: amount});
+    let games = (await this.gameRepository.find({ relations: ["fields"] ,
+    skip: skip,
+    take: amount}))
+    console.log(games[40].fields);
+
+    // games.forEach((gameData)=> {
+    //   gameData.fields = gameData.fields.map((gameField)=>{
+
+    //   })
+    // })
+    
+  // return await this.gameRepository.find({ relations: ["fields"] ,
+  // skip: skip,
+  // take: amount});
   }
   
   async saveGame(@Body() req: Game) {

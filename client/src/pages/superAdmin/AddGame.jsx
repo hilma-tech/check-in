@@ -342,10 +342,10 @@ class AddGame extends Component {
               </div>
               <label className="labelFields">שדות:</label>
               {/* game fields */}
-              {this.state.fieldsData.map((fieldObj) => {
+              {this.state.fieldsData.map((fieldObj, index) => {
                 return (
                   <GameFieldSelection
-                    key={fieldObj.id}
+                    key={index}
                     fieldId={fieldObj.id}
                     name={this.saveFieldName}
                     selection={this.saveSelection}
