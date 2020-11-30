@@ -1,7 +1,7 @@
 import React from "react";
 import { Component } from "react";
 import "../style/sign_in.css";
-import hilmaicon from "../img/hilmawhite.svg";
+import hilmaicon from "../img/hilmaIcon.svg";
 import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
 import { nameContext } from "../stores/name.store";
