@@ -10,9 +10,9 @@ class LoadingPage extends React.Component {
             // <img src='/icons/loading.gif' alt='loading...'></img>
             <div className="grid">
                 {
-                    arr.map(() => {
+                    arr.map((num) => {
                         return (
-                            <div className="imageContainerLoading loading item3">
+                            <div key={num} className="imageContainerLoading loading item3">
                                 <h2 className="gameTitleBackgroundLoading"></h2>
                                 <img
                                     className="optionIcon"

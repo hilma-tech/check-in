@@ -2,10 +2,7 @@ import {
   UserService,
   UseLocalAuth,
   RequestUser,
-  UserModule,
-  User,
   Role,
-  UseJwtAuth,
 } from '@hilma/auth-nest';
 import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { SuperAdmin } from './super-admin.entity';

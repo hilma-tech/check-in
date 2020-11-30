@@ -60,13 +60,14 @@ class GameFieldSelection extends Component {
       // mapping to put in the right values
       return (
         <label className='gridFieldInputs'>
-            {sixArray.map((inputId) => {
+            {sixArray.map((inputId, index) => {
               let input = this.props.originalValue.filter(
                 (valueArray) => valueArray.id === inputId
               );
               if (input[0]) {
                 return (
-                  <input
+                  <input 
+                    key={index}
                     defaultValue={input[0].value}
                     onBlur={this.sendFieldValue}
                     className="fieldSelectionInput"
@@ -77,6 +78,7 @@ class GameFieldSelection extends Component {
               } else {
                 return (
                   <input
+                  key={index}
                     onBlur={this.sendFieldValue}
                     className="fieldSelectionInput"
                     type="text"
