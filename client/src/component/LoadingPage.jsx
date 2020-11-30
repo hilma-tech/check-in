@@ -8,7 +8,7 @@ class LoadingPage extends React.Component {
         return (
             //#626262
             // <img src='/icons/loading.gif' alt='loading...'></img>
-            <div className="grid">
+            <div className="grid" style={{overflowX: 'hidden'}}>
                 {
                     arr.map((num) => {
                         return (
