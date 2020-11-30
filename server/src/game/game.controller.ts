@@ -41,9 +41,12 @@ export class GameController {
   @UseFilesHandler()
   async saveGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
     
-    
-    let imgPath = await this.imageService.save(files, req.game.image.id);
-    req.game.image.value = imgPath;
+    if(req.game.image.value){
+      let imgPath = await this.imageService.save(files, req.game.image.id);
+      req.game.image.value = imgPath;
+    } else {
+      req.game.image.value = "/image/4ChRJFZXXPjV7vhxCfCuftu6UobT4cnk.jpg";
+    }
 
     req.field.forEach(async (img, index) => {
       if ('image' === img.selection) {

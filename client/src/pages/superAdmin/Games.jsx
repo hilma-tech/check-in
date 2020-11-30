@@ -118,7 +118,7 @@ class Games extends Component {
                       </Fade>
                       <img className="gameImg" alt="" src={image.image} />
                       <h2 className="gameTitleBackground"></h2>
-                      <h1 className="gameTitle">{image.game_name}</h1>
+                      <h1 className="gameTitle">{image.game_name.length > 15 ? image.game_name.slice(0, 15) + '...': image.game_name}</h1>
                       <img
                         className="optionIcon"
                         onClick={() => { this.props.games.setShowOption(index) }}
