@@ -28,7 +28,7 @@ export class GameController {
     private gameService: GameService,
     private fieldService: FieldService,
     private readonly imageService: ImageService,
-  ) { this.gameService.returnGames(1, 50)}
+  ) {}
 
   @Get('/gameToFields')
   async getGameFields() {
