@@ -26,9 +26,6 @@ export class Field {
   @Column({ type: 'enum', enum: GameType, default: GameType.TEXT })
   type: string;
 
-  // @Column({type: 'int', default: 2})
-  // game_id: any;
-
   @ManyToOne(type => Game, game => game.id)
   game: number;
 

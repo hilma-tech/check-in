@@ -9,6 +9,7 @@ import PopUp from "../../component/superAdmin/GamePopUpMenu.jsx";
 import Fade from "@material-ui/core/Fade";
 import { errorMsgContext } from "../../stores/error.store";
 import { gamesContext } from "../../stores/games.store";
+import { chosenGameEditContext } from "../../stores/chosenGameEdit.store";
 import { observer } from "mobx-react"
 import { withContext } from '@hilma/tools';
 import LoadingPage from '../../component/LoadingPage.jsx'
@@ -44,7 +45,8 @@ class Games extends Component {
   };
 
   //TEMPORARILY COMMENTED OUT, WILL BE RETURN UPON PROPER ROUTING
-  onClickEditGame = () => {
+  onClickEditGame = (gameId) => {
+    this.props.chosenGameEditContext.setgameId(gameId)
     this.props.history.push(this.props.location.pathname + 'Edit');
   };
 
@@ -112,7 +114,7 @@ class Games extends Component {
                         mountOnEnter
                         unmountOnExit
                       >
-                        <PopUp onClickEditGame={this.onClickEditGame} />
+                        <PopUp onClickEditGame={this.onClickEditGame} gameId={image.id} />
                       </Fade>
                       <img className="gameImg" alt="" src={image.image} />
                       <h2 className="gameTitleBackground"></h2>
@@ -144,7 +146,8 @@ class Games extends Component {
 
 const mapContextToProps = {
   errorMsg: errorMsgContext,
-  games: gamesContext
+  games: gamesContext,
+  chosenGameEditContext: chosenGameEditContext
 }
 
 

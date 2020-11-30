@@ -34,7 +34,7 @@ export class FieldService {
   }
 
   // async getGamefields(@Body() gameId: any) {
-  //     let res = await this.fieldRepository.find({where:{game_id: gameId}})
+  //     let res = await this.fieldRepository.find({where:{game: gameId}})
   //     return res;
   // }
 }

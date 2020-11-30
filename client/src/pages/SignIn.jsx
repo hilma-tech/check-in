@@ -7,6 +7,8 @@ import { withContext } from "@hilma/tools";
 import { nameContext } from "../stores/name.store";
 import { errorMsgContext } from "../stores/error.store";
 import { observer } from "mobx-react";
+import { IsAuthenticatedContext } from '@hilma/auth';
+
 const axios = require("axios").default;
 
 class SignIn extends Component {
@@ -20,6 +22,13 @@ class SignIn extends Component {
         { toShow: "none", mess: "" },
       ],
     };
+  }
+
+  componentDidMount=() => {
+    let isAuthed = this.props.isAuthenticated
+  if (isAuthed === true) {
+    this.props.history.push("/superAdmin/games")
+  }
   }
 
   updateUser = (props) => {
@@ -76,12 +85,7 @@ class SignIn extends Component {
     //   // }
     // });
   };
-  //EXPERIMENTATION
-  // preventBack = () => {
-  //   { window.history.forward(); }
-  //   setTimeout(this.preventBack(), 0);
-  //   // window.onunload = function () { null };
-  // }
+  
 
   render() {
     // this.preventBack()
@@ -130,6 +134,7 @@ class SignIn extends Component {
 const mapContextToProps = {
   name: nameContext,
   errorMsg: errorMsgContext,
+  isAuthenticated: IsAuthenticatedContext
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(SignIn)));

@@ -12,27 +12,32 @@ export class GameService {
     private gameRepository: Repository<Game>,
   ) { }
 
-  async returnGames(skip, amount) {
+  async returnGames(skip, amount, gameId) {
+    
     let temp = (await this.gameRepository.find({
       relations: ["fields"],
       skip: skip,
-      take: amount
+      take: amount,
+      where: {id : gameId.id}
     }))
     let games: any
     games = [...temp]
-    for (let fieldI = 0; fieldI < games.length; fieldI++) {
-      for (let fieldF = 0; fieldF < games[fieldI].fields.length; fieldF++) {
-        if (games[fieldI].fields[fieldF].type === 'image' || games[fieldI].fields[fieldF].type === 'text') {
-          games[fieldI].fields[fieldF].value = [{ id: 0, value: games[fieldI].fields[fieldF].default_value }]
+    for (let i = 0; i < games.length; i++) {
+      for (let j = 0; j < games[i].fields.length; j++) {
+        if (games[i].fields[j].type === 'image' || games[i].fields[j].type === 'text') {
+          games[i].fields[j].value = [{ id: 0, value: games[i].fields[j].default_value }]
         }
         else {
-          games[fieldI].fields[fieldF].value = (JSON.parse(games[fieldI].fields[fieldF].default_value).map((value, index) => {
+          games[i].fields[j].value = (JSON.parse(games[i].fields[j].default_value).map((value, index) => {
             return { id: index, value: value }
           }))
         }
+        games[i].fields[j].name = games[i].fields[j].field_name
+        games[i].fields[j].selection = games[i].fields[j].type
       }
     }
-    return games
+    
+    return games[0]
   }
   
   async saveGame(@Body() req: GameSaveDto) {
@@ -54,6 +59,7 @@ export class GameService {
       where: [{ suspended: false }],
       skip: skipON.gamesLength,
       take: 50,
+      select: ['id', 'game_name', 'image']
     });
     return { gamesInfo: gamesInfo, haveMoreGames: haveMoreGames };
   }

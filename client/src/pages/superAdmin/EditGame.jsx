@@ -6,10 +6,19 @@ import "../../style/superAdmin/form_style.scss";
 import addicon from "../../img/addicon.svg";
 import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.jsx";
 import { withRouter } from "react-router-dom";
-import { mustInputValidation, nameValidation } from '../../tools/ValidationFunctions'
+import {
+  mustInputValidation,
+  nameValidation,
+} from "../../tools/ValidationFunctions";
 import { errorMsgContext } from "../../stores/error.store";
-import { observer } from "mobx-react"
-import { withContext } from '@hilma/tools';
+import { chosenGameEditContext } from "../../stores/chosenGameEdit.store";
+import { observer } from "mobx-react";
+import { withContext } from "@hilma/tools";
+import {
+  FilesUploader,
+  FileInput,
+  withFiles,
+} from "@hilma/fileshandler-client";
 
 const axios = require("axios").default;
 
@@ -21,34 +30,42 @@ class EditGame extends Component {
       gameNameErrorMessages: { toShow: "none", mess: "" },
       gameDescriptionErrorMessages: { toShow: "none", mess: "" },
       gameRequirementsErrorMessages: { toShow: "none", mess: "" },
-      fieldsData: [
-      ],
-      gameName: "עננים",
-      gameDescription: "הרבה והמון",
-      gameRequirements: "טובות ורעות",
+      fieldsData: [],
       image: "Screenshot from 2020-10-13 13-12-59.png",
     };
   }
 
-  componentDidMount = async ()=>{
-    try{
-      const { data } = await axios.post("/api/field/getGameField", { id: 69 });
-      let tempFieldsData = []
-      data.map((fieldData) => {
-        let val = JSON.parse(fieldData.default_value)
-        tempFieldsData.push({
-            id: fieldData.id,
-            name: fieldData.field_name,
-            selection: fieldData.type,
-            value: val,
-            errorMessage: { toShow: "none", mess: "" },
-        })
-      })
-      this.setState({fieldsData: tempFieldsData})
-    }catch (error){
-      this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת.');
+  componentDidMount = async () => {
+    try {
+      // const { data1 } = await axios.post("/api/field/getGameField", { id: 69 });
+      const { data } = await axios.post("/api/game/gameToFields", {id:this.props.chosenGameEditContext.gameId});
+      // let tempFieldsData = [];
+      // data.map((fieldData) => {
+      //   let val = JSON.parse(fieldData.default_value);
+      //   tempFieldsData.push({
+      //     id: fieldData.id,
+      //     name: fieldData.field_name,
+      //     selection: fieldData.type,
+      //     value: val,
+      //     errorMessage: { toShow: "none", mess: "" },
+      //   });
+      // });
+      if (!data.game_name){
+        this.props.history.push('/superAdmin/games')
+      }
+      this.setState({
+        fieldsData: data.fields,
+        gameName: data.game_name,
+        gameDescription: data.description,
+        gameRequirements: data.requirements,
+        image: data.image
+      });
+    } catch (error) {
+      this.props.errorMsg.setErrorMsg(
+        "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
+      );
     }
-  }
+  };
 
   saveFieldName = (fieldName, fieldId) => {
     this.state.fieldsData.filter(
@@ -129,37 +146,49 @@ class EditGame extends Component {
     this.setState({ [props.target.id]: props.target.value });
   };
 
-  saveData = () => {
-    let allOK = true;
-    let fieldOK = true;
-    let ValidationFunctions = [{ name: 'gameName', func: nameValidation, errMsg: '' },
-    { name: 'gameDescription', func: mustInputValidation, errMsg: '' },
-    { name: 'gameRequirements', func: mustInputValidation, errMsg: '' }]
+  // saveData = () => {
+  //   let allOK = true;
+  //   let fieldOK = true;
+  //   let ValidationFunctions = [
+  //     { name: "gameName", func: nameValidation, errMsg: "" },
+  //     { name: "gameDescription", func: mustInputValidation, errMsg: "" },
+  //     { name: "gameRequirements", func: mustInputValidation, errMsg: "" },
+  //   ];
 
-    ValidationFunctions.forEach((validationData) => {
-      validationData.errMsg = validationData.func(this.state[validationData.name])
-      if (validationData.errMsg.length !== 0) {
-        allOK = false;
-        this.setState((prevState) => {
-          prevState[(validationData.name + 'ErrorMessages')].toShow = "block";
-          prevState[(validationData.name + 'ErrorMessages')].mess = validationData.errMsg;
-          return { errorMessages: prevState[(validationData.name + 'ErrorMessages')] };
-        });
-      } else {
-        this.setState((prevState) => {
-          prevState[(validationData.name + 'ErrorMessages')] = { toShow: "none", mess: "" };
-          return { errorMessages: prevState[(validationData.name + 'ErrorMessages')] };
-        });
-      }
-    })
+  //   ValidationFunctions.forEach((validationData) => {
+  //     validationData.errMsg = validationData.func(
+  //       this.state[validationData.name]
+  //     );
+  //     if (validationData.errMsg.length !== 0) {
+  //       allOK = false;
+  //       this.setState((prevState) => {
+  //         prevState[validationData.name + "ErrorMessages"].toShow = "block";
+  //         prevState[validationData.name + "ErrorMessages"].mess =
+  //           validationData.errMsg;
+  //         return {
+  //           errorMessages: prevState[validationData.name + "ErrorMessages"],
+  //         };
+  //       });
+  //     } else {
+  //       this.setState((prevState) => {
+  //         prevState[validationData.name + "ErrorMessages"] = {
+  //           toShow: "none",
+  //           mess: "",
+  //         };
+  //         return {
+  //           errorMessages: prevState[validationData.name + "ErrorMessages"],
+  //         };
+  //       });
+  //     }
+  //   });
 
-    fieldOK = this.validateFields();
+  //   fieldOK = this.validateFields();
 
-    //after all the validetion we need to send the data to sql
-    if (allOK && fieldOK) {
-      this.props.history.goBack(); // after saving go back
-    }
-  };
+  //   //after all the validetion we need to send the data to sql
+  //   if (allOK && fieldOK) {
+  //     this.props.history.goBack(); // after saving go back
+  //   }
+  // };
 
   validateFields = () => {
     let errMess = "";
@@ -201,81 +230,87 @@ class EditGame extends Component {
   render() {
     return (
       <>
-        <div className="pageContainer">
-          <WhiteBar />
-          <form className='formData'>
-            <label className='labelFields'>
-              שם המשחק:
-              </label>
-            <p
-              className="error"
-              style={{ display: this.state.gameNameErrorMessages.toShow }}
-            >
-              {this.state.gameNameErrorMessages.mess}
-            </p>
-            <input
-              className='inputFields'
-              id="gameName"
-              type="text"
-              placeholder="הכנס את שם המשחק..."
-              onBlur={this.updateBasicInfo}
-              onChange={this.validation}
-              defaultValue={this.state.gameName}
-            />
-            <label className='labelFields'>
-              תיאור המשחק:
-              </label>
-            <p
-              className="error"
-              style={{
-                display: this.state.gameDescriptionErrorMessages.toShow,
-              }}
-            >
-              {this.state.gameDescriptionErrorMessages.mess}
-            </p>
-            <TextareaAutosize
-              className='inputFields'
-              placeholder="הכנס תיאור משחק..."
-              id="gameDescription"
-              onBlur={this.updateBasicInfo}
-              defaultValue={this.state.gameDescription}
-            />
-            <label className='labelFields'>
-              דרישות המשחק:
-              </label>
-            <p
-              className="error"
-              style={{
-                display: this.state.gameRequirementsErrorMessages.toShow,
-              }}
-            >
-              {this.state.gameRequirementsErrorMessages.mess}
-            </p>
-            <TextareaAutosize
-              className='inputFields'
-              placeholder="הכנס דרישות משחק..."
-              id="gameRequirements"
-              onBlur={this.updateBasicInfo}
-              defaultValue={this.state.gameRequirements}
-            />
-            <label className='labelFields'>
-              תמונה:
-              </label>
-            <input
-              className='hiddenInput'
-              type="file"
-              id="image"
-              onChange={this.updateBasicInfo}
-            />
-            <div className='borderCameraIcon'>
-              <img className='cameraIcon' src="/icons/camera-icon.svg" />
-            </div>
-            <label className='labelFields'>
-              שדות:
-              </label>
-            {/* game fields */}
-            {this.state.fieldsData.map((fieldObj) => {
-              return (
+        <div className="withMenu">
+          <div className="pageContainer">
+            <WhiteBar />
+            <form className="formData">
+              <label className="labelFields">שם המשחק:</label>
+              <p
+                className="error"
+                style={{ display: this.state.gameNameErrorMessages.toShow }}
+              >
+                {this.state.gameNameErrorMessages.mess}
+              </p>
+              <input
+                className="inputFields"
+                id="gameName"
+                type="text"
+                placeholder="הכנס את שם המשחק..."
+                onBlur={this.updateBasicInfo}
+                onChange={this.validation}
+                defaultValue={this.state.gameName}
+                readOnly={true}
+              />
+              <label className="labelFields">תיאור המשחק:</label>
+              <p
+                className="error"
+                style={{
+                  display: this.state.gameDescriptionErrorMessages.toShow,
+                }}
+              >
+                {this.state.gameDescriptionErrorMessages.mess}
+              </p>
+              <TextareaAutosize
+                className="inputFields"
+                placeholder="הכנס תיאור משחק..."
+                id="gameDescription"
+                onBlur={this.updateBasicInfo}
+                defaultValue={this.state.gameDescription}
+                readOnly={true}
+              />
+              <label className="labelFields">דרישות המשחק:</label>
+              <p
+                className="error"
+                style={{
+                  display: this.state.gameRequirementsErrorMessages.toShow,
+                }}
+              >
+                {this.state.gameRequirementsErrorMessages.mess}
+              </p>
+              <TextareaAutosize
+                className="inputFields"
+                placeholder="הכנס דרישות משחק..."
+                id="gameRequirements"
+                onBlur={this.updateBasicInfo}
+                defaultValue={this.state.gameRequirements}
+                readOnly={true}
+              />
+              <label className="labelFields">תמונה:</label>
+              <div className="borderCameraIcon marginTop">
+                <label className="borderCameraIconLabel">
+                  {/* <FileInput
+                  id="image"
+                  className="hiddenInput"
+                  type="image"
+                  onChange={this.updateBasicInfo}
+                  filesUploader={this.imageUploader}
+                /> */}
+                  <img
+                    alt="photograph icon"
+                    className={
+                      typeof this.state.image === "string"
+                        ? "chosenImg"
+                        : "cameraIcon"
+                    }
+                    src={this.state.image || "/icons/camera-icon.svg"}
+                  />
+                </label>
+              </div>
+
+              <label className="labelFields">שדות:</label>
+              {/* game fields */}
+              {this.state.fieldsData.map((fieldObj) => {
+                return (
                   <GameFieldSelection
                     key={fieldObj.id}
                     fieldId={fieldObj.id}
@@ -288,25 +323,24 @@ class EditGame extends Component {
                     originalValue={fieldObj.value}
                     errorMessage={fieldObj.errorMessage}
                     imagePath={this.state.fieldsData[0].value[0].value}
+                    reading={true}
                   />
-              );
-            })}
-            {/* add fields */}
-            <div
-              className='addSomethingNew'
-              onClick={this.addNewFieldData}
-            >
-              <img className='addIcon' src={addicon}></img>
-              <p className='addTitle'>הוסף שדה</p>
-            </div>
-          </form>
+                );
+              })}
+              {/* add fields */}
+              {/* <div className="addSomethingNew" onClick={this.addNewFieldData}>
+                <img className="addIcon" src={addicon}></img>
+                <p className="addTitle">הוסף שדה</p>
+              </div> */}
+            </form>
 
-          <div className='spacerFromSaveButton'></div>
-          <div className='saveButtonBackground'>
-            <button className="saveButton" onClick={this.saveData}>
-              שמור
-            </button>
-          </div>
+            {/* <div className="spacerFromSaveButton"></div>
+            <div className="saveButtonBackground">
+              <button className="saveButton" onClick={this.saveData}>
+                שמור
+              </button>
+            </div>*/}
+          </div> 
         </div>
       </>
     );
@@ -315,6 +349,7 @@ class EditGame extends Component {
 
 const mapContextToProps = {
   errorMsg: errorMsgContext,
-}
+  chosenGameEditContext: chosenGameEditContext
+};
 
 export default withContext(mapContextToProps)(withRouter(observer(EditGame)));

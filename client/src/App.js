@@ -14,6 +14,7 @@ import Draft from "./dumps/draft.jsx";
 import { nameProvider } from "./stores/name.store";
 import { errorMsgProvider } from "./stores/error.store";
 import { gamesProvider } from "./stores/games.store";
+import { chosenGameEditProvider } from "./stores/chosenGameEdit.store";
 import { AuthProvider, PrivateRoute } from "@hilma/auth";
 import Menu from "./component/superAdmin/Menu";
 import PopUpError from './component/popUpError'
@@ -51,4 +52,4 @@ function App() {
   );
 }
 
-export default provide([nameProvider, {}], [errorMsgProvider, {}],[gamesProvider, {}], [AuthProvider, {accessTokenCookie: 'klool'}])(App);
+export default provide([nameProvider, {}], [errorMsgProvider, {}],[gamesProvider, {}],[chosenGameEditProvider,{}], [AuthProvider, {accessTokenCookie: 'klool'}])(App);
