@@ -30,11 +30,11 @@ export class GameController {
     private readonly imageService: ImageService,
   ) {}
 
-  // @Get('/gameToFields')
-  // async getGameFields() {
-  //   return await this.gameService.returnGames(0, 50)
+  @Post('/gameToFields')
+  async getGameFields(@Body() ide) {
+    return await this.gameService.returnGames(0, 50, ide)
     
-  // }
+  }
 
   @UseJwtAuth('superAdmin')
   @Post('/save')
@@ -59,7 +59,6 @@ export class GameController {
   @UseJwtAuth('superAdmin')
   @Post('/getGames')
   getGames(@Body() skipON: GetGameSkip) {
-    
     
     return this.gameService.getGamesInfo(skipON);
   }

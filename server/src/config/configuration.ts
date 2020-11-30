@@ -16,7 +16,8 @@ export default () => ({
         'SuperAdminRoute',
         'SAdminAddGames',
         'SAdminGames',
-        'SAdminGamesList'
+        'SAdminGamesList',
+        "SAdminEditGames"
       ],
       defaultHomePage: 'SAdminGames',
     },

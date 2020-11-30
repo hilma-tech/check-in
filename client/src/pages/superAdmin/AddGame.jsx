@@ -354,6 +354,7 @@ class AddGame extends Component {
                     errorMessage={fieldObj.errorMessage}
                     changeInputType={fieldObj.selection}
                     ourImageUploader={this.imageUploader}
+                    reading={false}
                   />
                 );
               })}
