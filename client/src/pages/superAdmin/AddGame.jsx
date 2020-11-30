@@ -261,6 +261,8 @@ class AddGame extends Component {
             }
           });
         }
+      } else {
+        console.log("bitc", fields.selection);
       }
     });
     return isOk;

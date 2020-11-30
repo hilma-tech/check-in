@@ -1,5 +1,6 @@
 import { Field } from "src/field/field.entity";
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { IsDefined, IsString } from "class-validator";
 
 @Entity()
 export class Game {
@@ -12,6 +13,8 @@ export class Game {
   )
   fields: Field[];
 
+  @IsDefined()
+  @IsString()
   @Column({ type: "varchar", length: 50, unique: true })
   game_name: string;
 

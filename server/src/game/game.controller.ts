@@ -10,7 +10,7 @@ import {
   Put
 } from "@nestjs/common";
 import { GameService } from "./game.service";
-import { GameDto } from "./game.dto";
+
 import { FieldService } from "src/field/field.service";
 import {
   UseFilesHandler,

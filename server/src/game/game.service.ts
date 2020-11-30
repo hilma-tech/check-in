@@ -2,7 +2,6 @@ import { assignMetadata, Body, Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Game } from "./game.entity";
-import { GameDto } from "./game.dto";
 import { UseJwtAuth } from "@hilma/auth-nest";
 
 @Injectable()
@@ -20,7 +19,7 @@ export class GameService {
     });
   }
 
-  async saveGame(@Body() req: GameDto) {
+  async saveGame(@Body() req: Game) {
     let game = new Game();
     game.game_name = req.game_name;
     game.description = req.description;
