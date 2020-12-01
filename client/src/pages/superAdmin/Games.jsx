@@ -13,6 +13,7 @@ import { chosenGameEditContext } from "../../stores/chosenGameEdit.store";
 import { observer } from "mobx-react"
 import { withContext } from '@hilma/tools';
 import LoadingPage from '../../component/LoadingPage.jsx'
+import { IsAuthenticatedContext } from '@hilma/auth';
 
 const axios = require("axios").default;
 
@@ -132,7 +133,7 @@ class Games extends Component {
             </div>
           }
 
-          {this.props.games.startGetGames ? <img style={{width: '8vw'}} src='/icons/loading.gif' alt='loading...'></img> :
+          {this.props.games.startGetGames ? <img style={{ width: '8vw' }} src='/icons/loading.gif' alt='loading...'></img> :
             <button
               className='showMoreGamesB'
               onClick={this.getGames}
@@ -148,7 +149,8 @@ class Games extends Component {
 const mapContextToProps = {
   errorMsg: errorMsgContext,
   games: gamesContext,
-  chosenGameEditContext: chosenGameEditContext
+  chosenGameEditContext: chosenGameEditContext,
+  isAuthenticated: IsAuthenticatedContext
 }
 
 
