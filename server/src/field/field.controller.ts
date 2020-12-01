@@ -14,9 +14,9 @@ export class FieldController {
   //     return this.fieldService.getGamefields(gameId.id)
   // }
 
-  @UseJwtAuth("superAdmin")
-  @Post("/getGameField")
-  getGameField(@Body() gameId: any) {
-    return this.fieldService.getGamefields(gameId);
-  }
+  // @UseJwtAuth("superAdmin")
+  // @Post("/getGameField")
+  // getGameField(@Body() gameId: any) {
+  //   return this.fieldService.getGamefields(gameId);
+  // }
 }
