@@ -7,8 +7,6 @@ import {
   Length,
 } from 'class-validator';
 
-
-
 export class DataValueDto {
   @IsDefined()
   @IsNumber()
