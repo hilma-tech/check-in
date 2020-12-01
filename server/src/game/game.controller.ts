@@ -31,8 +31,8 @@ export class GameController {
   ) {}
 
   @Post('/gameToFields')
-  async getGameFields(@Body() ide) {
-    return await this.gameService.returnGames(0, 50, ide)
+  async getGameFields(@Body() game_id) {
+    return await this.gameService.returnGames(0, 50, game_id)
     
   }
 
