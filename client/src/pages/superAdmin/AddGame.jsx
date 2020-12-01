@@ -173,7 +173,11 @@ class AddGame extends Component {
       }
       this.props.history.goBack(); // after saving go back
     } catch (error) {
-      this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסה לבדוק את החיבור");
+      if (error.status === 500){
+        this.props.errorMsg.setErrorMsg("אסור שני משחקים עם אותו שם. נסה לשנות את השם.");
+      } else {
+        this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסה לבדוק את החיבור");
+      }
     }
   };
   // addGameFieldsDb= async (gameId) => {
@@ -232,6 +236,7 @@ class AddGame extends Component {
   validateFields = () => {
     let errMess = "";
     let isOk = true;
+    let countFullFields = 0;
     this.state.fieldsData.map((fields, index) => {
       if (fields.selection !== "image") {
         errMess = nameValidation(fields.name);
@@ -254,6 +259,7 @@ class AddGame extends Component {
               isOk = false;
             } else {
               this.setState((prevState) => {
+                countFullFields++;
                 prevState.fieldsData[index].errorMessage.toShow = "none";
                 prevState.fieldsData[index].errorMessage.mess = "";
                 return { fieldsData: prevState.fieldsData };
@@ -264,20 +270,20 @@ class AddGame extends Component {
       } else {
         console.log("bitc", fields.selection);
         errMess = mustInputValidation(fields.value[0].value);
-            if (errMess.length !== 0) {
-              this.setState((prevState) => {
-                prevState.fieldsData[index].errorMessage.toShow = "block";
-                prevState.fieldsData[index].errorMessage.mess = errMess;
-                return { fieldsData: prevState.fieldsData };
-              });
-              isOk = false;
-            } else {
-              this.setState((prevState) => {
-                prevState.fieldsData[index].errorMessage.toShow = "none";
-                prevState.fieldsData[index].errorMessage.mess = "";
-                return { fieldsData: prevState.fieldsData };
-              });
-            }
+        if (errMess.length !== 0) {
+          this.setState((prevState) => {
+            prevState.fieldsData[index].errorMessage.toShow = "block";
+            prevState.fieldsData[index].errorMessage.mess = errMess;
+            return { fieldsData: prevState.fieldsData };
+          });
+          isOk = false;
+        } else {
+          this.setState((prevState) => {
+            prevState.fieldsData[index].errorMessage.toShow = "none";
+            prevState.fieldsData[index].errorMessage.mess = "";
+            return { fieldsData: prevState.fieldsData };
+          });
+        }
       }
     });
     return isOk;

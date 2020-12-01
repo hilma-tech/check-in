@@ -25,7 +25,6 @@ class Games {
         try{
             this.startGetGames = true;
             const { data } = await axios.get("/api/game/getGames",{ params:{ gamesLength: this.gamesList.length }});
-            console.log(data);
             this.gamesList = this.gamesList.concat(data.gamesInfo)
             this.haveMoreGames = data.haveMoreGames;
             this.successGettingGames = true;

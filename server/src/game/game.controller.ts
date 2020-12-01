@@ -60,6 +60,8 @@ export class GameController {
       }
     });
     let game = await this.gameService.saveGame(req.game);
+    console.log(req.field);
+    
     await this.fieldService.saveField({ data: req.field, id: game.id });
     return game;
   }

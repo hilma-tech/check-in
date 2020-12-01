@@ -50,9 +50,9 @@ class EditGame extends Component {
       //     errorMessage: { toShow: "none", mess: "" },
       //   });
       // });
-      // if (!data.game_name){
-      //   this.props.history.push('/superAdmin/games')
-      // }
+      if (data.game_name === null || data.game_name === undefined){
+        this.props.history.push('/superAdmin/games')
+      }
       this.setState({
         fieldsData: data.fields,
         gameName: data.game_name,
@@ -67,22 +67,22 @@ class EditGame extends Component {
     }
   };
 
-  // saveFieldName = (fieldName, fieldId) => {
+  saveFieldName = (fieldName, fieldId) => {
   //   this.state.fieldsData.filter(
   //     (field) => field.id === fieldId
   //   )[0].name = fieldName;
-  // };
+  };
 
-  // saveSelection = (selection, fieldId) => {
+  saveSelection = (selection, fieldId) => {
   //   this.setState((prevState) => {
   //     prevState.fieldsData.filter(
   //       (field) => field.id === fieldId
   //     )[0].selection = selection;
   //     return { fieldsData: prevState.fieldsData };
   //   });
-  // };
+  };
 
-  // saveFieldValue = (fieldValue, fieldId, inputId, inputFiles) => {
+  saveFieldValue = (fieldValue, fieldId, inputId, inputFiles) => {
   //   //only relevant to choice/multi-choice
   //   if (inputId) {
   //     this.setState((prevState) => {
@@ -113,7 +113,7 @@ class EditGame extends Component {
   //       return { fieldsData: prevState.fieldsData };
   //     });
   //   }
-  // };
+  };
 
   // addNewFieldData = () => {
   //   this.setState((prevState) => {
@@ -134,13 +134,13 @@ class EditGame extends Component {
   //   });
   // };
 
-  // triggerRemoval = (fieldId) => {
+  triggerRemoval = (fieldId) => {
   //   this.setState((prevState) => {
   //     let oldFieldArray = prevState.fieldsData;
   //     let newArray = oldFieldArray.filter((field) => field.id !== fieldId);
   //     return { fieldsData: newArray };
   //   });
-  // };
+  };
 
   // updateBasicInfo = (props) => {
   //   this.setState({ [props.target.id]: props.target.value });
@@ -309,7 +309,8 @@ class EditGame extends Component {
 
               <label className="labelFields">שדות:</label>
               {/* game fields */}
-              {this.state.fieldsData.map((fieldObj) => {
+              {this.state.fieldsData.length === 0 ? <p style={{marginTop: '0'}}>אין שדות למשחק זה</p> :
+               this.state.fieldsData.map((fieldObj) => {
                 return (
                   <GameFieldSelection
                     key={fieldObj.id}
