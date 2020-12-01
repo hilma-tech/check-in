@@ -40,7 +40,7 @@ export class Game {
   @Column({
     type: 'varchar',
     length: 1000,
-    default: 'blob:http://localhost:3000/8e4f6604-fef9-4190-bdd3-3628c7bc572c',
+    default: "/image/amxgDI5RSECPDVwftEI6GWGXFsvTMsXt.jpg",
   })
   image: string;
 

@@ -19,7 +19,8 @@ class PopUpError extends React.Component {
                 style: {
                   backgroundColor: 'white',
                   boxShadow: '0px 3px 6px #00000029',
-                  border: '1px solid #707070'
+                  border: '1px solid #707070',
+                  padding: '5px'
                 },
               }}
         open={this.props.errorMsg.showMsg}
@@ -30,7 +31,7 @@ class PopUpError extends React.Component {
 
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <p style={{color: 'black', fontWeight: 'bold'}}>{this.props.errorMsg.errorMsg}</p>
+            <p style={{color: 'black', fontWeight: 'bold', fontSize: '1.5vw'}}>{this.props.errorMsg.errorMsg}</p>
           </DialogContentText>
         </DialogContent>
         <DialogActions>

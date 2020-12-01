@@ -20,7 +20,7 @@ export default function SelectStyle() {
       const opacity = state.isDisabled ? 0.5 : 1;
       const transition = "opacity 300ms";
 
-      return { ...provided, opacity, transition, color: "#043163" };
+      return { ...provided, opacity, transition, color: "#043163" ,fontSize: '1.5vw'};
     },
     option: (styles) => {
       return {
@@ -33,6 +33,7 @@ export default function SelectStyle() {
       return {
         ...styles,
         color: "#043163",
+        fontSize: '1.5vw'
       };
     },
     dropdownIndicator: (styles) => {

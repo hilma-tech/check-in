@@ -67,84 +67,84 @@ class EditGame extends Component {
     }
   };
 
-  saveFieldName = (fieldName, fieldId) => {
-    this.state.fieldsData.filter(
-      (field) => field.id === fieldId
-    )[0].name = fieldName;
-  };
+  // saveFieldName = (fieldName, fieldId) => {
+  //   this.state.fieldsData.filter(
+  //     (field) => field.id === fieldId
+  //   )[0].name = fieldName;
+  // };
 
-  saveSelection = (selection, fieldId) => {
-    this.setState((prevState) => {
-      prevState.fieldsData.filter(
-        (field) => field.id === fieldId
-      )[0].selection = selection;
-      return { fieldsData: prevState.fieldsData };
-    });
-  };
+  // saveSelection = (selection, fieldId) => {
+  //   this.setState((prevState) => {
+  //     prevState.fieldsData.filter(
+  //       (field) => field.id === fieldId
+  //     )[0].selection = selection;
+  //     return { fieldsData: prevState.fieldsData };
+  //   });
+  // };
 
-  saveFieldValue = (fieldValue, fieldId, inputId, inputFiles) => {
-    //only relevant to choice/multi-choice
-    if (inputId) {
-      this.setState((prevState) => {
-        prevState.fieldsData[fieldId].value[inputId] = {
-          id: inputId,
-          value: fieldValue,
-        };
-        return { fieldsData: prevState.fieldsData };
-      });
-      //only relevant to image
-    } else if (inputFiles) {
-      this.setState((prevState) => {
-        prevState.fieldsData[fieldId].value = [];
-        prevState.fieldsData[fieldId].value[0] = {
-          id: 0,
-          value: inputFiles[0].name,
-        };
-        return { fieldsData: prevState.fieldsData };
-      });
-      //only relevant to text
-    } else {
-      this.setState((prevState) => {
-        prevState.fieldsData[fieldId].value = [];
-        prevState.fieldsData[fieldId].value[0] = {
-          id: 0,
-          value: fieldValue,
-        };
-        return { fieldsData: prevState.fieldsData };
-      });
-    }
-  };
+  // saveFieldValue = (fieldValue, fieldId, inputId, inputFiles) => {
+  //   //only relevant to choice/multi-choice
+  //   if (inputId) {
+  //     this.setState((prevState) => {
+  //       prevState.fieldsData[fieldId].value[inputId] = {
+  //         id: inputId,
+  //         value: fieldValue,
+  //       };
+  //       return { fieldsData: prevState.fieldsData };
+  //     });
+  //     //only relevant to image
+  //   } else if (inputFiles) {
+  //     this.setState((prevState) => {
+  //       prevState.fieldsData[fieldId].value = [];
+  //       prevState.fieldsData[fieldId].value[0] = {
+  //         id: 0,
+  //         value: inputFiles[0].name,
+  //       };
+  //       return { fieldsData: prevState.fieldsData };
+  //     });
+  //     //only relevant to text
+  //   } else {
+  //     this.setState((prevState) => {
+  //       prevState.fieldsData[fieldId].value = [];
+  //       prevState.fieldsData[fieldId].value[0] = {
+  //         id: 0,
+  //         value: fieldValue,
+  //       };
+  //       return { fieldsData: prevState.fieldsData };
+  //     });
+  //   }
+  // };
 
-  addNewFieldData = () => {
-    this.setState((prevState) => {
-      let tempFieldsData = [...prevState.fieldsData];
-      tempFieldsData.push({
-        id: this.state.newKey,
-        name: "",
-        selection: "text",
-        value: [{ id: 0, value: "" }],
-        errorMessage: { toShow: "none", mess: "" },
-      });
-      return { fieldsData: tempFieldsData };
-    });
-    this.setState((prevState) => {
-      let nextKey = prevState.newKey;
-      nextKey = nextKey + 1;
-      return { newKey: nextKey };
-    });
-  };
+  // addNewFieldData = () => {
+  //   this.setState((prevState) => {
+  //     let tempFieldsData = [...prevState.fieldsData];
+  //     tempFieldsData.push({
+  //       id: this.state.newKey,
+  //       name: "",
+  //       selection: "text",
+  //       value: [{ id: 0, value: "" }],
+  //       errorMessage: { toShow: "none", mess: "" },
+  //     });
+  //     return { fieldsData: tempFieldsData };
+  //   });
+  //   this.setState((prevState) => {
+  //     let nextKey = prevState.newKey;
+  //     nextKey = nextKey + 1;
+  //     return { newKey: nextKey };
+  //   });
+  // };
 
-  triggerRemoval = (fieldId) => {
-    this.setState((prevState) => {
-      let oldFieldArray = prevState.fieldsData;
-      let newArray = oldFieldArray.filter((field) => field.id !== fieldId);
-      return { fieldsData: newArray };
-    });
-  };
+  // triggerRemoval = (fieldId) => {
+  //   this.setState((prevState) => {
+  //     let oldFieldArray = prevState.fieldsData;
+  //     let newArray = oldFieldArray.filter((field) => field.id !== fieldId);
+  //     return { fieldsData: newArray };
+  //   });
+  // };
 
-  updateBasicInfo = (props) => {
-    this.setState({ [props.target.id]: props.target.value });
-  };
+  // updateBasicInfo = (props) => {
+  //   this.setState({ [props.target.id]: props.target.value });
+  // };
 
   // saveData = () => {
   //   let allOK = true;
@@ -190,42 +190,42 @@ class EditGame extends Component {
   //   }
   // };
 
-  validateFields = () => {
-    let errMess = "";
-    let isOk = true;
-    this.state.fieldsData.map((fields, index) => {
-      if (fields.selection !== "image") {
-        errMess = nameValidation(fields.name);
-        if (errMess.length !== 0) {
-          this.setState((prevState) => {
-            prevState.fieldsData[index].errorMessage.toShow = "block";
-            prevState.fieldsData[index].errorMessage.mess = errMess;
-            return { fieldsData: prevState.fieldsData };
-          });
-          isOk = false;
-        } else {
-          fields.value.map((field) => {
-            errMess = mustInputValidation(field.value);
-            if (errMess.length !== 0) {
-              this.setState((prevState) => {
-                prevState.fieldsData[index].errorMessage.toShow = "block";
-                prevState.fieldsData[index].errorMessage.mess = errMess;
-                return { fieldsData: prevState.fieldsData };
-              });
-              isOk = false;
-            } else {
-              this.setState((prevState) => {
-                prevState.fieldsData[index].errorMessage.toShow = "none";
-                prevState.fieldsData[index].errorMessage.mess = "";
-                return { fieldsData: prevState.fieldsData };
-              });
-            }
-          });
-        }
-      }
-    });
-    return isOk;
-  };
+  // validateFields = () => {
+  //   let errMess = "";
+  //   let isOk = true;
+  //   this.state.fieldsData.map((fields, index) => {
+  //     if (fields.selection !== "image") {
+  //       errMess = nameValidation(fields.name);
+  //       if (errMess.length !== 0) {
+  //         this.setState((prevState) => {
+  //           prevState.fieldsData[index].errorMessage.toShow = "block";
+  //           prevState.fieldsData[index].errorMessage.mess = errMess;
+  //           return { fieldsData: prevState.fieldsData };
+  //         });
+  //         isOk = false;
+  //       } else {
+  //         fields.value.map((field) => {
+  //           errMess = mustInputValidation(field.value);
+  //           if (errMess.length !== 0) {
+  //             this.setState((prevState) => {
+  //               prevState.fieldsData[index].errorMessage.toShow = "block";
+  //               prevState.fieldsData[index].errorMessage.mess = errMess;
+  //               return { fieldsData: prevState.fieldsData };
+  //             });
+  //             isOk = false;
+  //           } else {
+  //             this.setState((prevState) => {
+  //               prevState.fieldsData[index].errorMessage.toShow = "none";
+  //               prevState.fieldsData[index].errorMessage.mess = "";
+  //               return { fieldsData: prevState.fieldsData };
+  //             });
+  //           }
+  //         });
+  //       }
+  //     }
+  //   });
+  //   return isOk;
+  // };
 
   render() {
     return (

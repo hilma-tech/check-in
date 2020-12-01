@@ -159,7 +159,6 @@ class AddGame extends Component {
     };
     const fieldData = this.setUpValues();
 
-    
     try {
       const response = await this.imageUploader.post(
         "/api/game/save",
@@ -193,6 +192,7 @@ class AddGame extends Component {
       { name: "gameDescription", func: mustInputValidation, errMsg: "" },
       { name: "gameRequirements", func: mustInputValidation, errMsg: "" },
     ];
+
     ValidationFunctions.forEach((validationData) => {
       validationData.errMsg = validationData.func(
         this.state[validationData.name]
@@ -261,6 +261,23 @@ class AddGame extends Component {
             }
           });
         }
+      } else {
+        console.log("bitc", fields.selection);
+        errMess = mustInputValidation(fields.value[0].value);
+            if (errMess.length !== 0) {
+              this.setState((prevState) => {
+                prevState.fieldsData[index].errorMessage.toShow = "block";
+                prevState.fieldsData[index].errorMessage.mess = errMess;
+                return { fieldsData: prevState.fieldsData };
+              });
+              isOk = false;
+            } else {
+              this.setState((prevState) => {
+                prevState.fieldsData[index].errorMessage.toShow = "none";
+                prevState.fieldsData[index].errorMessage.mess = "";
+                return { fieldsData: prevState.fieldsData };
+              });
+            }
       }
     });
     return isOk;
@@ -354,7 +371,6 @@ class AddGame extends Component {
                     errorMessage={fieldObj.errorMessage}
                     changeInputType={fieldObj.selection}
                     ourImageUploader={this.imageUploader}
-                    reading={false}
                   />
                 );
               })}
