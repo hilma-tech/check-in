@@ -58,7 +58,7 @@ export function passwordValidation(password) {
         return '** סיסמא לא תקינה **'
     } else if (password.trim().length === 0) {
         return '** סיסמא לא תקינה **'
-    } else if ((/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`\s]/).test(password)) {
+    } else if (!(/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
         return '** סיסמא לא תקינה **'
     } else {
         return ''
