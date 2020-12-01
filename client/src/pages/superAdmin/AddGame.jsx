@@ -268,8 +268,7 @@ class AddGame extends Component {
           });
         }
       } else {
-        console.log("bitc", fields.selection);
-        errMess = mustInputValidation(fields.value[0].value);
+        errMess = nameValidation(fields.name);
         if (errMess.length !== 0) {
           this.setState((prevState) => {
             prevState.fieldsData[index].errorMessage.toShow = "block";
@@ -278,11 +277,21 @@ class AddGame extends Component {
           });
           isOk = false;
         } else {
-          this.setState((prevState) => {
-            prevState.fieldsData[index].errorMessage.toShow = "none";
-            prevState.fieldsData[index].errorMessage.mess = "";
-            return { fieldsData: prevState.fieldsData };
-          });
+          errMess = mustInputValidation(fields.value[0].value);
+          if (errMess.length !== 0) {
+            this.setState((prevState) => {
+              prevState.fieldsData[index].errorMessage.toShow = "block";
+              prevState.fieldsData[index].errorMessage.mess = errMess;
+              return { fieldsData: prevState.fieldsData };
+            });
+            isOk = false;
+          } else {
+            this.setState((prevState) => {
+              prevState.fieldsData[index].errorMessage.toShow = "none";
+              prevState.fieldsData[index].errorMessage.mess = "";
+              return { fieldsData: prevState.fieldsData };
+            });
+          }
         }
       }
     });
