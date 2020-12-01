@@ -118,7 +118,7 @@ class Games extends Component {
                       </Fade>
                       <img className="gameImg" alt="" src={image.image} />
                       <h2 className="gameTitleBackground"></h2>
-                      <h1 className="gameTitle">{image.game_name.length > 15 ? image.game_name.slice(0, 15) + '...': image.game_name}</h1>
+                      <h1 className="gameTitle">{image.game_name.length > 15 ? image.game_name.slice(0, 15) + '...' : image.game_name}</h1>
                       <img
                         className="optionIcon"
                         onClick={() => { this.props.games.setShowOption(index) }}
@@ -132,12 +132,13 @@ class Games extends Component {
             </div>
           }
 
-          <button
-            className='showMoreGamesB'
-            onClick={this.getGames}
-            style={{ display: this.props.games.haveMoreGames && !displayLoading ? 'inline-block' : 'none' }}>
-            הצג עוד
-            </button>
+          {this.props.games.startGetGames ? <img style={{width: '8vw'}} src='/icons/loading.gif' alt='loading...'></img> :
+            <button
+              className='showMoreGamesB'
+              onClick={this.getGames}
+              style={{ display: this.props.games.haveMoreGames && !displayLoading ? 'inline-block' : 'none' }}>
+              הצג עוד
+            </button>}
         </div>
       </>
     );

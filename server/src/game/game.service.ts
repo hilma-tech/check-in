@@ -1,4 +1,4 @@
-import { assignMetadata, Body, Injectable } from '@nestjs/common';
+import { assignMetadata, Body, Injectable, Param,Req } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Game } from './game.entity';
@@ -12,12 +12,43 @@ export class GameService {
     private gameRepository: Repository<Game>,
   ) { }
 
-  async returnGames(skip, amount, gameId) {
+  async returnGames(skip, amount) {
     
-    let temp = (await this.gameRepository.find({
+    return (await this.gameRepository.find({
       relations: ["fields"],
       skip: skip,
       take: amount,
+    }))
+  }
+  
+  async saveGame(@Body() req: GameSaveDto) {
+    let game = new Game();
+    game.game_name = req.game_name;
+    game.description = req.description;
+    game.requirements = req.requirements;
+    game.image = req.image.value;
+    game.suspended = false;
+    let res = await this.gameRepository.save(game);
+    return res;
+  }
+
+  
+  async getGamesInfo(@Req() skipON: GetGameSkip) {
+    let numGames = await this.gameRepository.count();    
+    let haveMoreGames = numGames > skipON.gamesLength + 50 ? true : false;
+    let gamesInfo = await this.gameRepository.find({
+      where: [{ suspended: false }],
+      skip: skipON.gamesLength,
+      take: 50,
+      select: ['id', 'game_name', 'image']
+    });
+    return { gamesInfo: gamesInfo, haveMoreGames: haveMoreGames };
+  }
+  
+  async getGameInfo(gameId) {
+      
+    let temp = (await this.gameRepository.find({
+      relations: ["fields"],
       where: {id : gameId.id}
     }))
     let games: any
@@ -39,28 +70,6 @@ export class GameService {
     
     return games[0]
   }
-  
-  async saveGame(@Body() req: GameSaveDto) {
-    let game = new Game();
-    game.game_name = req.game_name;
-    game.description = req.description;
-    game.requirements = req.requirements;
-    game.image = req.image.value;
-    game.suspended = false;
-    let res = await this.gameRepository.save(game);
-    return res;
-  }
-
-  
-  async getGamesInfo(@Body() skipON: GetGameSkip) {
-    let numGames = await this.gameRepository.count();
-    let haveMoreGames = numGames > skipON.gamesLength + 50 ? true : false;
-    let gamesInfo = await this.gameRepository.find({
-      where: [{ suspended: false }],
-      skip: skipON.gamesLength,
-      take: 50,
-      select: ['id', 'game_name', 'image']
-    });
-    return { gamesInfo: gamesInfo, haveMoreGames: haveMoreGames };
-  }
 }
+
+

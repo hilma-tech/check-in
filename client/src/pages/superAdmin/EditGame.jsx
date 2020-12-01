@@ -38,7 +38,7 @@ class EditGame extends Component {
   componentDidMount = async () => {
     try {
       // const { data1 } = await axios.post("/api/field/getGameField", { id: 69 });
-      const { data } = await axios.post("/api/game/gameToFields", {id:this.props.chosenGameEditContext.gameId});
+      const { data } = await axios.get("/api/game/gameGameInfo", {params: {id: this.props.chosenGameEditContext.gameId}});
       // let tempFieldsData = [];
       // data.map((fieldData) => {
       //   let val = JSON.parse(fieldData.default_value);
@@ -50,9 +50,9 @@ class EditGame extends Component {
       //     errorMessage: { toShow: "none", mess: "" },
       //   });
       // });
-      if (!data.game_name){
-        this.props.history.push('/superAdmin/games')
-      }
+      // if (!data.game_name){
+      //   this.props.history.push('/superAdmin/games')
+      // }
       this.setState({
         fieldsData: data.fields,
         gameName: data.game_name,

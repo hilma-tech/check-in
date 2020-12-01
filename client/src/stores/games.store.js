@@ -9,11 +9,13 @@ class Games {
     gamesList = []
     haveMoreGames = true
     successGettingGames = true;
+    startGetGames = false;
     constructor() {
         makeObservable(this, {
             successGettingGames: observable,
             gamesList: observable,
             haveMoreGames: observable,
+            startGetGames: observable,
             setGames: action,
             resetShowOptions: action,
             setShowOption: action,
@@ -21,12 +23,16 @@ class Games {
     }
     setGames = async () => {
         try{
-            const { data } = await axios.post("/api/game/getGames", { gamesLength: this.gamesList.length });
+            this.startGetGames = true;
+            const { data } = await axios.get("/api/game/getGames",{ params:{ gamesLength: this.gamesList.length }});
+            console.log(data);
             this.gamesList = this.gamesList.concat(data.gamesInfo)
             this.haveMoreGames = data.haveMoreGames;
-            this.successGettingGames = true
+            this.successGettingGames = true;
+            this.startGetGames = false;
         }catch (error){
             this.successGettingGames = false
+            this.startGetGames = false;
         }
     }
 

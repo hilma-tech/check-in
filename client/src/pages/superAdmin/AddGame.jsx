@@ -161,7 +161,7 @@ class AddGame extends Component {
 
     try {
       const response = await this.imageUploader.post(
-        "/api/game/save",
+        "/api/game/addGame",
         JSON.stringify({
           game: currGameInfo,
           field: fieldData,
