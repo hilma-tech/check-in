@@ -63,6 +63,9 @@ class AddGame extends Component {
       prevState.fieldsData.filter(
         (field) => field.id === fieldId
       )[0].selection = selection;
+      prevState.fieldsData.filter(
+        (field) => field.id === fieldId
+      )[0].value= [{ id: 0, value: "" }]
       return { fieldsData: prevState.fieldsData };
     });
   };
@@ -71,7 +74,8 @@ class AddGame extends Component {
     //only relevant to choice/multi-choice
     if (inputId) {
       this.setState((prevState) => {
-        prevState.fieldsData[fieldId].value[inputId] = {
+        console.log(prevState.fieldsData[fieldId]);
+         prevState.fieldsData[fieldId].value[inputId] = {
           id: Number(inputId),
           value: fieldValue,
         };
@@ -233,6 +237,7 @@ class AddGame extends Component {
 
     //after all the validetion we need to send the data to sql
     if (allOK && fieldOK) {
+      console.log('need to save');
       //fetch to the server
       this.addGameDb();
     }
