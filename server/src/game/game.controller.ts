@@ -8,6 +8,7 @@ import {
   Req,
   UploadedFiles,
   Put,
+  Param
 } from '@nestjs/common';
 import { GameService } from './game.service';
 import {GameSaveReq, GetGameSkip} from './game.dtos'
@@ -30,24 +31,29 @@ export class GameController {
     private readonly imageService: ImageService,
   ) {}
 
-  @Post('/gameToFields')
-  async getGameFields(@Body() game_id) {
-    return await this.gameService.returnGames(0, 50, game_id)
-    
+  @Get('/gameToFields')
+  async getGameFields() {
+    return await this.gameService.returnGames(0, 50)
+  }
+
+  @Get('/gameGameInfo')
+  async getGameInfo(@Req() ide) {
+    return await this.gameService.getGameInfo(ide.query)
   }
 
   @UseJwtAuth('superAdmin')
-  @Post('/save')
+  @Post('/addGame')
   @UseFilesHandler()
   async saveGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
     console.log('req: ', req.game.image, typeof req.game.image);
     
     if(req.game.image.value){
+      
       let imgPath = await this.imageService.save(files, req.game.image.id);
       req.game.image.value = imgPath;
       
     } else {
-      req.game.image.value = "/image/4ChRJFZXXPjV7vhxCfCuftu6UobT4cnk.jpg";
+      req.game.image.value = "https://site.groupe-psa.com/content/uploads/sites/9/2016/12/white-background-2.jpg";
     }
 
     req.field.forEach(async (img, index) => {
@@ -58,14 +64,15 @@ export class GameController {
     });
 // console.log('req.game.image.value: ', req.game.image.value, typeof req.game.image.value);
     let game = await this.gameService.saveGame(req.game);
+    console.log(req.field);
+    
     await this.fieldService.saveField({ data: req.field, id: game.id });
     return game;
   }
 
   @UseJwtAuth('superAdmin')
-  @Post('/getGames')
-  getGames(@Body() skipON: GetGameSkip) {
-    
-    return this.gameService.getGamesInfo(skipON);
+  @Get('/getGames')
+  getGames(@Req() skipON:any) {
+    return this.gameService.getGamesInfo(skipON.query);
   }
 }

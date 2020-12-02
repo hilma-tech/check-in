@@ -13,19 +13,18 @@ export class FieldService {
     private fieldRepository: Repository<Field>,
     @InjectRepository(Game)
     private gameRepository: Repository<Game>,
-  ) {}
+  ) { }
 
- 
+
   async saveField(@Body() req: SaveFieldDto) {
-    // console.log('req.data[0].value: ', typeof req.data[0].value[0].id, req.data[0].value[0].id);
-    req.data.map(async fieldObject => {  
+    req.data.map(async fieldObject => {
       let field = new Field();
       field.field_name = fieldObject.name;
       field.type = fieldObject.selection;
-      if (fieldObject.selection === 'image' || fieldObject.selection === 'text'){
+      if (fieldObject.selection === 'image' || fieldObject.selection === 'text') {
         field.default_value = fieldObject.value[0].value
       } else {
-        field.default_value = JSON.stringify(fieldObject.value.map((valField) => {return valField.value}));
+        field.default_value = JSON.stringify(fieldObject.value.map((valField) => { return valField === null ? '' : valField.value }));
       }
       field.order = fieldObject.order;
       field.game = req.id;

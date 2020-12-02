@@ -149,12 +149,12 @@ class GameFieldSelection extends Component {
         </p>
         <div className="gameFieldSelection">
           {/* fieldSelection */}
-          <img
+          {this.props.reading? <></> :<img
             alt="remove field icon"
             onClick={this.removeField}
             className="removeFieldIcon"
             src="/icons/delete.svg"
-          />
+          />}
 
           <div className="fieldSelection">
             {/* name of field */}

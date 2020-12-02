@@ -8,6 +8,7 @@ import { nameContext } from "../stores/name.store";
 import { errorMsgContext } from "../stores/error.store";
 import { observer } from "mobx-react";
 import { IsAuthenticatedContext } from '@hilma/auth';
+import {passwordValidation, emailValidation} from '../tools/ValidationFunctions'
 
 const axios = require("axios").default;
 
@@ -43,13 +44,18 @@ class SignIn extends Component {
     let username = this.state.username;
     let password = this.state.password;
     try {
-      const response = await axios.post("/api/super-admin/login", {
-        username: username,
-        password: password,
-      });
-      
-      this.props.history.push("/superAdmin/games");
-      window.location.pathname = "/superAdmin/games"
+      if (emailValidation(username).length === 0 && passwordValidation(password).length === 0){
+        const response = await axios.post("/api/super-admin/login", {
+          username: username,
+          password: password,
+        });
+        
+        this.props.history.push("/superAdmin/games");
+        window.location.pathname = "/superAdmin/games"
+      } else {
+        console.log('xdszs');
+        throw {status: 401}
+      }
     } catch (error) {
       if(error.status === 401){
         this.props.errorMsg.setErrorMsg('שם המשתמש והסיסמא אינם תואמים.');
@@ -92,9 +98,8 @@ class SignIn extends Component {
     return (
       <div className="background" /* onunload="this.preventBack()" */>
         <div className="centeredPage">
-          <h1 className="webName" dir="ltr">
-            CheckIn
-          </h1>
+          <img className="webName" src='/icons/blueCheckIn.svg'>
+          </img>
           <p
             className="error"
             style={{ display: this.state.errorMessages[0].toShow }}

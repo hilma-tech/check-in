@@ -32,6 +32,7 @@ class AddGame extends Component {
       gameNameErrorMessages: { toShow: "none", mess: "" },
       gameDescriptionErrorMessages: { toShow: "none", mess: "" },
       gameRequirementsErrorMessages: { toShow: "none", mess: "" },
+      imageErrorMessages: { toShow: "none", mess: "" },
       fieldsData: [
         {
           id: 0,
@@ -158,7 +159,7 @@ class AddGame extends Component {
     // console.log(fieldData);
     try {
       const response = await this.imageUploader.post(
-        "/api/game/save",
+        "/api/game/addGame",
         JSON.stringify({
           game: currGameInfo,
           field: fieldData,
@@ -170,7 +171,11 @@ class AddGame extends Component {
       }
       this.props.history.goBack(); // after saving go back
     } catch (error) {
-      this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסה לבדוק את החיבור");
+      if (error.status === 500){
+        this.props.errorMsg.setErrorMsg("קיים כבר משחק בשם זה. נסה שם אחר.");
+      } else {
+        this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסה לבדוק את החיבור");
+      }
     }
   };
   // addGameFieldsDb= async (gameId) => {
@@ -216,6 +221,12 @@ class AddGame extends Component {
         });
       }
     });
+    if(!this.state.image.value){
+      allOK = false;
+      this.setState({imageErrorMessages: {toShow: "block",mess: '** חייב להכניס שדה זה **'}});
+    }else {
+      this.setState({imageErrorMessages: {toShow: "none",mess: ""}});
+    }
 
     fieldOK = this.validateFields();
 
@@ -229,6 +240,7 @@ class AddGame extends Component {
   validateFields = () => {
     let errMess = "";
     let isOk = true;
+    let countFullFields = 0;
     this.state.fieldsData.map((fields, index) => {
       if (fields.selection !== "image") {
         errMess = nameValidation(fields.name);
@@ -251,6 +263,7 @@ class AddGame extends Component {
               isOk = false;
             } else {
               this.setState((prevState) => {
+                countFullFields++;
                 prevState.fieldsData[index].errorMessage.toShow = "none";
                 prevState.fieldsData[index].errorMessage.mess = "";
                 return { fieldsData: prevState.fieldsData };
@@ -259,8 +272,7 @@ class AddGame extends Component {
           });
         }
       } else {
-        // console.log("bitc", fields.selection);
-        errMess = mustInputValidation(fields.value[0].value);
+        errMess = nameValidation(fields.name);
         if (errMess.length !== 0) {
           this.setState((prevState) => {
             prevState.fieldsData[index].errorMessage.toShow = "block";
@@ -269,11 +281,21 @@ class AddGame extends Component {
           });
           isOk = false;
         } else {
-          this.setState((prevState) => {
-            prevState.fieldsData[index].errorMessage.toShow = "none";
-            prevState.fieldsData[index].errorMessage.mess = "";
-            return { fieldsData: prevState.fieldsData };
-          });
+          errMess = mustInputValidation(fields.value[0].value);
+          if (errMess.length !== 0) {
+            this.setState((prevState) => {
+              prevState.fieldsData[index].errorMessage.toShow = "block";
+              prevState.fieldsData[index].errorMessage.mess = errMess;
+              return { fieldsData: prevState.fieldsData };
+            });
+            isOk = false;
+          } else {
+            this.setState((prevState) => {
+              prevState.fieldsData[index].errorMessage.toShow = "none";
+              prevState.fieldsData[index].errorMessage.mess = "";
+              return { fieldsData: prevState.fieldsData };
+            });
+          }
         }
       }
     });
@@ -332,6 +354,12 @@ class AddGame extends Component {
                 onBlur={this.updateBasicInfo}
               />
               <label className="labelFields">תמונה:</label>
+              <p
+                className="error"
+                style={{ display: this.state.imageErrorMessages.toShow }}
+              >
+                {this.state.imageErrorMessages.mess}
+              </p>
               <div className="borderCameraIcon marginTop">
                 <label className="borderCameraIconLabel">
                   <FileInput
