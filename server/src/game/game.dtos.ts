@@ -9,15 +9,8 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-export class ImageDto {
-  @IsDefined()
-  @IsNumber()
-  id: number;
-  @IsDefined()
-  value: any; //! CHANGE THIS
-}
 
-export class FieldValueDto {
+export class IdAndValueDto {
   @IsDefined()
   @IsNumber()
   id: number;
@@ -37,8 +30,8 @@ export class GameSaveDto {
   @IsDefined()
   @IsObject()
   @ValidateNested({ each: true })
-  @Type(() => ImageDto)
-  image: ImageDto;
+  @Type(() => IdAndValueDto)
+  image: IdAndValueDto;
   @IsDefined()
   @IsString()
   @Length(1, 260)
@@ -63,8 +56,8 @@ export class FieldArrDto {
   selection: string;
   @IsDefined()
   @ValidateNested({ each: true })
-  @Type(() => FieldValueDto)
-  value: FieldValueDto[];
+  @Type(() => IdAndValueDto)
+  value: IdAndValueDto[];
   @IsDefined()
   @IsNumber()
   order: number;
