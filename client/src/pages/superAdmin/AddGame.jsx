@@ -70,7 +70,7 @@ class AddGame extends Component {
     if (inputId) {
       this.setState((prevState) => {
         prevState.fieldsData[fieldId].value[inputId] = {
-          id: inputId,
+          id: Number(inputId),
           value: fieldValue,
         };
         return { fieldsData: prevState.fieldsData };
@@ -134,11 +134,8 @@ class AddGame extends Component {
   };
 
   setUpValues = () => {
-    let newValue = [];
-    let imageUploader = {};
     let currFieldData = [];
     this.state.fieldsData.map((obj) => {
-      // obj.value.map(valueObj => {newValue.push(valueObj.value);})
       let newField = {
         name: obj.name,
         selection: obj.selection,
@@ -158,7 +155,7 @@ class AddGame extends Component {
       suspended: false,
     };
     const fieldData = this.setUpValues();
-
+    // console.log(fieldData);
     try {
       const response = await this.imageUploader.post(
         "/api/game/save",
@@ -262,22 +259,22 @@ class AddGame extends Component {
           });
         }
       } else {
-        console.log("bitc", fields.selection);
+        // console.log("bitc", fields.selection);
         errMess = mustInputValidation(fields.value[0].value);
-            if (errMess.length !== 0) {
-              this.setState((prevState) => {
-                prevState.fieldsData[index].errorMessage.toShow = "block";
-                prevState.fieldsData[index].errorMessage.mess = errMess;
-                return { fieldsData: prevState.fieldsData };
-              });
-              isOk = false;
-            } else {
-              this.setState((prevState) => {
-                prevState.fieldsData[index].errorMessage.toShow = "none";
-                prevState.fieldsData[index].errorMessage.mess = "";
-                return { fieldsData: prevState.fieldsData };
-              });
-            }
+        if (errMess.length !== 0) {
+          this.setState((prevState) => {
+            prevState.fieldsData[index].errorMessage.toShow = "block";
+            prevState.fieldsData[index].errorMessage.mess = errMess;
+            return { fieldsData: prevState.fieldsData };
+          });
+          isOk = false;
+        } else {
+          this.setState((prevState) => {
+            prevState.fieldsData[index].errorMessage.toShow = "none";
+            prevState.fieldsData[index].errorMessage.mess = "";
+            return { fieldsData: prevState.fieldsData };
+          });
+        }
       }
     });
     return isOk;
