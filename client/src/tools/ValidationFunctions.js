@@ -86,6 +86,8 @@ export function mustInputValidation(input) {
         return '** חייב להכניס שדה זה **'
     } else if (input.trim().length === 0) {
         return  '** חייב להכניס שדה זה **'
+    } else if (input.length > 255) {
+        return '** שדה זה לא יכול להכיל יותר מ-255 תווים **'
     }  else {
         return ''
     }
