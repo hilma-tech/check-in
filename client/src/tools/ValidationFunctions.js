@@ -90,3 +90,17 @@ export function mustInputValidation(input) {
         return ''
     }
 }
+
+//Check validation for fields inputs
+//it's not matter how he field them... 
+export function fieldInputValidation(input) {
+    if (input === null || input.length === 0) {
+        return '** חייב להכניס שדה זה **'
+    } else if (input.trim().length === 0) {
+        return  '** חייב להכניס שדה זה **'
+    }  else if (input.length > 30) {
+        return  '** שדה זה לא יכול להכיל יותר מ-30 תווים **'
+    }  else {
+        return ''
+    }
+}

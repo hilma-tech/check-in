@@ -64,8 +64,6 @@ export class GameController {
     });
 // console.log('req.game.image.value: ', req.game.image.value, typeof req.game.image.value);
     let game = await this.gameService.saveGame(req.game);
-    console.log(req.field);
-    
     await this.fieldService.saveField({ data: req.field, id: game.id });
     return game;
   }

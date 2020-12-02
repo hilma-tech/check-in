@@ -53,7 +53,6 @@ class SignIn extends Component {
         this.props.history.push("/superAdmin/games");
         window.location.pathname = "/superAdmin/games"
       } else {
-        console.log('xdszs');
         throw {status: 401}
       }
     } catch (error) {

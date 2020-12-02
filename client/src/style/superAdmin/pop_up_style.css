@@ -24,6 +24,7 @@
     margin-right: 10vw;
     margin-top: 1vw;
     z-index: 80;
+    border: 1px solid rgb(0, 79, 143);
 }
 
 .popUpOpt {

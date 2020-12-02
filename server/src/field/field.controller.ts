@@ -10,8 +10,6 @@ export class FieldController {
     //   @UseJwtAuth('superAdmin')
     // @Post('/getGameField')
     // getGameField(@Body() gameId: any) {
-    //   console.log(typeof gameId, "ID");
-      
     //     return this.fieldService.getGamefields(gameId.id)
     // }
 
