@@ -1,51 +1,45 @@
 import {
   IsDefined,
-  IsInstance,
   IsNumber,
-  IsPositive,
   IsString,
   Length,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class DataValueDto {
   @IsDefined()
   @IsNumber()
-  @IsPositive()
   id: number;
   @IsDefined()
   @IsString()
+  // @Length(1, 30)
   value: string;
 }
 
 export class FieldDataDto {
   @IsDefined()
   @IsString()
-  @Length(4, 50)
+  @Length(1, 30)
   name: string;
   @IsDefined()
   @IsString()
-  @Length(4, 50)
+  @Length(1, 30)
   selection: string;
   @IsDefined()
-  @IsInstance(DataValueDto)
-  value: [{ id: number; value: string }];
+  @ValidateNested({ each: true })
+  @Type(() => DataValueDto)
+  value: DataValueDto[];
   @IsDefined()
   @IsNumber()
-  @IsPositive()
   order: number;
 }
 
 export class SaveFieldDto {
   @IsDefined()
-  @IsInstance(FieldDataDto)
-  data: [
-    {
-      name: string;
-      selection: string;
-      value: [{ id: number; value: string }];
-      order: number;
-    },
-  ];
+  @ValidateNested({ each: true })
+  @Type(() => FieldDataDto)
+  data: FieldDataDto[];
   @IsDefined()
   @IsNumber()
   id: number;

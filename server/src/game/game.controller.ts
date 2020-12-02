@@ -45,11 +45,13 @@ export class GameController {
   @Post('/addGame')
   @UseFilesHandler()
   async saveGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
+    console.log('req: ', req.game.image, typeof req.game.image);
     
     if(req.game.image.value){
       
       let imgPath = await this.imageService.save(files, req.game.image.id);
       req.game.image.value = imgPath;
+      
     } else {
       req.game.image.value = "https://site.groupe-psa.com/content/uploads/sites/9/2016/12/white-background-2.jpg";
     }
@@ -60,6 +62,7 @@ export class GameController {
         req.field[index].value[0].value = imgPath;
       }
     });
+// console.log('req.game.image.value: ', req.game.image.value, typeof req.game.image.value);
     let game = await this.gameService.saveGame(req.game);
     await this.fieldService.saveField({ data: req.field, id: game.id });
     return game;

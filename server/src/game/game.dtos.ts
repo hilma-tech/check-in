@@ -1,42 +1,51 @@
 import {
-  IsArray,
   IsBoolean,
   IsDefined,
-  IsInstance,
   IsNumber,
-  IsPositive,
+  IsObject,
   IsString,
   Length,
   Matches,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 export class ImageDto {
   @IsDefined()
   @IsNumber()
-  @IsPositive()
   id: number;
-  value: any;
+  @IsDefined()
+  value: any; //! CHANGE THIS
+}
+
+export class FieldValueDto {
+  @IsDefined()
+  @IsNumber()
+  id: number;
+  @IsDefined()
+  @IsString()
+  // @Length(1, 30)
+  value: string;
 }
 
 export class GameSaveDto {
   @IsDefined()
   @IsString()
-  @Length(4, 20)
-  @Matches(/[\u0590-\u05FF]{4,20}/)
+  @Length(1, 30)
+  @Matches(/[\u0590-\u05FF]/)
   game_name: string;
 
   @IsDefined()
-  @IsInstance(ImageDto)
-  image: {
-    id: number;
-    value: any;
-  };
+  @IsObject()
+  @ValidateNested({ each: true })
+  @Type(() => ImageDto)
+  image: ImageDto;
   @IsDefined()
   @IsString()
-  @Length(4, 150)
+  @Length(1, 260)
   description: string;
   @IsDefined()
   @IsString()
-  @Length(4, 150)
+  @Length(1, 260)
   requirements: string;
   @IsDefined()
   @IsBoolean()
@@ -46,28 +55,31 @@ export class GameSaveDto {
 export class FieldArrDto {
   @IsDefined()
   @IsString()
-  @Length(4, 50)
-    name: string;
-    @IsDefined()
+  @Length(1, 30)
+  name: string;
+  @IsDefined()
   @IsString()
-  @Length(4, 50)
-    selection: string;
-    @IsDefined()
-  @IsArray()
-    value: [{ id: number; value: string }];
-    @IsDefined()
-    @IsNumber()
-    @IsPositive()
-    order: number;
+  @Length(1, 30)
+  selection: string;
+  @IsDefined()
+  @ValidateNested({ each: true })
+  @Type(() => FieldValueDto)
+  value: FieldValueDto[];
+  @IsDefined()
+  @IsNumber()
+  order: number;
 }
 
 export class GameSaveReq {
   @IsDefined()
-  @IsInstance(GameSaveDto)
+  @IsObject()
+  @ValidateNested({ each: true })
+  @Type(() => GameSaveDto)
   game: GameSaveDto;
 
   @IsDefined()
-  @IsInstance(FieldArrDto)
+  @ValidateNested({ each: true })
+  @Type(() => FieldArrDto)
   field: [
     {
       name: string;
@@ -80,6 +92,6 @@ export class GameSaveReq {
 
 export class GetGameSkip {
   @IsDefined()
-  @IsString()
+  @IsNumber()
   gamesLength: number;
 }

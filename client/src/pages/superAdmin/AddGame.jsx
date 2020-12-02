@@ -72,7 +72,7 @@ class AddGame extends Component {
     if (inputId) {
       this.setState((prevState) => {
         prevState.fieldsData[fieldId].value[inputId] = {
-          id: inputId,
+          id: Number(inputId),
           value: fieldValue,
         };
         return { fieldsData: prevState.fieldsData };
@@ -136,11 +136,8 @@ class AddGame extends Component {
   };
 
   setUpValues = () => {
-    let newValue = [];
-    let imageUploader = {};
     let currFieldData = [];
     this.state.fieldsData.map((obj) => {
-      // obj.value.map(valueObj => {newValue.push(valueObj.value);})
       let newField = {
         name: obj.name,
         selection: obj.selection,
@@ -160,7 +157,7 @@ class AddGame extends Component {
       suspended: false,
     };
     const fieldData = this.setUpValues();
-
+    // console.log(fieldData);
     try {
       const response = await this.imageUploader.post(
         "/api/game/addGame",
