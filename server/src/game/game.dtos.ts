@@ -34,11 +34,11 @@ export class GameSaveDto {
   image: IdAndValueDto;
   @IsDefined()
   @IsString()
-  @Length(1, 260)
+  @Length(1, 255)
   description: string;
   @IsDefined()
   @IsString()
-  @Length(1, 260)
+  @Length(1, 255)
   requirements: string;
   @IsDefined()
   @IsBoolean()
