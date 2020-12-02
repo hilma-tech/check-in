@@ -234,7 +234,6 @@ class AddGame extends Component {
     }
 
     fieldOK = this.validateFields();
-
     //after all the validetion we need to send the data to sql
     if (allOK && fieldOK) {
       console.log('need to save');
@@ -267,14 +266,24 @@ class AddGame extends Component {
               });
               isOk = false;
             } else {
+              countFullFields++;
               this.setState((prevState) => {
-                countFullFields++;
                 prevState.fieldsData[index].errorMessage.toShow = "none";
                 prevState.fieldsData[index].errorMessage.mess = "";
                 return { fieldsData: prevState.fieldsData };
               });
             }
           });
+          if(fields.selection === "choice" || fields.selection === "multi-choice"){
+            if (countFullFields >= 2){
+              isOk=true;
+              this.setState((prevState) => {
+                prevState.fieldsData[index].errorMessage.toShow = "none";
+                prevState.fieldsData[index].errorMessage.mess = "";
+                return { fieldsData: prevState.fieldsData };
+              });
+            }
+          }
         }
       } else {
         let errMess = nameValidation(fields.name);

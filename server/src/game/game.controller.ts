@@ -45,7 +45,6 @@ export class GameController {
   @Post('/addGame')
   @UseFilesHandler()
   async saveGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
-    console.log('req: ', req.game.image, typeof req.game.image);
     
     if(req.game.image.value){
       
