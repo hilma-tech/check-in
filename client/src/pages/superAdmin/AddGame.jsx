@@ -10,6 +10,7 @@ import { withRouter } from "react-router-dom";
 import {
   mustInputValidation,
   nameValidation,
+  fieldInputValidation
 } from "../../tools/ValidationFunctions";
 import {
   FilesUploader,
@@ -241,12 +242,11 @@ class AddGame extends Component {
   };
 
   validateFields = () => {
-    let errMess = "";
     let isOk = true;
     let countFullFields = 0;
     this.state.fieldsData.map((fields, index) => {
       if (fields.selection !== "image") {
-        errMess = nameValidation(fields.name);
+        let errMess = nameValidation(fields.name);
         if (errMess.length !== 0) {
           this.setState((prevState) => {
             prevState.fieldsData[index].errorMessage.toShow = "block";
@@ -256,7 +256,7 @@ class AddGame extends Component {
           isOk = false;
         } else {
           fields.value.map((field) => {
-            errMess = mustInputValidation(field.value);
+            errMess = fieldInputValidation(field.value);
             if (errMess.length !== 0) {
               this.setState((prevState) => {
                 prevState.fieldsData[index].errorMessage.toShow = "block";
@@ -275,7 +275,7 @@ class AddGame extends Component {
           });
         }
       } else {
-        errMess = nameValidation(fields.name);
+        let errMess = nameValidation(fields.name);
         if (errMess.length !== 0) {
           this.setState((prevState) => {
             prevState.fieldsData[index].errorMessage.toShow = "block";

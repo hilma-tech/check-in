@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../style/error_page.scss";
-import hilmaicon from "../img/hilmawhite.svg";
+import hilmaicon from "../img/hilmaIcon.svg";
 import Menu from "../component/superAdmin/Menu";
 
 class ErrorPage extends Component {
