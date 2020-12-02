@@ -70,12 +70,12 @@ class AddGame extends Component {
     });
   };
 
-  saveFieldValue = (fieldValue, fieldId, inputId, inputImage, imgId) => {
+  saveFieldValue = (fieldValue, fieldI, inputId, inputImage, imgId) => {
     //only relevant to choice/multi-choice
     if (inputId) {
       this.setState((prevState) => {
-        console.log(prevState.fieldsData[fieldId]);
-         prevState.fieldsData[fieldId].value[inputId] = {
+        console.log(prevState.fieldsData[fieldI]);
+         prevState.fieldsData[fieldI].value[inputId] = {
           id: Number(inputId),
           value: fieldValue,
         };
@@ -84,7 +84,7 @@ class AddGame extends Component {
       //only relevant to image
     } else if (inputImage) {
       this.setState((prevState) => {
-        prevState.fieldsData[fieldId].value[0] = {
+        prevState.fieldsData[fieldI].value[0] = {
           id: imgId,
           value: inputImage,
         };
@@ -93,8 +93,8 @@ class AddGame extends Component {
       //only relevant to text
     } else {
       this.setState((prevState) => {
-        prevState.fieldsData[fieldId].value = [];
-        prevState.fieldsData[fieldId].value[0] = {
+        prevState.fieldsData[fieldI].value = [];
+        prevState.fieldsData[fieldI].value[0] = {
           id: 0,
           value: fieldValue,
         };
@@ -257,7 +257,7 @@ class AddGame extends Component {
           isOk = false;
         } else {
           fields.value.map((field) => {
-            errMess = fieldInputValidation(field.value);
+            errMess = nameValidation(field.value);
             if (errMess.length !== 0) {
               this.setState((prevState) => {
                 prevState.fieldsData[index].errorMessage.toShow = "block";
@@ -399,8 +399,9 @@ class AddGame extends Component {
               {this.state.fieldsData.map((fieldObj, index) => {
                 return (
                   <GameFieldSelection
-                    key={index}
+                    key={fieldObj.id}
                     fieldId={fieldObj.id}
+                    fieldI={index}
                     name={this.saveFieldName}
                     selection={this.saveSelection}
                     fieldValue={this.saveFieldValue}

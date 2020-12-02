@@ -114,7 +114,7 @@ class GameFieldSelection extends Component {
   sendFieldValue = (props) => {
     this.props.fieldValue(
       props.target.value,
-      this.props.fieldId,
+      this.props.fieldI,
       props.target.id,
       null
     );
@@ -123,7 +123,7 @@ class GameFieldSelection extends Component {
   sendImageFieldValue = (value) => {
     this.props.fieldValue(
       value.value,
-      this.props.fieldId,
+      this.props.fieldI,
       null,
       value.link,
       value.id
@@ -131,7 +131,7 @@ class GameFieldSelection extends Component {
   };
 
   removeField = () => {
-    this.props.removal(this.props.fieldId);
+    this.props.removal(this.props.fieldI);
   };
 
   render() {
