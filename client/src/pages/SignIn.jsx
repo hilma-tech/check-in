@@ -98,9 +98,8 @@ class SignIn extends Component {
     return (
       <div className="background" /* onunload="this.preventBack()" */>
         <div className="centeredPage">
-          <h1 className="webName" dir="ltr">
-            CheckIn
-          </h1>
+          <img className="webName" src='/icons/blueCheckIn.svg'>
+          </img>
           <p
             className="error"
             style={{ display: this.state.errorMessages[0].toShow }}

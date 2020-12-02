@@ -32,6 +32,7 @@ class AddGame extends Component {
       gameNameErrorMessages: { toShow: "none", mess: "" },
       gameDescriptionErrorMessages: { toShow: "none", mess: "" },
       gameRequirementsErrorMessages: { toShow: "none", mess: "" },
+      imageErrorMessages: { toShow: "none", mess: "" },
       fieldsData: [
         {
           id: 0,
@@ -223,6 +224,12 @@ class AddGame extends Component {
         });
       }
     });
+    if(!this.state.image.value){
+      allOK = false;
+      this.setState({imageErrorMessages: {toShow: "block",mess: '** חייב להכניס שדה זה **'}});
+    }else {
+      this.setState({imageErrorMessages: {toShow: "none",mess: ""}});
+    }
 
     fieldOK = this.validateFields();
 
@@ -350,6 +357,12 @@ class AddGame extends Component {
                 onBlur={this.updateBasicInfo}
               />
               <label className="labelFields">תמונה:</label>
+              <p
+                className="error"
+                style={{ display: this.state.imageErrorMessages.toShow }}
+              >
+                {this.state.imageErrorMessages.mess}
+              </p>
               <div className="borderCameraIcon marginTop">
                 <label className="borderCameraIconLabel">
                   <FileInput
