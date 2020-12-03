@@ -28,7 +28,7 @@ export class FieldService {
       } else {
         field.default_value = JSON.stringify(
           fieldObject.value.map(valField => {
-            return valField.value;
+            return valField === null ? "" : valField.value;
           })
         );
       }
@@ -40,7 +40,7 @@ export class FieldService {
   }
 
   // async getGamefields(@Body() gameId: any) {
-  //     let res = await this.fieldRepository.find({where:{game_id: gameId}})
+  //     let res = await this.fieldRepository.find({where:{game: gameId}})
   //     return res;
   // }
 }

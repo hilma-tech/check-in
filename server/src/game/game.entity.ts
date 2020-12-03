@@ -27,32 +27,32 @@ export class Game {
 
   @IsDefined()
   @IsString()
-  @Length(4, 20)
-  @Matches(/[\u0590-\u05FF]{4,20}/)
+  @Length(1, 30)
+  @Matches(/[\u0590-\u05FF]/)
   @Column({ type: "varchar", length: 50, unique: true })
   game_name: string;
 
   @IsDefined()
   @IsString()
-  @Length(4, 150)
-  @Matches(/[\u0590-\u05FF]{4,150}/)
+  @Length(1, 255)
+  @Matches(/[\u0590-\u05FF]/)
   @Column({ type: "varchar", length: 255 })
   description: string;
 
   @IsDefined()
   @IsString()
-  @Length(4, 150)
-  @Matches(/[\u0590-\u05FF]{4,150}/)
+  @Length(1, 255)
+  @Matches(/[\u0590-\u05FF]/)
   @Column({ type: "varchar", length: 255 })
   requirements: string;
 
   @IsDefined()
   @IsString()
-  @Length(4, 1000)
+  // @Length(4, 1000)
   @Column({
     type: "varchar",
     length: 1000,
-    default: "blob:http://localhost:3000/8e4f6604-fef9-4190-bdd3-3628c7bc572c"
+    default: "/image/amxgDI5RSECPDVwftEI6GWGXFsvTMsXt.jpg"
   })
   image: string;
 

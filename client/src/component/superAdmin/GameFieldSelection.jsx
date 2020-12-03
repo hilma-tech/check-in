@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import Select from "react-select";
 import SelectStyle from "../../style/superAdmin/select_style";
 import "../../style/superAdmin/form_style.scss";
-import { FilesUploader, FileInput ,withFiles} from "@hilma/fileshandler-client";
-import '../../style/superAdmin/game_field_selection_style.scss';
+import {
+  FilesUploader,
+  FileInput,
+  withFiles,
+} from "@hilma/fileshandler-client";
+import "../../style/superAdmin/game_field_selection_style.scss";
 
 class GameFieldSelection extends Component {
   constructor(props) {
@@ -16,77 +20,81 @@ class GameFieldSelection extends Component {
     ];
     // this.imageUploader = new FilesUploader();
     this.imageUploader = props.ourImageUploader;
-
-    }
+  }
 
   // creates input based on "type"
   fieldCreator = () => {
     if (this.props.changeInputType === "text") {
       return (
-          <input
-            onBlur={this.sendFieldValue}
-            className="fieldSelectionInput"
-            type="text"
-            defaultValue={this.props.originalValue[0].value}
-          />
+        <input
+          onBlur={this.sendFieldValue}
+          className="fieldSelectionInput"
+          type="text"
+          defaultValue={this.props.originalValue[0].value}
+          readOnly={this.props.reading}
+        />
       );
     } else if (this.props.changeInputType === "image") {
       return (
         <label className="cameraFieldBorder">
+          {this.props.reading ? <></> :
           <FileInput
             id="image"
             className="hiddenInput"
             type="image"
             filesUploader={this.imageUploader}
             onChange={this.sendImageFieldValue}
-            />
-            <img
-              className={
-                this.props.originalValue[0].value.length !== 0
-                  ? "chosenImg"
-                  : "cameraIcon"
-              }
-              src={
-                this.props.originalValue[0].value
-                  ? this.props.originalValue[0].value
-                  : "/icons/camera-icon.svg"
-              }
-              alt="photography icon"
-            />
+            
+          />}
+          <img
+            className={
+              this.props.originalValue[0].value.length !== 0
+                ? "chosenImg"
+                : "cameraIcon"
+            }
+            src={
+              this.props.originalValue[0].value
+                ? this.props.originalValue[0].value
+                : "/icons/camera-icon.svg"
+            }
+            alt="photography icon"
+          />
         </label>
       );
     } else {
       const sixArray = [0, 1, 2, 3, 4, 5];
       // mapping to put in the right values
       return (
-        <label className='gridFieldInputs'>
-            {sixArray.map((inputId, index) => {
-              let input = this.props.originalValue.filter(
-                (valueArray) => valueArray.id === inputId
-              );
-              if (input[0]) {
-                return (
-                  <input 
-                    key={index}
-                    defaultValue={input[0].value}
-                    onBlur={this.sendFieldValue}
-                    className="fieldSelectionInput"
-                    type="text"
-                    id={inputId}
-                  />
-                );
-              } else {
-                return (
-                  <input
+        <label className="gridFieldInputs">
+          {sixArray.map((inputId, index) => {
+            let input = this.props.originalValue.filter(
+              (valueArray) => valueArray.id === inputId
+            );
+            if (input[0]) {
+              return (
+                <input
                   key={index}
-                    onBlur={this.sendFieldValue}
-                    className="fieldSelectionInput"
-                    type="text"
-                    id={inputId}
-                  />
-                );
-              }
-            })}
+                  defaultValue={input[0].value}
+                  onBlur={this.sendFieldValue}
+                  className="fieldSelectionInput"
+                  type="text"
+                  id={inputId}
+                  readOnly={this.props.reading}
+                />
+              );
+            } else {
+              return (
+                <input
+                  key={index}
+                  onBlur={this.sendFieldValue}
+                  className="fieldSelectionInput"
+                  type="text"
+                  id={inputId}
+                  readOnly={this.props.reading}
+                />
+              );
+            }
+          })}
         </label>
       );
     }
@@ -114,11 +122,12 @@ class GameFieldSelection extends Component {
 
   sendImageFieldValue = (value) => {
     this.props.fieldValue(
-      value.value, 
-      this.props.fieldId, 
-      null, 
+      value.value,
+      this.props.fieldId,
+      null,
       value.link,
-      value.id);
+      value.id
+    );
   };
 
   removeField = () => {
@@ -140,14 +149,14 @@ class GameFieldSelection extends Component {
         </p>
         <div className="gameFieldSelection">
           {/* fieldSelection */}
-          <img
+          {this.props.reading? <></> :<img
             alt="remove field icon"
             onClick={this.removeField}
             className="removeFieldIcon"
             src="/icons/delete.svg"
-          />
+          />}
 
-          <div className='fieldSelection'>
+          <div className="fieldSelection">
             {/* name of field */}
             <input
               className="fieldSelectionInput"
@@ -155,12 +164,14 @@ class GameFieldSelection extends Component {
               onBlur={this.sendNameValue}
               placeholder="רשום את שם השדה"
               defaultValue={this.props.originalName}
+              readOnly={this.props.reading}
             />
 
             {/* selected field type */}
             <Select
               id="fieldType"
               styles={SelectStyle()}
+             isDisabled={this.props.reading}
               options={this.options}
               onChange={this.sendSelection}
               defaultValue={
@@ -170,8 +181,8 @@ class GameFieldSelection extends Component {
               }
             />
             {/* field for user interaction */}
-
-            {this.fieldCreator()}</div>
+            <div>{this.fieldCreator()}</div>
+          </div>
         </div>
       </div>
     );

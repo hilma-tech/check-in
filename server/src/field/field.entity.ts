@@ -7,7 +7,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { GameType } from './game.type.enum';
-import { IsPositive,IsDefined, IsString, Length, Matches, IsEnum, IsNumber } from 'class-validator';
+import { IsDefined, IsString, Length, Matches, IsEnum, IsNumber } from 'class-validator';
 
 @Entity()
 export class Field {
@@ -16,31 +16,28 @@ export class Field {
 
   @IsDefined()
   @IsString()
-  @Length(4, 20)
-  @Matches(/[\u0590-\u05FF]{4,20}/)
+  @Length(1, 30)
+  @Matches(/[\u0590-\u05FF]/)
   @Column({ type: 'varchar', length: 50 })
   field_name: string;
 
   @IsDefined()
   @IsEnum(GameType)
+  @Length(1, 30)
   @Column({ type: 'enum', enum: GameType, default: GameType.TEXT })
   type: string;
-
-  // @Column({type: 'int', default: 2})
-  // game_id: any;
 
   @ManyToOne(type => Game, game => game.id)
   game: number;
 
   @IsDefined()
   @IsString()
-  @Length(4, 150)
+  // @Length(1, 30)
   @Column({ type: 'varchar', length: 150 })
   default_value: string;
 
   @IsDefined()
   @IsNumber()
-  @IsPositive()
   @Column({ type: 'int' })
   order: number;
 }

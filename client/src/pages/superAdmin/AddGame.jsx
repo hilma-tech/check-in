@@ -10,6 +10,7 @@ import { withRouter } from "react-router-dom";
 import {
   mustInputValidation,
   nameValidation,
+  fieldInputValidation
 } from "../../tools/ValidationFunctions";
 import {
   FilesUploader,
@@ -32,6 +33,7 @@ class AddGame extends Component {
       gameNameErrorMessages: { toShow: "none", mess: "" },
       gameDescriptionErrorMessages: { toShow: "none", mess: "" },
       gameRequirementsErrorMessages: { toShow: "none", mess: "" },
+      imageErrorMessages: { toShow: "none", mess: "" },
       fieldsData: [
         {
           id: 0,
@@ -70,7 +72,7 @@ class AddGame extends Component {
     if (inputId) {
       this.setState((prevState) => {
         prevState.fieldsData[fieldId].value[inputId] = {
-          id: inputId,
+          id: Number(inputId),
           value: fieldValue,
         };
         return { fieldsData: prevState.fieldsData };
@@ -134,11 +136,8 @@ class AddGame extends Component {
   };
 
   setUpValues = () => {
-    let newValue = [];
-    let imageUploader = {};
     let currFieldData = [];
     this.state.fieldsData.map((obj) => {
-      // obj.value.map(valueObj => {newValue.push(valueObj.value);})
       let newField = {
         name: obj.name,
         selection: obj.selection,
@@ -158,11 +157,10 @@ class AddGame extends Component {
       suspended: false,
     };
     const fieldData = this.setUpValues();
-
-    
+    // console.log(fieldData);
     try {
       const response = await this.imageUploader.post(
-        "/api/game/save",
+        "/api/game/addGame",
         JSON.stringify({
           game: currGameInfo,
           field: fieldData,
@@ -174,7 +172,11 @@ class AddGame extends Component {
       }
       this.props.history.goBack(); // after saving go back
     } catch (error) {
-      this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסה לבדוק את החיבור");
+      if (error.status === 500){
+        this.props.errorMsg.setErrorMsg("קיים כבר משחק בשם זה. נסה שם אחר.");
+      } else {
+        this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסה לבדוק את החיבור");
+      }
     }
   };
   // addGameFieldsDb= async (gameId) => {
@@ -193,6 +195,7 @@ class AddGame extends Component {
       { name: "gameDescription", func: mustInputValidation, errMsg: "" },
       { name: "gameRequirements", func: mustInputValidation, errMsg: "" },
     ];
+
     ValidationFunctions.forEach((validationData) => {
       validationData.errMsg = validationData.func(
         this.state[validationData.name]
@@ -219,6 +222,12 @@ class AddGame extends Component {
         });
       }
     });
+    if(!this.state.image.value){
+      allOK = false;
+      this.setState({imageErrorMessages: {toShow: "block",mess: '** חייב להכניס שדה זה **'}});
+    }else {
+      this.setState({imageErrorMessages: {toShow: "none",mess: ""}});
+    }
 
     fieldOK = this.validateFields();
 
@@ -230,11 +239,11 @@ class AddGame extends Component {
   };
 
   validateFields = () => {
-    let errMess = "";
     let isOk = true;
+    let countFullFields = 0;
     this.state.fieldsData.map((fields, index) => {
       if (fields.selection !== "image") {
-        errMess = nameValidation(fields.name);
+        let errMess = nameValidation(fields.name);
         if (errMess.length !== 0) {
           this.setState((prevState) => {
             prevState.fieldsData[index].errorMessage.toShow = "block";
@@ -244,7 +253,7 @@ class AddGame extends Component {
           isOk = false;
         } else {
           fields.value.map((field) => {
-            errMess = mustInputValidation(field.value);
+            errMess = fieldInputValidation(field.value);
             if (errMess.length !== 0) {
               this.setState((prevState) => {
                 prevState.fieldsData[index].errorMessage.toShow = "block";
@@ -254,12 +263,39 @@ class AddGame extends Component {
               isOk = false;
             } else {
               this.setState((prevState) => {
+                countFullFields++;
                 prevState.fieldsData[index].errorMessage.toShow = "none";
                 prevState.fieldsData[index].errorMessage.mess = "";
                 return { fieldsData: prevState.fieldsData };
               });
             }
           });
+        }
+      } else {
+        let errMess = nameValidation(fields.name);
+        if (errMess.length !== 0) {
+          this.setState((prevState) => {
+            prevState.fieldsData[index].errorMessage.toShow = "block";
+            prevState.fieldsData[index].errorMessage.mess = errMess;
+            return { fieldsData: prevState.fieldsData };
+          });
+          isOk = false;
+        } else {
+          errMess = mustInputValidation(fields.value[0].value);
+          if (errMess.length !== 0) {
+            this.setState((prevState) => {
+              prevState.fieldsData[index].errorMessage.toShow = "block";
+              prevState.fieldsData[index].errorMessage.mess = errMess;
+              return { fieldsData: prevState.fieldsData };
+            });
+            isOk = false;
+          } else {
+            this.setState((prevState) => {
+              prevState.fieldsData[index].errorMessage.toShow = "none";
+              prevState.fieldsData[index].errorMessage.mess = "";
+              return { fieldsData: prevState.fieldsData };
+            });
+          }
         }
       }
     });
@@ -318,6 +354,12 @@ class AddGame extends Component {
                 onBlur={this.updateBasicInfo}
               />
               <label className="labelFields">תמונה:</label>
+              <p
+                className="error"
+                style={{ display: this.state.imageErrorMessages.toShow }}
+              >
+                {this.state.imageErrorMessages.mess}
+              </p>
               <div className="borderCameraIcon marginTop">
                 <label className="borderCameraIconLabel">
                   <FileInput

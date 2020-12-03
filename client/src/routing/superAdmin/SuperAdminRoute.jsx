@@ -17,6 +17,9 @@ import ErrorPage from "../../pages/404Page.jsx";
 import "../../style/superAdmin/disp.scss"
 
 class SuperAdminRoute extends React.Component {
+  componentDidMount(){
+    setTimeout(() => { window.location.pathname = '/signin' }, 155520000000)
+  }
   render() {
   
     return (
@@ -39,6 +42,14 @@ class SuperAdminRoute extends React.Component {
             redirectComponent={GamesRouter}
             component={AddGame}
           />
+          <PrivateRoute
+              path="/superAdmin/gamesEdit"
+              exact
+              componentName="SAdminEditGames"
+              redirectPath="/signin"
+              redirectComponent={GamesRouter}
+              component={EditGame}
+            />
           <Route path="/superAdmin/:smth" component={ErrorPage} />
           {/* <PrivateRoute
               path="/superAdmin/schools"
@@ -84,13 +95,6 @@ class SuperAdminRoute extends React.Component {
               component={AddSchool}
             /> */}
 
-          {/* <PrivateRoute
-              path="/superAdmin/gamesEdit"
-              exact
-              componentName="SAdminEditGames"
-              redirectComponent={GamesRouter}
-              component={EditGame}
-            /> */}
           {/* <PrivateRoute
               path="/superAdmin/schoolsEdit"
               exact

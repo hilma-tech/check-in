@@ -9,9 +9,11 @@ import PopUp from "../../component/superAdmin/GamePopUpMenu.jsx";
 import Fade from "@material-ui/core/Fade";
 import { errorMsgContext } from "../../stores/error.store";
 import { gamesContext } from "../../stores/games.store";
+import { chosenGameEditContext } from "../../stores/chosenGameEdit.store";
 import { observer } from "mobx-react"
 import { withContext } from '@hilma/tools';
 import LoadingPage from '../../component/LoadingPage.jsx'
+import { IsAuthenticatedContext } from '@hilma/auth';
 
 const axios = require("axios").default;
 
@@ -44,7 +46,8 @@ class Games extends Component {
   };
 
   //TEMPORARILY COMMENTED OUT, WILL BE RETURN UPON PROPER ROUTING
-  onClickEditGame = () => {
+  onClickEditGame = (gameId) => {
+    this.props.chosenGameEditContext.setgameId(gameId)
     this.props.history.push(this.props.location.pathname + 'Edit');
   };
 
@@ -112,11 +115,11 @@ class Games extends Component {
                         mountOnEnter
                         unmountOnExit
                       >
-                        <PopUp onClickEditGame={this.onClickEditGame} />
+                        <PopUp onClickEditGame={this.onClickEditGame} gameId={image.id} />
                       </Fade>
                       <img className="gameImg" alt="" src={image.image} />
                       <h2 className="gameTitleBackground"></h2>
-                      <h1 className="gameTitle">{image.game_name}</h1>
+                      <h1 className="gameTitle">{image.game_name.length > 15 ? image.game_name.slice(0, 15) + '...' : image.game_name}</h1>
                       <img
                         className="optionIcon"
                         onClick={() => { this.props.games.setShowOption(index) }}
@@ -130,12 +133,13 @@ class Games extends Component {
             </div>
           }
 
-          <button
-            className='showMoreGamesB'
-            onClick={this.getGames}
-            style={{ display: this.props.games.haveMoreGames && !displayLoading ? 'inline-block' : 'none' }}>
-            הצג עוד
-            </button>
+          {this.props.games.startGetGames ? <img style={{ width: '8vw' }} src='/icons/loading.gif' alt='loading...'></img> :
+            <button
+              className='showMoreGamesB'
+              onClick={this.getGames}
+              style={{ display: this.props.games.haveMoreGames && !displayLoading ? 'inline-block' : 'none' }}>
+              הצג עוד
+            </button>}
         </div>
       </>
     );
@@ -144,7 +148,9 @@ class Games extends Component {
 
 const mapContextToProps = {
   errorMsg: errorMsgContext,
-  games: gamesContext
+  games: gamesContext,
+  chosenGameEditContext: chosenGameEditContext,
+  isAuthenticated: IsAuthenticatedContext
 }
 
 
