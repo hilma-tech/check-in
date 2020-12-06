@@ -52,29 +52,24 @@ class AddGame extends Component {
     this.imageUploader = props.filesUploader;
   }
 
-  saveFieldName = (fieldName, fieldId) => {
-    this.state.fieldsData.filter(
-      (field) => field.id === fieldId
-    )[0].name = fieldName;
+  saveFieldName = (fieldName, fieldI) => {
+    this.state.fieldsData[fieldI].name = fieldName;
   };
 
-  saveSelection = (selection, fieldId) => {
+  saveSelection = (selection, fieldI) => {
     this.setState((prevState) => {
-      prevState.fieldsData.filter(
-        (field) => field.id === fieldId
-      )[0].selection = selection;
-      prevState.fieldsData.filter(
-        (field) => field.id === fieldId
-      )[0].value= [{ id: 0, value: "" }]
+      prevState.fieldsData[fieldI].id = this.newKey;
+      prevState.fieldsData[fieldI].selection = selection
+      prevState.fieldsData[fieldI].value= [{ id: 0, value: "" }]
       return { fieldsData: prevState.fieldsData };
     });
+    this.newKey++
   };
 
   saveFieldValue = (fieldValue, fieldI, inputId, inputImage, imgId) => {
     //only relevant to choice/multi-choice
     if (inputId) {
       this.setState((prevState) => {
-        console.log(prevState.fieldsData[fieldI]);
          prevState.fieldsData[fieldI].value[inputId] = {
           id: Number(inputId),
           value: fieldValue,
@@ -163,6 +158,8 @@ class AddGame extends Component {
     const fieldData = this.setUpValues();
     // console.log(fieldData);
     try {
+      console.log(fieldData);
+
       const response = await this.imageUploader.post(
         "/api/game/addGame",
         JSON.stringify({
@@ -236,7 +233,6 @@ class AddGame extends Component {
     fieldOK = this.validateFields();
     //after all the validetion we need to send the data to sql
     if (allOK && fieldOK) {
-      console.log('need to save');
       //fetch to the server
       this.addGameDb();
     }

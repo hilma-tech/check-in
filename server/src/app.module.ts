@@ -8,6 +8,8 @@ import { ConfigModule } from '@nestjs/config';
 import { FieldModule } from './field/field.module';
 import { SuperAdminModule } from './super-admin/super-admin.module';
 import { FilesHandlerModule } from '@hilma/fileshandler-typeorm';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -16,7 +18,10 @@ import { FilesHandlerModule } from '@hilma/fileshandler-typeorm';
     SuperAdminModule,
     ConfigModule.forRoot({ load: [configuration], isGlobal: true }),
     FieldModule,
-    FilesHandlerModule.register({folder: "../../filesHandlerUploads", autoAllow: true})
+    FilesHandlerModule.register({folder: "../../filesHandlerUploads", autoAllow: true}),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
