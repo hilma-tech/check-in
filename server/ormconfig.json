@@ -1,14 +1,16 @@
 {
   "type": "mysql",
-  "host": "localhost",
+  "host": "mysql8a.mysql.database.azure.com",
   "port": 3306,
-  "username": "root",
-  "password": "z10mz10m",
+  "username": "checkin@mysql8a",
+  "password": "73hjx*%fwldx",
   "database": "checkin",
   "entities": [
     "dist/**/*.entity{.ts,.js}",
     "node_modules/@hilma/fileshandler-typeorm/**/*.entity.{ts,js}",
     "node_modules/@hilma/auth-nest/dist/**/*.entity{.ts,.js}"
   ],
-  "synchronize": true
+  "synchronize": true,
+  "ssl": true
 }
+
