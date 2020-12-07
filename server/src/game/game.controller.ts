@@ -44,7 +44,7 @@ export class GameController {
   @UseJwtAuth('superAdmin')
   @Post('/addGame')
   @UseFilesHandler()
-  async saveGame(@UploadedFiles() files: FilesType, @Body() req/*: GameSaveReq*/) {
+  async saveGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
     return await this.gameService.addGame(files,req)
   }
 

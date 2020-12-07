@@ -8,7 +8,9 @@ export function userNameValidation(userName) {
         return '** שם משתמש לא תקין **'
     } else if ((/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`\s]/).test(userName)) {
         return '** שם משתמש לא תקין **'
-    } else {
+    } else if (!(/[A-Za-z\u0590-\u05EA0-9]/).test(userName)) {
+        return '** שם משתמש לא תקין **'
+    }  else {
         return ''
     }
 }
@@ -24,6 +26,8 @@ export function nameValidation(name) {
     }  else if ((/[a-z]/).test(name) || (/[A-Z]/).test(name) || (/[0-9]/).test(name) || (/[@#$%^&*()_+=[\]{};:\\|<>/~`]/).test(name)) {
         return '** שדה זה לא יכול להכיל אותיות באנגלית או תווים מיוחדים **'
     } else if (name.includes('"') || name.includes("'") || name.includes('.') || name.includes(',') || name.includes('-')) {
+        return '** שם זה לא תקין **'
+    } else if (!(/[\u0590-\u05EA0-9,.!-?'"]/).test(name)) {
         return '** שם זה לא תקין **'
     } else {
         return ''
@@ -60,6 +64,8 @@ export function passwordValidation(password) {
         return '** סיסמא לא תקינה **'
     } else if (!(/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
         return '** סיסמא לא תקינה **'
+    } else if (!(/[A-Za-z\u0590-\u05EA0-9]/).test(password)) {
+        return '** סיסמא לא תקינה **'
     } else {
         return ''
     }
@@ -88,7 +94,9 @@ export function mustInputValidation(input) {
         return  '** חייב להכניס שדה זה **'
     } else if (input.length > 255) {
         return '** שדה זה לא יכול להכיל יותר מ-255 תווים **'
-    }  else {
+    }  else if (!(/[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`\s]/).test(input)) {
+        return '** שדה זה לא תקין **'
+    } else {
         return ''
     }
 }
@@ -102,7 +110,9 @@ export function fieldInputValidation(input) {
         return  '** חייב להכניס שדה זה **'
     }  else if (input.length > 30) {
         return  '** שדה זה לא יכול להכיל יותר מ-30 תווים **'
-    }  else {
+    }  else if (!(/[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`\s]/).test(input)) {
+        return '** שדה זה לא תקין **'
+    } else {
         return ''
     }
 }

@@ -132,7 +132,7 @@ class GameFieldSelection extends Component {
   };
 
   removeField = () => {
-    this.props.removal(this.props.fieldI);
+    this.props.removal(this.props.fieldId);
   };
 
   render() {
