@@ -1,8 +1,8 @@
 export default () => ({
   auth: {
-    ttl: { SuperAdmin: 155520000000 }, //{minutes: 5},
-    secretOrKey: "hi@$#$T46btrtges",
-    accessToken_cookie: "klool"
+    ttl: {'SuperAdmin': 155520000},//{minutes: 5},
+    secretOrKey: 'hi@$#$T46btrtges',
+    accessToken_cookie: 'klool'
   },
 
   app_name: "checkin", //english

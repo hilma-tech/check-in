@@ -44,9 +44,9 @@ export class GameController {
   @Post("/addGame")
   @UseFilesHandler()
   async saveGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
-    console.log("req:111 ", req.field[0].value);
-
-    if (req.game.image.value) {
+    
+    if(req.game.image.value){
+      
       let imgPath = await this.imageService.save(files, req.game.image.id);
       req.game.image.value = imgPath;
     } else {

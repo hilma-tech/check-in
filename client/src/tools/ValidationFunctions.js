@@ -21,7 +21,7 @@ export function nameValidation(name) {
         return '** שדה זה לא יכול להכיל יותר מ-30 תווים **'
     } else if (name.trim().length === 0) {
         return '** שם זה לא תקין **'
-    }  else if ((/[a-z]/).test(name) || (/[A-Z]/).test(name) || (/[!@#$%^&*()_+=[\]{};:\\|<>/?~`]/).test(name)) {
+    }  else if ((/[a-z]/).test(name) || (/[A-Z]/).test(name) || (/[0-9]/).test(name) || (/[@#$%^&*()_+=[\]{};:\\|<>/~`]/).test(name)) {
         return '** שדה זה לא יכול להכיל אותיות באנגלית או תווים מיוחדים **'
     } else if (name.includes('"') || name.includes("'") || name.includes('.') || name.includes(',') || name.includes('-')) {
         return '** שם זה לא תקין **'

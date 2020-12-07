@@ -63,15 +63,19 @@ class AddGame extends Component {
       prevState.fieldsData.filter(
         (field) => field.id === fieldId
       )[0].selection = selection;
+      prevState.fieldsData.filter(
+        (field) => field.id === fieldId
+      )[0].value= [{ id: 0, value: "" }]
       return { fieldsData: prevState.fieldsData };
     });
   };
 
-  saveFieldValue = (fieldValue, fieldId, inputId, inputImage, imgId) => {
+  saveFieldValue = (fieldValue, fieldI, inputId, inputImage, imgId) => {
     //only relevant to choice/multi-choice
     if (inputId) {
       this.setState((prevState) => {
-        prevState.fieldsData[fieldId].value[inputId] = {
+        console.log(prevState.fieldsData[fieldI]);
+         prevState.fieldsData[fieldI].value[inputId] = {
           id: Number(inputId),
           value: fieldValue,
         };
@@ -80,7 +84,7 @@ class AddGame extends Component {
       //only relevant to image
     } else if (inputImage) {
       this.setState((prevState) => {
-        prevState.fieldsData[fieldId].value[0] = {
+        prevState.fieldsData[fieldI].value[0] = {
           id: imgId,
           value: inputImage,
         };
@@ -89,8 +93,8 @@ class AddGame extends Component {
       //only relevant to text
     } else {
       this.setState((prevState) => {
-        prevState.fieldsData[fieldId].value = [];
-        prevState.fieldsData[fieldId].value[0] = {
+        prevState.fieldsData[fieldI].value = [];
+        prevState.fieldsData[fieldI].value[0] = {
           id: 0,
           value: fieldValue,
         };
@@ -230,9 +234,9 @@ class AddGame extends Component {
     }
 
     fieldOK = this.validateFields();
-
     //after all the validetion we need to send the data to sql
     if (allOK && fieldOK) {
+      console.log('need to save');
       //fetch to the server
       this.addGameDb();
     }
@@ -253,7 +257,7 @@ class AddGame extends Component {
           isOk = false;
         } else {
           fields.value.map((field) => {
-            errMess = fieldInputValidation(field.value);
+            errMess = nameValidation(field.value);
             if (errMess.length !== 0) {
               this.setState((prevState) => {
                 prevState.fieldsData[index].errorMessage.toShow = "block";
@@ -262,14 +266,24 @@ class AddGame extends Component {
               });
               isOk = false;
             } else {
+              countFullFields++;
               this.setState((prevState) => {
-                countFullFields++;
                 prevState.fieldsData[index].errorMessage.toShow = "none";
                 prevState.fieldsData[index].errorMessage.mess = "";
                 return { fieldsData: prevState.fieldsData };
               });
             }
           });
+          if(fields.selection === "choice" || fields.selection === "multi-choice"){
+            if (countFullFields >= 2){
+              isOk=true;
+              this.setState((prevState) => {
+                prevState.fieldsData[index].errorMessage.toShow = "none";
+                prevState.fieldsData[index].errorMessage.mess = "";
+                return { fieldsData: prevState.fieldsData };
+              });
+            }
+          }
         }
       } else {
         let errMess = nameValidation(fields.name);
@@ -385,8 +399,9 @@ class AddGame extends Component {
               {this.state.fieldsData.map((fieldObj, index) => {
                 return (
                   <GameFieldSelection
-                    key={index}
+                    key={fieldObj.id}
                     fieldId={fieldObj.id}
+                    fieldI={index}
                     name={this.saveFieldName}
                     selection={this.saveSelection}
                     fieldValue={this.saveFieldValue}
