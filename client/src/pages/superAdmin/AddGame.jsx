@@ -52,21 +52,16 @@ class AddGame extends Component {
     this.imageUploader = props.filesUploader;
   }
 
-  saveFieldName = (fieldName, fieldId) => {
-    this.state.fieldsData.filter(
-      (field) => field.id === fieldId
-    )[0].name = fieldName;
+  saveFieldName = (fieldName, fieldI) => {
+    this.state.fieldsData[fieldI].name = fieldName;
   };
 
-  saveSelection = (selection, fieldId) => {
+  saveSelection = (selection, fieldI) => {
     this.setState((prevState) => {
-      prevState.fieldsData.filter(
-        (field) => field.id === fieldId
-      )[0].selection = selection;
-      prevState.fieldsData.filter(
-        (field) => field.id === fieldId
-      )[0].value= [{ id: 0, value: "" }]
-      return { fieldsData: prevState.fieldsData };
+      prevState.fieldsData[fieldI].id = this.state.newKey;
+      prevState.fieldsData[fieldI].selection = selection
+      prevState.fieldsData[fieldI].value= [{ id: 0, value: "" }]
+      return { fieldsData: prevState.fieldsData, newKey:prevState.newKey+1 };
     });
   };
 
@@ -74,7 +69,14 @@ class AddGame extends Component {
     //only relevant to choice/multi-choice
     if (inputId) {
       this.setState((prevState) => {
-        console.log(prevState.fieldsData[fieldI]);
+        if (prevState.fieldsData[fieldI].value.length < inputId){
+          for(let i=prevState.fieldsData[fieldI].value.length;i<inputId; i++){
+            prevState.fieldsData[fieldI].value[i] = {
+              id: Number(i),
+              value: '',
+            };
+          }
+        }
          prevState.fieldsData[fieldI].value[inputId] = {
           id: Number(inputId),
           value: fieldValue,
@@ -161,7 +163,6 @@ class AddGame extends Component {
       suspended: false,
     };
     const fieldData = this.setUpValues();
-    // console.log(fieldData);
     try {
       const response = await this.imageUploader.post(
         "/api/game/addGame",
@@ -236,7 +237,6 @@ class AddGame extends Component {
     fieldOK = this.validateFields();
     //after all the validetion we need to send the data to sql
     if (allOK && fieldOK) {
-      console.log('need to save');
       //fetch to the server
       this.addGameDb();
     }
@@ -245,6 +245,7 @@ class AddGame extends Component {
   validateFields = () => {
     let isOk = true;
     let countFullFields = 0;
+    let fieldEmpt = true;
     this.state.fieldsData.map((fields, index) => {
       if (fields.selection !== "image") {
         let errMess = nameValidation(fields.name);
@@ -259,6 +260,9 @@ class AddGame extends Component {
           fields.value.map((field) => {
             errMess = nameValidation(field.value);
             if (errMess.length !== 0) {
+              if(errMess === '** שדה זה לא יכול להכיל אותיות באנגלית או תווים מיוחדים **'){
+                fieldEmpt = false;
+              }
               this.setState((prevState) => {
                 prevState.fieldsData[index].errorMessage.toShow = "block";
                 prevState.fieldsData[index].errorMessage.mess = errMess;
@@ -275,11 +279,17 @@ class AddGame extends Component {
             }
           });
           if(fields.selection === "choice" || fields.selection === "multi-choice"){
-            if (countFullFields >= 2){
+            if (countFullFields >= 2 && fieldEmpt){
               isOk=true;
               this.setState((prevState) => {
                 prevState.fieldsData[index].errorMessage.toShow = "none";
                 prevState.fieldsData[index].errorMessage.mess = "";
+                return { fieldsData: prevState.fieldsData };
+              });
+            } else {
+              this.setState((prevState) => {
+                prevState.fieldsData[index].errorMessage.toShow = "block";
+                prevState.fieldsData[index].errorMessage.mess = '** שדה זה לא תקין **';
                 return { fieldsData: prevState.fieldsData };
               });
             }

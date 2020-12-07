@@ -32,7 +32,7 @@ CREATE TABLE `field` (
   PRIMARY KEY (`id`),
   KEY `FK_3eba8e668001b7e4313de7d0fc5` (`gameId`),
   CONSTRAINT `FK_3eba8e668001b7e4313de7d0fc5` FOREIGN KEY (`gameId`) REFERENCES `game` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +41,7 @@ CREATE TABLE `field` (
 
 LOCK TABLES `field` WRITE;
 /*!40000 ALTER TABLE `field` DISABLE KEYS */;
+INSERT INTO `field` VALUES (1,0,1,'את שם השדה','מה אני אמורה לרשום כאן??','text'),(2,1,2,'לא באנגלית','/image/LwEnvglpVGTtMyfLtywpWcs3ckKNR9Uw.jpg','image'),(3,0,3,'ךלכגדחגדכ','[\"לחכגדךךלכחד\",\"חדגחךדגחשד\",\"כדחגךלכש\",\"ךלחכדגחשךכ\",\"חךלגדכחש\",\"חכגדלשךחכ\"]','choice'),(4,0,4,'לכגךדש','חכךלכחגדשך','text'),(5,1,4,'כךלגדחכ','[\"כגדש\",\"כדשכג\",\"כגשד\",\"גכש\",\"חמג\",\"לחיחלי\"]','choice'),(6,0,5,'גכשדכ','גכשדכ','text'),(7,1,6,'ךןיוטג','.....ו!!!!','text'),(8,0,7,'צבדלד','null','text'),(9,0,8,'הכס','[\"fsdf\",\"vdzvc\",\"חמח\",\" צךןםחן\",\"dfv\",\"לצלמ\"]','choice'),(10,0,9,'בדךלגמ','[\"ךסלג צח\",\"צלמ\",\"בצדלגרמחה\",\" כגסהג\",\"לירגר\",\"וכטאג\"]','choice'),(11,0,10,'בלגכ','[\"\",\"סמעכ\",\"מעכס\",\"כגאיסאח\"]','choice'),(12,0,11,'סגדשב','[\"בגש\",\"ארכו\",\"אגאביע\",\" בגדב\",\"גחטטכ\"]','choice'),(13,0,12,'בגזכ','סגכד','text'),(14,0,13,'הגד','[\" בדג\",\"\",\"\",\"בגד\"]','choice'),(15,0,14,'גבלכגמ','[\"\",\"\",\"הבגד\",\"\",\"\",\"הג\"]','choice'),(16,0,15,'בגדש','בגדב','text'),(17,0,16,'צבלמכג','חןטן','text'),(18,0,17,'ךתךל','[\"\",\"\",\"צךל\",\"\",\"\",\"צךלן\"]','choice');
 /*!40000 ALTER TABLE `field` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +88,7 @@ CREATE TABLE `game` (
   `suspended` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `IDX_4bc6e56e3db9c52e787b5d3251` (`game_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,6 +97,7 @@ CREATE TABLE `game` (
 
 LOCK TABLES `game` WRITE;
 /*!40000 ALTER TABLE `game` DISABLE KEYS */;
+INSERT INTO `game` VALUES (1,'אוכל ','יכולת לאכול','הפומלה של פדות','/image/vMUnnnlTkG15DnKDi7fIFyM6ACgk9xga.jpg',_binary '\0'),(2,'null','null','רון','/image/7VAXR4VP1y2wCNmuwJRQT5lYTa8xO1g3.jpg',_binary '\0'),(3,'วflkŞว໓f &#138','כךלחדכחשךד','כגדחךלכחדלךגדכ','/image/PzwrBzAm2gaJ1diMC2zmM36YiPYazuhu.jpg',_binary '\0'),(4,'חכגדךלכחךלדש','חכגדךלכחגשד','ךלחגדשךלכגדש','/image/LoMZoeTvigswVKJyd5MqZbHLMtt22651.jpg',_binary '\0'),(5,'גכשדג','גכש','גכדשגד','/image/52I9tPR9Lxc0ZhkYY3dVCR6N5OdIRcXA.jpg',_binary '\0'),(6,'בצךלגדזחן','צבסןד','לכגדסםך','/image/HDdjsXu271JR3aBCJhMyZIfiTaIbfo1F.jpg',_binary '\0'),(7,'מאסק','צאזמ','זה נורמלי','/image/xXcX7Yhj5ADoIpBeaB78gPkScFtbhOcj.jpg',_binary '\0'),(8,'צבלגשחרםן','סצםגחכקםן','צבדלחגדן','/image/zRV1wiBZtj1sxbrxa0v858dmwVA5dpg9.jpg',_binary '\0'),(9,'בדגז','בדג','בגד','/image/D3f4f884NVIbL07VzWoRH21K6x1AbM7R.jpg',_binary '\0'),(10,'מכחרקשכחב','צגךלכברק','חמגשלחכג','/image/XntUtK8zVbCRoPxAnSpLghTDgES8xlIi.jpg',_binary '\0'),(11,'במגחש','וסדיוש','צלבסגצ','/image/bHLiZQKLoOv0Mj0nf0lHNsQtxllwgIrI.jpg',_binary '\0'),(12,'בגדבדגבע',' חקלכחכ','בגדב','/image/kknQSAxCfGieJnM2VL3zJeCLpIlguTcE.jpg',_binary '\0'),(13,'בלגדמ','צב ג','במבלחג','/image/zgSpyPbwh9ra0c9kiATDsNdZzhobitPi.jpg',_binary '\0'),(14,'בלגמב',' בתלגדחמ','מגל','/image/dJ8Q1cD1r06GZB7HQ7xmlLNeBwPzcJcP.jpg',_binary '\0'),(15,'מבלחגדש','חמבג','בלג','/image/hmPRrP9W4EIwZlZU6boxWOPfoqXHIliI.jpg',_binary '\0'),(16,'בצךלגד','ךלהבחךכג','בךלכגמלהב','/image/8nNuOeUyo2kEDl9j2WHgwLzqyq1FvrJn.jpg',_binary '\0'),(17,'םןוטאכ','חןם','לןחוטארק','/image/jiGjraO9ooSI4c7ITzc21lzWUZT5mA2d.jpg',_binary '\0');
 /*!40000 ALTER TABLE `game` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,4 +222,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-02 11:17:59
+-- Dump completed on 2020-12-06 15:37:15
