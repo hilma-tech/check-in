@@ -30,12 +30,14 @@ export class GameController {
     private readonly imageService: ImageService
   ) {}
 
+  
   @Get("/gameToFields")
-  async getGameFields() {
-    return await this.gameService.returnGames(0, 50);
+  async getGameFields(@Req() req: any) {
+    return await this.gameService.returnGames(req.skipON, req.munOfGames);
   }
 
-  @Get("/gameGameInfo")
+  @UseJwtAuth("superAdmin")
+  @Get("/getGameInfo")
   async getGameInfo(@Req() ide) {
     return await this.gameService.getGameInfo(ide.query);
   }
