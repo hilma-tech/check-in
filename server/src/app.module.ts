@@ -20,7 +20,7 @@ import { join } from 'path';
     FieldModule,
     FilesHandlerModule.register({folder: "../../filesHandlerUploads", autoAllow: true}),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'client'),
+      rootPath: join(__dirname, '../../', 'client/build'),
     }),
   ],
   controllers: [AppController],
