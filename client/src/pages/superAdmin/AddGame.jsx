@@ -48,6 +48,7 @@ class AddGame extends Component {
       gameDescription: "",
       gameRequirements: "",
       image: { id: 0, value: false },
+      savingInfo: false
     };
     this.imageUploader = props.filesUploader;
   }
@@ -164,6 +165,7 @@ class AddGame extends Component {
     };
     const fieldData = this.setUpValues();
     try {
+      this.setState({savingInfo: true})
       const response = await this.imageUploader.post(
         "/api/game/addGame",
         JSON.stringify({
@@ -178,6 +180,7 @@ class AddGame extends Component {
       this.props.history.goBack(); // after saving go back
     } catch (error) {
       if (error.status === 500){
+        this.setState({savingInfo: false})
         this.props.errorMsg.setErrorMsg("קיים כבר משחק בשם זה. נסה שם אחר.");
       } else {
         this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסה לבדוק את החיבור");
@@ -432,7 +435,7 @@ class AddGame extends Component {
             </form>
             <div className="spacerFromSaveButton"></div>
             <div className="saveButtonBackground">
-              <button className="saveButton" onClick={this.saveData}>
+              <button className="saveButton" onClick={this.saveData} style={this.state.savingInfo? {pointerEvents: 'none'}: {}}>
                 שמור
               </button>
             </div>
