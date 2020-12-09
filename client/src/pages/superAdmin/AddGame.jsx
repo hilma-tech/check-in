@@ -153,7 +153,7 @@ class AddGame extends Component {
     return currFieldData;
   };
   addGameDb = async () => {
-    let currGameInfo = {
+    let currGameInfo = { //!
       game_name: this.state.gameName,
       image: this.state.image,
       description: this.state.gameDescription,
@@ -161,7 +161,7 @@ class AddGame extends Component {
       suspended: false,
     };
     const fieldData = this.setUpValues();
-    // console.log(fieldData);
+    console.log(fieldData, "CURR");
     try {
       const response = await this.imageUploader.post(
         "/api/game/addGame",

@@ -45,7 +45,7 @@ export class GameController {
   @Post('/addGame')
   @UseFilesHandler()
   async saveGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
-    console.log('req: ', req.game.image, typeof req.game.image);
+    console.log("req", req);
     
     if(req.game.image.value){
       
@@ -64,7 +64,13 @@ export class GameController {
     });
 // console.log('req.game.image.value: ', req.game.image.value, typeof req.game.image.value);
     let game = await this.gameService.saveGame(req.game);
-    await this.fieldService.saveField({ data: req.field, id: game.id });
+    try{
+
+      await this.fieldService.saveField({ data: req.field, id: game.id });
+    } catch (err){
+      console.log('errrrrrrrrrrrrrrr');
+      
+    }
     return game;
   }
 
