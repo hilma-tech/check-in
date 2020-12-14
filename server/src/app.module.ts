@@ -10,6 +10,9 @@ import { SuperAdminModule } from './super-admin/super-admin.module';
 import { FilesHandlerModule } from '@hilma/fileshandler-typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { StudentModule } from './student/student.module';
+import { SchoolModule } from './school/school.module';
+import { TeacherModule } from './teacher/teacher.module';
 
 @Module({
   imports: [
@@ -22,6 +25,9 @@ import { join } from 'path';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../../', 'client/build'),
     }),
+    StudentModule,
+    SchoolModule,
+    TeacherModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -26,7 +26,10 @@ import { createConnection, getConnection } from "typeorm";
 export class GameController {
   constructor(
     private gameService: GameService
-  ) {}
+  ) {
+    console.log('game controller');
+    
+  }
 
   
   @Get("/gameToFields")
