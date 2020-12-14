@@ -13,8 +13,7 @@ class Menu extends React.Component {
   constructor() {
     super();
     this.state = {
-      // pagesNames: ["משחקים", "בתי ספר", "מורים", "תלמידים"],
-      pagesNames: ["משחקים"],
+      pagesNames: ["משחקים", "בתי ספר", "מורים", "תלמידים"],
       תלמידים: "students",
       מורים: "teachers",
       "בתי ספר": "schools",

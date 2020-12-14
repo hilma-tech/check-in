@@ -1,6 +1,5 @@
-import { Field } from "src/field/field.entity";
 import {
-  Entity,
+    ChildEntity,
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
@@ -17,7 +16,7 @@ import {
 import { User } from '@hilma/auth-nest';
 import { School } from "src/school/school.entity";
 
-@Entity()
+@ChildEntity()
 export class Teacher extends User{
   @IsDefined()
   @IsString()
