@@ -181,9 +181,9 @@ class AddGame extends Component {
     } catch (error) {
       if (error.status === 500){
         this.setState({savingInfo: false})
-        this.props.errorMsg.setErrorMsg("קיים כבר משחק בשם זה. נסה שם אחר.");
+        this.props.errorMsg.setErrorMsg("קיים כבר משחק בשם זה. נסו שם אחר.");
       } else {
-        this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסה לבדוק את החיבור");
+        this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסו לבדוק את החיבור");
       }
     }
   };
@@ -191,7 +191,7 @@ class AddGame extends Component {
   //   try {
   //     const response = await axios.post("/api/field/save", {gameId: gameId, data: this.state.fieldsData})
   //   } catch (error) {
-  //     this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסה לבדוק את החיבור");
+  //     this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסו לבדוק את החיבור");
   //   }
   // }
 
