@@ -174,9 +174,9 @@ class AddGame extends Component {
         })
       );
       // this.addGameFieldsDb(response.data[0].id);
-      if (!this.props.games.haveMoreGames) {
-        this.props.games.addGame(response.data);
-      }
+      // if (!this.props.games.haveMoreGames) {
+      this.props.games.addGame(response.data);
+      // }
       this.props.history.goBack(); // after saving go back
     } catch (error) {
       if (error.status === 500){

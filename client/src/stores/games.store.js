@@ -25,7 +25,7 @@ class Games {
         try{
             this.startGetGames = true;
             const { data } = await axios.get("/api/game/getGames",{ params:{ gamesLength: this.gamesList.length }});
-            this.gamesList = this.gamesList.concat(data.gamesInfo)
+            this.gamesList = this.gamesList.concat(data.gamesInfo.reverse())
             this.haveMoreGames = data.haveMoreGames;
             this.successGettingGames = true;
             this.startGetGames = false;
@@ -36,7 +36,7 @@ class Games {
     }
 
     addGame = (newGame) => {
-        this.gamesList.push(newGame)
+        this.gamesList = [newGame, ...this.gamesList]
     }
 
     setShowOption = (gameIndex) => {
