@@ -26,12 +26,12 @@ class RowData extends React.Component {
             this.props.categors.map((categor, index) => {
               return categor !== "כיתות" ? (
                 <p className={"item" + index} key={index}>
-                  {this.props.data[categor]}
+                  {this.props.data[this.props.enCategor[categor]]}
                 </p>
               ) : (
                 <div key={index} className={"item" + index + " classes"}>
                   {" "}
-                  {this.props.data[categor].map((val, categorIndex) => {
+                  {this.props.data[this.props.enCategor[categor]].map((val, categorIndex) => {
                     return <p key={categorIndex}>{val}</p>;
                   })}{" "}
                 </div>

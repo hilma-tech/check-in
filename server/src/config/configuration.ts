@@ -16,7 +16,8 @@ export default () => ({
         "SAdminAddGames",
         "SAdminGames",
         "SAdminGamesList",
-        "SAdminEditGames"
+        "SAdminEditGames",
+        "SAdminSchools"
       ],
       defaultHomePage: "SAdminGames"
     }

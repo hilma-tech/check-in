@@ -58,15 +58,13 @@ class SuperAdminRoute extends React.Component {
               redirectComponent={GamesRouter}
               component={EditGame}
             />
-          <Route path="/superAdmin/:smth" component={ErrorPage} />
-          {/* <PrivateRoute
+          <PrivateRoute
               path="/superAdmin/schools"
               exact
               componentName="SAdminSchools"
-       
               redirectComponent={GamesRouter}
               component={SchoolsList}
-            /> */}
+            />
           {/* <PrivateRoute
               path="/superAdmin/teachers"
               exact
@@ -127,6 +125,7 @@ class SuperAdminRoute extends React.Component {
             >
               <h4>student edit</h4>
             </PrivateRoute> */}
+            <Route path="/superAdmin/:smth" component={ErrorPage} />
         </Switch>
       </>
     );
