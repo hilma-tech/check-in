@@ -22,29 +22,11 @@ export class Teacher extends User{
   @IsString()
   @Length(1, 30)
   @Column({ type: "varchar", length: 50})
-  firstName: string;
-
-  @IsDefined()
-  @IsString()
-  @Length(1, 30)
-  @Column({ type: "varchar", length: 50})
-  lastName: string;
-
-  @IsDefined()
-  @IsString()
-  @Length(1, 30)
-  @Column({ type: "varchar", length: 50})
-  email: string;
+  name: string;
 
   @OneToMany(
     type => School,
     school => school.id
   )
   schoolId: School;
-
-//   @Column()
-//   created: Timestamp;
-
-//   @Column()
-//   updated: Timestamp;
 }
