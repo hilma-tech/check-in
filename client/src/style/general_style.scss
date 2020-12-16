@@ -78,3 +78,15 @@ textarea::placeholder{
     font-family: Assistant;
     font-weight: lighter;
 }
+
+// if we want to make it look nice in other places we'll ned to work with a mixin
+// @mixin imgCover($mainPage) {
+//     @if $mainPage==true {
+//         width: 20vw;
+//         height: 11.5vw;
+//     } @else if $mainPage==false {
+//         width: 25vw;
+//         height: 16vw;
+//     }
+    
+//   }
