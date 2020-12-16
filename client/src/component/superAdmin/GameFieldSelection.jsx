@@ -68,6 +68,7 @@ class GameFieldSelection extends Component {
         <label className="gridFieldInputs">
           {sixArray.map((inputId, index) => {
             let input = this.props.originalValue.filter(
+
               (valueArray) => valueArray.id === inputId
             );
             if (input[0]) {
@@ -102,19 +103,19 @@ class GameFieldSelection extends Component {
 
   //sends name to parent
   sendNameValue = (props) => {
-    this.props.name(props.target.value, this.props.fieldId);
+    this.props.name(props.target.value, this.props.fieldI);
   };
 
   //sends selection to parent
   sendSelection = (props) => {
-    this.props.selection(props.value, this.props.fieldId);
+    this.props.selection(props.value, this.props.fieldI);
   };
 
   //sends input value ENETERED BY USER to parent
   sendFieldValue = (props) => {
     this.props.fieldValue(
       props.target.value,
-      this.props.fieldId,
+      this.props.fieldI,
       props.target.id,
       null
     );
@@ -123,7 +124,7 @@ class GameFieldSelection extends Component {
   sendImageFieldValue = (value) => {
     this.props.fieldValue(
       value.value,
-      this.props.fieldId,
+      this.props.fieldI,
       null,
       value.link,
       value.id

@@ -1,4 +1,4 @@
-import { Game } from './game.entity';
+import { Game } from "./game.entity";
 import {
   Body,
   Controller,
@@ -9,74 +9,49 @@ import {
   UploadedFiles,
   Put,
   Param
-} from '@nestjs/common';
-import { GameService } from './game.service';
-import {GameSaveReq, GetGameSkip} from './game.dtos'
-import { FieldService } from 'src/field/field.service';
+} from "@nestjs/common";
+import { GameService } from "./game.service";
+import { GameSaveReq, GetGameSkip } from "./game.dtos";
+import { FieldService } from "src/field/field.service";
 import {
   UseFilesHandler,
   FilesType,
-  ImageService,
-} from '@hilma/fileshandler-typeorm';
-import { Field } from '../field/field.entity';
-import { UseJwtAuth } from '@hilma/auth-nest';
-import {createConnection, getConnection} from "typeorm";
+  ImageService
+} from "@hilma/fileshandler-typeorm";
+import { Field } from "../field/field.entity";
+import { UseJwtAuth } from "@hilma/auth-nest";
+import { createConnection, getConnection } from "typeorm";
 
-
-@Controller('api/game')
+@Controller("api/game")
 export class GameController {
   constructor(
     private gameService: GameService,
     private fieldService: FieldService,
-    private readonly imageService: ImageService,
+    private readonly imageService: ImageService
   ) {}
 
-  @Get('/gameToFields')
-  async getGameFields() {
-    return await this.gameService.returnGames(0, 50)
+  
+  @Get("/gameToFields")
+  async getGameFields(@Req() req: any) {
+    return await this.gameService.returnGames(req.skipON, req.munOfGames);
   }
 
-  @Get('/gameGameInfo')
+  @UseJwtAuth("superAdmin")
+  @Get("/getGameInfo")
   async getGameInfo(@Req() ide) {
-    return await this.gameService.getGameInfo(ide.query)
+    return await this.gameService.getGameInfo(ide.query);
   }
 
-  @UseJwtAuth('superAdmin')
-  @Post('/addGame')
+  @UseJwtAuth("superAdmin")
+  @Post("/addGame")
   @UseFilesHandler()
   async saveGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
-    console.log("req", req);
-    
-    if(req.game.image.value){
-      
-      let imgPath = await this.imageService.save(files, req.game.image.id);
-      req.game.image.value = imgPath;
-      
-    } else {
-      req.game.image.value = "https://site.groupe-psa.com/content/uploads/sites/9/2016/12/white-background-2.jpg";
-    }
-
-    req.field.forEach(async (img, index) => {
-      if ('image' === img.selection) {
-        let imgPath = await this.imageService.save(files, img.value[0].id);
-        req.field[index].value[0].value = imgPath;
-      }
-    });
-// console.log('req.game.image.value: ', req.game.image.value, typeof req.game.image.value);
-    let game = await this.gameService.saveGame(req.game);
-    try{
-
-      await this.fieldService.saveField({ data: req.field, id: game.id });
-    } catch (err){
-      console.log('errrrrrrrrrrrrrrr');
-      
-    }
-    return game;
+    return await this.gameService.addGame(files,req)
   }
 
-  @UseJwtAuth('superAdmin')
-  @Get('/getGames')
-  getGames(@Req() skipON:any) {
+  @UseJwtAuth("superAdmin")
+  @Get("/getGames")
+  getGames(@Req() skipON: any) {
     return this.gameService.getGamesInfo(skipON.query);
   }
 }

@@ -1,5 +1,5 @@
 import { createMobXContext } from '@hilma/tools'
-import { makeObservable, observable, action  } from 'mobx'
+import { makeObservable, observable, action } from 'mobx'
 
 class Name {
     name = ""

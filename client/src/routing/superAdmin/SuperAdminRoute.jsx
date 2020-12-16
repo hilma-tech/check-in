@@ -18,7 +18,7 @@ import "../../style/superAdmin/disp.scss"
 
 class SuperAdminRoute extends React.Component {
   componentDidMount(){
-    setTimeout(() => { window.location.pathname = '/signin' }, 155520000000)
+    setTimeout(() => { window.location.pathname = '/signin' }, 155520000)
   }
   render() {
   
@@ -26,6 +26,14 @@ class SuperAdminRoute extends React.Component {
       <>
           <Menu  />
         <Switch>
+        <PrivateRoute
+            path="/superAdmin"
+            exact
+            redirectPath="/signin"
+            componentName="SAdminGames"
+            redirectComponent={SignIn}
+            component={GamesRouter}
+          />
           <PrivateRoute
             path="/superAdmin/games"
             exact

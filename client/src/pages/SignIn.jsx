@@ -53,7 +53,11 @@ class SignIn extends Component {
         this.props.history.push("/superAdmin/games");
         window.location.pathname = "/superAdmin/games"
       } else {
-        throw {status: 401}
+        if(username.length === 0 || password.length === 0){
+          this.props.errorMsg.setErrorMsg('נא למלא את כל השדות.');
+        } else{
+          throw {status: 401}
+        }
       }
     } catch (error) {
       if(error.status === 401){
