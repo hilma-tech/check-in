@@ -52,7 +52,8 @@ $gameimgwidth: 20vw;
   height: 5vw;
   width: 5vw;
   position: relative;
-  top: 2.5vw;
+  top: 2.5vw; 
+  @include mouse(point);
 }
 
 .imageContainer {
@@ -106,6 +107,7 @@ $gameimgwidth: 20vw;
 .optionIcon {
   height: 1.5vw;
   width: 3.5vw;
+  @include mouse(point);
 }
 
 .clockIcon {
@@ -143,5 +145,3 @@ img {
   height: 11.5vw;
   width: 20vw;
 }
-
-

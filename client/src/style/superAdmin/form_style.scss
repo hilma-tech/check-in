@@ -50,6 +50,7 @@
     margin: 0;
     margin-bottom: 1vh;
     @include adding-button;
+    @include mouse(point);
 }
 .addIcon{
     width: 1.25vw;

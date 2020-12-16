@@ -17,6 +17,8 @@
 .chosenImg {
   margin: 0px;
   padding: 0px;
+  height: 16vw;
+  width: 25vw;
   object-fit: cover;
   border-radius: 2vw;
 }
@@ -31,6 +33,7 @@
 }
 
 .borderCameraIconLabel{
+  @include mouse(point);
   position: relative;
   display: flex;
   justify-content: center;
@@ -48,6 +51,7 @@
 }
 
 // img {
-//   @include imgCover(false);
-// }
-
+  //   @include imgCover(false);
+  // }
+  
+  

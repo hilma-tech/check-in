@@ -79,14 +79,13 @@ textarea::placeholder{
     font-weight: lighter;
 }
 
-// if we want to make it look nice in other places we'll ned to work with a mixin
-// @mixin imgCover($mainPage) {
-//     @if $mainPage==true {
-//         width: 20vw;
-//         height: 11.5vw;
-//     } @else if $mainPage==false {
-//         width: 25vw;
-//         height: 16vw;
-//     }
+@mixin mouse($type) {
+    @if $type==point {
+        cursor:  pointer;
+    } @else if $type==text {
+        cursor: text;
+    } @else if $type==arrow {
+        cursor: default;
+    }
     
-//   }
+}

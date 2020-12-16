@@ -7,10 +7,15 @@
     margin-bottom: 1vh;
 }
 
+// #fieldType {
+//     @include mouse(point);
+// }
+
 .gameFieldSelection {
     display: flex;   
     align-items: flex-start;
     width: 85vw;
+    @include mouse(point);
 }
 
 .fieldSelectionInput{
@@ -18,6 +23,7 @@
     width: 98.75%;
     border: none;
     @include inputs-style;
+    
 }
 
 .gridFieldInputs{
