@@ -11,6 +11,7 @@ export class SchoolController {
         console.log('school controller');
       }
 
+      @UseJwtAuth("superAdmin")
       @Get("/getGameInfo")
       async getSchoolsInfo() {
         return await this.schoolService.getSchools()
