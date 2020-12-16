@@ -8,6 +8,11 @@ class StudentsList extends React.Component {
     super();
     this.state = {
       categors: ["שם התלמיד", "בית ספר", "כיתה"],
+      enCategor: {
+        "שם התלמיד": "name",
+        "כיתה": "class",
+        "schoolName": "בית ספר"
+      },
       listDataStudents: [
         {
           id: 1,
@@ -68,7 +73,7 @@ class StudentsList extends React.Component {
   };
   render() {
     return (
-      <div className="StudentsList" dir="rtl">
+      <div className="StudentsList withMenu" dir="rtl">
         <div className="PageTitles">
           <p>תלמידים</p>
           {/* for now */}
@@ -96,6 +101,7 @@ class StudentsList extends React.Component {
         <GeneralTable
           allData={this.state.listDataStudents}
           categors={this.state.categors}
+          enCategor={this.state.enCategor}
         />
       </div>
     );

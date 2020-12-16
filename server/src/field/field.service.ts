@@ -11,9 +11,11 @@ export class FieldService {
   constructor(
     @InjectRepository(Field)
     private fieldRepository: Repository<Field>,
-    @InjectRepository(Game)
-    private gameRepository: Repository<Game>
-  ) {}
+    // @InjectRepository(Game)
+    // private gameRepository: Repository<Game>
+  ) {
+    console.log('field service');
+  }
 
   async saveField(@Body() req: SaveFieldDto) {
     req.data.map(async fieldObject => {

@@ -3,51 +3,25 @@ import Slide from "@material-ui/core/Slide";
 import GeneralTable from "../../component/superAdmin/GeneralTable.jsx";
 import "../../style/superAdmin/table_style.css";
 
+const axios = require("axios").default;
+
 class SchoolsList extends React.Component {
   constructor() {
     super();
     this.state = {
       categors: ["שם בית הספר", "עיר"],
-      listDataSchools: [
-        {
-          id: 1,
-          "שם בית הספר": "עשה חיל",
-          עיר: "אפרת",
-        },
-        {
-          id: 2,
-          "שם בית הספר": "עשה חיל",
-          עיר: "אפרת",
-        },
-        {
-          id: 3,
-          "שם בית הספר": "עשה חיל",
-          עיר: "אפרת",
-        },
-        {
-          id: 4,
-          "שם בית הספר": "עשה חיל",
-          עיר: "אפרת",
-        },
-        {
-          id: 5,
-          "שם בית הספר": "עשה חיל",
-          עיר: "אפרת",
-        },
-        {
-          id: 6,
-          "שם בית הספר": "עשה חיל",
-          עיר: "אפרת",
-        },
-        {
-          id: 7,
-          "שם בית הספר": "עשה חיל",
-          עיר: "אפרת",
-        },
-      ],
+      enCategor: {
+        "שם בית הספר": "name",
+        "עיר": "city"
+      },
+      listDataSchools: [],
       searchVal: "",
       displaySearch: false,
     };
+  }
+  componentDidMount = async () => {
+    const { data } = await axios.get("/api/school/getGameInfo");
+    this.setState({listDataSchools: data})
   }
 
   //Save the user search value as searchVal in state.
@@ -61,7 +35,7 @@ class SchoolsList extends React.Component {
   };
   render() {
     return (
-      <div className="SchoolsList" dir="rtl">
+      <div className="SchoolsList withMenu" dir="rtl">
         <div className="PageTitles">
           <p>בתי ספר</p>
           {/* for now */}
@@ -89,6 +63,7 @@ class SchoolsList extends React.Component {
         <GeneralTable
           allData={this.state.listDataSchools}
           categors={this.state.categors}
+          enCategor={this.state.enCategor}
         />
       </div>
     );

@@ -25,10 +25,11 @@ import { createConnection, getConnection } from "typeorm";
 @Controller("api/game")
 export class GameController {
   constructor(
-    private gameService: GameService,
-    private fieldService: FieldService,
-    private readonly imageService: ImageService
-  ) {}
+    private gameService: GameService
+  ) {
+    console.log('game controller');
+    
+  }
 
   
   @Get("/gameToFields")

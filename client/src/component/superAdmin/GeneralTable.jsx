@@ -34,6 +34,7 @@ class GeneralTable extends React.Component {
                   key={index}
                   data={val}
                   categors={this.props.categors}
+                  enCategor={this.props.enCategor}
                 />
               );
             })

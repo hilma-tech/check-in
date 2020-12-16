@@ -15,6 +15,8 @@ export class SuperAdminService extends UserService {
         protected readonly jwtService: JwtService,
         protected readonly configService: ConfigService,
     ) {
+        
         super(config_options, userRepository, jwtService, configService);
+        console.log('SuperAdminService');
     }
 }
