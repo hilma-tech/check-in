@@ -67,9 +67,12 @@ export class GameService {
     let haveMoreGames = numGames > skipON.gamesLength + 50 ? true : false;
     let gamesInfo = await this.gameRepository.find({
       where: [{ suspended: false }],
-      skip: (numGames - 50 - skipON.gamesLength) < 0 ? 0 : numGames - 50 - skipON.gamesLength,
-      take: (numGames - 50 - skipON.gamesLength) < 0 ? numGames - skipON.gamesLength : 50,
-      select: ["id", "game_name", "image"]
+      skip: skipON.gamesLength,
+      take: 50,
+      select: ["id", "game_name", "image"],
+      order: {
+        id: "DESC"
+    }
     });
     return { gamesInfo: gamesInfo, haveMoreGames: haveMoreGames };
   }

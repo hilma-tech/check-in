@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -19,8 +19,18 @@ import { AuthProvider, PrivateRoute } from "@hilma/auth";
 import Menu from "./component/superAdmin/Menu";
 import PopUpError from './component/popUpError'
 import ErrorPage from "./pages/404Page";
+import { useIsAuthenticated } from '@hilma/auth';
 
 function App() {
+  let isAuthenticated = useIsAuthenticated();
+
+  useEffect(()=>{
+    console.log('njcdjsnvfk');
+    if (!isAuthenticated && !(window.location.pathname !== '/signin' || window.location.pathname !== '/')){
+      window.location.pathname = '/signin'
+    }
+  },[isAuthenticated])
+
   return (
     <div className="App">
       

@@ -17,9 +17,6 @@ import ErrorPage from "../../pages/404Page.jsx";
 import "../../style/superAdmin/disp.scss"
 
 class SuperAdminRoute extends React.Component {
-  componentDidMount(){
-    setTimeout(() => { window.location.pathname = '/signin' }, 155520000)
-  }
   render() {
   
     return (

@@ -1,6 +1,6 @@
 export default () => ({
   auth: {
-    ttl: {'SuperAdmin': 155520000},
+    ttl: {'SuperAdmin': 1000},
     secretOrKey: 'hi@$#$T46btrtges',
     accessToken_cookie: 'klool'
   },

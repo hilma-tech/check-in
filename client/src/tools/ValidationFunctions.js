@@ -1,15 +1,15 @@
 //Check validation for user name
 export function userNameValidation(userName) {
     if (userName === null || userName.length === 0) {
-        return '** חייב להכניס שם משתמש **'
+        return '** חייב להכניס כתובת מייל **'
     } else if (userName.length > 30 || userName.length < 8) {
-        return '** שם משתמש לא תקין **'
+        return '** כתובת מייל לא תקין **'
     } else if (userName.trim().length === 0) {
-        return '** שם משתמש לא תקין **'
+        return '** כתובת מייל לא תקין **'
     } else if ((/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`\s]/).test(userName)) {
-        return '** שם משתמש לא תקין **'
+        return '** כתובת מייל לא תקין **'
     } else if (!(/[A-Za-z\u0590-\u05EA0-9]/).test(userName)) {
-        return '** שם משתמש לא תקין **'
+        return '** כתובת מייל לא תקין **'
     }  else {
         return ''
     }
