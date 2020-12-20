@@ -11,24 +11,16 @@ import { JwtStrategy, USER_MODULE_OPTIONS } from "@hilma/auth-nest";
 import { SuperAdminService } from "src/super-admin/super-admin.service";
 import { SuperAdmin } from "src/super-admin/super-admin.entity";
 import { FieldModule } from "src/field/field.module";
-import { SuperAdminModule } from "src/super-admin/super-admin.module";
-
+import { UserModule } from '@hilma/auth-nest';
 @Module({
   imports: [
     JwtModule.register({}),
     FieldModule,
-    SuperAdminModule,
+    UserModule,
     TypeOrmModule.forFeature([Game]),
   ],
   controllers: [GameController],
-  providers: [
-    GameService,
-    JwtStrategy,
-    {
-      provide: "UserService",
-      useExisting: SuperAdminService
-    },
-  ],
+  providers: [GameService],
   exports:[GameService]
 })
 export class GameModule {}

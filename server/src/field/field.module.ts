@@ -6,27 +6,17 @@ import { FieldController } from './field.controller';
 import { Field } from './field.entity';
 import { FieldService } from './field.service';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
-import { SuperAdminService } from 'src/super-admin/super-admin.service';
-import { SuperAdmin } from 'src/super-admin/super-admin.entity';
-import { GameModule } from 'src/game/game.module';
-import { SuperAdminModule } from 'src/super-admin/super-admin.module';
+import { UserModule } from '@hilma/auth-nest';
 
 @Module(
   {
     imports: [
       TypeOrmModule.forFeature([Field]), 
-    SuperAdminModule, 
+    UserModule, 
     JwtModule.register({})],
     controllers: [FieldController],
 
-    providers: [
-      FieldService, JwtStrategy,
-      {
-        provide: 'UserService',
-        useExisting: SuperAdminService,
-      },
-     ],
+    providers: [FieldService],
     exports: [FieldService]
   })
 export class FieldModule { }
