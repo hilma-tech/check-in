@@ -12,7 +12,7 @@ export class SchoolController {
       }
 
       @UseJwtAuth("superAdmin")
-      @Get("/getGameInfo")
+      @Get("/getSchools")
       async getSchoolsInfo() {
         return await this.schoolService.getSchools()
       }
