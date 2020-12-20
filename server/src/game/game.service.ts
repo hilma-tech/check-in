@@ -63,7 +63,7 @@ export class GameService {
     return res;
   }
 
-  async getGamesInfo(@Req() skipON: GetGameSkip) {
+  async getGames(@Req() skipON: GetGameSkip) {
     let numGames = await this.gameRepository.count();
     let haveMoreGames = numGames > skipON.gamesLength + 50 ? true : false;
     let gamesInfo = await this.gameRepository.find({

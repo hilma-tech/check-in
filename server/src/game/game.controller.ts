@@ -61,6 +61,6 @@ export class GameController {
   @UseJwtAuth('superAdmin')
   @Get('/getGames')
   getGames(@Req() skipON: any) {
-    return this.gameService.getGamesInfo(skipON.query);
+    return this.gameService.getGames(skipON.query);
   }
 }
