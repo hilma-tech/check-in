@@ -9,9 +9,7 @@ export class SchoolService {
     constructor(
         @InjectRepository(School)
         private schoolRepository: Repository<School>
-      ) { 
-        console.log('School Service');
-      }
+      ) {}
 
     async getSchools(){
 

@@ -18,10 +18,7 @@ export class GameService {
     private gameRepository: Repository<Game>,
     private fieldService: FieldService,
     private readonly imageService: ImageService,
-  ) { 
-    console.log('Game Service');
-    
-  }
+  ) {}
 
     async addGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq){
       if(req.game.image.value){

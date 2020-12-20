@@ -20,7 +20,9 @@ import { createConnection, getConnection } from 'typeorm';
 
 @Controller('api/game')
 export class GameController {
-  constructor(private gameService: GameService) {}
+  constructor(
+    private gameService: GameService
+    ) {}
 
   @Get('/gameToFields')
   async getGameFields(@Req() req: any) {
@@ -37,8 +39,6 @@ export class GameController {
   @Post('/addGame')
   @UseFilesHandler()
   async saveGame(@UploadedFiles() files: FilesType, @Body() req) {
-    console.log(req, "req");
-    
     req.field.map(eachField => {
       if( eachField.selection !== 'image') {
         eachField.value.map(singularInp => {
