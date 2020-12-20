@@ -21,6 +21,7 @@ export class Field {
   field_name: string;
 
   @IsDefined()
+  @Column({ type: 'varchar', length: 50 })
   type: string;
 
   @ManyToOne(type => Game, game => game.id)

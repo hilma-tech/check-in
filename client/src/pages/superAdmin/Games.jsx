@@ -34,8 +34,8 @@ class Games extends Component {
     }
   }
 
-  getGames = () => {
-    let getGames = this.props.games.setGames();
+  getGames = async () => {
+    let getGames = await this.props.games.setGames();
     if (!this.props.games.successGettingGames) {
       this.props.errorMsg.setErrorMsg(
         "הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת."
