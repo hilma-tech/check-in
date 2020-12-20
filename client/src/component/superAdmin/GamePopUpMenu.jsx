@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../../style/superAdmin/pop_up_style.css";
+import "../../style/superAdmin/pop_up_style.scss";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 

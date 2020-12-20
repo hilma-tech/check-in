@@ -156,7 +156,7 @@ class AddGame extends Component {
     return currFieldData;
   };
   addGameDb = async () => {
-    let currGameInfo = {
+    let currGameInfo = { //!
       game_name: this.state.gameName,
       image: this.state.image,
       description: this.state.gameDescription,

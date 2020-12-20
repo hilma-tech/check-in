@@ -1,4 +1,6 @@
 @import "../fonts/fonts.scss";
+@import "../general_style.scss";
+
 .hiddenInput {
   display: none;
   height: 0px;
@@ -15,8 +17,9 @@
 .chosenImg {
   margin: 0px;
   padding: 0px;
-  width: 100%;
-  height: 100%;
+  height: 16vw;
+  width: 25vw;
+  object-fit: cover;
   border-radius: 2vw;
 }
 
@@ -30,6 +33,7 @@
 }
 
 .borderCameraIconLabel{
+  @include mouse(point);
   position: relative;
   display: flex;
   justify-content: center;
@@ -46,3 +50,8 @@
   margin-top: 2.5vh;
 }
 
+// img {
+  //   @include imgCover(false);
+  // }
+  
+  

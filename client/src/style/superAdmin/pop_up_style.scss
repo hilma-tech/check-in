@@ -1,3 +1,5 @@
+@import "../general_style.scss";
+
 /* .popUp {
     position: absolute;
     display: flex;
@@ -33,6 +35,7 @@
     font-weight: 200;
     text-align: right;
     margin-right: 1vw;
+    
 }
 
 .divider {
@@ -45,6 +48,7 @@
 .optionRow {
     display: flex;
     flex-direction: row;
+    @include mouse(point);
 }
 
 .popUpIcon {

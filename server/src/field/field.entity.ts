@@ -3,11 +3,10 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  JoinColumn,
   ManyToOne,
 } from 'typeorm';
 import { GameType } from './game.type.enum';
-import { IsDefined, IsString, Length, Matches, IsEnum, IsNumber } from 'class-validator';
+import { IsDefined, IsString, Length, Matches, IsEnum, IsNumber, ValidateNested } from 'class-validator';
 
 @Entity()
 export class Field {
@@ -22,9 +21,6 @@ export class Field {
   field_name: string;
 
   @IsDefined()
-  @IsEnum(GameType)
-  @Length(1, 30)
-  @Column({ type: 'enum', enum: GameType, default: GameType.TEXT })
   type: string;
 
   @ManyToOne(type => Game, game => game.id)

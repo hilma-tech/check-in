@@ -78,3 +78,14 @@ textarea::placeholder{
     font-family: Assistant;
     font-weight: lighter;
 }
+
+@mixin mouse($type) {
+    @if $type==point {
+        cursor:  pointer;
+    } @else if $type==text {
+        cursor: text;
+    } @else if $type==arrow {
+        cursor: default;
+    }
+    
+}

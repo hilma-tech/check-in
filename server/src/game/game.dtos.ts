@@ -1,6 +1,7 @@
 import {
   IsBoolean,
   IsDefined,
+  IsEnum,
   IsNumber,
   IsObject,
   IsString,
@@ -9,13 +10,23 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-
-export class IdAndValueDto {
+import { GameType } from 'src/field/game.type.enum';
+export class ImageDto {
   @IsDefined()
   @IsNumber()
   id: number;
   @IsDefined()
   @IsString()
+  value: string;
+}
+
+export class FieldValueDto {
+  @IsDefined()
+  @IsNumber()
+  id: number;
+  @IsDefined()
+  @IsString()
+  // @Matches(/[\u0590-\u05FF]^[^0-9]+$/)
   // @Length(1, 30)
   value: string;
 }
@@ -30,15 +41,15 @@ export class GameSaveDto {
   @IsDefined()
   @IsObject()
   @ValidateNested({ each: true })
-  @Type(() => IdAndValueDto)
-  image: IdAndValueDto;
+  @Type(() => ImageDto)
+  image: ImageDto;
   @IsDefined()
   @IsString()
-  @Length(1, 255)
+  @Length(1, 260)
   description: string;
   @IsDefined()
   @IsString()
-  @Length(1, 255)
+  @Length(1, 260)
   requirements: string;
   @IsDefined()
   @IsBoolean()
@@ -49,15 +60,15 @@ export class FieldArrDto {
   @IsDefined()
   @IsString()
   @Length(1, 30)
+  @Matches(/^[\u0590-\u05FF]*$/)
   name: string;
   @IsDefined()
-  @IsString()
-  @Length(1, 30)
-  selection: string;
+  @IsEnum(GameType)
+  selection: GameType;
   @IsDefined()
   @ValidateNested({ each: true })
-  @Type(() => IdAndValueDto)
-  value: IdAndValueDto[];
+  @Type(() => FieldValueDto)
+  value: FieldValueDto[];
   @IsDefined()
   @IsNumber()
   order: number;

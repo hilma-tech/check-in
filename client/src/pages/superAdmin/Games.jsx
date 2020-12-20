@@ -10,10 +10,10 @@ import Fade from "@material-ui/core/Fade";
 import { errorMsgContext } from "../../stores/error.store";
 import { gamesContext } from "../../stores/games.store";
 import { chosenGameEditContext } from "../../stores/chosenGameEdit.store";
-import { observer } from "mobx-react"
-import { withContext } from '@hilma/tools';
-import LoadingPage from '../../component/LoadingPage.jsx'
-import { IsAuthenticatedContext } from '@hilma/auth';
+import { observer } from "mobx-react";
+import { withContext } from "@hilma/tools";
+import LoadingPage from "../../component/LoadingPage.jsx";
+import { IsAuthenticatedContext } from "@hilma/auth";
 
 const axios = require("axios").default;
 
@@ -28,18 +28,20 @@ class Games extends Component {
   }
 
   componentDidMount() {
-    this.props.games.resetShowOptions()
+    this.props.games.resetShowOptions();
     if (this.props.games.gamesList.length === 0) {
-      this.getGames()
+      this.getGames();
     }
   }
 
   getGames = () => {
-    let getGames = this.props.games.setGames()
+    let getGames = this.props.games.setGames();
     if (!this.props.games.successGettingGames) {
-      this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת.');
+      this.props.errorMsg.setErrorMsg(
+        "הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת."
+      );
     }
-  }
+  };
 
   onClickAddGame = () => {
     this.props.history.push(this.props.location.pathname + "Add");
@@ -47,8 +49,8 @@ class Games extends Component {
 
   //TEMPORARILY COMMENTED OUT, WILL BE RETURN UPON PROPER ROUTING
   onClickEditGame = (gameId) => {
-    this.props.chosenGameEditContext.setgameId(gameId)
-    this.props.history.push(this.props.location.pathname + 'Edit');
+    this.props.chosenGameEditContext.setgameId(gameId);
+    this.props.history.push(this.props.location.pathname + "Edit");
   };
 
   //Save the user search value as searchVal in state.
@@ -89,10 +91,14 @@ class Games extends Component {
               <p className="searchIcon" onClick={this.activateSearch}></p>
             </form> */}
           </div>
-          {this.props.games.haveMoreGames && this.props.games.gamesList.length === 0 ?
-            displayLoading = true : displayLoading = false}
-          {this.props.games.haveMoreGames && this.props.games.gamesList.length === 0 ?
-            <LoadingPage /> :
+          {this.props.games.haveMoreGames &&
+          this.props.games.gamesList.length === 0
+            ? (displayLoading = true)
+            : (displayLoading = false)}
+          {this.props.games.haveMoreGames &&
+          this.props.games.gamesList.length === 0 ? (
+            <LoadingPage />
+          ) : (
             <div className="grid">
               <div onClick={this.onClickAddGame}>
                 <div className="imageContainer item3">
@@ -115,14 +121,25 @@ class Games extends Component {
                         mountOnEnter
                         unmountOnExit
                       >
-                        <PopUp onClickEditGame={this.onClickEditGame} gameId={image.id} />
+                        <PopUp
+                          onClickEditGame={this.onClickEditGame}
+                          gameId={image.id}
+                        />
                       </Fade>
-                      <img className="gameImg" alt="" src={image.image} />
+                      <div id="holdImg">
+                        <img className="gameImg" alt="" src={image.image} />
+                      </div>
                       <h2 className="gameTitleBackground"></h2>
-                      <h1 className="gameTitle">{image.game_name.length > 15 ? image.game_name.slice(0, 15) + '...' : image.game_name}</h1>
+                      <h1 className="gameTitle">
+                        {image.game_name.length > 15
+                          ? image.game_name.slice(0, 15) + "..."
+                          : image.game_name}
+                      </h1>
                       <img
                         className="optionIcon"
-                        onClick={() => { this.props.games.setShowOption(index) }}
+                        onClick={() => {
+                          this.props.games.setShowOption(index);
+                        }}
                         alt=""
                         src={optionicon}
                       />
@@ -131,15 +148,28 @@ class Games extends Component {
                 );
               })}
             </div>
-          }
+          )}
 
-          {this.props.games.startGetGames ? <img style={{ width: '8vw' }} src='/icons/loading.gif' alt='loading...'></img> :
+          {this.props.games.startGetGames ? (
+            <img
+              style={{ width: "8vw" }}
+              src="/icons/loading.gif"
+              alt="loading..."
+            ></img>
+          ) : (
             <button
-              className='showMoreGamesB'
+              className="showMoreGamesB"
               onClick={this.getGames}
-              style={{ display: this.props.games.haveMoreGames && !displayLoading ? 'inline-block' : 'none' }}>
+              style={{
+                display:
+                  this.props.games.haveMoreGames && !displayLoading
+                    ? "inline-block"
+                    : "none",
+              }}
+            >
               הצג עוד
-            </button>}
+            </button>
+          )}
         </div>
       </>
     );
@@ -150,8 +180,7 @@ const mapContextToProps = {
   errorMsg: errorMsgContext,
   games: gamesContext,
   chosenGameEditContext: chosenGameEditContext,
-  isAuthenticated: IsAuthenticatedContext
-}
-
+  isAuthenticated: IsAuthenticatedContext,
+};
 
 export default withContext(mapContextToProps)(withRouter(observer(Games)));

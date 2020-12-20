@@ -36,7 +36,7 @@ export class FieldService {
       }
       field.order = fieldObject.order;
       field.game = req.id;
-
+      
       let res = await this.fieldRepository.save(field);
     });
   }

@@ -16,7 +16,23 @@ export default () => ({
         "SAdminAddGames",
         "SAdminGames",
         "SAdminGamesList",
-        "SAdminEditGames"
+        "SAdminEditGames",
+        "SAdminSchools"
+      ],
+      defaultHomePage: "SAdminGames"
+    },
+    teacher: {
+      components: [
+      ],
+      defaultHomePage: "SAdminGames"
+    },
+    superTeacher: {
+      components: [
+      ],
+      defaultHomePage: "SAdminGames"
+    },
+    student: {
+      components: [
       ],
       defaultHomePage: "SAdminGames"
     }

@@ -1,3 +1,5 @@
+@import "../general_style.scss";
+
 .menu{
     display: flex;
     width: 85vw;
@@ -38,6 +40,9 @@
 
 .logOut{
     display: flex;
+    width: 12vw;
+    padding-left: 4vw;
+    @include mouse(point);
 }
 
 .logOut button{
@@ -47,6 +52,7 @@
     color: white;
     border: none;
     box-shadow: none;
+    @include mouse(point);
 }
 
 .logOut span{
