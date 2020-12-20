@@ -20,7 +20,7 @@ class SchoolsList extends React.Component {
     };
   }
   componentDidMount = async () => {
-    const { data } = await axios.get("/api/school/getGameInfo");
+    const { data } = await axios.get("/api/school/getSchools");
     this.setState({listDataSchools: data})
   }
 
