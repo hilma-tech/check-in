@@ -37,7 +37,6 @@ export class GameController {
   @Post('/addGame')
   @UseFilesHandler()
   async saveGame(@UploadedFiles() files: FilesType, @Body() req) {
-    console.log(req, "req");
     
     req.field.map(eachField => {
       if( eachField.selection !== 'image') {

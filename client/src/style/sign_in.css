@@ -2,11 +2,12 @@
   margin: 0vh;
   position: absolute;
   margin-right: 32.5%;
-  margin-top: 25vh;
+  margin-top: 16.5vh;
   display: flex;
   flex-direction: column;
   width: 35%;
   background-color: #d1e4fa00;
+  align-items: center;
 }
 
 .background {
@@ -40,6 +41,7 @@
   border-radius: 3vw;
   padding-right: 1.5vw;
   font-size: 2.5vh;
+  width: 30vw;
 }
 
 .signInButton {
@@ -52,6 +54,7 @@
   font-weight: bolder;
   border-radius: 3vw;
   border: none;
+  width: 30vw;
 }
 
 .forgot {

@@ -8,7 +8,6 @@ export class SchoolController {
     constructor(
         private schoolService: SchoolService
       ) {
-        console.log('school controller');
       }
 
       @UseJwtAuth("superAdmin")

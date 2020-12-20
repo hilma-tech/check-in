@@ -150,7 +150,7 @@ class Games extends Component {
             </div>
           )}
 
-          {this.props.games.startGetGames ? (
+          {this.startGetGames ? (
             <img
               style={{ width: "8vw" }}
               src="/icons/loading.gif"

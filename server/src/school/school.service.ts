@@ -10,7 +10,6 @@ export class SchoolService {
         @InjectRepository(School)
         private schoolRepository: Repository<School>
       ) { 
-        console.log('School Service');
       }
 
     async getSchools(){

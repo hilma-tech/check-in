@@ -14,7 +14,6 @@ export class FieldService {
     // @InjectRepository(Game)
     // private gameRepository: Repository<Game>
   ) {
-    console.log('field service');
   }
 
   async saveField(@Body() req: SaveFieldDto) {

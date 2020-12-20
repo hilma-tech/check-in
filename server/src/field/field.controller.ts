@@ -7,7 +7,6 @@ export class FieldController {
   constructor(
     // private fieldService: FieldService
     ) {
-    console.log('field constructor');
     
   }
 

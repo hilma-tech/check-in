@@ -17,9 +17,6 @@ import ErrorPage from "../../pages/404Page.jsx";
 import "../../style/superAdmin/disp.scss"
 
 class SuperAdminRoute extends React.Component {
-  componentDidMount(){
-    setTimeout(() => { window.location.pathname = '/signin' }, 155520000)
-  }
   render() {
   
     return (
@@ -58,13 +55,13 @@ class SuperAdminRoute extends React.Component {
               redirectComponent={GamesRouter}
               component={EditGame}
             />
-          <PrivateRoute
+          {/* <PrivateRoute
               path="/superAdmin/schools"
               exact
               componentName="SAdminSchools"
               redirectComponent={GamesRouter}
               component={SchoolsList}
-            />
+            /> */}
           {/* <PrivateRoute
               path="/superAdmin/teachers"
               exact
