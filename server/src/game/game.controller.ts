@@ -18,6 +18,8 @@ import { Field } from '../field/field.entity';
 import { UseJwtAuth } from '@hilma/auth-nest';
 import { createConnection, getConnection } from 'typeorm';
 
+// let {mustValid} = require("../server-tools/serverValidate.ts")
+
 @Controller('api/game')
 export class GameController {
   constructor(private gameService: GameService) {}
@@ -37,19 +39,21 @@ export class GameController {
   @Post('/addGame')
   @UseFilesHandler()
   async saveGame(@UploadedFiles() files: FilesType, @Body() req) {
-    console.log(req, "req");
-    
+    console.log(req, 'req');
+
     req.field.map(eachField => {
-      if( eachField.selection !== 'image') {
+      if (eachField.selection !== 'image') {
         eachField.value.map(singularInp => {
           let val = singularInp.value;
-          if ((/[a-z]/).test(val) || (/[A-Z]/).test(val)) {
-            throw new Error
-          }
-        })
-        
+          
+          
+
+          // if (funcs.mustInputValidation(val).length === 0) {
+          //   throw new Error();
+          // }
+        });
       }
-    })
+    });
     // todo map the field array
     // if(selection = 'image') {
     //   console.log('hi');

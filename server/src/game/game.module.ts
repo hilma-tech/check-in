@@ -11,12 +11,17 @@ import { JwtStrategy, USER_MODULE_OPTIONS } from "@hilma/auth-nest";
 import { SuperAdminService } from "src/super-admin/super-admin.service";
 import { SuperAdmin } from "src/super-admin/super-admin.entity";
 
+const {mustValid} = require("../server-tools/serverValidate")
+
+
+mustValid('hello');
 @Module({
   imports: [
     JwtModule.register({}),
     TypeOrmModule.forFeature([Game]),
     TypeOrmModule.forFeature([Field]),
-    TypeOrmModule.forFeature([SuperAdmin])
+    TypeOrmModule.forFeature([SuperAdmin]),
+    // mustValid
   ],
   controllers: [GameController],
   providers: [
