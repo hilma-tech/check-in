@@ -4,7 +4,9 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
-  MinKey
+  MinKey,
+  ManyToMany,
+  JoinTable
 } from "typeorm";
 import {
   IsDefined,
@@ -13,6 +15,7 @@ import {
   Matches,
   IsBoolean
 } from "class-validator";
+import { Class } from "src/class/class.entity";
 
 @Entity()
 export class Game {
@@ -60,4 +63,5 @@ export class Game {
   @IsBoolean()
   @Column({ type: "bit", default: false })
   suspended: boolean;
+
 }

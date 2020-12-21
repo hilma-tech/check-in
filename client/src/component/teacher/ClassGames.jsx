@@ -1,16 +1,27 @@
-import React from 'react';
+import React from "react";
 
 class ClassGames extends React.Component {
-    render() {
-        return (
-            <div className='gameContainer'>
-                <img className="classGameImg" alt="" src={this.props.image} />
-                <img className={this.props.chosen ? "classGameIconClose" : 'classGameIconAdd'} alt="" src={this.props.chosen ? '/icons/ionic-close-circle-outline.svg' : '/icons/ionic-ios-add-circle-outline.svg'} />
-                <h2 className="classGameTitleBackground"></h2>
-                <h1 className="classGameTitle">{this.props.name}</h1>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className="gameContainer">
+        <img className="classGameImg" alt="" src={this.props.image} />
+        <img
+          className={
+            this.props.chosen ? "classGameIconClose" : "classGameIconAdd"
+          }
+          alt=""
+          onClick={()=>{this.props.changeGameStatus(this.props.index)}}
+          src={
+            this.props.chosen
+              ? "/icons/ionic-close-circle-outline.svg"
+              : "/icons/ionic-ios-add-circle-outline.svg"
+          }
+        />
+        <h2 className="classGameTitleBackground"></h2>
+        <h1 className="classGameTitle">{this.props.name}</h1>
+      </div>
+    );
+  }
 }
 
 export default ClassGames;

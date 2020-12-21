@@ -19,44 +19,44 @@ class Games extends React.Component {
     constructor() {
         super();
         this.state = {
-            chosenGames: [{
-                name: "Gorilla",
-                url:
-                    "https://c402277.ssl.cf1.rackcdn.com/photos/18330/images/hero_small/Mountain_Gorilla_Silverback_WW22557.jpg?1576515753",
-            },
-            ],
-            gamesList: [{
-                name: "Orangutan",
-                url:
-                    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Orang_Utan%2C_Semenggok_Forest_Reserve%2C_Sarawak%2C_Borneo%2C_Malaysia.JPG/1200px-Orang_Utan%2C_Semenggok_Forest_Reserve%2C_Sarawak%2C_Borneo%2C_Malaysia.JPG",
-            },
-            {
-                name: "Baboon",
-                url:
-                    "https://upload.wikimedia.org/wikipedia/commons/3/35/Olive_baboon_Ngorongoro.jpg",
-            },
-            {
-                name: "Giraffe",
-                url: "https://www.andrewscamera.com/img/s/v-10/p1348222310-3.jpg",
-            },]
+            chosenGames: [],
+            gamesList: []
         }
     }
 
     componentDidMount() {
         this.props.games.resetShowOptions();
-        if (this.props.games.gamesList.length === 0) {
+        if (this.state.gamesList.length === 0) {
           this.getGames();
         }
       }
     
       getGames = async () => {
         let getGames = await this.props.games.setGames();
+        // console.log(this.props.games.getGamesList);
+        this.setState({gamesList: this.props.games.gamesList})
         if (!this.props.games.successGettingGames) {
           this.props.errorMsg.setErrorMsg(
             "הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת."
           );
         }
       };
+
+      removeGameFromClass = (index) => {
+        this.setState((prevState)=>{
+            let newGamesList = [...prevState.gamesList,prevState.chosenGames[index]]
+            prevState.chosenGames.splice(index,1)
+            return({chosenGames: prevState.chosenGames, gamesList: newGamesList});
+        })
+      }
+
+      addGameFromClass =(index) => {
+        this.setState((prevState)=>{
+            let newChosenGame= [...prevState.chosenGames, prevState.gamesList[index]]
+            prevState.gamesList.splice(index,1)
+            return({gamesList: prevState.gamesList, chosenGames: newChosenGame});
+        })
+      }
 
     render() {
         return (
@@ -68,11 +68,14 @@ class Games extends React.Component {
                 <div className="smallAlign" style={{top:'39.75vh'}}>
                     <div className='chosenGamesForClass'>
                         {
-                            this.state.chosenGames.map((gameData) => {
+                            this.state.chosenGames.map((gameData, i) => {
                                 return (<ClassGames
+                                    index={i}
+                                    changeGameStatus={this.removeGameFromClass}
                                     chosen={true}
-                                    name={gameData.name.length > 15 ? gameData.name.slice(0, 15) + "..." : gameData.name}
-                                    image={gameData.url}
+                                    name={gameData.game_name}
+                                    // name={gameData.name.length > 15 ? gameData.name.slice(0, 15) + "..." : gameData.name}
+                                    image={gameData.image}
                                 />)
                             })
                         }
@@ -80,10 +83,12 @@ class Games extends React.Component {
                     <p className='gameListTitle'>משחקים שיתן להוסיף:</p>
                     {/* add search option */}
                     <div className='listGamesForClass'>
-                        {this.props.games.gamesList.map((image, index) => {
+                        {this.state.gamesList.map((image, index) => {
                                 return (<ClassGames
+                                    changeGameStatus={this.addGameFromClass}
                                     chosen={false}
-                                    name={image.game_name.length > 15 ? image.game_name.slice(0, 15) + "..." : image.game_name}
+                                    name={image.game_name}
+                                    // name={image.game_name.length > 15 ? image.game_name.slice(0, 15) + "..." : image.game_name}
                                     image={image.image}
                                     index={index}
                                 />)
