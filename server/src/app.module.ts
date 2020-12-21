@@ -13,6 +13,7 @@ import { join } from 'path';
 import { StudentModule } from './student/student.module';
 import { SchoolModule } from './school/school.module';
 import { TeacherModule } from './teacher/teacher.module';
+import { ClassModule } from './class/class.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { TeacherModule } from './teacher/teacher.module';
     StudentModule,
     SchoolModule,
     TeacherModule,
+    ClassModule,
   ],
   controllers: [AppController],
   providers: [AppService],
