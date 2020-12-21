@@ -18,7 +18,7 @@ import { Field } from '../field/field.entity';
 import { UseJwtAuth } from '@hilma/auth-nest';
 import { createConnection, getConnection } from 'typeorm';
 
-// let {mustValid} = require("../server-tools/serverValidate.ts")
+let { mustValid } = require('../server-tools/serverValidate.ts');
 
 @Controller('api/game')
 export class GameController {
@@ -38,19 +38,17 @@ export class GameController {
   @UseJwtAuth('superAdmin')
   @Post('/addGame')
   @UseFilesHandler()
-  async saveGame(@UploadedFiles() files: FilesType, @Body() req) {
-    console.log(req, 'req');
+  async saveGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
+    console.log('hgffff');
 
     req.field.map(eachField => {
       if (eachField.selection !== 'image') {
         eachField.value.map(singularInp => {
           let val = singularInp.value;
-          
-          
-
-          // if (funcs.mustInputValidation(val).length === 0) {
-          //   throw new Error();
-          // }
+          console.log('GFD', mustValid(val));
+          if (mustValid(val).length !== 0) {
+            throw new Error();
+          }
         });
       }
     });
