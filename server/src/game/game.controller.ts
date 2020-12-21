@@ -17,12 +17,13 @@ import {
 import { Field } from '../field/field.entity';
 import { UseJwtAuth } from '@hilma/auth-nest';
 import { createConnection, getConnection } from 'typeorm';
-
-let { mustValid } = require('../server-tools/serverValidate.ts');
+const {mustValid} = require("../serverTools/ServerValid")
 
 @Controller('api/game')
 export class GameController {
-  constructor(private gameService: GameService) {}
+  constructor(
+    private gameService: GameService
+    ) {}
 
   @Get('/gameToFields')
   async getGameFields(@Req() req: any) {

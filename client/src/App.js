@@ -23,9 +23,7 @@ import { useIsAuthenticated } from '@hilma/auth';
 
 function App() {
   let isAuthenticated = useIsAuthenticated();
-  console.log('app');
   useEffect(()=>{
-    console.log('njcdjsnvfk');
     if (!isAuthenticated && !(window.location.pathname !== '/signin' || window.location.pathname !== '/')){
       window.location.pathname = '/signin'
     }

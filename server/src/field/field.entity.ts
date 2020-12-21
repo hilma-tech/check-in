@@ -21,6 +21,8 @@ export class Field {
   field_name: string;
 
   @IsDefined()
+  @IsString()
+  @Length(1, 30)
   @Column({ type: 'varchar', length: 50 })
   type: string;
 
