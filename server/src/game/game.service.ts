@@ -63,8 +63,8 @@ export class GameService {
   }
 
   async getGames(@Req() skipON: GetGameSkip) {
-    let numGames = await this.gameRepository.count();
-    let haveMoreGames = numGames > skipON.gamesLength + 50 ? true : false;
+    let numGames = await this.gameRepository.count();    
+    let haveMoreGames = numGames > Number(skipON.gamesLength) + 50 ? true : false;
     let gamesInfo = await this.gameRepository.find({
       where: [{ suspended: false }],
       skip: skipON.gamesLength,
