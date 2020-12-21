@@ -21,7 +21,9 @@ const {mustValid} = require("../serverTools/ServerValid")
 
 @Controller('api/game')
 export class GameController {
-  constructor(private gameService: GameService) {}
+  constructor(
+    private gameService: GameService
+    ) {}
 
   @Get('/gameToFields')
   async getGameFields(@Req() req: any) {
@@ -37,19 +39,17 @@ export class GameController {
   @UseJwtAuth('superAdmin')
   @Post('/addGame')
   @UseFilesHandler()
-  async saveGame(@UploadedFiles() files: FilesType, @Body() req) {
-    console.log(req, 'req');
+  async saveGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
+    console.log('hgffff');
 
     req.field.map(eachField => {
       if (eachField.selection !== 'image') {
         eachField.value.map(singularInp => {
           let val = singularInp.value;
-          console.log(module.exports, "eek");
-          
-
-          // if (funcs.mustInputValidation(val).length === 0) {
-          //   throw new Error();
-          // }
+          console.log('GFD', mustValid(val));
+          if (mustValid(val).length !== 0) {
+            throw new Error();
+          }
         });
       }
     });

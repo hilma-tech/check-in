@@ -6,9 +6,7 @@ import { FieldService } from "./field.service";
 export class FieldController {
   constructor(
     // private fieldService: FieldService
-    ) {
-    
-  }
+    ) { }
 
   //   @UseJwtAuth('superAdmin')
   // @Post('/getGameField')

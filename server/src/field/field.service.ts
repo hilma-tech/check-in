@@ -13,8 +13,7 @@ export class FieldService {
     private fieldRepository: Repository<Field>,
     // @InjectRepository(Game)
     // private gameRepository: Repository<Game>
-  ) {
-  }
+  ) {}
 
   async saveField(@Body() req: SaveFieldDto) {
     req.data.map(async fieldObject => {

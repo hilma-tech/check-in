@@ -7,8 +7,7 @@ import { UseJwtAuth } from "@hilma/auth-nest";
 export class SchoolController {
     constructor(
         private schoolService: SchoolService
-      ) {
-      }
+      ) {}
 
       @UseJwtAuth("superAdmin")
       @Get("/getSchools")

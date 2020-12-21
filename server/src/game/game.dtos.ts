@@ -26,8 +26,6 @@ export class FieldValueDto {
   id: number;
   @IsDefined()
   @IsString()
-  // @Matches(/[\u0590-\u05FF]^[^0-9]+$/)
-  // @Length(1, 30)
   value: string;
 }
 
