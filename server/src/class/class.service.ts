@@ -20,15 +20,28 @@ export class ClassService {
 
 
     async addGameRelation(@Body() req:any) {
-      let newGame = new Classs();
-      newGame.games = await this.gameRepository.find({where: {id: req.id}});
-      newGame.id = 6;
+      let ClassGame = new Classs();
+      ClassGame.games = await this.gameRepository.find({where: {id: req.id}});
+      ClassGame.id = 6;
       let ans = await this.classRepository.find({
         relations: ['games'],
         where: [{id: 6}]
       })
-      ans[0].games.push(newGame.games[0])
-      let newAddedGame = await this.classRepository.save(ans[0])
-      return { newAddedGame: newAddedGame};
+      ans[0].games.push(ClassGame.games[0])
+      let newlyAddedGame = await this.classRepository.save(ans[0])
+      return { newlyAddedGame: newlyAddedGame};
+    }
+
+    async removeGameRelation(@Body() req:any) {
+      let ClassModel = new Classs();
+      ClassModel.games = await this.gameRepository.find({where: {id: req.id}});
+      ClassModel.id = 6;
+      let ans = await this.classRepository.find({
+        relations: ['games'],
+        where: [{id: 6}]
+      })
+      ans[0].games.splice(req.id, 1);
+      let newRemovedGame = await this.classRepository.save(ans[0])
+      return { newRemovedGame: newRemovedGame};
     }
 }

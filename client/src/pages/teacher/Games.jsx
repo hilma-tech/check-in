@@ -42,12 +42,13 @@ class Games extends React.Component {
         }
       };
 
-      removeGameFromClass = (index) => {
+      removeGameFromClass = async (index) => {
         this.setState((prevState)=>{
             let newGamesList = [...prevState.gamesList,prevState.chosenGames[index]]
             prevState.chosenGames.splice(index,1)
             return({chosenGames: prevState.chosenGames, gamesList: newGamesList});
         })
+        await axios.post("/api/class/removeGameRelation", {id: this.state.chosenGames[index].id});
       }
 
       addGameToClass = async (index) => {
@@ -56,8 +57,7 @@ class Games extends React.Component {
             prevState.gamesList.splice(index,1)
             return({gamesList: prevState.gamesList, chosenGames: newChosenGame});
         })
-        const { data } = await axios.post("/api/class/addGameRelation", {id: this.state.gamesList[index].id});
-        console.log(data);
+        await axios.post("/api/class/addGameRelation", {id: this.state.gamesList[index].id});
       }
 
     render() {

@@ -11,4 +11,9 @@ export class ClassController {
     async addGameRelation(@Body() req: any) {
         return await this.classService.addGameRelation(req);
     }
+
+    @Post('/removeGameRelation')
+    async removeGameRelation(@Body() req: any) {
+        return await this.classService.removeGameRelation(req)
+    }
 }
