@@ -1,4 +1,14 @@
-import { Controller } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
+import {ClassService} from './class.service'
 
-@Controller('class')
-export class ClassController {}
+@Controller('api/class')
+export class ClassController {
+    constructor(
+        private classService: ClassService
+        ) {}
+
+    @Post('/addGameRelation')
+    async addGameRelation(@Body() req: any) {
+        return await this.classService.addGameRelation(req);
+    }
+}

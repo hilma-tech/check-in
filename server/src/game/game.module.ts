@@ -20,7 +20,7 @@ import { UserModule } from '@hilma/auth-nest';
     TypeOrmModule.forFeature([Game]),
     TypeOrmModule.forFeature([Field]),
     TypeOrmModule.forFeature([SuperAdmin]),
-    // mustValid
+    
   ],
   controllers: [GameController],
   providers: [GameService],

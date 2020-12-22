@@ -50,12 +50,14 @@ class Games extends React.Component {
         })
       }
 
-      addGameFromClass =(index) => {
+      addGameToClass = async (index) => {
         this.setState((prevState)=>{
             let newChosenGame= [...prevState.chosenGames, prevState.gamesList[index]]
             prevState.gamesList.splice(index,1)
             return({gamesList: prevState.gamesList, chosenGames: newChosenGame});
         })
+        const { data } = await axios.post("/api/class/addGameRelation", {id: this.state.gamesList[index].id});
+        console.log(data);
       }
 
     render() {
@@ -85,7 +87,7 @@ class Games extends React.Component {
                     <div className='listGamesForClass'>
                         {this.state.gamesList.map((image, index) => {
                                 return (<ClassGames
-                                    changeGameStatus={this.addGameFromClass}
+                                    changeGameStatus={this.addGameToClass}
                                     chosen={false}
                                     name={image.game_name}
                                     // name={image.game_name.length > 15 ? image.game_name.slice(0, 15) + "..." : image.game_name}

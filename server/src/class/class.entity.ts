@@ -1,18 +1,37 @@
 import { Game } from 'src/game/game.entity';
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
-export class Class {
+export class Classs {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   name: string;
-  
-//   @ManyToOne(type => School, school => school.id)
+
+  @Column()
   school: number;
 
-  @ManyToMany(()=>Game)
-  @JoinTable()
+  @ManyToMany(
+    type => Game,
+    game => game.classes,{eager:true}
+  )
+  @JoinTable({
+    joinColumn: {
+      name: 'class_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'game_id',
+      referencedColumnName: 'id',
+    },
+  })
   games: Game[];
 }
+// @ManyToOne(type => School, school => school.id)
