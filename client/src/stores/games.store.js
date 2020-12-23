@@ -21,6 +21,7 @@ class Games {
             setShowOption: action,
         })
     }
+
     setGames = async () => {
         try{
             this.startGetGames = true;

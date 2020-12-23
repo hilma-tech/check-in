@@ -16,7 +16,6 @@ export class TeacherService extends UserService {
         protected readonly configService: ConfigService,
     ) { 
         super(config_options, userRepository, jwtService, configService);
-        console.log('SuperAdminService');
     }
 
     async getTeacher(){

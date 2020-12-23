@@ -1,4 +1,3 @@
-import { Game } from './game.entity';
 import {
   Body,
   Controller,
@@ -8,19 +7,19 @@ import {
   UploadedFiles,
 } from '@nestjs/common';
 import { GameService } from './game.service';
-import { GameSaveReq, GetGameSkip } from './game.dtos';
+import { GameSaveReq } from './game.dtos';
 import {
   UseFilesHandler,
   FilesType,
-  ImageService,
 } from '@hilma/fileshandler-typeorm';
-import { Field } from '../field/field.entity';
 import { UseJwtAuth } from '@hilma/auth-nest';
-import { createConnection, getConnection } from 'typeorm';
+const {mustValid} = require("../serverTools/ServerValid")
 
 @Controller('api/game')
 export class GameController {
-  constructor(private gameService: GameService) {}
+  constructor(
+    private gameService: GameService
+    ) {}
 
   @Get('/gameToFields')
   async getGameFields(@Req() req: any) {
@@ -36,20 +35,20 @@ export class GameController {
   @UseJwtAuth('superAdmin')
   @Post('/addGame')
   @UseFilesHandler()
-  async saveGame(@UploadedFiles() files: FilesType, @Body() req) {
-    console.log(req, "req");
-    
+  async saveGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
+    console.log('hgffff');
+
     req.field.map(eachField => {
-      if( eachField.selection !== 'image') {
+      if (eachField.selection !== 'image') {
         eachField.value.map(singularInp => {
           let val = singularInp.value;
-          if ((/[a-z]/).test(val) || (/[A-Z]/).test(val)) {
-            throw new Error
+          console.log('GFD', mustValid(val));
+          if (mustValid(val).length !== 0) {
+            throw new Error();
           }
-        })
-        
+        });
       }
-    })
+    });
     // todo map the field array
     // if(selection = 'image') {
     //   console.log('hi');
@@ -62,6 +61,6 @@ export class GameController {
   @UseJwtAuth('superAdmin')
   @Get('/getGames')
   getGames(@Req() skipON: any) {
-    return this.gameService.getGamesInfo(skipON.query);
+    return this.gameService.getGames(skipON.query);
   }
 }

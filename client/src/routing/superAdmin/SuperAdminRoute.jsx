@@ -17,7 +17,6 @@ import ErrorPage from "../../pages/404Page.jsx";
 import "../../style/superAdmin/disp.scss"
 
 class SuperAdminRoute extends React.Component {
-
   render() {
   
     return (
@@ -63,7 +62,7 @@ class SuperAdminRoute extends React.Component {
               redirectComponent={GamesRouter}
               component={SchoolsList}
             />
-          <PrivateRoute
+        <PrivateRoute
               path="/superAdmin/teachers"
               exact
               componentName="SAdminTeachers"

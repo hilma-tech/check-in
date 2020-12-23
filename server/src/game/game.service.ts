@@ -18,10 +18,7 @@ export class GameService {
     private gameRepository: Repository<Game>,
     private fieldService: FieldService,
     private readonly imageService: ImageService,
-  ) { 
-    console.log('Game Service');
-    
-  }
+  ) {}
 
     async addGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq){
       if(req.game.image.value){
@@ -65,7 +62,7 @@ export class GameService {
     return res;
   }
 
-  async getGamesInfo(@Req() skipON: GetGameSkip) {
+  async getGames(@Req() skipON: GetGameSkip) {
     let numGames = await this.gameRepository.count();    
     let haveMoreGames = numGames > Number(skipON.gamesLength) + 50 ? true : false;
     let gamesInfo = await this.gameRepository.find({
@@ -81,6 +78,7 @@ export class GameService {
   }
 
   async getGameInfo(gameId) {
+    
     let temp = await this.gameRepository.find({
       relations: ["fields"],
       where: { id: gameId.id }
@@ -92,14 +90,14 @@ export class GameService {
         if (
           games[i].fields[j].type === "image" ||
           games[i].fields[j].type === "text"
-        ) {
-          games[i].fields[j].value = [
-            { id: 0, value: games[i].fields[j].default_value }
-          ];
-        } else {
-          games[i].fields[j].value = JSON.parse(
-            games[i].fields[j].default_value
-          ).map((value, index) => {
+          ) {
+            games[i].fields[j].value = [
+              { id: 0, value: games[i].fields[j].default_value }
+            ];
+          } else {
+            games[i].fields[j].value = JSON.parse(
+              games[i].fields[j].default_value
+              ).map((value, index) => {
             return { id: index, value: value };
           });
         }

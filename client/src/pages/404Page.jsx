@@ -5,14 +5,12 @@ import Menu from "../component/superAdmin/Menu";
 
 class ErrorPage extends Component {
   render() {
-    console.log("window.location.pathname.includes('superAdmin')", window.location.pathname);
     let dispo = true
     if(window.location.pathname == "/superAdmin/:smth") {
       dispo = false;
     } else if(!window.location.pathname.includes('superAdmin')){
       dispo = false
     }
-    console.log(dispo);
     return (
       <>
           <div className={dispo ? "disp" : "nodisp"}><Menu/></div>

@@ -10,18 +10,21 @@ import { JwtModule } from "@nestjs/jwt";
 import { JwtStrategy, USER_MODULE_OPTIONS } from "@hilma/auth-nest";
 import { SuperAdminService } from "src/super-admin/super-admin.service";
 import { SuperAdmin } from "src/super-admin/super-admin.entity";
-
+import { FieldModule } from "src/field/field.module";
+import { UserModule } from '@hilma/auth-nest';
 @Module({
   imports: [
     JwtModule.register({}),
+    FieldModule,
+    UserModule,
     TypeOrmModule.forFeature([Game]),
     TypeOrmModule.forFeature([Field]),
-    TypeOrmModule.forFeature([SuperAdmin])
+    TypeOrmModule.forFeature([SuperAdmin]),
+    
   ],
   controllers: [GameController],
   providers: [
     GameService,
-    FieldService,
     JwtStrategy,
     {
       provide: "UserService",
@@ -33,6 +36,6 @@ import { SuperAdmin } from "src/super-admin/super-admin.entity";
       useValue: {}
     }
   ],
-  exports: [GameService]
+  exports:[GameService]
 })
 export class GameModule {}

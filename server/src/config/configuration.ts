@@ -1,6 +1,6 @@
 export default () => ({
   auth: {
-    ttl: {'SuperAdmin': 155520000},
+    ttl: {'SuperAdmin': 2592000000},
     secretOrKey: 'hi@$#$T46btrtges',
     accessToken_cookie: 'klool'
   },
@@ -20,6 +20,11 @@ export default () => ({
         "SAdminSchools",
         "SAdminTeachers",
         "SAdminStudents",
+
+        "TeacherRoute",
+        "TeacherClasses",
+        "SmallTeacherRoute"
+
       ],
       defaultHomePage: "SAdminGames"
     },

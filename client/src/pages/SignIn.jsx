@@ -84,7 +84,7 @@ class SignIn extends Component {
           </p>
           <input
             className="username input"
-            placeholder="שם משתמש"
+            placeholder="כתובת מייל"
             onBlur={this.updateUser}
           />
           <br />
