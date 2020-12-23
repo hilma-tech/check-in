@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import {
     UserService,
     UseLocalAuth,
@@ -10,6 +10,7 @@ import { StudentService } from './student.service';
 import { School } from 'src/school/school.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { GetStudentSkip } from './student.dtos';
 
 @Controller('api/student')
 export class StudentController {
@@ -35,7 +36,7 @@ export class StudentController {
 
 
   @Get('/getStudents')
-  getStudents(){
-    return this.studentService.getStudents()
+  getStudents(@Req() skipON: any){
+    return this.studentService.getStudents(skipON.query)
   }
 }

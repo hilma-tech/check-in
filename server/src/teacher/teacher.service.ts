@@ -1,10 +1,11 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserConfig, UserService, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import {Teacher} from './teacher.entity'
+import { GetTeacherSkip } from './teacher.dtos';
 
 @Injectable()
 export class TeacherService extends UserService {
@@ -18,9 +19,14 @@ export class TeacherService extends UserService {
         super(config_options, userRepository, jwtService, configService);
     }
 
-    async getTeacher(){
-        return await this.userRepository.find({
+    async getTeacher(@Req() skipON: GetTeacherSkip){
+        let numTeachers = await this.userRepository.count();
+        let haveMoreTeachers = numTeachers > Number(skipON.teachersLength) + 50 ? true : false;
+        let teachers = await this.userRepository.find({
+            skip: skipON.teachersLength,
+            take: 50,
             relations: ['School']
         })
+        return { teachersInfo: teachers, haveMoreTeachers: haveMoreTeachers }
     }
 }

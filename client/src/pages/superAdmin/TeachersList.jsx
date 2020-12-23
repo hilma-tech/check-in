@@ -2,6 +2,9 @@ import React from "react";
 import Slide from "@material-ui/core/Slide";
 import GeneralTable from "../../component/superAdmin/GeneralTable.jsx";
 import "../../style/superAdmin/table_style.css";
+import { observer } from "mobx-react";
+import { withContext } from "@hilma/tools";
+import { teachersContext } from "../../stores/teachers.store.js";
 
 const axios = require("axios").default;
 
@@ -23,12 +26,7 @@ class TeachersList extends React.Component {
   }
 
   componentDidMount = async () => {
-    const { data } = await axios.get("/api/teacher/getTeachers");
-    let teachersList= data.map((teacher) => {
-      teacher.schoolName = teacher.School.name
-      return teacher
-    });
-    this.setState({listDataTeachers: teachersList})
+    this.props.teachers.setTeachers();
   }
 
   //Save the user search value as searchVal in state.
@@ -68,13 +66,33 @@ class TeachersList extends React.Component {
                 Create the school table with the general table.
             */}
         <GeneralTable
-          allData={this.state.listDataTeachers}
+          allData={this.props.teachers.listDataTeachers}
           categors={this.state.categors}
           enCategor={this.state.enCategor}
         />
+
+        <button
+          className="showMoreGamesB"
+          onClick={this.props.teachers.setTeachers}
+          style={{
+            display:
+              this.props.teachers.haveMoreTeachers
+                ? "inline-block"
+                : "none",
+          }}
+        >
+          הצג עוד
+            </button>
       </div>
     );
   }
 }
 
-export default TeachersList;
+
+
+
+const mapContextToProps = {
+  teachers: teachersContext
+};
+
+export default withContext(mapContextToProps)(observer(TeachersList));

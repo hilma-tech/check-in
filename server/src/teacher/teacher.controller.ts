@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import {
     UserService,
     UseLocalAuth,
@@ -7,6 +7,7 @@ import {
   } from '@hilma/auth-nest';
   import {Teacher} from './teacher.entity'
 import { TeacherService } from './teacher.service';
+import { GetTeacherSkip } from './teacher.dtos';
 
 @Controller('api/teacher')
 export class TeacherController {
@@ -31,7 +32,7 @@ export class TeacherController {
   }
 
   @Get('/getTeachers')
-  getStudents(){
-    return this.teacherService.getTeacher()
+  getStudents(@Req() skipON: any){
+    return this.teacherService.getTeacher(skipON.query)
   }
 }

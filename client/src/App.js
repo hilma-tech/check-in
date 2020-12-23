@@ -20,6 +20,8 @@ import Menu from "./component/superAdmin/Menu";
 import PopUpError from "./component/popUpError";
 import ErrorPage from "./pages/404Page";
 import { useIsAuthenticated } from "@hilma/auth";
+import { studentsProvider } from "./stores/students.store";
+import { teachersProvider } from "./stores/teachers.store";
 
 function App() {
   let isAuthenticated = useIsAuthenticated();
@@ -73,5 +75,7 @@ export default provide(
   [errorMsgProvider, {}],
   [gamesProvider, {}],
   [chosenGameEditProvider, {}],
+  [studentsProvider, {}],
+  [teachersProvider, {}],
   [AuthProvider, { accessTokenCookie: "klool" }]
 )(App);

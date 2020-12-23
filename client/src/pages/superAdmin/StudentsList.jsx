@@ -2,8 +2,9 @@ import React from "react";
 import Slide from "@material-ui/core/Slide";
 import GeneralTable from "../../component/superAdmin/GeneralTable.jsx";
 import "../../style/superAdmin/table_style.css";
-
-const axios = require("axios").default;
+import { studentsContext } from "../../stores/students.store.js";
+import { withContext } from "@hilma/tools";
+import { observer } from "mobx-react";
 
 class StudentsList extends React.Component {
   constructor() {
@@ -15,19 +16,13 @@ class StudentsList extends React.Component {
         "כיתה": "class",
         "בית ספר": "schoolName"
       },
-      listDataStudents: [],
       searchVal: "",
       displaySearch: false,
     };
   }
 
   componentDidMount = async () => {
-    const { data } = await axios.get("/api/student/getStudents");
-    let studentsList= data.map((student) => {
-      student.schoolName = student.School.name
-      return student
-    });
-    this.setState({listDataStudents: studentsList})
+    this.props.students.setStudents();
   }
 
   //Save the user search value as searchVal in state.
@@ -67,13 +62,31 @@ class StudentsList extends React.Component {
                 Create the school table with the general teble.
             */}
         <GeneralTable
-          allData={this.state.listDataStudents}
+          allData={this.props.students.listDataStudents}
           categors={this.state.categors}
           enCategor={this.state.enCategor}
         />
+
+        <button
+          className="showMoreGamesB"
+          onClick={this.props.students.setStudents}
+          style={{
+            display:
+              this.props.students.haveMoreStudents
+                ? "inline-block"
+                : "none",
+          }}
+        >
+          הצג עוד
+            </button>
+
       </div>
     );
   }
 }
 
-export default StudentsList;
+const mapContextToProps = {
+  students: studentsContext
+};
+
+export default withContext(mapContextToProps)(observer(StudentsList));

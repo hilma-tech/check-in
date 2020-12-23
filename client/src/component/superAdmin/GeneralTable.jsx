@@ -12,7 +12,7 @@ class GeneralTable extends React.Component {
   };
   render() {
     return (
-      <div>
+      <div className='generalTable'>
         <div className="TableTitles">
           {
             //Return the table's categors row
