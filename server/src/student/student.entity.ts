@@ -26,6 +26,6 @@ export class Student extends User{
   name: string;
 
   @ManyToOne(() => School, School => School.students)
-  // @JoinColumn({referencedColumnName: "id", name: 'school_id'})
+  @JoinColumn({referencedColumnName: "id", name: 'school_id'})
   School?: number;
 }

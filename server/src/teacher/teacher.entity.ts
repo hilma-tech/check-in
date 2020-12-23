@@ -7,7 +7,8 @@ import {
   Timestamp,
   ManyToMany,
   JoinTable,
-  ManyToOne
+  ManyToOne,
+  JoinColumn
 } from "typeorm";
 import {
   IsDefined,
@@ -27,6 +28,7 @@ export class Teacher extends User{
   @Column({ type: "varchar", length: 50})
   name: string;
 
-  @ManyToOne(() => School, School => School.students)
+  @ManyToOne(() => School, School => School.Teachers)
+  @JoinColumn({referencedColumnName: "id", name: 'school_id'})
   School?: number;
 }
