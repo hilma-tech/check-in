@@ -18,20 +18,26 @@ export default () => ({
         "SAdminGamesList",
         "SAdminEditGames",
         "SAdminSchools",
-        "SAdminTeachers",
         "SAdminStudents",
-
-        "TeacherRoute",
-        "TeacherClasses",
-        "SmallTeacherRoute"
-
+        "SAdminTeachers"
       ],
       defaultHomePage: "SAdminGames"
     },
     teacher: {
       components: [
+        "SuperAdminMenu",
+        "SuperAdminRoute",
+        "SAdminAddGames",
+        "SAdminGames",
+        "SAdminGamesList",
+        "SAdminEditGames",
+        "SAdminSchools",
+
+        "TeacherRoute",
+        "TeacherClasses",
+        "SmallTeacherRoute"
       ],
-      defaultHomePage: "SAdminGames"
+      defaultHomePage: "TeacherClasses"
     },
     superTeacher: {
       components: [
@@ -42,6 +48,6 @@ export default () => ({
       components: [
       ],
       defaultHomePage: "SAdminGames"
-    }
+    },
   }
 });

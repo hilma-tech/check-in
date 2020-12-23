@@ -1,13 +1,13 @@
 import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import {
-    UserService,
-    UseLocalAuth,
-    RequestUser,
-    Role,
-  } from '@hilma/auth-nest';
-  import {Teacher} from './teacher.entity'
+  UserService,
+  UseLocalAuth,
+  RequestUser,
+  Role,
+  UseJwtAuth,
+} from '@hilma/auth-nest';
+import { Teacher } from './teacher.entity';
 import { TeacherService } from './teacher.service';
-import { GetTeacherSkip } from './teacher.dtos';
 
 @Controller('api/teacher')
 export class TeacherController {
@@ -18,8 +18,17 @@ export class TeacherController {
         // this.register({username: 'teacher8@gmail.com', password: 'teacher1', name: 'חיים מישישווילי'})
     }
 
-    @Post('/register')
-    register(@Body() req) {
+
+
+  @UseJwtAuth(`$everyone`)
+  @Get('/getTeacherClasses')
+  async getTeacherClasses(@RequestUser() userinfo) {
+
+    return await this.teacherService.getTeacherClasses(userinfo.id);
+  }
+
+  @Post('/register')
+  register(@Body() req) {
     let username = req.username;
     let password = req.password;
     let user: Partial<Teacher> = new Teacher({ username, password });

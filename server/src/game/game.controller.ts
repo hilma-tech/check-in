@@ -58,7 +58,7 @@ export class GameController {
     return await this.gameService.addGame(files, req);
   }
 
-  @UseJwtAuth('superAdmin')
+  @UseJwtAuth('superAdmin', 'teacher')
   @Get('/getGames')
   getGames(@Req() skipON: any) {
     return this.gameService.getGames(skipON.query);

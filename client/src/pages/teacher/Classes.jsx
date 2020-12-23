@@ -4,6 +4,7 @@ import "../../style/teacher/classes.scss";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 import PageTitle from "../../component/teacher/PageTitle";
 import { withRouter } from "react-router-dom";
+const axios = require("axios").default;
 
 class Classes extends Component {
   constructor() {
@@ -27,29 +28,36 @@ class Classes extends Component {
       "#9c001b",
       "#411045",
     ];
-    this.classes = ["א'3", "ב'2", "ג'1", "ד'8", "ה'5", "ו'4", "י'1"];
-  }
-  
-  moveToClass = () => {
-    this.props.history.push(this.props.location.pathname + '/games');
+    this.state = {classes: []}
   }
 
+  componentDidMount = async () => {
+    let teacherClasses = await axios.get("/api/teacher/getTeacherClasses");
+    this.setState({classes: teacherClasses.data})
+  };
+
+  moveToClass = () => {
+    this.props.history.push(this.props.location.pathname + "/games");
+  };
+
   render() {
+    console.log(this.state);
     return (
       <>
         <div className="smallSticky">
           <SmallMenuBar />
         </div>
-        <PageTitle className="officialTitle" title="שלום המורה נורית!"/>
+        <PageTitle className="officialTitle" title="שלום המורה נורית!" />
         <div className="griddler">
-          {this.classes.map((name, index) => {
+          {this.state.classes.map((classObj, index) => {
             return (
-              <div onClick={this.moveToClass}
+              <div
+                onClick={this.moveToClass}
                 className="circleCont"
                 style={{ borderColor: this.colors[index] }}
               >
                 <h3 className="className" style={{ color: this.colors[index] }}>
-                  {name}
+                  {classObj.name}
                 </h3>
               </div>
             );
