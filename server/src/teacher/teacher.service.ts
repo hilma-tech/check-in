@@ -18,4 +18,10 @@ export class TeacherService extends UserService {
         super(config_options, userRepository, jwtService, configService);
         console.log('SuperAdminService');
     }
+
+    async getTeacher(){
+        return await this.userRepository.find({
+            relations: ['School']
+        })
+    }
 }

@@ -3,63 +3,32 @@ import Slide from "@material-ui/core/Slide";
 import GeneralTable from "../../component/superAdmin/GeneralTable.jsx";
 import "../../style/superAdmin/table_style.css";
 
+const axios = require("axios").default;
+
 class TeachersList extends React.Component {
   constructor() {
     super();
     this.state = {
-      categors: ["שם המורה", "בית ספר", "כיתות"],
+      // categors: ["שם המורה", "בית ספר", "כיתות"],
+      categors: ["שם המורה", "בית ספר"],
       enCategor: {
         "שם המורה": "name",
-        "כיתות": "classes",
-        "schoolName": "בית ספר"
+        // "כיתות": "classes",
+        "בית ספר": "schoolName"
       },
-      listDataTeachers: [
-        {
-          id: 1,
-          "שם המורה": "נורית כהן",
-          "בית ספר": "עשה חיל",
-          כיתות: ["א'2", "ג'2"],
-        },
-        {
-          id: 2,
-          "שם המורה": "נורית כהן",
-          "בית ספר": "עשה חיל",
-          כיתות: ["א'2", "ג'2"],
-        },
-        {
-          id: 3,
-          "שם המורה": "נורית כהן",
-          "בית ספר": "עשה חיל",
-          כיתות: ["א'2", "ג'2"],
-        },
-        {
-          id: 4,
-          "שם המורה": "נורית כהן",
-          "בית ספר": "עשה חיל",
-          כיתות: ["א'2", "ג'2"],
-        },
-        {
-          id: 5,
-          "שם המורה": "נורית כהן",
-          "בית ספר": "עשה חיל",
-          כיתות: ["א'2", "ג'2"],
-        },
-        {
-          id: 6,
-          "שם המורה": "נורית כהן",
-          "בית ספר": "עשה חיל",
-          כיתות: ["א'2", "ג'2"],
-        },
-        {
-          id: 7,
-          "שם המורה": "נורית כהן",
-          "בית ספר": "עשה חיל",
-          כיתות: ["א'2", "ג'2"],
-        },
-      ],
+      listDataTeachers: [],
       searchVal: "",
       displaySearch: false,
     };
+  }
+
+  componentDidMount = async () => {
+    const { data } = await axios.get("/api/teacher/getTeachers");
+    let teachersList= data.map((teacher) => {
+      teacher.schoolName = teacher.School.name
+      return teacher
+    });
+    this.setState({listDataTeachers: teachersList})
   }
 
   //Save the user search value as searchVal in state.

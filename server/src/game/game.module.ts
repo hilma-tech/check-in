@@ -32,6 +32,7 @@ import { SuperAdmin } from "src/super-admin/super-admin.entity";
       provide: USER_MODULE_OPTIONS,
       useValue: {}
     }
-  ]
+  ],
+  exports: [GameService]
 })
 export class GameModule {}

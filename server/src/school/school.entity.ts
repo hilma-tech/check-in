@@ -3,7 +3,10 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
-  MinKey
+  MinKey,
+  ManyToMany,
+  JoinTable,
+  JoinColumn
 } from "typeorm";
 import {
   IsDefined,
@@ -12,6 +15,8 @@ import {
   Matches,
   IsBoolean
 } from "class-validator";
+import { Student } from "src/student/student.entity";
+import { Teacher } from "src/teacher/teacher.entity";
 
 @Entity()
 export class School {
@@ -21,12 +26,25 @@ export class School {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Column({ type: "varchar", length: 50})
+  @Column({ type: "varchar", length: 50 })
   name: string;
 
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Column({ type: "varchar", length: 50})
+  @Column({ type: "varchar", length: 50 })
   city: string;
+
+
+  @OneToMany(
+    () => Student,
+    student => student.School
+  )
+  students?: Student[];
+
+  @OneToMany(
+    () => Teacher,
+    Teacher => Teacher.School
+  )
+  Teachers?: Teacher[];
 }

@@ -3,7 +3,9 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
-  MinKey
+  MinKey,
+  ManyToOne,
+  JoinColumn
 } from "typeorm";
 import {
   IsDefined,
@@ -13,6 +15,7 @@ import {
   IsBoolean
 } from "class-validator";
 import { User } from '@hilma/auth-nest';
+import { School } from "src/school/school.entity";
 
 @ChildEntity()
 export class Student extends User{
@@ -22,9 +25,7 @@ export class Student extends User{
   @Column({ type: "varchar", length: 50})
   name: string;
 
-  // @IsDefined()
-  // @IsString()
-  // @Length(1, 30)
-  // @Column({ type: "varchar", length: 50})
-  // email: string;
+  @ManyToOne(() => School, School => School.students)
+  // @JoinColumn({referencedColumnName: "id", name: 'school_id'})
+  School?: number;
 }

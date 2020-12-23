@@ -17,4 +17,11 @@ export class StudentService extends UserService {
     ) { 
         super(config_options, userRepository, jwtService, configService);
     }
+
+    async getStudents(){
+        let students = await this.userRepository.find({
+            relations: ['School']
+        })
+        return students;
+    }
 }

@@ -4,7 +4,10 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   MinKey,
-  Timestamp
+  Timestamp,
+  ManyToMany,
+  JoinTable,
+  ManyToOne
 } from "typeorm";
 import {
   IsDefined,
@@ -24,9 +27,6 @@ export class Teacher extends User{
   @Column({ type: "varchar", length: 50})
   name: string;
 
-  @OneToMany(
-    type => School,
-    school => school.id
-  )
-  schoolId: School;
+  @ManyToOne(() => School, School => School.students)
+  School?: number;
 }

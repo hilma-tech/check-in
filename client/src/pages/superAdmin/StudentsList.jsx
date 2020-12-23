@@ -3,6 +3,8 @@ import Slide from "@material-ui/core/Slide";
 import GeneralTable from "../../component/superAdmin/GeneralTable.jsx";
 import "../../style/superAdmin/table_style.css";
 
+const axios = require("axios").default;
+
 class StudentsList extends React.Component {
   constructor() {
     super();
@@ -11,55 +13,21 @@ class StudentsList extends React.Component {
       enCategor: {
         "שם התלמיד": "name",
         "כיתה": "class",
-        "schoolName": "בית ספר"
+        "בית ספר": "schoolName"
       },
-      listDataStudents: [
-        {
-          id: 1,
-          "שם התלמיד": "אחיה כהן",
-          "בית ספר": "עשה חיל",
-          כיתה: "א'2",
-        },
-        {
-          id: 2,
-          "שם התלמיד": "אחיה כהן",
-          "בית ספר": "עשה חיל",
-          כיתה: "א'2",
-        },
-        {
-          id: 3,
-          "שם התלמיד": "אחיה כהן",
-          "בית ספר": "עשה חיל",
-          כיתה: "א'2",
-        },
-        {
-          id: 4,
-          "שם התלמיד": "אחיה כהן",
-          "בית ספר": "עשה חיל",
-          כיתה: "א'2",
-        },
-        {
-          id: 5,
-          "שם התלמיד": "אחיה כהן",
-          "בית ספר": "עשה חיל",
-          כיתה: "א'2",
-        },
-        {
-          id: 6,
-          "שם התלמיד": "אחיה כהן",
-          "בית ספר": "עשה חיל",
-          כיתה: "א'2",
-        },
-        {
-          id: 7,
-          "שם התלמיד": "אחיה כהן",
-          "בית ספר": "עשה חיל",
-          כיתה: "א'2",
-        },
-      ],
+      listDataStudents: [],
       searchVal: "",
       displaySearch: false,
     };
+  }
+
+  componentDidMount = async () => {
+    const { data } = await axios.get("/api/student/getStudents");
+    let studentsList= data.map((student) => {
+      student.schoolName = student.School.name
+      return student
+    });
+    this.setState({listDataStudents: studentsList})
   }
 
   //Save the user search value as searchVal in state.
