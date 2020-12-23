@@ -25,7 +25,7 @@ export class ClassService {
       ClassGame.id = 6;
       let ans = await this.classRepository.find({
         relations: ['games'],
-        where: [{id: 6}]
+        where: [{id: 2}]
       })
       ans[0].games.push(ClassGame.games[0])
       let newlyAddedGame = await this.classRepository.save(ans[0])
@@ -38,7 +38,7 @@ export class ClassService {
       ClassModel.id = 6;
       let ans = await this.classRepository.find({
         relations: ['games'],
-        where: [{id: 6}]
+        where: [{id: 2}]
       })
       ans[0].games.splice(req.id, 1);
       let newRemovedGame = await this.classRepository.save(ans[0])

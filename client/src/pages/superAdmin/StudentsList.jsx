@@ -10,10 +10,10 @@ class StudentsList extends React.Component {
   constructor() {
     super();
     this.state = {
-      categors: ["שם התלמיד", "בית ספר", "כיתה"],
+      categors: ["שם התלמיד", "בית ספר", "כיתות"],
       enCategor: {
         "שם התלמיד": "name",
-        "כיתה": "class",
+        "כיתות": "classes",
         "בית ספר": "schoolName"
       },
       searchVal: "",
@@ -35,6 +35,8 @@ class StudentsList extends React.Component {
     this.setState({ displaySearch: true });
   };
   render() {
+    console.log(this.props.students.listDataStudents[0]);
+
     return (
       <div className="StudentsList withMenu" dir="rtl">
         <div className="PageTitles">

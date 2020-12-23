@@ -18,47 +18,23 @@ const axios = require("axios").default;
 class Games extends React.Component {
     constructor() {
         super();
-        this.state = {
-            chosenGames: [],
-            gamesList: []
-        }
     }
 
     componentDidMount() {
         this.props.games.resetShowOptions();
-        if (this.state.gamesList.length === 0) {
+        if (this.props.games.gamesList.length === 0) {
           this.getGames();
         }
       }
     
       getGames = async () => {
-        let getGames = await this.props.games.setGames();
-        // console.log(this.props.games.getGamesList);
-        this.setState({gamesList: this.props.games.gamesList})
+        await this.props.games.setGames();
         if (!this.props.games.successGettingGames) {
           this.props.errorMsg.setErrorMsg(
             "הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת."
           );
         }
       };
-
-      removeGameFromClass = async (index) => {
-        this.setState((prevState)=>{
-            let newGamesList = [...prevState.gamesList,prevState.chosenGames[index]]
-            prevState.chosenGames.splice(index,1)
-            return({chosenGames: prevState.chosenGames, gamesList: newGamesList});
-        })
-        await axios.post("/api/class/removeGameRelation", {id: this.state.chosenGames[index].id});
-      }
-
-      addGameToClass = async (index) => {
-        this.setState((prevState)=>{
-            let newChosenGame= [...prevState.chosenGames, prevState.gamesList[index]]
-            prevState.gamesList.splice(index,1)
-            return({gamesList: prevState.gamesList, chosenGames: newChosenGame});
-        })
-        await axios.post("/api/class/addGameRelation", {id: this.state.gamesList[index].id});
-      }
 
     render() {
         return (
@@ -70,10 +46,10 @@ class Games extends React.Component {
                 <div className="smallAlign" style={{top:'39.75vh'}}>
                     <div className='chosenGamesForClass'>
                         {
-                            this.state.chosenGames.map((gameData, i) => {
+                            this.props.games.chosenGameList.map((gameData, i) => {
                                 return (<ClassGames
                                     index={i}
-                                    changeGameStatus={this.removeGameFromClass}
+                                    changeGameStatus={this.props.games.removeGameFromClass}
                                     chosen={true}
                                     name={gameData.game_name}
                                     // name={gameData.name.length > 15 ? gameData.name.slice(0, 15) + "..." : gameData.name}
@@ -85,9 +61,9 @@ class Games extends React.Component {
                     <p className='gameListTitle'>משחקים שיתן להוסיף:</p>
                     {/* add search option */}
                     <div className='listGamesForClass'>
-                        {this.state.gamesList.map((image, index) => {
+                        {this.props.games.gamesList.map((image, index) => {
                                 return (<ClassGames
-                                    changeGameStatus={this.addGameToClass}
+                                    changeGameStatus={this.props.games.addGameToClass}
                                     chosen={false}
                                     name={image.game_name}
                                     // name={image.game_name.length > 15 ? image.game_name.slice(0, 15) + "..." : image.game_name}
