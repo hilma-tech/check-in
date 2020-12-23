@@ -1,10 +1,11 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserConfig, UserService, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
-import { Student } from './student.entity' 
+import { Student } from './student.entity'
+import { GetStudentSkip } from './student.dtos';
 
 @Injectable()
 export class StudentService extends UserService {
@@ -14,7 +15,20 @@ export class StudentService extends UserService {
         protected readonly userRepository: Repository<Student>,
         protected readonly jwtService: JwtService,
         protected readonly configService: ConfigService,
-    ) { 
+    ) {
         super(config_options, userRepository, jwtService, configService);
+    }
+
+    async getStudents(@Req() skipON: GetStudentSkip) {
+        console.log('skipON: ', skipON);
+        let numStudents = await this.userRepository.count();
+        console.log('numStudents: ', numStudents);
+        let haveMoreStudents = numStudents > Number(skipON.studentsLength) + 50 ? true : false;
+        let students = await this.userRepository.find({
+            skip: skipON.studentsLength,
+            take: 50,
+            relations: ['School']
+        })
+        return { studentsInfo: students, haveMoreStudents: haveMoreStudents }
     }
 }

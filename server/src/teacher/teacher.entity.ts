@@ -6,7 +6,9 @@ import {
   MinKey,
   Timestamp,
   ManyToMany,
-  JoinTable
+  JoinTable,
+  ManyToOne,
+  JoinColumn
 } from "typeorm";
 import {
   IsDefined,
@@ -49,4 +51,7 @@ export class Teacher extends User{
     },
   })
   classrooms: Classroom[];
+  @ManyToOne(() => School, School => School.Teachers)
+  @JoinColumn({referencedColumnName: "id", name: 'school_id'})
+  School?: number;
 }

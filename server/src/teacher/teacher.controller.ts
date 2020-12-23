@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import {
   UserService,
   UseLocalAuth,
@@ -15,6 +15,9 @@ export class TeacherController {
     private readonly userService: UserService,
     private readonly teacherService: TeacherService,
   ) {}
+ 
+
+
 
   @UseJwtAuth(`$everyone`)
   @Get('/getTeacherClasses')
@@ -28,11 +31,16 @@ export class TeacherController {
     let username = req.username;
     let password = req.password;
     let user: Partial<Teacher> = new Teacher({ username, password });
-    user.name = req.name;
+    user.name = req.name
+    user.School = 3
     let userRole = new Role();
-    userRole.id = 3; //you just the role id.
+    userRole.id = 2; //you just the role id.
     user.roles = [userRole];
-
     this.userService.createUser<Teacher>(user);
+  }
+
+  @Get('/getTeachers')
+  getStudents(@Req() skipON: any){
+    return this.teacherService.getTeacher(skipON.query)
   }
 }

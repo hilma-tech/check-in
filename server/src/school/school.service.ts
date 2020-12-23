@@ -12,7 +12,10 @@ export class SchoolService {
       ) {}
 
     async getSchools(){
-
-        return await this.schoolRepository.find();
+        let schools = await this.schoolRepository.find({
+      });
+      console.log(schools);
+      
+        return schools
     }
 }

@@ -5,6 +5,7 @@ import { RoleModule, UserModule, JwtStrategy, USER_MODULE_OPTIONS } from '@hilma
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import {Student} from './student.entity'
+import { School } from 'src/school/school.entity';
 
 @Module({
   imports: [UserModule, RoleModule, TypeOrmModule.forFeature([Student]), JwtModule.register({})],

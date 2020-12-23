@@ -18,6 +18,8 @@ export default () => ({
         "SAdminGamesList",
         "SAdminEditGames",
         "SAdminSchools",
+        "SAdminStudents",
+        "SAdminTeachers"
       ],
       defaultHomePage: "SAdminGames"
     },

@@ -2,6 +2,9 @@ import React from "react";
 import Slide from "@material-ui/core/Slide";
 import GeneralTable from "../../component/superAdmin/GeneralTable.jsx";
 import "../../style/superAdmin/table_style.css";
+import { studentsContext } from "../../stores/students.store.js";
+import { withContext } from "@hilma/tools";
+import { observer } from "mobx-react";
 
 class StudentsList extends React.Component {
   constructor() {
@@ -11,55 +14,15 @@ class StudentsList extends React.Component {
       enCategor: {
         "שם התלמיד": "name",
         "כיתה": "class",
-        "schoolName": "בית ספר"
+        "בית ספר": "schoolName"
       },
-      listDataStudents: [
-        {
-          id: 1,
-          "שם התלמיד": "אחיה כהן",
-          "בית ספר": "עשה חיל",
-          כיתה: "א'2",
-        },
-        {
-          id: 2,
-          "שם התלמיד": "אחיה כהן",
-          "בית ספר": "עשה חיל",
-          כיתה: "א'2",
-        },
-        {
-          id: 3,
-          "שם התלמיד": "אחיה כהן",
-          "בית ספר": "עשה חיל",
-          כיתה: "א'2",
-        },
-        {
-          id: 4,
-          "שם התלמיד": "אחיה כהן",
-          "בית ספר": "עשה חיל",
-          כיתה: "א'2",
-        },
-        {
-          id: 5,
-          "שם התלמיד": "אחיה כהן",
-          "בית ספר": "עשה חיל",
-          כיתה: "א'2",
-        },
-        {
-          id: 6,
-          "שם התלמיד": "אחיה כהן",
-          "בית ספר": "עשה חיל",
-          כיתה: "א'2",
-        },
-        {
-          id: 7,
-          "שם התלמיד": "אחיה כהן",
-          "בית ספר": "עשה חיל",
-          כיתה: "א'2",
-        },
-      ],
       searchVal: "",
       displaySearch: false,
     };
+  }
+
+  componentDidMount = async () => {
+    this.props.students.setStudents();
   }
 
   //Save the user search value as searchVal in state.
@@ -99,13 +62,31 @@ class StudentsList extends React.Component {
                 Create the school table with the general teble.
             */}
         <GeneralTable
-          allData={this.state.listDataStudents}
+          allData={this.props.students.listDataStudents}
           categors={this.state.categors}
           enCategor={this.state.enCategor}
         />
+
+        <button
+          className="showMoreGamesB"
+          onClick={this.props.students.setStudents}
+          style={{
+            display:
+              this.props.students.haveMoreStudents
+                ? "inline-block"
+                : "none",
+          }}
+        >
+          הצג עוד
+            </button>
+
       </div>
     );
   }
 }
 
-export default StudentsList;
+const mapContextToProps = {
+  students: studentsContext
+};
+
+export default withContext(mapContextToProps)(observer(StudentsList));

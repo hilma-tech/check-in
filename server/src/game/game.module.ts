@@ -23,7 +23,19 @@ import { UserModule } from '@hilma/auth-nest';
     
   ],
   controllers: [GameController],
-  providers: [GameService],
+  providers: [
+    GameService,
+    JwtStrategy,
+    {
+      provide: "UserService",
+      useExisting: SuperAdminService
+    },
+    SuperAdminService,
+    {
+      provide: USER_MODULE_OPTIONS,
+      useValue: {}
+    }
+  ],
   exports:[GameService]
 })
 export class GameModule {}

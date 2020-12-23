@@ -2,64 +2,31 @@ import React from "react";
 import Slide from "@material-ui/core/Slide";
 import GeneralTable from "../../component/superAdmin/GeneralTable.jsx";
 import "../../style/superAdmin/table_style.css";
+import { observer } from "mobx-react";
+import { withContext } from "@hilma/tools";
+import { teachersContext } from "../../stores/teachers.store.js";
+
+const axios = require("axios").default;
 
 class TeachersList extends React.Component {
   constructor() {
     super();
     this.state = {
-      categors: ["שם המורה", "בית ספר", "כיתות"],
+      // categors: ["שם המורה", "בית ספר", "כיתות"],
+      categors: ["שם המורה", "בית ספר"],
       enCategor: {
         "שם המורה": "name",
-        "כיתות": "classes",
-        "schoolName": "בית ספר"
+        // "כיתות": "classes",
+        "בית ספר": "schoolName"
       },
-      listDataTeachers: [
-        {
-          id: 1,
-          "שם המורה": "נורית כהן",
-          "בית ספר": "עשה חיל",
-          כיתות: ["א'2", "ג'2"],
-        },
-        {
-          id: 2,
-          "שם המורה": "נורית כהן",
-          "בית ספר": "עשה חיל",
-          כיתות: ["א'2", "ג'2"],
-        },
-        {
-          id: 3,
-          "שם המורה": "נורית כהן",
-          "בית ספר": "עשה חיל",
-          כיתות: ["א'2", "ג'2"],
-        },
-        {
-          id: 4,
-          "שם המורה": "נורית כהן",
-          "בית ספר": "עשה חיל",
-          כיתות: ["א'2", "ג'2"],
-        },
-        {
-          id: 5,
-          "שם המורה": "נורית כהן",
-          "בית ספר": "עשה חיל",
-          כיתות: ["א'2", "ג'2"],
-        },
-        {
-          id: 6,
-          "שם המורה": "נורית כהן",
-          "בית ספר": "עשה חיל",
-          כיתות: ["א'2", "ג'2"],
-        },
-        {
-          id: 7,
-          "שם המורה": "נורית כהן",
-          "בית ספר": "עשה חיל",
-          כיתות: ["א'2", "ג'2"],
-        },
-      ],
+      listDataTeachers: [],
       searchVal: "",
       displaySearch: false,
     };
+  }
+
+  componentDidMount = async () => {
+    this.props.teachers.setTeachers();
   }
 
   //Save the user search value as searchVal in state.
@@ -99,13 +66,33 @@ class TeachersList extends React.Component {
                 Create the school table with the general table.
             */}
         <GeneralTable
-          allData={this.state.listDataTeachers}
+          allData={this.props.teachers.listDataTeachers}
           categors={this.state.categors}
           enCategor={this.state.enCategor}
         />
+
+        <button
+          className="showMoreGamesB"
+          onClick={this.props.teachers.setTeachers}
+          style={{
+            display:
+              this.props.teachers.haveMoreTeachers
+                ? "inline-block"
+                : "none",
+          }}
+        >
+          הצג עוד
+            </button>
       </div>
     );
   }
 }
 
-export default TeachersList;
+
+
+
+const mapContextToProps = {
+  teachers: teachersContext
+};
+
+export default withContext(mapContextToProps)(observer(TeachersList));

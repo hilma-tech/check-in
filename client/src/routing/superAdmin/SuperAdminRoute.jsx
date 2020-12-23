@@ -21,7 +21,7 @@ class SuperAdminRoute extends React.Component {
   
     return (
       <>
-          <Menu  />
+        <Menu  />
         <Switch>
         <PrivateRoute
             path="/superAdmin"
@@ -55,27 +55,27 @@ class SuperAdminRoute extends React.Component {
               redirectComponent={GamesRouter}
               component={EditGame}
             />
-          {/* <PrivateRoute
+          <PrivateRoute
               path="/superAdmin/schools"
               exact
               componentName="SAdminSchools"
               redirectComponent={GamesRouter}
               component={SchoolsList}
-            /> */}
-          {/* <PrivateRoute
+            />
+        <PrivateRoute
               path="/superAdmin/teachers"
               exact
               componentName="SAdminTeachers"
               redirectComponent={GamesRouter}
               component={TeachersList}
-            /> */}
-          {/* <PrivateRoute
+            />
+          <PrivateRoute
               path="/superAdmin/students"
               exact
               componentName="SAdminStudents"
               redirectComponent={GamesRouter}
               component={StudentsList}
-            /> */}
+            />
           {/* <PrivateRoute
               path="/superAdmin/studentsAdd"
               exact
