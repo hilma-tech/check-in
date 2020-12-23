@@ -15,7 +15,7 @@ import {
   Matches,
   IsBoolean
 } from "class-validator";
-import { Classs } from "src/class/class.entity";
+import { Classroom } from "src/class/class.entity";
 
 @Entity()
 export class Game {
@@ -28,8 +28,8 @@ export class Game {
   )
   fields: Field[];
 
-  @ManyToMany(type=>Classs, classs => classs.games)
-  classes: Classs[];
+  @ManyToMany(type=>Classroom, classroom => classroom.games)
+  classrooms: Classroom[];
 
   @IsDefined()
   @IsString()

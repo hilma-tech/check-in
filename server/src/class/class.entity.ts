@@ -1,4 +1,5 @@
 import { Game } from 'src/game/game.entity';
+import { Teacher } from 'src/teacher/teacher.entity';
 import {
   Column,
   Entity,
@@ -8,7 +9,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Classs {
+export class Classroom {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -16,15 +17,19 @@ export class Classs {
   name: string;
 
   @Column()
-  school: number;
+  school_id: number;
+
+  @ManyToMany(type=>Teacher, teacher => teacher.classrooms)
+  teachers: Teacher[];
 
   @ManyToMany(
     type => Game,
-    game => game.classes,{eager:true}
+    game => game.classrooms,{eager:true}
   )
   @JoinTable({
+    name: "classroom_game",
     joinColumn: {
-      name: 'class_id',
+      name: 'classroom_id',
       referencedColumnName: 'id',
     },
     inverseJoinColumn: {

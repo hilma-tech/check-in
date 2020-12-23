@@ -4,7 +4,9 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   MinKey,
-  Timestamp
+  Timestamp,
+  ManyToMany,
+  JoinTable
 } from "typeorm";
 import {
   IsDefined,
@@ -15,6 +17,7 @@ import {
 } from "class-validator";
 import { User } from '@hilma/auth-nest';
 import { School } from "src/school/school.entity";
+import { Classroom } from "src/class/class.entity";
 
 @ChildEntity()
 export class Teacher extends User{
@@ -28,5 +31,22 @@ export class Teacher extends User{
     type => School,
     school => school.id
   )
-  schoolId: School;
+  school_id: School;
+
+  @ManyToMany(
+    type => Classroom,
+    classroom => classroom.teachers,{eager:true}
+  )
+  @JoinTable({
+    name: "teacher_classroom",
+    joinColumn: {
+      name: 'teacher_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'classroom_id',
+      referencedColumnName: 'id',
+    },
+  })
+  classrooms: Classroom[];
 }
