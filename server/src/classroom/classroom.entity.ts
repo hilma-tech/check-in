@@ -20,12 +20,9 @@ export class Classroom {
   @Column()
   school_id: number;
 
-  @ManyToMany(type=>Teacher, teacher => teacher.classrooms)
-  teachers: Teacher[];
-
   @ManyToMany(
     type => Game,
-    game => game.classes,{eager:true}
+    game => game.classrooms,{eager:true}
   )
   @JoinTable({
     name: "classroom_game",
@@ -46,7 +43,7 @@ export class Classroom {
   )
   @JoinTable({
     joinColumn: {
-      name: 'class_id',
+      name: 'classroom_id',
       referencedColumnName: 'id',
     },
     inverseJoinColumn: {
@@ -54,15 +51,15 @@ export class Classroom {
       referencedColumnName: 'id',
     },
   })
-  student: Student[];
+  student?: Student[];
 
   @ManyToMany(
     type => Teacher,
-    teacher => teacher.classes,{eager:true}
+    teacher => teacher.classroom
   )
   @JoinTable({
     joinColumn: {
-      name: 'class_id',
+      name: 'classroom_id',
       referencedColumnName: 'id',
     },
     inverseJoinColumn: {
@@ -70,6 +67,6 @@ export class Classroom {
       referencedColumnName: 'id',
     },
   })
-  teacher: Teacher[];
+  teacher?: Teacher[];
 }
 // @ManyToOne(type => School, school => school.id)

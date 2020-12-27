@@ -17,7 +17,7 @@ import {
 } from "class-validator";
 import { User } from '@hilma/auth-nest';
 import { School } from "src/school/school.entity";
-import { Classroom } from "src/class/class.entity";
+import { Classroom } from "src/classroom/classroom.entity";
 
 @ChildEntity()
 export class Student extends User{
@@ -31,6 +31,6 @@ export class Student extends User{
   @JoinColumn({referencedColumnName: "id", name: 'school_id'})
   School?: number;
 
-  @ManyToMany(type=>Classroom, classroom => classroom.games)
-  classroom: Classroom[];
+  @ManyToMany(type=>Classroom, classroom => classroom.id)
+  classroom?: Classroom[];
 }

@@ -55,13 +55,13 @@ class Games {
     }
 
     removeGameFromClass = async (index) => {
-        await axios.post("/api/class/removeGameRelation", {id: this.chosenGameList[index].id});
+        await axios.post("/api/classroom/removeGameRelation", {id: this.chosenGameList[index].id});
         this.gamesList = [...this.gamesList,this.chosenGameList[index]]
         this.chosenGameList.splice(index,1)
       }
 
       addGameToClass = async (index) => {
-          await axios.post("/api/class/addGameRelation", {id: this.gamesList[index].id});
+          await axios.post("/api/classroom/addGameRelation", {id: this.gamesList[index].id});
           this.chosenGameList = [...this.chosenGameList,this.gamesList[index]]
           this.gamesList.splice(index,1)
       }

@@ -2,12 +2,12 @@ import { RequestUser, UseJwtAuth, UseLocalAuth } from '@hilma/auth-nest';
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { request } from 'express';
 import { userInfo } from 'os';
-import {ClassService} from './class.service'
+import { ClassroomService } from './classroom.service';
 
-@Controller('api/class')
-export class ClassController {
+@Controller('classroom')
+export class ClassroomController {
     constructor(
-        private classService: ClassService
+        private classService: ClassroomService
         ) {}
 
     
