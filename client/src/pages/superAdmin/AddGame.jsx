@@ -35,14 +35,6 @@ class AddGame extends Component {
       gameRequirementsErrorMessages: { toShow: "none", mess: "" },
       imageErrorMessages: { toShow: "none", mess: "" },
       fieldsData: [
-        {
-          id: 0,
-          name: "",
-          selection: "text",
-          value: [{ id: 0, value: "" }],
-          order: 0,
-          errorMessage: { toShow: "none", mess: "" },
-        },
       ],
       gameName: "",
       gameDescription: "",

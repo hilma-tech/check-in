@@ -6,7 +6,8 @@ import {
   MinKey,
   ManyToOne,
   JoinColumn,
-  ManyToMany
+  ManyToMany,
+  JoinTable
 } from "typeorm";
 import {
   IsDefined,
@@ -17,7 +18,7 @@ import {
 } from "class-validator";
 import { User } from '@hilma/auth-nest';
 import { School } from "src/school/school.entity";
-import { Classroom } from "src/class/classroom.entity";
+import { Classroom } from "src/classroom/classroom.entity";
 
 @ChildEntity()
 export class Student extends User{
@@ -31,6 +32,16 @@ export class Student extends User{
   @JoinColumn({referencedColumnName: "id", name: 'school_id'})
   School?: number;
 
-  @ManyToMany(type=>Classroom, classroom => classroom.games)
-  classroom: Classroom[];
+  @ManyToMany(type=>Classroom, Classroom => Classroom.Student)
+  @JoinTable({
+    inverseJoinColumn: {
+      name: 'classroom_id',
+      referencedColumnName: 'id',
+    },
+    joinColumn: {
+      name: 'student_id',
+      referencedColumnName: 'id',
+    },
+  })
+  Classroom?: Classroom[];
 }

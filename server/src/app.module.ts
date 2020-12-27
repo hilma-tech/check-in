@@ -13,7 +13,7 @@ import { join } from 'path';
 import { StudentModule } from './student/student.module';
 import { SchoolModule } from './school/school.module';
 import { TeacherModule } from './teacher/teacher.module';
-import { ClassroomModule } from './class/classroom.module';
+import { ClassroomModule } from './classroom/classroom.module';
 
 @Module({
   imports: [
