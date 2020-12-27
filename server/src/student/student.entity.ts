@@ -6,7 +6,8 @@ import {
   MinKey,
   ManyToOne,
   JoinColumn,
-  ManyToMany
+  ManyToMany,
+  JoinTable
 } from "typeorm";
 import {
   IsDefined,
@@ -31,6 +32,16 @@ export class Student extends User{
   @JoinColumn({referencedColumnName: "id", name: 'school_id'})
   School?: number;
 
-  @ManyToMany(type=>Classroom, classroom => classroom.id)
-  classroom?: Classroom[];
+  @ManyToMany(type=>Classroom, Classroom => Classroom.Student)
+  @JoinTable({
+    inverseJoinColumn: {
+      name: 'classroom_id',
+      referencedColumnName: 'id',
+    },
+    joinColumn: {
+      name: 'student_id',
+      referencedColumnName: 'id',
+    },
+  })
+  Classroom?: Classroom[];
 }

@@ -34,7 +34,6 @@ export class Teacher extends User{
     classroom => classroom.teacher
   )
   @JoinTable({
-    name: "teacher_classroom",
     joinColumn: {
       name: 'teacher_id',
       referencedColumnName: 'id',
