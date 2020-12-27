@@ -1,4 +1,5 @@
 import { Game } from 'src/game/game.entity';
+import { Student } from 'src/student/student.entity';
 import { Teacher } from 'src/teacher/teacher.entity';
 import {
   Column,
@@ -19,9 +20,6 @@ export class Classroom {
   @Column()
   school_id: number;
 
-  @ManyToMany(type=>Teacher, teacher => teacher.classrooms)
-  teachers: Teacher[];
-
   @ManyToMany(
     type => Game,
     game => game.classrooms,{eager:true}
@@ -38,5 +36,37 @@ export class Classroom {
     },
   })
   games: Game[];
+
+  @ManyToMany(
+    type => Student,
+    student => student.classroom,{eager:true}
+  )
+  @JoinTable({
+    joinColumn: {
+      name: 'class_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'student_id',
+      referencedColumnName: 'id',
+    },
+  })
+  student: Student[];
+
+  @ManyToMany(
+    type => Teacher,
+    teacher => teacher.classrooms,{eager:true}
+  )
+  @JoinTable({
+    joinColumn: {
+      name: 'class_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'teacher_id',
+      referencedColumnName: 'id',
+    },
+  })
+  teachers: Teacher[];
 }
 // @ManyToOne(type => School, school => school.id)

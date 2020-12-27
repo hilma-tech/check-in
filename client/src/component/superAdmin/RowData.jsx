@@ -12,7 +12,8 @@ class RowData extends React.Component {
 
   //When we press on row it's passed to the edit page of the item
   onClickEdit = () => {
-    this.props.history.push(this.props.location.pathname + "Edit");
+    //for now
+    // this.props.history.push(this.props.location.pathname + "Edit");
   };
 
   render() {
@@ -31,9 +32,9 @@ class RowData extends React.Component {
               ) : (
                 <div key={index} className={"item" + index + " classes"}>
                   {" "}
-                  {this.props.data[this.props.enCategor[categor]].map((val, categorIndex) => {
+                  {this.props.data[this.props.enCategor[categor]] ? this.props.data[this.props.enCategor[categor]].map((val, categorIndex) => {
                     return <p key={categorIndex}>{val}</p>;
-                  })}{" "}
+                  }) : <p></p>}{" "}
                 </div>
               );
             })

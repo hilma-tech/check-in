@@ -7,18 +7,22 @@ const axios = require("axios").default;
 
 class Games {
     gamesList = []
+    chosenGameList = []
     haveMoreGames = true
     successGettingGames = true;
     startGetGames = false;
     constructor() {
         makeObservable(this, {
             successGettingGames: observable,
+            chosenGameList: observable,
             gamesList: observable,
             haveMoreGames: observable,
             startGetGames: observable,
             setGames: action,
             resetShowOptions: action,
             setShowOption: action,
+            removeGameFromClass: action,
+            addGameToClass: action,
         })
     }
 
@@ -49,6 +53,18 @@ class Games {
             this.gamesList[i].showOption = false
         }
     }
+
+    removeGameFromClass = async (index) => {
+        await axios.post("/api/class/removeGameRelation", {id: this.chosenGameList[index].id});
+        this.gamesList = [...this.gamesList,this.chosenGameList[index]]
+        this.chosenGameList.splice(index,1)
+      }
+
+      addGameToClass = async (index) => {
+          await axios.post("/api/class/addGameRelation", {id: this.gamesList[index].id});
+          this.chosenGameList = [...this.chosenGameList,this.gamesList[index]]
+          this.gamesList.splice(index,1)
+      }
 }
 
 const games = new Games();

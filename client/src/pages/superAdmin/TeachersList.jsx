@@ -12,11 +12,10 @@ class TeachersList extends React.Component {
   constructor() {
     super();
     this.state = {
-      // categors: ["שם המורה", "בית ספר", "כיתות"],
-      categors: ["שם המורה", "בית ספר"],
+      categors: ["שם המורה", "בית ספר", "כיתות"],
       enCategor: {
         "שם המורה": "name",
-        // "כיתות": "classes",
+        "כיתות": "classes",
         "בית ספר": "schoolName"
       },
       listDataTeachers: [],

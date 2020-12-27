@@ -18,7 +18,7 @@ export class StudentController {
       private readonly userService: UserService,
       private studentService: StudentService
       ) {
-      // this.register({username: 'student10@gmail.com', password: 'student11', name: 'רות תשובה'})
+      // this.register({username: 'student101@gmail.com', password: 'student11', name: 'פז גלבולגבגבצקי'})
     }
 
     @Post('/register')

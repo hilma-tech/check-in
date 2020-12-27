@@ -11,11 +11,12 @@ import { TeacherService } from './teacher.service';
 
 @Controller('api/teacher')
 export class TeacherController {
-  constructor(
-    private readonly userService: UserService,
-    private readonly teacherService: TeacherService,
-  ) {}
- 
+    constructor(
+      private readonly userService: UserService,
+      private teacherService: TeacherService
+      ) {
+        // this.register({username: 'teacher8@gmail.com', password: 'teacher1', name: 'חיים מישישווילי'})
+    }
 
 
 

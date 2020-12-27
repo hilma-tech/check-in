@@ -5,7 +5,8 @@ import {
   OneToMany,
   MinKey,
   ManyToOne,
-  JoinColumn
+  JoinColumn,
+  ManyToMany
 } from "typeorm";
 import {
   IsDefined,
@@ -16,6 +17,7 @@ import {
 } from "class-validator";
 import { User } from '@hilma/auth-nest';
 import { School } from "src/school/school.entity";
+import { Classroom } from "src/class/class.entity";
 
 @ChildEntity()
 export class Student extends User{
@@ -28,4 +30,7 @@ export class Student extends User{
   @ManyToOne(() => School, School => School.students)
   @JoinColumn({referencedColumnName: "id", name: 'school_id'})
   School?: number;
+
+  @ManyToMany(type=>Classroom, classroom => classroom.games)
+  classroom: Classroom[];
 }
