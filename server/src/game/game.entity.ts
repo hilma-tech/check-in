@@ -15,7 +15,7 @@ import {
   Matches,
   IsBoolean
 } from "class-validator";
-import { Classroom } from "src/class/class.entity";
+import { Classroom } from "src/class/classroom.entity";
 
 @Entity()
 export class Game {

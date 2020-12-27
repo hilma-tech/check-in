@@ -43,7 +43,7 @@ export class Classroom {
   )
   @JoinTable({
     joinColumn: {
-      name: 'class_id',
+      name: 'classroom_id',
       referencedColumnName: 'id',
     },
     inverseJoinColumn: {
@@ -59,7 +59,7 @@ export class Classroom {
   )
   @JoinTable({
     joinColumn: {
-      name: 'class_id',
+      name: 'classroom_id',
       referencedColumnName: 'id',
     },
     inverseJoinColumn: {

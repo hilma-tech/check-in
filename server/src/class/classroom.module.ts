@@ -2,9 +2,9 @@ import { RoleModule, UserModule } from '@hilma/auth-nest';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SuperAdmin } from 'src/super-admin/super-admin.entity';
-import { ClassController } from './class.controller';
-import { Classroom } from './class.entity';
-import { ClassService } from './class.service';
+import { ClassroomController } from './classroom.controller';
+import { Classroom } from './classroom.entity';
+import { ClassroomService } from './classroom.service';
 import { JwtModule } from "@nestjs/jwt";
 import { Game } from 'src/game/game.entity';
 
@@ -18,7 +18,7 @@ import { Game } from 'src/game/game.entity';
     TypeOrmModule.forFeature([SuperAdmin]),
   
   ],
-  controllers: [ClassController],
-  providers: [ClassService]
+  controllers: [ClassroomController],
+  providers: [ClassroomService]
 })
-export class ClassModule {}
+export class ClassroomModule {}

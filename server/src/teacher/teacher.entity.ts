@@ -19,7 +19,7 @@ import {
 } from "class-validator";
 import { User } from '@hilma/auth-nest';
 import { School } from "src/school/school.entity";
-import { Classroom } from "src/class/class.entity";
+import { Classroom } from "src/class/classroom.entity";
 
 @ChildEntity()
 export class Teacher extends User{
