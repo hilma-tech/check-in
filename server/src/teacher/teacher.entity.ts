@@ -29,10 +29,24 @@ export class Teacher extends User{
   @Column({ type: "varchar", length: 50})
   name: string;
 
+  @ManyToMany(
+    type => Classroom,
+    classroom => classroom.teacher
+  )
+  @JoinTable({
+    name: "teacher_classroom",
+    joinColumn: {
+      name: 'teacher_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'classroom_id',
+      referencedColumnName: 'id',
+    },
+  })
+  classroom: Classroom[];
+
   @ManyToOne(() => School, School => School.Teachers)
   @JoinColumn({referencedColumnName: "id", name: 'school_id'})
   School?: number;
-
-  @ManyToMany(type => Classroom, classroom => classroom.id)
-  classroom?: Classroom[];
 }

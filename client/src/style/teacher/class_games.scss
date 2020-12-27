@@ -13,6 +13,18 @@
   border: 0.5px solid #043163d1;
 }
 
+.scrollChosenGames {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  width: 90vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  .gameContainer{
+    display: inline-block;
+  }
+}
+
 .classGameTitle {
   /*text*/
   font: normal normal normal 5vw Assistant;
@@ -48,6 +60,10 @@
   border: 1px solid rgba(4, 49, 99, 0.5);
 }
 
+.scrollChosenGames .gameContainer:not(:first-child) {
+  margin-right: 6vw;
+}
+
 .classGameIconClose{
   position: absolute;
   float: left;
@@ -65,7 +81,8 @@
   height: 7vw;
   width: 7vw;
 }
-.chosenGamesForClass, .listGamesForClass{
+
+.listGamesForClass{
     display: grid;
     grid-template-columns: 40vw 40vw;
     justify-content: space-evenly;

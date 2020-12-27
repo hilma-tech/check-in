@@ -55,7 +55,7 @@ export class Classroom {
 
   @ManyToMany(
     type => Teacher,
-    teacher => teacher.classroom
+    teacher => teacher.classroom,{eager:true}
   )
   @JoinTable({
     joinColumn: {
