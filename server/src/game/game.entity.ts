@@ -34,22 +34,22 @@ export class Game {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/[\u0590-\u05FF]/)
+  @Matches(/[\u0590-\u05FFa-zA-Z0-9]/)
   @Column({ type: "varchar", length: 50, unique: true })
   game_name: string;
 
   @IsDefined()
   @IsString()
   @Length(1, 260)
-  @Matches(/[\u0590-\u05FF]/)
-  @Column({ type: "varchar", length: 255 })
+  @Matches(/[\u0590-\u05FFa-zA-Z0-9]/)
+  @Column({ type: "varchar", length: 30 })
   description: string;
 
   @IsDefined()
   @IsString()
   @Length(1, 260)
-  @Matches(/[\u0590-\u05FF]/)
-  @Column({ type: "varchar", length: 255 })
+  @Matches(/[\u0590-\u05FFa-zA-Z0-9]/)
+  @Column({ type: "varchar", length: 30 })
   requirements: string;
 
   @IsDefined()

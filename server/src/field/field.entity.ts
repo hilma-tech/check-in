@@ -15,8 +15,8 @@ export class Field {
 
   @IsDefined()
   @IsString()
-  @Length(1, 30)
-  @Matches(/[\u0590-\u05FF]/)
+  @Length(1, 50)
+  @Matches(/[\u0590-\u05FFa-zA-Z0-9]/)
   @Column({ type: 'varchar', length: 50 })
   field_name: string;
 

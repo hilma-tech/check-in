@@ -18,32 +18,19 @@
 // }
 
 // //Check validation for names (teacher, student, school or games)
-// export function nameValidation(name) {
-//   if (name === null || name.length === 0) {
-//     return '** נא למלא שדה זה **';
+// export function export function nameValidation(name) {
+//     if (name === null || name.length === 0) {
+//       return '** נא למלא שדה זה **'
 //   } else if (name.length > 30) {
-//     return '** שדה זה לא יכול להכיל יותר מ-30 תווים **';
+//       return '** שדה זה לא יכול להכיל יותר מ-30 תווים **'
 //   } else if (name.trim().length === 0) {
-//     return '** שם זה לא תקין **';
-//   } else if (
-//     /[a-z]/.test(name) ||
-//     /[A-Z]/.test(name) ||
-//     /[0-9]/.test(name) ||
-//     /[@#$%^&*()_+=[\]{};:\\|<>/~`]/.test(name)
-//   ) {
-//     return '** שדה זה לא יכול להכיל אותיות באנגלית או תווים מיוחדים **';
-//   } else if (
-//     name.includes('"') ||
-//     name.includes("'") ||
-//     name.includes('.') ||
-//     name.includes(',') ||
-//     name.includes('-')
-//   ) {
-//     return '** שם זה לא תקין **';
-//   } else if (!/[\u0590-\u05EA0-9,.!-?'"]/.test(name)) {
-//     return '** שם זה לא תקין **';
+//       return '** שם זה לא תקין **'
+//   }  else if ((/[@#$%^&*()_+=[\]{};:\\|<>/~`]/).test(name)) {
+//       return '** שדה זה לא יכול להכיל תווים מיוחדים **'
+//   } else if (name.includes('"') || name.includes("'") || name.includes(',') || name.includes('-')) {
+//       return '** שם זה לא תקין **'
 //   } else {
-//     return '';
+//       return ''
 //   }
 // }
 
@@ -115,22 +102,20 @@
 //Check validation for inputs that the user must field
 //it's not matter how he field them...
 module.exports.mustValid = function (input) {
-    if (input === null || input.length === 0) {
-      return '** נא למלא שדה זה **';
-    } else if (input.trim().length === 0) {
-      return '** נא למלא שדה זה **';
-    } else if (input.length > 255) {
-      return '** שדה זה לא יכול להכיל יותר מ-255 תווים **';
-    } else if (
-      !/[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`\s]/.test(
-        input,
-      )
-    ) {
-      return '** שדה זה לא תקין **';
-    } else {
-      return '';
-    }
+  if (input === null || input.length === 0) {
+      return '** נא למלא שדה זה **'
+  } else if (input.trim().length === 0) {
+      return  '** נא למלא שדה זה **'
+  } else if (input.length > 30) {
+      return '** שדה זה לא יכול להכיל יותר מ-30 תווים **'
+  }  else if (!(/[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{};:\\|<>/?~\s]/).test(input)) {
+      return '** שדה זה לא תקין **'
+  } else if (input.includes('"') || input.includes("'") || input.includes('-')) {
+      return '** שם זה לא תקין **'
+  }else {
+      return ''
   }
+}
 
 
 //Check validation for fields inputs
