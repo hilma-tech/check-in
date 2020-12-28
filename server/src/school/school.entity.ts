@@ -38,13 +38,13 @@ export class School {
 
   @OneToMany(
     () => Student,
-    student => student.School
+    student => student.school
   )
-  students?: Student[];
+  students: Student[];
 
   @OneToMany(
     () => Teacher,
-    Teacher => Teacher.School
+    teacher => teacher.school
   )
-  Teachers?: Teacher[];
+  teachers: Teacher[];
 }

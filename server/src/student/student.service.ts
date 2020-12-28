@@ -25,7 +25,7 @@ export class StudentService extends UserService {
         console.log('numStudents: ', numStudents);
         let haveMoreStudents = numStudents > Number(skipON.studentsLength) + 50 ? true : false;
         let students = await this.userRepository.find({
-            relations: ['School','Classroom'],
+            relations: ['school','classrooms'],
             skip: skipON.studentsLength,
             take: 50,
         })

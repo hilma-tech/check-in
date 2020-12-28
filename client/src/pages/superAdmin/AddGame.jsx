@@ -9,8 +9,9 @@ import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.js
 import { withRouter } from "react-router-dom";
 import {
   mustInputValidation,
-  fieldNameValidation,
-  requirementValidation
+  nameValidation,
+  requirementValidation,
+  fieldNameValidation
 } from "../../tools/ValidationFunctions";
 import {
   FilesUploader,
@@ -35,6 +36,14 @@ class AddGame extends Component {
       gameRequirementsErrorMessages: { toShow: "none", mess: "" },
       imageErrorMessages: { toShow: "none", mess: "" },
       fieldsData: [
+        {
+          id: 0,
+          name: "",
+          selection: "text",
+          value: [{ id: 0, value: "" }],
+          order: 0,
+          errorMessage: { toShow: "none", mess: "" },
+        },
       ],
       gameName: "",
       gameDescription: "",

@@ -27,7 +27,7 @@ export class StudentController {
     let password = req.password;
     let student: Partial<Student> = new Student({ username, password });
     student.name = req.name
-    student.School= 1
+    student.school= 1
     let userRole = new Role();
     userRole.id = 4; //you just the role id.
     student.roles = [userRole];
