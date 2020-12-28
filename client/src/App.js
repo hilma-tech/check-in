@@ -52,6 +52,7 @@ function App() {
             path="/superAdmin"
             componentName="SuperAdminRoute"
             redirectPath="/signin"
+            redirectComponent={SignIn}
             component={SuperAdminRoute}
           />
           <PrivateRoute
@@ -59,6 +60,7 @@ function App() {
             component={TeacherRoute}
             componentName="TeacherRoute"
             redirectPath="/signin"
+            redirectComponent={SignIn}
           />
           {/* <Route path="/draft" exact>
               <Draft />
