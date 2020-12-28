@@ -31,7 +31,7 @@ export class Teacher extends User{
 
   @ManyToMany(
     type => Classroom,
-    classroom => classroom.teacher
+    classroom => classroom.teachers
   )
   @JoinTable({
     joinColumn: {
@@ -43,9 +43,9 @@ export class Teacher extends User{
       referencedColumnName: 'id',
     },
   })
-  classroom: Classroom[];
+  classrooms: Classroom[];
 
-  @ManyToOne(() => School, School => School.Teachers)
+  @ManyToOne(() => School, school => school.teachers)
   @JoinColumn({referencedColumnName: "id", name: 'school_id'})
-  School?: number;
+  school: number;
 }

@@ -28,11 +28,11 @@ export class Student extends User{
   @Column({ type: "varchar", length: 50})
   name: string;
 
-  @ManyToOne(() => School, School => School.students)
+  @ManyToOne(() => School, school => school.students)
   @JoinColumn({referencedColumnName: "id", name: 'school_id'})
-  School?: number;
+  school: number;
 
-  @ManyToMany(type=>Classroom, Classroom => Classroom.Student)
+  @ManyToMany(type=>Classroom, classroom => classroom.students)
   @JoinTable({
     inverseJoinColumn: {
       name: 'classroom_id',
@@ -43,5 +43,5 @@ export class Student extends User{
       referencedColumnName: 'id',
     },
   })
-  Classroom?: Classroom[];
+  classrooms: Classroom[];
 }

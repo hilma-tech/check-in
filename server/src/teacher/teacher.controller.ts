@@ -33,7 +33,7 @@ export class TeacherController {
     let password = req.password;
     let user: Partial<Teacher> = new Teacher({ username, password });
     user.name = req.name
-    user.School = 3
+    user.school = 3
     let userRole = new Role();
     userRole.id = 2; //you just the role id.
     user.roles = [userRole];

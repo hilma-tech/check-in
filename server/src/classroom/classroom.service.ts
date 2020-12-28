@@ -23,26 +23,26 @@ export class ClassroomService {
   
 
   async addGameRelation(@Body() req: any) {
-    let ClassroomGame = new Classroom();
-    ClassroomGame.games = await this.gameRepository.find({ 
+    let classroomGame = new Classroom();
+    classroomGame.games = await this.gameRepository.find({ 
       where: { id: req.id } 
     });
-    ClassroomGame.id = 6;
+    classroomGame.id = 6;
     let currClassGameArr = await this.classroomRepository.find({
       relations: ['games'],
       where: [{ id: 1 }],
     });
-    currClassGameArr[0].games.push(ClassroomGame.games[0]);
+    currClassGameArr[0].games.push(classroomGame.games[0]);
     let newlyAddedGame = await this.classroomRepository.save(currClassGameArr[0]);
     return { newlyAddedGame: newlyAddedGame };
   }
 
   async removeGameRelation(@Body() req: any) {
-    let ClassroomModel = new Classroom();
-    ClassroomModel.games = await this.gameRepository.find({
+    let classroomModel = new Classroom();
+    classroomModel.games = await this.gameRepository.find({
       where: { id: req.id },
     });
-    ClassroomModel.id = 6;
+    classroomModel.id = 6;
     let ans = await this.classroomRepository.find({
       relations: ['games'],
       where: [{ id: 1 }],
