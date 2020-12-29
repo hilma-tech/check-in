@@ -10,6 +10,8 @@ import { withRouter } from "react-router-dom";
 import {
   mustInputValidation,
   nameValidation,
+  requirementValidation,
+  fieldNameValidation,
   fieldInputValidation
 } from "../../tools/ValidationFunctions";
 import {
@@ -192,7 +194,7 @@ class AddGame extends Component {
     let ValidationFunctions = [
       { name: "gameName", func: nameValidation, errMsg: "" },
       { name: "gameDescription", func: mustInputValidation, errMsg: "" },
-      { name: "gameRequirements", func: mustInputValidation, errMsg: "" },
+      { name: "gameRequirements", func: requirementValidation, errMsg: "" },
     ];
 
     ValidationFunctions.forEach((validationData) => {
@@ -242,7 +244,7 @@ class AddGame extends Component {
     let fieldEmpt = true;
     this.state.fieldsData.map((fields, index) => {
       if (fields.selection !== "image") {
-        let errMess = nameValidation(fields.name);
+        let errMess = fieldNameValidation(fields.name);
         if (errMess.length !== 0) {
           this.setState((prevState) => {
             prevState.fieldsData[index].errorMessage.toShow = "block";
@@ -252,7 +254,7 @@ class AddGame extends Component {
           isOk = false;
         } else {
           fields.value.map((field) => {
-            errMess = nameValidation(field.value);
+            errMess = fieldNameValidation(field.value);
             if (errMess.length !== 0) {
               if(errMess === '** שדה זה לא יכול להכיל אותיות באנגלית או תווים מיוחדים **'){
                 fieldEmpt = false;
@@ -290,7 +292,7 @@ class AddGame extends Component {
           }
         }
       } else {
-        let errMess = nameValidation(fields.name);
+        let errMess = fieldNameValidation(fields.name);
         if (errMess.length !== 0) {
           this.setState((prevState) => {
             prevState.fieldsData[index].errorMessage.toShow = "block";
@@ -299,7 +301,7 @@ class AddGame extends Component {
           });
           isOk = false;
         } else {
-          errMess = mustInputValidation(fields.value[0].value);
+          errMess = fieldInputValidation(fields.value[0].value);
           if (errMess.length !== 0) {
             this.setState((prevState) => {
               prevState.fieldsData[index].errorMessage.toShow = "block";
