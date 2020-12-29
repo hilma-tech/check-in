@@ -45,7 +45,7 @@ export class Game {
   @IsString()
   @Length(1, 260)
   @Matches(/[\u0590-\u05FFa-zA-Z0-9]/)
-  @Column({ type: "varchar", length: 30 })
+  @Column({ type: "varchar", length: 250 })
   requirements: string;
 
   @IsDefined()
