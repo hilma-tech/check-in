@@ -1,5 +1,5 @@
 import React from 'react';
-import '../style/loading_page_style.scss'
+import '../../style/loading_page_style.scss'
 // import optionicon from "/icons/greeOptionIcon.svg";
 
 class LoadingPage extends React.Component {

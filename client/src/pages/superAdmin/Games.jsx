@@ -12,7 +12,7 @@ import { gamesContext } from "../../stores/games.store";
 import { chosenGameEditContext } from "../../stores/chosenGameEdit.store";
 import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
-import LoadingPage from "../../component/LoadingPage.jsx";
+import LoadingPage from "../../component/superAdmin/LoadingGamePage.jsx";
 import { IsAuthenticatedContext } from "@hilma/auth";
 
 const axios = require("axios").default;

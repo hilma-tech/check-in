@@ -5,6 +5,7 @@ import "../../style/superAdmin/table_style.css";
 import { studentsContext } from "../../stores/students.store.js";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
+import LoadingTable from "../../component/superAdmin/LoadingTable.jsx";
 
 class StudentsList extends React.Component {
   constructor() {
@@ -35,8 +36,6 @@ class StudentsList extends React.Component {
     this.setState({ displaySearch: true });
   };
   render() {
-    console.log(this.props.students.listDataStudents[0]);
-
     return (
       <div className="StudentsList withMenu" dir="rtl">
         <div className="PageTitles">
@@ -63,25 +62,31 @@ class StudentsList extends React.Component {
         {/*
                 Create the school table with the general teble.
             */}
-        <GeneralTable
-          allData={this.props.students.listDataStudents}
-          categors={this.state.categors}
-          enCategor={this.state.enCategor}
-        />
+        
+        {!this.props.students.haveMoreStudents &&
+          this.props.students.listDataStudents.length === 0 ? (
+            <LoadingTable />) :
+          <>
+            <GeneralTable
+              allData={this.props.students.listDataStudents}
+              categors={this.state.categors}
+              enCategor={this.state.enCategor}
+            />
 
-        <button
-          className="showMoreGamesB"
-          onClick={this.props.students.setStudents}
-          style={{
-            display:
-              this.props.students.haveMoreStudents
-                ? "inline-block"
-                : "none",
-          }}
-        >
-          הצג עוד
+            <button
+              className="showMoreGamesB"
+              onClick={this.props.students.setStudents}
+              style={{
+                display:
+                  this.props.students.haveMoreStudents
+                    ? "inline-block"
+                    : "none",
+              }}
+            >
+              הצג עוד
             </button>
-
+          </>
+        }
       </div>
     );
   }
