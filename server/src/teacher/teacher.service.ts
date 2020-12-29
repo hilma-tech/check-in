@@ -40,7 +40,7 @@ export class TeacherService extends UserService {
         let teachers = await this.userRepository.find({
             skip: skipON.teachersLength,
             take: 50,
-            relations: ['classrooms']
+            relations: ['school','classrooms']
         })
         console.log('teachers: ', teachers);
         return { teachersInfo: teachers, haveMoreTeachers: haveMoreTeachers }

@@ -7,11 +7,20 @@ import { errorMsgContext } from "../stores/error.store";
 import { observer } from "mobx-react"
 import { withContext } from '@hilma/tools';
 import '../style/pop_up_error_style.css'
+import { withRouter } from 'react-router-dom';
 
 class PopUpError extends React.Component {
     constructor(props) {
         super();
     }
+
+    approvalButton = () => {
+      this.props.errorMsg.resetMsg()
+      if(window.location.pathname !== "/superAdmin/games"){
+        window.location.pathname = "/superAdmin/games"
+      }
+    }
+
     render() { 
         return ( 
             <Dialog
@@ -38,7 +47,7 @@ class PopUpError extends React.Component {
           {/* <button className='popUpCanselButton' color="primary">
             ביטול
           </button> */}
-          <button className='popUpOkButton' onClick={this.props.errorMsg.resetMsg}>
+          <button className='popUpOkButton' onClick={this.approvalButton}>
             אישור
           </button>
           

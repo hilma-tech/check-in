@@ -5,6 +5,7 @@ import "../../style/superAdmin/table_style.css";
 import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import { teachersContext } from "../../stores/teachers.store.js";
+import LoadingTable from "../../component/superAdmin/LoadingTable.jsx";
 
 const axios = require("axios").default;
 
@@ -64,24 +65,30 @@ class TeachersList extends React.Component {
         {/*
                 Create the school table with the general table.
             */}
-        <GeneralTable
-          allData={this.props.teachers.listDataTeachers}
-          categors={this.state.categors}
-          enCategor={this.state.enCategor}
-        />
 
-        <button
-          className="showMoreGamesB"
-          onClick={this.props.teachers.setTeachers}
-          style={{
-            display:
-              this.props.teachers.haveMoreTeachers
-                ? "inline-block"
-                : "none",
-          }}
-        >
-          הצג עוד
+        {!this.props.teachers.haveMoreTeachers &&
+          this.props.teachers.listDataTeachers.length === 0 ? (
+            <LoadingTable />) :
+          <>
+            <GeneralTable
+              allData={this.props.teachers.listDataTeachers}
+              categors={this.state.categors}
+              enCategor={this.state.enCategor}
+            />
+
+            <button
+              className="showMoreGamesB"
+              onClick={this.props.teachers.setTeachers}
+              style={{
+                display:
+                  this.props.teachers.haveMoreTeachers
+                    ? "inline-block"
+                    : "none",
+              }}
+            >
+              הצג עוד
             </button>
+          </>}
       </div>
     );
   }
