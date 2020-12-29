@@ -23,7 +23,8 @@ class Teachers {
             this.startGetGames = true;
             const { data } = await axios.get("/api/teacher/getTeachers",{ params:{ teachersLength: this.listDataTeachers.length }});
             this.listDataTeachers = this.listDataTeachers.concat(data.teachersInfo.map((teacher) => {
-                teacher.schoolName = teacher.School.name
+                teacher.schoolName = teacher.school.name
+                teacher.classes = teacher.classrooms.map((classroom)=>{return classroom.name})
                 return teacher
               }))
             this.haveMoreTeachers = data.haveMoreTeachers;

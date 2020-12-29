@@ -2,6 +2,7 @@ import React from "react";
 import Slide from "@material-ui/core/Slide";
 import GeneralTable from "../../component/superAdmin/GeneralTable.jsx";
 import "../../style/superAdmin/table_style.css";
+import LoadingTable from "../../component/superAdmin/LoadingTable.jsx";
 
 const axios = require("axios").default;
 
@@ -20,8 +21,12 @@ class SchoolsList extends React.Component {
     };
   }
   componentDidMount = async () => {
-    const { data } = await axios.get("/api/school/getSchools");
-    this.setState({listDataSchools: data})
+    try{
+      const { data } = await axios.get("/api/school/getSchools");
+      this.setState({ listDataSchools: data })
+    } catch(error){
+      console.log('something wrong');
+    }
   }
 
   //Save the user search value as searchVal in state.
@@ -60,11 +65,15 @@ class SchoolsList extends React.Component {
         {/*
                 Create the school table with the general teble.
             */}
-        <GeneralTable
-          allData={this.state.listDataSchools}
-          categors={this.state.categors}
-          enCategor={this.state.enCategor}
-        />
+        {this.state.listDataSchools.length === 0 ? (
+          <LoadingTable />) :
+          <>
+            <GeneralTable
+              allData={this.state.listDataSchools}
+              categors={this.state.categors}
+              enCategor={this.state.enCategor}
+            />
+          </>}
       </div>
     );
   }
