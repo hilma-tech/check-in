@@ -13,14 +13,13 @@ export class DataValueDto {
   id: number;
   @IsDefined()
   @IsString()
-  // @Length(1, 30)
   value: string;
 }
 
 export class FieldDataDto {
   @IsDefined()
   @IsString()
-  @Length(1, 30)
+  @Length(1, 50)
   name: string;
   @IsDefined()
   @IsString()
