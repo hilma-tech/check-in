@@ -23,11 +23,11 @@ class Students {
             this.startGetGames = true;
             const { data } = await axios.get("/api/student/getStudents",{ params:{ studentsLength: this.listDataStudents.length }});
             let newStudents = data.studentsInfo.map((student) => {
-                student.schoolName = student.School.name
-                student.classes = student.Classroom.map((classroom)=>{return classroom.name})
+                student.schoolName = student.school.name
+                student.classes = student.classrooms.map((classroom)=>{return classroom.name})
                 return student
               })
-            console.log(newStudents);
+            console.log('newStudents   ',newStudents);
             this.listDataStudents = this.listDataStudents.concat(newStudents)
             this.haveMoreStudents = data.haveMoreStudents;
             this.successGettingStudents = true;
