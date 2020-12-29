@@ -42,7 +42,8 @@ export class GameController {
       if (eachField.selection !== 'image') {
         eachField.value.map(singularInp => {
           let val = singularInp.value;
-          console.log('GFD', mustValid(val));
+          let err = mustValid(val)
+          console.log('GFD', err);
           if (mustValid(val).length !== 0) {
             throw new Error();
           }
