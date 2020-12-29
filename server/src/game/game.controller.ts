@@ -41,7 +41,7 @@ export class GameController {
   @UseFilesHandler()
   async saveGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
     console.log('hgffff');
-
+    
     req.field.map(eachField => {
       if (eachField.selection !== 'image') {
         eachField.value.map(singularInp => {
