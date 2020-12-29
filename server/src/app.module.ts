@@ -22,9 +22,9 @@ import { TeacherModule } from './teacher/teacher.module';
     ConfigModule.forRoot({ load: [configuration], isGlobal: true }),
     FieldModule,
     FilesHandlerModule.register({folder: "../../filesHandlerUploads", autoAllow: true}),
-    // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '../../', 'client/build'),
-    // }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../../', 'client/build'),
+    }),
     StudentModule,
     SchoolModule,
     TeacherModule,
