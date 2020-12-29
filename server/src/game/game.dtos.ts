@@ -33,7 +33,7 @@ export class GameSaveDto {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/[\u0590-\u05FF]/)
+  @Matches(/[\u0590-\u05FFa-zA-Z0-9]/)
   game_name: string;
 
   @IsDefined()
@@ -43,7 +43,7 @@ export class GameSaveDto {
   image: ImageDto;
   @IsDefined()
   @IsString()
-  @Length(1, 260)
+  @Length(1, 30)
   description: string;
   @IsDefined()
   @IsString()
@@ -58,7 +58,7 @@ export class FieldArrDto {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[\u0590-\u05FF]*$/)
+  @Matches(/[\u0590-\u05FFa-zA-Z0-9]/)
   name: string;
   @IsDefined()
   @IsEnum(GameType)

@@ -1,0 +1,84 @@
+.mobileBackground {
+  background-color: #f2f7fc;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  margin-top: 0px;
+}
+
+.mobileSaveButton {
+  color: blue;
+}
+
+.mobileGameContainer {
+  position: relative;
+  width: 30vw;
+  height: 27vw;
+  border: 0px solid white;
+  opacity: 1;
+  margin-bottom: 2vh;
+  margin-top: 2vh;
+  margin-right: 6vw;
+  border-radius: 2vw;
+  border: 2px solid rgba(4, 49, 99, 1);
+}
+
+.mobileClassGameTitleBackground {
+  /* background and border */
+  border-radius: 0px 0px 2vw 2vw;
+  /*positioning*/
+  position: absolute;
+  top: 20vw;
+  margin: 0px;
+  width: 100%;
+  height: 7.5vw;
+  background: #043163d1 0% 0% no-repeat padding-box;
+  border: 0.5px solid #043163d1;
+}
+
+.mobileClassGameTitle {
+  /*text*/
+  font: normal normal normal 5vw Assistant;
+  letter-spacing: 0.52px;
+  color: #ffffff;
+  padding: 0.5vw 0vw;
+  /*positioning*/
+  position: absolute;
+  width: 100%;
+  margin: 0px;
+  text-align: center;
+  top: 20vw;
+  font-weight: bolder;
+}
+
+.mobileGameDesc {
+  background-color: #00000029;
+  width: 90vw;
+  height: 10vh;
+  margin-right: 4vw;
+  border-radius: 1vw;
+//   text
+    text-align: right;
+    padding-right: 2vw;
+}
+
+.mobileGameReq {
+  background-color: #00000029;
+  width: 90vw;
+  margin-right: 4vw;
+  border-radius: 1vw;
+//   text
+    text-align: right;
+    padding-right: 2vw;
+}
+
+.mobileChangingInput {
+  background-color: #00000029;
+  width: 90vw;
+  margin-right: 1vw;
+  border: none;
+  border-radius: 1vw;
+//   text
+    text-align: right;
+    padding-right: 2vw;
+}

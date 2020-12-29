@@ -20,7 +20,7 @@ export class DataValueDto {
 export class FieldDataDto {
   @IsDefined()
   @IsString()
-  @Length(1, 30)
+  @Length(1, 50)
   name: string;
   @IsDefined()
   @IsString()
