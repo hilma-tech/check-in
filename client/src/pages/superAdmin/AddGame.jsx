@@ -285,7 +285,7 @@ class AddGame extends Component {
             } else {
               this.setState((prevState) => {
                 prevState.fieldsData[index].errorMessage.toShow = "block";
-                prevState.fieldsData[index].errorMessage.mess = '** שדה זה לא תקין **';
+                prevState.fieldsData[index].errorMessage.mess = '** נא למלא לפחות 2 שדות **';
                 return { fieldsData: prevState.fieldsData };
               });
             }
