@@ -3,6 +3,11 @@ import Slide from "@material-ui/core/Slide";
 import GeneralTable from "../../component/superAdmin/GeneralTable.jsx";
 import "../../style/superAdmin/table_style.css";
 import LoadingTable from "../../component/superAdmin/LoadingTable.jsx";
+import { withContext } from "@hilma/tools";
+import { observer } from "mobx-react";
+import { errorMsgContext } from "../../stores/error.store.js";
+import { schoolsContext } from "../../stores/schools.store.js";
+
 
 const axios = require("axios").default;
 
@@ -21,12 +26,7 @@ class SchoolsList extends React.Component {
     };
   }
   componentDidMount = async () => {
-    try{
-      const { data } = await axios.get("/api/school/getSchools");
-      this.setState({ listDataSchools: data })
-    } catch(error){
-      console.log('something wrong');
-    }
+    this.props.schools.setSchools()
   }
 
   //Save the user search value as searchVal in state.
@@ -38,6 +38,16 @@ class SchoolsList extends React.Component {
   activateSearch = () => {
     this.setState({ displaySearch: true });
   };
+
+  getSchools = async () => {
+    await this.props.schools.setSchools();
+    if (!this.props.schools.successGettingSchools) {
+      this.props.errorMsg.setErrorMsg(
+        "הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת."
+      );
+    }
+  };
+
   render() {
     return (
       <div className="SchoolsList withMenu" dir="rtl">
@@ -63,20 +73,25 @@ class SchoolsList extends React.Component {
           </form> */}
         </div>
         {/*
-                Create the school table with the general teble.
-            */}
-        {this.state.listDataSchools.length === 0 ? (
-          <LoadingTable />) :
-          <>
-            <GeneralTable
-              allData={this.state.listDataSchools}
-              categors={this.state.categors}
-              enCategor={this.state.enCategor}
-            />
-          </>}
+            Create the school table with the general teble.
+        */}
+        <GeneralTable
+          allData={this.props.schools.listDataSchools}
+          categors={this.state.categors}
+          enCategor={this.state.enCategor}
+          loadMore={this.getSchools}
+          haveMoreData={this.props.schools.haveMoreSchools}
+        />
       </div>
     );
   }
 }
 
-export default SchoolsList;
+
+
+const mapContextToProps = {
+  schools: schoolsContext,
+  errorMsg: errorMsgContext
+};
+
+export default withContext(mapContextToProps)(observer(SchoolsList));

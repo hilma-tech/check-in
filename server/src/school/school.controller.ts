@@ -11,7 +11,7 @@ export class SchoolController {
 
       @UseJwtAuth("superAdmin")
       @Get("/getSchools")
-      async getSchoolsInfo() {
-        return await this.schoolService.getSchools()
+      async getSchoolsInfo(@Req() skipON: any) {
+        return await this.schoolService.getSchools(skipON.query)
       }
 }

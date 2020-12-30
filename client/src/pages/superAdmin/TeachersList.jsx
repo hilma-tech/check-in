@@ -6,6 +6,7 @@ import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import { teachersContext } from "../../stores/teachers.store.js";
 import LoadingTable from "../../component/superAdmin/LoadingTable.jsx";
+import { errorMsgContext } from "../../stores/error.store.js";
 
 const axios = require("axios").default;
 
@@ -38,6 +39,15 @@ class TeachersList extends React.Component {
   activateSearch = () => {
     this.setState({ displaySearch: true });
   };
+
+  getTeachers = async () => {
+    await this.props.teachers.setTeachers();
+    if (!this.props.teachers.successGettingTeachers) {
+      this.props.errorMsg.setErrorMsg(
+        "הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת."
+      );
+    }
+  };
   render() {
     return (
       <div className="TeachersList withMenu" dir="rtl">
@@ -63,32 +73,21 @@ class TeachersList extends React.Component {
           </form> */}
         </div>
         {/*
-                Create the school table with the general table.
+                Create the teacher table with the general table.
             */}
 
-        {!this.props.teachers.haveMoreTeachers &&
+        {/* {!this.props.teachers.haveMoreTeachers &&
           this.props.teachers.listDataTeachers.length === 0 ? (
             <LoadingTable />) :
-          <>
+          <> */}
             <GeneralTable
               allData={this.props.teachers.listDataTeachers}
               categors={this.state.categors}
               enCategor={this.state.enCategor}
+              loadMore={this.getTeachers}
+              haveMoreData={this.props.teachers.haveMoreTeachers}
             />
-
-            <button
-              className="showMoreGamesB"
-              onClick={this.props.teachers.setTeachers}
-              style={{
-                display:
-                  this.props.teachers.haveMoreTeachers
-                    ? "inline-block"
-                    : "none",
-              }}
-            >
-              הצג עוד
-            </button>
-          </>}
+          {/* </>} */}
       </div>
     );
   }
@@ -98,7 +97,8 @@ class TeachersList extends React.Component {
 
 
 const mapContextToProps = {
-  teachers: teachersContext
+  teachers: teachersContext,
+  errorMsg: errorMsgContext
 };
 
 export default withContext(mapContextToProps)(observer(TeachersList));
