@@ -41,11 +41,9 @@ export class Game {
   @Column({ type: "varchar", length: 30 })
   description: string;
 
-  @IsDefined()
-  @IsString()
-  @Length(1, 260)
-  @Matches(/[\u0590-\u05FFa-zA-Z0-9]/)
-  @Column({ type: "varchar", length: 250 })
+  // @Length(0, 260)
+  // @Matches(/[\u0590-\u05FFa-zA-Z0-9]/)
+  @Column({ type: "varchar", length: 250, nullable: true, default: null })
   requirements: string;
 
   @IsDefined()
