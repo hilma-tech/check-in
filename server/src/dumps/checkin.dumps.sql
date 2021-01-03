@@ -103,12 +103,12 @@ DROP TABLE IF EXISTS `classroom_student_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `classroom_student_user` (
-  `class_id` int NOT NULL,
+  `classroom_id` int NOT NULL,
   `student_id` varchar(36) NOT NULL,
-  PRIMARY KEY (`class_id`,`student_id`),
-  KEY `IDX_1332ef0ba0881d10d836583665` (`class_id`),
+  PRIMARY KEY (`classroom_id`,`student_id`),
+  KEY `IDX_1332ef0ba0881d10d836583665` (`classroom_id`),
   KEY `IDX_38f771775f54fca67fe7faa71b` (`student_id`),
-  CONSTRAINT `FK_1332ef0ba0881d10d8365836655` FOREIGN KEY (`class_id`) REFERENCES `classroom` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_1332ef0ba0881d10d8365836655` FOREIGN KEY (`classroom_id`) REFERENCES `classroom` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_38f771775f54fca67fe7faa71be` FOREIGN KEY (`student_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -188,13 +188,10 @@ DROP TABLE IF EXISTS `classroom_teachers_user`;
 CREATE TABLE `classroom_teachers_user` (
   `teacher_id` varchar(36) NOT NULL,
   `classroom_id` int NOT NULL,
-  `class_id` int NOT NULL,
-  PRIMARY KEY (`class_id`,`teacher_id`),
+  `classroom_id` int NOT NULL,
   KEY `IDX_01a232bba5bd359058115aced9` (`teacher_id`),
   KEY `IDX_9a48b039ff7d32cac2e930bbd3` (`classroom_id`),
-  KEY `IDX_6a094e45ba2860d47802694e9b` (`class_id`),
   CONSTRAINT `FK_01a232bba5bd359058115aced9d` FOREIGN KEY (`teacher_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_6a094e45ba2860d47802694e9ba` FOREIGN KEY (`class_id`) REFERENCES `classroom` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_9a48b039ff7d32cac2e930bbd34` FOREIGN KEY (`classroom_id`) REFERENCES `classroom` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

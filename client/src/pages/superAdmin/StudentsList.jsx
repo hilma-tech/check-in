@@ -6,6 +6,7 @@ import { studentsContext } from "../../stores/students.store.js";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import LoadingTable from "../../component/superAdmin/LoadingTable.jsx";
+import { errorMsgContext } from "../../stores/error.store.js";
 
 class StudentsList extends React.Component {
   constructor() {
@@ -35,6 +36,16 @@ class StudentsList extends React.Component {
   activateSearch = () => {
     this.setState({ displaySearch: true });
   };
+
+  getStudents = async () => {
+    await this.props.students.setStudents();
+    if (!this.props.students.successGettingStudents) {
+      this.props.errorMsg.setErrorMsg(
+        "הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת."
+      );
+    }
+  };
+
   render() {
     return (
       <div className="StudentsList withMenu" dir="rtl">
@@ -63,37 +74,27 @@ class StudentsList extends React.Component {
                 Create the school table with the general teble.
             */}
         
-        {!this.props.students.haveMoreStudents &&
+        {/* {!this.props.students.haveMoreStudents &&
           this.props.students.listDataStudents.length === 0 ? (
             <LoadingTable />) :
-          <>
+          <> */}
             <GeneralTable
               allData={this.props.students.listDataStudents}
               categors={this.state.categors}
               enCategor={this.state.enCategor}
+              loadMore={this.getStudents}
+              haveMoreData={this.props.students.haveMoreStudents}
             />
-
-            <button
-              className="showMoreGamesB"
-              onClick={this.props.students.setStudents}
-              style={{
-                display:
-                  this.props.students.haveMoreStudents
-                    ? "inline-block"
-                    : "none",
-              }}
-            >
-              הצג עוד
-            </button>
-          </>
-        }
+          {/* </>
+        } */}
       </div>
     );
   }
 }
 
 const mapContextToProps = {
-  students: studentsContext
+  students: studentsContext,
+  errorMsg: errorMsgContext
 };
 
 export default withContext(mapContextToProps)(observer(StudentsList));

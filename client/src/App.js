@@ -22,6 +22,7 @@ import ErrorPage from "./pages/404Page";
 import { useIsAuthenticated } from "@hilma/auth";
 import { studentsProvider } from "./stores/students.store";
 import { teachersProvider } from "./stores/teachers.store";
+import { schoolsProvider } from "./stores/schools.store";
 
 function App() {
   let isAuthenticated = useIsAuthenticated();
@@ -79,5 +80,6 @@ export default provide(
   [chosenGameEditProvider, {}],
   [studentsProvider, {}],
   [teachersProvider, {}],
+  [schoolsProvider, {}],
   [AuthProvider, { accessTokenCookie: "klool" }]
 )(App);

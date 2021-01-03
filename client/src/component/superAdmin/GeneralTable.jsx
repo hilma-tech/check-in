@@ -1,6 +1,7 @@
 import React from "react";
 import RowData from "./RowData.jsx";
 import { withRouter } from "react-router-dom";
+import LoadingTable from "./LoadingTable.jsx";
 
 class GeneralTable extends React.Component {
   constructor(props) {
@@ -25,22 +26,41 @@ class GeneralTable extends React.Component {
             })
           }
         </div>
-        <div className="AllData">
-          {
-            //Make the rows in the table
-            this.props.allData.map((val, index) => {
-              return (
-                <RowData
-                  key={index}
-                  data={val}
-                  categors={this.props.categors}
-                  enCategor={this.props.enCategor}
-                />
-              );
-            })
-          }
-        </div>
-        {/* <div className="addingButton" onClick={this.onClickAdd}></div> */}
+{console.log(this.props.haveMoreData)}
+{console.log(this.props.allData.length === 0)}
+        {this.props.haveMoreData &&
+          this.props.allData.length === 0 ? (
+            <LoadingTable />) :
+          <>
+            <div className="AllData">
+              {
+                //Make the rows in the table
+                this.props.allData.map((val, index) => {
+                  return (
+                    <RowData
+                      key={index}
+                      data={val}
+                      categors={this.props.categors}
+                      enCategor={this.props.enCategor}
+                    />
+                  );
+                })
+              }
+            </div>
+            <button
+              className="showMoreGamesB"
+              onClick={this.props.loadMore}
+              style={{
+                display:
+                  this.props.haveMoreData
+                    ? "inline-block"
+                    : "none",
+              }}
+            >
+              הצג עוד
+            </button>
+          </>
+        }
       </div>
     );
   }
