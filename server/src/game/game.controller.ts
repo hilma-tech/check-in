@@ -36,20 +36,25 @@ export class GameController {
   @Post('/addGame')
   @UseFilesHandler()
   async saveGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
-    console.log('hgffff');
-
+    let emptyField = 0;
     req.field.map(eachField => {
       if (eachField.selection !== 'image') {
         eachField.value.map(singularInp => {
           let val = singularInp.value;
-          let err = mustValid(val)
-          console.log('GFD', err);
           if (mustValid(val).length !== 0) {
-            throw new Error();
+            if(eachField.selection === 'text'){              
+              throw new Error();
+            } else {
+              emptyField++;
+            }
           }
         });
       }
-    });
+      if(emptyField > 4){
+        throw new Error();
+      }
+      emptyField=0
+    });    
     // todo map the field array
     // if(selection = 'image') {
     //   console.log('hi');

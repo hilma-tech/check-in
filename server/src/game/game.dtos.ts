@@ -45,9 +45,7 @@ export class GameSaveDto {
   @IsString()
   @Length(1, 30)
   description: string;
-  @IsDefined()
-  @IsString()
-  @Length(1, 260)
+  @Length(0, 260)
   requirements: string;
   @IsDefined()
   @IsBoolean()

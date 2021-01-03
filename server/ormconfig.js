@@ -1,15 +1,19 @@
-{
+
+module.exports ={
   "type": "mysql",
-  "host": "localhost",
+  "host": process.env.DB_HOST,
   "port": 3306,
-  "username": "root",
-  "password": "z10mz10m",
+  "username": process.env.DB_USER,
+  "password": process.env.DB_PWD,
   "database": "checkin",
   "entities": [
     "dist/**/*.entity{.ts,.js}",
     "node_modules/@hilma/fileshandler-typeorm/**/*.entity.{ts,js}",
     "node_modules/@hilma/auth-nest/dist/**/*.entity{.ts,.js}"
   ],
-  "synchronize": true
+  "synchronize": true,
+  "ssl": true
 }
+
+
 
