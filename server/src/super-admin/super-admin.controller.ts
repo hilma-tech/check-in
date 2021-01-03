@@ -9,7 +9,9 @@ import { SuperAdmin } from './super-admin.entity';
 
 @Controller('api/super-admin')
 export class SuperAdminController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) {
+    // this.register({username: 'superadmin@gmail.com', password:'superadmin1'})
+  }
 
     @UseLocalAuth()
     @Post('/login')
