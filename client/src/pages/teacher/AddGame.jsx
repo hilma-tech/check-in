@@ -23,9 +23,9 @@ class AddGame extends Component {
         </div>
         <h3 className="mobileGameDesc">תיאור המשחק</h3>
         <h3 className="mobileGameReq">דרישות המשחק</h3>
-        <h1 className="mobileGameField">שדות</h1>
+        <h1 className="mobileGameFields">שדות:</h1>
         <h2 className="mobileFieldName" >שם השדה</h2>
-        <input value="ערך ניתן לשינוי" className="mobileChangingInput"/>
+        <input defaultValue="ערך ניתן לשינוי" className="mobileChangingInput"/>
         <div className="mobileSaveButtonBackground">
           <button
             className="mobileSaveButton"

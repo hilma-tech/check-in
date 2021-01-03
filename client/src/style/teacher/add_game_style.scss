@@ -1,3 +1,5 @@
+@import "../../style/fonts/fonts.scss";
+
 .mobileBackground {
   background-color: #f2f7fc;
   width: 100vw;
@@ -7,13 +9,13 @@
 }
 
 .mobileSaveButton {
-  color: blue;
+  color: #043163;
 }
 
 .mobileGameContainer {
   position: relative;
-  width: 30vw;
-  height: 27vw;
+  width: 33vw;
+  height: 30vw;
   border: 0px solid white;
   opacity: 1;
   margin-bottom: 2vh;
@@ -28,17 +30,20 @@
   border-radius: 0px 0px 2vw 2vw;
   /*positioning*/
   position: absolute;
-  top: 20vw;
+  top: 21.5vw;
   margin: 0px;
   width: 100%;
-  height: 7.5vw;
+  height: 9vw;
   background: #043163d1 0% 0% no-repeat padding-box;
   border: 0.5px solid #043163d1;
 }
 
 .mobileClassGameTitle {
   /*text*/
-  font: normal normal normal 5vw Assistant;
+  font-family: Assistant;
+  font-size: 3.2vh;
+  font-weight: 600;
+  font-style: normal;
   letter-spacing: 0.52px;
   color: #ffffff;
   padding: 0.5vw 0vw;
@@ -47,38 +52,88 @@
   width: 100%;
   margin: 0px;
   text-align: center;
-  top: 20vw;
+  top: 21.5vw;
   font-weight: bolder;
 }
 
 .mobileGameDesc {
-  background-color: #00000029;
+  background-color: #e7ebef;
+  font-family: Assistant;
+  font-weight: 600;
+  font-size: 3vh;
+  box-shadow: 0px 3px 6px #00000029;
   width: 90vw;
-  height: 10vh;
+  height: 15vh;
+  margin-top: 5vh;
   margin-right: 4vw;
-  border-radius: 1vw;
-//   text
-    text-align: right;
-    padding-right: 2vw;
+  border-radius: 1.5vw;
+  //   text
+  text-align: right;
+  padding-right: 2vw;
+  color: #043163;
 }
 
 .mobileGameReq {
-  background-color: #00000029;
+  background-color: #e7ebef;
+  font-weight: 600;
+  font-family: Assistant;
+  font-size: 3vh;
+  box-shadow: 0px 3px 6px #00000029;
   width: 90vw;
+  height: 10vh;
   margin-right: 4vw;
-  border-radius: 1vw;
-//   text
-    text-align: right;
-    padding-right: 2vw;
+  border-radius: 1.5vw;
+  //   text
+  text-align: right;
+  color: #043163;
+  padding-right: 2vw;
 }
 
 .mobileChangingInput {
-  background-color: #00000029;
+  background-color: #e7ebef;
+  font-weight: 600;
+  font-size: 3vh;
+  font-family: Assistant;
+  box-shadow: 0px 3px 6px #00000029;
   width: 90vw;
+  height: 5vh;
   margin-right: 1vw;
+  margin-bottom: 2vh;
   border: none;
-  border-radius: 1vw;
-//   text
-    text-align: right;
-    padding-right: 2vw;
+  border-radius: 1.5vw;
+  //   text
+  text-align: right;
+  padding-right: 2vw;
+  color: #043163;
+}
+
+.mobileGameFields {
+  //text
+  font-family: Assistant;
+  font-weight: 600;
+  font-size: 4.5vh;
+  text-align: right;
+  color: #043163;
+  //positioning
+  margin: 0px;
+  margin-right: 4vw;
+  margin-bottom: 4vw;
+}
+.mobileFieldName {
+  //text
+  font-family: Assistant;
+  font-weight: 600;
+  font-size: 3vh;
+  text-align: right;
+  color: #043163;
+  //positioning
+  margin: 0px;
+  margin-right: 4vw;
+  margin-bottom: 3vw;
+}
+
+.mobileSaveButtonBackground {
+  position: absolute;
+  margin-top: 4vh;
+  left: 2vh;
 }

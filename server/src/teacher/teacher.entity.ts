@@ -1,10 +1,6 @@
 import {
     ChildEntity,
   Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  MinKey,
-  Timestamp,
   ManyToMany,
   JoinTable,
   ManyToOne,
@@ -31,18 +27,8 @@ export class Teacher extends User{
 
   @ManyToMany(
     type => Classroom,
-    Classroom => Classroom.teachers
-  )
-  @JoinTable({
-    joinColumn: {
-      name: 'teacher_id',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'classroom_id',
-      referencedColumnName: 'id',
-    },
-  })
+    classroom => classroom.teachers
+  ) 
   classrooms: Classroom[];
 
   @ManyToOne(() => School, school => school.teachers)

@@ -16,7 +16,11 @@ export class TeacherController {
       private readonly userService: UserService,
       private teacherService: TeacherService
       ) {
+<<<<<<< HEAD
         // this.register({username: 'teacher100@gmail.com', password: 'teacher1', name: 'יונה בן ראובן'})
+=======
+        // this.register({username: 'teacher1@gmail.com', password: 'teacher1', name: 'שירה גולשטיין'})
+>>>>>>> aa4cc8bcc660e8cee2ec200ed2f47e78c043235d
     }
 
 
@@ -33,7 +37,7 @@ export class TeacherController {
     let password = req.password;
     let user: Partial<Teacher> = new Teacher({ username, password });
     user.name = req.name
-    user.school = 3
+    user.school = 1
     let userRole = new Role();
     userRole.id = 3; //you just the role id.
     user.roles = [userRole];
