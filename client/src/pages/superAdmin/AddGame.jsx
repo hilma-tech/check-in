@@ -11,7 +11,7 @@ import {
   mustInputValidation,
   nameValidation,
   requirementValidation,
-  fieldNameValidation
+  fieldNameValidation, fieldInputValidation
 } from "../../tools/ValidationFunctions";
 import {
   FilesUploader,
@@ -35,16 +35,7 @@ class AddGame extends Component {
       gameDescriptionErrorMessages: { toShow: "none", mess: "" },
       gameRequirementsErrorMessages: { toShow: "none", mess: "" },
       imageErrorMessages: { toShow: "none", mess: "" },
-      fieldsData: [
-        {
-          id: 0,
-          name: "",
-          selection: "text",
-          value: [{ id: 0, value: "" }],
-          order: 0,
-          errorMessage: { toShow: "none", mess: "" },
-        },
-      ],
+      fieldsData: [],
       gameName: "",
       gameDescription: "",
       gameRequirements: "",
@@ -293,7 +284,7 @@ class AddGame extends Component {
             } else {
               this.setState((prevState) => {
                 prevState.fieldsData[index].errorMessage.toShow = "block";
-                prevState.fieldsData[index].errorMessage.mess = '** שדה זה לא תקין **';
+                prevState.fieldsData[index].errorMessage.mess = '** נא למלא לפחות 2 שדות **';
                 return { fieldsData: prevState.fieldsData };
               });
             }
@@ -309,7 +300,7 @@ class AddGame extends Component {
           });
           isOk = false;
         } else {
-          errMess = mustInputValidation(fields.value[0].value);
+          errMess = fieldInputValidation(fields.value[0].value);
           if (errMess.length !== 0) {
             this.setState((prevState) => {
               prevState.fieldsData[index].errorMessage.toShow = "block";
