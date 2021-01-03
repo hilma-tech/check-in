@@ -39,7 +39,7 @@ export class Classroom {
 
   @ManyToMany(
     type => Student,
-    Student => Student.classrooms,{eager:true}
+    Student => Student.classrooms
   )
   @JoinTable({
     joinColumn: {
@@ -55,7 +55,7 @@ export class Classroom {
 
   @ManyToMany(
     type => Teacher,
-    Teacher => Teacher.classrooms,{eager:true}
+    Teacher => Teacher.classrooms
   )
   @JoinTable({
     joinColumn: {

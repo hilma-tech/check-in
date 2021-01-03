@@ -32,6 +32,6 @@ export class Student extends User{
   @JoinColumn({referencedColumnName: "id", name: 'school_id'})
   school: number;
 
-  @ManyToMany(type=>Classroom, Classroom => Classroom.students)
+  @ManyToMany(()=>Classroom, Classroom => Classroom.students)
   classrooms: Classroom[];
 }

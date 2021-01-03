@@ -8,6 +8,7 @@ import {
 } from '@hilma/auth-nest';
 import { Teacher } from './teacher.entity';
 import { TeacherService } from './teacher.service';
+import { Classroom } from 'src/classroom/classroom.entity';
 
 @Controller('api/teacher')
 export class TeacherController {
@@ -15,7 +16,7 @@ export class TeacherController {
       private readonly userService: UserService,
       private teacherService: TeacherService
       ) {
-        // this.register({username: 'teacher8@gmail.com', password: 'teacher1', name: 'חיים מישישווילי'})
+        // this.register({username: 'teacher100@gmail.com', password: 'teacher1', name: 'יונה בן ראובן'})
     }
 
 
@@ -23,7 +24,6 @@ export class TeacherController {
   @UseJwtAuth(`$everyone`)
   @Get('/getTeacherClasses')
   async getTeacherClasses(@RequestUser() userinfo) {
-
     return await this.teacherService.getTeacherClasses(userinfo.id);
   }
 
@@ -35,7 +35,7 @@ export class TeacherController {
     user.name = req.name
     user.school = 3
     let userRole = new Role();
-    userRole.id = 2; //you just the role id.
+    userRole.id = 3; //you just the role id.
     user.roles = [userRole];
     this.userService.createUser<Teacher>(user);
   }
