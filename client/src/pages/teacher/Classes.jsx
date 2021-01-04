@@ -4,6 +4,7 @@ import "../../style/teacher/classes.scss";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 import PageTitle from "../../component/teacher/PageTitle";
 import { withRouter } from "react-router-dom";
+import BlueSideBar from "../../component/teacher/BlueSideBar";
 const axios = require("axios").default;
 
 class Classes extends Component {
@@ -47,6 +48,7 @@ class Classes extends Component {
         <div className="smallSticky">
           <SmallMenuBar />
         </div>
+        {/* <BlueSideBar /> */}
         <PageTitle className="officialTitle" title="שלום המורה נורית!" />
         <div className="griddler">
           {this.state.classes.map((classObj, index) => {

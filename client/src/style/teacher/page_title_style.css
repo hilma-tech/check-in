@@ -1,5 +1,5 @@
 .titleContain {
-    position: fixed;
+  position: fixed;
   margin: 0vh;
   top: 9.8vh;
   background-color: #043163;
@@ -12,7 +12,24 @@
   margin: 0vh;
   height: 9vh;
   text-align: center;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 6vh;
 }
 
+
+
+@media only screen and (min-width: 600px) {
+  .titleContain {
+    left: 0;
+    top: 0;
+    padding-top: 10vh;
+    background-color: #F2F7FC;
+    color: #043163;
+    width: 75vw;
+  }
+
+  .officialTitle {
+    padding-right: 2vw;
+    text-align: right;
+  }
+}

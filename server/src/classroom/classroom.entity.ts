@@ -38,31 +38,17 @@ export class Classroom {
   })
   games: Game[];
 
-<<<<<<< HEAD
   @ManyToMany(
-    type => Student,
-    Student => Student.classrooms
-  )
-=======
-  @ManyToMany(type => Student)
->>>>>>> aa4cc8bcc660e8cee2ec200ed2f47e78c043235d
+     type => Student,
+     student=> student.classrooms,
+     { eager: true },
+    )
   @JoinTable({
     name: 'student_classroom',
     inverseJoinColumn: {
       name: 'student_id',
       referencedColumnName: 'id',
     },
-<<<<<<< HEAD
-  })
-  students: Student[];
-
-  @ManyToMany(
-    type => Teacher,
-    Teacher => Teacher.classrooms
-  )
-  @JoinTable({
-=======
->>>>>>> aa4cc8bcc660e8cee2ec200ed2f47e78c043235d
     joinColumn: {
       name: 'classroom_id',
       referencedColumnName: 'id',
@@ -70,7 +56,11 @@ export class Classroom {
   })
   students: Student[];
 
-  @ManyToMany(type => Teacher)
+  @ManyToMany(
+    type => Teacher,
+    teacher=> teacher.classrooms,
+    { eager: true },
+    )
   @JoinTable({
     name: 'teacher_classroom',
     inverseJoinColumn: {

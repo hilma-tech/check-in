@@ -19,11 +19,7 @@ export class StudentController {
       private readonly userService: UserService,
       private studentService: StudentService
       ) {
-<<<<<<< HEAD
-      // this.register({username: 'student111@gmail.com', password: 'student11', name: 'אלעד ראובני'})
-=======
-      // this.register({username: 'student1@gmail.com', password: 'student11', name: 'פז גלבולגבגבצקי'})
->>>>>>> aa4cc8bcc660e8cee2ec200ed2f47e78c043235d
+      // this.register({username: 'student1@gmail.com', password: 'student11', name: 'בת ציון רוז'})
     }
 
     @Post('/register')
@@ -34,6 +30,7 @@ export class StudentController {
     student.name = req.name
     student.school= 1
     let classroom = new Classroom()
+    classroom.id=2
     classroom.name="א'1"
     classroom.school_id=1
     student.classrooms = [classroom]

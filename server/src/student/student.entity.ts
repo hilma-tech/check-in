@@ -35,13 +35,9 @@ export class Student extends User {
   @JoinColumn({ referencedColumnName: 'id', name: 'school_id' })
   school: number;
 
-<<<<<<< HEAD
-  @ManyToMany(()=>Classroom, Classroom => Classroom.students)
-=======
   @ManyToMany(
     type => Classroom,
     classroom => classroom.students,
   )
->>>>>>> aa4cc8bcc660e8cee2ec200ed2f47e78c043235d
   classrooms: Classroom[];
 }
