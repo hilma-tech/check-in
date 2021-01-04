@@ -15,7 +15,7 @@ class BlueSideBar extends React.Component {
     }
     render() {
         return (<>
-            <Drawer anchor='right' open={true} className='drawer '>
+            <Drawer anchor='right' open={false} className='drawer '>
                 <div className='blueSideBar'>
                     <div className='blueSideBarUserName'>
                         <img src='/icons/closeIcon.svg' id='closeIcon' />

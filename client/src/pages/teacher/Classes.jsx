@@ -48,7 +48,7 @@ class Classes extends Component {
         <div className="smallSticky">
           <SmallMenuBar />
         </div>
-        {/* <BlueSideBar /> */}
+        <BlueSideBar />
         <PageTitle className="officialTitle" title="שלום המורה נורית!" />
         <div className="griddler">
           {this.state.classes.map((classObj, index) => {
