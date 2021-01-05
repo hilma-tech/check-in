@@ -1,4 +1,3 @@
-import { Game } from './game.entity';
 import {
   Body,
   Controller,
@@ -8,15 +7,12 @@ import {
   UploadedFiles,
 } from '@nestjs/common';
 import { GameService } from './game.service';
-import { GameSaveReq, GetGameSkip } from './game.dtos';
+import { GameSaveReq } from './game.dtos';
 import {
   UseFilesHandler,
   FilesType,
-  ImageService,
 } from '@hilma/fileshandler-typeorm';
-import { Field } from '../field/field.entity';
 import { UseJwtAuth } from '@hilma/auth-nest';
-import { createConnection, getConnection } from 'typeorm';
 const {mustValid} = require("../serverTools/ServerValid")
 
 @Controller('api/game')
@@ -27,7 +23,7 @@ export class GameController {
 
   @Get('/gameToFields')
   async getGameFields(@Req() req: any) {
-    return await this.gameService.returnGames(req.skipON, req.munOfGames);
+    return await this.gameService.returnGames(req.skipON, req.numOfGames);
   }
 
   @UseJwtAuth('superAdmin')
