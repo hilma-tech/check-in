@@ -11,6 +11,7 @@ import { School } from 'src/school/school.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { GetStudentSkip } from './student.dtos';
+import { Classroom } from 'src/classroom/classroom.entity';
 
 @Controller('api/student')
 export class StudentController {
@@ -18,7 +19,7 @@ export class StudentController {
       private readonly userService: UserService,
       private studentService: StudentService
       ) {
-      // this.register({username: 'student1@gmail.com', password: 'student11', name: 'פז גלבולגבגבצקי'})
+      // this.register({username: 'student1@gmail.com', password: 'student11', name: 'בת ציון רוז'})
     }
 
     @Post('/register')
@@ -28,6 +29,11 @@ export class StudentController {
     let student: Partial<Student> = new Student({ username, password });
     student.name = req.name
     student.school= 1
+    let classroom = new Classroom()
+    classroom.id=2
+    classroom.name="א'1"
+    classroom.school_id=1
+    student.classrooms = [classroom]
     let userRole = new Role();
     userRole.id = 4; //you just the role id.
     student.roles = [userRole];

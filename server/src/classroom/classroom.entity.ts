@@ -38,7 +38,11 @@ export class Classroom {
   })
   games: Game[];
 
-  @ManyToMany(type => Student)
+  @ManyToMany(
+     type => Student,
+     student=> student.classrooms,
+     { eager: true },
+    )
   @JoinTable({
     name: 'student_classroom',
     inverseJoinColumn: {
@@ -52,7 +56,11 @@ export class Classroom {
   })
   students: Student[];
 
-  @ManyToMany(type => Teacher)
+  @ManyToMany(
+    type => Teacher,
+    teacher=> teacher.classrooms,
+    { eager: true },
+    )
   @JoinTable({
     name: 'teacher_classroom',
     inverseJoinColumn: {

@@ -1,11 +1,14 @@
 @import "../../style/fonts/fonts.scss";
 
 .griddler {
-  margin-top: 30vh;
+  margin-top: 18.9vh;
+  padding-top: 11.1vh;
   display: grid;
   grid-template-columns: 35vw 35vw;
   grid-auto-rows: minmax(40vw, auto);
   justify-content: space-evenly;
+  background-color: #F2F7FC;
+  height: 70vh;
 }
 
 .className {
@@ -31,4 +34,31 @@
   top: 0;
   width: 100vw;
   margin-bottom: 50vh;
+}
+
+
+@media only screen and (min-width: 500px) {
+  .griddler {
+    position: absolute;
+    width: 75vw;
+    left: 0vw;
+    grid-template-columns: 15vw 15vw 15vw;
+    grid-auto-rows: minmax(17vw, auto);
+  }
+
+  .className {
+    font-size: 6vw;
+  }
+
+  .circleCont {
+    width: 15vw;
+    height: 15vw;
+  }
+
+  .smallSticky {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    margin-bottom: 50vh;
+  }
 }

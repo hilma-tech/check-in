@@ -1,0 +1,134 @@
+@import "../general_style.scss";
+
+.blueSideBar{
+    background-color: #043163;
+    height: 100vh;
+    width: 80vw;
+    overflow-x: hidden;
+}
+
+#teacherName{
+    color: white;
+    opacity: 0.5;
+    font-size: 5vw;
+    margin: 0;
+}
+
+.blueSideBarUserName{
+    display: flex;
+    /* margin-top: 3vh; */
+    margin-right: 5vw;
+    align-items: center;
+}
+
+#closeIcon{
+    width: 6vw;
+    padding: 3vw;
+}
+
+.blueSideBarOptions{
+    width: 70vw;
+    margin-right: 5vw;
+}
+
+.sideBarOption{
+    color: white;
+    padding: 2vh;
+    margin: 0;
+}
+
+.sideBarOption:first-child{
+    border-bottom: 1px solid rgba($color: #ffffff, $alpha: 0.2);
+}
+
+.blueSideBarLogOut{
+    display: flex;
+    position: fixed;
+    top: 90vh;
+    right: 15vw;
+    @include mouse(point);
+}
+
+.blueSideBarLogOut button{
+    font-size: 5vw;
+    background-color: #043163;
+    color: white;
+    border: none;
+    box-shadow: none;
+    @include mouse(point);
+}
+
+.blueSideBarLogOut img{
+    width: 5vw;
+    margin-left: 1.5vw;
+}
+
+.webBlueSideBar{
+    display: none;
+}
+
+@media only screen and (min-width: 500px) {
+    .drawer{
+        display: none;
+    }
+    .webBlueSideBar{
+        position: fixed;
+        right: 0;
+        display: block;
+    }
+    .blueSideBar{
+        background-color: #043163;
+        height: 100vh;
+        width: 25vw;
+    }
+    
+    #teacherName{
+        color: white;
+        opacity: 0.5;
+        font-size: 1.5vw;
+        margin: 0;
+    }
+
+    #checkInIcon{
+        width: 10vw;
+        height: 5vw;
+    }
+    
+    .blueSideBarUserName{
+        display: flex;
+        margin-right: 2vw;
+        margin-left: 2vw;
+        justify-content: space-between;
+    }
+    
+    .blueSideBarOptions{
+        width: 20vw;
+        margin-right: 2.5vw;
+    }
+    
+    .sideBarOption{
+        padding-bottom: 2vh;
+        padding-top: 2vh;
+        text-align: right;
+    }
+
+    .blueSideBarLogOut{
+        top: 85vh;
+        right: 2.5vw;
+        @include mouse(point);
+    }
+    
+    .blueSideBarLogOut button{
+        font-size: 1.5vw;
+        background-color: #043163;
+        color: white;
+        border: none;
+        box-shadow: none;
+        @include mouse(point);
+    }
+    
+    .blueSideBarLogOut img{
+        width: 1vw;
+        margin-left: 0.25vw;
+    }
+}

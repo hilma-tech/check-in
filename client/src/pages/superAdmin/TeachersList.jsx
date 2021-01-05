@@ -27,7 +27,7 @@ class TeachersList extends React.Component {
   }
 
   componentDidMount = async () => {
-    this.props.teachers.setTeachers();
+    this.getTeachers();
   }
 
   //Save the user search value as searchVal in state.
@@ -44,7 +44,7 @@ class TeachersList extends React.Component {
     await this.props.teachers.setTeachers();
     if (!this.props.teachers.successGettingTeachers) {
       this.props.errorMsg.setErrorMsg(
-        "הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת."
+        "הייתה שגיאה בשרת. לא ניתן לקבל מורים מהשרת."
       );
     }
   };

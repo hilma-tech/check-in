@@ -26,7 +26,7 @@ class SchoolsList extends React.Component {
     };
   }
   componentDidMount = async () => {
-    this.props.schools.setSchools()
+    this.getSchools()
   }
 
   //Save the user search value as searchVal in state.
@@ -43,11 +43,21 @@ class SchoolsList extends React.Component {
     await this.props.schools.setSchools();
     if (!this.props.schools.successGettingSchools) {
       this.props.errorMsg.setErrorMsg(
-        "הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת."
+        "הייתה שגיאה בשרת. לא ניתן לקבל בתי ספר מהשרת."
       );
     }
   };
 
+  getWidth() {
+    return Math.max(
+      document.body.scrollWidth,
+      document.documentElement.scrollWidth,
+      document.body.offsetWidth,
+      document.documentElement.offsetWidth,
+      document.documentElement.clientWidth
+    );
+  }
+  
   render() {
     return (
       <div className="SchoolsList withMenu" dir="rtl">
