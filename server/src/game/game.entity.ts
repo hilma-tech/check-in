@@ -30,25 +30,25 @@ export class Game {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/[\u0590-\u05FFa-zA-Z0-9]/)
-  @Column({ type: "varchar", length: 50, unique: true })
+  @Matches(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
+  @Column({ type: "varchar", length: 30, unique: true })
   game_name: string;
 
   @IsDefined()
   @IsString()
-  @Length(1, 260)
-  @Matches(/[\u0590-\u05FFa-zA-Z0-9]/)
+  @Length(1, 30)
+  @Matches(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
   @Column({ type: "varchar", length: 30 })
   description: string;
 
-  // @Length(0, 260)
-  // @Matches(/[\u0590-\u05FFa-zA-Z0-9]/)
-  @Column({ type: "varchar", length: 250, nullable: true, default: null })
+  
+  @Matches(/^$|^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
+  @Column({ type: "varchar", length: 255, nullable: true })
   requirements: string;
 
   @IsDefined()
   @IsString()
-  // @Length(4, 1000)
+  @Length(4, 1000)
   @Column({
     type: "varchar",
     length: 1000,
