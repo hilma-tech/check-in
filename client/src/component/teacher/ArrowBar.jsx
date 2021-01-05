@@ -13,7 +13,7 @@ class ArrowBar extends React.Component {
                     />
                     <p className='gamesChooseDistractionsText'>
                         בחר/י משחק כדי לערוך אותו,<br />
-                    על מנת להוסיף משחק חדש לכיתה זו<br />
+                    על מנת להוסיף משחק חדש לכיתה זו
                     לחץ/י על סמל הפלוס
                 </p>
                 </div>);

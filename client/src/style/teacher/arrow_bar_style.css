@@ -1,9 +1,8 @@
 .smallBackArrow {
     position: absolute;
     margin-right: 8vw;
-    margin-top: 1.5vh;
     right: 0;
-    width: 7vw;
+    width: 5vw;
     background-color: #F2F7FC;
 }
 
@@ -25,7 +24,8 @@
     margin-top: 0;
     font-size: 5vw;
     padding-top: 1.5vh;
-    width: 92vw;
+    width: 70vw;
+    margin-right: 7vw;
   }
 
 .studentsArrowBar{
