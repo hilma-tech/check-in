@@ -301,11 +301,10 @@ class AddGame extends Component {
           });
           isOk = false;
         } else {
-          errMess = fieldInputValidation(fields.value[0].value);
-          if (errMess.length !== 0) {
+          if (fields.value[0].value.length === 0) {
             this.setState((prevState) => {
               prevState.fieldsData[index].errorMessage.toShow = "block";
-              prevState.fieldsData[index].errorMessage.mess = errMess;
+              prevState.fieldsData[index].errorMessage.mess = '** חייב להכניס שדה זה **';
               return { fieldsData: prevState.fieldsData };
             });
             isOk = false;
