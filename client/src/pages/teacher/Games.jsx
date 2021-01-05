@@ -13,7 +13,6 @@ import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 
-const axios = require("axios").default;
 
 class Games extends React.Component {
   constructor() {
@@ -46,6 +45,12 @@ class Games extends React.Component {
     }
   };
 
+  addGameToClass = async(index) => {
+    await this.props.chosenGame.setgameId(this.props.games.gamesList[index].id)
+    await this.props.games.addGameToClass(index)
+    this.props.history.push('/teacher/classes/addgame')
+  }
+
   render() {
     return (
       <div>
@@ -75,7 +80,7 @@ class Games extends React.Component {
             {this.props.games.gamesList.map((image, index) => {
               return (
                 <ClassGames
-                  changeGameStatus={this.props.games.addGameToClass}
+                  changeGameStatus={this.addGameToClass}
                   chosen={false}
                   name={image.game_name}
                   image={image.image}
@@ -93,7 +98,7 @@ class Games extends React.Component {
 const mapContextToProps = {
   errorMsg: errorMsgContext,
   games: gamesContext,
-  chosenGameEditContext: chosenGameEditContext,
+  chosenGame: chosenGameEditContext,
   isAuthenticated: IsAuthenticatedContext,
 };
 

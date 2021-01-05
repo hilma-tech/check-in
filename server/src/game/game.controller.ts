@@ -26,7 +26,7 @@ export class GameController {
     return await this.gameService.returnGames(req.skipON, req.munOfGames);
   }
 
-  @UseJwtAuth('superAdmin')
+  @UseJwtAuth('superAdmin', 'teacher')
   @Get('/getGameInfo')
   async getGameInfo(@Req() ide) {
     return await this.gameService.getGameInfo(ide.query);

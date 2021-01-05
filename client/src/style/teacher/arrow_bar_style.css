@@ -1,10 +1,21 @@
 .smallBackArrow {
     position: absolute;
     margin-right: 8vw;
-    margin-top: 1.5vh;
+    margin-top: 1vh;
     right: 0;
-    width: 7vw;
+    width: 5vw;
     background-color: #F2F7FC;
+}
+
+.addGameArrow{
+    background-color: #F2F7FC;
+    position: fixed;
+    top: 26vh;
+    width: 100%;
+    color: #043163;
+    padding-right: 4%;
+    height: 9vh;
+    z-index: 100;
 }
 
 

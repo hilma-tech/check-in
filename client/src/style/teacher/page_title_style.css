@@ -1,11 +1,21 @@
 .titleContain {
-    position: fixed;
+  position: fixed;
   margin: 0vh;
   top: 9.8vh;
   background-color: #043163;
   color: white;
   width: 100vw;
   z-index: 100;
+}
+
+.secondTitle {
+  position: fixed;
+  top: 17.5vh;
+  background-color: #043163;
+  color: white;
+  width: 100vw;
+  z-index: 100;
+  margin-bottom: 2vh;
 }
 
 .officialTitle {
@@ -15,4 +25,3 @@
   font-weight: 600;
   font-size: 6vh;
 }
-
