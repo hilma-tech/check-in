@@ -32,7 +32,7 @@ export class TeacherController {
     let username = req.username;
     let password = req.password;
     let user: Partial<Teacher> = new Teacher({ username, password });
-    user.name = req.name
+    user.first_name = req.name
     user.school = 1
     let classroom = new Classroom()
     classroom.id=2
