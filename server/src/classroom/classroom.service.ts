@@ -27,10 +27,10 @@ export class ClassroomService {
     classroomGame.games = await this.gameRepository.find({ 
       where: { id: req.id } 
     });
-    classroomGame.id = 6;
+    classroomGame.id = 2;
     let currClassGameArr = await this.classroomRepository.find({
       relations: ['games'],
-      where: [{ id: 1 }],
+      where: [{ id: 2 }],
     });
     console.log(currClassGameArr);
     
@@ -44,10 +44,10 @@ export class ClassroomService {
     classroomModel.games = await this.gameRepository.find({
       where: { id: req.id },
     });
-    classroomModel.id = 6;
+    classroomModel.id = 2;
     let ans = await this.classroomRepository.find({
       relations: ['games'],
-      where: [{ id: 1 }],
+      where: [{ id: 2 }],
     });
     ans[0].games.splice(req.id, 1);
     let newRemovedGame = await this.classroomRepository.save(ans[0]);

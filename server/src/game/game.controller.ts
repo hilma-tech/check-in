@@ -23,7 +23,7 @@ export class GameController {
 
   @Get('/gameToFields')
   async getGameFields(@Req() req: any) {
-    return await this.gameService.returnGames(req.skipON, req.munOfGames);
+    return await this.gameService.returnGames(req.skipON, req.numOfGames);
   }
 
   @UseJwtAuth('superAdmin', 'teacher')

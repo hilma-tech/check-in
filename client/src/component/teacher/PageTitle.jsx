@@ -22,8 +22,10 @@ class PageTitle extends Component {
         else {
             // return <div>{(this.props.title.split(' '))[1]}</div>
             return <div className="titleContain">
-                <h1 className="officialTitle">{(this.props.title.split(' '))[0]}</h1>
-                <h1 className="officialTitle">{(this.props.title.split(' '))[1]}</h1>
+                <h1 className="officialTitle">{this.props.title}</h1>
+
+                {/* <h1 className="officialTitle">{(this.props.title.split(' '))[0]}</h1>
+                <h1 className="officialTitle">{(this.props.title.split(' '))[1]}</h1> */}
 
                 {this.props.titleTwo !== undefined ?
                     !this.props.titleTwo.includes('כיתה') ?

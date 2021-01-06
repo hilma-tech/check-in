@@ -5,7 +5,7 @@
   padding-top: 11.1vh;
   display: grid;
   grid-template-columns: 35vw 35vw;
-  grid-auto-rows: minmax(40vw, auto);
+  grid-auto-rows: minmax(40vw, 45vw);
   justify-content: space-evenly;
   background-color: #F2F7FC;
   height: 70vh;
@@ -43,7 +43,7 @@
     width: 75vw;
     left: 0vw;
     grid-template-columns: 15vw 15vw 15vw;
-    grid-auto-rows: minmax(17vw, auto);
+    grid-auto-rows: minmax(17vw, 20vw);
   }
 
   .className {
