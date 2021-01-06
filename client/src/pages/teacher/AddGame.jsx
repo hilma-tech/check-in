@@ -75,18 +75,35 @@ class AddGame extends Component {
             <h3 className="mobileGameReq">דרישות המשחק</h3>
             <p className="mobileGameRP">{this.state.gameRequirements}</p>
             <h1 className="mobileGameFields">שדות:</h1>
-            {this.state.fieldsData.map(field => {
+            {this.state.fieldsData.map((field) => {
               console.log(field);
-              return(
+              return (
                 <>
-                <h2 className="mobileFieldName">{field.field_name}</h2>
-            {field.value.map(value => {
-              return(<input
-              defaultValue={value.value}
-              className="mobileChangingInput"
-            />)})}
-            </>
-              )
+                  <h2 className="mobileFieldName">{field.field_name}</h2>
+                  {
+                    field.selection !== "image" ?
+                    field.value.map((value) => {
+                      if (value.value.length !== 0) {
+                        return (
+                          <input
+                            defaultValue={value.value}
+                            className="mobileChangingInput"
+                          />
+                        );
+                      } else {
+                        return <></>
+                      }
+                    }) :
+                    <div className="mobileBorderCameraIcon">
+              
+                    <img
+                    alt="photograph icon"
+                    className="mobileImg"
+                    src={field.value[0].value}
+                  /></div>
+                  }
+                </>
+              );
             })}
             <div className="mobileSaveButtonBackground">
               <button
