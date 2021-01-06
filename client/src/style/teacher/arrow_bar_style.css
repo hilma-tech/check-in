@@ -6,13 +6,23 @@
     background-color: #F2F7FC;
 }
 
+.addGameArrow{
+    background-color: #F2F7FC;
+    position: fixed;
+    top: 26vh;
+    width: 100%;
+    color: #043163;
+    padding-right: 4%;
+    height: 9vh;
+    z-index: 100;
+}
+
 
 .gamesChooseDistractions{
     background-color: #F2F7FC;
     position: fixed;
     top: 24.75vh;
     width: 100%;
-    font-size: 5vw;
     color: #043163;
     padding-right: 4%;
     height: 15vh;

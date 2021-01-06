@@ -32,6 +32,8 @@ export class ClassroomService {
       relations: ['games'],
       where: [{ id: 1 }],
     });
+    console.log(currClassGameArr);
+    
     currClassGameArr[0].games.push(classroomGame.games[0]);
     let newlyAddedGame = await this.classroomRepository.save(currClassGameArr[0]);
     return { newlyAddedGame: newlyAddedGame };

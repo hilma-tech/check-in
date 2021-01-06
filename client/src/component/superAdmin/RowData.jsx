@@ -41,7 +41,7 @@ class RowData extends React.Component {
           }
         </div>
         <p>
-          <Icon icon={iosArrowBack} />
+          {/* <Icon icon={iosArrowBack} /> */}
         </p>
       </div>
     );

@@ -1,6 +1,6 @@
 @import "../fonts/fonts.scss";
 
-.classGameTitleBackground{
+.classGameTitleBackground {
   /* background and border */
   border-radius: 0px 0px 2vw 2vw;
   /*positioning*/
@@ -20,7 +20,7 @@
   width: 90vw;
   margin-left: 5vw;
   margin-right: 5vw;
-  .gameContainer{
+  .gameContainer {
     display: inline-block;
   }
 }
@@ -53,7 +53,6 @@
   position: relative;
   width: 40vw;
   height: 37vw;
-  border: 0px solid white;
   opacity: 1;
   margin-bottom: 2vh;
   border-radius: 2vw;
@@ -64,7 +63,7 @@
   margin-right: 6vw;
 }
 
-.classGameIconClose{
+.classGameIconClose {
   position: absolute;
   float: left;
   top: 1vw;
@@ -73,7 +72,7 @@
   width: 5vw;
 }
 
-.classGameIconAdd{
+.classGameIconAdd {
   position: absolute;
   float: left;
   top: 0vw;
@@ -82,14 +81,14 @@
   width: 7vw;
 }
 
-.listGamesForClass{
-    display: grid;
-    grid-template-columns: 40vw 40vw;
-    justify-content: space-evenly;
-  }
-  
-  .gameListTitle{
-    color: #043163;
-    font-size: 5vw;
-    padding-right: 10vw;
-  }
+.listGamesForClass {
+  display: grid;
+  grid-template-columns: 40vw 40vw;
+  justify-content: space-evenly;
+}
+
+.gameListTitle {
+  color: #043163;
+  font-size: 5vw;
+  padding-right: 10vw;
+}

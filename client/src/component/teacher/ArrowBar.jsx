@@ -1,8 +1,10 @@
-import React from 'react';
-import '../../style/teacher/arrow_bar_style.css'
+import React from "react";
+import "../../style/teacher/arrow_bar_style.css";
 
 class ArrowBar extends React.Component {
     render() {
+        console.log(this.props.page);
+        console.log(this.props.page.includes('game'));
         if (this.props.page === 'games') {
             return (
                 <div className='gamesChooseDistractions'>
@@ -39,8 +41,11 @@ class ArrowBar extends React.Component {
                         src="/icons/awesome-arrow-right.svg"
                     />
                 </div>);
+        } else {
+            return <></>
         }
     }
-}
+  }
+
 
 export default ArrowBar;

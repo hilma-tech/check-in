@@ -3,13 +3,31 @@
 .mobileBackground {
   background-color: #f2f7fc;
   width: 100vw;
-  height: 100vh;
+  background-size: cover;
   position: absolute;
   margin-top: 0px;
 }
 
+.mobileSaveButtonBackground {
+  display: flex;
+  padding-right: 70vw;
+  margin-top: 1vh;
+  margin-bottom: 2vh;
+}
+
 .mobileSaveButton {
-  color: #043163;
+  color: white;
+  left: 0;
+  background-color: rgba(4, 49, 99, 1);
+  border: none;
+  border-radius: 1vw;
+  width: 25vw;
+  height: 3.5vh;
+  left: 2px;
+}
+
+.mobileGap {
+  padding-top: 7vh;
 }
 
 .mobileGameContainer {
@@ -95,9 +113,9 @@
   font-size: 3vh;
   font-family: Assistant;
   box-shadow: 0px 3px 6px #00000029;
-  width: 90vw;
+  width: 86vw;
   height: 5vh;
-  margin-right: 1vw;
+  margin-right: 5vw;
   margin-bottom: 2vh;
   border: none;
   border-radius: 1.5vw;
@@ -128,12 +146,31 @@
   color: #043163;
   //positioning
   margin: 0px;
-  margin-right: 4vw;
+  margin-right: 6vw;
   margin-bottom: 3vw;
 }
 
-.mobileSaveButtonBackground {
-  position: absolute;
-  margin-top: 4vh;
-  left: 2vh;
+.addGameTitleArrow {
+  margin: 0vh;
+  text-align: right;
+  margin-right: 13vw;
+  margin-top: 1.5vh;
+  font-size: 4vh;
+  font-weight: 600;
 }
+
+.mobileGameRP{
+  position: absolute;
+  margin: 0px;
+  margin-right: 6vw;
+  margin-top: -9vh;
+}
+
+.mobileGameDP{
+  position: absolute;
+  margin: 0px;
+  margin-right: 6vw;
+  margin-top: -14vh;
+}
+
+

@@ -1,43 +1,115 @@
 import { Component } from "react";
 import React from "react";
 import echidnaloo from "../../img/addicon.svg";
-import "../../style/teacher/add_game_style.scss"
+import "../../style/teacher/add_game_style.scss";
+import SmallMenuBar from "../../component/teacher/SmallMenuBar";
+import PageTitle from "../../component/teacher/PageTitle";
+import ArrowBar from "../../component/teacher/ArrowBar";
+import { withRouter } from "react-router-dom";
+import { observer } from "mobx-react";
+import { withContext } from "@hilma/tools";
+import { errorMsgContext } from "../../stores/error.store";
+import { chosenGameEditContext } from "../../stores/chosenGameEdit.store";
+
+const axios = require("axios").default;
 
 class AddGame extends Component {
   constructor() {
     super();
+    this.state = {
+      gameName: "",
+      gameDescription: "",
+      gameRequirements: "",
+      image: "",
+      fieldsData: [],
+    };
   }
+
+  componentDidMount() {
+    this.getGameInfo();
+  }
+
+  getGameInfo = async () => {
+    try {
+      const { data } = await axios.get("/api/game/getGameInfo", {
+        params: { id: this.props.chosenGame.gameId },
+      });
+      if (data.game_name === null || data.game_name === undefined) {
+        this.props.history.push("/teacher/classes/games");
+      }
+      this.setState({
+        fieldsData: data.fields,
+        gameName: data.game_name,
+        gameDescription: data.description,
+        gameRequirements: data.requirements,
+        image: data.image,
+      });
+    } catch (error) {
+      this.props.errorMsg.setErrorMsg(
+        "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
+      );
+    }
+  };
+
   render() {
     return (
       <>
-      <div className="mobileBackground">
-        <div className="mobileGameContainer">
-          <img
-            className="classGameImg"
-            alt=""
-            src={echidnaloo}
-            //   src={this.props.image}
-          />
-          <h2 className="mobileClassGameTitleBackground"></h2>
-          <h1 className="mobileClassGameTitle">אני כותרת</h1>
-        </div>
-        <h3 className="mobileGameDesc">תיאור המשחק</h3>
-        <h3 className="mobileGameReq">דרישות המשחק</h3>
-        <h1 className="mobileGameFields">שדות:</h1>
-        <h2 className="mobileFieldName" >שם השדה</h2>
-        <input defaultValue="ערך ניתן לשינוי" className="mobileChangingInput"/>
-        <div className="mobileSaveButtonBackground">
-          <button
-            className="mobileSaveButton"
-            // onClick={this.saveData}
-          >
-            שמור
-          </button>
-        </div>
+        <SmallMenuBar />
+        <PageTitle title="משחקים" titleTwo="כיתה א'1" />
+        <ArrowBar page="addGame" />
+        <div className="smallAlign mobileGap" style={{ top: "26vh" }}>
+          <div className="mobileBackground">
+            <div className="mobileGameContainer">
+              <img
+                className="classGameImg"
+                alt=""
+                src={this.state.image}
+                // src={echidnaloo}
+                //   src={this.props.image}
+              />
+              <h2 className="mobileClassGameTitleBackground"></h2>
+              <h1 className="mobileClassGameTitle">{this.state.gameName}</h1>
+            </div>
+            <h3 className="mobileGameDesc">תיאור המשחק</h3>
+            <p className="mobileGameDP">{this.state.gameDescription}</p>
+            <h3 className="mobileGameReq">דרישות המשחק</h3>
+            <p className="mobileGameRP">{this.state.gameRequirements}</p>
+            <h1 className="mobileGameFields">שדות:</h1>
+            {this.state.fieldsData.map(field => {
+              console.log(field);
+              return(
+                <>
+                <h2 className="mobileFieldName">{field.field_name}</h2>
+            {field.value.map(value => {
+              return(<input
+              defaultValue={value.value}
+              className="mobileChangingInput"
+            />)})}
+            </>
+              )
+            })}
+            <div className="mobileSaveButtonBackground">
+              <button
+                className="mobileSaveButton"
+                onClick={() => {
+                  this.props.history.push("/teacher/classes/games");
+                }}
+              >
+                שמור
+              </button>
+            </div>
+          </div>
         </div>
       </>
     );
   }
 }
 
-export default AddGame;
+// export default withRouter(AddGame)
+
+const mapContextToProps = {
+  errorMsg: errorMsgContext,
+  chosenGame: chosenGameEditContext,
+};
+
+export default withContext(mapContextToProps)(withRouter(observer(AddGame)));

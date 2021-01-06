@@ -3,6 +3,7 @@ import {
   IsNumber,
   IsString,
   Length,
+  Matches,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -20,6 +21,7 @@ export class FieldDataDto {
   @IsDefined()
   @IsString()
   @Length(1, 50)
+  @Matches(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
   name: string;
   @IsDefined()
   @IsString()
