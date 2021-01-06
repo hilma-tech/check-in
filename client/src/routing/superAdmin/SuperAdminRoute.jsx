@@ -14,16 +14,15 @@ import AddSchool from "../../pages/superAdmin/AddSchool.jsx";
 import SignIn from "../../pages/SignIn.jsx";
 import { PrivateRoute } from "@hilma/auth";
 import ErrorPage from "../../pages/404Page.jsx";
-import "../../style/superAdmin/disp.scss"
+import "../../style/superAdmin/disp.scss";
 
 class SuperAdminRoute extends React.Component {
   render() {
-  
     return (
       <>
-        <Menu  />
+        <Menu />
         <Switch>
-        <PrivateRoute
+          <PrivateRoute
             path="/superAdmin"
             exact
             redirectPath="/signin"
@@ -44,38 +43,41 @@ class SuperAdminRoute extends React.Component {
             exact
             componentName="SAdminAddGames"
             redirectPath="/signin"
-            redirectComponent={GamesRouter}
+            redirectComponent={SignIn}
             component={AddGame}
           />
           <PrivateRoute
-              path="/superAdmin/gamesEdit"
-              exact
-              componentName="SAdminEditGames"
-              redirectPath="/signin"
-              redirectComponent={GamesRouter}
-              component={EditGame}
-            />
+            path="/superAdmin/gamesEdit"
+            exact
+            componentName="SAdminEditGames"
+            redirectPath="/signin"
+            redirectComponent={SignIn}
+            component={EditGame}
+          />
           <PrivateRoute
-              path="/superAdmin/schools"
-              exact
-              componentName="SAdminSchools"
-              redirectComponent={GamesRouter}
-              component={SchoolsList}
-            />
-        <PrivateRoute
-              path="/superAdmin/teachers"
-              exact
-              componentName="SAdminTeachers"
-              redirectComponent={GamesRouter}
-              component={TeachersList}
-            />
+            path="/superAdmin/schools"
+            exact
+            componentName="SAdminSchools"
+            redirectPath="/signin"
+            redirectComponent={SignIn}
+            component={SchoolsList}
+          />
           <PrivateRoute
-              path="/superAdmin/students"
-              exact
-              componentName="SAdminStudents"
-              redirectComponent={GamesRouter}
-              component={StudentsList}
-            />
+            path="/superAdmin/teachers"
+            exact
+            componentName="SAdminTeachers"
+            redirectPath="/signin"
+            redirectComponent={SignIn}
+            component={TeachersList}
+          />
+          <PrivateRoute
+            path="/superAdmin/students"
+            exact
+            componentName="SAdminStudents"
+            redirectPath="/signin"
+            redirectComponent={SignIn}
+            component={StudentsList}
+          />
           {/* <PrivateRoute
               path="/superAdmin/studentsAdd"
               exact
@@ -122,7 +124,7 @@ class SuperAdminRoute extends React.Component {
             >
               <h4>student edit</h4>
             </PrivateRoute> */}
-            <Route path="/superAdmin/:smth" component={ErrorPage} />
+          <Route path="/superAdmin/:smth" component={ErrorPage} />
         </Switch>
       </>
     );
