@@ -17,8 +17,8 @@
 .chosenImg {
   margin: 0px;
   padding: 0px;
-  height: 16vw;
-  width: 25vw;
+  height: 100%;
+  width: 100%;
   object-fit: cover;
   border-radius: 2vw;
 }
@@ -49,6 +49,8 @@
 .marginTop {
   margin-top: 2.5vh;
 }
+
+
 
 // img {
   //   @include imgCover(false);

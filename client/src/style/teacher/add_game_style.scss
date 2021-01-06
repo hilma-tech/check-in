@@ -27,7 +27,7 @@
 }
 
 .mobileGap {
-  padding-top: 7vh;
+  padding-top: 4vh;
 }
 
 .mobileGameContainer {
@@ -173,4 +173,21 @@
   margin-top: -14vh;
 }
 
+.mobileBorderCameraIcon{
+  border: 1px solid #043163;
+  margin: 0;
+  margin-right: 6vw;
+  width: 50vw;
+  border-radius: 2vw;
+  height: 36vw;
+  margin-bottom: 1vh;
+}
 
+.mobileImg{
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 2vw;
+}

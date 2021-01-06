@@ -80,18 +80,28 @@ class AddGame extends Component {
               return (
                 <>
                   <h2 className="mobileFieldName">{field.field_name}</h2>
-                  {field.value.map((value) => {
-                    if (value.value.length !== 0) {
-                      return (
-                        <input
-                          defaultValue={value.value}
-                          className="mobileChangingInput"
-                        />
-                      );
-                    } else {
-                      return <></>;
-                    }
-                  })}
+                  {
+                    field.selection !== "image" ?
+                    field.value.map((value) => {
+                      if (value.value.length !== 0) {
+                        return (
+                          <input
+                            defaultValue={value.value}
+                            className="mobileChangingInput"
+                          />
+                        );
+                      } else {
+                        return <></>
+                      }
+                    }) :
+                    <div className="mobileBorderCameraIcon">
+              
+                    <img
+                    alt="photograph icon"
+                    className="mobileImg"
+                    src={field.value[0].value}
+                  /></div>
+                  }
                 </>
               );
             })}
