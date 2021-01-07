@@ -2,17 +2,25 @@ import React from "react";
 import "../../style/teacher/arrow_bar_style.css";
 
 class ArrowBar extends React.Component {
+    constructor() {
+        super()
+        this.pages = {
+            games: 'משחקים',
+            addGame: 'עריכת משחק',
+            students: 'תלמידים',
+            permission: 'הרשאות'
+        }
+    }
     render() {
-        console.log(this.props.page);
-        console.log(this.props.page.includes('game'));
         if (this.props.page === 'games') {
             return (
                 <div className='gamesChooseDistractions'>
                     <img
-                    alt="small back arrow"
+                        alt="small back arrow"
                         className="smallBackArrow"
                         src="/icons/awesome-arrow-right.svg"
                     />
+                    <p className="pageNameArrowBar">{this.pages[this.props.page]}</p>
                     <p className='gamesChooseDistractionsText'>
                         בחר/י משחק כדי לערוך אותו,<br />
                     על מנת להוסיף משחק חדש לכיתה זו
@@ -23,10 +31,12 @@ class ArrowBar extends React.Component {
             return (
                 <div className='studentsArrowBar'>
                     <img
-                    alt="small back arrow"
+                        alt="small back arrow"
                         className="smallBackArrow"
                         src="/icons/awesome-arrow-right.svg"
                     />
+                    <p className="pageNameArrowBar">{this.pages[this.props.page]}</p>
+
                     <br />
                     <br />
                     {/* search bar */}
@@ -36,16 +46,17 @@ class ArrowBar extends React.Component {
             return (
                 <div className='permissionArrowBar'>
                     <img
-                    alt="small back arrow"
+                        alt="small back arrow"
                         className="smallBackArrow"
                         src="/icons/awesome-arrow-right.svg"
                     />
+                    <p className="pageNameArrowBar">{this.pages[this.props.page]}</p>
                 </div>);
         } else {
             return <></>
         }
     }
-  }
+}
 
 
 export default ArrowBar;

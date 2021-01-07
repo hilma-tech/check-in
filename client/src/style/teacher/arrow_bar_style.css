@@ -25,7 +25,7 @@
     width: 100%;
     color: #043163;
     padding-right: 4%;
-    height: 15vh;
+    height: 25vw;
     z-index: 100;
 }
 
@@ -60,4 +60,45 @@
     padding-right: 4%;
     height: 5vh;
     z-index: 100;
+}
+
+.pageNameArrowBar{
+    display: none;
+}
+@media only screen and (min-width: 500px) {
+    .smallBackArrow {
+        margin-right: 3.75vw;
+        width: 1.65vw;
+        background-color: rgba(255, 255, 255, 0);
+    }
+    
+    .gamesChooseDistractions{
+        background-color: #F2F7FC;
+        position: fixed;
+        top: 6vh;
+        right: 25vw;
+        width: 60vw;
+        padding-right: 0;
+        height: 17vw;
+        z-index: 100;
+    }
+    
+    .gamesChooseDistractionsText{
+        text-align: start;
+        margin-top: 0;
+        font-size: 2vw;
+        padding-top: 0;
+        width: 70vw;
+        margin-right: 7vw;
+      }
+    
+    .pageNameArrowBar{
+        font-size: 2.5vw;
+        text-align: start;
+        display: inline-block;
+        font-weight: 700;
+        padding-top: 2.25vh;
+        width: 70vw;
+        margin-right: 7vw;
+    }
 }

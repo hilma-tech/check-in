@@ -39,3 +39,14 @@
     width: 100%;
     top: 0;
 }
+
+
+@media only screen and (min-width: 500px) {
+
+    .smallAlign {
+        width: 75vw;
+        right: 25vw;
+        /* height: 20vh; */
+        /* padding-top: 0 !important; */
+    }
+}
