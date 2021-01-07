@@ -27,8 +27,7 @@ export class StudentController {
     let username = req.username;
     let password = req.password;
     let student: Partial<Student> = new Student({ username, password });
-    student.name = req.name
-    student.school= 1
+    student.first_name = req.name
     let classroom = new Classroom()
     classroom.id=2
     classroom.name="א'1"

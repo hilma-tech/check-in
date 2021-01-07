@@ -24,9 +24,15 @@ import { Classroom } from 'src/classroom/classroom.entity';
 export class Student extends User {
   @IsDefined()
   @IsString()
-  @Length(1, 30)
+  @Length(1, 50)
   @Column({ type: 'varchar', length: 50 })
-  name: string;
+  first_name: string;
+
+  @IsDefined()
+  @IsString()
+  @Length(1, 50)
+  @Column({ type: 'varchar', length: 50 })
+  last_name: string;
 
   @ManyToOne(
     () => School,
@@ -35,6 +41,7 @@ export class Student extends User {
   @JoinColumn({ referencedColumnName: 'id', name: 'school_id' })
   school: number;
 
+  
   @ManyToMany(
     type => Classroom,
     classroom => classroom.students,

@@ -31,7 +31,7 @@
   position: fixed;
   background-color: white;
   top: 24.25vh;
-  width: 30vw;
+  width: 50vw;
   height: 0.5vh;
   margin: 0;
   margin-right: 35vw;
@@ -42,7 +42,7 @@
   position: fixed;
   background-color: white;
   top: 24.25vh;
-  width: 30vw;
+  width: 50vw;
   height: 0.5vh;
   margin: 0;
   z-index: 101;

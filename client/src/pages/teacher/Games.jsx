@@ -28,14 +28,15 @@ class Games extends React.Component {
     this.props.games.resetShowOptions();
     if (this.state.gamesList.length === 0) {
       this.getGames();
+      this.props.games.getClassroomGames()
+      if (!this.props.games.successGettingGames) {
+        this.props.errorMsg.setErrorMsg(
+          "הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת."
+          );
+        }
+      }
     }
-  }
-  componentDidMount() {
-    this.props.games.resetShowOptions();
-    if (this.props.games.gamesList.length === 0) {
-      this.getGames();
-    }
-  }
+   
 
   getGames = async () => {
     await this.props.games.setGames();

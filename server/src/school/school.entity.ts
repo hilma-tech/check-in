@@ -35,7 +35,6 @@ export class School {
   @Column({ type: "varchar", length: 50 })
   city: string;
 
-
   @OneToMany(
     () => Student,
     student => student.school

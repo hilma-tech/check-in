@@ -1,5 +1,5 @@
 import { RequestUser, UseJwtAuth, UseLocalAuth } from '@hilma/auth-nest';
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { request } from 'express';
 import { userInfo } from 'os';
 import { ClassroomService } from './classroom.service';
@@ -10,7 +10,10 @@ export class ClassroomController {
         private classroomService: ClassroomService
         ) {}
 
-    
+        @Get('/getClassroomGames')
+        async getClassroomGames(){
+            return await this.classroomService.getClassroomGames();
+        }
 
     @Post('/addGameRelation')
     async addGameRelation(@Body() req: any) {
