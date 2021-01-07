@@ -28,9 +28,9 @@ export class TeacherService extends UserService {
           relations: ['classrooms'],
           where: [{id: userinfo}]
         });
-        console.log(currTeacher, "userrrrr");
+        // console.log(currTeacher, "userrrrr");
         let currTeacherClasses = currTeacher[0].classrooms;
-        console.log(currTeacherClasses);
+        // console.log(currTeacherClasses);
         
         return currTeacherClasses;
       }
@@ -42,7 +42,7 @@ export class TeacherService extends UserService {
             take: 50,
             relations: ['school','classrooms']
         })
-        console.log('teachers: ', teachers);
+        // console.log('teachers: ', teachers);
         return { teachersInfo: teachers, haveMoreTeachers: haveMoreTeachers }
     }
 }

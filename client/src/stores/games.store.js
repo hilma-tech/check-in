@@ -23,6 +23,7 @@ class Games {
             setShowOption: action,
             removeGameFromClass: action,
             addGameToClass: action,
+            getClassroomGames: action,
         })
     }
 
@@ -32,6 +33,25 @@ class Games {
             const { data } = await axios.get("/api/game/getGames",{ params:{ gamesLength: this.gamesList.length }});
             this.gamesList = this.gamesList.concat(data.gamesInfo)
             this.haveMoreGames = data.haveMoreGames;
+            this.successGettingGames = true;
+            this.startGetGames = false;
+        }catch (error){
+            this.successGettingGames = false
+            this.startGetGames = false;
+        }
+    }
+
+    getClassroomGames = async() => {
+        try{
+            this.startGetGames = true;
+            const { data } = await axios.get("/api/classroom/getClassroomGames");
+            this.chosenGameList = this.chosenGameList.concat(data.games)
+            this.gamesList = this.gamesList.filter((game)=>{
+                let filterArr = this.chosenGameList.filter((chosenGame)=>{
+                    return chosenGame.id === game.id
+                })
+                return filterArr.length === 0
+            })
             this.successGettingGames = true;
             this.startGetGames = false;
         }catch (error){

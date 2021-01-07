@@ -20,6 +20,13 @@ export class ClassroomService {
     private gameRepository: Repository<Game>,
   ) {}
 
+  async getClassroomGames() {
+    let currClassGames = await this.classroomRepository.find({
+      relations: ['games'],
+      where: [{ id: 2 }],
+    });
+    return currClassGames[0];
+  }
   
 
   async addGameRelation(@Body() req: any) {
@@ -32,7 +39,6 @@ export class ClassroomService {
       relations: ['games'],
       where: [{ id: 2 }],
     });
-    console.log(currClassGameArr);
     
     currClassGameArr[0].games.push(classroomGame.games[0]);
     let newlyAddedGame = await this.classroomRepository.save(currClassGameArr[0]);
