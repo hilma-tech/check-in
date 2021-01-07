@@ -34,6 +34,14 @@ export class Student extends User {
   @Column({ type: 'varchar', length: 50 })
   last_name: string;
 
+  @ManyToOne(
+    () => School,
+    school => school.students,
+  )
+  @JoinColumn({ referencedColumnName: 'id', name: 'school_id' })
+  school: number;
+
+  
   @ManyToMany(
     type => Classroom,
     classroom => classroom.students,

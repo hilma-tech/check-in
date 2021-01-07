@@ -36,6 +36,12 @@ export class School {
   city: string;
 
   @OneToMany(
+    () => Student,
+    student => student.school
+  )
+  students: Student[];
+
+  @OneToMany(
     () => Teacher,
     teacher => teacher.school
   )
