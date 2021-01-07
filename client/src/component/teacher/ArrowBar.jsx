@@ -32,15 +32,15 @@ class ArrowBar extends React.Component {
                     {/* search bar */}
                     <h4 className="linkToTeachers">לרשימת המורים של כיתה זו</h4>
                 </div>);
-        } else if (this.props.page === 'permission') {
-            return (
-                <div className='permissionArrowBar'>
-                    <img
-                    alt="small back arrow"
-                        className="smallBackArrow"
-                        src="/icons/awesome-arrow-right.svg"
-                    />
-                </div>);
+        // } else if (this.props.page === 'permission') {
+        //     return (
+        //         <div className='permissionArrowBar'>
+        //             <img
+        //             alt="small back arrow"
+        //                 className="smallBackArrow"
+        //                 src="/icons/awesome-arrow-right.svg"
+        //             />
+        //         </div>);
         } else {
             return <></>
         }
