@@ -73,7 +73,7 @@ class Games extends React.Component {
               })}
             </div>
           </div>
-          <p className="gameListTitle">משחקים שיתן להוסיף:</p>
+          <p className="gameListTitle">משחקים שניתן להוסיף:</p>
           {/*add search option */}
            <div className="listGamesForClass">
             {this.props.games.gamesList.map((image, index) => {
