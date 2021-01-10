@@ -5,7 +5,7 @@
   background-color: #043163;
   color: white;
   width: 100vw;
-  height: 17vh;
+  height: 9vh;
   z-index: 100;
   font-size: 6vh;
   font-family: Assistant;
@@ -23,7 +23,7 @@
   font-size: 6vh;
 }
 
-.officialTitle {
+.officialTitle, .officialTitleClass {
   margin: 0vh;
   height: 9vh;
   text-align: center;
@@ -31,6 +31,19 @@
   font-size: 6vh;
 }
 
+.officialTitleClassName{
+  margin: 0vh;
+  height: 9vh;
+  text-align: center;
+  font-weight: 700;
+  font-size: 6vh;
+  padding-right: 8px;
+}
+
+.officialTitleFlex{
+  display: flex;
+  justify-content: center;
+}
 
 
 @media only screen and (min-width: 500px) {
@@ -41,10 +54,33 @@
     background-color: #F2F7FC;
     color: #043163;
     width: 75vw;
+    height: 17vh;
+    /* height: 100vh; */
   }
 
   .officialTitle {
     padding-right: 2vw;
     text-align: right;
+  }
+
+  .officialTitleClassName{
+    display: flex;
+    position: absolute;
+    top: 13vh;
+    left: 7vw;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 90%;
+  width: 3vw;
+  height: 3vw;
+  font-size: 1.5vw;
+  border: 1px dashed;
+  padding: 0;
+  }
+  .officialTitleClass{
+    display: none;
+  }
+  .officialTitleFlex{
+    justify-content: flex-end;
   }
 }

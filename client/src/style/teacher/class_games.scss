@@ -20,6 +20,7 @@
   width: 90vw;
   margin-left: 5vw;
   margin-right: 5vw;
+
   .gameContainer {
     display: inline-block;
   }
@@ -83,6 +84,7 @@
 
 .listGamesForClass {
   display: grid;
+  background-color: #F2F7FC;
   grid-template-columns: 40vw 40vw;
   justify-content: space-evenly;
 }
@@ -92,3 +94,84 @@
   font-size: 5vw;
   padding-right: 10vw;
 }
+
+#smallAlignClassGames {
+  top: 24.75vh;
+  padding-top: 25vw;
+  background-repeat: repeat;
+  height: 75.25vh;
+  background-color: #F2F7FC;
+}
+
+@media only screen and (min-width: 500px) {
+  .classGameTitleBackground {
+    /* background and border */
+    border-radius: 0px 0px 1vw 1vw;
+    top: 7.5vw;
+    height: 2.5vw;
+  }
+
+  .scrollChosenGames {
+    margin-right: 7vw;
+    margin-top: 9vw;
+    width: 60vw;
+  }
+
+  .classGameTitle {
+    /*text*/
+    font: normal normal normal 2vw Assistant;
+    padding: 0.1vw 0vw;
+    top: 7.25vw;
+  }
+
+  .classGameImg {
+    border-radius: 1vw;
+  }
+
+  .gameContainer {
+    width: 13vw;
+    height: 10vw;
+    margin-bottom: 2vh;
+    border-radius: 1vw;
+  }
+
+  .scrollChosenGames .gameContainer:not(:first-child) {
+    margin-right: 1.5vw;
+  }
+
+  .classGameIconClose {
+    top: 0.5vw;
+    left: 0.5vw;
+    height: 1.75vw;
+    width: 1.75vw;
+  }
+
+  .classGameIconAdd {
+    height: 2.25vw;
+    width: 2.25vw;
+  }
+
+  .listGamesForClass {
+    padding-right: 7vw;
+    display: grid;
+    width: 60vw;
+    justify-content: space-between;
+    grid-template-columns: 13vw 13vw 13vw 13vw;
+  }
+
+  .gameListTitle {
+    color: #043163;
+    font-size: 2vw;
+    padding-right: 7vw;
+  }
+
+  #smallAlignClassGames {
+    height: 73vh;
+    margin: 0;
+    position: absolute;
+    top: 27vh;
+    padding-top: 0;
+    left: 0;
+    overflow-x: hidden;
+  }
+} 

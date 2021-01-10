@@ -7,6 +7,7 @@ import ClassesRouter from "./ClassesRouter.jsx";
 class TeacherRoute extends React.Component {
   render() {
     return (
+          <div style={{backgroundColor: '#F2F7FC', height: '100vh'}}>
         <Switch>
           <PrivateRoute
             path="/teacher/classes"
@@ -16,6 +17,7 @@ class TeacherRoute extends React.Component {
             component={ClassesRouter}
           />
         </Switch>
+          </div>
     );
   }
 }

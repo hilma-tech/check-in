@@ -13,6 +13,7 @@ import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { chosenClassContext } from "../../stores/chosenClass.store.js";
+import BlueSideBar from "../../component/teacher/BlueSideBar.jsx";
 
 
 class Games extends React.Component {
@@ -42,7 +43,7 @@ class Games extends React.Component {
     }
   }
 
-  addGameToClass = async(index) => {
+  addGameToClass = async (index) => {
     await this.props.chosenGame.setgameId(this.props.games.gamesList[index].id)
     await this.props.games.addGameToClass(index, this.props.chosenClass.classId)
     this.props.history.push('/teacher/classes/addgame')
@@ -50,16 +51,17 @@ class Games extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{ overflowX: 'hidden', width: '100vw' }}>
         <SmallMenuBar />
-        <PageTitle title={"כיתה " + this.props.chosenClass.classroomName} />
-        <SmallNavBar />
-        <ArrowBar page="games" />
-        <div className="smallAlign" style={{ top: "39.75vh" }}>
+        <SmallNavBar active="games" />
+        <BlueSideBar />
+        <PageTitle title="כיתה א'1" />
+        <ArrowBar page="games" chosenClass="א'1" />
+        <div className="smallAlign" id='smallAlignClassGames'>
           <div className="chosenGamesForClass">
             <div className="scrollChosenGames">
-            {this.props.games.chosenGameList.map((gameData, i) => {
-              return (
+              {this.props.games.chosenGameList.map((gameData, i) => {
+                return (
                   <ClassGames
                     index={i}
                     changeGameStatus={()=>{this.props.games.removeGameFromClass(i,this.props.chosenClass.classId)}}
@@ -67,13 +69,13 @@ class Games extends React.Component {
                     name={gameData.game_name}
                     image={gameData.image}
                   />
-                  );
-                })}
-                </div>
+                );
+              })}
+            </div>
           </div>
           <p className="gameListTitle">משחקים שיתן להוסיף:</p>
-          {/* add search option */}
-          <div className="listGamesForClass">
+          {/*add search option */}
+           <div className="listGamesForClass">
             {this.props.games.gamesList.map((image, index) => {
               return (
                 <ClassGames

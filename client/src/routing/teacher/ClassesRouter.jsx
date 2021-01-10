@@ -12,14 +12,12 @@ class ClassesRouter extends Component {
     }
     render() {
       return (
-        <div>
           <>
             <PrivateRoute path='/teacher/classes' exact componentName="TeacherClasses" component={Classes} />
             <PrivateRoute path='/teacher/classes/addGame' exact componentName="TeacherAddGame" component={AddGame} />
             {/* <Route path={"/teacher/classes/students/studentInfo"} exact component={StudentDetails} /> */}
             <SmallNavRouter />
           </>
-        </div>
       );
     }
   }
