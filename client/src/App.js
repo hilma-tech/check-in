@@ -23,6 +23,7 @@ import { useIsAuthenticated } from "@hilma/auth";
 import { studentsProvider } from "./stores/students.store";
 import { teachersProvider } from "./stores/teachers.store";
 import { schoolsProvider } from "./stores/schools.store";
+import { chosenClassProvider } from "./stores/chosenClass.store";
 
 function App() {
   let isAuthenticated = useIsAuthenticated();
@@ -81,5 +82,6 @@ export default provide(
   [studentsProvider, {}],
   [teachersProvider, {}],
   [schoolsProvider, {}],
+  [chosenClassProvider, {}],
   [AuthProvider, { accessTokenCookie: "klool" }]
 )(App);

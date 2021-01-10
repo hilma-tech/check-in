@@ -20,10 +20,10 @@ export class ClassroomService {
     private gameRepository: Repository<Game>,
   ) {}
 
-  async getClassroomGames() {
+  async getClassroomGames(req) {
     let currClassGames = await this.classroomRepository.find({
       relations: ['games'],
-      where: [{ id: 2 }],
+      where: [{ id: req.classId }],
     });
     return currClassGames[0];
   }
@@ -32,12 +32,12 @@ export class ClassroomService {
   async addGameRelation(@Body() req: any) {
     let classroomGame = new Classroom();
     classroomGame.games = await this.gameRepository.find({ 
-      where: { id: req.id } 
+      where: { id: req.gameId } 
     });
-    classroomGame.id = 2;
+    classroomGame.id = req.classId;
     let currClassGameArr = await this.classroomRepository.find({
       relations: ['games'],
-      where: [{ id: 2 }],
+      where: [{ id: req.classId }],
     });
     
     currClassGameArr[0].games.push(classroomGame.games[0]);
@@ -48,12 +48,12 @@ export class ClassroomService {
   async removeGameRelation(@Body() req: any) {
     let classroomModel = new Classroom();
     classroomModel.games = await this.gameRepository.find({
-      where: { id: req.id },
+      where: { id: req.gameId },
     });
-    classroomModel.id = 2;
+    classroomModel.id = req.classId;
     let ans = await this.classroomRepository.find({
       relations: ['games'],
-      where: [{ id: 2 }],
+      where: [{ id: req.classId }],
     });
     ans[0].games.splice(req.id, 1);
     let newRemovedGame = await this.classroomRepository.save(ans[0]);
