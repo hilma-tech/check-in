@@ -42,9 +42,13 @@ class Classes extends Component {
 
   moveToClass = (classId, classroomName) => {
     this.props.chosenClass.setClassId(classId, classroomName)
-    this.props.history.push(this.props.location.pathname + "/games");
-  };
-
+    if(this.props.location.pathname === '/teacher/classes/'){
+      this.props.history.push(this.props.location.pathname + "games");
+    } else {
+      this.props.history.push(this.props.location.pathname + "/games");
+    }
+  }
+  
   render() {
     console.log(this.state);
     return (
@@ -52,7 +56,6 @@ class Classes extends Component {
         <div className="smallSticky">
           <SmallMenuBar />
         </div>
-        <BlueSideBar />
         <PageTitle className="officialTitle" title="שלום המורה נורית!" />
         <div className="griddler">
           {this.state.classes.map((classObj, index) => {

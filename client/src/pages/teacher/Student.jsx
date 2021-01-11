@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ArrowBar from "../../component/teacher/ArrowBar.jsx";
+import BlueSideBar from "../../component/teacher/BlueSideBar.jsx";
 import PageTitle from "../../component/teacher/PageTitle.jsx";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 import SmallNavBar from "../../component/teacher/SmallNavBar.jsx";
@@ -25,13 +26,12 @@ class Students extends Component {
   render() {
     return (
       <>
-        <div className="smallBackground">
           <div className="smallPage">
             <SmallMenuBar />
             <PageTitle title="כיתה א'2" />
             <SmallNavBar active="students" />
             <ArrowBar page="students" />
-            <div className="smallAlign" style={{ top: "37.75vh" }}>
+            <div className="smallAlign"  id='smallAlignStudentList'>
               {this.students.map((studentName, index) => {
                 return (
                   <div
@@ -46,7 +46,6 @@ class Students extends Component {
               })}
             </div>
           </div>
-        </div>
       </>
     );
   }

@@ -8,6 +8,7 @@ import { PrivateRoute } from "@hilma/auth";
 
 class SmallNavRouter extends Component {
   render() {
+    console.log(window.location.pathname);
     return (
       <>
         <PrivateRoute
@@ -18,11 +19,14 @@ class SmallNavRouter extends Component {
           redirectPath="/signin"
           redirectComponent={SignIn}
         />
-        {/* <Route
-              path={"/teacher/classes/students"} exact
-              component={Students}
-            />
-            <Route path={"/teacher/classes/permissions"} exact
+         <PrivateRoute
+          path={"/teacher/classes/students"}
+          exact
+          componentName="TeacherStudenstList"
+          component={Students}
+          redirectPath="/signin"
+        />
+        {/*    <Route path={"/teacher/classes/permissions"} exact
               component={Permissions}/> */}
       </>
     );

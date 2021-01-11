@@ -15,10 +15,10 @@ class BlueSideBar extends React.Component {
     }
     render() {
         return (<>
-            <Drawer anchor='right' open={false} className='drawer '>
+            <Drawer anchor='right' open={this.props.openSideBar} className='drawer '>
                 <div className='blueSideBar'>
                     <div className='blueSideBarUserName'>
-                        <img src='/icons/closeIcon.svg' id='closeIcon' />
+                        <img src='/icons/closeIcon.svg' id='closeIcon' onClick={this.props.closeSideBar} />
                         <p id='teacherName'>נורית כהן</p>
                     </div>
                     <div className='blueSideBarOptions'>
