@@ -47,10 +47,18 @@ class GeneralTable extends React.Component {
                 })
               }
             </div>
+            {/* {
+              this.props.startGetInfo ? 
+              <img
+              style={{ width: "8vw", height:'8vw', marginTop: '1vh' }}
+              src="/icons/loading.gif"
+              alt="loading..."
+            ></img> :
             <button
               className="showMoreGamesB"
               onClick={this.props.loadMore}
               style={{
+                marginTop: '1vh',
                 display:
                   this.props.haveMoreData
                     ? "inline-block"
@@ -59,6 +67,7 @@ class GeneralTable extends React.Component {
             >
               הצג עוד
             </button>
+            } */}
           </>
         }
       </div>

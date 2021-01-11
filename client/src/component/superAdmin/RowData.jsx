@@ -13,7 +13,7 @@ class RowData extends React.Component {
   //When we press on row it's passed to the edit page of the item
   onClickEdit = () => {
     //for now
-    // this.props.history.push(this.props.location.pathname + "Edit");
+    this.props.history.push(this.props.location.pathname + "Edit");
   };
 
   render() {
@@ -41,7 +41,10 @@ class RowData extends React.Component {
           }
         </div>
         <p>
-          {/* <Icon icon={iosArrowBack} /> */}
+          {
+            !this.props.location.pathname.includes('student') ?
+            <Icon icon={iosArrowBack} /> : <></>
+            }
         </p>
       </div>
     );
