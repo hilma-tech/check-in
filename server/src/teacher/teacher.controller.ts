@@ -16,7 +16,7 @@ export class TeacherController {
       private readonly userService: UserService,
       private teacherService: TeacherService
       ) {
-        // this.register({username: 'teacher100@gmail.com', password: 'teacher1', name: 'יונה בן ראובן'})
+        // this.register({username: 'teacher2@gmail.com', password: 'teacher1'})
     }
 
 
@@ -33,8 +33,8 @@ export class TeacherController {
     let password = req.password;
     let fullName = req.name.split(' ')
     let user: Partial<Teacher> = new Teacher({ username, password });
-    user.first_name = fullName[0]
-    user.last_name = fullName[1]
+    // user.first_name = "רון"
+    // user.last_name = "איסר"
     user.school = 1
     let classroom = new Classroom()
     classroom.id=2
