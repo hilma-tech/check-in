@@ -10,11 +10,11 @@ class Students extends Component {
   constructor() {
     super();
     this.students = [
-      "גלעד כהן",
-      "יונה אהרון",
-      "נוה לוי",
-      "נטע שלם",
-      "יונה אהרון",
+      {name: "גלעד כהן", userName: "gilad10",password:"12345678" },
+      {name: "יונה אהרון", userName: "gilad10",password:"12345678" },
+      {name:  "נוה לוי", userName: "gilad10",password:"12345678" },
+      {name: "נטע שלם", userName: "gilad10",password:"12345678" },
+      {name: "יונה אהרון", userName: "gilad10",password:"12345678" }, 
     ];
   }
 
@@ -32,14 +32,20 @@ class Students extends Component {
             <SmallNavBar active="students" />
             <ArrowBar page="students" />
             <div className="smallAlign"  id='smallAlignStudentList'>
-              {this.students.map((studentName, index) => {
+              {this.students.map((student, index) => {
                 return (
                   <div
                     className="smallStudentCont"
                     onClick={this.moveToStudent}
                   >
                     <h1 className="smallStudentName" id={index}>
-                      {studentName}
+                      {student.name}
+                    </h1>
+                    <h1 className="smallStudentName justForWeb" id={index}>
+                      שם משתמש: {student.userName}
+                    </h1>
+                    <h1 className="smallStudentName justForWeb" id={index}>
+                      סיסמא: {student.password}
                     </h1>
                   </div>
                 );
