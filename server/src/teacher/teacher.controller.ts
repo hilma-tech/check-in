@@ -31,8 +31,10 @@ export class TeacherController {
   register(@Body() req) {
     let username = req.username;
     let password = req.password;
+    let fullName = req.name.split(' ')
     let user: Partial<Teacher> = new Teacher({ username, password });
-    user.first_name = req.name
+    user.first_name = fullName[0]
+    user.last_name = fullName[1]
     user.school = 1
     let classroom = new Classroom()
     classroom.id=2

@@ -26,8 +26,10 @@ export class StudentController {
     async register(@Body() req) {
     let username = req.username;
     let password = req.password;
+    let fullName = req.name.split(' ')
     let student: Partial<Student> = new Student({ username, password });
-    student.first_name = req.name
+    student.first_name = fullName[0]
+    student.last_name = fullName[1]
     let classroom = new Classroom()
     classroom.id=2
     classroom.name="א'1"
