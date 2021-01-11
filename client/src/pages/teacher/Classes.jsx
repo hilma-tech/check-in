@@ -5,6 +5,9 @@ import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 import PageTitle from "../../component/teacher/PageTitle";
 import { withRouter } from "react-router-dom";
 import BlueSideBar from "../../component/teacher/BlueSideBar";
+import { chosenClassContext } from "../../stores/chosenClass.store";
+import { withContext } from "@hilma/tools";
+import { observer } from "mobx-react";
 const axios = require("axios").default;
 
 class Classes extends Component {
@@ -37,14 +40,15 @@ class Classes extends Component {
     this.setState({classes: teacherClasses.data})
   };
 
-  moveToClass = () => {
+  moveToClass = (classId, classroomName) => {
+    this.props.chosenClass.setClassId(classId, classroomName)
     if(this.props.location.pathname === '/teacher/classes/'){
       this.props.history.push(this.props.location.pathname + "games");
     } else {
       this.props.history.push(this.props.location.pathname + "/games");
     }
-  };
-
+  }
+  
   render() {
     console.log(this.state);
     return (
@@ -57,7 +61,7 @@ class Classes extends Component {
           {this.state.classes.map((classObj, index) => {
             return (
               <div
-                onClick={this.moveToClass}
+                onClick={()=>{this.moveToClass(classObj.id, classObj.name)}}
                 className="circleCont"
                 style={{ borderColor: this.colors[index] }}
               >
@@ -72,4 +76,10 @@ class Classes extends Component {
     );
   }
 }
-export default withRouter(Classes);
+
+
+const mapContextToProps = {
+  chosenClass: chosenClassContext,
+};
+
+export default withContext(mapContextToProps)(withRouter(observer(Classes)));

@@ -12,6 +12,7 @@ import { IsAuthenticatedContext } from "@hilma/auth";
 import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
+import { chosenClassContext } from "../../stores/chosenClass.store.js";
 import BlueSideBar from "../../component/teacher/BlueSideBar.jsx";
 
 
@@ -28,28 +29,23 @@ class Games extends React.Component {
     this.props.games.resetShowOptions();
     if (this.state.gamesList.length === 0) {
       this.getGames();
-      this.props.games.getClassroomGames()
-      if (!this.props.games.successGettingGames) {
-        this.props.errorMsg.setErrorMsg(
-          "הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת."
-          );
-        }
-      }
     }
+  }
    
 
   getGames = async () => {
     await this.props.games.setGames();
+    await this.props.games.getClassroomGames(this.props.chosenClass.classId)
     if (!this.props.games.successGettingGames) {
       this.props.errorMsg.setErrorMsg(
         "הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת."
       );
     }
-  };
+  }
 
   addGameToClass = async (index) => {
     await this.props.chosenGame.setgameId(this.props.games.gamesList[index].id)
-    await this.props.games.addGameToClass(index)
+    await this.props.games.addGameToClass(index, this.props.chosenClass.classId)
     this.props.history.push('/teacher/classes/addgame')
   }
 
@@ -67,7 +63,7 @@ class Games extends React.Component {
                 return (
                   <ClassGames
                     index={i}
-                    changeGameStatus={this.props.games.removeGameFromClass}
+                    changeGameStatus={()=>{this.props.games.removeGameFromClass(i,this.props.chosenClass.classId)}}
                     chosen={true}
                     name={gameData.game_name}
                     image={gameData.image}
@@ -76,7 +72,7 @@ class Games extends React.Component {
               })}
             </div>
           </div>
-          <p className="gameListTitle">משחקים שיתן להוסיף:</p>
+          <p className="gameListTitle">משחקים שניתן להוסיף:</p>
           {/*add search option */}
            <div className="listGamesForClass">
             {this.props.games.gamesList.map((image, index) => {
@@ -102,6 +98,7 @@ const mapContextToProps = {
   games: gamesContext,
   chosenGame: chosenGameEditContext,
   isAuthenticated: IsAuthenticatedContext,
+  chosenClass: chosenClassContext,
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(Games)));

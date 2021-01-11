@@ -41,11 +41,11 @@ class Games {
         }
     }
 
-    getClassroomGames = async() => {
+    getClassroomGames = async(classId) => {
         try{
             this.startGetGames = true;
-            const { data } = await axios.get("/api/classroom/getClassroomGames");
-            this.chosenGameList = this.chosenGameList.concat(data.games)
+            const { data } = await axios.get("/api/classroom/getClassroomGames",{ params:{ classId: classId }});
+            this.chosenGameList = data.games
             this.gamesList = this.gamesList.filter((game)=>{
                 let filterArr = this.chosenGameList.filter((chosenGame)=>{
                     return chosenGame.id === game.id
@@ -74,16 +74,17 @@ class Games {
         }
     }
 
-    removeGameFromClass = async (index) => {
-        await axios.post("/api/classroom/removeGameRelation", {id: this.chosenGameList[index].id});
+    removeGameFromClass = async (index, classId) => {
+        await axios.post("/api/classroom/removeGameRelation", {gameId: this.chosenGameList[index].id, classId: classId});
         this.gamesList = [...this.gamesList,this.chosenGameList[index]]
         this.chosenGameList.splice(index,1)
       }
 
-      addGameToClass = async (index) => {
-          await axios.post("/api/classroom/addGameRelation", {id: this.gamesList[index].id});
-          this.chosenGameList = [...this.chosenGameList,this.gamesList[index]]
-          this.gamesList.splice(index,1)
+      addGameToClass = async (index, classId) => {
+          await axios.post("/api/classroom/addGameRelation", {gameId: this.gamesList[index].id, classId: classId});
+        //   this.chosenGameList = [...this.chosenGameList,this.gamesList[index]]
+        //   this.gamesList.splice(index,1)
+        //   console.log('gamesList: ', this.gamesList);
       }
 }
 

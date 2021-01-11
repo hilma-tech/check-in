@@ -11,8 +11,8 @@ export class ClassroomController {
         ) {}
 
         @Get('/getClassroomGames')
-        async getClassroomGames(){
-            return await this.classroomService.getClassroomGames();
+        async getClassroomGames(@Req() req: any){
+            return await this.classroomService.getClassroomGames(req.query);
         }
 
     @Post('/addGameRelation')
