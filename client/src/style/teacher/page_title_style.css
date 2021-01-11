@@ -31,7 +31,7 @@
   font-size: 6vh;
 }
 
-.officialTitleClassName{
+.officialTitleClassName {
   margin: 0vh;
   height: 9vh;
   text-align: center;
@@ -40,11 +40,10 @@
   padding-right: 8px;
 }
 
-.officialTitleFlex{
+.officialTitleFlex {
   display: flex;
   justify-content: center;
 }
-
 
 @media only screen and (min-width: 500px) {
   .titleContain {
@@ -57,30 +56,28 @@
     height: 17vh;
     /* height: 100vh; */
   }
-
   .officialTitle {
     padding-right: 2vw;
     text-align: right;
   }
-
-  .officialTitleClassName{
+  .officialTitleClassName {
     display: flex;
     position: absolute;
     top: 13vh;
-    left: 7vw;
-  justify-content: space-around;
-  align-items: center;
-  border-radius: 90%;
-  width: 3vw;
-  height: 3vw;
-  font-size: 1.5vw;
-  border: 1px dashed;
-  padding: 0;
+    left: 8vw;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 90%;
+    width: 3vw;
+    height: 3vw;
+    font-size: 1.5vw;
+    border: 1px dashed;
+    padding: 0;
   }
-  .officialTitleClass{
+  .officialTitleClass {
     display: none;
   }
-  .officialTitleFlex{
+  .officialTitleFlex {
     justify-content: flex-end;
   }
 }

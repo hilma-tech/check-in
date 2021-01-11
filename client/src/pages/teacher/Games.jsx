@@ -58,7 +58,6 @@ class Games extends React.Component {
       <div style={{ overflowX: 'hidden', width: '100vw' }}>
         <SmallMenuBar />
         <SmallNavBar active="games" />
-        <BlueSideBar />
         <PageTitle title="כיתה א'1" />
         <ArrowBar page="games" chosenClass="א'1" />
         <div className="smallAlign" id='smallAlignClassGames'>

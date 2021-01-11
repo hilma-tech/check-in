@@ -38,3 +38,19 @@
     font-size: 3.5vh;
     color: #043163;
 }
+
+#smallAlignStudentList {
+    top: 37.75vh;
+}
+
+@media only screen and (min-width: 500px) {
+    #smallAlignStudentList {
+        height: 73vh;
+        margin: 0;
+        position: absolute;
+        top: 27vh;
+        padding-top: 0;
+        left: 0;
+        overflow-x: hidden;
+    }
+}

@@ -34,7 +34,8 @@
   width: 50vw;
   height: 0.5vh;
   margin: 0;
-  margin-right: 35vw;
+  margin-right: 50vw;
+  /* margin-right: 35vw; */
   z-index: 101;
 }
 

@@ -36,7 +36,8 @@ export default () => ({
         "TeacherRoute",
         "TeacherClasses",
         "SmallTeacherRoute",
-        "TeacherAddGame"
+        "TeacherAddGame",
+        "TeacherStudenstList",
       ],
       defaultHomePage: "TeacherClasses"
     },

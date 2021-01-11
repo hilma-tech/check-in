@@ -37,8 +37,8 @@ class ArrowBar extends React.Component {
                     />
                     <p className="pageNameArrowBar">{this.pages[this.props.page]}</p>
 
-                    <br />
-                    <br />
+                    {/* <br /> */}
+                    {/* <br /> */}
                     {/* search bar */}
                     <h4 className="linkToTeachers">לרשימת המורים של כיתה זו</h4>
                 </div>);

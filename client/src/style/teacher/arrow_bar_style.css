@@ -6,7 +6,7 @@
     background-color: #F2F7FC;
 }
 
-.addGameArrow{
+.addGameArrow {
     background-color: #F2F7FC;
     position: fixed;
     top: 26vh;
@@ -18,7 +18,7 @@
 }
 
 
-.gamesChooseDistractions{
+.gamesChooseDistractions {
     background-color: #F2F7FC;
     position: fixed;
     top: 24.75vh;
@@ -29,16 +29,16 @@
     z-index: 100;
 }
 
-.gamesChooseDistractionsText{
+.gamesChooseDistractionsText {
     text-align: center;
     margin-top: 0;
     font-size: 5vw;
     padding-top: 1.5vh;
     width: 70vw;
     margin-right: 7vw;
-  }
+}
 
-.studentsArrowBar{
+.studentsArrowBar {
     background-color: #F2F7FC;
     position: fixed;
     top: 24.75vh;
@@ -50,7 +50,7 @@
     z-index: 100;
 }
 
-.permissionArrowBar{
+.permissionArrowBar {
     background-color: #F2F7FC;
     position: fixed;
     top: 24.75vh;
@@ -62,17 +62,18 @@
     z-index: 100;
 }
 
-.pageNameArrowBar{
+.pageNameArrowBar {
     display: none;
 }
+
 @media only screen and (min-width: 500px) {
     .smallBackArrow {
         margin-right: 3.75vw;
         width: 1.65vw;
         background-color: rgba(255, 255, 255, 0);
     }
-    
-    .gamesChooseDistractions{
+
+    .gamesChooseDistractions {
         background-color: #F2F7FC;
         position: fixed;
         top: 6vh;
@@ -82,17 +83,17 @@
         height: 17vw;
         z-index: 100;
     }
-    
-    .gamesChooseDistractionsText{
+
+    .gamesChooseDistractionsText {
         text-align: start;
         margin-top: 0;
         font-size: 2vw;
         padding-top: 0;
         width: 70vw;
         margin-right: 7vw;
-      }
-    
-    .pageNameArrowBar{
+    }
+
+    .pageNameArrowBar {
         font-size: 2.5vw;
         text-align: start;
         display: inline-block;
@@ -100,5 +101,14 @@
         padding-top: 2.25vh;
         width: 70vw;
         margin-right: 7vw;
+    }
+
+    .studentsArrowBar {
+        top: 6vh;
+        width: 68vw;
+        font-size: 2vw;
+        padding-right: 0;
+        left: 7vw;
+        background-color: rgba(0, 0, 0, 0);
     }
 }
