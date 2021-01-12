@@ -91,6 +91,7 @@ class SchoolsList extends React.Component {
           enCategor={this.state.enCategor}
           loadMore={this.getSchools}
           haveMoreData={this.props.schools.haveMoreSchools}
+          startGetInfo={this.props.schools.startGetSchools}
         />
       </div>
     );

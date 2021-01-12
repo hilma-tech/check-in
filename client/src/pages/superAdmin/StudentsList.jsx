@@ -84,6 +84,7 @@ class StudentsList extends React.Component {
               enCategor={this.state.enCategor}
               loadMore={this.getStudents}
               haveMoreData={this.props.students.haveMoreStudents}
+              startGetInfo={this.props.students.startGetStudents}
             />
           {/* </>
         } */}

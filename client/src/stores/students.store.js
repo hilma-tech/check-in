@@ -20,7 +20,7 @@ class Students {
 
     setStudents = async () => {
         try{
-            this.startGetGames = true;
+            this.startGetStudents = true;
             const { data } = await axios.get("/api/student/getStudents",{ params:{ studentsLength: this.listDataStudents.length }});
             let newStudents = data.studentsInfo.map((student) => {
                 student.name = student.first_name + " " + student.last_name;

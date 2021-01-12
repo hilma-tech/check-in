@@ -20,7 +20,7 @@ class Teachers {
 
     setTeachers = async () => {
         try{
-            this.startGetGames = true;
+            this.startGetTeachers = true;
             const { data } = await axios.get("/api/teacher/getTeachers",{ params:{ teachersLength: this.listDataTeachers.length }});
             this.listDataTeachers = this.listDataTeachers.concat(data.teachersInfo.map((teacher) => {
                 teacher.name = teacher.first_name + " " + teacher.last_name

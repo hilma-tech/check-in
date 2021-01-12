@@ -20,7 +20,7 @@ class Schools {
 
     setSchools = async () => {
         try{
-            this.startGetGames = true;
+            this.startGetSchools = true;
             const { data } = await axios.get("/api/school/getSchools",{ params:{ schoolsLength: this.listDataSchools.length }});
             this.listDataSchools = this.listDataSchools.concat(data.schoolsInfo)
             this.haveMoreSchools = data.haveMoreSchools;

@@ -43,6 +43,10 @@
     top: 37.75vh;
 }
 
+.justForWeb{
+    display: none;
+}
+
 @media only screen and (min-width: 500px) {
     #smallAlignStudentList {
         height: 73vh;
@@ -53,4 +57,9 @@
         left: 0;
         overflow-x: hidden;
     }
+
+    .justForWeb{
+        display: inline-block;
+    }
+
 }

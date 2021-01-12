@@ -32,21 +32,17 @@ class Classes extends Component {
       "#9c001b",
       "#411045",
     ];
-    this.state = {classes: []}
+    this.state = { classes: [] }
   }
 
   componentDidMount = async () => {
     let teacherClasses = await axios.get("/api/teacher/getTeacherClasses");
-    this.setState({classes: teacherClasses.data})
+    this.setState({ classes: teacherClasses.data })
   };
 
   moveToClass = (classId, classroomName) => {
     this.props.chosenClass.setClassId(classId, classroomName)
-    if(this.props.location.pathname === '/teacher/classes/'){
-      this.props.history.push(this.props.location.pathname + "games");
-    } else {
-      this.props.history.push(this.props.location.pathname + "/games");
-    }
+    this.props.history.push("/teacher/classes/games");
   }
 
   callStudents = async (classnum) => {
@@ -65,7 +61,7 @@ class Classes extends Component {
           {this.state.classes.map((classObj, index) => {
             return (
               <div
-                onClick={()=>{this.moveToClass(classObj.id, classObj.name)}}
+                onClick={() => { this.moveToClass(classObj.id, classObj.name) }}
                 className="circleCont"
                 style={{ borderColor: this.colors[index] }}
               >
