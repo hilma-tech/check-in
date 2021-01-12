@@ -35,7 +35,7 @@ export class Teacher extends User{
     type => Classroom,
     classroom => classroom.teachers
   ) 
-  classrooms: Classroom[];
+  classroomTeacher: Classroom[];
 
   @ManyToOne(() => School, school => school.teachers)
   @JoinColumn({referencedColumnName: "id", name: 'school_id'})

@@ -15,6 +15,11 @@ export class ClassroomController {
             return await this.classroomService.getClassroomGames(req.query);
         }
 
+        @Get('/getClassStudents')
+        async getClassStudents (@Req() classId: any){
+            return await this.classroomService.getClassStudents(classId.query.classId)
+        }
+
     @Post('/addGameRelation')
     async addGameRelation(@Body() req: any) {
         return await this.classroomService.addGameRelation(req);

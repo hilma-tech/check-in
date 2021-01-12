@@ -25,7 +25,7 @@ class Teachers {
             this.listDataTeachers = this.listDataTeachers.concat(data.teachersInfo.map((teacher) => {
                 teacher.name = teacher.first_name + " " + teacher.last_name
                 teacher.schoolName = teacher.school.name
-                teacher.classes = teacher.classrooms.map((classroom)=>{return classroom.name})
+                teacher.classes = teacher.classroomTeacher.map((classroom)=>{return classroom.name})
                 return teacher
               }))
             this.haveMoreTeachers = data.haveMoreTeachers;

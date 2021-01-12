@@ -27,21 +27,32 @@ export class ClassroomService {
     });
     return currClassGames[0];
   }
-  
+
+  async getClassStudents(classId) {
+    let classroom = await this.classroomRepository.findOne({
+      relations: ['students'],
+      where: [{ id: classId }],
+    });
+    console.log(classroom.students);
+    
+    return classroom.students;
+  }
 
   async addGameRelation(@Body() req: any) {
     let classroomGame = new Classroom();
-    classroomGame.games = await this.gameRepository.find({ 
-      where: { id: req.gameId } 
+    classroomGame.games = await this.gameRepository.find({
+      where: { id: req.gameId },
     });
     classroomGame.id = req.classId;
     let currClassGameArr = await this.classroomRepository.find({
       relations: ['games'],
       where: [{ id: req.classId }],
     });
-    
+
     currClassGameArr[0].games.push(classroomGame.games[0]);
-    let newlyAddedGame = await this.classroomRepository.save(currClassGameArr[0]);
+    let newlyAddedGame = await this.classroomRepository.save(
+      currClassGameArr[0],
+    );
     return { newlyAddedGame: newlyAddedGame };
   }
 

@@ -46,5 +46,5 @@ export class Student extends User {
     type => Classroom,
     classroom => classroom.students,
   )
-  classrooms: Classroom[];
+  classroomStudent: Classroom[];
 }

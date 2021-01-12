@@ -34,7 +34,7 @@ export class StudentController {
     classroom.id=2
     classroom.name="א'1"
     classroom.school_id=1
-    student.classrooms = [classroom]
+    student.classroomStudent = [classroom]
     let userRole = new Role();
     userRole.id = 4; //you just the role id.
     student.roles = [userRole];

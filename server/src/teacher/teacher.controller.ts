@@ -40,7 +40,7 @@ export class TeacherController {
     classroom.id=2
     classroom.name="א'1"
     classroom.school_id=1
-    user.classrooms = [classroom]
+    user.classroomTeacher = [classroom]
     let userRole = new Role();
     userRole.id = 3; //you just the role id.
     user.roles = [userRole];
