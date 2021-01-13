@@ -44,13 +44,8 @@ class Classes extends Component {
     this.props.chosenClass.setClassId(classId, classroomName)
     this.props.history.push("/teacher/classes/games");
   }
-
-  callStudents = async (classnum) => {
-    await axios.get("/api/classroom/getClassStudents", {params: {classId: classnum}})
-  }
   
   render() {
-    this.callStudents(2)
     return (
       <>
         <div className="smallSticky">

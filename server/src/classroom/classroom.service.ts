@@ -4,11 +4,6 @@ import { Game } from 'src/game/game.entity';
 import { Repository } from 'typeorm';
 import { Classroom } from './classroom.entity';
 
-export interface SaveOptions {
-  data: { id: 6 };
-  reload: false;
-}
-
 @Injectable()
 export class ClassroomService {
   constructor(
@@ -27,13 +22,14 @@ export class ClassroomService {
   }
 
   async getClassStudents(classId) {
-    let classroom = await this.classroomRepository.findOne({
+    let classroom = await this.classroomRepository.find({
+      select: ["id"],
       relations: ['students'],
-      where: [{ id: classId }],
+      where: { id: classId },
     });
-    console.log(classroom.students);
+    console.log(classroom);
     
-    return classroom.students;
+    return classroom[0].students;
   }
 
   async addGameRelation(@Body() req: any) {
