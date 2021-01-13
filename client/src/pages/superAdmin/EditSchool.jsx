@@ -176,7 +176,7 @@ class editSchool extends Component {
 
   render() {
     return (
-      <div>
+      <div className='withMenu'>
         <WhiteBar />
         <form className='formData'>
           <label for="schoolName" className='labelFields'>

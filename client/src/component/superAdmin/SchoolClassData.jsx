@@ -112,6 +112,7 @@ class ClassData extends React.Component {
             className="removeClass"
             onClick={() => this.props.removeClass(this.props.classIndex)}
             src="/icons/delete.svg"
+            style= {{height: '20px', marginTop:'15px'}}
           />
         </div>
         <Fade in={this.state.showClass}>
