@@ -38,7 +38,7 @@ class StudentsList extends React.Component {
   };
 
   getStudents = async () => {
-    await this.props.students.setStudents();
+    await this.props.students.getStudents();
     if (!this.props.students.successGettingStudents) {
       this.props.errorMsg.setErrorMsg(
         "הייתה שגיאה בשרת. לא ניתן לקבל תלמידים מהשרת."

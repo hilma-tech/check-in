@@ -14,11 +14,11 @@ class Students {
             haveMoreStudents: observable,
             successGettingStudents: observable,
             startGetStudents: observable,
-            setStudents: action,
+            getStudents: action,
         })
     }
 
-    setStudents = async () => {
+    getStudents = async () => {
         try{
             this.startGetStudents = true;
             const { data } = await axios.get("/api/student/getStudents",{ params:{ studentsLength: this.listDataStudents.length }});

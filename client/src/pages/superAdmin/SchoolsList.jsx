@@ -40,7 +40,7 @@ class SchoolsList extends React.Component {
   };
 
   getSchools = async () => {
-    await this.props.schools.setSchools();
+    await this.props.schools.getSchools();
     if (!this.props.schools.successGettingSchools) {
       this.props.errorMsg.setErrorMsg(
         "הייתה שגיאה בשרת. לא ניתן לקבל בתי ספר מהשרת."

@@ -6,10 +6,6 @@ import { Game } from 'src/game/game.entity';
 import { getConnection, Repository } from 'typeorm';
 import { Classroom } from './classroom.entity';
 
-export interface SaveOptions {
-  data: { id: 6 };
-  reload: false;
-}
 
 @Injectable()
 export class ClassroomService {

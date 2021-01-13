@@ -41,7 +41,7 @@ class TeachersList extends React.Component {
   };
 
   getTeachers = async () => {
-    await this.props.teachers.setTeachers();
+    await this.props.teachers.getTeachers();
     if (!this.props.teachers.successGettingTeachers) {
       this.props.errorMsg.setErrorMsg(
         "הייתה שגיאה בשרת. לא ניתן לקבל מורים מהשרת."
@@ -87,7 +87,7 @@ class TeachersList extends React.Component {
               loadMore={this.getTeachers}
               haveMoreData={this.props.teachers.haveMoreTeachers}
               startGetInfo={this.props.teachers.startGetTeachers}
-              setClickedRow={this.props.teachers.setChosenTeacher}
+              setClickedRow={this.props.teachers.getChosenTeacher}
             />
           {/* </>} */}
       </div>

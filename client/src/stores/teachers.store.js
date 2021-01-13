@@ -16,12 +16,12 @@ class Teachers {
             successGettingTeachers: observable,
             startGetTeachers: observable,
             chosenTeacher: observable,
-            setTeachers: action,
-            setChosenTeacher: action,
+            getTeachers: action,
+            getChosenTeacher: action,
         })
     }
 
-    setTeachers = async () => {
+    getTeachers = async () => {
         try{
             this.startGetTeachers = true;
             const { data } = await axios.get("/api/teacher/getTeachers",{ params:{ teachersLength: this.listDataTeachers.length }});
@@ -40,7 +40,7 @@ class Teachers {
         }
     }
 
-    setChosenTeacher = async (teacherId) => {
+    getChosenTeacher = async (teacherId) => {
         try{
             const { data } = await axios.get("/api/teacher/getTeacherInfo",{ params:{ teacherId: teacherId }});
             this.chosenTeacher = data
