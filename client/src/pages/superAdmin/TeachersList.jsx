@@ -87,6 +87,7 @@ class TeachersList extends React.Component {
               loadMore={this.getTeachers}
               haveMoreData={this.props.teachers.haveMoreTeachers}
               startGetInfo={this.props.teachers.startGetTeachers}
+              setClickedRow={this.props.teachers.setChosenTeacher}
             />
           {/* </>} */}
       </div>

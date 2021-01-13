@@ -15,6 +15,7 @@ import SignIn from "../../pages/SignIn.jsx";
 import { PrivateRoute } from "@hilma/auth";
 import ErrorPage from "../../pages/404Page.jsx";
 import "../../style/superAdmin/disp.scss";
+import EditTeacher from "../../pages/superAdmin/EditTeacher.jsx";
 
 class SuperAdminRoute extends React.Component {
   render() {
@@ -100,7 +101,7 @@ class SuperAdminRoute extends React.Component {
               component={AddSchool}
             /> */}
 
-          {/* <PrivateRoute
+          <PrivateRoute
               path="/superAdmin/schoolsEdit"
               exact
               componentName="SAdminEditSchools"
@@ -112,10 +113,8 @@ class SuperAdminRoute extends React.Component {
               exact
               componentName="SAdminEditTeachers"
               redirectComponent={SignIn}
-              
-            >
-              <h4>teacher edit</h4>
-            </PrivateRoute> */}
+              component={EditTeacher}
+            />
           {/* <PrivateRoute
               path="/superAdmin/studentsEdit"
               exact

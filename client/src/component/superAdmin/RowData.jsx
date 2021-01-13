@@ -11,14 +11,17 @@ class RowData extends React.Component {
   }
 
   //When we press on row it's passed to the edit page of the item
-  onClickEdit = () => {
+  onClickEdit = async(id) => {
+    if(!this.props.location.pathname.includes('student') && !this.props.location.pathname.includes('school') ){
+      await this.props.setClickedRow(id)
+    }
     //for now
     this.props.history.push(this.props.location.pathname + "Edit");
   };
 
   render() {
     return (
-      <div onClick={this.onClickEdit} className="rowData">
+      <div onClick={()=>{this.onClickEdit(this.props.data.id)}} className="rowData">
         <div className="Details">
           {
             // Order the data (the keys are the categories).

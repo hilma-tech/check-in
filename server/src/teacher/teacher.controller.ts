@@ -19,12 +19,16 @@ export class TeacherController {
         // this.register({username: 'teacher2@gmail.com', password: 'teacher1'})
     }
 
-
-
   @UseJwtAuth(`$everyone`)
   @Get('/getTeacherClasses')
   async getTeacherClasses(@RequestUser() userinfo) {
     return await this.teacherService.getTeacherClasses(userinfo.id);
+  }
+
+  @UseJwtAuth(`$everyone`)
+  @Get('/getTeacherInfo')
+  getTeacherInfo(@Req() req: any){
+    return this.teacherService.getTeacherInfo(req.query)
   }
 
   @Post('/register')

@@ -8,13 +8,16 @@ class Teachers {
     haveMoreTeachers = true
     successGettingTeachers = true;
     startGetTeachers = false;
+    chosenTeacher = null;
     constructor() {
         makeObservable(this, {
             listDataTeachers: observable,
             haveMoreTeachers: observable,
             successGettingTeachers: observable,
             startGetTeachers: observable,
+            chosenTeacher: observable,
             setTeachers: action,
+            setChosenTeacher: action,
         })
     }
 
@@ -34,6 +37,16 @@ class Teachers {
         }catch (error){
             this.successGettingTeachers = false
             this.startGetTeachers = false;
+        }
+    }
+
+    setChosenTeacher = async (teacherId) => {
+        try{
+            const { data } = await axios.get("/api/teacher/getTeacherInfo",{ params:{ teacherId: teacherId }});
+            this.chosenTeacher = data
+            console.log('chosenTeacher: ', this.chosenTeacher);
+        }catch (error){
+            this.successGettingTeachers = false
         }
     }
 }

@@ -42,6 +42,7 @@ class GeneralTable extends React.Component {
                       data={val}
                       categors={this.props.categors}
                       enCategor={this.props.enCategor}
+                      setClickedRow={this.props.setClickedRow}
                     />
                   );
                 })
