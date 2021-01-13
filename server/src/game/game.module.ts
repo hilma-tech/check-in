@@ -14,27 +14,13 @@ import { FieldModule } from "src/field/field.module";
 import { UserModule } from '@hilma/auth-nest';
 @Module({
   imports: [
-    JwtModule.register({}),
     FieldModule,
     UserModule,
     TypeOrmModule.forFeature([Game]),
-    TypeOrmModule.forFeature([Field]),
-    TypeOrmModule.forFeature([SuperAdmin]),
-    
   ],
   controllers: [GameController],
   providers: [
     GameService,
-    JwtStrategy,
-    {
-      provide: "UserService",
-      useExisting: SuperAdminService
-    },
-    SuperAdminService,
-    {
-      provide: USER_MODULE_OPTIONS,
-      useValue: {}
-    }
   ],
   exports:[GameService]
 })

@@ -15,8 +15,6 @@ export class TeacherService extends UserService {
         protected readonly userRepository: Repository<Teacher>,
         protected readonly jwtService: JwtService,
         protected readonly configService: ConfigService,
-        @InjectRepository(Teacher)
-        private readonly teacherRepository: Repository<Teacher>
     ) { 
         super(config_options, userRepository, jwtService, configService);
     }
@@ -24,7 +22,7 @@ export class TeacherService extends UserService {
     async getTeacherClasses(@Body() userinfo: any) {
         //use teacherId to find all classes relevant
         
-        let currTeacher = await this.teacherRepository.find({
+        let currTeacher = await this.userRepository.find({
           relations: ['classroomTeacher'],
           where: [{id: userinfo}]
         });
