@@ -1,9 +1,12 @@
+import { withContext } from "@hilma/tools";
+import { observer } from "mobx-react";
 import React, { Component } from "react";
 import ArrowBar from "../../component/teacher/ArrowBar.jsx";
 import BlueSideBar from "../../component/teacher/BlueSideBar.jsx";
 import PageTitle from "../../component/teacher/PageTitle.jsx";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 import SmallNavBar from "../../component/teacher/SmallNavBar.jsx";
+import { chosenClassContext } from "../../stores/chosenClass.store.js";
 import "../../style/teacher/students.css";
 
 class Students extends Component {
@@ -28,7 +31,7 @@ class Students extends Component {
       <>
           <div className="smallPage">
             <SmallMenuBar />
-            <PageTitle title="כיתה א'2" />
+            <PageTitle title={"כיתה " + this.props.chosenClass.classroomName} />
             <SmallNavBar active="students" />
             <ArrowBar page="students" />
             <div className="smallAlign"  id='smallAlignStudentList'>
@@ -57,4 +60,8 @@ class Students extends Component {
   }
 }
 
-export default Students;
+const mapContextToProps = {
+  chosenClass: chosenClassContext,
+};
+
+export default withContext(mapContextToProps)(observer(Students));
