@@ -25,7 +25,7 @@ class Students {
             let newStudents = data.studentsInfo.map((student) => {
                 student.name = student.first_name + " " + student.last_name;
                 student.schoolName = student.school.name
-                student.classes = student.classrooms.map((classroom)=>{return classroom.name})
+                student.classes = student.classroomStudent.map((classroom)=>{return classroom.name})
                 return student
               })
             console.log('newStudents   ',newStudents);

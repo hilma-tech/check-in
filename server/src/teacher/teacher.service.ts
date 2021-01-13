@@ -25,11 +25,11 @@ export class TeacherService extends UserService {
         //use teacherId to find all classes relevant
         
         let currTeacher = await this.teacherRepository.find({
-          relations: ['classrooms'],
+          relations: ['classroomTeacher'],
           where: [{id: userinfo}]
         });
         // console.log(currTeacher, "userrrrr");
-        let currTeacherClasses = currTeacher[0].classrooms;
+        let currTeacherClasses = currTeacher[0].classroomTeacher;
         // console.log(currTeacherClasses);
         
         return currTeacherClasses;
@@ -40,7 +40,7 @@ export class TeacherService extends UserService {
         let teachers = await this.userRepository.find({
             skip: skipON.teachersLength,
             take: 50,
-            relations: ['school','classrooms']
+            relations: ['school','classroomTeacher']
         })
         // console.log('teachers: ', teachers);
         return { teachersInfo: teachers, haveMoreTeachers: haveMoreTeachers }

@@ -19,17 +19,18 @@ export class StudentService extends UserService {
         super(config_options, userRepository, jwtService, configService);
     }
 
+
     async getStudents(@Req() skipON: GetStudentSkip) {
         // console.log('skipON: ', skipON);
         let numStudents = await this.userRepository.count();
         // console.log('numStudents: ', numStudents);
         let haveMoreStudents = numStudents > Number(skipON.studentsLength) + 50 ? true : false;
         let students = await this.userRepository.find({
-            relations: ['school','classrooms'],
+            relations: ['school','classroomStudent'],
             skip: skipON.studentsLength,
             take: 50,
         })
-        // console.log('students: ', students);
+        console.log('students: ', students);
         return { studentsInfo: students, haveMoreStudents: haveMoreStudents }
     }
 }
