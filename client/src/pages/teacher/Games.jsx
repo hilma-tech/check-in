@@ -26,7 +26,6 @@ class Games extends React.Component {
   }
 
   componentDidMount() {
-    this.props.games.resetShowOptions();
     if (this.state.gamesList.length === 0) {
       this.getGames();
     }

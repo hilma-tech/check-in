@@ -1,9 +1,7 @@
 import { Body, Injectable, Post, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Request } from 'express';
-import { request } from 'http';
 import { Game } from 'src/game/game.entity';
-import { getConnection, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Classroom } from './classroom.entity';
 
 

@@ -11,12 +11,10 @@ import { JwtModule } from "@nestjs/jwt";
 
 @Module({
   imports: [
-    JwtModule.register({}),
     UserModule,
     RoleModule,
     TypeOrmModule.forFeature([Classroom]),
     TypeOrmModule.forFeature([Game]),
-    TypeOrmModule.forFeature([SuperAdmin]),
   
   ],
   providers: [ClassroomService],
