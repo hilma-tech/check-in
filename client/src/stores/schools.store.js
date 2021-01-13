@@ -14,11 +14,11 @@ class Schools {
             haveMoreSchools: observable,
             successGettingSchools: observable,
             startGetSchools: observable,
-            setSchools: action,
+            getSchools: action,
         })
     }
 
-    setSchools = async () => {
+    getSchools = async () => {
         try{
             this.startGetSchools = true;
             const { data } = await axios.get("/api/school/getSchools",{ params:{ schoolsLength: this.listDataSchools.length }});

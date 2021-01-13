@@ -33,7 +33,7 @@ class Games extends React.Component {
    
 
   getGames = async () => {
-    await this.props.games.setGames();
+    await this.props.games.getGames();
     await this.props.games.getClassroomGames(this.props.chosenClass.classId)
     if (!this.props.games.successGettingGames) {
       this.props.errorMsg.setErrorMsg(
@@ -53,8 +53,8 @@ class Games extends React.Component {
       <div style={{ overflowX: 'hidden', width: '100vw' }}>
         <SmallMenuBar />
         <SmallNavBar active="games" />
-        <PageTitle title="כיתה א'1" />
-        <ArrowBar page="games" chosenClass="א'1" />
+        <PageTitle title={"כיתה " + this.props.chosenClass.classroomName} />
+        <ArrowBar page="games" chosenClass={this.props.chosenClass.classroomName} />
         <div className="smallAlign" id='smallAlignClassGames'>
           <div className="chosenGamesForClass">
             <div className="scrollChosenGames">

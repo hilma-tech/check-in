@@ -18,7 +18,7 @@ class Games {
             gamesList: observable,
             haveMoreGames: observable,
             startGetGames: observable,
-            setGames: action,
+            getGames: action,
             resetShowOptions: action,
             setShowOption: action,
             removeGameFromClass: action,
@@ -27,7 +27,7 @@ class Games {
         })
     }
 
-    setGames = async () => {
+    getGames = async () => {
         try{
             this.startGetGames = true;
             const { data } = await axios.get("/api/game/getGames",{ params:{ gamesLength: this.gamesList.length }});
@@ -80,7 +80,7 @@ class Games {
         this.chosenGameList.splice(index,1)
       }
 
-      addGameToClass = async (index, classId) => {
+    addGameToClass = async (index, classId) => {
           await axios.post("/api/classroom/addGameRelation", {gameId: this.gamesList[index].id, classId: classId});
         //   this.chosenGameList = [...this.chosenGameList,this.gamesList[index]]
         //   this.gamesList.splice(index,1)

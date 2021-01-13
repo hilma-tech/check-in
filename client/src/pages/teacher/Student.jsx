@@ -1,4 +1,5 @@
 import { withContext } from "@hilma/tools";
+import { observer } from "mobx-react";
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import ArrowBar from "../../component/teacher/ArrowBar.jsx";
@@ -6,6 +7,7 @@ import BlueSideBar from "../../component/teacher/BlueSideBar.jsx";
 import PageTitle from "../../component/teacher/PageTitle.jsx";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 import SmallNavBar from "../../component/teacher/SmallNavBar.jsx";
+import { chosenClassContext } from "../../stores/chosenClass.store.js";
 import "../../style/teacher/students.css";
 import { observer } from "mobx-react";
 import { chosenClassContext } from "../../stores/chosenClass.store";
@@ -48,7 +50,7 @@ class Students extends Component {
           <SmallNavBar active="students" />
           <ArrowBar page="students" />
           <div className="smallAlign" id="smallAlignStudentList">
-            {this.state.students.map((student, index) => {
+            {this.students.map((student, index) => {
               return (
                 <div className="smallStudentCont" onClick={this.moveToStudent}>
                   <h1 className="smallStudentName" id={index}>
