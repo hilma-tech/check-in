@@ -3,7 +3,6 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import SignIn from "../../pages/SignIn.jsx";
 import SmallNavRouter from './SmallNavRouter.jsx';
-import StudentDetails from '../../pages/teacher/StudentDetails.jsx'
 import Classes from '../../pages/teacher/Classes.jsx'
 
 class TeacherRoute extends React.Component {

@@ -27,18 +27,17 @@ class Students extends Component {
   };
 
   moveToStudent = (props) => {
-    sessionStorage.setItem("currStudent", props.target.id);
+    console.log("target",props.target.id);
+    this.props.chosenClass.setCurrStudent(props.target.id);
     this.props.history.push(this.props.location.pathname + "/studentInfo");
   };
-
-  
 
   render() {
     return (
       <>
         <div className="smallPage">
           <SmallMenuBar />
-          <PageTitle title="כיתה א'2" />
+          <PageTitle title={"כיתה " + this.props.chosenClass.classroomName} />
           <SmallNavBar active="students" />
           <ArrowBar page="students" />
           <div className="smallAlign" id="smallAlignStudentList">

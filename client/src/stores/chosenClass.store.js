@@ -6,6 +6,7 @@ class ChosenClass {
     classId = 0
     classroomName = ''
     students =[]
+    currStudentId = 0
     constructor() {
         makeObservable(this, {
             classId: observable,
@@ -13,7 +14,19 @@ class ChosenClass {
             setClassId: action,
             students: observable,
             callStudents: action,
+            currStudentId: observable,
+            setCurrStudent:action,
+            getCurrStudent:action
         })
+    }
+
+    setCurrStudent = (studentId) => {
+        this.currStudentId = studentId
+    }
+
+    getCurrStudent = () => {
+        console.log(this.students[this.currStudentId]);
+        return this.students[this.currStudentId]
     }
 
     callStudents = async (classnum) => {
