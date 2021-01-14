@@ -1,5 +1,4 @@
 import { withContext } from "@hilma/tools";
-import { observer } from "mobx-react";
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import ArrowBar from "../../component/teacher/ArrowBar.jsx";
@@ -7,11 +6,9 @@ import BlueSideBar from "../../component/teacher/BlueSideBar.jsx";
 import PageTitle from "../../component/teacher/PageTitle.jsx";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 import SmallNavBar from "../../component/teacher/SmallNavBar.jsx";
-import { chosenClassContext } from "../../stores/chosenClass.store.js";
 import "../../style/teacher/students.css";
 import { observer } from "mobx-react";
 import { chosenClassContext } from "../../stores/chosenClass.store";
-const axios = require("axios").default;
 
 class Students extends Component {
   constructor() {
@@ -26,7 +23,7 @@ class Students extends Component {
   }
 
   componentDidMount = () => {
-    this.callStudents(this.props.chosenClass.classId);
+    this.props.chosenClass.callStudents(this.props.chosenClass.classId);
   };
 
   moveToStudent = (props) => {
@@ -34,12 +31,7 @@ class Students extends Component {
     this.props.history.push(this.props.location.pathname + "/studentInfo");
   };
 
-  callStudents = async (classnum) => {
-    let studentsData = await axios.get("/api/classroom/getClassStudents", {
-      params: { classId: classnum },
-    });
-    console.log("studentsData: ", studentsData.data);
-  };
+  
 
   render() {
     return (
@@ -50,17 +42,17 @@ class Students extends Component {
           <SmallNavBar active="students" />
           <ArrowBar page="students" />
           <div className="smallAlign" id="smallAlignStudentList">
-            {this.students.map((student, index) => {
+            {this.props.chosenClass.students.map((student, index) => {
               return (
                 <div className="smallStudentCont" onClick={this.moveToStudent}>
                   <h1 className="smallStudentName" id={index}>
-                    {student.name}
+                    {student.first_name+" "+student.last_name}
                   </h1>
                   <h1 className="smallStudentName justForWeb" id={index}>
-                    שם משתמש: {student.userName}
+                    שם משתמש: {student.username}
                   </h1>
                   <h1 className="smallStudentName justForWeb" id={index}>
-                    סיסמא: {student.password}
+                    סיסמא: {student.id}
                   </h1>
                 </div>
               );
