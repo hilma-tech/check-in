@@ -23,13 +23,14 @@ export class ClassroomService {
   }
 
   async getClassStudents(classId) {
-    let classroom = await this.classroomRepository.findOne({
+    let classroom = await this.classroomRepository.find({
+      select: ["id"],
       relations: ['students'],
-      where: [{ id: classId }],
+      where: { id: classId },
     });
-    console.log(classroom.students);
+    console.log(classroom);
     
-    return classroom.students;
+    return classroom[0].students;
   }
 
   async addGameRelation(@Body() req: any) {

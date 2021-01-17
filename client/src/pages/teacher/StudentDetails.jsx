@@ -1,9 +1,17 @@
+import { withContext } from "@hilma/tools";
+import { observer } from "mobx-react-lite";
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import PageTitle from "../../component/teacher/PageTitle";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar";
 import "../../style/teacher/student_details_style.css";
+import { chosenClassContext } from "../../stores/chosenClass.store";
 
 class StudentDetails extends Component {
+  constructor(){
+    super()
+    this.eh = []
+  }
   render() {
     return (
       <>
@@ -35,5 +43,9 @@ class StudentDetails extends Component {
     );
   }
 }
+const mapContextToProps = {
+  chosenClass: chosenClassContext,
+};
+//! no observer because it made the code crash for some reason(???)
+export default withContext(mapContextToProps)(withRouter(StudentDetails));
 
-export default StudentDetails;
