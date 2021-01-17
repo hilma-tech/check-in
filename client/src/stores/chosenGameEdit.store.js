@@ -3,15 +3,18 @@ import { makeObservable, observable, action  } from 'mobx'
 
 class ChosenGameEdit {
     gameId = 0
+    index = 0
     constructor() {
         makeObservable(this, {
             gameId: observable,
-            setgameId: action
+            setgameId: action,
+            index : observable,
         })
     }
 
-    setgameId=(id)=>{
+    setgameId=(id, index)=>{
         this.gameId = id
+        this.index = index
     }
 }
 
