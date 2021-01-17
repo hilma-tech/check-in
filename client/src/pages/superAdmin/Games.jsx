@@ -28,7 +28,6 @@ class Games extends Component {
   }
 
   componentDidMount() {
-    this.props.games.resetShowOptions();
     if (this.props.games.gamesList.length === 0) {
       this.getGames();
     }
