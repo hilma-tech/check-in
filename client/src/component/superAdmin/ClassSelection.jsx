@@ -22,13 +22,25 @@ class ClassSelection extends Component {
     return (
       <>
       <div className='classSelection'>
+        {
+          this.props.reading ? 
+          <Select
+        className='classSelectionInAddTecher'
+          options={this.props.options}
+          styles={SelectStyle()}
+          onChange={this.sendValue}
+          placeholder={this.props.defaultValue}
+          isDisabled={true}
+        /> :
         <Select
         className='classSelectionInAddTecher'
           options={this.props.options}
           styles={SelectStyle()}
           onChange={this.sendValue}
           defaultValue={{ value: "default", label: "בחר כיתה" }}
+          isDisabled={false}
         />
+        }
       <img
             onClick={this.removeField}
             className="removeFieldIcon"
