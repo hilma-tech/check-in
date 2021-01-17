@@ -2,7 +2,6 @@ import { withContext } from "@hilma/tools";
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import ArrowBar from "../../component/teacher/ArrowBar.jsx";
-import BlueSideBar from "../../component/teacher/BlueSideBar.jsx";
 import PageTitle from "../../component/teacher/PageTitle.jsx";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 import SmallNavBar from "../../component/teacher/SmallNavBar.jsx";

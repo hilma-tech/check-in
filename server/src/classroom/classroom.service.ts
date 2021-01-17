@@ -1,4 +1,4 @@
-import { Body, Injectable, Post, Req } from '@nestjs/common';
+import { Body, Injectable} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Game } from 'src/game/game.entity';
 import { Repository } from 'typeorm';

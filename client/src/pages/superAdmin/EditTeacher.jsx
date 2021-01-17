@@ -7,12 +7,6 @@ import ClassSelection from "../../component/superAdmin/ClassSelection.jsx";
 import "../../style/superAdmin/form_style.scss";
 import "../../style/superAdmin/add_game_style.scss";
 import SelectStyle from "../../style/superAdmin/select_style";
-import {
-  nameValidation,
-  mustInputValidation,
-  passwordValidation,
-  emailValidation
-} from "../../tools/ValidationFunctions";
 import { observer } from "mobx-react";
 import { withContext } from '@hilma/tools';
 import { teachersContext } from '../../stores/teachers.store';
@@ -236,7 +230,7 @@ class EditTeacher extends React.Component {
                 className='addSomethingNew'
                 onClick={this.addNewFieldData}
               >
-                <img className='addIcon' src={addicon}></img>
+                <img className='addIcon' src={addicon} alt="addIcon"></img>
                 <p className='addTitle'>הוסף כיתה</p>
               </div>
               <form className='formData' style={{ marginTop: '0' }}>

@@ -13,7 +13,6 @@ import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { chosenClassContext } from "../../stores/chosenClass.store.js";
-import BlueSideBar from "../../component/teacher/BlueSideBar.jsx";
 
 
 class Games extends React.Component {

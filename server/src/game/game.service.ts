@@ -1,12 +1,10 @@
-import { assignMetadata,UploadedFiles, Body, Injectable, Param,Req } from '@nestjs/common';
+import { UploadedFiles, Body, Injectable, Req } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Game } from './game.entity';
-import { UseJwtAuth } from '@hilma/auth-nest';
 import { GameSaveDto, GetGameSkip,GameSaveReq } from './game.dtos';
 import { FieldService } from 'src/field/field.service';
 import {
-  UseFilesHandler,
   FilesType,
   ImageService,
 } from '@hilma/fileshandler-typeorm'
@@ -36,7 +34,6 @@ export class GameService {
           req.field[index].value[0].value = imgPath;
         }
       });
-  // console.log('req.game.image.value: ', req.game.image.value, typeof req.game.image.value);
       let game = await this.saveGame(req.game);
       await this.fieldService.saveField({ data: req.field, id: game.id });
       return game;

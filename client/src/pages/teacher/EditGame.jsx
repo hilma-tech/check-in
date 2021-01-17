@@ -1,6 +1,5 @@
 import { Component } from "react";
 import React from "react";
-import echidnaloo from "../../img/addicon.svg";
 import "../../style/teacher/edit_game_style.scss";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar";
 import PageTitle from "../../component/teacher/PageTitle";

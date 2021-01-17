@@ -1,11 +1,9 @@
 import React from "react";
-import Slide from "@material-ui/core/Slide";
 import GeneralTable from "../../component/superAdmin/GeneralTable.jsx";
 import "../../style/superAdmin/table_style.css";
 import { studentsContext } from "../../stores/students.store.js";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
-import LoadingTable from "../../component/superAdmin/LoadingTable.jsx";
 import { errorMsgContext } from "../../stores/error.store.js";
 
 class StudentsList extends React.Component {

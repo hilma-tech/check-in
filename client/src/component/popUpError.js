@@ -7,7 +7,6 @@ import { errorMsgContext } from "../stores/error.store";
 import { observer } from "mobx-react"
 import { withContext } from '@hilma/tools';
 import '../style/pop_up_error_style.css'
-import { withRouter } from 'react-router-dom';
 
 class PopUpError extends React.Component {
     constructor(props) {

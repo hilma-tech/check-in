@@ -3,16 +3,12 @@ import TextareaAutosize from "react-textarea-autosize";
 import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import "../../style/superAdmin/add_game_style.scss";
 import "../../style/superAdmin/form_style.scss";
-
 import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.jsx";
 import { withRouter } from "react-router-dom";
-
 import { errorMsgContext } from "../../stores/error.store";
 import { chosenGameEditContext } from "../../stores/chosenGameEdit.store";
 import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
-
-
 const axios = require("axios").default;
 
 class EditGame extends Component {

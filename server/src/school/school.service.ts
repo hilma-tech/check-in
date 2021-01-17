@@ -18,7 +18,6 @@ export class SchoolService {
           skip: skipON.schoolsLength,
           take: 50,
       });
-      // console.log(schools);
       return { schoolsInfo: schools, haveMoreSchools: haveMoreSchools }    }
 }
 

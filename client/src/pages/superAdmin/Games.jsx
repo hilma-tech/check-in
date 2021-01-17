@@ -4,7 +4,6 @@ import optionicon from "../../img/optionicon.svg";
 import addicon from "../../img/addicon.svg";
 import WhiteBar from "../../component/superAdmin/GameNavBar.jsx";
 import { withRouter } from "react-router-dom";
-import Slide from "@material-ui/core/Slide";
 import PopUp from "../../component/superAdmin/GamePopUpMenu.jsx";
 import Fade from "@material-ui/core/Fade";
 import { errorMsgContext } from "../../stores/error.store";
@@ -14,8 +13,6 @@ import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import LoadingPage from "../../component/superAdmin/LoadingGamePage.jsx";
 import { IsAuthenticatedContext } from "@hilma/auth";
-
-const axios = require("axios").default;
 
 class Games extends Component {
   constructor() {
@@ -34,7 +31,7 @@ class Games extends Component {
   }
 
   getGames = async () => {
-    let getGames = await this.props.games.getGames();
+    await this.props.games.getGames();
     if (!this.props.games.successGettingGames) {
       this.props.errorMsg.setErrorMsg(
         "הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת."
