@@ -44,7 +44,7 @@ class Games extends React.Component {
 
   addGameToClass = async (index) => {
     await this.props.chosenGame.setgameId(this.props.games.gamesList[index].id, index);
-   this.props.history.push('/teacher/classes/addgame')
+   this.props.history.push('/teacher/classes/editGame')
   }
 
   render() {

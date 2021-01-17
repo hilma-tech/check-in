@@ -1,7 +1,7 @@
 import { Component } from "react";
 import React from "react";
 import echidnaloo from "../../img/addicon.svg";
-import "../../style/teacher/add_game_style.scss";
+import "../../style/teacher/edit_game_style.scss";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar";
 import PageTitle from "../../component/teacher/PageTitle";
 import ArrowBar from "../../component/teacher/ArrowBar";
@@ -15,7 +15,7 @@ import { gamesContext } from "../../stores/games.store";
 
 const axios = require("axios").default;
 
-class AddGame extends Component {
+class EditGame extends Component {
   constructor() {
     super();
     this.state = {
@@ -66,7 +66,7 @@ class AddGame extends Component {
       <>
         <SmallMenuBar />
         <PageTitle title="משחקים" titleTwo="כיתה א'1" />
-        <ArrowBar page="addGame" />
+        <ArrowBar page="editGame" />
         <div className="smallAlign mobileGap" style={{ top: "26vh" }}>
           <div className="mobileBackground">
             <div className="mobileGameContainer">
@@ -125,8 +125,6 @@ class AddGame extends Component {
   }
 }
 
-// export default withRouter(AddGame)
-
 const mapContextToProps = {
   errorMsg: errorMsgContext,
   chosenGame: chosenGameEditContext,
@@ -134,4 +132,4 @@ const mapContextToProps = {
   games: gamesContext
 };
 
-export default withContext(mapContextToProps)(withRouter(observer(AddGame)));
+export default withContext(mapContextToProps)(withRouter(observer(EditGame)));

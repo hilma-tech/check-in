@@ -7,7 +7,7 @@ class ArrowBar extends React.Component {
         super()
         this.pages = {
             games: 'משחקים',
-            addGame: 'עריכת משחק',
+            editGame: 'עריכת משחק',
             students: 'תלמידים',
             permission: 'הרשאות'
         }
@@ -58,7 +58,7 @@ class ArrowBar extends React.Component {
                 //             />
                 // <p className="pageNameArrowBar">{this.pages[this.props.page]}</p>
         //         </div>);
-        }else if (this.props.page === 'addGame') {
+        }else if (this.props.page === 'editGame') {
             return (
                 <div className='studentsArrowBar'>
                     <img
