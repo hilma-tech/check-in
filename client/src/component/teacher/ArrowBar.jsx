@@ -1,5 +1,5 @@
 import React from "react";
-import "../../style/teacher/arrow_bar_style.css";
+import "../../style/teacher/arrow_bar_style.scss";
 
 class ArrowBar extends React.Component {
     constructor() {

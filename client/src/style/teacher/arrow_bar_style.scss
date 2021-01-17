@@ -1,4 +1,8 @@
+@import "../general_style.scss";
+
+
 .smallBackArrow {
+    @include mouse(point);
     position: absolute;
     margin-right: 8vw;
     right: 0;

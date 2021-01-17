@@ -1,4 +1,6 @@
 @import "../../style/fonts/fonts.scss";
+@import "../general_style.scss";
+
 
 .griddler {
   margin-top: 18.9vh;
@@ -27,6 +29,7 @@
   width: 35vw;
   height: 35vw;
   border: 2px dashed;
+  @include mouse(point);
 }
 
 .smallSticky {

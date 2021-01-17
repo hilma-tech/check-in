@@ -32,6 +32,7 @@
 }
 
 .sideBarOption{
+    @include mouse(point);
     color: white;
     padding: 2vh;
     margin: 0;
