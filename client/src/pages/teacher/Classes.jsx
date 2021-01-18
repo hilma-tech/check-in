@@ -32,19 +32,19 @@ class Classes extends Component {
       "#9c001b",
       "#411045",
     ];
-    this.state = { classes: [] }
+    this.state = { classes: [] };
   }
 
   componentDidMount = async () => {
     let teacherClasses = await axios.get("/api/teacher/getTeacherClasses");
-    this.setState({ classes: teacherClasses.data })
+    this.setState({ classes: teacherClasses.data });
   };
 
   moveToClass = (classId, classroomName) => {
-    this.props.chosenClass.setClassId(classId, classroomName)
+    this.props.chosenClass.setClassId(classId, classroomName);
     this.props.history.push("/teacher/classes/games");
-  }
-  
+  };
+
   render() {
     return (
       <>
@@ -56,11 +56,14 @@ class Classes extends Component {
           {this.state.classes.map((classObj, index) => {
             return (
               <div
-                onClick={() => { this.moveToClass(classObj.id, classObj.name) }}
+                onClick={() => {
+                  this.moveToClass(classObj.id, classObj.name);
+                }}
                 className="circleCont"
                 style={{ borderColor: this.colors[index] }}
+                key={index}
               >
-                <h3 className="className" style={{ color: this.colors[index] }}>
+                <h3 className="className" key={index} style={{ color: this.colors[index] }}>
                   {classObj.name}
                 </h3>
               </div>
@@ -71,7 +74,6 @@ class Classes extends Component {
     );
   }
 }
-
 
 const mapContextToProps = {
   chosenClass: chosenClassContext,

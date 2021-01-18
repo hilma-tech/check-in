@@ -1,119 +1,137 @@
 @import "../general_style.scss";
 
-
 .smallBackArrow {
-    @include mouse(point);
-    position: absolute;
-    margin-right: 8vw;
-    right: 0;
-    width: 5vw;
-    background-color: #F2F7FC;
+  @include mouse(point);
+  position: absolute;
+  margin-right: 8vw;
+  right: 0;
+  width: 5vw;
+  background-color: #f2f7fc;
 }
 
 .addGameArrow {
-    background-color: #F2F7FC;
-    position: fixed;
-    top: 26vh;
-    width: 100%;
-    color: #043163;
-    padding-right: 4%;
-    height: 9vh;
-    z-index: 100;
+  background-color: #f2f7fc;
+  position: fixed;
+  top: 26vh;
+  width: 100%;
+  color: #043163;
+  padding-right: 4%;
+  height: 9vh;
+  z-index: 100;
 }
 
-
-.gamesChooseDistractions {
-    background-color: #F2F7FC;
-    position: fixed;
-    top: 24.75vh;
-    width: 100%;
-    color: #043163;
-    padding-right: 4%;
-    height: 25vw;
-    z-index: 100;
+.gamesArrowBar {
+  background-color: #f2f7fc;
+  position: fixed;
+  top: 24.75vh;
+  width: 100%;
+  color: #043163;
+  padding-right: 4%;
+  height: 25vw;
+  z-index: 100;
 }
 
-.gamesChooseDistractionsText {
-    text-align: center;
-    margin-top: 0;
-    font-size: 5vw;
-    padding-top: 1.5vh;
-    width: 70vw;
-    margin-right: 7vw;
+.gamesArrowBarText {
+  text-align: center;
+  margin-top: 0;
+  font-size: 5vw;
+  padding-top: 1.5vh;
+  width: 70vw;
+  margin-right: 11vw;
 }
 
 .studentsArrowBar {
-    background-color: #F2F7FC;
-    position: fixed;
-    top: 24.75vh;
-    width: 100%;
-    font-size: 5vw;
-    color: #043163;
-    padding-right: 4%;
-    height: 13vh;
-    z-index: 100;
+  background-color: #f2f7fc;
+  position: fixed;
+  top: 24.75vh;
+  width: 100%;
+  font-size: 5vw;
+  color: #043163;
+  padding-right: 4%;
+  height: 13vh;
+  z-index: 100;
+  justify-items: right;
 }
 
 .permissionArrowBar {
-    background-color: #F2F7FC;
-    position: fixed;
-    top: 24.75vh;
-    width: 100%;
-    font-size: 5vw;
-    color: #043163;
-    padding-right: 4%;
-    height: 5vh;
-    z-index: 100;
+  background-color: #f2f7fc;
+  position: fixed;
+  top: 24.75vh;
+  width: 100%;
+  font-size: 5vw;
+  color: #043163;
+  padding-right: 4%;
+  height: 5vh;
+  z-index: 100;
 }
 //todo
 .pageNameArrowBar {
-    display: none;
-    display: inline;
+  display: none;
+  display: inline;
+}
+.studentsArrowBar {
+    display: flex;
+  .pageNameArrowBar {
+    margin: 0vh;
+    align-self: center;
+    margin-right: 12vw;
+    margin-top: -4vh;
+  }
+}
+
+.gamesArrowBar {
+    display: flex;
+  .pageNameArrowBar {
+    margin: 0vh;
+    align-self: center;
+    margin-right: 12vw;
+    margin-top: -4vh;
+  }
 }
 
 @media only screen and (min-width: 500px) {
-    .smallBackArrow {
-        margin-right: 3.75vw;
-        width: 1.65vw;
-        background-color: rgba(255, 255, 255, 0);
-    }
+  .smallBackArrow {
+    margin-right: 3.75vw;
+    width: 1.65vw;
+    background-color: rgba(255, 255, 255, 0);
+  }
 
-    .gamesChooseDistractions {
-        background-color: #F2F7FC;
-        position: fixed;
-        top: 6vh;
-        right: 25vw;
-        width: 60vw;
-        padding-right: 0;
-        height: 17vw;
-        z-index: 99;
-    }
+  .gamesArrowBar {
+    background-color: #f2f7fc;
+    position: fixed;
+    top: 10vh;
+    right: 25vw;
+    width: 60vw;
+    padding-right: 0;
+    height: 17vw;
+    z-index: 99;
+  }
 
-    .gamesChooseDistractionsText {
-        text-align: start;
-        margin-top: 0;
-        font-size: 2vw;
-        padding-top: 0;
-        width: 70vw;
-        margin-right: 7vw;
-    }
+  .gamesArrowBarText {
+    text-align: start;
+    margin-top: 0;
+    font-size: 2vw;
+    padding-top: 0;
+    width: 70vw;
+    margin-right: 7vw;
+  }
 
-    .pageNameArrowBar {
-        font-size: 2.5vw;
-        text-align: start;
-        display: inline-block;
-        font-weight: 700;
-        padding-top: 2.25vh;
-        width: 70vw;
-        margin-right: 7vw;
-    }
+  .pageNameArrowBar {
+    font-size: 2.5vw;
+    text-align: start;
+    display: inline-block;
+    font-weight: 700;
+    padding-top: 2.25vh;
+    width: 70vw;
+    margin-right: 7vw;
+  }
 
-    .studentsArrowBar {
-        top: 6vh;
-        width: 68vw;
-        font-size: 2vw;
-        padding-right: 0;
-        left: 7vw;
-        background-color: rgba(0, 0, 0, 0);
-    }
+  .studentsArrowBar {
+    top: 6vh;
+    width: 68vw;
+    font-size: 2vw;
+    padding-right: 0;
+    left: 7vw;
+    background-color: rgba(0, 0, 0, 0);
+  }
 }
