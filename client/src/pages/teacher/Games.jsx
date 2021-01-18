@@ -13,6 +13,10 @@ import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { chosenClassContext } from "../../stores/chosenClass.store.js";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 
 class Games extends React.Component {
@@ -21,7 +25,9 @@ class Games extends React.Component {
     this.state = {
       chosenGames: [],
       gamesList: [],
+      openPopUp: false,
     };
+    this.gameIndex= 0
   }
 
   componentDidMount() {
@@ -29,7 +35,7 @@ class Games extends React.Component {
       this.getGames();
     }
   }
-   
+
 
   getGames = async () => {
     await this.props.games.getGames();
@@ -43,16 +49,24 @@ class Games extends React.Component {
 
   addGameToClass = async (index) => {
     await this.props.chosenGame.setgameId(this.props.games.gamesList[index].id, index);
-   this.props.history.push('/teacher/classes/editGame')
+    this.props.history.push('/teacher/classes/editGame')
   }
 
-  removeGameFromClass = (index, classId) => {
-    this.props.errorMsg.setQuestion(
-      "האם הנך בטוח שברצונך להסיר משחק זה מכיתה זו?"
-    );
-    if(this.props.errorMsg.approve){
-      this.props.games.removeGameFromClass(index, classId)
-    }
+  removeGameFromClass = () => {
+    console.log('this.gameIndex: ', this.gameIndex);
+    this.changePopUpstate()
+    this.props.games.removeGameFromClass(this.gameIndex, this.props.chosenClass.classId)
+  }
+
+  openPopUpClick = (index) => {
+    this.changePopUpstate()
+    this.gameIndex = index
+  }
+
+  changePopUpstate = () => {
+    this.setState((prevState) => {
+      return { openPopUp: !prevState.openPopUp }
+    })
   }
 
   render() {
@@ -62,15 +76,45 @@ class Games extends React.Component {
         <SmallNavBar active="games" />
         <PageTitle title={"כיתה " + this.props.chosenClass.classroomName} />
         <ArrowBar page="games" chosenClass={this.props.chosenClass.classroomName} />
+        <Dialog
+          PaperProps={{
+            style: {
+              backgroundColor: 'white',
+              boxShadow: '0px 3px 6px #00000029',
+              border: '1px solid #707070',
+              padding: '5px'
+            },
+          }}
+          open={this.state.openPopUp}
+          // onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <span style={{ color: 'black', fontWeight: 'bold', fontSize: '1.5vw' }}>האם הנך בטוח שברצונך להסיר משחק זה מכיתה זו?</span>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <button className='popUpCanselButton' color="primary" onClick={this.changePopUpstate}>
+              ביטול
+          </button>
+            <button className='popUpOkButton' onClick={this.removeGameFromClass}>
+              אישור
+          </button>
+
+          </DialogActions>
+        </Dialog>
         <div className="smallAlign" id='smallAlignClassGames'>
           <div className="chosenGamesForClass">
             <div className="scrollChosenGames">
               {this.props.games.chosenGameList.map((gameData, i) => {
                 return (
                   <ClassGames
-                  key={i}
+                    key={i}
                     index={i}
-                    changeGameStatus={()=>{this.removeGameFromClass(i,this.props.chosenClass.classId)}}
+                    changeGameStatus={() => { this.openPopUpClick(i) }}
                     chosen={true}
                     name={gameData.game_name}
                     image={gameData.image}
@@ -81,7 +125,7 @@ class Games extends React.Component {
           </div>
           <p className="gameListTitle">משחקים שניתן להוסיף:</p>
           {/*add search option */}
-           <div className="listGamesForClass">
+          <div className="listGamesForClass">
             {this.props.games.gamesList.map((image, index) => {
               return (
                 <ClassGames
