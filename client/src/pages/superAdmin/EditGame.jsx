@@ -3,10 +3,8 @@ import TextareaAutosize from "react-textarea-autosize";
 import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import "../../style/superAdmin/add_game_style.scss";
 import "../../style/superAdmin/form_style.scss";
-
 import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.jsx";
 import { withRouter } from "react-router-dom";
-
 import { errorMsgContext } from "../../stores/error.store";
 import { chosenGameEditContext } from "../../stores/chosenGameEdit.store";
 import { observer } from "mobx-react";
@@ -57,6 +55,7 @@ class EditGame extends Component {
         gameDescription: data.description,
         gameRequirements: data.requirements,
         image: data.image,
+        gameId: data.id
       });
     } catch (error) {
       this.props.errorMsg.setErrorMsg(
@@ -232,6 +231,8 @@ class EditGame extends Component {
           <div className="pageContainer">
             <WhiteBar />
             <form className="formData">
+            <label className="labelFields">מספר זיהוי:</label>
+              <p className="inputFields editGameId" >{this.state.gameId}</p>
               <label className="labelFields">שם המשחק:</label>
               <p
                 className="error"
