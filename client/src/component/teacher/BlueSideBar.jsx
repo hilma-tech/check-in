@@ -33,7 +33,7 @@ class BlueSideBar extends React.Component {
             </div>
             <div className="blueSideBarOptions">
               <p className="sideBarOption">כיתות</p>
-              <p className="sideBarOption">ניהול</p>
+              {/* <p className="sideBarOption">ניהול</p> */}
             </div>
 
             <div
