@@ -59,9 +59,9 @@ class SuspendedGames extends Component {
             </form>
           </div>
           <div className="grid">
-            {images.map((image) => {
+            {images.map((image, i) => {
               return (
-                <div className="imageContainer item3">
+                <div key={i} className="imageContainer item3">
                   <img className="gameImg" alt="" src={image.url} />
                   <h2 className="holdGameTitleBackground"></h2>
                   <h1 className="gameTitle">{image.name}</h1>

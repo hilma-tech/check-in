@@ -106,7 +106,7 @@ class Games extends Component {
               {this.props.games.gamesList.map((image, index) => {
                 return (
                   <div key={image.id}>
-                    <div className="imageContainer item3">
+                    <div key={image.id} className="imageContainer item3">
                       <Fade
                         in={image.showOption}
                         timeout={{
@@ -122,16 +122,17 @@ class Games extends Component {
                           gameId={image.id}
                         />
                       </Fade>
-                      <div id="holdImg">
+                      <div key={image.id} id="holdImg">
                         <img className="gameImg" alt="" src={image.image} />
                       </div>
-                      <h2 className="gameTitleBackground"></h2>
-                      <h1 className="gameTitle">
+                      <h2 key={image.id} className="gameTitleBackground"></h2>
+                      <h1 key={image.id} className="gameTitle">
                         {image.game_name.length > 15
                           ? image.game_name.slice(0, 15) + "..."
                           : image.game_name}
                       </h1>
                       <img
+                      key={image.id}
                         className="optionIcon"
                         onClick={() => {
                           this.props.games.setShowOption(index);

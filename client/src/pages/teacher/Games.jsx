@@ -68,6 +68,7 @@ class Games extends React.Component {
               {this.props.games.chosenGameList.map((gameData, i) => {
                 return (
                   <ClassGames
+                  key={i}
                     index={i}
                     changeGameStatus={()=>{this.removeGameFromClass(i,this.props.chosenClass.classId)}}
                     chosen={true}
@@ -89,6 +90,7 @@ class Games extends React.Component {
                   name={image.game_name}
                   image={image.image}
                   index={index}
+                  key={index}
                 />
               );
             })}

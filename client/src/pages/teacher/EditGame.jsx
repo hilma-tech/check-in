@@ -82,26 +82,26 @@ class EditGame extends Component {
             <h3 className="mobileGameReq">דרישות המשחק</h3>
             <p className="mobileGameRP">{this.state.gameRequirements}</p>
             <h1 className="mobileGameFields">שדות:</h1>
-            {this.state.fieldsData.map((field) => {
-              console.log(field);
+            {this.state.fieldsData.map((field, i) => {
               return (
                 <>
-                  <h2 className="mobileFieldName">{field.field_name}</h2>
+                  <h2 className="mobileFieldName"key={i+1} >{field.field_name}</h2>
                   {field.selection !== "image" ? (
-                    field.value.map((value) => {
+                    field.value.map((value, i) => {
                       if (value.value.length !== 0) {
                         return (
-                          <input
+                          <div key={i}><input
+                          key={i}
                             defaultValue={value.value}
                             className="mobileChangingInput"
-                          />
+                          /></div>
                         );
                       } else {
-                        return <></>;
+                        return <></>
                       }
                     })
                   ) : (
-                    <div className="mobileBorderCameraIcon">
+                    <div key={i} className="mobileBorderCameraIcon">
                       <img
                         alt="photograph icon"
                         className="mobileImg"

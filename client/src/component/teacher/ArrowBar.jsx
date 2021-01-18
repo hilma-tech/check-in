@@ -20,14 +20,14 @@ class ArrowBar extends React.Component {
     render() {
         if (this.props.page === 'games') {
             return (
-                <div className='gamesChooseDistractions'>
+                <div className='gamesArrowBar'>
                     <img
                         alt="small back arrow"
                         className="smallBackArrow"
                         src="/icons/awesome-arrow-right.svg"
                     />
-                    <p className="pageNameArrowBar">{this.pages[this.props.page]}</p>
-                    <p className='gamesChooseDistractionsText'>
+                    {/* <p className="pageNameArrowBar">{this.pages[this.props.page]}</p> */}
+                    <p className='gamesArrowBarText'>
                         בחר/י משחק כדי לערוך אותו,<br />
                     על מנת להוסיף משחק חדש לכיתה זו
                     לחץ/י על סמל הפלוס
@@ -41,7 +41,7 @@ class ArrowBar extends React.Component {
                         className="smallBackArrow"
                         src="/icons/awesome-arrow-right.svg"
                     />
-                    <p className="pageNameArrowBar">{this.pages[this.props.page]}</p>
+                    {/* <p className="pageNameArrowBar">{this.pages[this.props.page]}</p> */}
 
                     {/* <br /> */}
                     {/* <br /> */}
