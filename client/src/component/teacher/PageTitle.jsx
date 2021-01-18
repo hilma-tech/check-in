@@ -10,8 +10,15 @@ class PageTitle extends Component {
                         <h1 className="officialTitle">{this.props.title}</h1>
                         {this.props.titleTwo !== undefined ?
                             !this.props.titleTwo.includes('כיתה') ?
-                                <h1 className="officialTitle">{this.props.titleTwo}</h1> :
-                                <div>{(this.props.titleTwo.split(' '))[1]}</div>
+                                <div className="secondTitle">
+                                    <h1 className="officialTitle">{this.props.titleTwo}</h1>
+                                </div> :
+                                <div className="secondTitle">
+                                    <div className='officialTitleFlex'>
+                                        <h1 className="officialTitleClass">{(this.props.titleTwo.split(' '))[0]} </h1>
+                                        <h1 className="officialTitleClassName"> {(this.props.titleTwo.split(' '))[1]}</h1>
+                                    </div>
+                                </div>
                             :
                             <></>
                         }

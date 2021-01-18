@@ -6,7 +6,8 @@ class ChosenClass {
     classId = 0
     classroomName = ''
     students =[]
-    currStudentId = 0
+    currStudentIndex = 0
+    studentClassrooms = []
     constructor() {
         makeObservable(this, {
             classId: observable,
@@ -14,19 +15,27 @@ class ChosenClass {
             setClassId: action,
             students: observable,
             callStudents: action,
-            currStudentId: observable,
+            currStudentIndex: observable,
             setCurrStudent:action,
-            getCurrStudent:action
+            getCurrStudent:action,
+            studentClassrooms: observable,
         })
     }
 
-    setCurrStudent = (studentId) => {
-        this.currStudentId = studentId
+    setCurrStudent = async (studentIndex) => {
+        console.log(studentIndex);
+        this.currStudentIndex = studentIndex
+        let {data} = await axios.get("/api/student/getStudentsClassrooms", {params: {studentId: this.students[studentIndex].id}})
+        let classId = this.classId
+        this.studentClassrooms = data.filter((classroom)=>{
+            return classroom.id != classId
+        })
+        console.log('studentClassrooms: ', this.studentClassrooms);
     }
 
     getCurrStudent = () => {
-        console.log(this.students[this.currStudentId]);
-        return this.students[this.currStudentId]
+        console.log(this.students[this.currStudentIndex]);
+        return this.students[this.currStudentIndex]
     }
 
     callStudents = async (classnum) => {

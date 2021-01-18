@@ -33,4 +33,12 @@ export class StudentService extends UserService {
         console.log('students: ', students);
         return { studentsInfo: students, haveMoreStudents: haveMoreStudents }
     }
+
+    async getStudentsClassrooms(@Req() studentId: any) {
+        let studentsClassroom = await this.userRepository.findOne({
+            relations: ['classroomStudent'],
+            where: [{id: studentId}],
+        })
+        return studentsClassroom.classroomStudent
+    }
 }

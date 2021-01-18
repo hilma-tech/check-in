@@ -26,9 +26,9 @@ class Students extends Component {
     this.props.chosenClass.callStudents(this.props.chosenClass.classId);
   };
 
-  moveToStudent = (props) => {
-    console.log("target",props.target.id);
-    this.props.chosenClass.setCurrStudent(props.target.id);
+  moveToStudent = async (index) => {
+    // console.log("target",props.target.id);
+    await this.props.chosenClass.setCurrStudent(index);
     this.props.history.push(this.props.location.pathname + "/studentInfo");
   };
 
@@ -43,8 +43,8 @@ class Students extends Component {
           <div className="smallAlign" id="smallAlignStudentList">
             {this.props.chosenClass.students.map((student, index) => {
               return (
-                <div className="smallStudentCont" onClick={this.moveToStudent}>
-                  <h1 className="smallStudentName" id={index}>
+                <div className="smallStudentCont" id={index} onClick={()=>{this.moveToStudent(index)}}>
+                  <h1 className="smallStudentName">
                     {student.first_name+" "+student.last_name}
                   </h1>
                   <h1 className="smallStudentName justForWeb" id={index}>

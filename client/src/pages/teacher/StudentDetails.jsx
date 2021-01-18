@@ -8,16 +8,32 @@ import "../../style/teacher/student_details_style.css";
 import { chosenClassContext } from "../../stores/chosenClass.store";
 
 class StudentDetails extends Component {
-  constructor(){
+  constructor() {
     super()
+    this.state = {
+      name: "",
+      userName: "",
+      classrooms: []
+    }
     this.eh = []
   }
+
+  componentDidMount() {
+    let studentInfo = this.props.chosenClass.getCurrStudent()
+    let classrooms = this.props.chosenClass.studentClassrooms
+    this.setState({
+      name: studentInfo.first_name + ' ' + studentInfo.last_name,
+      userName: studentInfo.username,
+      classrooms: classrooms
+    })
+  }
+  
   render() {
     return (
       <>
         <div className="smallPage">
           <SmallMenuBar />
-          <PageTitle title="תלמידים" titleTwo="כיתה א'1"/>
+          <PageTitle title="תלמידים" titleTwo="כיתה א'1" />
           {/* <PageTitle title="כיתה א'1"/> */}
           <img
             className="deetBackArrow"
@@ -27,16 +43,18 @@ class StudentDetails extends Component {
           <h3 className="smallArrowTitle">כרטיס תלמיד</h3>
           <br />
           <div className="studentDeets top">
-            <h1 className="detail">יוסי פפרמן</h1>
+            <h1 className="detail">{this.state.name}</h1>
           </div>
           <div className="studentDeets">
-            <h1 className="detail">yossipepperman</h1>
+            <h1 className="detail">{this.state.userName}</h1>
           </div>
           <div className="studentDeets">
             <h1 className="detail">1234</h1>
           </div>
           <div className="studentDeets">
-            <h1 className="detail">ב'3</h1>
+            <h1 className="detail">{this.state.classrooms.map((classroom) => {
+              return <p style={{display:'inline-block', margin: '0'}}>{classroom.name}</p>
+            })}</h1>
           </div>
         </div>
       </>

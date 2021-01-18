@@ -46,4 +46,9 @@ export class StudentController {
   getStudents(@Req() skipON: any){
     return this.studentService.getStudents(skipON.query)
   }
+
+  @Get('/getStudentsClassrooms')
+  getStudentsClassrooms(@Req() req: any){
+    return this.studentService.getStudentsClassrooms(req.query.studentId)
+  }
 }
