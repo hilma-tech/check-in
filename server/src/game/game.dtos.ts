@@ -33,7 +33,7 @@ export class GameSaveDto {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[\u0590-\u05FFa-zA-Z0-9 /s]+$/)
+  @Matches(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
   game_name: string;
 
   @IsDefined()
