@@ -46,6 +46,15 @@ class Games extends React.Component {
    this.props.history.push('/teacher/classes/editGame')
   }
 
+  removeGameFromClass = (index, classId) => {
+    this.props.errorMsg.setQuestion(
+      "האם הנך בטוח שברצונך להסיר משחק זה מכיתה זו?"
+    );
+    if(this.props.errorMsg.approve){
+      this.props.games.removeGameFromClass(index, classId)
+    }
+  }
+
   render() {
     return (
       <div style={{ overflowX: 'hidden', width: '100vw' }}>
@@ -60,7 +69,7 @@ class Games extends React.Component {
                 return (
                   <ClassGames
                     index={i}
-                    changeGameStatus={()=>{this.props.games.removeGameFromClass(i,this.props.chosenClass.classId)}}
+                    changeGameStatus={()=>{this.removeGameFromClass(i,this.props.chosenClass.classId)}}
                     chosen={true}
                     name={gameData.game_name}
                     image={gameData.image}

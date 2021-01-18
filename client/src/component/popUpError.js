@@ -15,9 +15,17 @@ class PopUpError extends React.Component {
 
     approvalButton = () => {
       this.props.errorMsg.resetMsg()
-      if(window.location.pathname !== "/superAdmin/games"){
-        window.location.pathname = "/superAdmin/games"
+      this.props.errorMsg.approveClick()
+      if(!this.props.errorMsg.question){
+        if(window.location.pathname !== "/superAdmin/games"){
+          window.location.pathname = "/superAdmin/games"
+        }
       }
+    }
+
+    cancelButton = () => {
+      this.props.errorMsg.resetMsg()
+      this.props.errorMsg.disapproveClick()
     }
 
     render() { 
@@ -43,9 +51,12 @@ class PopUpError extends React.Component {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          {/* <button className='popUpCanselButton' color="primary">
+          { 
+          this.props.errorMsg.question ?
+          <button className='popUpCanselButton' color="primary" onClick={this.cancelButton}>
             ביטול
-          </button> */}
+          </button> : <></>
+          }
           <button className='popUpOkButton' onClick={this.approvalButton}>
             אישור
           </button>
