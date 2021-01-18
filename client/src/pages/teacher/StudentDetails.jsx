@@ -1,5 +1,5 @@
 import { withContext } from "@hilma/tools";
-import { observer } from "mobx-react-lite";
+import { observer } from "mobx-react";
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import PageTitle from "../../component/teacher/PageTitle";
@@ -64,6 +64,6 @@ class StudentDetails extends Component {
 const mapContextToProps = {
   chosenClass: chosenClassContext,
 };
-//! no observer because it made the code crash for some reason(???)
-export default withContext(mapContextToProps)(withRouter(StudentDetails));
+
+export default withContext(mapContextToProps)(withRouter(observer(StudentDetails)));
 

@@ -11,10 +11,9 @@ import {
   mustInputValidation,
   nameValidation,
   requirementValidation,
-  fieldNameValidation, fieldInputValidation
+  fieldNameValidation, 
 } from "../../tools/ValidationFunctions";
 import {
-  FilesUploader,
   FileInput,
   withFiles,
 } from "@hilma/fileshandler-client";
@@ -24,7 +23,6 @@ import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import { gamesContext } from "../../stores/games.store";
 
-const axios = require("axios").default;
 
 class AddGame extends Component {
   constructor(props) {
@@ -46,7 +44,10 @@ class AddGame extends Component {
   }
 
   saveFieldName = (fieldName, fieldI) => {
-    this.state.fieldsData[fieldI].name = fieldName;
+    this.setState(prevState => {
+      prevState.fieldsData[fieldI].name = fieldName
+      return ({fieldsData: prevState.fieldsData})
+    })
   };
 
   saveSelection = (selection, fieldI) => {
@@ -134,9 +135,9 @@ class AddGame extends Component {
     this.setState({ image: { id: value.id, value: value.link } });
   };
 
-  setUpValues = () => {
+  setUpValues =() =>{
     let currFieldData = [];
-    this.state.fieldsData.map((obj) => {
+    this.state.fieldsData.map(obj => {
       let newField = {
         name: obj.name,
         selection: obj.selection,
@@ -148,7 +149,7 @@ class AddGame extends Component {
     return currFieldData;
   };
   addGameDb = async () => {
-    let currGameInfo = { //!
+    let currGameInfo = {
       game_name: this.state.gameName,
       image: this.state.image,
       description: this.state.gameDescription,

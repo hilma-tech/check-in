@@ -1,15 +1,10 @@
 import React from "react";
-import Slide from "@material-ui/core/Slide";
 import GeneralTable from "../../component/superAdmin/GeneralTable.jsx";
 import "../../style/superAdmin/table_style.css";
-import LoadingTable from "../../component/superAdmin/LoadingTable.jsx";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { errorMsgContext } from "../../stores/error.store.js";
 import { schoolsContext } from "../../stores/schools.store.js";
-
-
-const axios = require("axios").default;
 
 class SchoolsList extends React.Component {
   constructor() {

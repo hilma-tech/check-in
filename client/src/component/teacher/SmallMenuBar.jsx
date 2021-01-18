@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import menu from "../../img/menuWhite.svg";
-import "../../style/teacher/small_menu_bar.css";
+import "../../style/teacher/small_menu_bar.scss";
 import BlueSideBar from "./BlueSideBar";
 
 class SmallMenuBar extends Component {
@@ -21,8 +21,8 @@ class SmallMenuBar extends Component {
       <>
         <BlueSideBar openSideBar={this.state.openSideBar} closeSideBar={this.changeSideBarState} />
         <div className="smallMenuBar">
-          <img className="smallMenu" src={menu} onClick={this.changeSideBarState}/>
-          <img className="smallLogo" src="/icons/CheckIn.svg"/>
+          <img className="smallMenu" src={menu} alt="menuIcon" onClick={this.changeSideBarState}/>
+          <img className="smallLogo" alt="checkin" src="/icons/CheckIn.svg"/>
         </div>
       </>
     );

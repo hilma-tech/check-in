@@ -1,16 +1,22 @@
 import React from "react";
-import "../../style/teacher/arrow_bar_style.css";
+import { withRouter } from "react-router-dom";
+import "../../style/teacher/arrow_bar_style.scss";
 
 class ArrowBar extends React.Component {
     constructor() {
         super()
         this.pages = {
             games: 'משחקים',
-            addGame: 'עריכת משחק',
+            editGame: 'עריכת משחק',
             students: 'תלמידים',
             permission: 'הרשאות'
         }
     }
+    backToGames = () => {
+        this.props.history.push("/teacher/classes/games");
+        
+      };
+
     render() {
         if (this.props.page === 'games') {
             return (
@@ -52,11 +58,21 @@ class ArrowBar extends React.Component {
                 //             />
                 // <p className="pageNameArrowBar">{this.pages[this.props.page]}</p>
         //         </div>);
-        } else {
+        }else if (this.props.page === 'editGame') {
+            return (
+                <div className='studentsArrowBar'>
+                    <img
+                        alt="small back arrow"
+                        className="smallBackArrow"
+                        src="/icons/awesome-arrow-right.svg"
+                        onClick={this.backToGames}
+                    />
+                    <p className="pageNameArrowBar">{this.pages[this.props.page]}</p>
+                </div>); } else {
             return <></>
         }
     }
 }
 
 
-export default ArrowBar;
+export default withRouter(ArrowBar);

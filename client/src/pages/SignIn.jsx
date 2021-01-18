@@ -10,8 +10,6 @@ import { observer } from "mobx-react";
 import { IsAuthenticatedContext, LoginContext } from '@hilma/auth';
 import { passwordValidation, emailValidation } from '../tools/ValidationFunctions'
 
-const axios = require("axios").default;
-
 class SignIn extends Component {
   constructor() {
     super();

@@ -10,7 +10,6 @@ import {
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { Student } from './student.entity';
-import { School } from 'src/school/school.entity';
 
 @Module({
   imports: [

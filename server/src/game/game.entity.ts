@@ -4,9 +4,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
-  MinKey,
   ManyToMany,
-  JoinTable
 } from "typeorm";
 import {
   IsDefined,

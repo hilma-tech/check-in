@@ -1,4 +1,5 @@
 @import "../fonts/fonts.scss";
+@import "../general_style.scss";
 
 .classGameTitleBackground {
   /* background and border */
@@ -65,6 +66,7 @@
 }
 
 .classGameIconClose {
+  @include mouse(point);
   position: absolute;
   float: left;
   top: 1vw;
@@ -74,6 +76,7 @@
 }
 
 .classGameIconAdd {
+  @include mouse(point);
   position: absolute;
   float: left;
   top: 0vw;

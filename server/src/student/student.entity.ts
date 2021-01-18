@@ -1,20 +1,14 @@
 import {
   ChildEntity,
   Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  MinKey,
   ManyToOne,
   JoinColumn,
   ManyToMany,
-  JoinTable,
 } from 'typeorm';
 import {
   IsDefined,
   IsString,
   Length,
-  Matches,
-  IsBoolean,
 } from 'class-validator';
 import { User } from '@hilma/auth-nest';
 import { School } from 'src/school/school.entity';

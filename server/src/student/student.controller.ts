@@ -1,16 +1,10 @@
 import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import {
     UserService,
-    UseLocalAuth,
-    RequestUser,
     Role,
   } from '@hilma/auth-nest';
   import {Student} from "./student.entity"
 import { StudentService } from './student.service';
-import { School } from 'src/school/school.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { GetStudentSkip } from './student.dtos';
 import { Classroom } from 'src/classroom/classroom.entity';
 
 @Controller('api/student')

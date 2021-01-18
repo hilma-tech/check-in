@@ -4,7 +4,7 @@ import {
   RequestUser,
   Role,
 } from '@hilma/auth-nest';
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Post, Res } from '@nestjs/common';
 import { SuperAdmin } from './super-admin.entity';
 
 @Controller('api/super-admin')
@@ -16,7 +16,6 @@ export class SuperAdminController {
     @UseLocalAuth()
     @Post('/login')
     login(@RequestUser() userInfo, @Res() res) {
-      // console.log("ASDF", userInfo);
       let body = this.userService.login(userInfo, res);
       res.send(body);
     }

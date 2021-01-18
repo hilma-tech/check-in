@@ -1,8 +1,5 @@
 import { createMobXContext } from '@hilma/tools'
-import { makeObservable, observable, computed, action } from 'mobx'
-import { errorMsgContext } from "./error.store";
-import { withContext } from '@hilma/tools';
-import { observer } from "mobx-react"
+import { makeObservable, observable, action, runInAction } from 'mobx'
 const axios = require("axios").default;
 
 class Games {
@@ -31,10 +28,12 @@ class Games {
         try{
             this.startGetGames = true;
             const { data } = await axios.get("/api/game/getGames",{ params:{ gamesLength: this.gamesList.length }});
-            this.gamesList = this.gamesList.concat(data.gamesInfo)
-            this.haveMoreGames = data.haveMoreGames;
-            this.successGettingGames = true;
-            this.startGetGames = false;
+            runInAction(() => {
+                this.gamesList = this.gamesList.concat(data.gamesInfo)
+              this.haveMoreGames = data.haveMoreGames;
+              this.successGettingGames = true;
+              this.startGetGames = false;
+            })
         }catch (error){
             this.successGettingGames = false
             this.startGetGames = false;
@@ -45,15 +44,17 @@ class Games {
         try{
             this.startGetGames = true;
             const { data } = await axios.get("/api/classroom/getClassroomGames",{ params:{ classId: classId }});
-            this.chosenGameList = data.games
-            this.gamesList = this.gamesList.filter((game)=>{
-                let filterArr = this.chosenGameList.filter((chosenGame)=>{
-                    return chosenGame.id === game.id
-                })
-                return filterArr.length === 0
+            runInAction(() => {
+                this.chosenGameList = data.games
+              this.gamesList = this.gamesList.filter((game)=>{
+                  let filterArr = this.chosenGameList.filter((chosenGame)=>{
+                      return chosenGame.id === game.id
+                  })
+                  return filterArr.length === 0
+              })
+              this.successGettingGames = true;
+              this.startGetGames = false;
             })
-            this.successGettingGames = true;
-            this.startGetGames = false;
         }catch (error){
             this.successGettingGames = false
             this.startGetGames = false;
@@ -76,7 +77,9 @@ class Games {
 
     removeGameFromClass = async (index, classId) => {
         await axios.post("/api/classroom/removeGameRelation", {gameId: this.chosenGameList[index].id, classId: classId});
-        this.gamesList = [...this.gamesList,this.chosenGameList[index]]
+        runInAction(() => {
+            this.gamesList = [...this.gamesList,this.chosenGameList[index]]
+          })
         this.chosenGameList.splice(index,1)
       }
 

@@ -1,7 +1,6 @@
 import { Component } from "react";
 import React from "react";
-import echidnaloo from "../../img/addicon.svg";
-import "../../style/teacher/add_game_style.scss";
+import "../../style/teacher/edit_game_style.scss";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar";
 import PageTitle from "../../component/teacher/PageTitle";
 import ArrowBar from "../../component/teacher/ArrowBar";
@@ -10,10 +9,12 @@ import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import { errorMsgContext } from "../../stores/error.store";
 import { chosenGameEditContext } from "../../stores/chosenGameEdit.store";
+import { chosenClassContext } from "../../stores/chosenClass.store";
+import { gamesContext } from "../../stores/games.store";
 
 const axios = require("axios").default;
 
-class AddGame extends Component {
+class EditGame extends Component {
   constructor() {
     super();
     this.state = {
@@ -51,12 +52,20 @@ class AddGame extends Component {
     }
   };
 
+  addGameToDB = async () => {
+    await this.props.games.addGameToClass(
+      this.props.chosenGame.index,
+      this.props.chosenClass.classId
+    );
+    this.props.history.push("/teacher/classes/games");
+  };
+
   render() {
     return (
       <>
         <SmallMenuBar />
         <PageTitle title="משחקים" titleTwo="כיתה א'1" />
-        <ArrowBar page="addGame" />
+        <ArrowBar page="editGame" />
         <div className="smallAlign mobileGap" style={{ top: "26vh" }}>
           <div className="mobileBackground">
             <div className="mobileGameContainer">
@@ -64,8 +73,6 @@ class AddGame extends Component {
                 className="classGameImg"
                 alt=""
                 src={this.state.image}
-                // src={echidnaloo}
-                //   src={this.props.image}
               />
               <h2 className="mobileClassGameTitleBackground"></h2>
               <h1 className="mobileClassGameTitle">{this.state.gameName}</h1>
@@ -80,8 +87,7 @@ class AddGame extends Component {
               return (
                 <>
                   <h2 className="mobileFieldName">{field.field_name}</h2>
-                  {
-                    field.selection !== "image" ?
+                  {field.selection !== "image" ? (
                     field.value.map((value) => {
                       if (value.value.length !== 0) {
                         return (
@@ -91,27 +97,23 @@ class AddGame extends Component {
                           />
                         );
                       } else {
-                        return <></>
+                        return <></>;
                       }
-                    }) :
+                    })
+                  ) : (
                     <div className="mobileBorderCameraIcon">
-              
-                    <img
-                    alt="photograph icon"
-                    className="mobileImg"
-                    src={field.value[0].value}
-                  /></div>
-                  }
+                      <img
+                        alt="photograph icon"
+                        className="mobileImg"
+                        src={field.value[0].value}
+                      />
+                    </div>
+                  )}
                 </>
               );
             })}
             <div className="mobileSaveButtonBackground">
-              <button
-                className="mobileSaveButton"
-                onClick={() => {
-                  this.props.history.push("/teacher/classes/games");
-                }}
-              >
+              <button className="mobileSaveButton" onClick={this.addGameToDB}>
                 שמור
               </button>
             </div>
@@ -122,11 +124,11 @@ class AddGame extends Component {
   }
 }
 
-// export default withRouter(AddGame)
-
 const mapContextToProps = {
   errorMsg: errorMsgContext,
   chosenGame: chosenGameEditContext,
+  chosenClass: chosenClassContext,
+  games: gamesContext
 };
 
-export default withContext(mapContextToProps)(withRouter(observer(AddGame)));
+export default withContext(mapContextToProps)(withRouter(observer(EditGame)));

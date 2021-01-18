@@ -3,17 +3,11 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
-  MinKey,
-  
-  JoinTable,
-  JoinColumn
 } from "typeorm";
 import {
   IsDefined,
   IsString,
   Length,
-  Matches,
-  IsBoolean
 } from "class-validator";
 import { Student } from "src/student/student.entity";
 import { Teacher } from "src/teacher/teacher.entity";
