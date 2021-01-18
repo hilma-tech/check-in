@@ -14,8 +14,8 @@ class PopUpError extends React.Component {
     }
 
     approvalButton = () => {
-      this.props.errorMsg.resetMsg()
       this.props.errorMsg.approveClick()
+      this.props.errorMsg.resetMsg()
       if(!this.props.errorMsg.question){
         if(window.location.pathname !== "/superAdmin/games"){
           window.location.pathname = "/superAdmin/games"

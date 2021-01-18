@@ -6,6 +6,7 @@ class ErrorMsg {
     showMsg = false
     question = false
     approve = false
+    
     constructor() {
         makeObservable(this, {
             errorMsg: observable,
@@ -22,19 +23,19 @@ class ErrorMsg {
     resetMsg = () => {
         this.errorMsg = ''
         this.showMsg = false
-        this.question = false
     }
-
+    
     disapproveClick = () => {
         this.approve = false
     }
-
+    
     approveClick = () => {
         this.approve = true
     }
-
+    
     setErrorMsg=(msg)=>{
         this.errorMsg = msg
+        this.question = false
         this.showMsg = true
     }
 
