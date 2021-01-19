@@ -102,7 +102,7 @@
     position: fixed;
     top: 10vh;
     right: 25vw;
-    width: 60vw;
+    width: 75vw;
     padding-right: 0;
     height: 17vw;
     z-index: 99;
@@ -113,8 +113,9 @@
     margin-top: 0;
     font-size: 2vw;
     padding-top: 0;
-    width: 70vw;
+    width: 75vw;
     margin-right: 7vw;
+    z-index: 99;
   }
 
   .pageNameArrowBar {
@@ -122,19 +123,21 @@
     text-align: start;
     display: inline-block;
     font-weight: 700;
-    padding-top: 2.25vh;
-    width: 70vw;
+    width: 75vw;
     margin-right: 7vw;
     padding-top: 2.5vh;
+    margin-bottom: 1vh;
+    z-index: 99;
   }
 
   .studentsArrowBar {
     display: block;
     top: 6vh;
-    width: 68vw;
+    width: 75vw;
     font-size: 2vw;
     padding-right: 0;
-    left: 7vw;
+    left: 0;
     background-color: rgba(0, 0, 0, 0);
+    z-index: 99;
   }
 }
