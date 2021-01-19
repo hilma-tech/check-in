@@ -38,7 +38,6 @@ class Games extends React.Component {
 
 
   getGames = async () => {
-    await this.props.games.getGames();
     await this.props.games.getClassroomGames(this.props.chosenClass.classId)
     if (!this.props.games.successGettingGames) {
       this.props.errorMsg.setErrorMsg(

@@ -45,7 +45,8 @@ class Games {
             this.startGetGames = true;
             const { data } = await axios.get("/api/classroom/getClassroomGames",{ params:{ classId: classId }});
             runInAction(() => {
-                this.chosenGameList = data.games
+                this.gamesList = data.allGames
+                this.chosenGameList = data.currClassGames.games
               this.gamesList = this.gamesList.filter((game)=>{
                   let filterArr = this.chosenGameList.filter((chosenGame)=>{
                       return chosenGame.id === game.id
