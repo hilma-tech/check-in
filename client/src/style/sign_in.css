@@ -2,12 +2,13 @@
   margin: 0vh;
   position: absolute;
   margin-right: 32.5%;
-  margin-top: 16.5vh;
   display: flex;
   flex-direction: column;
   width: 35%;
   background-color: #d1e4fa00;
   align-items: center;
+  height: 100vh;
+  justify-content: center
 }
 
 .background {
@@ -22,6 +23,7 @@
   font-family: "Segoe UI";
   margin: 3vh;
   font-size: 8vh;
+  margin-top: 0;
 }
 
 .username {
@@ -55,6 +57,7 @@
   border-radius: 3vw;
   border: none;
   width: 30vw;
+  margin-bottom: 3vh;
 }
 
 .forgot {
@@ -63,21 +66,21 @@
   margin-top: 1vh;
 }
 
-.hilmalogo {
-  padding-top: 8vh;
+.hilmalogo{
+  padding-top: 1vh;
   height: 9vh;
 }
-
 @media only screen and (max-width: 600px) {
   .centeredPage {
     margin: 0vh;
     position: absolute;
     margin-right: 10%;
-    margin-top: 25vh;
     display: flex;
     flex-direction: column;
     width: 80%;
-    background-color: #d1e4fa00;
+    background-color: #bd078000;
+    height: 100vh;
+    justify-content: center
   }
   
   .background {
@@ -88,11 +91,15 @@
   }
   
   .input {
-    font-size: 4vh;
+    font-size: 2vh;
+    width: 60%;
   }
   
   .signInButton {
-    font-size: 4vh;
+    font-size: 3vh;
+    margin: 0vh;
+    width: 60%;
   }
   
 }
+
