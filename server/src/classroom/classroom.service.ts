@@ -15,11 +15,12 @@ export class ClassroomService {
   ) {}
 
   async getClassroomGames(req) {
-    let currClassGames = await this.classroomRepository.find({
+    let allGames = await this.gameRepository.find();
+    let currClassGames = await this.classroomRepository.findOne({
       relations: ['games'],
       where: [{ id: req.classId }],
     });
-    return currClassGames[0];
+    return ({currClassGames: currClassGames, allGames: allGames});
   }
 
   async getClassStudents(classId) {
