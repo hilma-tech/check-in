@@ -26,8 +26,6 @@ class GeneralTable extends React.Component {
             })
           }
         </div>
-{console.log(this.props.haveMoreData)}
-{console.log(this.props.allData.length === 0)}
         {this.props.haveMoreData &&
           this.props.allData.length === 0 ? (
             <LoadingTable />) :
@@ -48,7 +46,7 @@ class GeneralTable extends React.Component {
                 })
               }
             </div>
-            {/* {
+            {
               this.props.startGetInfo ? 
               <img
               style={{ width: "8vw", height:'8vw', marginTop: '1vh' }}
@@ -68,7 +66,7 @@ class GeneralTable extends React.Component {
             >
               הצג עוד
             </button>
-            } */}
+            }
           </>
         }
       </div>
