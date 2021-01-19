@@ -55,7 +55,7 @@ class BlueSideBar extends React.Component {
               <img src="/icons/CheckIn.svg" id="checkInIcon" alt="checkin" />
             </div>
             <div className="blueSideBarOptions">
-              <p className="sideBarOption">כיתות</p>
+              <p className="sideBarOption"  onClick={()=>{this.props.history.push("/teacher/classes")}}>כיתות</p>
               {/* <p className="sideBarOption">ניהול</p> */}
             </div>
 
