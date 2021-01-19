@@ -89,6 +89,29 @@
   // }
 }
 
+.pageNameArrowBarStudentInfo{
+  margin-top: 1vh;
+  margin-right: 13vw;
+  font-size: 3vh;
+  height: 4vh;
+  font-weight: 600;
+  text-align: right;
+}
+
+.studentsInfoArrowBar{
+  background-color: #f2f7fc;
+  position: fixed;
+  top: 24.75vh;
+  width: 100%;
+  font-size: 5vw;
+  color: #043163;
+  padding-right: 4%;
+  height: 6vh;
+  padding-top: 1vh;
+  z-index: 100;
+  justify-items: right;
+}
+
 @media only screen and (min-width: 500px) {
   .smallBackArrow {
     margin-right: 3.75vw;
@@ -125,7 +148,7 @@
     font-weight: 700;
     width: 75vw;
     margin-right: 7vw;
-    padding-top: 2.5vh;
+    padding-top: 2.75vh;
     margin-bottom: 1vh;
     z-index: 99;
   }

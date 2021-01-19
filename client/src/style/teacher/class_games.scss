@@ -106,6 +106,13 @@
   background-color: #F2F7FC;
 }
 
+.popUpQuesion{
+  color: black;
+  font-weight: bold;
+  font-size: 3vw;
+  text-align: center;
+}
+
 @media only screen and (min-width: 500px) {
   .classGameTitleBackground {
     /* background and border */
@@ -169,12 +176,16 @@
   }
 
   #smallAlignClassGames {
-    height: 73vh;
+    height: 73.5vh;
     margin: 0;
     position: absolute;
-    top: 27vh;
+    top: 26.5vh;
     padding-top: 0;
     left: 0;
     overflow-x: hidden;
+  }
+
+  .popUpQuesion{
+    font-size: 1.5vw;
   }
 } 

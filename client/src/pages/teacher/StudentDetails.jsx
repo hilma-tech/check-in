@@ -6,6 +6,7 @@ import PageTitle from "../../component/teacher/PageTitle";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar";
 import "../../style/teacher/student_details_style.css";
 import { chosenClassContext } from "../../stores/chosenClass.store";
+import ArrowBar from "../../component/teacher/ArrowBar";
 
 class StudentDetails extends Component {
   constructor() {
@@ -33,15 +34,17 @@ class StudentDetails extends Component {
       <>
         <div className="smallPage">
           <SmallMenuBar />
-          <PageTitle title="תלמידים" titleTwo="כיתה א'1" />
+          <PageTitle title="תלמידים" titleTwo={"כיתה " + this.props.chosenClass.classroomName} />
+          <ArrowBar page="studentInfo" chosenClass={this.props.chosenClass.classroomName} />
           {/* <PageTitle title="כיתה א'1"/> */}
-          <img
-            className="deetBackArrow"
+          {/* <img
+            // className="deetBackArrow"
+            className= 'smallBackArrow'
             src="/icons/awesome-arrow-right.svg"
             alt="small back arrow"
           />
           <h3 className="smallArrowTitle">כרטיס תלמיד</h3>
-          <br />
+          <br /> */}
           <div className="studentDeets top">
             <h1 className="detail">{this.state.name}</h1>
           </div>
