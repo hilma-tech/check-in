@@ -47,7 +47,7 @@ class PopUpError extends React.Component {
 
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <span style={{color: 'black', fontWeight: 'bold', fontSize: '1.5vw'}}>{this.props.errorMsg.errorMsg}</span>
+            <span className='popUpQuesion'>{this.props.errorMsg.errorMsg}</span>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
