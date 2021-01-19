@@ -81,7 +81,8 @@ class Games extends React.Component {
               backgroundColor: 'white',
               boxShadow: '0px 3px 6px #00000029',
               border: '1px solid #707070',
-              padding: '5px'
+              padding: '5px',
+              width: '75vw'
             },
           }}
           open={this.state.openPopUp}
@@ -92,7 +93,7 @@ class Games extends React.Component {
 
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              <span style={{ color: 'black', fontWeight: 'bold', fontSize: '1.5vw' }}>האם הנך בטוח שברצונך להסיר משחק זה מכיתה זו?</span>
+              <span className='popUpQuesion'>האם הנך בטוח שברצונך להסיר משחק זה מכיתה זו?</span>
             </DialogContentText>
           </DialogContent>
           <DialogActions>

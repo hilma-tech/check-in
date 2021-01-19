@@ -24,3 +24,28 @@
     position: absolute;
     right: 1.1vw;
 }
+
+@media only screen and (max-width: 500px) {
+    .popUpOkButton{
+        font-weight: bold;
+        font-size: 2.5vw;
+        width: 15vw;
+        height: 4vh;
+        background-color: #043163;
+        border-radius: 0.5vw;
+        border-color: #04306300;
+    
+    }
+    
+    .popUpCanselButton{
+        font-weight: bold;
+        font-size: 2.5vw;
+        color: #043163;
+        width: 15vw;
+        height: 4vh;
+        border-color: #043163;
+        border-radius: 0.5vw;
+        background-color: white;
+        right: 5.5vw;
+    }
+}
