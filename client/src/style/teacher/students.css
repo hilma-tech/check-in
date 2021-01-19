@@ -78,7 +78,8 @@
         color: #043163;
         font-weight: 200;
         text-align: left;
-        font-size: 1vw;
-        padding-left: 1vw;
+        font-size: 2vh;
+        padding-left: 9vw;
+        margin-bottom: 1vh;
     }
 }

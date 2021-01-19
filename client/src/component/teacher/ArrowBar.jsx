@@ -26,7 +26,7 @@ class ArrowBar extends React.Component {
                         className="smallBackArrow"
                         src="/icons/awesome-arrow-right.svg"
                     />
-                    {/* <p className="pageNameArrowBar">{this.pages[this.props.page]}</p> */}
+                    <p className="pageNameArrowBar">{this.pages[this.props.page]}</p>
                     <p className='gamesArrowBarText'>
                         בחר/י משחק כדי לערוך אותו,<br />
                     על מנת להוסיף משחק חדש לכיתה זו
@@ -41,7 +41,7 @@ class ArrowBar extends React.Component {
                         className="smallBackArrow"
                         src="/icons/awesome-arrow-right.svg"
                     />
-                    {/* <p className="pageNameArrowBar">{this.pages[this.props.page]}</p> */}
+                    <p className="pageNameArrowBar">{this.pages[this.props.page]}</p>
 
                     {/* <br /> */}
                     {/* <br /> */}
