@@ -28,7 +28,6 @@ class Students {
                 student.classes = student.classroomStudent.map((classroom)=>{return classroom.name})
                 return student
               })
-            console.log('newStudents   ',newStudents);
             this.listDataStudents = this.listDataStudents.concat(newStudents)
             this.haveMoreStudents = data.haveMoreStudents;
             this.successGettingStudents = true;

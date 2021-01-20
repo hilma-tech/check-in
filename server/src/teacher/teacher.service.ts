@@ -46,8 +46,6 @@ export class TeacherService extends UserService {
       where: [{ id: req.teacherId }],
       relations: ['school', 'classroomTeacher'],
     });
-
-    console.log('teacherInfo: ', teacherInfo);
     return teacherInfo;
   }
 }

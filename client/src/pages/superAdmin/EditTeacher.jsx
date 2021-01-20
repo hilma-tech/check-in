@@ -194,7 +194,6 @@ class EditTeacher extends React.Component {
                   בית ספר:
                     </label>
                 <p className='error' style={{ display: this.state.schoolNameError.toShow }}>{this.state.schoolNameError.mess}</p>
-                {console.log('this.state.schoolName   ', this.state.schoolName)}
                 <Select
                   className='selectStyle'
                   onChange={this.saveSchoolName}
