@@ -54,12 +54,11 @@
     padding-top: 10vh;
     background-color: rgba(0, 0, 0, 0);
     color: #043163;
-    width: 75vw;
+    width: 70vw;
     height: 17vh;
     /* height: 100vh; */
   }
   .officialTitle {
-    padding-right: 2vw;
     text-align: right;
   }
   .officialTitleClassName {
