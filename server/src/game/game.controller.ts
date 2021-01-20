@@ -21,6 +21,7 @@ export class GameController {
     private gameService: GameService
     ) {}
 
+  // IS FOR DANIEL
   @Get('/gameToFields')
   async getGameFields(@Req() req: any) {
     return await this.gameService.returnGames(req.skipON, req.numOfGames);

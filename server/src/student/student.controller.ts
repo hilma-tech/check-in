@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import {
     UserService,
     Role,
+    UseJwtAuth,
   } from '@hilma/auth-nest';
   import {Student} from "./student.entity"
 import { StudentService } from './student.service';
@@ -35,12 +36,13 @@ export class StudentController {
     this.userService.createUser<Student>(student);
   }
 
-
+  @UseJwtAuth('teacher')
   @Get('/getStudents')
   getStudents(@Req() skipON: any){
     return this.studentService.getStudents(skipON.query)
   }
-
+  
+  @UseJwtAuth('teacher')
   @Get('/getStudentsClassrooms')
   getStudentsClassrooms(@Req() req: any){
     return this.studentService.getStudentsClassrooms(req.query.studentId)

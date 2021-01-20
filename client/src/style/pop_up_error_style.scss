@@ -1,4 +1,7 @@
+@import "./general_style.scss";
+
 .popUpOkButton{
+    @include mouse(point);
     font-weight: bold;
     font-size: 1.5vw;
     color: white;
@@ -12,6 +15,7 @@
 }
 
 .popUpCanselButton{
+    @include mouse(point);
     font-weight: bold;
     font-size: 1.5vw;
     color: #043163;

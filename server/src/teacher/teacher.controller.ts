@@ -13,21 +13,16 @@ export class TeacherController {
     // this.register({username: 'teacher2@gmail.com', password: 'teacher1'})
   }
 
-  @UseJwtAuth(`$everyone`)
+  @UseJwtAuth('teacher')
   @Get('/getTeacherClasses')
   async getTeacherClasses(@RequestUser() userinfo) {
     return await this.teacherService.getTeacherClasses(userinfo.id);
   }
 
-  @UseJwtAuth(`$everyone`)
+  @UseJwtAuth('teacher')
   @Get('/getTeacherInfo')
   getTeacherInfo(@Req() req: any) {
     return this.teacherService.getTeacherInfo(req.query);
-  }
-
-  @Get('/getTeacherName')
-  getTeacherName(@Req() req: any) {
-    return this.teacherService.getTeacherName(req.query);
   }
 
   @Post('/register')
@@ -50,6 +45,7 @@ export class TeacherController {
     this.userService.createUser<Teacher>(user);
   }
 
+  @UseJwtAuth('superAdmin')
   @Get('/getTeachers')
   getStudents(@Req() skipON: any) {
     return this.teacherService.getTeacher(skipON.query);
