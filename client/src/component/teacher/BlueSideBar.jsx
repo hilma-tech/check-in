@@ -32,7 +32,7 @@ class BlueSideBar extends React.Component {
               <p id="teacherName">נורית כהן</p>
             </div>
             <div className="blueSideBarOptions">
-              <p className="sideBarOption" onClick={()=>{this.props.history.push("/teacher/classes")}}>כיתות</p>
+              <p className="sideBarOption" onClick={() => { this.props.history.push("/teacher/classes") }}>כיתות</p>
               {/* <p className="sideBarOption">ניהול</p> */}
             </div>
 
@@ -43,7 +43,7 @@ class BlueSideBar extends React.Component {
                 this.props.history.push("/signin");
               }}
             >
-              <img src="/icons/login.svg" alt="logout"/>
+              <img src="/icons/login.svg" alt="logout" />
               <button>התנתק</button>
             </div>
           </div>
@@ -55,7 +55,15 @@ class BlueSideBar extends React.Component {
               <img src="/icons/CheckIn.svg" id="checkInIcon" alt="checkin" />
             </div>
             <div className="blueSideBarOptions">
-              <p className="sideBarOption"  onClick={()=>{this.props.history.push("/teacher/classes")}}>כיתות</p>
+              <p className="sideBarOption" onClick={() => { this.props.history.push("/teacher/classes") }}>כיתות</p>
+              {
+                this.props.location.pathname !== "/teacher/classes" ?
+                  <>
+                    <p className="sideBarClassOption" onClick={() => { this.props.history.push("/teacher/classes/games") }}>משחקים</p>
+                    <p className="sideBarClassOption" onClick={() => { this.props.history.push("/teacher/classes/students") }}>תלמידים</p>
+                  </>
+                  : <></>
+              }
               {/* <p className="sideBarOption">ניהול</p> */}
             </div>
 
@@ -66,7 +74,7 @@ class BlueSideBar extends React.Component {
                 this.props.history.push("/signin");
               }}
             >
-              <img src="/icons/login.svg" alt="logout"/>
+              <img src="/icons/login.svg" alt="logout" />
               <button>התנתק</button>
             </div>
           </div>
