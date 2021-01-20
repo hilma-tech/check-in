@@ -68,7 +68,7 @@ class Classes extends Component {
                 }}
                 className="circleCont"
                 style={{ borderColor: this.colors[index] }}
-                key={index}
+                key={classObj.id}
               >
                 <h3 className="className" key={index} style={{ color: this.colors[index] }}>
                   {classObj.name}
