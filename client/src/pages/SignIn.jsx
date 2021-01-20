@@ -47,9 +47,16 @@ class SignIn extends Component {
           username,
           password,
         });
+        console.log('response: ', response);
         if(response.success){
-          this.props.history.push("/superAdmin/games");
-          window.location.pathname = "/superAdmin/games"
+          if(response.user.type === "Teacher"){
+            this.props.name.setId(response.user.id)
+            this.props.history.push("/teacher/classes");
+            window.location.pathname = "/teacher/classes"
+          } else{
+            this.props.history.push("/superAdmin/games");
+            window.location.pathname = "/superAdmin/games"
+          }
         } else {
           this.props.errorMsg.setErrorMsg('שם המשתמש והסיסמא אינם תואמים.');
         }

@@ -25,6 +25,11 @@ export class TeacherController {
     return this.teacherService.getTeacherInfo(req.query);
   }
 
+  @Get('/getTeacherName')
+  getTeacherName(@Req() req: any) {
+    return this.teacherService.getTeacherName(req.query);
+  }
+
   @Post('/register')
   register(@Body() req) {
     let username = req.username;
