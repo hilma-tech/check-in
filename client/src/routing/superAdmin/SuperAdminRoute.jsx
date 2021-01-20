@@ -13,6 +13,7 @@ import { PrivateRoute } from "@hilma/auth";
 import ErrorPage from "../../pages/404Page.jsx";
 import "../../style/superAdmin/disp.scss";
 import EditTeacher from "../../pages/superAdmin/EditTeacher.jsx";
+import EditStudent from "../../pages/superAdmin/EditStudent.jsx";
 
 class SuperAdminRoute extends React.Component {
   render() {
@@ -112,14 +113,13 @@ class SuperAdminRoute extends React.Component {
               redirectComponent={SignIn}
               component={EditTeacher}
             />
-          {/* <PrivateRoute
+          <PrivateRoute
               path="/superAdmin/studentsEdit"
               exact
               componentName="SAdminEditStudents"
               redirectComponent={SignIn}
-            >
-              <h4>student edit</h4>
-            </PrivateRoute> */}
+              component={EditStudent}
+            />
           <Route path="/superAdmin/:smth" component={ErrorPage} />
         </Switch>
       </>

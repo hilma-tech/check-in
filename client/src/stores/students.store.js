@@ -8,13 +8,16 @@ class Students {
     haveMoreStudents = true
     successGettingStudents = true;
     startGetStudents = false;
+    chosenStudent = {}
     constructor() {
         makeObservable(this, {
             listDataStudents: observable,
             haveMoreStudents: observable,
             successGettingStudents: observable,
             startGetStudents: observable,
+            chosenStudent: observable,
             getStudents: action,
+            getChosenStudet: action,
         })
     }
 
@@ -36,6 +39,13 @@ class Students {
             this.successGettingStudents = false
             this.startGetStudents = false;
         }
+    }
+
+    getChosenStudet = (studentId) => {
+        this.chosenStudent = (this.listDataStudents.filter((student)=>{
+            return student.id === studentId
+        }))[0]
+        console.log('this.chosenStudent: ', this.chosenStudent);
     }
 }
 
