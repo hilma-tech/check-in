@@ -1,48 +1,48 @@
 @import "../general_style.scss";
 
-.blueSideBar{
+.blueSideBar {
     background-color: #043163;
     height: 100vh;
     width: 80vw;
     overflow-x: hidden;
 }
 
-#teacherName{
+#teacherName {
     color: white;
     opacity: 0.5;
     font-size: 5vw;
     margin: 0;
 }
 
-.blueSideBarUserName{
+.blueSideBarUserName {
     display: flex;
     /* margin-top: 3vh; */
     margin-right: 5vw;
     align-items: center;
 }
 
-#closeIcon{
+#closeIcon {
     width: 6vw;
     padding: 3vw;
 }
 
-.blueSideBarOptions{
+.blueSideBarOptions {
     width: 70vw;
     margin-right: 5vw;
 }
 
-.sideBarOption{
+.sideBarOption {
     @include mouse(point);
     color: white;
     padding: 2vh;
     margin: 0;
 }
 
-.sideBarOption:first-child{
+.sideBarOption:first-child {
     border-bottom: 1px solid rgba($color: #ffffff, $alpha: 0.2);
 }
 
-.blueSideBarLogOut{
+.blueSideBarLogOut {
     display: flex;
     position: fixed;
     top: 90vh;
@@ -50,7 +50,7 @@
     @include mouse(point);
 }
 
-.blueSideBarLogOut button{
+.blueSideBarLogOut button {
     font-size: 5vw;
     background-color: #043163;
     color: white;
@@ -59,67 +59,69 @@
     @include mouse(point);
 }
 
-.blueSideBarLogOut img{
+.blueSideBarLogOut img {
     width: 5vw;
     margin-left: 1.5vw;
 }
 
-.webBlueSideBar{
+.webBlueSideBar {
     display: none;
 }
 
 @media only screen and (min-width: 500px) {
-    .drawer{
+    .drawer {
         display: none;
     }
-    .webBlueSideBar{
+
+    .webBlueSideBar {
         position: fixed;
         right: 0;
         display: block;
     }
-    .blueSideBar{
+
+    .blueSideBar {
         background-color: #043163;
         height: 100vh;
         width: 25vw;
     }
-    
-    #teacherName{
+
+    #teacherName {
         color: white;
         opacity: 0.5;
         font-size: 1.5vw;
         margin: 0;
     }
 
-    #checkInIcon{
+    #checkInIcon {
         width: 10vw;
         height: 5vw;
     }
-    
-    .blueSideBarUserName{
+
+    .blueSideBarUserName {
         display: flex;
         margin-right: 2vw;
         margin-left: 2vw;
         justify-content: space-between;
     }
-    
-    .blueSideBarOptions{
+
+    .blueSideBarOptions {
         width: 20vw;
         margin-right: 2.5vw;
     }
-    
-    .sideBarOption{
+
+    .sideBarOption {
         padding-bottom: 2vh;
         padding-top: 2vh;
         text-align: right;
     }
 
-    .blueSideBarLogOut{
+    .blueSideBarLogOut {
         top: 85vh;
         right: 2.5vw;
         @include mouse(point);
     }
-    
-    .blueSideBarLogOut button{
+
+    .blueSideBarLogOut button {
         font-size: 1.5vw;
         background-color: #043163;
         color: white;
@@ -127,9 +129,18 @@
         box-shadow: none;
         @include mouse(point);
     }
-    
-    .blueSideBarLogOut img{
+
+    .blueSideBarLogOut img {
         width: 1vw;
         margin-left: 0.25vw;
+    }
+
+    .sideBarClassOption {
+        padding: 0;
+        text-align: right;
+        @include mouse(point);
+        color: white;
+        margin-bottom: 0;
+        margin-right: 2vw;
     }
 }
