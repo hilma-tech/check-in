@@ -53,7 +53,6 @@ class Games extends React.Component {
   }
 
   removeGameFromClass = () => {
-    console.log('this.gameIndex: ', this.gameIndex);
     this.changePopUpstate()
     this.props.games.removeGameFromClass(this.gameIndex, this.props.chosenClass.classId, this.gameId)
   }

@@ -8,6 +8,7 @@ import BlueSideBar from "../../component/teacher/BlueSideBar";
 import { chosenClassContext } from "../../stores/chosenClass.store";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
+import { errorMsgContext } from "../../stores/error.store";
 const axios = require("axios").default;
 
 class Classes extends Component {
@@ -36,8 +37,14 @@ class Classes extends Component {
   }
 
   componentDidMount = async () => {
-    let teacherClasses = await axios.get("/api/teacher/getTeacherClasses");
-    this.setState({ classes: teacherClasses.data });
+    try{
+      let teacherClasses = await axios.get("/api/teacher/getTeacherClasses");
+      this.setState({ classes: teacherClasses.data });
+    } catch(err){
+      this.props.errorMsg.setErrorMsg(
+        "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
+      );
+    }
   };
 
   moveToClass = (classId, classroomName) => {
@@ -61,7 +68,7 @@ class Classes extends Component {
                 }}
                 className="circleCont"
                 style={{ borderColor: this.colors[index] }}
-                key={index}
+                key={classObj.id}
               >
                 <h3 className="className" key={index} style={{ color: this.colors[index] }}>
                   {classObj.name}
@@ -77,6 +84,7 @@ class Classes extends Component {
 
 const mapContextToProps = {
   chosenClass: chosenClassContext,
+  errorMsg: errorMsgContext,
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(Classes)));

@@ -11,8 +11,8 @@ class RowData extends React.Component {
   }
 
   //When we press on row it's passed to the edit page of the item
-  onClickEdit = async(id) => {
-    if(!this.props.location.pathname.includes('student') && !this.props.location.pathname.includes('school') ){
+  onClickEdit = async (id) => {
+    if (!this.props.location.pathname.includes('school')) {
       await this.props.setClickedRow(id)
     }
     //for now
@@ -21,7 +21,7 @@ class RowData extends React.Component {
 
   render() {
     return (
-      <div onClick={()=>{this.onClickEdit(this.props.data.id)}} className="rowData">
+      <div onClick={() => { this.onClickEdit(this.props.data.id) }} className="rowData">
         <div className="Details">
           {
             // Order the data (the keys are the categories).
@@ -33,21 +33,18 @@ class RowData extends React.Component {
                   {this.props.data[this.props.enCategor[categor]]}
                 </p>
               ) : (
-                <div key={index} className={"item" + index + " classes"}>
-                  {" "}
-                  {this.props.data[this.props.enCategor[categor]] ? this.props.data[this.props.enCategor[categor]].map((val, categorIndex) => {
-                    return <p key={categorIndex}>{val}</p>;
-                  }) : <p></p>}{" "}
-                </div>
-              );
+                  <div key={index} className={"item" + index + " classes"}>
+                    {" "}
+                    {this.props.data[this.props.enCategor[categor]] ? this.props.data[this.props.enCategor[categor]].map((val, categorIndex) => {
+                      return <p key={categorIndex}>{val}</p>;
+                    }) : <p></p>}{" "}
+                  </div>
+                );
             })
           }
         </div>
         <p>
-          {
-            !this.props.location.pathname.includes('student') ?
-            <Icon icon={iosArrowBack} /> : <></>
-            }
+          <Icon icon={iosArrowBack} />
         </p>
       </div>
     );

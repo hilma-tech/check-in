@@ -26,7 +26,6 @@ class Students extends Component {
   };
 
   moveToStudent = async (index) => {
-    // console.log("target",props.target.id);
     await this.props.chosenClass.setCurrStudent(index);
     this.props.history.push(this.props.location.pathname + "/studentInfo");
   };

@@ -44,7 +44,6 @@ class Teachers {
         try{
             const { data } = await axios.get("/api/teacher/getTeacherInfo",{ params:{ teacherId: teacherId }});
             this.chosenTeacher = data
-            console.log('chosenTeacher: ', this.chosenTeacher);
         }catch (error){
             this.successGettingTeachers = false
         }

@@ -8,7 +8,7 @@ import Classes from '../../pages/teacher/Classes.jsx'
 class TeacherRoute extends React.Component {
   render() {
     return (
-          <div style={{backgroundColor: '#F2F7FC', height: '100vh'}}>
+          <div style={{backgroundColor: '#F2F7FC', height: '100vh', overflowY: 'hidden'}}>
         <Switch>
            <PrivateRoute
             path='/teacher/classes'

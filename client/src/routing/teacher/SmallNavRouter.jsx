@@ -9,7 +9,6 @@ import StudentDetails from '../../pages/teacher/StudentDetails.jsx'
 
 class SmallNavRouter extends Component {
   render() {
-    console.log(window.location.pathname);
     return (
       <>
         <PrivateRoute

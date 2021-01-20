@@ -8,6 +8,7 @@ class ChosenClass {
     students =[]
     currStudentIndex = 0
     studentClassrooms = []
+    successGetInfo = true
     constructor() {
         makeObservable(this, {
             classId: observable,
@@ -19,31 +20,38 @@ class ChosenClass {
             setCurrStudent:action,
             getCurrStudent:action,
             studentClassrooms: observable,
+            successGetInfo: observable,
         })
     }
 
     setCurrStudent = async (studentIndex) => {
-        console.log(studentIndex);
-        this.currStudentIndex = studentIndex
-        let {data} = await axios.get("/api/student/getStudentsClassrooms", {params: {studentId: this.students[studentIndex].id}})
-        let classId = this.classId
-        this.studentClassrooms = data.filter((classroom)=>{
-            return classroom.id != classId
-        })
-        console.log('studentClassrooms: ', this.studentClassrooms);
+        try{    
+            this.currStudentIndex = studentIndex
+            let {data} = await axios.get("/api/student/getStudentsClassrooms", {params: {studentId: this.students[studentIndex].id}})
+            let classId = this.classId
+            this.studentClassrooms = data.filter((classroom)=>{
+                return classroom.id != classId
+            })
+          } catch(err){
+            this.successGetInfo = false
+          }
+
     }
 
     getCurrStudent = () => {
-        console.log(this.students[this.currStudentIndex]);
         return this.students[this.currStudentIndex]
     }
 
     callStudents = async (classnum) => {
-        let studentsData = await axios.get("/api/classroom/getClassStudents", {
-          params: { classId: classnum },
-        });
-        this.students = studentsData.data;
-        console.log("studentsData: ", studentsData.data);
+        try{    
+            let studentsData = await axios.get("/api/classroom/getClassStudents", {
+              params: { classId: classnum },
+            });
+            this.students = studentsData.data;
+            console.log("studentsData: ", studentsData.data);
+        } catch(err){
+         this.successGetInfo = false
+        }
       };
 
     setClassId=(id, classroomName)=>{

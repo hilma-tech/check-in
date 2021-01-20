@@ -28,9 +28,7 @@ export class ClassroomService {
       select: ["id"],
       relations: ['students'],
       where: { id: classId },
-    });
-    console.log(classroom);
-    
+    });    
     return classroom[0].students;
   }
 
