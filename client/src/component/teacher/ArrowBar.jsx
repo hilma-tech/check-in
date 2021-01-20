@@ -14,7 +14,7 @@ class ArrowBar extends React.Component {
         }
     }
     backToGames = () => {
-        this.props.history.push("teacher/classes/games")
+        this.props.history.push("/teacher/classes/games")
       };
 
     render() {
@@ -60,14 +60,14 @@ class ArrowBar extends React.Component {
         //         </div>);
         }else if (this.props.page === 'editGame') {
             return (
-                <div className='studentsArrowBar'>
+                <div className='studentsInfoArrowBar'>
                     <img
                         alt="small back arrow"
                         className="smallBackArrow"
                         src="/icons/awesome-arrow-right.svg"
                         onClick={this.backToGames}
                     />
-                    <p className="pageNameArrowBar">{this.pages[this.props.page]}</p>
+                    <p className="pageNameArrowBarStudentInfo">{this.pages[this.props.page]}</p>
                 </div>); } else if(this.props.page === 'studentInfo'){
                    return ( <div className='studentsInfoArrowBar'>
                     <img
