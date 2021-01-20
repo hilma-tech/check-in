@@ -279,9 +279,9 @@ class EditGame extends Component {
                 defaultValue={this.state.gameRequirements}
                 readOnly={true}
               />
-              <label className="labelFields">תמונה:</label>
+              {/* <label className="labelFields">תמונה:</label>
               <div className="borderCameraIcon marginTop">
-                <label className="borderCameraIconLabel">
+                <label className="borderCameraIconLabel"> */}
                   {/* <FileInput
                   id="image"
                   className="hiddenInput"
@@ -289,7 +289,7 @@ class EditGame extends Component {
                   onChange={this.updateBasicInfo}
                   filesUploader={this.imageUploader}
                 /> */}
-                  <img
+                  {/* <img
                     alt="photograph icon"
                     className={
                       typeof this.state.image === "string"
@@ -297,9 +297,9 @@ class EditGame extends Component {
                         : "cameraIcon"
                     }
                     src={this.state.image || "/icons/camera-icon.svg"}
-                  />
-                </label>
-              </div>
+                  /> */}
+                {/* </label>
+              </div> */}
 
               <label className="labelFields">שדות:</label>
               {/* game fields */}

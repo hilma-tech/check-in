@@ -7,15 +7,12 @@
     margin-bottom: 1vh;
 }
 
-// #fieldType {
-//     @include mouse(point);
-// }
 
 .gameFieldSelection {
     display: flex;   
     align-items: flex-start;
     width: 85vw;
-    @include mouse(point);
+    
 }
 
 .fieldSelectionInput{
@@ -35,6 +32,7 @@
 
 
 .cameraFieldBorder{
+    @include mouse(point);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,3 +48,7 @@
     margin-left: 0.75vw;
     margin-top: 12px;
 }
+
+// #fieldType {
+//     @include mouse(point);
+// }
