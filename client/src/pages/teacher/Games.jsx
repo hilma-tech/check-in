@@ -27,6 +27,7 @@ class Games extends React.Component {
       gamesList: [],
       openPopUp: false,
     };
+    this.gameId = 0
     this.gameIndex= 0
   }
 
@@ -53,12 +54,13 @@ class Games extends React.Component {
 
   removeGameFromClass = () => {
     this.changePopUpstate()
-    this.props.games.removeGameFromClass(this.gameIndex, this.props.chosenClass.classId)
+    this.props.games.removeGameFromClass(this.gameIndex, this.props.chosenClass.classId, this.gameId)
   }
 
-  openPopUpClick = (index) => {
+  openPopUpClick = (index, id) => {
     this.changePopUpstate()
     this.gameIndex = index
+    this.gameId = id
   }
 
   changePopUpstate = () => {
@@ -113,7 +115,7 @@ class Games extends React.Component {
                   <ClassGames
                     key={i}
                     index={i}
-                    changeGameStatus={() => { this.openPopUpClick(i) }}
+                    changeGameStatus={() => { this.openPopUpClick(i, gameData.id) }}
                     chosen={true}
                     name={gameData.game_name}
                     image={gameData.image}

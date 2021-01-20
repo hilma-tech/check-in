@@ -51,17 +51,21 @@ export class ClassroomService {
   }
 
   async removeGameRelation(@Body() req: any) {
+    console.log("req",req);
+    
     let classroomModel = new Classroom();
     classroomModel.games = await this.gameRepository.find({
       where: { id: req.gameId },
     });
     classroomModel.id = req.classId;
-    let ans = await this.classroomRepository.find({
+    let ans = await this.classroomRepository.findOne({
       relations: ['games'],
       where: [{ id: req.classId }],
     });
-    ans[0].games.splice(req.id, 1);
-    let newRemovedGame = await this.classroomRepository.save(ans[0]);
+    ans.games = ans.games.filter((game)=>{
+      return (game.id !== req.gameId)
+    });
+    let newRemovedGame = await this.classroomRepository.save(ans);
     return { newRemovedGame: newRemovedGame };
   }
 }
