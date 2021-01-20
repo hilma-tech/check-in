@@ -9,6 +9,7 @@ import { chosenClassContext } from "../../stores/chosenClass.store";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { errorMsgContext } from "../../stores/error.store";
+import { nameContext } from "../../stores/name.store";
 const axios = require("axios").default;
 
 class Classes extends Component {
@@ -33,13 +34,14 @@ class Classes extends Component {
       "#9c001b",
       "#411045",
     ];
-    this.state = { classes: [] };
+    this.state = { classes: [],
+    name:"" };
   }
 
   componentDidMount = async () => {
     try{
-      let teacherClasses = await axios.get("/api/teacher/getTeacherClasses");
-      this.setState({ classes: teacherClasses.data });
+      let {data} = await axios.get("/api/teacher/getTeacherClasses", { id: this.props.name.id });
+      this.setState({ classes: data.currTeacherClasses , name: data.name});
     } catch(err){
       this.props.errorMsg.setErrorMsg(
         "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
@@ -58,7 +60,7 @@ class Classes extends Component {
         <div className="smallSticky">
           <SmallMenuBar />
         </div>
-        <PageTitle className="officialTitle" title="שלום המורה נורית!" />
+        <PageTitle className="officialTitle" title={"שלום המורה " + this.state.name + "!"} />
         <div className="griddler">
           {this.state.classes.map((classObj, index) => {
             return (
@@ -85,6 +87,7 @@ class Classes extends Component {
 const mapContextToProps = {
   chosenClass: chosenClassContext,
   errorMsg: errorMsgContext,
+  name: nameContext,
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(Classes)));

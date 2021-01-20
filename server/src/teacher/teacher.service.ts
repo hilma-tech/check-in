@@ -21,13 +21,13 @@ export class TeacherService extends UserService {
 
   async getTeacherClasses(@Body() userinfo: any) {
     //use teacherId to find all classes relevant
-    let currTeacher = await this.userRepository.find({
+
+    let currTeacher = await this.userRepository.findOne({
       relations: ['classroomTeacher'],
       where: [{ id: userinfo }],
     });
-    let currTeacherClasses = currTeacher[0].classroomTeacher;
-
-    return currTeacherClasses;
+    // let currTeacherClasses = currTeacher[0].classroomTeacher;
+    return {currTeacherClasses: currTeacher.classroomTeacher, name: currTeacher.first_name};
   }
   async getTeacher(@Req() skipON: GetTeacherSkip) {
     let numTeachers = await this.userRepository.count();
@@ -40,10 +40,19 @@ export class TeacherService extends UserService {
     });
     return { teachersInfo: teachers, haveMoreTeachers: haveMoreTeachers };
   }
+
   async getTeacherInfo(@Req() req: any) {
     let teacherInfo = await this.userRepository.findOne({
       where: [{ id: req.teacherId }],
       relations: ['school', 'classroomTeacher'],
+    });
+    return teacherInfo;
+  }
+
+  async getTeacherName(@Req() req: any) {
+    let teacherInfo = await this.userRepository.findOne({
+      where: [{ id: req.teacherId }],
+      select: ["first_name"]
     });
     return teacherInfo;
   }
