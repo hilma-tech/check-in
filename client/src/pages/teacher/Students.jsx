@@ -12,13 +12,7 @@ import { chosenClassContext } from "../../stores/chosenClass.store";
 class Students extends Component {
   constructor() {
     super();
-    this.students = [
-      { name: "גלעד כהן", userName: "gilad10", password: "12345678" },
-      { name: "יונה אהרון", userName: "gilad10", password: "12345678" },
-      { name: "נוה לוי", userName: "gilad10", password: "12345678" },
-      { name: "נטע שלם", userName: "gilad10", password: "12345678" },
-      { name: "יונה אהרון", userName: "gilad10", password: "12345678" },
-    ];
+    this.students = [];
   }
 
   componentDidMount = () => {
