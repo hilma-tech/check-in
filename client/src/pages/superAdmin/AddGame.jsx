@@ -37,7 +37,7 @@ class AddGame extends Component {
       gameName: "",
       gameDescription: "",
       gameRequirements: "",
-      image: { id: 0, value: false },
+      image: { id: 0, value: "https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg" },
       savingInfo: false
     };
     this.imageUploader = props.filesUploader;
@@ -372,14 +372,14 @@ class AddGame extends Component {
                 id="gameRequirements"
                 onBlur={this.updateBasicInfo}
               />
-              <label className="labelFields">תמונה:</label>
+              {/* <label className="labelFields">תמונה:</label>
               <p
                 className="error"
                 style={{ display: this.state.imageErrorMessages.toShow }}
               >
                 {this.state.imageErrorMessages.mess}
-              </p>
-              <div className="borderCameraIcon marginTop">
+              </p> */}
+              {/* <div className="borderCameraIcon marginTop">
                 <label className="borderCameraIconLabel">
                   <FileInput
                     id="image"
@@ -389,8 +389,8 @@ class AddGame extends Component {
                     filesUploader={this.imageUploader}
                   />
                   <img
-                    alt="photograph icon"
-                    className={
+                    alt="photograph icon" */}
+                    {/* className={
                       typeof this.state.image.value === "string"
                         ? "chosenImg"
                         : "cameraIcon"
@@ -398,7 +398,7 @@ class AddGame extends Component {
                     src={this.state.image.value || "/icons/camera-icon.svg"}
                   />
                 </label>
-              </div>
+              </div> */}
               <label className="labelFields">שדות:</label>
               {/* game fields */}
               {this.state.fieldsData.map((fieldObj, index) => {

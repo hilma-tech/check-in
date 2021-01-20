@@ -1,3 +1,5 @@
+@import "./general_style.scss";
+
 .centeredPage {
   margin: 0vh;
   position: absolute;
@@ -47,6 +49,7 @@
 }
 
 .signInButton {
+  @include mouse(point);
   background-color: #043163;
   color: white;
   margin: 0vh;

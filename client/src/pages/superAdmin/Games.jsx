@@ -123,7 +123,7 @@ class Games extends Component {
                         />
                       </Fade>
                       <div key={image.id} id="holdImg">
-                        <img className="gameImg" alt="" src={image.image} />
+                        <img className="gameImg" alt="" src="https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg" />
                       </div>
                       <h2 key={image.id} className="gameTitleBackground"></h2>
                       <h1 key={image.id} className="gameTitle">
