@@ -49,7 +49,7 @@ class Classes extends Component {
 
   moveToClass = (classId, classroomName) => {
     this.props.chosenClass.setClassId(classId, classroomName);
-    this.props.history.push("/teacher/classes/students");
+    this.props.history.push("/teacher/classes/games");
   };
 
   render() {
