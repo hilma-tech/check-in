@@ -40,7 +40,7 @@ class AddGame extends Component {
       gameName: "",
       gameDescription: "",
       gameRequirements: "",
-      image: { id: 0, value: false },
+      image: { id: 0, value: "https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png" },
       savingInfo: false
     };
     this.imageUploader = props.filesUploader;
@@ -372,23 +372,23 @@ class AddGame extends Component {
                 id="gameRequirements"
                 onBlur={this.updateBasicInfo}
               />
-              <label className="labelFields">תמונה:</label>
-              <p
+              {/* <label className="labelFields">תמונה:</label> */}
+              {/* <p
                 className="error"
                 style={{ display: this.state.imageErrorMessages.toShow }}
               >
                 {this.state.imageErrorMessages.mess}
-              </p>
-              <div className="borderCameraIcon marginTop">
-                <label className="borderCameraIconLabel">
-                  <FileInput
+              </p> */}
+              {/* <div className="borderCameraIcon marginTop">
+                <label className="borderCameraIconLabel"> */}
+                  {/* <FileInput
                     id="image"
                     className="hiddenInput"
                     type="image"
                     onChange={this.updateImage}
                     filesUploader={this.imageUploader}
-                  />
-                  <img
+                  /> */}
+                  {/* <img
                     alt="photograph icon"
                     className={
                       typeof this.state.image.value === "string"
@@ -398,7 +398,7 @@ class AddGame extends Component {
                     src={this.state.image.value || "/icons/camera-icon.svg"}
                   />
                 </label>
-              </div>
+              </div> */}
               <label className="labelFields">שדות:</label>
               {/* game fields */}
               {this.state.fieldsData.map((fieldObj, index) => {
