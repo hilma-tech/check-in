@@ -15,7 +15,9 @@ export class ClassroomService {
   ) {}
 
   async getClassroomGames(req) {
-    let allGames = await this.gameRepository.find();
+    let allGames = await this.gameRepository.find(
+      {where: [{suspended: 0}]}
+    );
     let currClassGames = await this.classroomRepository.findOne({
       relations: ['games'],
       where: [{ id: req.classId }],

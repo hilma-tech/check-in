@@ -13,6 +13,11 @@ class ArrowBar extends React.Component {
             studentInfo: 'כרטיס תלמיד'
         }
     }
+
+    moveToClasses = () => {
+        this.props.history.push("/teacher/classes")
+    }
+
     backToGames = () => {
         this.props.history.push("/teacher/classes/games")
       };
@@ -25,6 +30,7 @@ class ArrowBar extends React.Component {
                         alt="small back arrow"
                         className="smallBackArrow"
                         src="/icons/awesome-arrow-right.svg"
+                        onClick={this.moveToClasses}
                     />
                     <p className="pageNameArrowBar">{this.pages[this.props.page]}</p>
                     <p className='gamesArrowBarText'>
@@ -48,16 +54,6 @@ class ArrowBar extends React.Component {
                     {/* search bar */}
                     <h4 className="linkToTeachers">לרשימת המורים של כיתה זו</h4>
                 </div>);
-        // } else if (this.props.page === 'permission') {
-            //     return (
-                //         <div className='permissionArrowBar'>
-                //             <img
-                //             alt="small back arrow"
-                //                 className="smallBackArrow"
-                //                 src="/icons/awesome-arrow-right.svg"
-                //             />
-                // <p className="pageNameArrowBar">{this.pages[this.props.page]}</p>
-        //         </div>);
         }else if (this.props.page === 'editGame') {
             return (
                 <div className='studentsInfoArrowBar'>

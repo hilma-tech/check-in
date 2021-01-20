@@ -6,7 +6,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import { errorMsgContext } from "../stores/error.store";
 import { observer } from "mobx-react"
 import { withContext } from '@hilma/tools';
-import '../style/pop_up_error_style.css'
+import '../style/pop_up_error_style.scss'
 
 class PopUpError extends React.Component {
     constructor(props) {

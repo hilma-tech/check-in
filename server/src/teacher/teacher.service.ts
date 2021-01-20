@@ -21,7 +21,6 @@ export class TeacherService extends UserService {
 
   async getTeacherClasses(@Body() userinfo: any) {
     //use teacherId to find all classes relevant
-
     let currTeacher = await this.userRepository.find({
       relations: ['classroomTeacher'],
       where: [{ id: userinfo }],
