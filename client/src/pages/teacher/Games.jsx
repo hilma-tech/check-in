@@ -13,11 +13,10 @@ import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { chosenClassContext } from "../../stores/chosenClass.store.js";
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
 
 class Games extends React.Component {
   constructor() {
@@ -27,8 +26,8 @@ class Games extends React.Component {
       gamesList: [],
       openPopUp: false,
     };
-    this.gameId = 0
-    this.gameIndex= 0
+    this.gameId = 0;
+    this.gameIndex = 0;
   }
 
   componentDidMount() {
@@ -37,53 +36,84 @@ class Games extends React.Component {
     }
   }
 
-
   getClassGames = async () => {
-    await this.props.games.getClassroomGames(this.props.chosenClass.classId)
+    await this.props.games.getClassroomGames(this.props.chosenClass.classId);
     if (!this.props.games.successGettingGames) {
       this.props.errorMsg.setErrorMsg(
         "הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת."
       );
     }
-  }
+  };
+
+  limitedAddition = async (index) => {
+    console.log(index);
+    if (this.props.games.chosenGameList.length < 6) {
+      // console.log("smaller than six");
+      return this.addGameToClass(index);
+    } else {
+      // console.log("equal to six");
+      return null;
+    }
+  };
+
+  limitedRemoval = async (index, id) => {
+    if (this.props.games.chosenGameList.length > 2) {
+      console.log("bigger than two");
+      return this.openPopUpClick(index, id);
+    } else {
+      console.log("equal to two");
+      return null;
+    }
+  };
 
   addGameToClass = async (index) => {
-    await this.props.chosenGame.setgameId(this.props.games.gamesList[index].id, index);
-    this.props.history.push('/teacher/classes/editGame')
-  }
+    
+    await this.props.chosenGame.setgameId(
+      this.props.games.gamesList[index].id,
+      index
+    );
+    this.props.history.push("/teacher/classes/editGame");
+  };
 
   removeGameFromClass = () => {
-    this.changePopUpstate()
-    this.props.games.removeGameFromClass(this.gameIndex, this.props.chosenClass.classId, this.gameId)
-  }
+    this.changePopUpstate();
+    this.props.games.removeGameFromClass(
+      this.gameIndex,
+      this.props.chosenClass.classId,
+      this.gameId
+    );
+  };
 
   openPopUpClick = (index, id) => {
-    this.changePopUpstate()
-    this.gameIndex = index
-    this.gameId = id
-  }
+    this.changePopUpstate();
+    this.gameIndex = index;
+    this.gameId = id;
+  };
 
   changePopUpstate = () => {
     this.setState((prevState) => {
-      return { openPopUp: !prevState.openPopUp }
-    })
-  }
+      return { openPopUp: !prevState.openPopUp };
+    });
+  };
 
   render() {
     return (
-      <div style={{ overflowX: 'hidden', width: '100vw' }}>
+      <div style={{ overflowX: "hidden", width: "100vw" }}>
         <SmallMenuBar />
         <SmallNavBar active="games" />
         <PageTitle title={"כיתה " + this.props.chosenClass.classroomName} />
-        <ArrowBar page="games" chosenClass={this.props.chosenClass.classroomName} />
+        <ArrowBar
+          page="games"
+          chosenClass={this.props.chosenClass.classroomName}
+        />
         <Dialog
           PaperProps={{
             style: {
-              backgroundColor: 'white',
-              boxShadow: '0px 3px 6px #00000029',
-              border: '1px solid #707070',
-              padding: '5px',
-              width: '75vw'
+              backgroundColor: "white",
+              boxShadow: "0px 3px 6px #00000029",
+              border: "1px solid #707070",
+              padding: "5px",
+              width: "75vw",
             },
           }}
           open={this.state.openPopUp}
@@ -91,23 +121,30 @@ class Games extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              <span className='popUpQuesion'>האם הנך בטוח שברצונך להסיר משחק זה מכיתה זו?</span>
+              <span className="popUpQuesion">
+                האם הנך בטוח שברצונך להסיר משחק זה מכיתה זו?
+              </span>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <button className='popUpCanselButton' color="primary" onClick={this.changePopUpstate}>
+            <button
+              className="popUpCanselButton"
+              color="primary"
+              onClick={this.changePopUpstate}
+            >
               ביטול
-          </button>
-            <button className='popUpOkButton' onClick={this.removeGameFromClass}>
+            </button>
+            <button
+              className="popUpOkButton"
+              onClick={this.removeGameFromClass}
+            >
               אישור
-          </button>
-
+            </button>
           </DialogActions>
         </Dialog>
-        <div className="smallAlign" id='smallAlignClassGames'>
+        <div className="smallAlign" id="smallAlignClassGames">
           <div className="chosenGamesForClass">
             <div className="scrollChosenGames">
               {this.props.games.chosenGameList.map((gameData, i) => {
@@ -115,7 +152,9 @@ class Games extends React.Component {
                   <ClassGames
                     key={i}
                     index={i}
-                    changeGameStatus={() => { this.openPopUpClick(i, gameData.id) }}
+                    changeGameStatus={() => {
+                      this.limitedRemoval(i, gameData.id);
+                    }}
                     chosen={true}
                     name={gameData.game_name}
                     image={gameData.image}
@@ -130,7 +169,7 @@ class Games extends React.Component {
             {this.props.games.gamesList.map((image, index) => {
               return (
                 <ClassGames
-                  changeGameStatus={this.addGameToClass}
+                  changeGameStatus={this.limitedAddition}
                   chosen={false}
                   name={image.game_name}
                   image={image.image}
