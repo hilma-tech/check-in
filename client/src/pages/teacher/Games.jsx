@@ -33,12 +33,12 @@ class Games extends React.Component {
 
   componentDidMount() {
     if (this.state.gamesList.length === 0) {
-      this.getGames();
+      this.getClassGames();
     }
   }
 
 
-  getGames = async () => {
+  getClassGames = async () => {
     await this.props.games.getClassroomGames(this.props.chosenClass.classId)
     if (!this.props.games.successGettingGames) {
       this.props.errorMsg.setErrorMsg(
