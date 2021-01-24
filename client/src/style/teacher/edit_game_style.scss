@@ -193,3 +193,17 @@
   object-fit: cover;
   border-radius: 2vw;
 }
+
+
+#editGameForClass{
+  top: 27vh;
+  overflow-y: scroll;
+}
+
+@media only screen and (min-width: 500px) {
+  #editGameForClass{
+    top: 19vh;
+    height: 75vh;
+    overflow-y: scroll;
+  }
+}

@@ -3,11 +3,12 @@ import "../../style/teacher/page_title_style.css";
 
 class PageTitle extends Component {
     render() {
+        let displayText =  this.props.titleTwo !== undefined ? (this.props.titleTwo.includes('כיתה') ? "clearText" : "") : ""
         if (!this.props.title.includes('כיתה')) {
             return (
                 <>
                     <div className="titleContain">
-                        <h1 className="officialTitle">{this.props.title}</h1>
+                        <h1 className={"officialTitle " + displayText}>{this.props.title}</h1>
                         {this.props.titleTwo !== undefined ?
                             !this.props.titleTwo.includes('כיתה') ?
                                 <div className="secondTitle">

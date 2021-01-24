@@ -66,7 +66,7 @@ class EditGame extends Component {
         <SmallMenuBar />
         <PageTitle title="משחקים" titleTwo={"כיתה " + this.props.chosenClass.classroomName} />
         <ArrowBar page="editGame" />
-        <div className="smallAlign mobileGap" style={{ top: "27vh",overflowY: 'scroll' }}>
+        <div className="smallAlign mobileGap" id="editGameForClass">
           <div className="mobileBackground">
             <div className="mobileGameContainer">
               <img

@@ -52,9 +52,7 @@ export class ClassroomService {
     return { newlyAddedGame: newlyAddedGame };
   }
 
-  async removeGameRelation(@Body() req: any) {
-    console.log("req",req);
-    
+  async removeGameRelation(@Body() req: any) {    
     let classroomModel = new Classroom();
     classroomModel.games = await this.gameRepository.find({
       where: { id: req.gameId },

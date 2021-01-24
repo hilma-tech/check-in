@@ -1,8 +1,6 @@
 import { createMobXContext } from '@hilma/tools'
 import { makeObservable, observable, action } from 'mobx'
 
-const axios = require("axios").default;
-
 class Name {
     name = ""
     id = 0
@@ -12,7 +10,6 @@ class Name {
             id: observable,
             setName: action,
             setId: action,
-            getTeacherName: action,
         })
     }
 
@@ -22,15 +19,6 @@ class Name {
 
     setId = (id) => {
         this.id = id
-    }
-
-    getTeacherName = async() => {
-        try{
-            const { data } = await axios.get("/api/teacher/getTeacherName",{ params:{ teacherId: this.id }});
-            console.log('data: ', data);
-        }catch (error){
-            console.log('error!!');
-        }
     }
 }
 

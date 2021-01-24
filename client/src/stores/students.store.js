@@ -45,7 +45,6 @@ class Students {
         this.chosenStudent = (this.listDataStudents.filter((student)=>{
             return student.id === studentId
         }))[0]
-        console.log('this.chosenStudent: ', this.chosenStudent);
     }
 }
 

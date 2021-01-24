@@ -47,7 +47,6 @@ class SignIn extends Component {
           username,
           password,
         });
-        console.log('response: ', response);
         if(response.success){
           if(response.user.type === "Teacher"){
             this.props.name.setId(response.user.id)

@@ -48,7 +48,6 @@ class ChosenClass {
               params: { classId: classnum },
             });
             this.students = studentsData.data;
-            console.log("studentsData: ", studentsData.data);
         } catch(err){
          this.successGetInfo = false
         }

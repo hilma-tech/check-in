@@ -3,7 +3,7 @@
 
 
 .griddler {
-  margin-top: 18.9vh;
+  margin-top: 18vh;
   padding-top: 11.1vh;
   display: grid;
   grid-template-columns: 35vw 35vw;
@@ -11,6 +11,7 @@
   justify-content: space-evenly;
   background-color: #F2F7FC;
   height: 70vh;
+  overflow-y: scroll;
 }
 
 .className {

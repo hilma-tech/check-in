@@ -121,6 +121,10 @@
     height: 2.5vw;
   }
 
+  .clearText{
+    color: #00000000;
+  }
+
   .scrollChosenGames {
     margin-right: 7vw;
     margin-top: 9vw;
@@ -179,7 +183,7 @@
     height: 73.5vh;
     margin: 0;
     position: absolute;
-    top: 26.5vh;
+    top: 20.5vh;
     padding-top: 0;
     left: 0;
     overflow-x: hidden;

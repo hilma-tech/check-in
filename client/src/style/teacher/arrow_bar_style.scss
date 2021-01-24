@@ -117,6 +117,7 @@
     @include mouse(point);
     margin-right: 3.75vw;
     width: 1.65vw;
+    height: 3.75vw;
     background-color: rgba(255, 255, 255, 0);
   }
 
@@ -124,11 +125,11 @@
     display: block;
     background-color: #f2f7fc;
     position: fixed;
-    top: 10vh;
+    top: 12vh;
     right: 25vw;
     width: 75vw;
     padding-right: 0;
-    height: 17vw;
+    height: 11vw;
     z-index: 99;
   }
 
@@ -149,14 +150,15 @@
     font-weight: 700;
     width: 75vw;
     margin-right: 7vw;
-    padding-top: 2.75vh;
-    margin-bottom: 1vh;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
     z-index: 99;
   }
 
   .studentsArrowBar {
     display: block;
-    top: 6vh;
+    top: 12vh;
     width: 75vw;
     font-size: 2vw;
     padding-right: 0;
@@ -164,4 +166,24 @@
     background-color: rgba(0, 0, 0, 0);
     z-index: 99;
   }
+
+  .studentsInfoArrowBar{
+    background-color: #00000000;
+    top: 13vh;
+    font-size: 5vw;
+    padding-right: 0;
+    height: 6vh;
+    padding-top: 0;
+    z-index: 98;
+    justify-items: right;
+    width: 75vw;
+    left: 0;
+  }
+
+  .pageNameArrowBarStudentInfo {
+    margin-top: 0;
+    margin-right: 7vw;
+    font-weight: 700;
+    font-size: 2.5vw;
+}
 }
