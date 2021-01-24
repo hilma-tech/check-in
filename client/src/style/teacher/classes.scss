@@ -2,6 +2,16 @@
 @import "../general_style.scss";
 
 
+.classesArrowBarText {
+  text-align: center;
+  position: fixed;
+  margin-top: 0;
+  font-size: 5vw;
+  top: 20vh;
+  padding-top: 1.5vh;
+  margin-right: 14vw;
+}
+
 .griddler {
   margin-top: 18.9vh;
   padding-top: 11.1vh;
