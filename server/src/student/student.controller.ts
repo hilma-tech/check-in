@@ -36,7 +36,7 @@ export class StudentController {
     this.userService.createUser<Student>(student);
   }
 
-  @UseJwtAuth('teacher')
+  @UseJwtAuth('teacher', 'superAdmin')
   @Get('/getStudents')
   getStudents(@Req() skipON: any){
     return this.studentService.getStudents(skipON.query)
