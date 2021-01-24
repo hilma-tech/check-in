@@ -61,6 +61,9 @@ class Classes extends Component {
           <SmallMenuBar />
         </div>
         <PageTitle className="officialTitle" title={"שלום המורה " + this.state.name + "!"} />
+        <p className='classesArrowBarText'>
+                        בחר/י כיתה כדי לראות את פרטי הכיתה
+                </p>
         <div className="griddler">
           {this.state.classes.map((classObj, index) => {
             return (
