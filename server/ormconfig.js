@@ -12,7 +12,7 @@ module.exports ={
     "node_modules/@hilma/auth-nest/dist/**/*.entity{.ts,.js}"
   ],
   "synchronize": true,
-  "ssl": true
+  // "ssl": true
 }
 
 
