@@ -35,9 +35,16 @@ class Students extends Component {
           <div className="smallAlign" id="smallAlignStudentList">
             {this.props.chosenClass.students.map((student, index) => {
               return (
-                <div className="smallStudentCont" id={index} onClick={()=>{this.moveToStudent(index)}}>
+                <div
+                key={index}
+                  className="smallStudentCont"
+                  id={index}
+                  onClick={() => {
+                    this.moveToStudent(index);
+                  }}
+                >
                   <h1 className="smallStudentName">
-                    {student.first_name+" "+student.last_name}
+                    {student.first_name + " " + student.last_name}
                   </h1>
                   <h1 className="smallStudentName justForWeb" id={index}>
                     שם משתמש: {student.username}

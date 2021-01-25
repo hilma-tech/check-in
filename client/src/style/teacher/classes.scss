@@ -7,9 +7,12 @@
   position: fixed;
   margin-top: 0;
   font-size: 5vw;
-  top: 20vh;
-  padding-top: 1.5vh;
-  margin-right: 14vw;
+  top: 18vh;
+  padding-top: 2vh;
+  // margin-right: 14vw;
+  background-color: #F2F7FC;
+  width: 100vw;
+  height: 8vh;
 }
 
 .griddler {
@@ -58,6 +61,10 @@
     left: 0vw;
     grid-template-columns: 15vw 15vw 15vw;
     grid-auto-rows: minmax(17vw, 20vw);
+  }
+
+  .classesArrowBarText{
+    display: none;
   }
 
   .className {
