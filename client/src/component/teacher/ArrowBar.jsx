@@ -46,6 +46,7 @@ class ArrowBar extends React.Component {
                         alt="small back arrow"
                         className="smallBackArrow"
                         src="/icons/awesome-arrow-right.svg"
+                        onClick={this.moveToClasses}
                     />
                     <p className="pageNameArrowBar">{this.pages[this.props.page]}</p>
 
