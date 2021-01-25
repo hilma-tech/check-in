@@ -254,7 +254,7 @@ class AddGame extends Component {
           isOk = false;
         } else {
           fields.value.map((field) => {
-            errMess = fieldNameValidation(field.value);
+            errMess = fieldInputValidation(field.value);
             if (errMess.length !== 0) {
               if(errMess === '** שדה זה לא יכול להכיל אותיות באנגלית או תווים מיוחדים **'){
                 fieldEmpt = false;

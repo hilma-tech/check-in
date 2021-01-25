@@ -118,6 +118,7 @@ export function mustInputValidation(input) {
     }
 }
 
+//validation for requirement field in game
 export function requirementValidation(reqs) {
     if (reqs === null || reqs.length === 0) {
         return ''
@@ -133,7 +134,7 @@ export function requirementValidation(reqs) {
 }
 
 //Check validation for fields inputs
-//it's not matter how he field them... 
+//it's not matter how he filled them out... 
 export function fieldInputValidation(input) {
     if (input === null || input.length === 0) {
         return '** נא למלא שדה זה **'
