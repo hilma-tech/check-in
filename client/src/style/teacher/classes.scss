@@ -63,10 +63,6 @@
     grid-auto-rows: minmax(17vw, 20vw);
   }
 
-  .classesArrowBarText{
-    display: none;
-  }
-
   .className {
     font-size: 6vw;
   }
@@ -84,7 +80,7 @@
   }
 
   .classesArrowBarText {
-    text-align: center;
+    text-align: right;
     position: fixed;
     margin-top: 0;
     font-size: 1.5vw;
