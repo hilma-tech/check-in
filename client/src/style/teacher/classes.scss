@@ -75,4 +75,15 @@
     width: 100vw;
     margin-bottom: 50vh;
   }
+
+  .classesArrowBarText {
+    text-align: center;
+    position: fixed;
+    margin-top: 0;
+    font-size: 1.5vw;
+    top: 20vh;
+    padding-top: 1vh;
+    margin-right: 30vw;
+    z-index: 109;
+  }
 }

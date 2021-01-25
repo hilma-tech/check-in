@@ -71,6 +71,7 @@ class EditGame extends Component {
             <div className="mobileGameContainer">
               <img
                 className="classGameImg"
+                id="classGameImgTeacherWeb"
                 alt=""
                 src={this.state.image}
               />
@@ -87,19 +88,27 @@ class EditGame extends Component {
                 <>
                   <h2 className="mobileFieldName"key={i+1} >{field.field_name}</h2>
                   {field.selection !== "image" ? (
-                    field.value.map((value, i) => {
+                    field.selection === "text" ? (
+                      <input
+                      key={i}
+                        defaultValue={field.value[0].value}
+                        className="mobileChangingInput"
+                      />
+                    ) :( <div className="mobileChangingInputGrid">
+{                    field.value.map((value, i) => {
                       if (value.value.length !== 0) {
                         return (
-                          <div key={i}><input
+                          <input
                           key={i}
                             defaultValue={value.value}
-                            className="mobileChangingInput"
-                          /></div>
+                            className="mobileChangingInputChoice"
+                          />
                         );
                       } else {
                         return <></>
                       }
-                    })
+                    })}
+                    </div>)
                   ) : (
                     <div key={i} className="mobileBorderCameraIcon">
                       <img

@@ -7,7 +7,7 @@ class ArrowBar extends React.Component {
         super()
         this.pages = {
             games: 'משחקים',
-            editGame: 'עריכת משחק',
+            editGame: 'הוספת משחק',
             students: 'תלמידים',
             permission: 'הרשאות',
             studentInfo: 'כרטיס תלמיד'
