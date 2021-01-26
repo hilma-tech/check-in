@@ -172,8 +172,8 @@ class AddGame extends Component {
       // }
       this.props.history.goBack(); // after saving go back
     } catch (error) {
+      this.setState({savingInfo: false})
       if (error.status === 500){
-        this.setState({savingInfo: false})
         this.props.errorMsg.setErrorMsg("קיים כבר משחק בשם זה. נסו שם אחר.");
       } else {
         this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסו לבדוק את החיבור");
