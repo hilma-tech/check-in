@@ -9,6 +9,7 @@ import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.js
 import { withRouter } from "react-router-dom";
 import {
   mustInputValidation,
+  descriptionValidation,
   nameValidation,
   requirementValidation,
   fieldNameValidation,
@@ -193,7 +194,7 @@ class AddGame extends Component {
     let fieldOK = true;
     let ValidationFunctions = [
       { name: "gameName", func: nameValidation, errMsg: "" },
-      { name: "gameDescription", func: mustInputValidation, errMsg: "" },
+      { name: "gameDescription", func: descriptionValidation, errMsg: "" },
       { name: "gameRequirements", func: requirementValidation, errMsg: "" },
     ];
 
