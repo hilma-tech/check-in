@@ -37,7 +37,7 @@ class AddGame extends Component {
       gameName: "",
       gameDescription: "",
       gameRequirements: "",
-      image: { id: 0, value: "https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg" },
+      image: { id: 0, value: "https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png" },
       savingInfo: false
     };
     this.imageUploader = props.filesUploader;
@@ -254,7 +254,7 @@ class AddGame extends Component {
           isOk = false;
         } else {
           fields.value.map((field) => {
-            errMess = fieldNameValidation(field.value);
+            errMess = fieldInputValidation(field.value);
             if (errMess.length !== 0) {
               if(errMess === '** שדה זה לא יכול להכיל אותיות באנגלית או תווים מיוחדים **'){
                 fieldEmpt = false;
@@ -372,25 +372,25 @@ class AddGame extends Component {
                 id="gameRequirements"
                 onBlur={this.updateBasicInfo}
               />
-              {/* <label className="labelFields">תמונה:</label>
-              <p
+              {/* <label className="labelFields">תמונה:</label> */}
+              {/* <p
                 className="error"
                 style={{ display: this.state.imageErrorMessages.toShow }}
               >
                 {this.state.imageErrorMessages.mess}
               </p> */}
               {/* <div className="borderCameraIcon marginTop">
-                <label className="borderCameraIconLabel">
-                  <FileInput
+                <label className="borderCameraIconLabel"> */}
+                  {/* <FileInput
                     id="image"
                     className="hiddenInput"
                     type="image"
                     onChange={this.updateImage}
                     filesUploader={this.imageUploader}
-                  />
-                  <img
-                    alt="photograph icon" */}
-                    {/* className={
+                  /> */}
+                  {/* <img
+                    alt="photograph icon"
+                    className={
                       typeof this.state.image.value === "string"
                         ? "chosenImg"
                         : "cameraIcon"
