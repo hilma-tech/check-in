@@ -19,14 +19,12 @@ export class GameService {
   ) {}
 
     async addGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq){
-      if(req.game.image.value){
-      
-        let imgPath = await this.imageService.save(files, req.game.image.id);
-        req.game.image.value = imgPath;
-        
-      } else {
-        req.game.image.value = "https://site.groupe-psa.com/content/uploads/sites/9/2016/12/white-background-2.jpg";
-      }
+      // if(req.game.image.value){
+      //   let imgPath = await this.imageService.save(files, req.game.image.id);
+      //   req.game.image.value = imgPath;
+      // } else {
+      //   req.game.image.value = "https://site.groupe-psa.com/content/uploads/sites/9/2016/12/white-background-2.jpg";
+      // }
   
       req.field.forEach(async (img, index) => {
         if ('image' === img.selection) {
