@@ -12,6 +12,7 @@ import {
   nameValidation,
   requirementValidation,
   fieldNameValidation, 
+  fieldInputValidation
 } from "../../tools/ValidationFunctions";
 import {
   FileInput,
