@@ -70,6 +70,14 @@
     width: 45vw;
 }
 
+.editGameId{
+    margin: 0vh;
+    margin-bottom: 2vh;
+    padding-top: 1vh;
+    width: 5vw;
+    text-align: center;
+}
+
 .labelFields{
     @include labels-style;
     font-weight: 600;

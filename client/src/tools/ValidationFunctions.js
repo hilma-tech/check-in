@@ -118,14 +118,15 @@ export function mustInputValidation(input) {
     }
 }
 
+//validation for requirement field in game
 export function requirementValidation(reqs) {
     if (reqs === null || reqs.length === 0) {
         return ''
     } else if (reqs.length > 100) {
         return ''
-    } else if (!(/[A-Za-z\u0590-\u05EA0-9]/).test(reqs)) {
+    } else if (!(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/).test(reqs)) {
         return '** שדה זה לא תקין **'
-    } else if (reqs.includes('"') || reqs.includes("'") || reqs.includes('-') || reqs.includes("?") || reqs.includes("!") || reqs.includes("&") || reqs.includes("%") ) {
+    } else if (reqs.includes('"') || reqs.includes("'") || reqs.includes('-') || reqs.includes("?") || reqs.includes("!") || reqs.includes("&") || reqs.includes("%") || reqs.includes("`") ) {
         return '** שם זה לא תקין **'
     }else {
         return ''
