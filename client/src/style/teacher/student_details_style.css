@@ -62,4 +62,18 @@
         display: inline-block;
     }
 
+    .studentDeets {
+        width: 60vw;
+        height: 6vh;
+        margin-top: 3vh;
+        margin-right: 32vw;
+        border-radius: 0.75vw;
+        background-color: #E7EBEF;
+        box-shadow: 0px 3px 6px #04316329;
+    }
+    
+    .top {
+        margin-top: 25vh;
+    }
+
 }
