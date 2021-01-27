@@ -8,13 +8,16 @@ class Schools {
     haveMoreSchools = true
     successGettingSchools = true;
     startGetSchools = false;
+    chosenSchool = {}
     constructor() {
         makeObservable(this, {
             listDataSchools: observable,
             haveMoreSchools: observable,
             successGettingSchools: observable,
             startGetSchools: observable,
+            chosenSchool: observable,
             getSchools: action,
+            getChosenSchool: action,
         })
     }
 
@@ -29,6 +32,25 @@ class Schools {
         } catch (error){
             this.successGettingSchools = false
             this.startGetSchools = false;
+        }
+    }
+
+    getChosenSchool = async (schoolId) => {
+        try{
+            const { data } = await axios.get("/api/classroom/getSchoolClasses",{ params:{ schoolId: schoolId }});
+            this.chosenSchool = (this.listDataSchools.filter((school)=>{
+                return school.id === schoolId
+            }))[0]
+            this.chosenSchool.classrooms = data.map((classroom)=>{
+                let classInfo = {id: classroom.id, name: classroom.name, classNameError: { toShow: 'none', mess: '' }}
+                classInfo.chosenTeachers = classroom.teachers.map((teacher)=>{
+                    return {id: teacher.id, name: (teacher.first_name + " " + teacher.last_name)}
+                })
+                return classInfo
+            })
+            //[{ id: 1, name: "ד'2", chosenTeachers: [], classNameError: { toShow: 'none', mess: '' }, }],    { id: id, name: value }
+        } catch (error){
+            console.log('choose school error: ', error);
         }
     }
 }

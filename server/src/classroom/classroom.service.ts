@@ -68,4 +68,12 @@ export class ClassroomService {
     let newRemovedGame = await this.classroomRepository.save(ans);
     return { newRemovedGame: newRemovedGame };
   }
+
+  async getSchoolClasses(schoolId: number){
+    let classes = await this.classroomRepository.find({
+      relations: ['teachers'],
+      where: { school_id: schoolId },
+    });
+    return classes
+  }
 }
