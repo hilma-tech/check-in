@@ -1,6 +1,7 @@
 import { Body, Injectable} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Game } from 'src/game/game.entity';
+import { GameService } from 'src/game/game.service';
 import { Repository } from 'typeorm';
 import { Classroom } from './classroom.entity';
 
@@ -10,14 +11,11 @@ export class ClassroomService {
   constructor(
     @InjectRepository(Classroom)
     private classroomRepository: Repository<Classroom>,
-    @InjectRepository(Game)
-    private gameRepository: Repository<Game>,
+    private gameService: GameService
   ) {}
 
   async getClassroomGames(req) {
-    let allGames = await this.gameRepository.find(
-      {where: [{suspended: 0}]}
-    );
+    let allGames = await this.gameService.getAllGames()
     let currClassGames = await this.classroomRepository.findOne({
       relations: ['games'],
       where: [{ id: req.classId }],
@@ -36,28 +34,21 @@ export class ClassroomService {
 
   async addGameRelation(@Body() req: any) {
     let classroomGame = new Classroom();
-    classroomGame.games = await this.gameRepository.find({
-      where: { id: req.gameId },
-    });
+    classroomGame.games = await this.gameService.getGameById(req.gameId)
     classroomGame.id = req.classId;
-    let currClassGameArr = await this.classroomRepository.find({
+    let currClassGameArr = await this.classroomRepository.findOne({
       relations: ['games'],
       where: [{ id: req.classId }],
     });
 
-    currClassGameArr[0].games.push(classroomGame.games[0]);
+    currClassGameArr.games.push(classroomGame.games[0]);
     let newlyAddedGame = await this.classroomRepository.save(
-      currClassGameArr[0],
+      currClassGameArr,
     );
     return { newlyAddedGame: newlyAddedGame };
   }
 
   async removeGameRelation(@Body() req: any) {    
-    let classroomModel = new Classroom();
-    classroomModel.games = await this.gameRepository.find({
-      where: { id: req.gameId },
-    });
-    classroomModel.id = req.classId;
     let ans = await this.classroomRepository.findOne({
       relations: ['games'],
       where: [{ id: req.classId }],

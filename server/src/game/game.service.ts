@@ -104,4 +104,16 @@ export class GameService {
 
     return games[0];
   }
+
+  async getAllGames(){
+    return await this.gameRepository.find({
+      where: [{ suspended: false }]
+    });
+  }
+
+  async getGameById(gameId){
+    return await this.gameRepository.find({
+      where: { id: gameId },
+    });
+  }
 }
