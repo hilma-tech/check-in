@@ -27,7 +27,7 @@ export class TeacherService extends UserService {
       where: [{ id: userinfo }],
     });
     // let currTeacherClasses = currTeacher[0].classroomTeacher;
-    return {currTeacherClasses: currTeacher.classroomTeacher, name: currTeacher.first_name};
+    return {currTeacherClasses: currTeacher.classroomTeacher, firstName: currTeacher.first_name, lastName: currTeacher.last_name};
   }
   async getTeacher(@Req() skipON: GetTeacherSkip) {
     let numTeachers = await this.userRepository.count();

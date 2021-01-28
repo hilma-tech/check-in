@@ -41,7 +41,8 @@ class Classes extends Component {
   componentDidMount = async () => {
     try{
       let {data} = await axios.get("/api/teacher/getTeacherClasses", { id: this.props.name.id });
-      this.setState({ classes: data.currTeacherClasses , name: data.name});
+      this.props.name.setName(data.firstName, data.lastName)
+      this.setState({ classes: data.currTeacherClasses , name: data.firstName});
     } catch(err){
       this.props.errorMsg.setErrorMsg(
         "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."

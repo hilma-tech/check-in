@@ -4,9 +4,11 @@ import "../../style/teacher/blue_side_bar_style.scss";
 import { withRouter } from "react-router-dom";
 import { LogoutContext } from "@hilma/auth";
 import { withContext } from "@hilma/tools";
+import { nameContext } from "../../stores/name.store";
 
 const mapContextToProps = {
   logout: LogoutContext,
+  name: nameContext,
 };
 
 class BlueSideBar extends React.Component {
@@ -29,7 +31,7 @@ class BlueSideBar extends React.Component {
                 onClick={this.props.closeSideBar}
                 alt="closeIcon"
               />
-              <p id="teacherName">נורית כהן</p>
+              <p id="teacherName">{this.props.name.firstName + " " + this.props.name.lastName}</p>
             </div>
             <div className="blueSideBarOptions">
               <p className="sideBarOption" onClick={() => { this.props.history.push("/teacher/classes") }}>כיתות</p>
@@ -51,7 +53,7 @@ class BlueSideBar extends React.Component {
         <div className="webBlueSideBar">
           <div className="blueSideBar">
             <div className="blueSideBarUserName">
-              <p id="teacherName">נורית כהן</p>
+              <p id="teacherName">{this.props.name.firstName + " " + this.props.name.lastName}</p>
               <img src="/icons/CheckIn.svg" id="checkInIcon" alt="checkin" />
             </div>
             <div className="blueSideBarOptions">

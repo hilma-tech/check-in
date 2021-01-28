@@ -49,10 +49,8 @@ class SignIn extends Component {
         });
         if(response.success){
           if(response.user.type === "Teacher"){
-            console.log('xmksaxk');
             this.props.name.setId(response.user.id)
             this.props.history.push("/teacher/classes");
-            window.location.pathname = "/teacher/classes"
           } else{
             this.props.history.push("/superAdmin/games");
             window.location.pathname = "/superAdmin/games"
