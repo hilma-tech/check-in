@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { Student } from './student.entity'
 import { GetStudentSkip } from './student.dtos';
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class StudentService extends UserService {
@@ -24,7 +25,7 @@ export class StudentService extends UserService {
         let numStudents = await this.userRepository.count();
         let haveMoreStudents = numStudents > Number(skipON.studentsLength) + 50 ? true : false;
         let students = await this.userRepository.find({
-            relations: ['school','classroomStudent'],
+            relations: ['school', 'classroomStudent'],
             skip: skipON.studentsLength,
             take: 50,
         })
@@ -34,8 +35,35 @@ export class StudentService extends UserService {
     async getStudentsClassrooms(@Req() studentId: any) {
         let studentsClassroom = await this.userRepository.findOne({
             relations: ['classroomStudent'],
-            where: [{id: studentId}],
+            where: [{ id: studentId }],
         })
         return studentsClassroom.classroomStudent
     }
+
+    async CheckUserInfoAndGetClassId(username, password, classId) {
+        let findUser = await this.userRepository.findOne({
+            where: [{ username: username }],
+            select: ['id', 'password']
+        })
+        let pass = bcrypt.compareSync(password, findUser.password)
+
+        let Class = await this.userRepository.findOne({
+            relations: ['classroomStudent'],
+            where: [{ id: findUser.id }],
+        })
+
+        const classID = () => {
+            Class.classroomStudent.map(IsInClass => {
+                if (IsInClass.id !== classId) {
+                    return true
+                }
+            })
+        }
+        if (findUser && classID) {
+            return true
+        } else {
+            return false
+        }
+    }
 }
+
