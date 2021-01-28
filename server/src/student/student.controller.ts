@@ -1,24 +1,25 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
 import {
-    UserService,
-    Role,
-    UseJwtAuth,
-  } from '@hilma/auth-nest';
-  import {Student} from "./student.entity"
+  UserService,
+  Role,
+  UseJwtAuth,
+} from '@hilma/auth-nest';
+import { Student } from "./student.entity"
 import { StudentService } from './student.service';
 import { Classroom } from 'src/classroom/classroom.entity';
+import { SuperAdmin } from 'src/super-admin/super-admin.entity';
 
 @Controller('api/student')
 export class StudentController {
-    constructor(
-      private readonly userService: UserService,
-      private studentService: StudentService
-      ) {
-      // this.register({username: 'student1@gmail.com', password: 'student11', name: 'בת ציון רוז'})
-    }
+  constructor(
+    private readonly userService: UserService,
+    private studentService: StudentService,
+  ) {
+    // this.register({username: 'student1@gmail.com', password: 'student11', name: 'בת ציון רוז'})
+  }
 
-    @Post('/register')
-    async register(@Body() req) {
+  @Post('/register')
+  async register(@Body() req) {
     let username = req.username;
     let password = req.password;
     let fullName = req.name.split(' ')
@@ -26,9 +27,9 @@ export class StudentController {
     student.first_name = fullName[0]
     student.last_name = fullName[1]
     let classroom = new Classroom()
-    classroom.id=2
-    classroom.name="א'1"
-    classroom.school_id=1
+    classroom.id = 2
+    classroom.name = "א'1"
+    classroom.school_id = 1
     student.classroomStudent = [classroom]
     let userRole = new Role();
     userRole.id = 4; //you just the role id.
@@ -38,13 +39,23 @@ export class StudentController {
 
   @UseJwtAuth('teacher', 'superAdmin')
   @Get('/getStudents')
-  getStudents(@Req() skipON: any){
+  getStudents(@Req() skipON: any) {
     return this.studentService.getStudents(skipON.query)
   }
-  
+
   @UseJwtAuth('teacher')
   @Get('/getStudentsClassrooms')
-  getStudentsClassrooms(@Req() req: any){
+  getStudentsClassrooms(@Req() req: any) {
     return this.studentService.getStudentsClassrooms(req.query.studentId)
+  }
+
+  @Get('/gamesForClass')
+  async getGamesForClass(@Query() info) {
+    let getClassId = await this.studentService.CheckUserInfoAndGetClassId(info.username, info.password, info.classId);
+    if (getClassId) {
+      return "get games function goes heres"
+    } else {
+      return "problem with info inserted"
+    }
   }
 }
