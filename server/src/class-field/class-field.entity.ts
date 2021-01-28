@@ -1,8 +1,11 @@
+import { type } from 'os';
+import { Classroom } from 'src/classroom/classroom.entity';
+import { Field } from 'src/field/field.entity';
 import {
   Column,
   Entity,
-  JoinTable,
-  ManyToMany,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -11,4 +14,14 @@ export class ClassField {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column()
+  new_value: string;
+
+  @OneToOne(type => Classroom) 
+  @JoinColumn({name: "class_id"}) 
+   class_id: Classroom;
+
+  @OneToOne(type => Field)
+  @JoinColumn({name: "field_id"})
+  field_id: Field;
 }
