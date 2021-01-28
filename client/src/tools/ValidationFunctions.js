@@ -118,14 +118,30 @@ export function mustInputValidation(input) {
     }
 }
 
+//validation for description field in game
+export function descriptionValidation(desc) {
+    if (desc === null || desc.length === 0) {
+        return '** נא למלא שדה זה **'
+    } else if (desc.length > 100) {
+        return '** נא למלא שדה זה **'
+    } else if (!(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/).test(desc)) {
+        return '** שדה זה לא תקין **'
+    } else if (desc.includes('"') || desc.includes("'") || desc.includes('-') || desc.includes("?") || desc.includes("!") || desc.includes("&") || desc.includes("%") || desc.includes("`") ) {
+        return '** שם זה לא תקין **'
+    }else {
+        return ''
+    }
+}
+
+//validation for requirement field in game
 export function requirementValidation(reqs) {
     if (reqs === null || reqs.length === 0) {
         return ''
     } else if (reqs.length > 100) {
         return ''
-    } else if (!(/[A-Za-z\u0590-\u05EA0-9]/).test(reqs)) {
+    } else if (!(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/).test(reqs)) {
         return '** שדה זה לא תקין **'
-    } else if (reqs.includes('"') || reqs.includes("'") || reqs.includes('-') || reqs.includes("?") || reqs.includes("!") || reqs.includes("&") || reqs.includes("%") ) {
+    } else if (reqs.includes('"') || reqs.includes("'") || reqs.includes('-') || reqs.includes("?") || reqs.includes("!") || reqs.includes("&") || reqs.includes("%") || reqs.includes("`") ) {
         return '** שם זה לא תקין **'
     }else {
         return ''

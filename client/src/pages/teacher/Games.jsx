@@ -52,6 +52,9 @@ class Games extends React.Component {
       return this.addGameToClass(index);
     } else {
       // console.log("equal to six");
+      this.props.errorMsg.setErrorMsg(
+        "לכל כיתה יכול להית עד שישה משחקים."
+      );
       return null;
     }
   };
@@ -62,6 +65,9 @@ class Games extends React.Component {
       return this.openPopUpClick(index, id);
     } else {
       console.log("equal to two");
+      this.props.errorMsg.setErrorMsg(
+        "לכל כיתה חייב להיות שני משחקים לפחות"
+      );
       return null;
     }
   };

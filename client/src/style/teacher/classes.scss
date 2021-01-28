@@ -9,10 +9,11 @@
   font-size: 5vw;
   top: 18vh;
   padding-top: 2vh;
-  // margin-right: 14vw;
   background-color: #F2F7FC;
   width: 100vw;
   height: 8vh;
+  color: #043163;
+  font-weight: 400;
 }
 
 .griddler {
@@ -63,10 +64,6 @@
     grid-auto-rows: minmax(17vw, 20vw);
   }
 
-  .classesArrowBarText{
-    display: none;
-  }
-
   .className {
     font-size: 6vw;
   }
@@ -81,5 +78,16 @@
     top: 0;
     width: 100vw;
     margin-bottom: 50vh;
+  }
+
+  .classesArrowBarText {
+    text-align: right;
+    position: fixed;
+    margin-top: 0;
+    font-size: 2vw;
+    top: 17vh;
+    padding-top: 4vh;
+    margin-right: 30vw;
+    z-index: 109;
   }
 }

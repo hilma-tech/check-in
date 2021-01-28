@@ -31,4 +31,10 @@ export class ClassroomController {
     async removeGameRelation(@Body() req: any) {
         return await this.classroomService.removeGameRelation(req)
     }
+
+    @UseJwtAuth('superAdmin')
+    @Get('/getSchoolClasses')
+    async getSchoolClasses(@Req() req: any) {
+        return await this.classroomService.getSchoolClasses(req.query.schoolId)
+    }
 }

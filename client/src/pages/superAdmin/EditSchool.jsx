@@ -5,16 +5,28 @@ import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx"
 import "../../style/superAdmin/edit_school_style.scss";
 import "../../style/superAdmin/form_style.scss";
 import "../../style/superAdmin/white_bar_style.css";
+import { schoolsContext } from "../../stores/schools.store.js";
+import { errorMsgContext } from "../../stores/error.store.js";
+import { withContext } from "@hilma/tools";
+import { observer } from "mobx-react";
 
 class editSchool extends Component {
   constructor(props) {
     super();
     this.state = {
       schoolNameError: { toShow: 'none', mess: '' },
-      schoolName: "עשה חיל",
+      schoolName: "",
       //List of all the classes in the school. The numTeachers represent the number of teachers in the class.
       classes: [{ id: 1, name: "ד'2", chosenTeachers: [], classNameError: { toShow: 'none', mess: '' }, }],
     };
+  }
+
+  componentDidMount(){
+    console.log(this.props.schools.chosenSchool);
+    this.setState({
+      schoolName: this.props.schools.chosenSchool.name,
+      classes: this.props.schools.chosenSchool.classrooms
+    })
   }
   /*
       Get e, prevent refresh and take the classes in state, 
@@ -22,19 +34,19 @@ class editSchool extends Component {
     */
   addClassToSchool = (e) => {
     e.preventDefault();
-    this.setState((prevState) => {
-      let tempData = [
-        ...prevState.classes,
-        {
-          id: prevState.classes.length + 1,
-          name: '',
-          numTeachers: 1,
-          chosenTeachers: [],
-          classNameError: { toShow: 'none', mess: '' },
-        },
-      ];
-      return { classes: tempData };
-    });
+    // this.setState((prevState) => {
+    //   let tempData = [
+    //     ...prevState.classes,
+    //     {
+    //       id: prevState.classes.length + 1,
+    //       name: '',
+    //       numTeachers: 1,
+    //       chosenTeachers: [],
+    //       classNameError: { toShow: 'none', mess: '' },
+    //     },
+    //   ];
+    //   return { classes: tempData };
+    // });
   };
 
 
@@ -42,56 +54,56 @@ class editSchool extends Component {
   //Need to change but update the class name.
   //It's call when the user change the value.
   chooseTeacher = (e) => {
-    let index = e.name
-    let value = e.value;
-    let selectKey = e.selectKey;
-    let id = e.id;
-    this.setState((prevState) => {
-      let tempData = [...prevState.classes]
-      tempData[index].chosenTeachers[selectKey] = { id: id, name: value }
-      return { classes: tempData }
-    })
+    // let index = e.name
+    // let value = e.value;
+    // let selectKey = e.selectKey;
+    // let id = e.id;
+    // this.setState((prevState) => {
+    //   let tempData = [...prevState.classes]
+    //   tempData[index].chosenTeachers[selectKey] = { id: id, name: value }
+    //   return { classes: tempData }
+    // })
   }
 
 
   //Get the element and set the schoolName by the info that the user type.
   handleChange = (e) => {
-    if (e.target.name === 'schoolName') {
-      this.setState({ schoolName: e.target.value });
-    } else {
-      let [fieldChangeName, classChangeIndex] = e.target.name.split('_')
-      let classNameValue = e.target.value;
-      this.setState((prevState) => {
-        let tempData = [...prevState.classes]
-        tempData[parseInt(classChangeIndex)][fieldChangeName] = classNameValue
-        return { classes: tempData }
-      })
-    }
+    // if (e.target.name === 'schoolName') {
+    //   this.setState({ schoolName: e.target.value });
+    // } else {
+    //   let [fieldChangeName, classChangeIndex] = e.target.name.split('_')
+    //   let classNameValue = e.target.value;
+    //   this.setState((prevState) => {
+    //     let tempData = [...prevState.classes]
+    //     tempData[parseInt(classChangeIndex)][fieldChangeName] = classNameValue
+    //     return { classes: tempData }
+    //   })
+    // }
   };
 
   addTeacherToClass = (classIndex) => {
-    this.setState((prevState) => {
-      let tempData = [...prevState.classes]
-      tempData[classIndex].chosenTeachers.push({ id: -1 * tempData[classIndex].chosenTeachers.length, name: 'בחר...' }) //id -1 did not exist and he wont show him
-      return { classes: tempData }
-    })
+    // this.setState((prevState) => {
+    //   let tempData = [...prevState.classes]
+    //   tempData[classIndex].chosenTeachers.push({ id: -1 * tempData[classIndex].chosenTeachers.length, name: 'בחר...' }) //id -1 did not exist and he wont show him
+    //   return { classes: tempData }
+    // })
   }
 
   removeTeacherFromClass = (classIndex, teacherIndex) => {
-    this.setState((prevState) => {
-      let tempData = [...prevState.classes]
-      tempData[classIndex].chosenTeachers.splice(teacherIndex, 1)
-      return { classes: tempData }
-    })
+    // this.setState((prevState) => {
+    //   let tempData = [...prevState.classes]
+    //   tempData[classIndex].chosenTeachers.splice(teacherIndex, 1)
+    //   return { classes: tempData }
+    // })
   }
 
 
   removeClass = (classIndex) => {
-    this.setState((prevState) => {
-      let tempData = [...prevState.classes]
-      tempData.splice(classIndex, 1);
-      return { classes: tempData }
-    })
+    // this.setState((prevState) => {
+    //   let tempData = [...prevState.classes]
+    //   tempData.splice(classIndex, 1);
+    //   return { classes: tempData }
+    // })
   }
 
   saveData = (e) => {
@@ -188,6 +200,7 @@ class editSchool extends Component {
             value={this.state.schoolName} //The input will show schoolName.
             name="schoolName"
             onChange={this.handleChange} //In charge of on the set state of schoolName.
+            readOnly={true}
           ></input>
 
           <label className='labelFields' for="schoolClasses">
@@ -207,19 +220,19 @@ class editSchool extends Component {
                 removeTeacherFromClass={this.removeTeacherFromClass}
                 removeClass={this.removeClass} />;
             })}
-          <button
+          {/* <button
             className='editSchoolAddClass'
             type="button"
             onClick={this.addClassToSchool} //Add class to the list.
           >
             הוסף כיתה
-            </button>
+            </button> */}
           <div className='spacerFromSaveButton'></div>
           <div className='saveButtonBackground'>
-            <button className="deletButton">מחק בית ספר</button>
+            {/* <button className="deletButton">מחק בית ספר</button>
             <button className="saveButton" onClick={this.saveData}>
               שמור
-            </button>
+            </button>  */}
           </div>
         </form>
       </div>
@@ -227,4 +240,9 @@ class editSchool extends Component {
   }
 }
 
-export default withRouter(editSchool);
+const mapContextToProps = {
+  schools: schoolsContext,
+  errorMsg: errorMsgContext
+};
+
+export default withContext(mapContextToProps)(observer(withRouter(editSchool)));

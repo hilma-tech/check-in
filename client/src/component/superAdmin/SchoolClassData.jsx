@@ -59,6 +59,7 @@ class ClassData extends React.Component {
               label: teacerDefaultValue,
             }}
             onChange={this.props.chooseTeacher}
+            isDisabled={true}
           />
           <img
             alt="remove button"
@@ -106,6 +107,7 @@ class ClassData extends React.Component {
             name={"name_" + this.props.classIndex}
             placeholder="הכנס שם כיתה"
             className="editSchoolClassesInput inputFields"
+            readOnly={true}
           ></input>
           <img
             alt="remove class button"

@@ -14,6 +14,9 @@ import { StudentModule } from './student/student.module';
 import { SchoolModule } from './school/school.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { ClassroomModule } from './classroom/classroom.module';
+import { ClassFieldController } from './class-field/class-field.controller';
+import { ClassFieldService } from './class-field/class-field.service';
+import { ClassFieldModule } from './class-field/class-field.module';
 
 @Module({
   imports: [
@@ -30,8 +33,9 @@ import { ClassroomModule } from './classroom/classroom.module';
     SchoolModule,
     TeacherModule,
     ClassroomModule,
+    ClassFieldModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, ClassFieldController],
+  providers: [AppService, ClassFieldService],
 })
 export class AppModule {}

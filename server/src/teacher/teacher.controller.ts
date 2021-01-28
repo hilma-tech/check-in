@@ -19,7 +19,7 @@ export class TeacherController {
     return await this.teacherService.getTeacherClasses(userinfo.id);
   }
 
-  @UseJwtAuth('teacher')
+  @UseJwtAuth('superAdmin')
   @Get('/getTeacherInfo')
   getTeacherInfo(@Req() req: any) {
     return this.teacherService.getTeacherInfo(req.query);

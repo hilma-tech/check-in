@@ -87,6 +87,7 @@ class SchoolsList extends React.Component {
           loadMore={this.getSchools}
           haveMoreData={this.props.schools.haveMoreSchools}
           startGetInfo={this.props.schools.startGetSchools}
+          setClickedRow={this.props.schools.getChosenSchool}
         />
       </div>
     );
