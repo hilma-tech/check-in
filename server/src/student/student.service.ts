@@ -59,7 +59,7 @@ export class StudentService extends UserService {
                 }
             })
         }
-        if (findUser && classID) {
+        if (findUser && pass && classID) {
             return true
         } else {
             return false
