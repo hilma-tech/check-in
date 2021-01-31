@@ -2,19 +2,22 @@ import { createMobXContext } from '@hilma/tools'
 import { makeObservable, observable, action } from 'mobx'
 
 class Name {
-    name = ""
+    firstName = ""
+    lastName = ""
     id = 0
     constructor() {
         makeObservable(this, {
-            name: observable,
+            firstName: observable,
+            lastName: observable,
             id: observable,
             setName: action,
             setId: action,
         })
     }
 
-    setName=(name)=>{
-        this.name = name
+    setName=(firstName, lastName)=>{
+        this.firstName = firstName
+        this.lastName = lastName
     }
 
     setId = (id) => {

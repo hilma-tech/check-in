@@ -13,7 +13,6 @@ import { GameModule } from 'src/game/game.module';
     RoleModule,
     GameModule,
     TypeOrmModule.forFeature([Classroom]),
-    TypeOrmModule.forFeature([Game]),
   ],
   providers: [ClassroomService],
   controllers: [ClassroomController]
