@@ -26,7 +26,7 @@ export class StudentService extends UserService {
         let haveMoreStudents = numStudents > Number(skipON.studentsLength) + 50 ? true : false;
         let students = await this.userRepository.find({
             relations: ['school', 'classroomStudent'],
-            skip: skipON.studentsLength,
+            skip: Number(skipON.studentsLength),
             take: 50,
         })
         return { studentsInfo: students, haveMoreStudents: haveMoreStudents }
@@ -43,7 +43,7 @@ export class StudentService extends UserService {
         return classes
     }
 
-    async CheckUserInfoAndGetClassId(username, password, classId) {
+    async CheckUserInfoAndGetClassId(username:string, password:string, classId:string) {
         let findUser = await this.userRepository.findOne({
             where: [{ username: username }],
             select: ['id', 'password']
@@ -57,7 +57,7 @@ export class StudentService extends UserService {
 
         const classID = () => {
             Class.classroomStudent.map(IsInClass => {
-                if (IsInClass.id !== classId) {
+                if (IsInClass.id !== Number(classId)) {
                     return true
                 }
             })

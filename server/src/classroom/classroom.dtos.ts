@@ -10,8 +10,8 @@ import { Type } from 'class-transformer';
 
 export class ClassroomIdDto {
     @IsDefined()
-    @IsNumber()
-    classId: number;
+    @IsString()
+    classId: string;
 }
 
 export class ClassroomGameDto {

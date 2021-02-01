@@ -19,7 +19,7 @@ export class ClassroomService {
     let allGames = await this.gameService.getAllGames()
     let currClassGames = await this.classroomRepository.findOne({
       relations: ['games'],
-      where: [{ id: req.classId }],
+      where: [{ id: Number(req.classId) }],
     });
     //      select: ["id", "game_name", "image"],
     // currClassGames.games = currClassGames.games.map((game)=>{
@@ -31,11 +31,11 @@ export class ClassroomService {
     return ({currClassGames: classGames, allGames: allGames});
   }
 
-  async getClassStudents(classId: number) {
+  async getClassStudents(classId: string) {
     let classroom = await this.classroomRepository.find({
       select: ["id"],
       relations: ['students'],
-      where: { id: classId },
+      where: { id: Number(classId) },
     });    
     let students = classroom[0].students.map((student)=>{
       return {id: student.id, username: student.username, first_name: student.first_name, last_name: student.last_name}
@@ -71,10 +71,10 @@ export class ClassroomService {
     return { newRemovedGame: newRemovedGame };
   }
 
-  async getSchoolClasses(schoolId: number){
+  async getSchoolClasses(schoolId: string){
     let classes = await this.classroomRepository.find({
       relations: ['teachers'],
-      where: { school_id: schoolId },
+      where: { school_id: Number(schoolId) },
     });
     return classes
   }

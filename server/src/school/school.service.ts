@@ -16,7 +16,7 @@ export class SchoolService {
       let numSchools = await this.schoolRepository.count();
       let haveMoreSchools = numSchools > Number(skipON.schoolsLength) + 50 ? true : false;
         let schools = await this.schoolRepository.find({
-          skip: skipON.schoolsLength,
+          skip: Number(skipON.schoolsLength),
           take: 50,
       });
       return { schoolsInfo: schools, haveMoreSchools: haveMoreSchools }    }

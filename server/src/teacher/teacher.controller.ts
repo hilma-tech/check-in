@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
 import { UserService, RequestUser, Role, UseJwtAuth } from '@hilma/auth-nest';
 import { Teacher } from './teacher.entity';
 import { TeacherService } from './teacher.service';
 import { Classroom } from 'src/classroom/classroom.entity';
+import { TeacherIdDto, GetTeacherSkip,TeacherInfoDto } from './teacher.dtos';
 
 @Controller('api/teacher')
 export class TeacherController {
@@ -15,14 +16,14 @@ export class TeacherController {
 
   @UseJwtAuth('teacher')
   @Get('/getTeacherClasses')
-  async getTeacherClasses(@RequestUser() userinfo) {
+  async getTeacherClasses(@RequestUser() userinfo:TeacherInfoDto) {
     return await this.teacherService.getTeacherClasses(userinfo.id);
   }
 
   @UseJwtAuth('superAdmin')
   @Get('/getTeacherInfo')
-  getTeacherInfo(@Req() req: any) {
-    return this.teacherService.getTeacherInfo(req.query);
+  getTeacherInfo(@Query() req: TeacherIdDto) {
+    return this.teacherService.getTeacherInfo(req);
   }
 
   @Post('/register')
@@ -47,7 +48,7 @@ export class TeacherController {
 
   @UseJwtAuth('superAdmin')
   @Get('/getTeachers')
-  getStudents(@Req() skipON: any) {
-    return this.teacherService.getTeacher(skipON.query);
+  getTeachers(@Query() skipON: GetTeacherSkip) {
+    return this.teacherService.getTeacher(skipON);
   }
 }

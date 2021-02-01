@@ -34,7 +34,7 @@ export class TeacherService extends UserService {
     let haveMoreTeachers =
       numTeachers > Number(skipON.teachersLength) + 50 ? true : false;
     let teachers = await this.userRepository.find({
-      skip: skipON.teachersLength,
+      skip: Number(skipON.teachersLength),
       take: 50,
       relations: ['school', 'classroomTeacher'],
     });

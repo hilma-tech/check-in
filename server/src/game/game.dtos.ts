@@ -96,13 +96,13 @@ export class GameSaveReq {
 
 export class GetGameSkip {
   @IsDefined()
-  @IsNumber()
-  gamesLength: number;
+  @IsString()
+  gamesLength: string;
 }
 
 
 export class GameIdDto {
   @IsDefined()
-  @IsNumber()
-  id: number;
+  @IsString()
+  id: string;
 }

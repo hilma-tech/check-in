@@ -1,13 +1,44 @@
-import { IsDefined, IsNumber } from "class-validator";
+import { IsDefined, IsNumber, IsString } from "class-validator";
 
 export class GetTeacherSkip {
   @IsDefined()
-  @IsNumber()
-  teachersLength: number;
+  @IsString()
+  teachersLength: string;
 }
 
 export class TeacherIdDto {
   @IsDefined()
-  @IsNumber()
-  teacherId: number;
+  @IsString()
+  teacherId: string;
 }
+
+export class TeacherInfoDto {
+  @IsDefined()
+  @IsString()
+  id: string;
+
+  @IsDefined()
+  @IsString()
+  username: string;
+
+  @IsDefined()
+  @IsString()
+  type: string;
+
+  @IsDefined()
+  @IsString()
+  roles: string[];
+
+  @IsDefined()
+  @IsString()
+  roleKeys: string[];
+
+  @IsDefined()
+  @IsNumber()
+  iat: number;
+
+  @IsDefined()
+  @IsNumber()
+  exp: number;
+}
+

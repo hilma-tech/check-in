@@ -8,6 +8,7 @@ import { Student } from "./student.entity"
 import { StudentService } from './student.service';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { SuperAdmin } from 'src/super-admin/super-admin.entity';
+import { GetStudentSkip, StudentIdDto, GamesForClassDto } from './student.dtos';
 
 @Controller('api/student')
 export class StudentController {
@@ -39,18 +40,18 @@ export class StudentController {
 
   @UseJwtAuth('teacher', 'superAdmin')
   @Get('/getStudents')
-  getStudents(@Req() skipON: any) {
-    return this.studentService.getStudents(skipON.query)
+  getStudents(@Query() skipON: GetStudentSkip) {
+    return this.studentService.getStudents(skipON)
   }
 
   @UseJwtAuth('teacher')
   @Get('/getStudentsClassrooms')
-  getStudentsClassrooms(@Req() req: any) {
-    return this.studentService.getStudentsClassrooms(req.query.studentId)
+  getStudentsClassrooms(@Query() req: StudentIdDto) {
+    return this.studentService.getStudentsClassrooms(req.id)
   }
 
   @Get('/gamesForClass')
-  async getGamesForClass(@Query() info) {
+  async getGamesForClass(@Query() info:GamesForClassDto) {
     let getClassId = await this.studentService.CheckUserInfoAndGetClassId(info.username, info.password, info.classId);
     if (getClassId) {
       return "get games function goes heres"
