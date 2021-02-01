@@ -32,12 +32,15 @@ export class StudentService extends UserService {
         return { studentsInfo: students, haveMoreStudents: haveMoreStudents }
     }
 
-    async getStudentsClassrooms(@Req() studentId: any) {
+    async getStudentsClassrooms(@Req() studentId: string) {
         let studentsClassroom = await this.userRepository.findOne({
             relations: ['classroomStudent'],
             where: [{ id: studentId }],
         })
-        return studentsClassroom.classroomStudent
+        let classes = studentsClassroom.classroomStudent.map((studentClass)=>{
+            return {id: studentClass.id, name: studentClass.name}
+        })
+        return classes
     }
 
     async CheckUserInfoAndGetClassId(username, password, classId) {

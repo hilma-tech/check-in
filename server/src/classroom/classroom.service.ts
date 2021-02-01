@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Game } from 'src/game/game.entity';
 import { GameService } from 'src/game/game.service';
 import { Repository } from 'typeorm';
+import { ClassroomIdDto, ClassroomGameDto } from './classroom.dtos';
 import { Classroom } from './classroom.entity';
 
 
@@ -14,25 +15,35 @@ export class ClassroomService {
     private gameService: GameService
   ) {}
 
-  async getClassroomGames(req) {
+  async getClassroomGames(req: ClassroomIdDto) {
     let allGames = await this.gameService.getAllGames()
     let currClassGames = await this.classroomRepository.findOne({
       relations: ['games'],
       where: [{ id: req.classId }],
     });
-    return ({currClassGames: currClassGames, allGames: allGames});
+    //      select: ["id", "game_name", "image"],
+    // currClassGames.games = currClassGames.games.map((game)=>{
+    //   return {id: game.id, }
+    // })
+    let classGames = currClassGames.games.map((game)=>{
+      return {id: game.id, game_name: game.game_name, image: game.image}
+    })
+    return ({currClassGames: classGames, allGames: allGames});
   }
 
-  async getClassStudents(classId) {
+  async getClassStudents(classId: number) {
     let classroom = await this.classroomRepository.find({
       select: ["id"],
       relations: ['students'],
       where: { id: classId },
     });    
-    return classroom[0].students;
+    let students = classroom[0].students.map((student)=>{
+      return {id: student.id, username: student.username, first_name: student.first_name, last_name: student.last_name}
+    })
+    return students;
   }
 
-  async addGameRelation(@Body() req: any) {
+  async addGameRelation(@Body() req: ClassroomGameDto) {
     let classroomGame = new Classroom();
     classroomGame.games = await this.gameService.getGameById(req.gameId)
     classroomGame.id = req.classId;
@@ -48,7 +59,7 @@ export class ClassroomService {
     return { newlyAddedGame: newlyAddedGame };
   }
 
-  async removeGameRelation(@Body() req: any) {    
+  async removeGameRelation(@Body() req: ClassroomGameDto) {    
     let ans = await this.classroomRepository.findOne({
       relations: ['games'],
       where: [{ id: req.classId }],

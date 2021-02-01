@@ -10,7 +10,6 @@ import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { errorMsgContext } from "../../stores/error.store";
 import { nameContext } from "../../stores/name.store";
-const axios = require("axios").default;
 
 class Classes extends Component {
   constructor() {
@@ -39,15 +38,7 @@ class Classes extends Component {
   }
 
   componentDidMount = async () => {
-    try{
-      let {data} = await axios.get("/api/teacher/getTeacherClasses", { id: this.props.name.id });
-      this.props.name.setName(data.firstName, data.lastName)
-      this.setState({ classes: data.currTeacherClasses , name: data.firstName});
-    } catch(err){
-      this.props.errorMsg.setErrorMsg(
-        "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
-      );
-    }
+      this.setState({ classes: this.props.name.teacherClasses, name: this.props.name.firstName});
   };
 
   moveToClass = (classId, classroomName) => {

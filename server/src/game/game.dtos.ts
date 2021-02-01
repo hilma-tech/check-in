@@ -99,3 +99,10 @@ export class GetGameSkip {
   @IsNumber()
   gamesLength: number;
 }
+
+
+export class GameIdDto {
+  @IsDefined()
+  @IsNumber()
+  id: number;
+}
