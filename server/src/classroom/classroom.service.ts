@@ -30,7 +30,10 @@ export class ClassroomService {
       relations: ['students'],
       where: { id: classId },
     });    
-    return classroom[0].students;
+    let students = classroom[0].students.map((student)=>{
+      return {id: student.id, username: student.username, first_name: student.first_name, last_name: student.last_name}
+    })
+    return students;
   }
 
   async addGameRelation(@Body() req: ClassroomGameDto) {
