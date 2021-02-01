@@ -21,7 +21,14 @@ export class ClassroomService {
       relations: ['games'],
       where: [{ id: req.classId }],
     });
-    return ({currClassGames: currClassGames, allGames: allGames});
+    //      select: ["id", "game_name", "image"],
+    // currClassGames.games = currClassGames.games.map((game)=>{
+    //   return {id: game.id, }
+    // })
+    let classGames = currClassGames.games.map((game)=>{
+      return {id: game.id, game_name: game.game_name, image: game.image}
+    })
+    return ({currClassGames: classGames, allGames: allGames});
   }
 
   async getClassStudents(classId: number) {

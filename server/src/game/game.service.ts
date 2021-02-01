@@ -107,6 +107,7 @@ export class GameService {
 
   async getAllGames(){
     return await this.gameRepository.find({
+      select: ["id", "game_name", "image"],
       where: [{ suspended: false }]
     });
   }
