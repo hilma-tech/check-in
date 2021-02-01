@@ -32,7 +32,7 @@ export class StudentService extends UserService {
         return { studentsInfo: students, haveMoreStudents: haveMoreStudents }
     }
 
-    async getStudentsClassrooms(@Req() studentId: any) {
+    async getStudentsClassrooms(@Req() studentId: string) {
         let studentsClassroom = await this.userRepository.findOne({
             relations: ['classroomStudent'],
             where: [{ id: studentId }],
