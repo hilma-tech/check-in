@@ -2,7 +2,7 @@ import { UploadedFiles, Body, Injectable, Req } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Game } from './game.entity';
-import { GameSaveDto, GetGameSkip,GameSaveReq, GameIdDto } from './game.dtos';
+import { GameSaveDto, GetGameSkip, GameSaveReq, GameIdDto } from './game.dtos';
 import { FieldService } from 'src/field/field.service';
 import {
   FilesType,
@@ -75,7 +75,7 @@ export class GameService {
   }
 
   async getGameInfo(gameId: GameIdDto) {
-    
+
     let temp = await this.gameRepository.find({
       relations: ["fields"],
       where: { id: gameId.id }
@@ -113,13 +113,14 @@ export class GameService {
     });
   }
 
-  async getGameById(gameId: number){
+  async getGameById(gameId: number) {
     return await this.gameRepository.find({
       where: { id: gameId },
     });
   }
 
   async deleteGameById(id) {
+     await this.fieldService.deleteField(id.Id) 
     let RemoveGame = await this.gameRepository.delete(id.Id);
   }
 }

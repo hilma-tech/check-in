@@ -78,7 +78,6 @@ export class GameController {
   @UseJwtAuth('superAdmin')
   @Post('/deleteGameById')
   deleteGame(@Body() req: any) {
-    this.fieldService.deleteField(req)
     return this.gameService.deleteGameById(req);
   }
 }
