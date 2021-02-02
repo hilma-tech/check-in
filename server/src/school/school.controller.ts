@@ -1,6 +1,7 @@
-import { Get,Req,Controller } from '@nestjs/common';
+import { Get,Req,Controller, Query } from '@nestjs/common';
 import {SchoolService} from './school.service'
 import { UseJwtAuth } from "@hilma/auth-nest";
+import { GetSchoolSkip } from './school.dtos';
 
 
 @Controller('api/school')
@@ -11,7 +12,7 @@ export class SchoolController {
 
       @UseJwtAuth("superAdmin")
       @Get("/getSchools")
-      async getSchoolsInfo(@Req() skipON: any) {
-        return await this.schoolService.getSchools(skipON.query)
+      async getSchoolsInfo(@Query() skipON: GetSchoolSkip) {
+        return await this.schoolService.getSchools(skipON)
       }
 }

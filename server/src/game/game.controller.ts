@@ -3,23 +3,24 @@ import {
   Controller,
   Get,
   Post,
+  Query,
   Req,
   UploadedFiles,
 } from '@nestjs/common';
 import { GameService } from './game.service';
-import { GameSaveReq } from './game.dtos';
+import { GameSaveReq, GameIdDto, GetGameSkip } from './game.dtos';
 import {
   UseFilesHandler,
   FilesType,
 } from '@hilma/fileshandler-typeorm';
 import { UseJwtAuth } from '@hilma/auth-nest';
-const {mustValid} = require("../serverTools/ServerValid")
+const { mustValid } = require("../serverTools/ServerValid")
 
 @Controller('api/game')
 export class GameController {
   constructor(
     private gameService: GameService
-    ) {}
+  ) { }
 
   // IS FOR DANIEL
   @Get('/gameToFields')
@@ -29,8 +30,8 @@ export class GameController {
 
   @UseJwtAuth('superAdmin', 'teacher')
   @Get('/getGameInfo')
-  async getGameInfo(@Req() ide) {
-    return await this.gameService.getGameInfo(ide.query);
+  async getGameInfo(@Query() ide: GameIdDto) {
+    return await this.gameService.getGameInfo(ide);
   }
 
   @UseJwtAuth('superAdmin')
@@ -43,7 +44,7 @@ export class GameController {
         eachField.value.map(singularInp => {
           let val = singularInp.value;
           if (mustValid(val).length !== 0) {
-            if(eachField.selection === 'text'){              
+            if (eachField.selection === 'text') {
               throw new Error();
             } else {
               emptyField++;
@@ -51,11 +52,11 @@ export class GameController {
           }
         });
       }
-      if(emptyField > 4){
+      if (emptyField > 4) {
         throw new Error();
       }
-      emptyField=0
-    });    
+      emptyField = 0
+    });
     // todo map the field array
     // if(selection = 'image') {
     //   console.log('hi');
@@ -67,8 +68,8 @@ export class GameController {
 
   @UseJwtAuth('superAdmin')
   @Get('/getGames')
-  getGames(@Req() skipON: any) {
-    return this.gameService.getGames(skipON.query);
+  getGames(@Query() skipON: GetGameSkip) {
+    return this.gameService.getGames(skipON);
   }
 
   @UseJwtAuth('superAdmin')

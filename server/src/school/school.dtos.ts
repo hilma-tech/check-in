@@ -12,6 +12,12 @@ import {
 
 export class GetSchoolSkip {
     @IsDefined()
-    @IsNumber()
-    schoolsLength: number;
+    @IsString()
+    schoolsLength: string;
+  }
+
+  export class SchoolIdDto {
+    @IsDefined()
+    @IsString()
+    schoolId: string;
   }

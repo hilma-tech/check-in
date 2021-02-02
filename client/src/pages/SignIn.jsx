@@ -4,7 +4,7 @@ import "../style/sign_in.scss";
 import hilmaicon from "../img/hilmaIcon.svg";
 import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
-import { nameContext } from "../stores/name.store";
+import { nameContext } from "../stores/userName.store";
 import { errorMsgContext } from "../stores/error.store";
 import { observer } from "mobx-react";
 import { IsAuthenticatedContext, LoginContext } from '@hilma/auth';

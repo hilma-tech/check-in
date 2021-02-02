@@ -17,7 +17,7 @@ class Name {
 
     setTeacher = async (id) => {
         try{
-            let {data} = await axios.get("/api/teacher/getTeacherClasses", { id: id });
+            let {data} = await axios.get("/api/teacher/getTeacherClasses", { teacherId: id });
             this.firstName = data.firstName
             this.lastName = data.lastName
             this.teacherClasses = data.currTeacherClasses

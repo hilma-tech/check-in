@@ -4,7 +4,7 @@ import "../../style/teacher/blue_side_bar_style.scss";
 import { withRouter } from "react-router-dom";
 import { LogoutContext } from "@hilma/auth";
 import { withContext } from "@hilma/tools";
-import { nameContext } from "../../stores/name.store";
+import { nameContext } from "../../stores/userName.store";
 
 const mapContextToProps = {
   logout: LogoutContext,

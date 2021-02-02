@@ -10,7 +10,7 @@ import SignIn from "./pages/SignIn.jsx";
 import SuperAdminRoute from "./routing/superAdmin/SuperAdminRoute.jsx";
 import TeacherRoute from "./routing/teacher/TeacherRoute.jsx";
 import { provide } from "@hilma/tools";
-import { nameProvider } from "./stores/name.store";
+import { nameProvider } from "./stores/userName.store";
 import { errorMsgProvider } from "./stores/error.store";
 import { gamesProvider } from "./stores/games.store";
 import { chosenGameEditProvider } from "./stores/chosenGameEdit.store";

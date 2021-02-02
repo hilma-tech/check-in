@@ -26,15 +26,17 @@ export class TeacherService extends UserService {
       relations: ['classroomTeacher'],
       where: [{ id: userinfo }],
     });
-    // let currTeacherClasses = currTeacher[0].classroomTeacher;
-    return {currTeacherClasses: currTeacher.classroomTeacher, firstName: currTeacher.first_name, lastName: currTeacher.last_name};
+    let currTeacherClasses = currTeacher.classroomTeacher.map((teacherClass)=>{
+      return {id: teacherClass.id, name: teacherClass.name}
+    });
+    return {currTeacherClasses: currTeacherClasses, firstName: currTeacher.first_name, lastName: currTeacher.last_name};
   }
   async getTeacher(@Req() skipON: GetTeacherSkip) {
     let numTeachers = await this.userRepository.count();
     let haveMoreTeachers =
       numTeachers > Number(skipON.teachersLength) + 50 ? true : false;
     let teachers = await this.userRepository.find({
-      skip: skipON.teachersLength,
+      skip: Number(skipON.teachersLength),
       take: 50,
       relations: ['school', 'classroomTeacher'],
     });
