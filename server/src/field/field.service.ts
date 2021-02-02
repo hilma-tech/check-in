@@ -38,12 +38,13 @@ export class FieldService {
   async deleteField(gameId) {
     let ans = await this.fieldRepository.find({
       relations: ['game'],
-      where: { game: gameId.Id }
+      where: { game: gameId}
     });
-  if (ans.length>0){
+    if (ans.length>0){
     ans.map((field) => {
-      let deleteField= this.fieldRepository.delete(field.id)
+      let deleteField= this.fieldRepository.delete(field)
     })}
   }
 
 }
+

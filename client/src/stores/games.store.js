@@ -99,8 +99,7 @@ class Games {
 
       deleteGame = async (Id) => {
         try{    
-            await axios.post("/api/field/deleteGameField", {Id})
-            await axios.post("/api/game/deleteGameById", {gameId: Id});
+            await axios.post("/api/game/deleteGameById", {Id});
         } catch(err){
             console.log('delete game err: ', err);
         }

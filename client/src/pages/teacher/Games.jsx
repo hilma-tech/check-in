@@ -51,10 +51,11 @@ class Games extends React.Component {
       // console.log("smaller than six");
       return this.addGameToClass(index);
     } else {
-      // console.log("equal to six");
-      this.props.errorMsg.setErrorMsg(
-        "לכל כיתה יכול להית עד שישה משחקים."
-      );
+      console.log("equal to six");
+      //! show game
+      // this.props.errorMsg.setErrorMsg(
+      //   "לכל כיתה יכול להית עד שישה משחקים."
+      // );
       return null;
     }
   };
