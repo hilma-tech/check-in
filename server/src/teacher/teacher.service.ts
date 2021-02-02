@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { Teacher } from './teacher.entity';
-import { GetTeacherSkip } from './teacher.dtos';
+import { GetTeacherSkip, TeacherIdDto } from './teacher.dtos';
 
 @Injectable()
 export class TeacherService extends UserService {
@@ -19,29 +19,31 @@ export class TeacherService extends UserService {
     super(config_options, userRepository, jwtService, configService);
   }
 
-  async getTeacherClasses(@Body() userinfo: any) {
+  async getTeacherClasses(@Body() userinfo: string) {
     //use teacherId to find all classes relevant
 
     let currTeacher = await this.userRepository.findOne({
       relations: ['classroomTeacher'],
       where: [{ id: userinfo }],
     });
-    // let currTeacherClasses = currTeacher[0].classroomTeacher;
-    return {currTeacherClasses: currTeacher.classroomTeacher, name: currTeacher.first_name};
+    let currTeacherClasses = currTeacher.classroomTeacher.map((teacherClass)=>{
+      return {id: teacherClass.id, name: teacherClass.name}
+    });
+    return {currTeacherClasses: currTeacherClasses, firstName: currTeacher.first_name, lastName: currTeacher.last_name};
   }
   async getTeacher(@Req() skipON: GetTeacherSkip) {
     let numTeachers = await this.userRepository.count();
     let haveMoreTeachers =
       numTeachers > Number(skipON.teachersLength) + 50 ? true : false;
     let teachers = await this.userRepository.find({
-      skip: skipON.teachersLength,
+      skip: Number(skipON.teachersLength),
       take: 50,
       relations: ['school', 'classroomTeacher'],
     });
     return { teachersInfo: teachers, haveMoreTeachers: haveMoreTeachers };
   }
 
-  async getTeacherInfo(@Req() req: any) {
+  async getTeacherInfo(@Req() req: TeacherIdDto) {
     let teacherInfo = await this.userRepository.findOne({
       where: [{ id: req.teacherId }],
       relations: ['school', 'classroomTeacher'],
@@ -49,7 +51,7 @@ export class TeacherService extends UserService {
     return teacherInfo;
   }
 
-  async getTeacherName(@Req() req: any) {
+  async getTeacherName(@Req() req: TeacherIdDto) {
     let teacherInfo = await this.userRepository.findOne({
       where: [{ id: req.teacherId }],
       select: ["first_name"]

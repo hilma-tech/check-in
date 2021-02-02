@@ -9,36 +9,45 @@ import { withContext } from '@hilma/tools';
 import '../style/pop_up_error_style.scss'
 
 class PopUpError extends React.Component {
-    constructor(props) {
-        super();
-    }
+  constructor(props) {
+    super();
+  }
 
-    approvalButton = () => {
-      this.props.errorMsg.approveClick()
-      this.props.errorMsg.resetMsg()
-      if(!this.props.errorMsg.question && window.location.pathname.includes('superAdmin')){
-        if(window.location.pathname !== "/superAdmin/games"){
-          window.location.pathname = "/superAdmin/games"
-        }
+  approvalButton = () => {
+    this.props.errorMsg.approveClick()
+    this.props.errorMsg.resetMsg()
+    if (!this.props.errorMsg.question && window.location.pathname.includes('superAdmin')) {
+      if (window.location.pathname !== "/superAdmin/games") {
+        window.location.pathname = "/superAdmin/games"
       }
     }
-
-    cancelButton = () => {
-      this.props.errorMsg.resetMsg()
-      this.props.errorMsg.disapproveClick()
+    else if (!this.props.errorMsg.question && window.location.pathname.includes('teacher')) {
+      if (window.location.pathname !== "teacher/classes") {
+        window.location.pathname = "teacher/classes"
+      }
+    }
+    if (this.props.question === true) {
+      this.props.OnApprove();
     }
 
-    render() { 
-        return ( 
-            <Dialog
-            PaperProps={{
-                style: {
-                  backgroundColor: 'white',
-                  boxShadow: '0px 3px 6px #00000029',
-                  border: '1px solid #707070',
-                  padding: '5px'
-                },
-              }}
+  }
+
+  cancelButton = () => {
+    this.props.errorMsg.resetMsg()
+    this.props.errorMsg.disapproveClick()
+  }
+
+  render() {
+    return (
+      <Dialog
+        PaperProps={{
+          style: {
+            backgroundColor: 'white',
+            boxShadow: '0px 3px 6px #00000029',
+            border: '1px solid #707070',
+            padding: '5px'
+          },
+        }}
         open={this.props.errorMsg.showMsg}
         // onClose={handleClose}
         aria-labelledby="alert-dialog-title"
@@ -51,20 +60,20 @@ class PopUpError extends React.Component {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          { 
-          this.props.errorMsg.question ?
-          <button className='popUpCanselButton' color="primary" onClick={this.cancelButton}>
-            ביטול
+          {
+            this.props.errorMsg.question ?
+              <button className='popUpCanselButton' color="primary" onClick={this.cancelButton}>
+                ביטול
           </button> : <></>
           }
           <button className='popUpOkButton' onClick={this.approvalButton}>
             אישור
           </button>
-          
+
         </DialogActions>
       </Dialog>
-         );
-    }
+    );
+  }
 }
 
 const mapContextToProps = {

@@ -4,7 +4,7 @@ import "../style/sign_in.scss";
 import hilmaicon from "../img/hilmaIcon.svg";
 import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
-import { nameContext } from "../stores/name.store";
+import { nameContext } from "../stores/userName.store";
 import { errorMsgContext } from "../stores/error.store";
 import { observer } from "mobx-react";
 import { IsAuthenticatedContext, LoginContext } from '@hilma/auth';
@@ -49,10 +49,7 @@ class SignIn extends Component {
         });
         if(response.success){
           if(response.user.type === "Teacher"){
-            console.log('xmksaxk');
-            this.props.name.setId(response.user.id)
             this.props.history.push("/teacher/classes");
-            window.location.pathname = "/teacher/classes"
           } else{
             this.props.history.push("/superAdmin/games");
             window.location.pathname = "/superAdmin/games"

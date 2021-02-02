@@ -49,6 +49,18 @@ class Games extends Component {
     this.props.history.push(this.props.location.pathname + "Edit");
   };
 
+  onClickDeleteGame = () => {
+    this.props.errorMsg.setErrorMsg(
+      "האם אתה בטוח שברצונך למחוק משחק זה?"
+    );
+    this.props.errorMsg.question = true;
+  };
+
+  OnApprove = async (gameId) => {
+   await this.props.games.deleteGame(gameId);
+    window.location.pathname = "superAdmin/games"
+  }
+
   //Save the user search value as searchVal in state.
   handleChang = (e) => {
     this.setState({ searchVal: e.target.value });
@@ -88,64 +100,66 @@ class Games extends Component {
             </form> */}
           </div>
           {this.props.games.haveMoreGames &&
-          this.props.games.gamesList.length === 0
+            this.props.games.gamesList.length === 0
             ? (displayLoading = true)
             : (displayLoading = false)}
           {this.props.games.haveMoreGames &&
-          this.props.games.gamesList.length === 0 ? (
-            <LoadingPage />
-          ) : (
-            <div className="grid">
-              <div onClick={this.onClickAddGame}>
-                <div className="imageContainer item3">
-                  <img className="addImg" src={addicon} alt="" />
-                  <h2 className="gameTitleBackground"></h2>
-                  <h1 className="gameTitle">הוסף משחק</h1>
-                </div>
-              </div>
-              {this.props.games.gamesList.map((image, index) => {
-                return (
-                  <div key={image.id}>
-                    <div className="imageContainer item3">
-                      <Fade
-                        in={image.showOption}
-                        timeout={{
-                          appear: 500,
-                          enter: 400,
-                          exit: 100,
-                        }}
-                        mountOnEnter
-                        unmountOnExit
-                      >
-                        <PopUp
-                          onClickEditGame={this.onClickEditGame}
-                          gameId={image.id}
-                        />
-                      </Fade>
-                      <div id="holdImg">
-                        <img className="gameImg" alt="" src="https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg" />
-                      </div>
-                      <h2 className="gameTitleBackground"></h2>
-                      <h1 className="gameTitle">
-                        {image.game_name.length > 15
-                          ? image.game_name.slice(0, 15) + "..."
-                          : image.game_name}
-                      </h1>
-                      <img
-                    
-                        className="optionIcon"
-                        onClick={() => {
-                          this.props.games.setShowOption(index);
-                        }}
-                        alt=""
-                        src={optionicon}
-                      />
-                    </div>
+            this.props.games.gamesList.length === 0 ? (
+              <LoadingPage />
+            ) : (
+              <div className="grid">
+                <div onClick={this.onClickAddGame}>
+                  <div className="imageContainer item3">
+                    <img className="addImg" src={addicon} alt="" />
+                    <h2 className="gameTitleBackground"></h2>
+                    <h1 className="gameTitle">הוסף משחק</h1>
                   </div>
-                );
-              })}
-            </div>
-          )}
+                </div>
+                {this.props.games.gamesList.map((image, index) => {
+                  return (
+                    <div key={image.id}>
+                      <div className="imageContainer item3">
+                        <Fade
+                          in={image.showOption}
+                          timeout={{
+                            appear: 500,
+                            enter: 400,
+                            exit: 100,
+                          }}
+                          mountOnEnter
+                          unmountOnExit
+                        >
+                          <PopUp
+                            onClickEditGame={this.onClickEditGame}
+                            onClickDeleteGame={this.onClickDeleteGame}
+                            OnApprove={this.OnApprove}
+                            gameId={image.id}
+                          />
+                        </Fade>
+                        <div id="holdImg">
+                          <img className="gameImg" alt="" src="https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg" />
+                        </div>
+                        <h2 className="gameTitleBackground"></h2>
+                        <h1 className="gameTitle">
+                          {image.game_name.length > 15
+                            ? image.game_name.slice(0, 15) + "..."
+                            : image.game_name}
+                        </h1>
+                        <img
+
+                          className="optionIcon"
+                          onClick={() => {
+                            this.props.games.setShowOption(index);
+                          }}
+                          alt=""
+                          src={optionicon}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
 
           {this.startGetGames ? (
             <img
@@ -154,19 +168,19 @@ class Games extends Component {
               alt="loading..."
             ></img>
           ) : (
-            <button
-              className="showMoreGamesB"
-              onClick={this.getGames}
-              style={{
-                display:
-                  this.props.games.haveMoreGames && !displayLoading
-                    ? "inline-block"
-                    : "none",
-              }}
-            >
-              הצג עוד
-            </button>
-          )}
+              <button
+                className="showMoreGamesB"
+                onClick={this.getGames}
+                style={{
+                  display:
+                    this.props.games.haveMoreGames && !displayLoading
+                      ? "inline-block"
+                      : "none",
+                }}
+              >
+                הצג עוד
+              </button>
+            )}
         </div>
       </>
     );
