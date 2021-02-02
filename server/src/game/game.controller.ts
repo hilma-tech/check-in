@@ -71,4 +71,10 @@ export class GameController {
   getGames(@Query() skipON: GetGameSkip) {
     return this.gameService.getGames(skipON);
   }
+
+  @UseJwtAuth('superAdmin')
+  @Post('/deleteGameById')
+  deleteGame(@Body() req: any) {
+    return this.gameService.deleteGameById(req.gameId);
+  }
 }

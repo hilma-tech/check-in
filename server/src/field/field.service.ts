@@ -9,7 +9,7 @@ export class FieldService {
   constructor(
     @InjectRepository(Field)
     private fieldRepository: Repository<Field>,
-  ) {}
+  ) { }
 
   async saveField(@Body() req: SaveFieldDto) {
     req.data.map(async fieldObject => {
@@ -30,8 +30,20 @@ export class FieldService {
       }
       field.order = fieldObject.order;
       field.game = req.id;
-      
+
       await this.fieldRepository.save(field);
     });
   }
+
+  async deleteField(gameId) {
+    let ans = await this.fieldRepository.find({
+      relations: ['game'],
+      where: { game: gameId.Id }
+    });
+  if (ans.length>0){
+    ans.map((field) => {
+      let deleteField= this.fieldRepository.delete(field.id)
+    })}
+  }
+
 }

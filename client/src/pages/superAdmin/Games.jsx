@@ -49,12 +49,17 @@ class Games extends Component {
     this.props.history.push(this.props.location.pathname + "Edit");
   };
 
-  onClickDeleteGame = (gameId) => {
+  onClickDeleteGame = () => {
     this.props.errorMsg.setErrorMsg(
       "האם אתה בטוח שברצונך למחוק משחק זה?"
-      );
-      this.props.errorMsg.question = true;
+    );
+    this.props.errorMsg.question = true;
   };
+
+  OnApprove = async (gameId) => {
+   await this.props.games.deleteGame(gameId);
+    window.location.pathname = "superAdmin/games"
+  }
 
   //Save the user search value as searchVal in state.
   handleChang = (e) => {
@@ -127,6 +132,7 @@ class Games extends Component {
                           <PopUp
                             onClickEditGame={this.onClickEditGame}
                             onClickDeleteGame={this.onClickDeleteGame}
+                            OnApprove={this.OnApprove}
                             gameId={image.id}
                           />
                         </Fade>

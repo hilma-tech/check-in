@@ -21,6 +21,7 @@ class Games {
             removeGameFromClass: action,
             addGameToClass: action,
             getClassroomGames: action,
+            deleteGame: action
         })
     }
 
@@ -95,8 +96,17 @@ class Games {
             console.log('add game err: ', err);
         }
       }
+
+      deleteGame = async (Id) => {
+        try{    
+            await axios.post("/api/field/deleteGameField", {Id})
+            await axios.post("/api/game/deleteGameById", {gameId: Id});
+        } catch(err){
+            console.log('delete game err: ', err);
+        }
+      }
 }
 
 const games = new Games();
 
-export const [gamesContext, gamesProvider, useGames] = createMobXContext(games);
+export const [gamesContext, gamesProvider, useGames] = createMobXContext(games); 

@@ -9,6 +9,7 @@ import {
   ImageService,
 } from '@hilma/fileshandler-typeorm'
 
+
 @Injectable()
 export class GameService {
   constructor(
@@ -16,28 +17,28 @@ export class GameService {
     private gameRepository: Repository<Game>,
     private fieldService: FieldService,
     private readonly imageService: ImageService,
-  ) {}
+  ) { }
 
-    async addGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq){
-      // if(req.game.image.value){
-      //   let imgPath = await this.imageService.save(files, req.game.image.id);
-      //   req.game.image.value = imgPath;
-      // } else {
-      //   req.game.image.value = "https://site.groupe-psa.com/content/uploads/sites/9/2016/12/white-background-2.jpg";
-      // }
-  
-      req.field.forEach(async (img, index) => {
-        if ('image' === img.selection) {
-          let imgPath = await this.imageService.save(files, img.value[0].id);
-          req.field[index].value[0].value = imgPath;
-        }
-      });
-      let game = await this.saveGame(req.game);
-      await this.fieldService.saveField({ data: req.field, id: game.id });
-      return game;
-    }
+  async addGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
+    // if(req.game.image.value){
+    //   let imgPath = await this.imageService.save(files, req.game.image.id);
+    //   req.game.image.value = imgPath;
+    // } else {
+    //   req.game.image.value = "https://site.groupe-psa.com/content/uploads/sites/9/2016/12/white-background-2.jpg";
+    // }
 
-    //IS FOR DANIEL
+    req.field.forEach(async (img, index) => {
+      if ('image' === img.selection) {
+        let imgPath = await this.imageService.save(files, img.value[0].id);
+        req.field[index].value[0].value = imgPath;
+      }
+    });
+    let game = await this.saveGame(req.game);
+    await this.fieldService.saveField({ data: req.field, id: game.id });
+    return game;
+  }
+
+  //IS FOR DANIEL
   async returnGames(skip, amount) {
     return await this.gameRepository.find({
       relations: ["fields"],
@@ -59,7 +60,7 @@ export class GameService {
   }
 
   async getGames(@Req() skipON: GetGameSkip) {
-    let numGames = await this.gameRepository.count();    
+    let numGames = await this.gameRepository.count();
     let haveMoreGames = numGames > Number(skipON.gamesLength) + 50 ? true : false;
     let gamesInfo = await this.gameRepository.find({
       where: [{ suspended: false }],
@@ -68,7 +69,7 @@ export class GameService {
       select: ["id", "game_name", "image"],
       order: {
         id: "DESC"
-    }
+      }
     });
     return { gamesInfo: gamesInfo, haveMoreGames: haveMoreGames };
   }
@@ -86,14 +87,14 @@ export class GameService {
         if (
           games[i].fields[j].type === "image" ||
           games[i].fields[j].type === "text"
-          ) {
-            games[i].fields[j].value = [
-              { id: 0, value: games[i].fields[j].default_value }
-            ];
-          } else {
-            games[i].fields[j].value = JSON.parse(
-              games[i].fields[j].default_value
-              ).map((value, index) => {
+        ) {
+          games[i].fields[j].value = [
+            { id: 0, value: games[i].fields[j].default_value }
+          ];
+        } else {
+          games[i].fields[j].value = JSON.parse(
+            games[i].fields[j].default_value
+          ).map((value, index) => {
             return { id: index, value: value };
           });
         }
@@ -105,7 +106,7 @@ export class GameService {
     return games[0];
   }
 
-  async getAllGames(){
+  async getAllGames() {
     return await this.gameRepository.find({
       select: ["id", "game_name", "image"],
       where: [{ suspended: false }]
@@ -116,5 +117,9 @@ export class GameService {
     return await this.gameRepository.find({
       where: { id: gameId },
     });
+  }
+
+  async deleteGameById(id) {
+    let RemoveGame = await this.gameRepository.delete(id);
   }
 }
