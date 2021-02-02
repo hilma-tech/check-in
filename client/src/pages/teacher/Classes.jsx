@@ -38,6 +38,7 @@ class Classes extends Component {
   }
 
   componentDidMount = async () => {
+      await this.props.name.setTeacher()
       this.setState({ classes: this.props.name.teacherClasses, name: this.props.name.firstName});
   };
 

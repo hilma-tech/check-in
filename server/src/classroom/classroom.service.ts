@@ -1,7 +1,7 @@
 import { Body, Injectable} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Game } from 'src/game/game.entity';
 import { GameService } from 'src/game/game.service';
+import {ClassFieldService} from 'src/class-field/class-field.service'
 import { Repository } from 'typeorm';
 import { ClassroomIdDto, ClassroomGameDto } from './classroom.dtos';
 import { Classroom } from './classroom.entity';
@@ -12,7 +12,8 @@ export class ClassroomService {
   constructor(
     @InjectRepository(Classroom)
     private classroomRepository: Repository<Classroom>,
-    private gameService: GameService
+    private gameService: GameService,
+    protected classfieldService: ClassFieldService
   ) {}
 
   async getClassroomGames(req: ClassroomIdDto) {
@@ -51,11 +52,11 @@ export class ClassroomService {
       relations: ['games'],
       where: [{ id: req.classId }],
     });
-
     currClassGameArr.games.push(classroomGame.games[0]);
     let newlyAddedGame = await this.classroomRepository.save(
       currClassGameArr,
     );
+    // await this.clasfieldService.addGameFieldsToClass(req)
     return { newlyAddedGame: newlyAddedGame };
   }
 

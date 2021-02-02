@@ -35,7 +35,7 @@ import { ClassFieldModule } from './class-field/class-field.module';
     ClassroomModule,
     ClassFieldModule,
   ],
-  controllers: [AppController, ClassFieldController],
-  providers: [AppService, ClassFieldService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

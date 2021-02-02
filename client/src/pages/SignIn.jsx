@@ -49,7 +49,6 @@ class SignIn extends Component {
         });
         if(response.success){
           if(response.user.type === "Teacher"){
-            await this.props.name.setTeacher(response.user.id)
             this.props.history.push("/teacher/classes");
           } else{
             this.props.history.push("/superAdmin/games");
