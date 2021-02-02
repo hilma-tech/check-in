@@ -120,6 +120,6 @@ export class GameService {
   }
 
   async deleteGameById(id) {
-    let RemoveGame = await this.gameRepository.delete(id);
+    let RemoveGame = await this.gameRepository.delete(id.Id);
   }
 }

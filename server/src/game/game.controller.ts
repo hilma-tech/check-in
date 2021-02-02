@@ -14,12 +14,15 @@ import {
   FilesType,
 } from '@hilma/fileshandler-typeorm';
 import { UseJwtAuth } from '@hilma/auth-nest';
+import { Field } from 'src/field/field.entity';
+import { FieldService } from 'src/field/field.service';
 const { mustValid } = require("../serverTools/ServerValid")
 
 @Controller('api/game')
 export class GameController {
   constructor(
-    private gameService: GameService
+    private gameService: GameService,
+    private fieldService: FieldService
   ) { }
 
   // IS FOR DANIEL
@@ -75,6 +78,7 @@ export class GameController {
   @UseJwtAuth('superAdmin')
   @Post('/deleteGameById')
   deleteGame(@Body() req: any) {
-    return this.gameService.deleteGameById(req.gameId);
+    this.fieldService.deleteField(req)
+    return this.gameService.deleteGameById(req);
   }
 }

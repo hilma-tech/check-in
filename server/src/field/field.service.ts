@@ -40,7 +40,7 @@ export class FieldService {
       relations: ['game'],
       where: { game: gameId.Id }
     });
-  if (ans.length>0){
+    if (ans.length>0){
     ans.map((field) => {
       let deleteField= this.fieldRepository.delete(field.id)
     })}
