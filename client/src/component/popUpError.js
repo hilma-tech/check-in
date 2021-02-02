@@ -21,9 +21,6 @@ class PopUpError extends React.Component {
       }
     }
     else if (!this.props.errorMsg.question && window.location.pathname.includes('teacher')) {
-      console.log('i am here');
-      console.log('this.props.errorMsg.errorMsg.includes("הייתה שגיאה בשרת"): ', this.props.errorMsg.errorMsg.includes('הייתה שגיאה בשרת'));
-      console.log('this.props.errorMsg.errorMsg: ', this.props.errorMsg.errorMsg);
       if (window.location.pathname !== "teacher/classes" && this.props.errorMsg.errorMsg.includes("הייתה שגיאה בשרת")) {
         window.location.pathname = "teacher/classes"
       }
