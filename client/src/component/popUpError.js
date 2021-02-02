@@ -22,7 +22,8 @@ class PopUpError extends React.Component {
       }
     }
     else if (!this.props.errorMsg.question && window.location.pathname.includes('teacher')) {
-      if (window.location.pathname !== "teacher/classes") {
+      if (!(window.location.pathname === "teacher/classes" || window.location.pathname === "/teacher/classes/showGame")) {
+        console.log("IM IN HERE");
         window.location.pathname = "teacher/classes"
       }
     }
