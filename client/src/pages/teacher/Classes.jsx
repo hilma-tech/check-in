@@ -9,7 +9,7 @@ import { chosenClassContext } from "../../stores/chosenClass.store";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { errorMsgContext } from "../../stores/error.store";
-import { nameContext } from "../../stores/name.store";
+import { nameContext } from "../../stores/userName.store";
 
 class Classes extends Component {
   constructor() {
