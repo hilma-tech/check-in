@@ -15,22 +15,20 @@ class PopUpError extends React.Component {
 
   approvalButton = () => {
     this.props.errorMsg.approveClick()
-    this.props.errorMsg.resetMsg()
     if (!this.props.errorMsg.question && window.location.pathname.includes('superAdmin')) {
       if (window.location.pathname !== "/superAdmin/games") {
         window.location.pathname = "/superAdmin/games"
       }
     }
     else if (!this.props.errorMsg.question && window.location.pathname.includes('teacher')) {
-      if (!(window.location.pathname === "teacher/classes" || window.location.pathname === "/teacher/classes/showGame")) {
-        console.log("IM IN HERE");
+      if (window.location.pathname !== "teacher/classes" && this.props.errorMsg.errorMsg.includes("הייתה שגיאה בשרת")) {
         window.location.pathname = "teacher/classes"
       }
     }
     if (this.props.question === true) {
       this.props.OnApprove();
     }
-
+    this.props.errorMsg.resetMsg()
   }
 
   cancelButton = () => {

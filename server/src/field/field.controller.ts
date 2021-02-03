@@ -7,10 +7,4 @@ export class FieldController {
   constructor(
     private fieldService: FieldService
     ) { }
-
-    @UseJwtAuth('superAdmin')
-    @Post('/deleteGameField')
-    async deleteGameField(@Body() req: any) {
-        return await this.fieldService.deleteField(req)
-    }
 }

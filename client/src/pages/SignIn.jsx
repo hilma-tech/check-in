@@ -10,6 +10,8 @@ import { observer } from "mobx-react";
 import { IsAuthenticatedContext, LoginContext } from '@hilma/auth';
 import { passwordValidation, emailValidation } from '../tools/ValidationFunctions'
 
+const axios = require("axios").default;
+
 class SignIn extends Component {
   constructor() {
     super();
@@ -23,10 +25,19 @@ class SignIn extends Component {
     };
   }
 
-  componentDidMount = () => {
+  componentDidMount = async() => {
     let isAuthed = this.props.isAuthenticated
     if (isAuthed === true) {
-      this.props.history.push("/superAdmin/games")
+      try{
+        let {data} = await axios.get("/api/super-admin/getUserType");
+        if (data === 'Teacher'){
+          this.props.history.push("/teacher/classes")
+        } else {
+          this.props.history.push("/superAdmin/games")
+        }
+      } catch(err){
+          console.log('set user err: ', err);
+      }
     }
   }
 
