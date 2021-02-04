@@ -3,7 +3,7 @@ import { UserService, RequestUser, Role, UseJwtAuth } from '@hilma/auth-nest';
 import { Teacher } from './teacher.entity';
 import { TeacherService } from './teacher.service';
 import { Classroom } from 'src/classroom/classroom.entity';
-import { TeacherIdDto, GetTeacherSkip,TeacherInfoDto } from './teacher.dtos';
+import { TeacherIdDto, GetTeacherSkip,TeacherInfoDto, GetClassSkip} from './teacher.dtos';
 
 @Controller('api/teacher')
 export class TeacherController {
@@ -16,8 +16,8 @@ export class TeacherController {
 
   @UseJwtAuth('teacher')
   @Get('/getTeacherClasses')
-  async getTeacherClasses(@RequestUser() userinfo:TeacherInfoDto) {
-    return await this.teacherService.getTeacherClasses(userinfo.id);
+  async getTeacherClasses(@RequestUser() userinfo:TeacherInfoDto, @Query() skipOn: GetClassSkip) {
+    return await this.teacherService.getTeacherClasses(userinfo.id, skipOn);
   }
 
   @UseJwtAuth('superAdmin')

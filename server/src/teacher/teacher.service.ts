@@ -5,7 +5,8 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { Teacher } from './teacher.entity';
-import { GetTeacherSkip, TeacherIdDto } from './teacher.dtos';
+import { GetTeacherSkip, TeacherIdDto, GetClassSkip } from './teacher.dtos';
+
 
 @Injectable()
 export class TeacherService extends UserService {
@@ -19,7 +20,7 @@ export class TeacherService extends UserService {
     super(config_options, userRepository, jwtService, configService);
   }
 
-  async getTeacherClasses(@Body() userinfo: string) {
+  async getTeacherClasses(@Body() userinfo: string, skipON: GetClassSkip) {
     //use teacherId to find all classes relevant
 
     let currTeacher = await this.userRepository.findOne({
@@ -29,8 +30,15 @@ export class TeacherService extends UserService {
     let currTeacherClasses = currTeacher.classroomTeacher.map((teacherClass)=>{
       return {id: teacherClass.id, name: teacherClass.name}
     });
-    return {currTeacherClasses: currTeacherClasses, firstName: currTeacher.first_name, lastName: currTeacher.last_name};
+    let haveMoreClasses = currTeacherClasses.length > Number(skipON.classesLength) + 50 ? true : false
+
+    if(skipON.classesLength === "0"){
+      return {currTeacherClasses: currTeacherClasses.slice(Number(skipON.classesLength), Number(skipON.classesLength)+50), haveMoreClasses: haveMoreClasses, firstName: currTeacher.first_name, lastName: currTeacher.last_name};
+    } else {
+      return {currTeacherClasses: currTeacherClasses.slice(Number(skipON.classesLength), Number(skipON.classesLength)+50), haveMoreClasses: haveMoreClasses};
+    }
   }
+
   async getTeacher(@Req() skipON: GetTeacherSkip) {
     let numTeachers = await this.userRepository.count();
     let haveMoreTeachers =

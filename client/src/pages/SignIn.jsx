@@ -7,7 +7,7 @@ import { withContext } from "@hilma/tools";
 import { nameContext } from "../stores/userName.store";
 import { errorMsgContext } from "../stores/error.store";
 import { observer } from "mobx-react";
-import { IsAuthenticatedContext, LoginContext } from '@hilma/auth';
+import { IsAuthenticatedContext, LoginContext, useGetAccessToken, AuthContext, UserContext } from '@hilma/auth';
 import { passwordValidation, emailValidation } from '../tools/ValidationFunctions'
 
 const axios = require("axios").default;
@@ -25,18 +25,16 @@ class SignIn extends Component {
     };
   }
 
-  componentDidMount = async() => {
+  componentDidMount = async () => {
     let isAuthed = this.props.isAuthenticated
     if (isAuthed === true) {
-      try{
-        let {data} = await axios.get("/api/super-admin/getUserType");
-        if (data === 'Teacher'){
-          this.props.history.push("/teacher/classes")
-        } else {
-          this.props.history.push("/superAdmin/games")
-        }
-      } catch(err){
-          console.log('set user err: ', err);
+      let kl = atob(this.props.AuthContext.kls.kl)
+      kl = kl.replace('["', "")
+      kl = kl.replace('"]', "")
+      if (kl == "mlkdsef98uxmwieau89") {
+        this.props.history.push("/teacher/classes")
+      } else {
+        this.props.history.push("/superAdmin/games")
       }
     }
   }
@@ -58,10 +56,10 @@ class SignIn extends Component {
           username,
           password,
         });
-        if(response.success){
-          if(response.user.type === "Teacher"){
+        if (response.success) {
+          if (response.user.type === "Teacher") {
             this.props.history.push("/teacher/classes");
-          } else{
+          } else {
             this.props.history.push("/superAdmin/games");
             window.location.pathname = "/superAdmin/games"
           }
@@ -132,7 +130,9 @@ const mapContextToProps = {
   name: nameContext,
   errorMsg: errorMsgContext,
   isAuthenticated: IsAuthenticatedContext,
-  LoginContext: LoginContext
+  LoginContext: LoginContext,
+  AuthContext: AuthContext,
+  UserContext: UserContext
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(SignIn)));

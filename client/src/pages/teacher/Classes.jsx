@@ -33,13 +33,15 @@ class Classes extends Component {
       "#9c001b",
       "#411045",
     ];
-    this.state = { classes: [],
-    name:"" };
+    this.state = {
+      classes: [],
+      name: ""
+    };
   }
 
   componentDidMount = async () => {
-      await this.props.name.setTeacher()
-      this.setState({ classes: this.props.name.teacherClasses, name: this.props.name.firstName});
+    await this.props.name.setTeacher()
+    this.setState({ classes: this.props.name.teacherClasses, name: this.props.name.firstName });
   };
 
   moveToClass = (classId, classroomName) => {
@@ -55,25 +57,48 @@ class Classes extends Component {
         </div>
         <PageTitle className="officialTitle" title={"שלום המורה " + this.state.name + "!"} />
         <p className='classesArrowBarText'>
-                        בחר/י כיתה כדי לראות את פרטי הכיתה
+          בחר/י כיתה כדי לראות את פרטי הכיתה
                 </p>
-        <div className="griddler">
-          {this.state.classes.map((classObj, index) => {
-            return (
-              <div
-                onClick={() => {
-                  this.moveToClass(classObj.id, classObj.name);
+        <div>
+          <div className="griddler">
+            {this.state.classes.map((classObj, index) => {
+              return (
+                <div
+                  onClick={() => {
+                    this.moveToClass(classObj.id, classObj.name);
+                  }}
+                  className="circleCont"
+                  style={{ borderColor: this.colors[index] }}
+                  key={classObj.id}
+                >
+                  <h3 className="className" key={index} style={{ color: this.colors[index] }}>
+                    {classObj.name}
+                  </h3>
+                </div>
+              );
+            })}
+          </div>
+          {/* {
+            this.props.name.startGetClasses ?
+              <img
+                style={{ width: "8vw", height: '8vw', marginTop: '1vh' }}
+                src="/icons/loading.gif"
+                alt="loading..."
+              ></img> :
+              <button
+                className="showMoreGamesB"
+                onClick={this.props.name.getMoreClasses}
+                style={{
+                  marginTop: '1vh',
+                  display:
+                    this.props.name.haveMoreClasses
+                      ? "inline-block"
+                      : "none",
                 }}
-                className="circleCont"
-                style={{ borderColor: this.colors[index] }}
-                key={classObj.id}
               >
-                <h3 className="className" key={index} style={{ color: this.colors[index] }}>
-                  {classObj.name}
-                </h3>
-              </div>
-            );
-          })}
+                הצג עוד
+            </button>
+          } */}
         </div>
       </>
     );
