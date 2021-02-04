@@ -7,7 +7,7 @@ import { withContext } from "@hilma/tools";
 import { nameContext } from "../stores/userName.store";
 import { errorMsgContext } from "../stores/error.store";
 import { observer } from "mobx-react";
-import { IsAuthenticatedContext, LoginContext, useGetAccessToken, AuthContext, UserContext } from '@hilma/auth';
+import { IsAuthenticatedContext, LoginContext, AuthContext } from '@hilma/auth';
 import { passwordValidation, emailValidation } from '../tools/ValidationFunctions'
 
 const axios = require("axios").default;
@@ -132,7 +132,6 @@ const mapContextToProps = {
   isAuthenticated: IsAuthenticatedContext,
   LoginContext: LoginContext,
   AuthContext: AuthContext,
-  UserContext: UserContext
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(SignIn)));

@@ -10,6 +10,7 @@ import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { errorMsgContext } from "../../stores/error.store";
 import { nameContext } from "../../stores/userName.store";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class Classes extends Component {
   constructor() {
@@ -41,7 +42,6 @@ class Classes extends Component {
 
   componentDidMount = async () => {
     await this.props.name.setTeacher()
-    this.setState({ classes: this.props.name.teacherClasses, name: this.props.name.firstName });
   };
 
   moveToClass = (classId, classroomName) => {
@@ -55,13 +55,13 @@ class Classes extends Component {
         <div className="smallSticky">
           <SmallMenuBar />
         </div>
-        <PageTitle className="officialTitle" title={"שלום המורה " + this.state.name + "!"} />
+        <PageTitle className="officialTitle" title={"שלום המורה " + this.props.name.firstName + "!"} />
         <p className='classesArrowBarText'>
           בחר/י כיתה כדי לראות את פרטי הכיתה
                 </p>
-        <div>
+        <div id="teacherClassesPage">
           <div className="griddler">
-            {this.state.classes.map((classObj, index) => {
+            {this.props.name.teacherClasses.map((classObj, index) => {
               return (
                 <div
                   onClick={() => {
@@ -78,13 +78,9 @@ class Classes extends Component {
               );
             })}
           </div>
-          {/* {
+          {
             this.props.name.startGetClasses ?
-              <img
-                style={{ width: "8vw", height: '8vw', marginTop: '1vh' }}
-                src="/icons/loading.gif"
-                alt="loading..."
-              ></img> :
+            <CircularProgress color="#043163" size="1.5rem"/> :
               <button
                 className="showMoreGamesB"
                 onClick={this.props.name.getMoreClasses}
@@ -98,7 +94,7 @@ class Classes extends Component {
               >
                 הצג עוד
             </button>
-          } */}
+          }
         </div>
       </>
     );

@@ -17,12 +17,15 @@
 }
 
 .griddler {
-  margin-top: 18vh;
   padding-top: 11.1vh;
   display: grid;
   grid-template-columns: 35vw 35vw;
   grid-auto-rows: minmax(40vw, 45vw);
   justify-content: space-evenly;
+}
+
+#teacherClassesPage{
+  margin-top: 18vh;
   background-color: #F2F7FC;
   height: 70vh;
   overflow-y: scroll;
@@ -57,11 +60,14 @@
 
 @media only screen and (min-width: 500px) {
   .griddler {
+    grid-template-columns: 15vw 15vw 15vw;
+    grid-auto-rows: minmax(17vw, 20vw);
+  }
+  
+  #teacherClassesPage{
     position: absolute;
     width: 75vw;
     left: 0vw;
-    grid-template-columns: 15vw 15vw 15vw;
-    grid-auto-rows: minmax(17vw, 20vw);
   }
 
   .className {

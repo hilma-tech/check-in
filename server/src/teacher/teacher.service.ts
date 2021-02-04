@@ -22,6 +22,16 @@ export class TeacherService extends UserService {
 
   async getTeacherClasses(@Body() userinfo: string, skipON: GetClassSkip) {
     //use teacherId to find all classes relevant
+    
+    // let temp = await this.userRepository.createQueryBuilder("Teacher")
+    // .innerJoinAndSelect("Teacher.classroomTeacher", "Classroom")
+    // .select("Teacher.first_name")
+    // .addSelect("Teacher.last_name")
+    // .addSelect("Classroom.id")
+    // .addSelect("Classroom.name")
+    // .where("Teacher.id = :id", { id: userinfo })
+    // .getOne();
+    // console.log('temp: ', temp);
 
     let currTeacher = await this.userRepository.findOne({
       relations: ['classroomTeacher'],
@@ -35,6 +45,7 @@ export class TeacherService extends UserService {
     if(skipON.classesLength === "0"){
       return {currTeacherClasses: currTeacherClasses.slice(Number(skipON.classesLength), Number(skipON.classesLength)+50), haveMoreClasses: haveMoreClasses, firstName: currTeacher.first_name, lastName: currTeacher.last_name};
     } else {
+      console.log('currTeacherClasses.slice(Number(skipON.classesLength), Number(skipON.classesLength)+50): ', currTeacherClasses.slice(Number(skipON.classesLength), Number(skipON.classesLength)+50));
       return {currTeacherClasses: currTeacherClasses.slice(Number(skipON.classesLength), Number(skipON.classesLength)+50), haveMoreClasses: haveMoreClasses};
     }
   }
