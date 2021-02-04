@@ -60,12 +60,7 @@ export class GameController {
       }
       emptyField = 0
     });
-    // todo map the field array
-    // if(selection = 'image') {
-    //   console.log('hi');
-    // } else {
-    //   test that its only hebrew and max 255 chars
-    // }
+    
     return await this.gameService.addGame(files, req);
   }
 

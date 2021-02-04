@@ -14,13 +14,6 @@ export class SuperAdminController {
     // this.register({username: 'superadmin@gmail.com', password:'superadmin1'})
   }
 
-    @UseLocalAuth()
-    @Post('/login')
-    login(@RequestUser() userInfo, @Res() res) {
-      let body = this.userService.login(userInfo, res);
-      res.send(body);
-    }
-
     @UseJwtAuth('teacher', 'superAdmin')
     @Get('/getUserType')
     getUserType(@RequestUser() userInfo) {
