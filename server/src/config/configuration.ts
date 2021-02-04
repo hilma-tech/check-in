@@ -40,6 +40,7 @@ export default () => ({
         "TeacherClasses",
         "SmallTeacherRoute",
         "TeacherEditGame",
+        "TeacherShowGame",
         "TeacherStudentInfo",
         "TeacherStudentsList",
       ],

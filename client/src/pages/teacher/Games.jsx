@@ -52,11 +52,14 @@ class Games extends React.Component {
       return this.addGameToClass(index);
     } else {
       console.log("equal to six");
-      //! show game
+      await this.props.chosenGame.setgameId(
+        this.props.games.gamesList[index].id,
+        index
+      );
+      this.props.history.push("/teacher/classes/showGame")
       // this.props.errorMsg.setErrorMsg(
       //   "לכל כיתה יכול להית עד שישה משחקים."
       // );
-      return null;
     }
   };
 
