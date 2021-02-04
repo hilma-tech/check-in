@@ -106,3 +106,13 @@ export class GameIdDto {
   @IsString()
   id: string;
 }
+
+export class GetGameDto {
+  @IsDefined()
+  @IsNumber()
+  skipON: number;
+
+  @IsDefined()
+  @IsNumber()
+  numOfGames: number;
+}

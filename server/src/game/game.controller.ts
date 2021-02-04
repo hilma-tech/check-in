@@ -8,7 +8,7 @@ import {
   UploadedFiles,
 } from '@nestjs/common';
 import { GameService } from './game.service';
-import { GameSaveReq, GameIdDto, GetGameSkip } from './game.dtos';
+import { GameSaveReq, GameIdDto, GetGameSkip, GetGameDto } from './game.dtos';
 import {
   UseFilesHandler,
   FilesType,
@@ -27,7 +27,7 @@ export class GameController {
 
   // IS FOR DANIEL
   @Get('/gameToFields')
-  async getGameFields(@Req() req: any) {
+  async getGameFields(@Req() req: GetGameDto) {
     return await this.gameService.returnGames(req.skipON, req.numOfGames);
   }
 
