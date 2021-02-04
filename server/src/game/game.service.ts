@@ -39,7 +39,7 @@ export class GameService {
   }
 
   //IS FOR DANIEL
-  async returnGames(skip, amount) {
+  async returnGames(skip: number, amount: number) {
     return await this.gameRepository.find({
       relations: ["fields"],
       skip: skip,

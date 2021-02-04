@@ -16,7 +16,7 @@ export class TeacherController {
 
   @UseJwtAuth('teacher')
   @Get('/getTeacherClasses')
-  async getTeacherClasses(@RequestUser() userinfo:TeacherInfoDto, @Query() skipOn: GetClassSkip) {
+  async getTeacherClasses(@RequestUser() userinfo, @Query() skipOn: GetClassSkip) {
     return await this.teacherService.getTeacherClasses(userinfo.id, skipOn);
   }
 
