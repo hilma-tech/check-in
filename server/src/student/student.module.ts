@@ -10,9 +10,11 @@ import {
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { Student } from './student.entity';
+import { ClassroomModule } from 'src/classroom/classroom.module';
 
 @Module({
   imports: [
+    ClassroomModule,
     UserModule,
     RoleModule,
     TypeOrmModule.forFeature([Student]),

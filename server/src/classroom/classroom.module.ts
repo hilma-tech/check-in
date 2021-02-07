@@ -18,6 +18,7 @@ import { ClassFieldModule } from 'src/class-field/class-field.module';
     ClassFieldModule
   ],
   providers: [ClassroomService],
-  controllers: [ClassroomController]
+  controllers: [ClassroomController],
+  exports:[ClassroomService]
 })
 export class ClassroomModule {}
