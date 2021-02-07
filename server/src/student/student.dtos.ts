@@ -1,4 +1,4 @@
-import { IsDefined, IsNumber, IsString } from "class-validator";
+import { IsDefined, IsEmail, IsNumber, IsString, Length } from "class-validator";
 
 export class GetStudentSkip {
   @IsDefined()
@@ -15,10 +15,12 @@ export class StudentIdDto {
 export class GamesForClassDto {
   @IsDefined()
   @IsString()
+  @Length(6,8)
   password: string;
 
   @IsDefined()
   @IsString()
+  @IsEmail()
   username: string;
 
   @IsDefined()

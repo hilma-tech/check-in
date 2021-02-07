@@ -43,6 +43,7 @@
 }
 
 .removeFieldIcon {
+    @include mouse(point);
     width: 15px;
     height: 2vh;
     margin-left: 0.75vw;

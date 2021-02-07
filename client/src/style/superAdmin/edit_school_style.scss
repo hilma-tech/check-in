@@ -36,6 +36,7 @@
 
 .hideClassButton,
 .showClassButton {
+  @include mouse(point);
   margin-right: 1vw;
   margin-top: 3vh;
   margin-left: 0.5vw;
@@ -54,6 +55,7 @@
 }
 
 .removeTeachersSelectIcon {
+  @include mouse(point);
   height: 30px;
   width: 1.5vw;
   margin: 0.75vw;

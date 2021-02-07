@@ -25,8 +25,8 @@ class PopUpError extends React.Component {
         window.location.pathname = "teacher/classes"
       }
     }
-    if (this.props.question === true) {
-      this.props.OnApprove();
+    if (this.props.errorMsg.question === true) {
+      this.props.errorMsg.approveFunction();
     }
     this.props.errorMsg.resetMsg()
   }
@@ -61,7 +61,7 @@ class PopUpError extends React.Component {
         <DialogActions>
           {
             this.props.errorMsg.question ?
-              <button className='popUpCanselButton' color="primary" onClick={this.cancelButton}>
+              <button className='popUpCancelButton' color="primary" onClick={this.cancelButton}>
                 ביטול
           </button> : <></>
           }

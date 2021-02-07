@@ -17,6 +17,7 @@ import { ClassroomModule } from './classroom/classroom.module';
 import { ClassFieldController } from './class-field/class-field.controller';
 import { ClassFieldService } from './class-field/class-field.service';
 import { ClassFieldModule } from './class-field/class-field.module';
+import { JwtStrategy, RoleModule, UserModule, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
 
 @Module({
   imports: [
@@ -34,8 +35,14 @@ import { ClassFieldModule } from './class-field/class-field.module';
     TeacherModule,
     ClassroomModule,
     ClassFieldModule,
+    UserModule, RoleModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,
+    JwtStrategy,
+    {
+      provide: USER_MODULE_OPTIONS,
+      useValue: {},
+    }],
 })
 export class AppModule {}

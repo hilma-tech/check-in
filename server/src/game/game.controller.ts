@@ -8,7 +8,7 @@ import {
   UploadedFiles,
 } from '@nestjs/common';
 import { GameService } from './game.service';
-import { GameSaveReq, GameIdDto, GetGameSkip } from './game.dtos';
+import { GameSaveReq, GameIdDto, GetGameSkip, GetGameDto } from './game.dtos';
 import {
   UseFilesHandler,
   FilesType,
@@ -27,7 +27,7 @@ export class GameController {
 
   // IS FOR DANIEL
   @Get('/gameToFields')
-  async getGameFields(@Req() req: any) {
+  async getGameFields(@Req() req: GetGameDto) {
     return await this.gameService.returnGames(req.skipON, req.numOfGames);
   }
 
@@ -60,12 +60,7 @@ export class GameController {
       }
       emptyField = 0
     });
-    // todo map the field array
-    // if(selection = 'image') {
-    //   console.log('hi');
-    // } else {
-    //   test that its only hebrew and max 255 chars
-    // }
+    
     return await this.gameService.addGame(files, req);
   }
 

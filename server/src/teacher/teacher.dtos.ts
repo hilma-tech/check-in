@@ -6,6 +6,12 @@ export class GetTeacherSkip {
   teachersLength: string;
 }
 
+export class GetClassSkip {
+  @IsDefined()
+  @IsString()
+  classesLength: string;
+}
+
 export class TeacherIdDto {
   @IsDefined()
   @IsString()

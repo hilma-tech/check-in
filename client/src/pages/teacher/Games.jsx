@@ -46,26 +46,26 @@ class Games extends React.Component {
   };
 
   limitedAddition = async (index) => {
-    console.log(index);
     if (this.props.games.chosenGameList.length < 6) {
-      // console.log("smaller than six");
+      //smaller than six
       return this.addGameToClass(index);
     } else {
-      console.log("equal to six");
-      //! show game
-      // this.props.errorMsg.setErrorMsg(
-      //   "לכל כיתה יכול להית עד שישה משחקים."
-      // );
-      return null;
+      // equal to six
+      await this.props.chosenGame.setgameId(
+        this.props.games.gamesList[index].id,
+        index
+      );
+      this.props.history.push("/teacher/classes/showGame")
+      
     }
   };
 
   limitedRemoval = async (index, id) => {
     if (this.props.games.chosenGameList.length > 2) {
-      console.log("bigger than two");
+      // bigger than two
       return this.openPopUpClick(index, id);
     } else {
-      console.log("equal to two");
+      // equal to two
       this.props.errorMsg.setErrorMsg(
         "לכל כיתה חייב להיות שני משחקים לפחות"
       );
@@ -83,7 +83,6 @@ class Games extends React.Component {
   };
 
   removeGameFromClass = () => {
-    this.changePopUpstate();
     this.props.games.removeGameFromClass(
       this.gameIndex,
       this.props.chosenClass.classId,
@@ -92,9 +91,9 @@ class Games extends React.Component {
   };
 
   openPopUpClick = (index, id) => {
-    this.changePopUpstate();
     this.gameIndex = index;
     this.gameId = id;
+    this.props.errorMsg.setQuestion("האם אתה רוצה למחוק משחק זה?", this.removeGameFromClass)
   };
 
   changePopUpstate = () => {
@@ -124,7 +123,6 @@ class Games extends React.Component {
             },
           }}
           open={this.state.openPopUp}
-          // onClose={handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
@@ -137,7 +135,7 @@ class Games extends React.Component {
           </DialogContent>
           <DialogActions>
             <button
-              className="popUpCanselButton"
+              className="popUpCancelButton"
               color="primary"
               onClick={this.changePopUpstate}
             >
