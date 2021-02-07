@@ -22,7 +22,6 @@ class editSchool extends Component {
   }
 
   componentDidMount(){
-    console.log(this.props.schools.chosenSchool);
     this.setState({
       schoolName: this.props.schools.chosenSchool.name,
       classes: this.props.schools.chosenSchool.classrooms

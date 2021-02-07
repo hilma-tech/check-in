@@ -13,6 +13,8 @@ import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import LoadingPage from "../../component/superAdmin/LoadingGamePage.jsx";
 import { IsAuthenticatedContext } from "@hilma/auth";
+import OutsideClickHandler from 'react-outside-click-handler';
+
 
 class Games extends Component {
   constructor() {
@@ -57,7 +59,7 @@ class Games extends Component {
   };
 
   OnApprove = async (gameId) => {
-   await this.props.games.deleteGame(gameId);
+    await this.props.games.deleteGame(gameId);
     window.location.pathname = "superAdmin/games"
   }
 
@@ -145,15 +147,18 @@ class Games extends Component {
                             ? image.game_name.slice(0, 15) + "..."
                             : image.game_name}
                         </h1>
-                        <img
+                        <OutsideClickHandler
+                        onOutsideClick={()=>this.props.games.resetShowOptions()}>
+                          <img
 
-                          className="optionIcon"
-                          onClick={() => {
-                            this.props.games.setShowOption(index);
-                          }}
-                          alt=""
-                          src={optionicon}
-                        />
+                            className="optionIcon"
+                            onClick={() => {
+                              this.props.games.setShowOption(index);
+                            }}
+                            alt=""
+                            src={optionicon}
+                          />
+                        </OutsideClickHandler>
                       </div>
                     </div>
                   );

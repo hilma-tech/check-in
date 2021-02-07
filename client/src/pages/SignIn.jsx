@@ -52,7 +52,7 @@ class SignIn extends Component {
     let password = this.state.password;
     try {
       if (emailValidation(username).length === 0 && passwordValidation(password).length === 0) {
-        const response = await this.props.LoginContext("/api/super-admin/login", {
+        const response = await this.props.LoginContext("/api/login", {
           username,
           password,
         });

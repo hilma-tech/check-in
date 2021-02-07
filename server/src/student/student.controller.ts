@@ -9,12 +9,14 @@ import { StudentService } from './student.service';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { SuperAdmin } from 'src/super-admin/super-admin.entity';
 import { GetStudentSkip, StudentIdDto, GamesForClassDto, ClassroomIdDto } from './student.dtos';
+import { ClassroomService } from 'src/classroom/classroom.service';
 
 @Controller('api/student')
 export class StudentController {
   constructor(
     private readonly userService: UserService,
     private studentService: StudentService,
+    private classroomService: ClassroomService
   ) {
     // this.register({username: 'student1@gmail.com', password: 'student11', name: 'בת ציון רוז'})
   }
@@ -51,11 +53,16 @@ export class StudentController {
   }
 
   @Get('/gamesForClass')
-  async getGamesForClass(@Query() info:GamesForClassDto) {
+  async getGamesForClass(@Query() info: GamesForClassDto) {
     let getClassId = await this.studentService.CheckUserInfoAndGetClassId(info.username, info.password, info.classId);
     if (getClassId) {
-      return "get games function goes heres"
-    } else {
+      let gamesForClass = await this.classroomService.getClassroomGames(info);
+      if (gamesForClass.currClassGames.length > 0) {
+        return gamesForClass.currClassGames
+      }
+      else { return "no games for this class" }
+    }
+    else {
       return "problem with info inserted"
     }
   }
