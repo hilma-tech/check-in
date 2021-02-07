@@ -41,7 +41,9 @@ class Classes extends Component {
   }
 
   componentDidMount = async () => {
-    await this.props.name.setTeacher()
+    if(this.props.name.haveMoreClasses && this.props.name.teacherClasses.length === 0){
+      await this.props.name.setTeacher()
+    }
   };
 
   moveToClass = (classId, classroomName) => {

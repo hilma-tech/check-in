@@ -2,7 +2,7 @@ import { UploadedFiles, Body, Injectable, Req } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Game } from './game.entity';
-import { GameSaveDto, GetGameSkip, GameSaveReq, GameIdDto } from './game.dtos';
+import { GameSaveDto, GetGameSkip, GameSaveReq, GameIdDto,ClassroomIdDto } from './game.dtos';
 import { FieldService } from 'src/field/field.service';
 import {
   FilesType,
@@ -122,5 +122,31 @@ export class GameService {
   async deleteGameById(id) {
      await this.fieldService.deleteField(id.Id) 
     let RemoveGame = await this.gameRepository.delete(id.Id);
+  }
+
+  async getClassroomGames(req: ClassroomIdDto) {
+    let allGames = await this.getAllGames()
+
+    let temp = await this.gameRepository.createQueryBuilder("Game")
+    .innerJoinAndSelect("Game.classrooms", "Classroom")
+    .select("Game.id")
+    .addSelect("Game.game_name")
+    .addSelect("Game.image")
+    .where("Classroom.id = :id", { id: Number(req.classId) })
+    .getMany();
+    console.log('temp: ', temp);
+
+    // let currClassGames = await this.classroomRepository.findOne({
+    //   relations: ['games'],
+    //   where: [{ id: Number(req.classId) }],
+    // });
+    // //      select: ["id", "game_name", "image"],
+    // // currClassGames.games = currClassGames.games.map((game)=>{
+    // //   return {id: game.id, }
+    // // })
+    // let classGames = currClassGames.games.map((game)=>{
+    //   return {id: game.id, game_name: game.game_name, image: game.image}
+    // })
+    return ({currClassGames: temp, allGames: allGames});
   }
 }

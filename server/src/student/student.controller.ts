@@ -8,7 +8,7 @@ import { Student } from "./student.entity"
 import { StudentService } from './student.service';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { SuperAdmin } from 'src/super-admin/super-admin.entity';
-import { GetStudentSkip, StudentIdDto, GamesForClassDto } from './student.dtos';
+import { GetStudentSkip, StudentIdDto, GamesForClassDto, ClassroomIdDto } from './student.dtos';
 
 @Controller('api/student')
 export class StudentController {
@@ -59,4 +59,12 @@ export class StudentController {
       return "problem with info inserted"
     }
   }
+
+
+  @UseJwtAuth('teacher')
+  @Get('/getClassStudents')
+  async getClassStudents (@Query() data: ClassroomIdDto){
+      return await this.studentService.getClassStudents(data.classId, Number(data.dataLength))
+  }
+  
 }

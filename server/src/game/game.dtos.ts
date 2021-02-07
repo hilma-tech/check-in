@@ -116,3 +116,13 @@ export class GetGameDto {
   @IsNumber()
   numOfGames: number;
 }
+
+export class ClassroomIdDto {
+  @IsDefined()
+  @IsString()
+  classId: string;
+
+  @IsDefined()
+  @IsString()
+  dataLength: string;
+}

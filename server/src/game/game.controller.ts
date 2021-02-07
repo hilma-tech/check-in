@@ -8,7 +8,7 @@ import {
   UploadedFiles,
 } from '@nestjs/common';
 import { GameService } from './game.service';
-import { GameSaveReq, GameIdDto, GetGameSkip, GetGameDto } from './game.dtos';
+import { GameSaveReq, GameIdDto, GetGameSkip, GetGameDto, ClassroomIdDto } from './game.dtos';
 import {
   UseFilesHandler,
   FilesType,
@@ -80,4 +80,11 @@ export class GameController {
   deleteGame(@Body() req: any) {
     return this.gameService.deleteGameById(req);
   }
+
+  @UseJwtAuth('teacher')
+  @Get('/getClassroomGames')
+  async getClassroomGames(@Query() req: ClassroomIdDto){
+      return await this.gameService.getClassroomGames(req);
+  }
+
 }

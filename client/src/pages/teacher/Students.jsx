@@ -8,6 +8,7 @@ import SmallNavBar from "../../component/teacher/SmallNavBar.jsx";
 import "../../style/teacher/students.css";
 import { observer } from "mobx-react";
 import { chosenClassContext } from "../../stores/chosenClass.store";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class Students extends Component {
   constructor() {
@@ -32,7 +33,8 @@ class Students extends Component {
           <PageTitle title={"כיתה " + this.props.chosenClass.classroomName} />
           <SmallNavBar active="students" />
           <ArrowBar page="students" />
-          <div className="smallAlign" id="smallAlignStudentList">
+          <div className="smallAlign" id="smallAlignStudentList" style={{textAlign: "center"}}>
+            <div>
             {this.props.chosenClass.students.map((student, index) => {
               return (
                 <div
@@ -55,6 +57,25 @@ class Students extends Component {
                 </div>
               );
             })}
+          </div>
+          {
+            this.props.chosenClass.startGetInfo ?
+            <CircularProgress color="#043163" size="1.5rem"/> :
+              <button
+                className="showMoreGamesB"
+                onClick={()=>{this.props.chosenClass.callStudents(this.props.chosenClass.classId)}}
+                style={{
+                  marginTop: '1vh',
+                  display:
+                    this.props.chosenClass.haveMoreStudents
+                      ? "inline-block"
+                      : "none",
+                }}
+              >
+                הצג עוד
+            </button>
+          }
+
           </div>
         </div>
       </>

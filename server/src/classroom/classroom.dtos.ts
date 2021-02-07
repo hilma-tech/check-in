@@ -12,6 +12,10 @@ export class ClassroomIdDto {
     @IsDefined()
     @IsString()
     classId: string;
+
+    @IsDefined()
+    @IsString()
+    dataLength: string;
 }
 
 export class ClassroomGameDto {
@@ -22,3 +26,9 @@ export class ClassroomGameDto {
     @IsNumber()
     gameId: number;
 }
+
+export class GetClassSkip {
+    @IsDefined()
+    @IsString()
+    classesLength: string;
+  }

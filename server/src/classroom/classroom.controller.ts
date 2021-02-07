@@ -1,7 +1,7 @@
-import { UseJwtAuth } from '@hilma/auth-nest';
+import { RequestUser, UseJwtAuth } from '@hilma/auth-nest';
 import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
 import { ClassroomService } from './classroom.service';
-import { ClassroomIdDto, ClassroomGameDto } from './classroom.dtos';
+import { ClassroomIdDto, ClassroomGameDto, GetClassSkip } from './classroom.dtos';
 import { SchoolIdDto } from 'src/school/school.dtos';
 
 
@@ -11,17 +11,7 @@ export class ClassroomController {
         private classroomService: ClassroomService
         ) {}
 
-        @UseJwtAuth('teacher')
-        @Get('/getClassroomGames')
-        async getClassroomGames(@Query() req: ClassroomIdDto){
-            return await this.classroomService.getClassroomGames(req);
-        }
-
-        @UseJwtAuth('teacher')
-        @Get('/getClassStudents')
-        async getClassStudents (@Query() classId: ClassroomIdDto){
-            return await this.classroomService.getClassStudents(classId.classId)
-        }
+      
 
         @UseJwtAuth('teacher')
     @Post('/addGameRelation')

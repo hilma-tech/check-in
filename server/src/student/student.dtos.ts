@@ -27,3 +27,14 @@ export class GamesForClassDto {
   @IsString()
   classId: string;
 }
+
+
+export class ClassroomIdDto {
+  @IsDefined()
+  @IsString()
+  classId: string;
+
+  @IsDefined()
+  @IsString()
+  dataLength: string;
+}

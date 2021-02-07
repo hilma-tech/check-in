@@ -9,6 +9,8 @@ class ChosenClass {
     currStudentIndex = 0
     studentClassrooms = []
     successGetInfo = true
+    haveMoreStudents = true
+    startGetInfo = false
     constructor() {
         makeObservable(this, {
             classId: observable,
@@ -21,6 +23,8 @@ class ChosenClass {
             getCurrStudent:action,
             studentClassrooms: observable,
             successGetInfo: observable,
+            haveMoreStudents: observable,
+            startGetInfo: observable,
         })
     }
 
@@ -29,6 +33,7 @@ class ChosenClass {
             this.currStudentIndex = studentIndex
             let {data} = await axios.get("/api/student/getStudentsClassrooms", {params: {studentId: this.students[studentIndex].id}})
             let classId = this.classId
+            this.students = []
             this.studentClassrooms = data.filter((classroom)=>{
                 return classroom.id != classId
             })
@@ -44,12 +49,16 @@ class ChosenClass {
 
     callStudents = async (classnum) => {
         try{    
-            let studentsData = await axios.get("/api/classroom/getClassStudents", {
-              params: { classId: classnum },
+            this.startGetInfo = true
+            let {data} = await axios.get("/api/student/getClassStudents", {
+              params: { classId: classnum, dataLength: this.students.length },
             });
-            this.students = studentsData.data;
+            this.students = this.students.concat(data.students);
+            this.haveMoreStudents = data.haveMoreStudents
+            this.startGetInfo = false
         } catch(err){
          this.successGetInfo = false
+         this.startGetInfo = false
         }
       };
 

@@ -44,7 +44,7 @@ class Games {
     getClassroomGames = async(classId) => {
         try{
             this.startGetGames = true;
-            const { data } = await axios.get("/api/classroom/getClassroomGames",{ params:{ classId: classId }});
+            const { data } = await axios.get("/api/game/getClassroomGames",{ params:{ classId: classId, dataLength: (this.gamesList.length) }});
             runInAction(() => {
                 this.gamesList = data.allGames
                 this.chosenGameList = data.currClassGames

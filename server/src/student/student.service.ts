@@ -68,5 +68,24 @@ export class StudentService extends UserService {
             return false
         }
     }
+
+    async getClassStudents(classId: string, studentLength: number) {
+        console.log('studentLength: ', studentLength);
+        let students = await this.userRepository.createQueryBuilder("Student")
+        .innerJoinAndSelect("Student.classroomStudent", "Classroom")
+        .select("Student.id")
+        .addSelect("Student.first_name")
+        .addSelect("Student.last_name")
+        .addSelect("Student.username")
+        .groupBy("Student.id")
+        .where("Classroom.id = :id", { id: classId })
+        .take(50)
+        .skip(studentLength)
+        .getManyAndCount();
+
+        console.log('temp: ', students);
+    
+    return {students: students[0], haveMoreStudents: students[1] > studentLength + 50 ? true : false}
+      }
 }
 
