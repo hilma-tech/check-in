@@ -49,6 +49,7 @@
 
 .addSomethingNew{
     margin: 0;
+    width: 11vw;
     margin-bottom: 1vh;
     @include adding-button;
     @include mouse(point);
