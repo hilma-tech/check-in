@@ -64,8 +64,12 @@ class SignIn extends Component {
             window.location.pathname = "/superAdmin/games"
           }
         } else {
-          this.props.errorMsg.setErrorMsg('שם המשתמש והסיסמא אינם תואמים.');
-        }
+          console.log('response.status: ', response);
+if (response.msg.status === 401) {
+        this.props.errorMsg.setErrorMsg('שם המשתמש והסיסמא אינם תואמים.');
+      } else {
+        this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן להתחבר.');
+      }        }
       } else {
         if (username.length === 0 || password.length === 0) {
           this.props.errorMsg.setErrorMsg('נא למלא את כל השדות.');
