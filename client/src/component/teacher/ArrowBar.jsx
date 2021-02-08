@@ -53,7 +53,7 @@ class ArrowBar extends React.Component {
                     {/* <br /> */}
                     {/* <br /> */}
                     {/* search bar */}
-                    <h4 className="linkToTeachers">לרשימת המורים של כיתה זו</h4>
+                    {/* <h4 className="linkToTeachers">לרשימת המורים של כיתה זו</h4> */}
                 </div>);
         }else if (this.props.page === 'editGame') {
             return (
