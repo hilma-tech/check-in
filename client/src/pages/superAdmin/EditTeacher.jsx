@@ -207,7 +207,9 @@ class EditTeacher extends React.Component {
                 {/* כיתה */}
                 <label className='labelFields'>כיתה:</label>
                 <div>
-                  {this.state.fieldsData.map((fieldObj) => {
+                  {this.state.fieldsData.length === 0 ?
+                  <p>למורה זה אין כיתות</p>
+                  : this.state.fieldsData.map((fieldObj) => {
                     return (
                       <ClassSelection
                         key={fieldObj.id}
@@ -224,14 +226,14 @@ class EditTeacher extends React.Component {
                 </div>
               </form >
               {/* הוספת כיתה */}
-              <div
+              {/* <div
                 style={{ marginRight: '9vw' }}
                 className='addSomethingNew'
                 onClick={this.addNewFieldData}
               >
                 <img className='addIcon' src={addicon} alt="addIcon"></img>
                 <p className='addTitle'>הוסף כיתה</p>
-              </div>
+              </div> */}
               <form className='formData' style={{ marginTop: '0' }}>
                 {/* אימייל */}
                 <label className='labelFields'>

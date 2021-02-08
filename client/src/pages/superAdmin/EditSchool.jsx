@@ -207,6 +207,7 @@ class editSchool extends Component {
             </label>
 
           {//Pass on all the classes in the list and make them the class component (with the name and the teacher's selects).
+          this.state.classes.length === 0 ? <p>לבית ספר זה אין כיתות</p> :
             this.state.classes.map((classData, classIndex) => {
               //The component get the class data as props.classData.
               return <ClassData key={classData.id}

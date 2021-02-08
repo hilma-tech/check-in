@@ -64,6 +64,9 @@ class EditStudent extends React.Component {
   };
   returnClassesSelections = () => {
     let classesSelections = [];
+    if(this.state.chosenClasses.length === 0){
+      return <p>לתלמיד זה אין כיתות</p>
+    }
     for (let i = 0; i < this.state.chosenClasses.length; i++) {
       classesSelections.push(
         <div key={this.state.chosenClasses[i].id} className='classSelection'>
@@ -72,17 +75,18 @@ class EditStudent extends React.Component {
             styles={SelectStyle()}
             options={this.makeClassesOption(i)}
             onChange={this.chooseClass}
-            defaultValue={{
-              value: this.state.chosenClasses[i].name,
-              label: this.state.chosenClasses[i].name,
-            }}
+            // defaultValue={{
+            //   value: this.state.chosenClasses[i].name,
+            //   label: this.state.chosenClasses[i].name,
+            // }}
+            placeholder={this.state.chosenClasses[i].name}
             isDisabled={true}
           />
-          <img
+          {/* <img
           className='removeFieldIcon'
             onClick={() => this.removeClass(i)}
             src="/icons/delete.svg"
-          />
+          /> */}
         </div>
       );
     }
@@ -204,7 +208,7 @@ class EditStudent extends React.Component {
       <div>
         <ArrowNavBar />
         <form className='formData'>
-          <label for="studentName" className='labelFields'>שם התלמיד:</label>
+          <label for="studentName" className='labelFields withMenu'>שם התלמיד:</label>
           <p
             className="error"
             style={{ display: this.state.studentNameError.toShow }}

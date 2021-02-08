@@ -41,11 +41,11 @@ class ClassSelection extends Component {
           isDisabled={false}
         />
         }
-      <img
+      {/* <img
             onClick={this.removeField}
             className="removeFieldIcon"
             src="/icons/delete.svg"
-          />
+          /> */}
         </div>
       </>
     );
