@@ -56,7 +56,7 @@ class StudentDetails extends Component {
           </div>
           <div className="studentDeets">
             <h1 className="detail">{this.state.classrooms.map((classroom) => {
-              return <p style={{display:'inline-block', margin: '0'}}>{classroom.name}</p>
+              return <p style={{display:'inline-block', margin: '0'}}>{classroom.name} </p>
             })}</h1>
           </div>
         </div>

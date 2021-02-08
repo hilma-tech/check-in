@@ -19,9 +19,9 @@ export class ClassField {
 
   @OneToOne(type => Classroom) 
   @JoinColumn({name: "class_id"}) 
-   class_id: Classroom;
+   class_id: number;
 
   @OneToOne(type => Field)
   @JoinColumn({name: "field_id"})
-  field_id: Field;
+  field_id: number;
 }

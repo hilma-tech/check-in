@@ -17,7 +17,7 @@ export class GameService {
     private gameRepository: Repository<Game>,
     private fieldService: FieldService,
     private readonly imageService: ImageService,
-  ) { }
+  ) {}
 
   async addGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
     // if(req.game.image.value){
@@ -140,4 +140,5 @@ export class GameService {
     let allGames = await this.gameRepository.query("select id, game_name, image from game where id not in(select game_id from classroom_game where classroom_id = " + req.classId +")  limit 50 offset " + req.dataLength + ";")
     return ({currClassGames: currClassGames, allGames: allGames, haveMoreGames: haveMoreGames});
   }
+
 }

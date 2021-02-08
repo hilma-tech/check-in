@@ -31,9 +31,8 @@ class ChosenClass {
     setCurrStudent = async (studentIndex) => {
         try{    
             this.currStudentIndex = studentIndex
-            let {data} = await axios.get("/api/student/getStudentsClassrooms", {params: {studentId: this.students[studentIndex].id}})
+            let {data} = await axios.get("/api/student/getStudentsClassrooms", {params: {id: this.students[studentIndex].id}})
             let classId = this.classId
-            this.students = []
             this.studentClassrooms = data.filter((classroom)=>{
                 return classroom.id != classId
             })
@@ -44,6 +43,7 @@ class ChosenClass {
     }
 
     getCurrStudent = () => {
+        console.log(this.studentClassrooms);
         return this.students[this.currStudentIndex]
     }
 

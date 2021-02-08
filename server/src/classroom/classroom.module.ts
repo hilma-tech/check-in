@@ -14,8 +14,8 @@ import { ClassFieldModule } from 'src/class-field/class-field.module';
     UserModule,
     RoleModule,
     GameModule,
+    ClassFieldModule,
     TypeOrmModule.forFeature([Classroom]),
-    ClassFieldModule
   ],
   providers: [ClassroomService],
   controllers: [ClassroomController],

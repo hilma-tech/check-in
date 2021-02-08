@@ -46,5 +46,15 @@ export class FieldService {
     })}
   }
 
+
+  async getGameFields(gameId){
+    let fields = await this.fieldRepository.createQueryBuilder("Field")
+    .innerJoinAndSelect("Field.game", "Game")
+    .select("Field.id")
+    .addSelect("Field.default_value")
+    .where("Game.id = :id", { id: Number(gameId) })
+    .getMany();
+    return fields;
+  }
 }
 
