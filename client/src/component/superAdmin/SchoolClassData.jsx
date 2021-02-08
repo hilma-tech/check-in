@@ -41,6 +41,9 @@ class ClassData extends React.Component {
   returnTeahcersSelections = () => {
     let teachersSelections = [];
     let numTeachers = this.props.classData.chosenTeachers.length;
+    if (numTeachers === 0){
+      return <p>לכיתה זו אין מורים</p>
+    }
     for (let i = 0; i < numTeachers; i++) {
       let teacerDefaultValue = this.props.classData.chosenTeachers[i].name;
       let selectOptions = this.makeTeacherOption(i);
@@ -54,21 +57,22 @@ class ClassData extends React.Component {
             styles={SelectStyle()}
             options={selectOptions}
             selectKey={i}
-            defaultValue={{
-              value: teacerDefaultValue,
-              label: teacerDefaultValue,
-            }}
+            // defaultValue={{
+            //   value: teacerDefaultValue,
+            //   label: teacerDefaultValue,
+            // }}
+            placeholder={teacerDefaultValue}
             onChange={this.props.chooseTeacher}
             isDisabled={true}
           />
-          <img
+          {/* <img
             alt="remove button"
             className="removeTeachersSelectIcon"
             onClick={() =>
               this.props.removeTeacherFromClass(this.props.classIndex, i)
             }
             src="/icons/delete.svg"
-          />
+          /> */}
         </div>
       );
     }
@@ -109,13 +113,13 @@ class ClassData extends React.Component {
             className="editSchoolClassesInput inputFields"
             readOnly={true}
           ></input>
-          <img
+          {/* <img
             alt="remove class button"
             className="removeClass"
             onClick={() => this.props.removeClass(this.props.classIndex)}
             src="/icons/delete.svg"
             style= {{height: '20px', marginTop:'15px'}}
-          />
+          /> */}
         </div>
         <Fade in={this.state.showClass}>
           <div
@@ -134,7 +138,7 @@ class ClassData extends React.Component {
             <div className="allEditSchoolClassTeacherSelect">
               {this.returnTeahcersSelections()}
             </div>
-            <div className="editSchoolClassTeacherButtons">
+            {/* <div className="editSchoolClassTeacherButtons">
               {this.props.canAddExistTeacher ? (
                 <div
                   className="editSchoolClassAddExistTeacher addSomethingNew"
@@ -152,7 +156,7 @@ class ClassData extends React.Component {
                 <img alt="add icon" className="addIcon" src="/icons/addicon.svg"></img>
                 <p className="addTitle">הוסף מורה חדש</p>
               </div>
-            </div>
+            </div> */}
           </div>
         </Fade>
       </>
