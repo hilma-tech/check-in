@@ -135,7 +135,7 @@ class Games extends React.Component {
           <p className="gameListTitle">משחקים שניתן להוסיף:</p>
           {/*add search option */}
           {!this.props.games.haveMoreGames && this.props.games.gamesList.length ===0 ?
-          <p>אין עוד משחקים שניתן להוסיף</p>:
+          <p className="gameListTitle">אין עוד משחקים שניתן להוסיף</p>:
           <div className="listGamesForClass">
             {this.props.games.gamesList.map((image, index) => {
               return (

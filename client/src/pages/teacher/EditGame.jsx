@@ -57,6 +57,7 @@ class EditGame extends Component {
       this.props.chosenGame.index,
       this.props.chosenClass.classId
     );
+    await this.props.games.resetGamesStore()
     this.props.history.push("/teacher/classes/games");
   };
 
