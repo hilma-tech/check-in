@@ -94,7 +94,7 @@ class Games extends React.Component {
   openPopUpClick = (index, id) => {
     this.gameIndex = index;
     this.gameId = id;
-    this.props.errorMsg.setQuestion("האם אתה רוצה למחוק משחק זה?", this.removeGameFromClass)
+    this.props.errorMsg.setQuestion("האם הנך בטוח שברצונך להסיר משחק זה מכיתה זו?", this.removeGameFromClass)
   };
 
   changePopUpstate = () => {
@@ -113,43 +113,6 @@ class Games extends React.Component {
           page="games"
           chosenClass={this.props.chosenClass.classroomName}
         />
-        <Dialog
-          PaperProps={{
-            style: {
-              backgroundColor: "white",
-              boxShadow: "0px 3px 6px #00000029",
-              border: "1px solid #707070",
-              padding: "5px",
-              width: "75vw",
-            },
-          }}
-          open={this.state.openPopUp}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              <span className="popUpQuesion">
-                האם הנך בטוח שברצונך להסיר משחק זה מכיתה זו?
-              </span>
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <button
-              className="popUpCancelButton"
-              color="primary"
-              onClick={this.changePopUpstate}
-            >
-              ביטול
-            </button>
-            <button
-              className="popUpOkButton"
-              onClick={this.removeGameFromClass}
-            >
-              אישור
-            </button>
-          </DialogActions>
-        </Dialog>
         <div className="smallAlign" id="smallAlignClassGames">
           <div className="chosenGamesForClass">
             <div className="scrollChosenGames">

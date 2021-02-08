@@ -18,7 +18,7 @@ class ErrorMsg {
             disapproveClick: action,
             approveClick: action,
             setQuestion: action,
-            approveFunction: action
+            approveFunction: observable
         })
     }
 

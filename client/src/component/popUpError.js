@@ -44,7 +44,7 @@ class PopUpError extends React.Component {
             backgroundColor: 'white',
             boxShadow: '0px 3px 6px #00000029',
             border: '1px solid #707070',
-            padding: '5px'
+            padding: '5px',
           },
         }}
         open={this.props.errorMsg.showMsg}
@@ -66,7 +66,7 @@ class PopUpError extends React.Component {
           </button> : <></>
           }
           <button className='popUpOkButton' onClick={this.approvalButton}>
-            אישור
+            {this.props.errorMsg.question ? "הבנתי" : "אישור"}
           </button>
 
         </DialogActions>
