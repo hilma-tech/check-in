@@ -52,20 +52,20 @@ export class StudentController {
     return this.studentService.getStudentsClassrooms(req.id)
   }
 
-  @Get('/gamesForClass')
-  async getGamesForClass(@Query() info: GamesForClassDto) {
-    let getClassId = await this.studentService.CheckUserInfoAndGetClassId(info.username, info.password, info.classId);
-    if (getClassId) {
-      let gamesForClass = await this.classroomService.getClassroomGames(info);
-      if (gamesForClass.currClassGames.length > 0) {
-        return gamesForClass.currClassGames
-      }
-      else { return "no games for this class" }
-    }
-    else {
-      return "problem with info inserted"
-    }
-  }
+  // @Get('/gamesForClass')
+  // async getGamesForClass(@Query() info: GamesForClassDto) {
+  //   let getClassId = await this.studentService.CheckUserInfoAndGetClassId(info.username, info.password, info.classId);
+  //   if (getClassId) {
+  //     let gamesForClass = await this.classroomService.getClassroomGames(info);
+  //     if (gamesForClass.currClassGames.length > 0) {
+  //       return gamesForClass.currClassGames
+  //     }
+  //     else { return "no games for this class" }
+  //   }
+  //   else {
+  //     return "problem with info inserted"
+  //   }
+  // }
 
 
   @UseJwtAuth('teacher')

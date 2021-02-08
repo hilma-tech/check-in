@@ -11,6 +11,7 @@ import { observer } from "mobx-react";
 import { errorMsgContext } from "../../stores/error.store";
 import { nameContext } from "../../stores/userName.store";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { gamesContext } from "../../stores/games.store";
 
 class Classes extends Component {
   constructor() {
@@ -41,6 +42,7 @@ class Classes extends Component {
   }
 
   componentDidMount = async () => {
+    this.props.games.resetGamesStore()
     if(this.props.name.haveMoreClasses && this.props.name.teacherClasses.length === 0){
       await this.props.name.setTeacher()
     }
@@ -107,6 +109,7 @@ const mapContextToProps = {
   chosenClass: chosenClassContext,
   errorMsg: errorMsgContext,
   name: nameContext,
+  games: gamesContext,
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(Classes)));

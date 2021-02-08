@@ -21,8 +21,17 @@ class Games {
             removeGameFromClass: action,
             addGameToClass: action,
             getClassroomGames: action,
-            deleteGame: action
+            deleteGame: action,
+            resetGamesStore: action
         })
+    }
+
+    resetGamesStore = () => {
+        this.gamesList = []
+        this.chosenGameList = []
+        this.haveMoreGames = true
+        this.successGettingGames = true;
+        this.startGetGames = false;
     }
 
     getGames = async () => {
@@ -46,14 +55,15 @@ class Games {
             this.startGetGames = true;
             const { data } = await axios.get("/api/game/getClassroomGames",{ params:{ classId: classId, dataLength: (this.gamesList.length) }});
             runInAction(() => {
-                this.gamesList = data.allGames
+                this.gamesList = this.gamesList.concat(data.allGames)
                 this.chosenGameList = data.currClassGames
-              this.gamesList = this.gamesList.filter((game)=>{
-                  let filterArr = this.chosenGameList.filter((chosenGame)=>{
-                      return chosenGame.id === game.id
-                  })
-                  return filterArr.length === 0
-              })
+                this.haveMoreGames = data.haveMoreGames
+            //   this.gamesList = this.gamesList.filter((game)=>{
+            //       let filterArr = this.chosenGameList.filter((chosenGame)=>{
+            //           return chosenGame.id === game.id
+            //       })
+            //       return filterArr.length === 0
+            //   })
               this.successGettingGames = true;
               this.startGetGames = false;
             })

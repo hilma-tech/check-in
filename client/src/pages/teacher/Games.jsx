@@ -17,6 +17,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class Games extends React.Component {
   constructor() {
@@ -56,7 +57,7 @@ class Games extends React.Component {
         index
       );
       this.props.history.push("/teacher/classes/showGame")
-      
+
     }
   };
 
@@ -74,7 +75,7 @@ class Games extends React.Component {
   };
 
   addGameToClass = async (index) => {
-    
+
     await this.props.chosenGame.setgameId(
       this.props.games.gamesList[index].id,
       index
@@ -183,6 +184,25 @@ class Games extends React.Component {
                 />
               );
             })}
+          </div>
+          <div style={{ textAlign: "center" }}>
+            {
+              this.props.games.startGetGames ?
+                <CircularProgress color="#043163" size="1.5rem" /> :
+                <button
+                  className="showMoreGamesB"
+                  onClick={this.getClassGames}
+                  style={{
+                    marginTop: '1vh',
+                    display:
+                      this.props.games.haveMoreGames
+                        ? "inline-block"
+                        : "none",
+                  }}
+                >
+                  הצג עוד
+            </button>
+            }
           </div>
         </div>
       </div>

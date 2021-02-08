@@ -70,7 +70,6 @@ export class StudentService extends UserService {
     }
 
     async getClassStudents(classId: string, studentLength: number) {
-        console.log('studentLength: ', studentLength);
         let students = await this.userRepository.createQueryBuilder("Student")
         .innerJoinAndSelect("Student.classroomStudent", "Classroom")
         .select("Student.id")
@@ -82,8 +81,6 @@ export class StudentService extends UserService {
         .take(50)
         .skip(studentLength)
         .getManyAndCount();
-
-        console.log('temp: ', students);
     
     return {students: students[0], haveMoreStudents: students[1] > studentLength + 50 ? true : false}
       }

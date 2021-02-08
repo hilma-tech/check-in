@@ -125,28 +125,19 @@ export class GameService {
   }
 
   async getClassroomGames(req: ClassroomIdDto) {
-    let allGames = await this.getAllGames()
-
-    let temp = await this.gameRepository.createQueryBuilder("Game")
+    let currClassGames = await this.gameRepository.createQueryBuilder("Game")
     .innerJoinAndSelect("Game.classrooms", "Classroom")
     .select("Game.id")
     .addSelect("Game.game_name")
     .addSelect("Game.image")
     .where("Classroom.id = :id", { id: Number(req.classId) })
     .getMany();
-    console.log('temp: ', temp);
 
-    // let currClassGames = await this.classroomRepository.findOne({
-    //   relations: ['games'],
-    //   where: [{ id: Number(req.classId) }],
-    // });
-    // //      select: ["id", "game_name", "image"],
-    // // currClassGames.games = currClassGames.games.map((game)=>{
-    // //   return {id: game.id, }
-    // // })
-    // let classGames = currClassGames.games.map((game)=>{
-    //   return {id: game.id, game_name: game.game_name, image: game.image}
-    // })
-    return ({currClassGames: temp, allGames: allGames});
+    let gamesLength = (await this.gameRepository.query("select id from game where id not in(select game_id from classroom_game where classroom_id = " + req.classId +");")).length
+
+    let haveMoreGames = gamesLength > Number(req.dataLength) + 50 ? true : false;
+
+    let allGames = await this.gameRepository.query("select id, game_name, image from game where id not in(select game_id from classroom_game where classroom_id = " + req.classId +")  limit 50 offset " + req.dataLength + ";")
+    return ({currClassGames: currClassGames, allGames: allGames, haveMoreGames: haveMoreGames});
   }
 }
