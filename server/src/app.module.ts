@@ -14,11 +14,11 @@ import { StudentModule } from './student/student.module';
 import { SchoolModule } from './school/school.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { ClassroomModule } from './classroom/classroom.module';
-import { ClassFieldModule } from './class-field/class-field.module';
 import {
   RoleModule,
   UserModule,
 } from '@hilma/auth-nest';
+import { ClassroomFieldModule } from './classroom-field/classroom-field.module';
 
 @Module({
   imports: [
@@ -38,9 +38,9 @@ import {
     SchoolModule,
     TeacherModule,
     ClassroomModule,
-    ClassFieldModule,
     UserModule,
     RoleModule,
+    ClassroomFieldModule,
   ],
   controllers: [AppController],
   providers: [AppService],
