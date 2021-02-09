@@ -15,7 +15,7 @@ export class StudentIdDto {
 export class GamesForClassDto {
   @IsDefined()
   @IsString()
-  @Length(6,8)
+  @Length(6,9)
   password: string;
 
   @IsDefined()
