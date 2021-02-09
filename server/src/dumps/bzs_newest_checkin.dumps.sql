@@ -43,36 +43,6 @@ LOCK TABLES `access_logger` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `class_field`
---
-
-DROP TABLE IF EXISTS `class_field`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `class_field` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `new_value` varchar(255) NOT NULL,
-  `class_id` int DEFAULT NULL,
-  `field_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `REL_cc64a5e4b5c1f5e65d137b7292` (`class_id`),
-  UNIQUE KEY `REL_5084d250412d9ff08b46643a37` (`field_id`),
-  CONSTRAINT `FK_5084d250412d9ff08b46643a370` FOREIGN KEY (`field_id`) REFERENCES `field` (`id`),
-  CONSTRAINT `FK_cc64a5e4b5c1f5e65d137b72925` FOREIGN KEY (`class_id`) REFERENCES `classroom` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `class_field`
---
-
-LOCK TABLES `class_field` WRITE;
-/*!40000 ALTER TABLE `class_field` DISABLE KEYS */;
-INSERT INTO `class_field` VALUES (1,'/image/gtFIowRh4u2EvHgenFC9hUNz3300aZtI.jpg',1,3);
-/*!40000 ALTER TABLE `class_field` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `classroom`
 --
 
@@ -95,6 +65,35 @@ LOCK TABLES `classroom` WRITE;
 /*!40000 ALTER TABLE `classroom` DISABLE KEYS */;
 INSERT INTO `classroom` VALUES (1,'א\'1',1),(2,'ב\'3',1),(3,'ה\'2',1),(4,'ב\'1',1),(12,'ג\'4',1),(13,'ד\'2',1),(14,'ה\'1',1),(15,'ו\'3',1),(16,'ז\'2',1),(17,'ח\'1',1),(18,'ט\'3',1),(19,'י\'2',1),(20,'י\'1',1),(21,'א\'3',1),(22,'ב\'4',1);
 /*!40000 ALTER TABLE `classroom` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `classroom_field`
+--
+
+DROP TABLE IF EXISTS `classroom_field`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `classroom_field` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `new_value` varchar(255) NOT NULL,
+  `classroom_id` int DEFAULT NULL,
+  `field_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `REL_ef6001153b3d1baf00d4307607` (`classroom_id`),
+  UNIQUE KEY `REL_28211bf7506a8fd301f86988bb` (`field_id`),
+  CONSTRAINT `FK_28211bf7506a8fd301f86988bb2` FOREIGN KEY (`field_id`) REFERENCES `field` (`id`),
+  CONSTRAINT `FK_ef6001153b3d1baf00d4307607c` FOREIGN KEY (`classroom_id`) REFERENCES `classroom` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `classroom_field`
+--
+
+LOCK TABLES `classroom_field` WRITE;
+/*!40000 ALTER TABLE `classroom_field` DISABLE KEYS */;
+/*!40000 ALTER TABLE `classroom_field` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -121,7 +120,7 @@ CREATE TABLE `classroom_game` (
 
 LOCK TABLES `classroom_game` WRITE;
 /*!40000 ALTER TABLE `classroom_game` DISABLE KEYS */;
-INSERT INTO `classroom_game` VALUES (1,1),(1,2),(1,6),(1,8),(1,9),(1,11);
+INSERT INTO `classroom_game` VALUES (1,2),(1,7),(1,8),(1,9),(1,11),(1,12),(4,1);
 /*!40000 ALTER TABLE `classroom_game` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,11 +137,11 @@ CREATE TABLE `field` (
   `type` varchar(50) NOT NULL,
   `default_value` varchar(150) NOT NULL,
   `order` int NOT NULL,
-  `gameId` int DEFAULT NULL,
+  `game_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_3eba8e668001b7e4313de7d0fc5` (`gameId`),
-  CONSTRAINT `FK_3eba8e668001b7e4313de7d0fc5` FOREIGN KEY (`gameId`) REFERENCES `game` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `FK_f535c2132ba21d4781e19ec07ef` (`game_id`),
+  CONSTRAINT `FK_f535c2132ba21d4781e19ec07ef` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,7 +150,6 @@ CREATE TABLE `field` (
 
 LOCK TABLES `field` WRITE;
 /*!40000 ALTER TABLE `field` DISABLE KEYS */;
-INSERT INTO `field` VALUES (1,'טאכ','text','יעה',1,3),(2,'בחירה','choice','[\"דגכמנ\",\"\",\"לגמ\",\"\",\"שלום\"]',1,8),(3,'תמונה','image','/image/gtFIowRh4u2EvHgenFC9hUNz3300aZtI.jpg',1,9),(4,'ךלזחכךלגדחכ','image','/image/1Sq3PrB0ut30N9YQ3F5QVT8LMUB5Svwa.jpg',1,11),(5,'zhjcxj','image','/image/eUJrfwgzUezM6gwi05IQl41KIJayTrzB.jpg',1,12),(6,'חנסב','image','/image/Fe9ZcgScXnGh99D7jfcnQF3YcAzZNIGY.jpg',1,13),(7,'יעח','text','חיחח',1,14),(8,'טאגטא','image','/image/sIz0Fxki6uLjc7rzBG6fce7PzRwDFBVA.jpg',2,14),(9,'יעכיעג','text','עכגעכגע',3,15),(10,'מצהצ','multi-choice','[\"יגי\",\"\",\"עיגע\",\"חכיחכ\"]',1,15),(11,'עכדעכד','image','/image/PNRHSz4xpv3KTJLbqxSbjHIe6oznSsj8.jpg',4,15),(12,'לבחהנתס','image','/image/acQyxu72QeMr50AnTo6xrM7zt3YNga1l.jpg',1,17),(13,'שחגכל','text','לחגנל',1,18),(14,'field the','text','the field',1,19);
 /*!40000 ALTER TABLE `field` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,7 +196,7 @@ CREATE TABLE `game` (
   `requirements` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `IDX_4bc6e56e3db9c52e787b5d3251` (`game_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,7 +205,7 @@ CREATE TABLE `game` (
 
 LOCK TABLES `game` WRITE;
 /*!40000 ALTER TABLE `game` DISABLE KEYS */;
-INSERT INTO `game` VALUES (1,'gcgf','resre','/image/ShVj7Yy9eGzFkYS5HTo0x1aJEKooODBm.jpg',_binary '\0',NULL),(2,'רקע','טכגט','/image/Eu3CwrlgcssFFrAZct6kGvKI0IZfbKoA.jpg',_binary '\0',NULL),(3,'טאכ','חיעח','/image/hgTJYeBO6XJCkXuh2yjISQuJpSnPefML.jpg',_binary '\0',NULL),(6,'טאכדכ','וע','/image/DDGdgk61ykeCCLcQidFRtgVj0dKkffbE.jpg',_binary '\0',NULL),(7,'גחבמ','לדחמ1','/image/cVnJXYzchqQkxZoIA0Qy59DUW225jmxI.jpg',_binary '\0',NULL),(8,'בחירה','גלדחכ','/image/KDjGwrBUMkSNVAJXutuevT0BOZ73FTqz.jpg',_binary '\0',NULL),(9,'תמונה','חטכס','/image/3uBCCqYeVA7SVeXUSA0UrdsGRxHysqcR.jpg',_binary '\0',NULL),(10,'gfdg','trdtr','/image/8xBWAyebzLPDBOroE2YRK40j0LsylBLA.png',_binary '\0',NULL),(11,'חדגכיע','לחגיכלגי','/image/cgMoysNe5YWthMz6FImjaoxU7N1JDZXx.jpg',_binary '\0',NULL),(12,'slkjdhk','kjfhkj','/image/navMZPrX8HVfvVszqMbF7OUxT8nMv4KN.jpg',_binary '\0',NULL),(13,'פדות','ןחיג','/image/GIOnCtPLoZiKdoTa5ZXbTwWVWuF5k0kk.jpg',_binary '\0',NULL),(14,'חיסג','חיכלחיכ','/image/zFsWrYlXb4l4gAVRdxtznl1rSqY06xut.jpg',_binary '\0',NULL),(15,'בסדר','טכריכ','/image/ZaNARJvzm43yEPvuEG01E9aiy1fmHu3t.jpg',_binary '\0',NULL),(16,'ארשדג','חיגכע','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0',NULL),(17,'מצבנדצ','נצבסנ','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0',NULL),(18,'גדלעחגיכ','לחיכנלח','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0',NULL),(19,'mickey mouse','game','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0','play');
+INSERT INTO `game` VALUES (1,'gcgf','resre','/image/ShVj7Yy9eGzFkYS5HTo0x1aJEKooODBm.jpg',_binary '\0',NULL),(2,'רקע','טכגט','/image/Eu3CwrlgcssFFrAZct6kGvKI0IZfbKoA.jpg',_binary '\0',NULL),(3,'טאכ','חיעח','/image/hgTJYeBO6XJCkXuh2yjISQuJpSnPefML.jpg',_binary '\0',NULL),(6,'טאכדכ','וע','/image/DDGdgk61ykeCCLcQidFRtgVj0dKkffbE.jpg',_binary '\0',NULL),(7,'גחבמ','לדחמ1','/image/cVnJXYzchqQkxZoIA0Qy59DUW225jmxI.jpg',_binary '\0',NULL),(8,'בחירה','גלדחכ','/image/KDjGwrBUMkSNVAJXutuevT0BOZ73FTqz.jpg',_binary '\0',NULL),(9,'תמונה','חטכס','/image/3uBCCqYeVA7SVeXUSA0UrdsGRxHysqcR.jpg',_binary '\0',NULL),(10,'gfdg','trdtr','/image/8xBWAyebzLPDBOroE2YRK40j0LsylBLA.png',_binary '\0',NULL),(11,'חדגכיע','לחגיכלגי','/image/cgMoysNe5YWthMz6FImjaoxU7N1JDZXx.jpg',_binary '\0',NULL),(12,'slkjdhk','kjfhkj','/image/navMZPrX8HVfvVszqMbF7OUxT8nMv4KN.jpg',_binary '\0',NULL),(13,'פדות','ןחיג','/image/GIOnCtPLoZiKdoTa5ZXbTwWVWuF5k0kk.jpg',_binary '\0',NULL),(14,'חיסג','חיכלחיכ','/image/zFsWrYlXb4l4gAVRdxtznl1rSqY06xut.jpg',_binary '\0',NULL),(15,'בסדר','טכריכ','/image/ZaNARJvzm43yEPvuEG01E9aiy1fmHu3t.jpg',_binary '\0',NULL),(16,'ארשדג','חיגכע','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0',NULL),(17,'מצבנדצ','נצבסנ','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0',NULL),(18,'גדלעחגיכ','לחיכנלח','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0',NULL),(19,'mickey mouse','game','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0','play'),(21,'jhdsfjh','jdfhj','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0','jhdfj');
 /*!40000 ALTER TABLE `game` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -416,4 +414,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-09 10:28:50
+-- Dump completed on 2021-02-09 15:32:34
