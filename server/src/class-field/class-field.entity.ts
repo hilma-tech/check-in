@@ -1,4 +1,3 @@
-import { type } from 'os';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { Field } from 'src/field/field.entity';
 import {
