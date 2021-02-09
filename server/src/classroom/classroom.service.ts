@@ -1,7 +1,7 @@
 import { Body, Injectable} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GameService } from 'src/game/game.service';
-import {ClassFieldService} from 'src/class-field/class-field.service'
+import {ClassroomFieldService} from 'src/classroom-field/classroom-field.service'
 import { Repository } from 'typeorm';
 import { ClassroomIdDto, ClassroomGameDto, GetClassSkip } from './classroom.dtos';
 import { Classroom } from './classroom.entity';
@@ -13,7 +13,7 @@ export class ClassroomService {
     @InjectRepository(Classroom)
     private classroomRepository: Repository<Classroom>,
     private gameService: GameService,
-    protected classfieldService: ClassFieldService
+    protected classroomfieldService: ClassroomFieldService
   ) {}
 
   async addGameRelation(@Body() req: ClassroomGameDto) {

@@ -1,4 +1,3 @@
-import { type } from 'os';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { Field } from 'src/field/field.entity';
 import {
@@ -10,7 +9,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class ClassField {
+export class ClassroomField {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -18,8 +17,8 @@ export class ClassField {
   new_value: string;
 
   @OneToOne(type => Classroom) 
-  @JoinColumn({name: "class_id"}) 
-   class_id: number;
+  @JoinColumn({name: "classroom_id"}) 
+   classroom_id: number;
 
   @OneToOne(type => Field)
   @JoinColumn({name: "field_id"})
