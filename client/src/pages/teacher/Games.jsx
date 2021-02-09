@@ -32,9 +32,7 @@ class Games extends React.Component {
   }
 
   componentDidMount() {
-    if (this.state.gamesList.length === 0) {
-      this.getClassGames();
-    }
+    this.getClassGames();    
   }
 
   getClassGames = async () => {
