@@ -25,9 +25,8 @@ class PopUpError extends React.Component {
         window.location.pathname = "teacher/classes"
       }
     }
-    if (this.props.errorMsg.question === true) {
       this.props.errorMsg.approveFunction();
-    }
+   
     this.props.errorMsg.resetMsg()
   }
 

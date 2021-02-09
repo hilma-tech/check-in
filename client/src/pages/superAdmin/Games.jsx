@@ -50,18 +50,19 @@ class Games extends Component {
     this.props.chosenGameEditContext.setgameId(gameId);
     this.props.history.push(this.props.location.pathname + "Edit");
   };
+  
+  OnApprove = async (info) => {
+    await this.props.games.deleteGame(info);
+    window.location.pathname = "superAdmin/games"
+  }
 
-  onClickDeleteGame = () => {
-    this.props.errorMsg.setErrorMsg(
-      "האם אתה בטוח שברצונך למחוק משחק זה?"
+  onClickDeleteGame = (gameId) => {
+    this.props.errorMsg.setQuestion(
+      "האם אתה בטוח שברצונך למחוק משחק זה?", ()=>this.OnApprove(gameId) 
     );
     this.props.errorMsg.question = true;
   };
 
-  OnApprove = async (gameId) => {
-    await this.props.games.deleteGame(gameId);
-    window.location.pathname = "superAdmin/games"
-  }
 
   //Save the user search value as searchVal in state.
   handleChang = (e) => {
