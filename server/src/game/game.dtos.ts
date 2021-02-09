@@ -3,6 +3,7 @@ import {
   IsDefined,
   IsEnum,
   IsNumber,
+  IsNumberString,
   IsObject,
   IsString,
   Length,
@@ -97,6 +98,7 @@ export class GameSaveReq {
 export class GetGameSkip {
   @IsDefined()
   @IsString()
+  @IsNumberString()
   gamesLength: string;
 }
 
@@ -104,6 +106,7 @@ export class GetGameSkip {
 export class GameIdDto {
   @IsDefined()
   @IsString()
+  @IsNumberString()
   id: string;
 }
 
@@ -120,9 +123,11 @@ export class GetGameDto {
 export class ClassroomIdDto {
   @IsDefined()
   @IsString()
+  @IsNumberString()
   classId: string;
 
   @IsDefined()
   @IsString()
+  @IsNumberString()
   dataLength: string;
 }

@@ -1,4 +1,4 @@
-import { IsDefined, IsNumber, IsString } from "class-validator";
+import { IsDefined, IsNumber, IsNumberString, IsString } from "class-validator";
 
 export class GetTeacherSkip {
   @IsDefined()
@@ -9,6 +9,7 @@ export class GetTeacherSkip {
 export class GetClassSkip {
   @IsDefined()
   @IsString()
+  @IsNumberString()
   classesLength: string;
 }
 

@@ -1,6 +1,7 @@
 import {
     IsDefined,
     IsNumber,
+    IsNumberString,
     IsString,
     Length,
     Matches,
@@ -11,10 +12,12 @@ import { Type } from 'class-transformer';
 export class ClassroomIdDto {
     @IsDefined()
     @IsString()
+    @IsNumberString()
     classId: string;
 
     @IsDefined()
     @IsString()
+    @IsNumberString()
     dataLength: string;
 }
 
@@ -29,6 +32,7 @@ export class ClassroomGameDto {
 
 export class GetClassSkip {
     @IsDefined()
-    @IsString()
-    classesLength: string;
+  @IsString()
+  @IsNumberString()
+  classesLength: string;
   }
