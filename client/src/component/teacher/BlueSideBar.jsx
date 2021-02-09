@@ -42,6 +42,7 @@ class BlueSideBar extends React.Component {
               className="blueSideBarLogOut"
               onClick={async () => {
                 await this.props.logout();
+                await this.props.name.resetUser()
                 this.props.history.push("/signin");
               }}
             >
@@ -73,6 +74,7 @@ class BlueSideBar extends React.Component {
               className="blueSideBarLogOut"
               onClick={async () => {
                 await this.props.logout();
+                await this.props.name.resetUser()
                 this.props.history.push("/signin");
               }}
             >
