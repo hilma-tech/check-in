@@ -4,6 +4,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { IsDefined, IsString, Length, Matches, IsEnum, IsNumber, ValidateNested } from 'class-validator';
 
@@ -26,6 +27,7 @@ export class Field {
   type: string;
 
   @ManyToOne(type => Game, game => game.id)
+  @JoinColumn({ referencedColumnName: 'id', name: 'game_id' })
   game: number;
 
   @IsDefined()
