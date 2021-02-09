@@ -17,7 +17,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 class Games extends React.Component {
   constructor() {
@@ -56,8 +56,7 @@ class Games extends React.Component {
         this.props.games.gamesList[index].id,
         index
       );
-      this.props.history.push("/teacher/classes/showGame")
-
+      this.props.history.push("/teacher/classes/showGame");
     }
   };
 
@@ -67,15 +66,12 @@ class Games extends React.Component {
       return this.openPopUpClick(index, id);
     } else {
       // equal to two
-      this.props.errorMsg.setErrorMsg(
-        "לכל כיתה חייב להיות שני משחקים לפחות"
-      );
+      this.props.errorMsg.setErrorMsg("לכל כיתה חייב להיות שני משחקים לפחות");
       return null;
     }
   };
 
   addGameToClass = async (index) => {
-
     await this.props.chosenGame.setgameId(
       this.props.games.gamesList[index].id,
       index
@@ -94,7 +90,10 @@ class Games extends React.Component {
   openPopUpClick = (index, id) => {
     this.gameIndex = index;
     this.gameId = id;
-    this.props.errorMsg.setQuestion("האם הנך בטוח שברצונך להסיר משחק זה מכיתה זו?", this.removeGameFromClass)
+    this.props.errorMsg.setQuestion(
+      "האם הנך בטוח שברצונך להסיר משחק זה מכיתה זו?",
+      this.removeGameFromClass
+    );
   };
 
   changePopUpstate = () => {
@@ -134,40 +133,42 @@ class Games extends React.Component {
           </div>
           <p className="gameListTitle">משחקים שניתן להוסיף:</p>
           {/*add search option */}
-          {!this.props.games.haveMoreGames && this.props.games.gamesList.length ===0 ?
-          <p className="gameListTitle">אין עוד משחקים שניתן להוסיף</p>:
-          <div className="listGamesForClass">
-            {this.props.games.gamesList.map((image, index) => {
-              return (
-                <ClassGames
-                  changeGameStatus={this.limitedAddition}
-                  chosen={false}
-                  name={image.game_name}
-                  image={image.image}
-                  index={index}
-                  key={index}
-                />
-              );
-            })}
-          </div>}
+          {!this.props.games.haveMoreGames &&
+          this.props.games.gamesList.length === 0 ? (
+            <p className="gameListTitle">אין עוד משחקים שניתן להוסיף</p>
+          ) : (
+            <div className="listGamesForClass">
+              {this.props.games.gamesList.map((image, index) => {
+                return (
+                  <ClassGames
+                    changeGameStatus={this.limitedAddition}
+                    chosen={false}
+                    name={image.game_name}
+                    image={image.image}
+                    index={index}
+                    key={index}
+                  />
+                );
+              })}
+            </div>
+          )}
           <div style={{ textAlign: "center" }}>
-            {
-              this.props.games.startGetGames ?
-                <CircularProgress color="#043163" size="1.5rem" /> :
-                <button
-                  className="showMoreGamesB"
-                  onClick={this.getClassGames}
-                  style={{
-                    marginTop: '1vh',
-                    display:
-                      this.props.games.haveMoreGames
-                        ? "inline-block"
-                        : "none",
-                  }}
-                >
-                  הצג עוד
-            </button>
-            }
+            {this.props.games.startGetGames ? (
+              <CircularProgress size="1.5rem" />
+            ) : (
+              <button
+                className="showMoreGamesB"
+                onClick={this.getClassGames}
+                style={{
+                  marginTop: "1vh",
+                  display: this.props.games.haveMoreGames
+                    ? "inline-block"
+                    : "none",
+                }}
+              >
+                הצג עוד
+              </button>
+            )}
           </div>
         </div>
       </div>

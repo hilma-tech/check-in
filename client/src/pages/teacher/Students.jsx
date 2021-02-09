@@ -60,7 +60,7 @@ class Students extends Component {
           </div>
           {
             this.props.chosenClass.startGetInfo ?
-            <CircularProgress color="#043163" size="1.5rem"/> :
+            <CircularProgress size="1.5rem"/> :
               <button
                 className="showMoreGamesB"
                 onClick={()=>{this.props.chosenClass.callStudents(this.props.chosenClass.classId)}}
