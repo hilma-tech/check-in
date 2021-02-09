@@ -40,12 +40,12 @@ export class TeacherService extends UserService {
     let currTeacherClasses = currTeacher.classroomTeacher.map((teacherClass)=>{
       return {id: teacherClass.id, name: teacherClass.name}
     });
-    let haveMoreClasses = currTeacherClasses.length > Number(skipON.classesLength) + 50 ? true : false
+    let haveMoreClasses = currTeacherClasses.length > Number(skipON.classesLength) + 2 ? true : false
 
     if(skipON.classesLength === "0"){
-      return {currTeacherClasses: currTeacherClasses.slice(Number(skipON.classesLength), Number(skipON.classesLength)+50), haveMoreClasses: haveMoreClasses, firstName: currTeacher.first_name, lastName: currTeacher.last_name};
+      return {currTeacherClasses: currTeacherClasses.slice(Number(skipON.classesLength), Number(skipON.classesLength)+2), haveMoreClasses: haveMoreClasses, firstName: currTeacher.first_name, lastName: currTeacher.last_name};
     } else {
-      return {currTeacherClasses: currTeacherClasses.slice(Number(skipON.classesLength), Number(skipON.classesLength)+50), haveMoreClasses: haveMoreClasses};
+      return {currTeacherClasses: currTeacherClasses.slice(Number(skipON.classesLength), Number(skipON.classesLength)+2), haveMoreClasses: haveMoreClasses};
     }
   }
 
