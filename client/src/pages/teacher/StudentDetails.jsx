@@ -55,8 +55,8 @@ class StudentDetails extends Component {
             <h1 className="detail">1234</h1>
           </div>
           <div className="studentDeets">
-            <h1 className="detail">{this.state.classrooms.map((classroom) => {
-              return <p style={{display:'inline-block', margin: '0'}}>{classroom.name} </p>
+            <h1 className="detail">{this.state.classrooms.map((classroom, ind) => {
+              return <p style={{display:'inline-block', margin: '0'}}>{classroom.name}{ind < this.state.classrooms.length -1 ? "\u00A0" : ''} </p>
             })}</h1>
           </div>
         </div>
