@@ -23,9 +23,10 @@
   background-color: rgba(4, 49, 99, 1);
   border: none;
   border-radius: 1vw;
-  width: 25vw;
-  height: 3.5vh;
+  width: 27vw;
+  height: 4vh;
   left: 2px;
+  font-size: 5vw;
 }
 
 .mobileGap {
@@ -201,6 +202,10 @@
   overflow-y: scroll;
 }
 
+.noFields{
+  margin-right: 5vw;
+}
+
 @media only screen and (min-width: 500px) {
   #editGameForClass {
     top: 19vh;
@@ -231,6 +236,7 @@
     width: 10vw;
     height: 5vh;
     margin-right: 50vw;
+    font-size: 2vw;
   }
 
   .mobileGap {
@@ -352,5 +358,9 @@
 
   #classGameImgTeacherWeb{
     border-radius: 2vw;
+  }
+
+  .noFields{
+    margin-right: 0;
   }
 }

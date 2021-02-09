@@ -57,6 +57,7 @@ class EditGame extends Component {
       this.props.chosenGame.index,
       this.props.chosenClass.classId
     );
+    await this.props.games.resetGamesStore()
     this.props.history.push("/teacher/classes/games");
   };
 
@@ -83,7 +84,9 @@ class EditGame extends Component {
             <h3 className="mobileGameReq">דרישות המשחק</h3>
             <p className="mobileGameRP">{this.state.gameRequirements}</p>
             <h1 className="mobileGameFields">שדות:</h1>
-            {this.state.fieldsData.map((field, i) => {
+            {this.state.fieldsData.length === 0 ? 
+            <p className="noFields">אין שדות למשחק זה</p>:
+            this.state.fieldsData.map((field, i) => {
               return (
                 <>
                   <h2 className="mobileFieldName"key={i+1} >{field.field_name}</h2>
