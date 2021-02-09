@@ -35,7 +35,9 @@ class Students extends Component {
           <ArrowBar page="students" />
           <div className="smallAlign" id="smallAlignStudentList" style={{textAlign: "center"}}>
             <div>
-            {this.props.chosenClass.students.map((student, index) => {
+            {this.props.chosenClass.students.length === 0?
+            <p>אין תלמידים לכיתה זו</p>:
+            this.props.chosenClass.students.map((student, index) => {
               return (
                 <div
                 key={index}
