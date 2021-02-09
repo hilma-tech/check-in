@@ -19,6 +19,7 @@ class Name {
             startGetClasses: observable,
             setTeacher: action,
             getMoreClasses: action,
+            resetUser: action,
         })
     }
 
@@ -53,6 +54,15 @@ class Name {
               console.log('set teacher err: ', err);
           }
 
+    }
+
+    resetUser = () =>{
+        this.firstName = ""
+        this.lastName = ""
+        this.teacherClasses = []
+        this.haveMoreClasses = true
+        this.successGettingClasses = true;
+        this.startGetClasses = false;
     }
 }
 

@@ -28,7 +28,6 @@ class ShowGame extends Component {
 
   componentDidMount() {
     this.getGameInfo();
-    this.props.errorMsg.setErrorMsg("לכל כיתה יכול להית עד שישה משחקים.");
   }
 
   getGameInfo = async () => {
@@ -79,7 +78,9 @@ class ShowGame extends Component {
             <h3 className="mobileGameReq">דרישות המשחק</h3>
             <p className="mobileGameRP">{this.state.gameRequirements}</p>
             <h1 className="mobileGameFields">שדות:</h1>
-            {this.state.fieldsData.map((field, i) => {
+            {this.state.fieldsData.length === 0 ?
+            <p className="noFields">אין שדות למשחק זה</p>:
+            this.state.fieldsData.map((field, i) => {
               return (
                 <>
                   <h2 className="mobileFieldName" key={i + 1}>
