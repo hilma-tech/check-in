@@ -11,6 +11,16 @@ export class ClassroomFieldService {
         private classFieldRepository: Repository<ClassroomField>,
         private fieldService: FieldService,
       ) {}
+
+      async removeGameFieldsFromClass (@Body() req:any) {
+        let fields = await this.fieldService.getGameFields(req.gameId)
+        fields.forEach((field)=>{
+          this.classFieldRepository.delete({
+            classroom_id: req.classId,
+            field_id: field.id
+          })
+        })
+      }
     
       async addGameFieldsToClass(@Body() req: any) {
         let fields = await this.fieldService.getGameFields(req.gameId)
