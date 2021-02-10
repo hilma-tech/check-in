@@ -80,11 +80,11 @@ CREATE TABLE `classroom_field` (
   `classroom_id` int DEFAULT NULL,
   `field_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `REL_ef6001153b3d1baf00d4307607` (`classroom_id`),
-  UNIQUE KEY `REL_28211bf7506a8fd301f86988bb` (`field_id`),
+  KEY `FK_ef6001153b3d1baf00d4307607c` (`classroom_id`),
+  KEY `FK_28211bf7506a8fd301f86988bb2` (`field_id`),
   CONSTRAINT `FK_28211bf7506a8fd301f86988bb2` FOREIGN KEY (`field_id`) REFERENCES `field` (`id`),
   CONSTRAINT `FK_ef6001153b3d1baf00d4307607c` FOREIGN KEY (`classroom_id`) REFERENCES `classroom` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,6 +93,7 @@ CREATE TABLE `classroom_field` (
 
 LOCK TABLES `classroom_field` WRITE;
 /*!40000 ALTER TABLE `classroom_field` DISABLE KEYS */;
+INSERT INTO `classroom_field` VALUES (1,'כעדגעד',1,1),(2,'/image/sCcbMPZ6CCTNBRvjFANkMtcZANlsdcpv.jpg',1,3),(3,'[\"ביבי\",\"בנט\",\"לפיד\",\"סער\"]',1,2);
 /*!40000 ALTER TABLE `classroom_field` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,7 +121,7 @@ CREATE TABLE `classroom_game` (
 
 LOCK TABLES `classroom_game` WRITE;
 /*!40000 ALTER TABLE `classroom_game` DISABLE KEYS */;
-INSERT INTO `classroom_game` VALUES (1,2),(1,7),(1,8),(1,9),(1,11),(1,12),(4,1);
+INSERT INTO `classroom_game` VALUES (1,7),(1,8),(1,12),(1,22),(4,1);
 /*!40000 ALTER TABLE `classroom_game` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,7 +142,7 @@ CREATE TABLE `field` (
   PRIMARY KEY (`id`),
   KEY `FK_f535c2132ba21d4781e19ec07ef` (`game_id`),
   CONSTRAINT `FK_f535c2132ba21d4781e19ec07ef` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,6 +151,7 @@ CREATE TABLE `field` (
 
 LOCK TABLES `field` WRITE;
 /*!40000 ALTER TABLE `field` DISABLE KEYS */;
+INSERT INTO `field` VALUES (1,'טקסטים','text','כעדגעד',1,22),(2,'בחירות 2021','choice','[\"ביבי\",\"בנט\",\"לפיד\",\"סער\"]',4,22),(3,'תמונה כלשהי','image','/image/sCcbMPZ6CCTNBRvjFANkMtcZANlsdcpv.jpg',2,22);
 /*!40000 ALTER TABLE `field` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,7 +198,7 @@ CREATE TABLE `game` (
   `requirements` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `IDX_4bc6e56e3db9c52e787b5d3251` (`game_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +207,7 @@ CREATE TABLE `game` (
 
 LOCK TABLES `game` WRITE;
 /*!40000 ALTER TABLE `game` DISABLE KEYS */;
-INSERT INTO `game` VALUES (1,'gcgf','resre','/image/ShVj7Yy9eGzFkYS5HTo0x1aJEKooODBm.jpg',_binary '\0',NULL),(2,'רקע','טכגט','/image/Eu3CwrlgcssFFrAZct6kGvKI0IZfbKoA.jpg',_binary '\0',NULL),(3,'טאכ','חיעח','/image/hgTJYeBO6XJCkXuh2yjISQuJpSnPefML.jpg',_binary '\0',NULL),(6,'טאכדכ','וע','/image/DDGdgk61ykeCCLcQidFRtgVj0dKkffbE.jpg',_binary '\0',NULL),(7,'גחבמ','לדחמ1','/image/cVnJXYzchqQkxZoIA0Qy59DUW225jmxI.jpg',_binary '\0',NULL),(8,'בחירה','גלדחכ','/image/KDjGwrBUMkSNVAJXutuevT0BOZ73FTqz.jpg',_binary '\0',NULL),(9,'תמונה','חטכס','/image/3uBCCqYeVA7SVeXUSA0UrdsGRxHysqcR.jpg',_binary '\0',NULL),(10,'gfdg','trdtr','/image/8xBWAyebzLPDBOroE2YRK40j0LsylBLA.png',_binary '\0',NULL),(11,'חדגכיע','לחגיכלגי','/image/cgMoysNe5YWthMz6FImjaoxU7N1JDZXx.jpg',_binary '\0',NULL),(12,'slkjdhk','kjfhkj','/image/navMZPrX8HVfvVszqMbF7OUxT8nMv4KN.jpg',_binary '\0',NULL),(13,'פדות','ןחיג','/image/GIOnCtPLoZiKdoTa5ZXbTwWVWuF5k0kk.jpg',_binary '\0',NULL),(14,'חיסג','חיכלחיכ','/image/zFsWrYlXb4l4gAVRdxtznl1rSqY06xut.jpg',_binary '\0',NULL),(15,'בסדר','טכריכ','/image/ZaNARJvzm43yEPvuEG01E9aiy1fmHu3t.jpg',_binary '\0',NULL),(16,'ארשדג','חיגכע','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0',NULL),(17,'מצבנדצ','נצבסנ','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0',NULL),(18,'גדלעחגיכ','לחיכנלח','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0',NULL),(19,'mickey mouse','game','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0','play'),(21,'jhdsfjh','jdfhj','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0','jhdfj');
+INSERT INTO `game` VALUES (1,'gcgf','resre','/image/ShVj7Yy9eGzFkYS5HTo0x1aJEKooODBm.jpg',_binary '\0',NULL),(2,'רקע','טכגט','/image/Eu3CwrlgcssFFrAZct6kGvKI0IZfbKoA.jpg',_binary '\0',NULL),(3,'טאכ','חיעח','/image/hgTJYeBO6XJCkXuh2yjISQuJpSnPefML.jpg',_binary '\0',NULL),(6,'טאכדכ','וע','/image/DDGdgk61ykeCCLcQidFRtgVj0dKkffbE.jpg',_binary '\0',NULL),(7,'גחבמ','לדחמ1','/image/cVnJXYzchqQkxZoIA0Qy59DUW225jmxI.jpg',_binary '\0',NULL),(8,'בחירה','גלדחכ','/image/KDjGwrBUMkSNVAJXutuevT0BOZ73FTqz.jpg',_binary '\0',NULL),(9,'תמונה','חטכס','/image/3uBCCqYeVA7SVeXUSA0UrdsGRxHysqcR.jpg',_binary '\0',NULL),(10,'gfdg','trdtr','/image/8xBWAyebzLPDBOroE2YRK40j0LsylBLA.png',_binary '\0',NULL),(11,'חדגכיע','לחגיכלגי','/image/cgMoysNe5YWthMz6FImjaoxU7N1JDZXx.jpg',_binary '\0',NULL),(12,'slkjdhk','kjfhkj','/image/navMZPrX8HVfvVszqMbF7OUxT8nMv4KN.jpg',_binary '\0',NULL),(13,'פדות','ןחיג','/image/GIOnCtPLoZiKdoTa5ZXbTwWVWuF5k0kk.jpg',_binary '\0',NULL),(14,'חיסג','חיכלחיכ','/image/zFsWrYlXb4l4gAVRdxtznl1rSqY06xut.jpg',_binary '\0',NULL),(15,'בסדר','טכריכ','/image/ZaNARJvzm43yEPvuEG01E9aiy1fmHu3t.jpg',_binary '\0',NULL),(16,'ארשדג','חיגכע','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0',NULL),(17,'מצבנדצ','נצבסנ','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0',NULL),(18,'גדלעחגיכ','לחיכנלח','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0',NULL),(19,'mickey mouse','game','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0','play'),(21,'jhdsfjh','jdfhj','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0','jhdfj'),(22,'בלופ','תיאור כלשהו','https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',_binary '\0','אין דרישות');
 /*!40000 ALTER TABLE `game` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -414,4 +416,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-09 15:32:34
+-- Dump completed on 2021-02-10 10:41:46
