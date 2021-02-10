@@ -8,6 +8,7 @@ import {
   FilesType,
   ImageService,
 } from '@hilma/fileshandler-typeorm'
+import { ClassFieldService } from 'src/class-field/class-field.service';
 
 
 @Injectable()
@@ -16,6 +17,7 @@ export class GameService {
     @InjectRepository(Game)
     private gameRepository: Repository<Game>,
     private fieldService: FieldService,
+    private classFieldService: ClassFieldService,
     private readonly imageService: ImageService,
   ) {}
 
@@ -112,18 +114,17 @@ export class GameService {
       where: [{ suspended: false }]
     });
   }
-
   async getGameById(gameId: number) {
     return await this.gameRepository.find({
       where: { id: gameId },
     });
   }
-
+////////////////
   async deleteGameById(id) {
-     await this.fieldService.deleteField(id.Id) 
+     await this.classFieldService.deleteFieldAndClassField(id.Id) 
     let RemoveGame = await this.gameRepository.delete(id.Id);
   }
-
+/////////////////
   async getClassroomGames(req: ClassroomIdDto) {
     let currClassGames = await this.gameRepository.createQueryBuilder("Game")
     .innerJoinAndSelect("Game.classrooms", "Classroom")

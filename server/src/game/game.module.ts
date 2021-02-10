@@ -12,10 +12,12 @@ import { SuperAdminService } from "src/super-admin/super-admin.service";
 import { SuperAdmin } from "src/super-admin/super-admin.entity";
 import { FieldModule } from "src/field/field.module";
 import { UserModule } from '@hilma/auth-nest';
+import { ClassFieldModule } from "src/class-field/class-field.module";
 @Module({
   imports: [
     FieldModule,
     UserModule,
+    ClassFieldModule,
     TypeOrmModule.forFeature([Game]),
   ],
   controllers: [GameController],
