@@ -90,6 +90,7 @@ class ShowGame extends Component {
                     field.selection === "text" ? (
                       <input
                         key={i}
+                        readOnly={true}
                         defaultValue={field.value[0].value}
                         className="mobileChangingInput"
                       />
@@ -100,6 +101,7 @@ class ShowGame extends Component {
                             return (
                               <input
                                 key={i}
+                                readOnly={true}
                                 defaultValue={value.value}
                                 className="mobileChangingInputChoice"
                               />

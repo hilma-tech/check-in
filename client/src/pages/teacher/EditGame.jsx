@@ -95,6 +95,7 @@ class EditGame extends Component {
                       <input
                       key={i}
                         defaultValue={field.value[0].value}
+                        readOnly={true}
                         className="mobileChangingInput"
                       />
                     ) :( <div className="mobileChangingInputGrid">
@@ -104,6 +105,7 @@ class EditGame extends Component {
                           <input
                           key={i}
                             defaultValue={value.value}
+                            readOnly={true}
                             className="mobileChangingInputChoice"
                           />
                         );
