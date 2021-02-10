@@ -3,6 +3,7 @@ import { IsDefined, IsNumber, IsNumberString, IsString } from "class-validator";
 export class GetTeacherSkip {
   @IsDefined()
   @IsString()
+  @IsNumberString()
   teachersLength: string;
 }
 
