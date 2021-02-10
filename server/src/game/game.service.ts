@@ -2,12 +2,13 @@ import { UploadedFiles, Body, Injectable, Req } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Game } from './game.entity';
-import { GameSaveDto, GetGameSkip, GameSaveReq, GameIdDto,ClassroomIdDto } from './game.dtos';
+import { GameSaveDto, GetGameSkip, GameSaveReq, GameIdDto, ClassroomIdDto } from './game.dtos';
 import { FieldService } from 'src/field/field.service';
 import {
   FilesType,
   ImageService,
 } from '@hilma/fileshandler-typeorm'
+import { ClassroomFieldService } from 'src/classroom-field/classroom-field.service';
 
 
 @Injectable()
@@ -16,8 +17,9 @@ export class GameService {
     @InjectRepository(Game)
     private gameRepository: Repository<Game>,
     private fieldService: FieldService,
+    private classFieldService: ClassroomFieldService,
     private readonly imageService: ImageService,
-  ) {}
+  ) { }
 
   async addGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
     // if(req.game.image.value){
@@ -112,7 +114,6 @@ export class GameService {
       where: [{ suspended: false }]
     });
   }
-
   async getGameById(gameId: number) {
     return await this.gameRepository.find({
       where: { id: gameId },
@@ -120,25 +121,25 @@ export class GameService {
   }
 
   async deleteGameById(id) {
-     await this.fieldService.deleteField(id.Id) 
+    await this.classFieldService.deleteFieldAndClassField(id.Id)
     let RemoveGame = await this.gameRepository.delete(id.Id);
   }
 
   async getClassroomGames(req: ClassroomIdDto) {
     let currClassGames = await this.gameRepository.createQueryBuilder("Game")
-    .innerJoinAndSelect("Game.classrooms", "Classroom")
-    .select("Game.id")
-    .addSelect("Game.game_name")
-    .addSelect("Game.image")
-    .where("Classroom.id = :id", { id: Number(req.classId) })
-    .getMany();
+      .innerJoinAndSelect("Game.classrooms", "Classroom")
+      .select("Game.id")
+      .addSelect("Game.game_name")
+      .addSelect("Game.image")
+      .where("Classroom.id = :id", { id: Number(req.classId) })
+      .getMany();
 
-    let gamesLength = (await this.gameRepository.query("select id from game where id not in(select game_id from classroom_game where classroom_id = " + req.classId +");")).length
+    let gamesLength = (await this.gameRepository.query("select id from game where id not in(select game_id from classroom_game where classroom_id = " + req.classId + ");")).length
 
     let haveMoreGames = gamesLength > Number(req.dataLength) + 50 ? true : false;
 
-    let allGames = await this.gameRepository.query("select id, game_name, image from game where id not in(select game_id from classroom_game where classroom_id = " + req.classId +")  limit 50 offset " + req.dataLength + ";")
-    return ({currClassGames: currClassGames, allGames: allGames, haveMoreGames: haveMoreGames});
+    let allGames = await this.gameRepository.query("select id, game_name, image from game where id not in(select game_id from classroom_game where classroom_id = " + req.classId + ")  limit 50 offset " + req.dataLength + ";")
+    return ({ currClassGames: currClassGames, allGames: allGames, haveMoreGames: haveMoreGames });
   }
 
 }
