@@ -27,6 +27,9 @@ class EditGame extends Component {
   }
 
   componentDidMount() {
+    if (this.props.chosenClass.classId === 0) {
+      this.props.history.push("/teacher/classes");
+    }
     this.getGameInfo();
   }
 

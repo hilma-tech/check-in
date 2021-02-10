@@ -57,10 +57,10 @@ function App() {
           />
           <PrivateRoute
             path="/teacher"
-            component={TeacherRoute}
             componentName="TeacherRoute"
             redirectPath="/signin"
             redirectComponent={SignIn}
+            component={TeacherRoute}
           />
           {/* <Route path="/draft" exact>
               <Draft />
