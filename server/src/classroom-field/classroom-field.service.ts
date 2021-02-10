@@ -24,7 +24,6 @@ export class ClassroomFieldService {
     
       async addGameFieldsToClass(@Body() req: any) {
         let fields = await this.fieldService.getGameFields(req.gameId)
-        console.log('fields: ', fields);
         fields.forEach((field) => {  
           let eek = new ClassroomField;
           eek.classroom_id = req.classId
