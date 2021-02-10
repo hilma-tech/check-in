@@ -58,7 +58,7 @@ export class StudentController {
   @Get('/gamesForClass')
   async getGamesForClass(@Query() info: GamesForClassDto) {
     let getClassId = await this.studentService.CheckUserInfoAndGetClassId(info.username, info.password, info.classId);
-    if (getClassId) {
+    if (Boolean(getClassId) === true) {
       let gamesForClass = await this.gameService.getClassroomGames({ classId: info.classId, dataLength: '0' });
       if (gamesForClass.currClassGames.length > 0) {
         return gamesForClass.currClassGames
@@ -66,7 +66,7 @@ export class StudentController {
       else { return "no games for this class" }
     }
     else {
-      return "problem with info inserted"
+      return 'problem with info'
     }
   }
 

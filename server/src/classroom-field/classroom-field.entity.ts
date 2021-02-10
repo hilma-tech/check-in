@@ -4,7 +4,7 @@ import {
   Column,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -16,11 +16,11 @@ export class ClassroomField {
   @Column()
   new_value: string;
 
-  @OneToOne(type => Classroom) 
-  @JoinColumn({name: "classroom_id"}) 
-   classroom_id: number;
+  @ManyToOne(type => Classroom, classroom => classroom.id)
+  @JoinColumn({referencedColumnName: 'id',name: "classroom_id"}) 
+  classroom_id: number;
 
-  @OneToOne(type => Field)
-  @JoinColumn({name: "field_id"})
+  @ManyToOne(type => Field, field => field.id)
+  @JoinColumn({name: "field_id", referencedColumnName: 'id'})
   field_id: number;
 }

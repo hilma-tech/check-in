@@ -10,7 +10,7 @@ import { ClassroomFieldService } from 'src/classroom-field/classroom-field.servi
 export class ClassroomController {
     constructor(
         private classroomService: ClassroomService,
-        private ClassroomFieldService: ClassroomFieldService
+        private classroomFieldService: ClassroomFieldService
         ) {}
 
       
@@ -18,7 +18,7 @@ export class ClassroomController {
         @UseJwtAuth('teacher')
     @Post('/addGameRelation')
     async addGameRelation(@Body() req: ClassroomGameDto) {
-        await this.ClassroomFieldService.addGameFieldsToClass(req)
+        await this.classroomFieldService.addGameFieldsToClass(req)
         return await this.classroomService.addGameRelation(req);
     }
 

@@ -122,7 +122,8 @@ export class GameService {
 
   async deleteGameById(id) {
     await this.classFieldService.deleteFieldAndClassField(id.Id)
-    let RemoveGame = await this.gameRepository.delete(id.Id);
+    await this.fieldService.deleteField(id.Id)
+    await this.gameRepository.delete(id.Id);
   }
 
   async getClassroomGames(req: ClassroomIdDto) {
