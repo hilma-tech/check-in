@@ -28,14 +28,6 @@ export default () => ({
     },
     teacher: {
       components: [
-        "SuperAdminMenu",
-        "SuperAdminRoute",
-        "SAdminAddGames",
-        "SAdminGames",
-        "SAdminGamesList",
-        "SAdminEditGames",
-        "SAdminSchools",
-
         "TeacherRoute",
         "TeacherClasses",
         "SmallTeacherRoute",

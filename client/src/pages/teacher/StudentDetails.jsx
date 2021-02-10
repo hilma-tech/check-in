@@ -20,6 +20,9 @@ class StudentDetails extends Component {
   }
 
   componentDidMount() {
+    if (this.props.chosenClass.classId === 0) {
+      this.props.history.push("/teacher/classes");
+    }
     let studentInfo = this.props.chosenClass.getCurrStudent()
     let classrooms = this.props.chosenClass.studentClassrooms
     this.setState({
@@ -55,7 +58,8 @@ class StudentDetails extends Component {
             <h1 className="detail">1234</h1>
           </div>
           <div className="studentDeets">
-            <h1 className="detail">{this.state.classrooms.map((classroom, ind) => {
+            <h1 className="detail">{this.state.classrooms.length === 0 ?
+            <p style={{display:'inline-block', margin: '0'}}>לתלמיד/ה זה/זו אין עוד כיתות</p> : this.state.classrooms.map((classroom, ind) => {
               return <p style={{display:'inline-block', margin: '0'}}>{classroom.name}{ind < this.state.classrooms.length -1 ? "\u00A0" : ''} </p>
             })}</h1>
           </div>

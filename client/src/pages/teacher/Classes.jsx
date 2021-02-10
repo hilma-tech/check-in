@@ -72,10 +72,10 @@ class Classes extends Component {
                     this.moveToClass(classObj.id, classObj.name);
                   }}
                   className="circleCont"
-                  style={{ borderColor: this.colors[index] }}
+                  style={{ borderColor: this.colors[(index+1)%this.colors.length] }}
                   key={classObj.id}
                 >
-                  <h3 className="className" key={index} style={{ color: this.colors[index] }}>
+                  <h3 className="className" key={index} style={{ color: this.colors[(index+1)%this.colors.length] }}>
                     {classObj.name}
                   </h3>
                 </div>
