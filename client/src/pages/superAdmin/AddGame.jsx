@@ -243,7 +243,8 @@ class AddGame extends Component {
   validateFields = () => {
     let isOk = true;
     let countFullFields = 0;
-    let fieldEmpt = true;
+    let fieldEmpt = 0;
+    let firstErrMsg = ""
     this.state.fieldsData.map((fields, index) => {
       if (fields.selection !== "image") {
         let errMess = fieldNameValidation(fields.name);
@@ -258,8 +259,11 @@ class AddGame extends Component {
           fields.value.map((field) => {
             errMess = fieldInputValidation(field.value);
             if (errMess.length !== 0) {
-              if(errMess === '** שדה זה לא יכול להכיל אותיות באנגלית או תווים מיוחדים **'){
-                fieldEmpt = false;
+              if(errMess === "** שדה זה לא יכול להכיל תווים מיוחדים **" || errMess === '** שדה זה לא יכול להכיל יותר מ-100 תווים **'){
+                fieldEmpt++;
+                if(firstErrMsg.length === 0){
+                  firstErrMsg = errMess
+                }
               }
               this.setState((prevState) => {
                 prevState.fieldsData[index].errorMessage.toShow = "block";
@@ -277,17 +281,23 @@ class AddGame extends Component {
             }
           });
           if(fields.selection === "choice" || fields.selection === "multi-choice"){
-            if (countFullFields >= 2 && fieldEmpt){
+            if (countFullFields >= 2 && fieldEmpt === 0){
               isOk=true;
               this.setState((prevState) => {
                 prevState.fieldsData[index].errorMessage.toShow = "none";
                 prevState.fieldsData[index].errorMessage.mess = "";
                 return { fieldsData: prevState.fieldsData };
               });
-            } else {
+            } else if(fieldEmpt === 0) {
               this.setState((prevState) => {
                 prevState.fieldsData[index].errorMessage.toShow = "block";
                 prevState.fieldsData[index].errorMessage.mess = '** נא למלא לפחות 2 שדות **';
+                return { fieldsData: prevState.fieldsData };
+              });
+            } else if(firstErrMsg.length !== 0){
+              this.setState((prevState) => {
+                prevState.fieldsData[index].errorMessage.toShow = "block";
+                prevState.fieldsData[index].errorMessage.mess = firstErrMsg;
                 return { fieldsData: prevState.fieldsData };
               });
             }

@@ -27,12 +27,10 @@ class SignIn extends Component {
 
   componentDidMount = async () => {
     let isAuthed = this.props.isAuthenticated
-    console.log('isAuthed: ', isAuthed);
     if (isAuthed === true) {
       let kl = atob(this.props.AuthContext.kls.kl)
       kl = kl.replace('["', "")
       kl = kl.replace('"]', "")
-      console.log('kl: ', kl);
       if (kl == "mlkdsef98uxmwieau89" || kl == "mxdired9432udxjdoi8e") {
         this.props.history.push("/teacher/classes")
       } else {
@@ -66,12 +64,12 @@ class SignIn extends Component {
             window.location.pathname = "/superAdmin/games"
           }
         } else {
-          console.log('response.status: ', response);
-if (response.msg.status === 401) {
-        this.props.errorMsg.setErrorMsg('שם המשתמש והסיסמא אינם תואמים.');
-      } else {
-        this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן להתחבר.');
-      }        }
+          if (response.msg.status === 401) {
+            this.props.errorMsg.setErrorMsg('שם המשתמש והסיסמא אינם תואמים.');
+          } else {
+            this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן להתחבר.');
+          }
+        }
       } else {
         if (username.length === 0 || password.length === 0) {
           this.props.errorMsg.setErrorMsg('נא למלא את כל השדות.');

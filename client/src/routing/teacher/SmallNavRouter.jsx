@@ -1,4 +1,4 @@
-import { Route, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import React, { Component } from "react";
 import Games from "../../pages/teacher/Games.jsx";
 import Students from "../../pages/teacher/Students.jsx";
@@ -12,7 +12,7 @@ import ErrorPage from "../../pages/404Page.jsx";
 class SmallNavRouter extends Component {
   render() {
     return (
-      <>
+      <Switch>
         <PrivateRoute
           path={"/teacher/classes/games"}
           exact
@@ -51,9 +51,11 @@ class SmallNavRouter extends Component {
           componentName="TeacherShowGame"
           component={ShowGame}
         />
+        <Route path="/teacher/:smth" exact component={ErrorPage} />
+        <Route path="/teacher/classes/:smth" exact component={ErrorPage} />
+        <Route path="/teacher/classes/students/:smth" exact component={ErrorPage} />
         {/* <Route path={"/teacher/classes/students/studentInfo"} exact component={StudentDetails} /> */}
-        <Route path="/teacher/:smth" component={ErrorPage} />
-      </>
+      </Switch>
     );
   }
 }
