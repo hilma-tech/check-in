@@ -1,4 +1,4 @@
-import { withRouter } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 import React, { Component } from "react";
 import Games from "../../pages/teacher/Games.jsx";
 import Students from "../../pages/teacher/Students.jsx";
@@ -7,6 +7,7 @@ import { PrivateRoute } from "@hilma/auth";
 import EditGame from '../../pages/teacher/EditGame.jsx'
 import StudentDetails from '../../pages/teacher/StudentDetails.jsx'
 import ShowGame from "../../pages/teacher/ShowGame.jsx";
+import ErrorPage from "../../pages/404Page.jsx";
 
 class SmallNavRouter extends Component {
   render() {
@@ -51,7 +52,7 @@ class SmallNavRouter extends Component {
           component={ShowGame}
         />
         {/* <Route path={"/teacher/classes/students/studentInfo"} exact component={StudentDetails} /> */}
-
+        <Route path="/teacher/:smth" component={ErrorPage} />
       </>
     );
   }

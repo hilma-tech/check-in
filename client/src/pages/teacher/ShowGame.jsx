@@ -27,6 +27,9 @@ class ShowGame extends Component {
   }
 
   componentDidMount() {
+    if (this.props.chosenClass.classId === 0) {
+      this.props.history.push("/teacher/classes");
+    }
     this.getGameInfo();
   }
 
@@ -90,6 +93,7 @@ class ShowGame extends Component {
                     field.selection === "text" ? (
                       <input
                         key={i}
+                        readOnly={true}
                         defaultValue={field.value[0].value}
                         className="mobileChangingInput"
                       />
@@ -100,6 +104,7 @@ class ShowGame extends Component {
                             return (
                               <input
                                 key={i}
+                                readOnly={true}
                                 defaultValue={value.value}
                                 className="mobileChangingInputChoice"
                               />

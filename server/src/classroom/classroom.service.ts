@@ -1,7 +1,6 @@
-import { Body, Injectable} from '@nestjs/common';
+import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GameService } from 'src/game/game.service';
-import {ClassroomFieldService} from 'src/classroom-field/classroom-field.service'
 import { Repository } from 'typeorm';
 import { ClassroomIdDto, ClassroomGameDto, GetClassSkip } from './classroom.dtos';
 import { Classroom } from './classroom.entity';
@@ -13,8 +12,7 @@ export class ClassroomService {
     @InjectRepository(Classroom)
     private classroomRepository: Repository<Classroom>,
     private gameService: GameService,
-    protected classroomfieldService: ClassroomFieldService
-  ) {}
+  ) { }
 
   async addGameRelation(@Body() req: ClassroomGameDto) {
     let classroomGame = new Classroom();
@@ -32,23 +30,23 @@ export class ClassroomService {
     return { newlyAddedGame: newlyAddedGame };
   }
 
-  async removeGameRelation(@Body() req: ClassroomGameDto) {    
+  async removeGameRelation(@Body() req: ClassroomGameDto) {
     let ans = await this.classroomRepository.findOne({
       relations: ['games'],
       where: [{ id: req.classId }],
     });
-    ans.games = ans.games.filter((game)=>{
+    ans.games = ans.games.filter((game) => {
       return (game.id !== req.gameId)
     });
     let newRemovedGame = await this.classroomRepository.save(ans);
     return { newRemovedGame: newRemovedGame };
   }
-
-  async getSchoolClasses(schoolId: string){
+  async getSchoolClasses(schoolId: string) {
     let classes = await this.classroomRepository.find({
       relations: ['teachers'],
       where: { school_id: Number(schoolId) },
     });
     return classes
   }
+
 }

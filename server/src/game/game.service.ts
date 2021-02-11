@@ -121,8 +121,7 @@ export class GameService {
   }
 
   async deleteGameById(id) {
-    await this.classFieldService.deleteFieldAndClassField(id.Id)
-    await this.fieldService.deleteField(id.Id)
+    await this.classFieldService.deleteClassField(id.Id)
     await this.gameRepository.delete(id.Id);
   }
 

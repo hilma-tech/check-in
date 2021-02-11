@@ -12,6 +12,16 @@ export class ClassroomFieldService {
     private fieldService: FieldService,
   ) { }
 
+  async removeGameFieldsFromClass(@Body() req: any) {
+    let fields = await this.fieldService.getGameFields(req.gameId)
+    fields.forEach((field) => {
+      this.classFieldRepository.delete({
+        classroom_id: req.classId,
+        field_id: field.id
+      })
+    })
+  }
+
   async addGameFieldsToClass(@Body() req: any) {
     let fields = await this.fieldService.getGameFields(req.gameId)
     fields.forEach((field) => {
@@ -24,16 +34,15 @@ export class ClassroomFieldService {
     return "hoi";
   }
 
-  async deleteFieldAndClassField(@Body() req: any) {
+  async deleteClassField(@Body() req: any) {
     let deleteFieldAndGetFieldId = await this.fieldService.getGameFields(req);
+    console.log('deleteFieldAndGetFieldId: ', deleteFieldAndGetFieldId);
+    let fieldsForDelete = []
     deleteFieldAndGetFieldId.map(async (fieldId) => {
-      let changedFields = await this.classFieldRepository.find({
-        relations: ['field_id'],
-        where: [{ field_id: fieldId.id }],
-      })
-      changedFields.map( (field) => {
-        return  this.classFieldRepository.delete(field.id)
-      })
+      fieldsForDelete.push(fieldId.id)
+      await this.classFieldRepository.delete({ field_id: fieldId.id });
     })
+    await this.fieldService.deleteField(fieldsForDelete)
+
   }
 }

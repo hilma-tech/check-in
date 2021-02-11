@@ -3,8 +3,6 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { GameController } from "./game.controller";
 import { GameService } from "./game.service";
 import { Game } from "./game.entity";
-import { Field } from "src/field/field.entity";
-import { FieldService } from "src/field/field.service";
 import { ImageService } from "@hilma/fileshandler-typeorm";
 import { JwtModule } from "@nestjs/jwt";
 import { JwtStrategy, USER_MODULE_OPTIONS } from "@hilma/auth-nest";

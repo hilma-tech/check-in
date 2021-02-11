@@ -21,7 +21,7 @@ export class StudentController {
     private classroomService: ClassroomService,
     private gameService: GameService
   ) {
-    // this.register({username: 'student1@gmail.com', password: 'student11', name: 'בת ציון רוז'})
+    // this.register({username: 'student2@gmail.com', password: 'student11', name: 'בת-ציון רוז'})
   }
 
   @Post('/register')
@@ -32,11 +32,11 @@ export class StudentController {
     let student: Partial<Student> = new Student({ username, password });
     student.first_name = fullName[0]
     student.last_name = fullName[1]
-    let classroom = new Classroom()
-    classroom.id = 2
-    classroom.name = "א'1"
-    classroom.school_id = 1
-    student.classroomStudent = [classroom]
+    // let classroom = new Classroom()
+    // classroom.id = 2
+    // classroom.name = "א'1"
+    // classroom.school_id = 1
+    // student.classroomStudent = [classroom]
     let userRole = new Role();
     userRole.id = 4; //you just the role id.
     student.roles = [userRole];

@@ -27,11 +27,13 @@ class SignIn extends Component {
 
   componentDidMount = async () => {
     let isAuthed = this.props.isAuthenticated
+    console.log('isAuthed: ', isAuthed);
     if (isAuthed === true) {
       let kl = atob(this.props.AuthContext.kls.kl)
       kl = kl.replace('["', "")
       kl = kl.replace('"]', "")
-      if (kl == "mlkdsef98uxmwieau89") {
+      console.log('kl: ', kl);
+      if (kl == "mlkdsef98uxmwieau89" || kl == "mxdired9432udxjdoi8e") {
         this.props.history.push("/teacher/classes")
       } else {
         this.props.history.push("/superAdmin/games")

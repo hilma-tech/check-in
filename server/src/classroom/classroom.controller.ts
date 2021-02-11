@@ -25,6 +25,7 @@ export class ClassroomController {
     @UseJwtAuth('teacher')
     @Post('/removeGameRelation')
     async removeGameRelation(@Body() req: ClassroomGameDto) {
+        await this.classroomFieldService.removeGameFieldsFromClass(req)
         return await this.classroomService.removeGameRelation(req)
     }
 

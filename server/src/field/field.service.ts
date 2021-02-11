@@ -35,13 +35,8 @@ export class FieldService {
     });
   }
 
-  async deleteField(gameId) {
-    let fields = await this.getGameFields(gameId)
-    if (fields.length > 0) {
-      fields.map( (field) => {
-        return this.fieldRepository.delete(field.id)
-      })
-    }
+  async deleteField(fields) {
+  return await this.fieldRepository.delete(fields)
   }
 
 

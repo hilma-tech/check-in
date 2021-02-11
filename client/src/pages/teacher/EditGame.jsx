@@ -27,6 +27,9 @@ class EditGame extends Component {
   }
 
   componentDidMount() {
+    if (this.props.chosenClass.classId === 0) {
+      this.props.history.push("/teacher/classes");
+    }
     this.getGameInfo();
   }
 
@@ -95,6 +98,7 @@ class EditGame extends Component {
                       <input
                       key={i}
                         defaultValue={field.value[0].value}
+                        readOnly={true}
                         className="mobileChangingInput"
                       />
                     ) :( <div className="mobileChangingInputGrid">
@@ -104,6 +108,7 @@ class EditGame extends Component {
                           <input
                           key={i}
                             defaultValue={value.value}
+                            readOnly={true}
                             className="mobileChangingInputChoice"
                           />
                         );
