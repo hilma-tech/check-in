@@ -16,11 +16,17 @@ export class ClassroomField {
   @Column()
   new_value: string;
 
-  @ManyToOne(type => Classroom, classroom => classroom.id)
-  @JoinColumn({referencedColumnName: 'id',name: "classroom_id"}) 
+  @ManyToOne(
+    type => Classroom,
+    classroom => classroom.id,
+  )
+  @JoinColumn({ referencedColumnName: 'id', name: 'classroom_id' })
   classroom_id: number;
 
-  @ManyToOne(type => Field, field => field.id)
-  @JoinColumn({name: "field_id", referencedColumnName: 'id'})
+  @ManyToOne(
+    type => Field,
+    field => field.id,
+  )
+  @JoinColumn({ name: 'field_id', referencedColumnName: 'id' })
   field_id: number;
 }

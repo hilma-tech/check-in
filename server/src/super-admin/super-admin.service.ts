@@ -8,14 +8,13 @@ import { SuperAdmin } from './super-admin.entity';
 
 @Injectable()
 export class SuperAdminService extends UserService {
-    constructor(
-        @Inject(USER_MODULE_OPTIONS) protected config_options: UserConfig,
-        @InjectRepository(SuperAdmin)
-        protected readonly userRepository: Repository<SuperAdmin>,
-        protected readonly jwtService: JwtService,
-        protected readonly configService: ConfigService,
-    ) {
-        
-        super(config_options, userRepository, jwtService, configService);
-    }
+  constructor(
+    @Inject(USER_MODULE_OPTIONS) protected config_options: UserConfig,
+    @InjectRepository(SuperAdmin)
+    protected readonly userRepository: Repository<SuperAdmin>,
+    protected readonly jwtService: JwtService,
+    protected readonly configService: ConfigService,
+  ) {
+    super(config_options, userRepository, jwtService, configService);
+  }
 }

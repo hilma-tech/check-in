@@ -15,6 +15,6 @@ import { ClassroomField } from './classroom-field.entity';
   ],
   providers: [ClassroomFieldService],
   controllers: [ClassroomFieldController],
-  exports: [ClassroomFieldService]
+  exports: [ClassroomFieldService],
 })
 export class ClassroomFieldModule {}

@@ -5,11 +5,7 @@ import {
   JoinColumn,
   ManyToMany,
 } from 'typeorm';
-import {
-  IsDefined,
-  IsString,
-  Length,
-} from 'class-validator';
+import { IsDefined, IsString, Length } from 'class-validator';
 import { User } from '@hilma/auth-nest';
 import { School } from 'src/school/school.entity';
 import { Classroom } from 'src/classroom/classroom.entity';
@@ -35,7 +31,6 @@ export class Student extends User {
   @JoinColumn({ referencedColumnName: 'id', name: 'school_id' })
   school: number;
 
-  
   @ManyToMany(
     type => Classroom,
     classroom => classroom.students,

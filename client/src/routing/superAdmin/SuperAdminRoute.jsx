@@ -100,26 +100,26 @@ class SuperAdminRoute extends React.Component {
             /> */}
 
           <PrivateRoute
-              path="/superAdmin/schoolsEdit"
-              exact
-              componentName="SAdminEditSchools"
-              redirectComponent={GamesRouter}
-              component={EditSchool}
-            />
-             <PrivateRoute
-              path="/superAdmin/teachersEdit"
-              exact
-              componentName="SAdminEditTeachers"
-              redirectComponent={SignIn}
-              component={EditTeacher}
-            />
+            path="/superAdmin/schoolsEdit"
+            exact
+            componentName="SAdminEditSchools"
+            redirectComponent={GamesRouter}
+            component={EditSchool}
+          />
           <PrivateRoute
-              path="/superAdmin/studentsEdit"
-              exact
-              componentName="SAdminEditStudents"
-              redirectComponent={SignIn}
-              component={EditStudent}
-            />
+            path="/superAdmin/teachersEdit"
+            exact
+            componentName="SAdminEditTeachers"
+            redirectComponent={SignIn}
+            component={EditTeacher}
+          />
+          <PrivateRoute
+            path="/superAdmin/studentsEdit"
+            exact
+            componentName="SAdminEditStudents"
+            redirectComponent={SignIn}
+            component={EditStudent}
+          />
           <Route path="/superAdmin/:smth" component={ErrorPage} />
         </Switch>
       </>

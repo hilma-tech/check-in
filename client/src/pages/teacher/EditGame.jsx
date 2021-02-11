@@ -26,6 +26,7 @@ class EditGame extends Component {
     };
   }
 
+  //gets information needed to display the selected game's info
   componentDidMount() {
     if (this.props.chosenClass.classId === 0) {
       this.props.history.push("/teacher/classes");
@@ -55,6 +56,8 @@ class EditGame extends Component {
     }
   };
 
+  //adds relation between the current class and the selected game
+  //then moves the user back to the game page
   addGameToDB = async () => {
     await this.props.games.addGameToClass(
       this.props.chosenGame.index,

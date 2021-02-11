@@ -2,15 +2,17 @@ import { RequestUser, UseLocalAuth, UserService } from '@hilma/auth-nest';
 import { Controller, Post, Res } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller("api")
+@Controller('api')
 export class AppController {
-  constructor(private readonly appService: AppService,
-    private readonly userService: UserService) {}
+  constructor(
+    private readonly appService: AppService,
+    private readonly userService: UserService,
+  ) {}
 
   @UseLocalAuth()
-    @Post('/login')
-    login(@RequestUser() userInfo, @Res() res) {
-      let body = this.userService.login(userInfo, res);
-      res.send(body);
-    }
+  @Post('/login')
+  login(@RequestUser() userInfo, @Res() res) {
+    let body = this.userService.login(userInfo, res);
+    res.send(body);
+  }
 }

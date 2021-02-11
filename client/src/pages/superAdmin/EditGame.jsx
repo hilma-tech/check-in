@@ -20,7 +20,8 @@ class EditGame extends Component {
       gameDescriptionErrorMessages: { toShow: "none", mess: "" },
       gameRequirementsErrorMessages: { toShow: "none", mess: "" },
       fieldsData: [],
-      image: "https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg",
+      image:
+        "https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg",
     };
     this.infoNotReady = true;
   }
@@ -52,7 +53,7 @@ class EditGame extends Component {
         gameName: data.game_name,
         gameDescription: data.description,
         gameRequirements: data.requirements,
-        gameId: data.id
+        gameId: data.id,
       });
     } catch (error) {
       this.props.errorMsg.setErrorMsg(
@@ -228,8 +229,8 @@ class EditGame extends Component {
           <div className="pageContainer">
             <WhiteBar />
             <form className="formData">
-            <label className="labelFields">מספר זיהוי:</label>
-              <p className="inputFields editGameId" >{this.state.gameId}</p>
+              <label className="labelFields">מספר זיהוי:</label>
+              <p className="inputFields editGameId">{this.state.gameId}</p>
               <label className="labelFields">שם המשחק:</label>
               <p
                 className="error"
@@ -283,24 +284,24 @@ class EditGame extends Component {
               />
               {/* <label className="labelFields">תמונה:</label> */}
               {/* <div className="borderCameraIcon marginTop"> */}
-                {/* <label className="borderCameraIconLabel"> */}
-                  {/* <FileInput
+              {/* <label className="borderCameraIconLabel"> */}
+              {/* <FileInput
                   id="image"
                   className="hiddenInput"
                   type="image"
                   onChange={this.updateBasicInfo}
                   filesUploader={this.imageUploader}
                 /> */}
-                  {/* <img */}
-                    {/* alt="photograph icon" */}
-                    {/* className={ */}
-                      {/* typeof this.state.image === "string" */}
-                        {/* ? "chosenImg" */}
-                        {/* : "cameraIcon" */}
-                    {/* } */}
-                    {/* src={this.state.image || "/icons/camera-icon.svg"} */}
-                  {/* /> */}
-                {/* </label> */}
+              {/* <img */}
+              {/* alt="photograph icon" */}
+              {/* className={ */}
+              {/* typeof this.state.image === "string" */}
+              {/* ? "chosenImg" */}
+              {/* : "cameraIcon" */}
+              {/* } */}
+              {/* src={this.state.image || "/icons/camera-icon.svg"} */}
+              {/* /> */}
+              {/* </label> */}
               {/* </div> */}
 
               <label className="labelFields">שדות:</label>
@@ -328,11 +329,13 @@ class EditGame extends Component {
                 })
               )}
               {this.infoNotReady ? (
-                <div className="infoNotReadyCont"><img
-                  className= "infoNotReady"
-                  src="/icons/loading.gif"
-                  alt="loading..."
-                ></img></div>
+                <div className="infoNotReadyCont">
+                  <img
+                    className="infoNotReady"
+                    src="/icons/loading.gif"
+                    alt="loading..."
+                  ></img>
+                </div>
               ) : (
                 <span></span>
               )}

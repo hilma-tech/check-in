@@ -3,7 +3,7 @@ import Select from "react-select";
 import Fade from "@material-ui/core/Fade";
 import SelectStyle from "../../style/superAdmin/select_style";
 
-class ClassData extends React.Component {
+class SchoolClassData extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -13,10 +13,13 @@ class ClassData extends React.Component {
       { id: 1, name: "נורית cכהן" },
       { id: 2, name: "נורsית כהן" },
       { id: 3, name: "נוריתa כהן" },
-    ]; // Will need to get the list from SQL
+    ];
+    // lists the options given for the teachers to assign to the class
+    //Will need to get the list from SQL
   }
 
-  //Return the techer list as list of objects for the Select.
+  //Return the teacher list as list of objects for the Select.
+  //removes the teachers already chosen from the options
   makeTeacherOption = (selectKey) => {
     let options = [];
     this.teachers.map((teacherData) => {
@@ -37,12 +40,13 @@ class ClassData extends React.Component {
     return options;
   };
 
-  //Make list of select with the teachers. The length is sent becouse in the select the this.state didn't work.
-  returnTeahcersSelections = () => {
+  //Make list of select with the teachers.
+  //The length is sent because in the select accessing state doesn't work.
+  returnTeacherSelections = () => {
     let teachersSelections = [];
     let numTeachers = this.props.classData.chosenTeachers.length;
-    if (numTeachers === 0){
-      return <p>לכיתה זו אין מורים</p>
+    if (numTeachers === 0) {
+      return <p>לכיתה זו אין מורים</p>;
     }
     for (let i = 0; i < numTeachers; i++) {
       let teacerDefaultValue = this.props.classData.chosenTeachers[i].name;
@@ -80,6 +84,8 @@ class ClassData extends React.Component {
   };
 
   //Get the prev state and change the showClass to the opposite value (if it's true it's will be false...).
+  //when clicking on the arrow icon the details of the class appear or disappear
+  //changes the state from true to false or the opposite
   transitionIcon = () => {
     this.setState((prevState) => {
       return { showClass: !prevState.showClass };
@@ -129,14 +135,11 @@ class ClassData extends React.Component {
                 : "hideSchoolClassTeacher"
             }
           >
-            <label
-              for="schoolClassTeacher"
-              className="labelFields"
-            >
+            <label for="schoolClassTeacher" className="labelFields">
               מורים:
             </label>
             <div className="allEditSchoolClassTeacherSelect">
-              {this.returnTeahcersSelections()}
+              {this.returnTeacherSelections()}
             </div>
             {/* <div className="editSchoolClassTeacherButtons">
               {this.props.canAddExistTeacher ? (
@@ -164,4 +167,4 @@ class ClassData extends React.Component {
   }
 }
 
-export default ClassData;
+export default SchoolClassData;

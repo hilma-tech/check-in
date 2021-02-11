@@ -4,13 +4,14 @@ import "../style/sign_in.scss";
 import hilmaicon from "../img/hilmaIcon.svg";
 import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
-import { nameContext } from "../stores/userName.store";
+import { userNameContext } from "../stores/userName.store";
 import { errorMsgContext } from "../stores/error.store";
 import { observer } from "mobx-react";
-import { IsAuthenticatedContext, LoginContext, AuthContext } from '@hilma/auth';
-import { passwordValidation, emailValidation } from '../tools/ValidationFunctions'
-
-const axios = require("axios").default;
+import { IsAuthenticatedContext, LoginContext, AuthContext } from "@hilma/auth";
+import {
+  passwordValidation,
+  emailValidation,
+} from "../tools/ValidationFunctions";
 
 class SignIn extends Component {
   constructor() {
@@ -26,20 +27,18 @@ class SignIn extends Component {
   }
 
   componentDidMount = async () => {
-    let isAuthed = this.props.isAuthenticated
-    console.log('isAuthed: ', isAuthed);
+    let isAuthed = this.props.isAuthenticated;
     if (isAuthed === true) {
-      let kl = atob(this.props.AuthContext.kls.kl)
-      kl = kl.replace('["', "")
-      kl = kl.replace('"]', "")
-      console.log('kl: ', kl);
+      let kl = atob(this.props.AuthContext.kls.kl);
+      kl = kl.replace('["', "");
+      kl = kl.replace('"]', "");
       if (kl == "mlkdsef98uxmwieau89" || kl == "mxdired9432udxjdoi8e") {
-        this.props.history.push("/teacher/classes")
+        this.props.history.push("/teacher/classes");
       } else {
-        this.props.history.push("/superAdmin/games")
+        this.props.history.push("/superAdmin/games");
       }
     }
-  }
+  };
 
   updateUser = (props) => {
     this.setState({ username: props.target.value });
@@ -49,11 +48,14 @@ class SignIn extends Component {
     this.setState({ password: props.target.value });
   };
 
-  superAdminLogin = async () => {
+  login = async () => {
     let username = this.state.username;
     let password = this.state.password;
     try {
-      if (emailValidation(username).length === 0 && passwordValidation(password).length === 0) {
+      if (
+        emailValidation(username).length === 0 &&
+        passwordValidation(password).length === 0
+      ) {
         const response = await this.props.LoginContext("/api/login", {
           username,
           password,
@@ -63,39 +65,38 @@ class SignIn extends Component {
             this.props.history.push("/teacher/classes");
           } else {
             this.props.history.push("/superAdmin/games");
-            window.location.pathname = "/superAdmin/games"
+            window.location.pathname = "/superAdmin/games";
           }
         } else {
-          console.log('response.status: ', response);
-if (response.msg.status === 401) {
-        this.props.errorMsg.setErrorMsg('שם המשתמש והסיסמא אינם תואמים.');
-      } else {
-        this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן להתחבר.');
-      }        }
+          if (response.msg.status === 401) {
+            this.props.errorMsg.setErrorMsg("שם המשתמש והסיסמא אינם תואמים.");
+          } else {
+            this.props.errorMsg.setErrorMsg(
+              "הייתה שגיאה בשרת. לא ניתן להתחבר."
+            );
+          }
+        }
       } else {
         if (username.length === 0 || password.length === 0) {
-          this.props.errorMsg.setErrorMsg('נא למלא את כל השדות.');
+          this.props.errorMsg.setErrorMsg("נא למלא את כל השדות.");
         } else {
-          throw { status: 401 }
+          throw { status: 401 };
         }
       }
     } catch (error) {
       if (error.status === 401) {
-        this.props.errorMsg.setErrorMsg('שם המשתמש והסיסמא אינם תואמים.');
+        this.props.errorMsg.setErrorMsg("שם המשתמש והסיסמא אינם תואמים.");
       } else {
-        this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת. לא ניתן להתחבר.');
+        this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת. לא ניתן להתחבר.");
       }
     }
   };
 
-
   render() {
-    // this.preventBack()
     return (
-      <div className="background" /* onunload="this.preventBack()" */>
+      <div className="background">
         <div className="centeredPage">
-          <img className="webName" src='/icons/blueCheckIn.svg'>
-          </img>
+          <img className="webName" src="/icons/blueCheckIn.svg"></img>
           <p
             className="error"
             style={{ display: this.state.errorMessages[0].toShow }}
@@ -121,7 +122,7 @@ if (response.msg.status === 401) {
             onBlur={this.updatePass}
           />
           <br />
-          <button className="signInButton" onClick={this.superAdminLogin}>
+          <button className="signInButton" onClick={this.login}>
             כניסה
           </button>
           {/* <h3 className="forgot">שכחת סיסמא?</h3> */}
@@ -133,7 +134,7 @@ if (response.msg.status === 401) {
 }
 
 const mapContextToProps = {
-  name: nameContext,
+  name: userNameContext,
   errorMsg: errorMsgContext,
   isAuthenticated: IsAuthenticatedContext,
   LoginContext: LoginContext,

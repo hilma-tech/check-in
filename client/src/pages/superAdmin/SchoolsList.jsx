@@ -13,19 +13,20 @@ class SchoolsList extends React.Component {
       categors: ["שם בית הספר", "עיר"],
       enCategor: {
         "שם בית הספר": "name",
-        "עיר": "city"
+        עיר: "city",
       },
       listDataSchools: [],
       searchVal: "",
       displaySearch: false,
     };
   }
+
   componentDidMount = async () => {
-    this.getSchools()
-  }
+    this.getSchools();
+  };
 
   //Save the user search value as searchVal in state.
-  handleChang = (e) => {
+  handleChange = (e) => {
     this.setState({ searchVal: e.target.value });
   };
 
@@ -43,16 +44,6 @@ class SchoolsList extends React.Component {
     }
   };
 
-  getWidth() {
-    return Math.max(
-      document.body.scrollWidth,
-      document.documentElement.scrollWidth,
-      document.body.offsetWidth,
-      document.documentElement.offsetWidth,
-      document.documentElement.clientWidth
-    );
-  }
-  
   render() {
     return (
       <div className="SchoolsList withMenu" dir="rtl">
@@ -71,7 +62,7 @@ class SchoolsList extends React.Component {
                 name="search"
                 value={this.state.searchVal}
                 placeholder="חיפוש"
-                onChange={this.handleChang}
+                onChange={this.handleChange}
               />
             </Slide>
             <p className="searchIcon" onClick={this.activateSearch}></p>
@@ -94,11 +85,9 @@ class SchoolsList extends React.Component {
   }
 }
 
-
-
 const mapContextToProps = {
   schools: schoolsContext,
-  errorMsg: errorMsgContext
+  errorMsg: errorMsgContext,
 };
 
 export default withContext(mapContextToProps)(observer(SchoolsList));

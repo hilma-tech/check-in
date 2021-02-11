@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { UserService, RequestUser, Role, UseJwtAuth } from '@hilma/auth-nest';
 import { Teacher } from './teacher.entity';
 import { TeacherService } from './teacher.service';
 import { Classroom } from 'src/classroom/classroom.entity';
-import { TeacherIdDto, GetTeacherSkip,TeacherInfoDto, GetClassSkip} from './teacher.dtos';
+import { TeacherIdDto, GetTeacherSkip, GetClassSkip } from './teacher.dtos';
 
 @Controller('api/teacher')
 export class TeacherController {
@@ -16,7 +16,10 @@ export class TeacherController {
 
   @UseJwtAuth('teacher')
   @Get('/getTeacherClasses')
-  async getTeacherClasses(@RequestUser() userinfo, @Query() skipOn: GetClassSkip) {
+  async getTeacherClasses(
+    @RequestUser() userinfo,
+    @Query() skipOn: GetClassSkip,
+  ) {
     return await this.teacherService.getTeacherClasses(userinfo.id, skipOn);
   }
 
@@ -41,7 +44,7 @@ export class TeacherController {
     classroom.school_id = 1;
     user.classroomTeacher = [classroom];
     let userRole = new Role();
-    userRole.id = 3; //you just the role id.
+    userRole.id = 3; //you set the role id.
     user.roles = [userRole];
     this.userService.createUser<Teacher>(user);
   }

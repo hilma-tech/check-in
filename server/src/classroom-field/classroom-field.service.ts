@@ -31,18 +31,18 @@ export class ClassroomFieldService {
       eek.new_value = field.default_value
       this.classFieldRepository.save(eek)
     });
-    return "hoi";
   }
 
   async deleteClassField(@Body() req: any) {
     let deleteFieldAndGetFieldId = await this.fieldService.getGameFields(req);
-    console.log('deleteFieldAndGetFieldId: ', deleteFieldAndGetFieldId);
     let fieldsForDelete = []
     deleteFieldAndGetFieldId.map(async (fieldId) => {
       fieldsForDelete.push(fieldId.id)
       await this.classFieldRepository.delete({ field_id: fieldId.id });
     })
-    await this.fieldService.deleteField(fieldsForDelete)
+    if (fieldsForDelete.length > 0) {
+      await this.fieldService.deleteField(fieldsForDelete)
+    }
 
   }
 }
