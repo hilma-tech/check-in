@@ -23,8 +23,9 @@ class Students extends Component {
     this.props.chosenClass.callStudents(this.props.chosenClass.classId);
   };
 
+  // allows to move to student details page
   moveToStudent = async (index) => {
-    await this.props.chosenClass.setCurrStudent(index);
+    await this.props.chosenClass.setCurrStudentClasses(index);
     this.props.history.push(this.props.location.pathname + "/studentInfo");
   };
 

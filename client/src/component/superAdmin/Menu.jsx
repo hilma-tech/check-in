@@ -1,13 +1,8 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import "../../style/superAdmin/menu_style.scss";
-
-import { LogoutContext } from '@hilma/auth';
+import { LogoutContext } from "@hilma/auth";
 import { withContext } from "@hilma/tools";
-
-const mapContextToProps = {
-  logout: LogoutContext
-}
 
 class Menu extends React.Component {
   constructor() {
@@ -21,7 +16,6 @@ class Menu extends React.Component {
     };
   }
 
-  
   render() {
     return (
       <div className="pageMenu">
@@ -72,5 +66,9 @@ class Menu extends React.Component {
     );
   }
 }
+
+const mapContextToProps = {
+  logout: LogoutContext,
+};
 
 export default withRouter(withContext(mapContextToProps)(Menu));

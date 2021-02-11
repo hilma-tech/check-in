@@ -13,7 +13,7 @@ import { chosenClassContext } from "../../stores/chosenClass.store";
 import { gamesContext } from "../../stores/games.store";
 
 const axios = require("axios").default;
-
+//shows game whilst you are unable to add it to a class
 class ShowGame extends Component {
   constructor() {
     super();
@@ -81,52 +81,54 @@ class ShowGame extends Component {
             <h3 className="mobileGameReq">דרישות המשחק</h3>
             <p className="mobileGameRP">{this.state.gameRequirements}</p>
             <h1 className="mobileGameFields">שדות:</h1>
-            {this.state.fieldsData.length === 0 ?
-            <p className="noFields">אין שדות למשחק זה</p>:
-            this.state.fieldsData.map((field, i) => {
-              return (
-                <>
-                  <h2 className="mobileFieldName" key={i + 1}>
-                    {field.field_name}
-                  </h2>
-                  {field.selection !== "image" ? (
-                    field.selection === "text" ? (
-                      <input
-                        key={i}
-                        readOnly={true}
-                        defaultValue={field.value[0].value}
-                        className="mobileChangingInput"
-                      />
+            {this.state.fieldsData.length === 0 ? (
+              <p className="noFields">אין שדות למשחק זה</p>
+            ) : (
+              this.state.fieldsData.map((field, i) => {
+                return (
+                  <>
+                    <h2 className="mobileFieldName" key={i + 1}>
+                      {field.field_name}
+                    </h2>
+                    {field.selection !== "image" ? (
+                      field.selection === "text" ? (
+                        <input
+                          key={i}
+                          readOnly={true}
+                          defaultValue={field.value[0].value}
+                          className="mobileChangingInput"
+                        />
+                      ) : (
+                        <div className="mobileChangingInputGrid">
+                          {field.value.map((value, i) => {
+                            if (value.value.length !== 0) {
+                              return (
+                                <input
+                                  key={i}
+                                  readOnly={true}
+                                  defaultValue={value.value}
+                                  className="mobileChangingInputChoice"
+                                />
+                              );
+                            } else {
+                              return <></>;
+                            }
+                          })}
+                        </div>
+                      )
                     ) : (
-                      <div className="mobileChangingInputGrid">
-                        {field.value.map((value, i) => {
-                          if (value.value.length !== 0) {
-                            return (
-                              <input
-                                key={i}
-                                readOnly={true}
-                                defaultValue={value.value}
-                                className="mobileChangingInputChoice"
-                              />
-                            );
-                          } else {
-                            return <></>;
-                          }
-                        })}
+                      <div key={i} className="mobileBorderCameraIcon">
+                        <img
+                          alt="photograph icon"
+                          className="mobileImg"
+                          src={field.value[0].value}
+                        />
                       </div>
-                    )
-                  ) : (
-                    <div key={i} className="mobileBorderCameraIcon">
-                      <img
-                        alt="photograph icon"
-                        className="mobileImg"
-                        src={field.value[0].value}
-                      />
-                    </div>
-                  )}
-                </>
-              );
-            })}
+                    )}
+                  </>
+                );
+              })
+            )}
           </div>
         </div>
       </>

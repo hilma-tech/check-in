@@ -1,26 +1,15 @@
-import {
-    IsBoolean,
-    IsDefined,
-    IsEnum,
-    IsNumber,
-    IsNumberString,
-    IsObject,
-    IsString,
-    Length,
-    Matches,
-    ValidateNested,
-  } from 'class-validator';
+import { IsDefined, IsNumberString, IsString } from 'class-validator';
 
 export class GetSchoolSkip {
-    @IsDefined()
-    @IsString()
-    @IsNumberString()
-    schoolsLength: string;
-  }
+  @IsDefined()
+  @IsString()
+  @IsNumberString()
+  schoolsLength: string;
+}
 
-  export class SchoolIdDto {
-    @IsDefined()
-    @IsString()
-    @IsNumberString()
-    schoolId: string;
-  }
+export class SchoolIdDto {
+  @IsDefined()
+  @IsString()
+  @IsNumberString()
+  schoolId: string;
+}

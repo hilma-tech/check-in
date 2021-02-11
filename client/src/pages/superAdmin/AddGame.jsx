@@ -8,23 +8,18 @@ import "../../style/with_menu.scss";
 import GameFieldSelection from "../../component/superAdmin/GameFieldSelection.jsx";
 import { withRouter } from "react-router-dom";
 import {
-  mustInputValidation,
   descriptionValidation,
   nameValidation,
   requirementValidation,
-  fieldNameValidation, 
-  fieldInputValidation
+  fieldNameValidation,
+  fieldInputValidation,
 } from "../../tools/ValidationFunctions";
-import {
-  FileInput,
-  withFiles,
-} from "@hilma/fileshandler-client";
+import { withFiles } from "@hilma/fileshandler-client";
 import PopUpError from "../../component/popUpError";
 import { errorMsgContext } from "../../stores/error.store";
 import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import { gamesContext } from "../../stores/games.store";
-
 
 class AddGame extends Component {
   constructor(props) {
@@ -39,41 +34,52 @@ class AddGame extends Component {
       gameName: "",
       gameDescription: "",
       gameRequirements: "",
-      image: { id: 0, value: "https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png" },
-      savingInfo: false
+      image: {
+        id: 0,
+        value:
+          "https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png",
+      },
+      savingInfo: false,
     };
     this.imageUploader = props.filesUploader;
   }
 
+  //כשמו כן הוא
   saveFieldName = (fieldName, fieldI) => {
-    this.setState(prevState => {
-      prevState.fieldsData[fieldI].name = fieldName
-      return ({fieldsData: prevState.fieldsData})
-    })
-  };
-
-  saveSelection = (selection, fieldI) => {
     this.setState((prevState) => {
-      prevState.fieldsData[fieldI].id = this.state.newKey;
-      prevState.fieldsData[fieldI].selection = selection
-      prevState.fieldsData[fieldI].value= [{ id: 0, value: "" }]
-      return { fieldsData: prevState.fieldsData, newKey:prevState.newKey+1 };
+      prevState.fieldsData[fieldI].name = fieldName;
+      return { fieldsData: prevState.fieldsData };
     });
   };
 
+  //כשמו כן הוא
+  saveSelection = (selection, fieldI) => {
+    this.setState((prevState) => {
+      prevState.fieldsData[fieldI].id = this.state.newKey;
+      prevState.fieldsData[fieldI].selection = selection;
+      prevState.fieldsData[fieldI].value = [{ id: 0, value: "" }];
+      return { fieldsData: prevState.fieldsData, newKey: prevState.newKey + 1 };
+    });
+  };
+
+  //כשמו כן הוא
   saveFieldValue = (fieldValue, fieldI, inputId, inputImage, imgId) => {
     //only relevant to choice/multi-choice
     if (inputId) {
       this.setState((prevState) => {
-        if (prevState.fieldsData[fieldI].value.length < inputId){
-          for(let i=prevState.fieldsData[fieldI].value.length;i<inputId; i++){
+        if (prevState.fieldsData[fieldI].value.length < inputId) {
+          for (
+            let i = prevState.fieldsData[fieldI].value.length;
+            i < inputId;
+            i++
+          ) {
             prevState.fieldsData[fieldI].value[i] = {
               id: Number(i),
-              value: '',
+              value: "",
             };
           }
         }
-         prevState.fieldsData[fieldI].value[inputId] = {
+        prevState.fieldsData[fieldI].value[inputId] = {
           id: Number(inputId),
           value: fieldValue,
         };
@@ -101,6 +107,7 @@ class AddGame extends Component {
     }
   };
 
+  //adds another field to the form
   addNewFieldData = () => {
     this.setState((prevState) => {
       let tempFieldsData = [...prevState.fieldsData];
@@ -121,6 +128,7 @@ class AddGame extends Component {
     });
   };
 
+  //removes selected field
   triggerRemoval = (fieldId) => {
     this.setState((prevState) => {
       let oldFieldArray = prevState.fieldsData;
@@ -129,17 +137,19 @@ class AddGame extends Component {
     });
   };
 
+  //updates the state regarding info like name, requirements, description
   updateBasicInfo = (props) => {
     this.setState({ [props.target.id]: props.target.value });
   };
 
-  updateImage = (value) => {
-    this.setState({ image: { id: value.id, value: value.link } });
-  };
+  //? updateImage = (value) => {
+  //?   this.setState({ image: { id: value.id, value: value.link } });
+  //? };
 
-  setUpValues =() =>{
+  // puts the data into a format fitting the database
+  setUpValues = () => {
     let currFieldData = [];
-    this.state.fieldsData.map(obj => {
+    this.state.fieldsData.map((obj) => {
       let newField = {
         name: obj.name,
         selection: obj.selection,
@@ -150,6 +160,8 @@ class AddGame extends Component {
     });
     return currFieldData;
   };
+
+  //sends all the data entered to the database to be added as a new game
   addGameDb = async () => {
     let currGameInfo = {
       game_name: this.state.gameName,
@@ -160,7 +172,7 @@ class AddGame extends Component {
     };
     const fieldData = this.setUpValues();
     try {
-      this.setState({savingInfo: true})
+      this.setState({ savingInfo: true });
       const response = await this.imageUploader.post(
         "/api/game/addGame",
         JSON.stringify({
@@ -174,23 +186,17 @@ class AddGame extends Component {
       // }
       this.props.history.goBack(); // after saving go back
     } catch (error) {
-      this.setState({savingInfo: false})
-      if (error.status === 500){
+      this.setState({ savingInfo: false });
+      if (error.status === 500) {
         this.props.errorMsg.setErrorMsg("קיים כבר משחק בשם זה. נסו שם אחר.");
       } else {
         this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסו לבדוק את החיבור");
       }
     }
   };
-  // addGameFieldsDb= async (gameId) => {
-  //   try {
-  //     const response = await axios.post("/api/field/save", {gameId: gameId, data: this.state.fieldsData})
-  //   } catch (error) {
-  //     this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסו לבדוק את החיבור");
-  //   }
-  // }
 
-  saveData = () => {
+  //right before adding the data to DB we validate the information
+  validateData = () => {
     let allOK = true;
     let fieldOK = true;
     let ValidationFunctions = [
@@ -199,6 +205,7 @@ class AddGame extends Component {
       { name: "gameRequirements", func: requirementValidation, errMsg: "" },
     ];
 
+    //validates the basic information
     ValidationFunctions.forEach((validationData) => {
       validationData.errMsg = validationData.func(
         this.state[validationData.name]
@@ -225,21 +232,28 @@ class AddGame extends Component {
         });
       }
     });
-    if(!this.state.image.value){
+    if (!this.state.image.value) {
       allOK = false;
-      this.setState({imageErrorMessages: {toShow: "block",mess: '** חייב להכניס שדה זה **'}});
-    }else {
-      this.setState({imageErrorMessages: {toShow: "none",mess: ""}});
+      this.setState({
+        imageErrorMessages: {
+          toShow: "block",
+          mess: "** חייב להכניס שדה זה **",
+        },
+      });
+    } else {
+      this.setState({ imageErrorMessages: { toShow: "none", mess: "" } });
     }
 
+    //validates the fields
     fieldOK = this.validateFields();
     //after all the validetion we need to send the data to sql
     if (allOK && fieldOK) {
-      //fetch to the server
+      //sends valid information to the server
       this.addGameDb();
     }
   };
 
+  //right before adding the data to DB we validate the field info
   validateFields = () => {
     let isOk = true;
     let countFullFields = 0;
@@ -258,7 +272,10 @@ class AddGame extends Component {
           fields.value.map((field) => {
             errMess = fieldInputValidation(field.value);
             if (errMess.length !== 0) {
-              if(errMess === '** שדה זה לא יכול להכיל אותיות באנגלית או תווים מיוחדים **'){
+              if (
+                errMess ===
+                "** שדה זה לא יכול להכיל אותיות באנגלית או תווים מיוחדים **"
+              ) {
                 fieldEmpt = false;
               }
               this.setState((prevState) => {
@@ -276,9 +293,12 @@ class AddGame extends Component {
               });
             }
           });
-          if(fields.selection === "choice" || fields.selection === "multi-choice"){
-            if (countFullFields >= 2 && fieldEmpt){
-              isOk=true;
+          if (
+            fields.selection === "choice" ||
+            fields.selection === "multi-choice"
+          ) {
+            if (countFullFields >= 2 && fieldEmpt) {
+              isOk = true;
               this.setState((prevState) => {
                 prevState.fieldsData[index].errorMessage.toShow = "none";
                 prevState.fieldsData[index].errorMessage.mess = "";
@@ -287,7 +307,8 @@ class AddGame extends Component {
             } else {
               this.setState((prevState) => {
                 prevState.fieldsData[index].errorMessage.toShow = "block";
-                prevState.fieldsData[index].errorMessage.mess = '** נא למלא לפחות 2 שדות **';
+                prevState.fieldsData[index].errorMessage.mess =
+                  "** נא למלא לפחות 2 שדות **";
                 return { fieldsData: prevState.fieldsData };
               });
             }
@@ -306,7 +327,8 @@ class AddGame extends Component {
           if (fields.value[0].value.length === 0) {
             this.setState((prevState) => {
               prevState.fieldsData[index].errorMessage.toShow = "block";
-              prevState.fieldsData[index].errorMessage.mess = '** חייב להכניס שדה זה **';
+              prevState.fieldsData[index].errorMessage.mess =
+                "** חייב להכניס שדה זה **";
               return { fieldsData: prevState.fieldsData };
             });
             isOk = false;
@@ -383,14 +405,14 @@ class AddGame extends Component {
               </p> */}
               {/* <div className="borderCameraIcon marginTop">
                 <label className="borderCameraIconLabel"> */}
-                  {/* <FileInput
+              {/* <FileInput
                     id="image"
                     className="hiddenInput"
                     type="image"
                     onChange={this.updateImage}
                     filesUploader={this.imageUploader}
                   /> */}
-                  {/* <img
+              {/* <img
                     alt="photograph icon"
                     className={
                       typeof this.state.image.value === "string"
@@ -429,7 +451,11 @@ class AddGame extends Component {
             </form>
             <div className="spacerFromSaveButton"></div>
             <div className="saveButtonBackground">
-              <button className="saveButton" onClick={this.saveData} style={this.state.savingInfo? {pointerEvents: 'none'}: {}}>
+              <button
+                className="saveButton"
+                onClick={this.validateData}
+                style={this.state.savingInfo ? { pointerEvents: "none" } : {}}
+              >
                 שמור
               </button>
             </div>

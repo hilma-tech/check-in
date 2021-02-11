@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import "../../style/teacher/small_nav_bar.css";
 
+//component for mobile
+//to allow easy switching between pages in a specific class
 class SmallNavBar extends Component {
   constructor(props) {
     super();
@@ -10,18 +12,20 @@ class SmallNavBar extends Component {
     };
   }
 
+  //handles navigation through pages with the navbar
   movePageFunc = (props) => {
-    let newPath = this.props.match.url.split('/')
+    let newPath = this.props.match.url.split("/");
     if (props.target.id === "games") {
-      newPath[newPath.length - 1] = "games"
+      newPath[newPath.length - 1] = "games";
     } else if (props.target.id === "students") {
-      newPath[newPath.length - 1] = "students"
+      newPath[newPath.length - 1] = "students";
     } else {
-      newPath[newPath.length - 1] = "permissions"
+      newPath[newPath.length - 1] = "permissions";
     }
-    this.props.history.push(newPath.join('/'));
+    this.props.history.push(newPath.join("/"));
   };
 
+  //determines the css depending on the current location
   determineUnderline = () => {
     if (window.location.pathname === "/teacher/classes/games") {
       return "smallRightUnderline";
@@ -47,7 +51,9 @@ class SmallNavBar extends Component {
               משחקים
             </h2>
             <h2
-              onClick={this.state.active === "students" ? null : this.movePageFunc}
+              onClick={
+                this.state.active === "students" ? null : this.movePageFunc
+              }
               className="smallNavName"
               id="students"
             >
@@ -67,4 +73,4 @@ class SmallNavBar extends Component {
     );
   }
 }
-export default withRouter(SmallNavBar) ;
+export default withRouter(SmallNavBar);

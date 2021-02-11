@@ -4,16 +4,18 @@ import { withRouter } from "react-router-dom";
 import LoadingTable from "./LoadingTable.jsx";
 
 class GeneralTable extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {};
   }
+  //moves the user to page where they
+  //can add a row to the table they came from
   onClickAdd = () => {
     this.props.history.push(this.props.location.pathname + "Add");
   };
   render() {
     return (
-      <div className='generalTable'>
+      <div className="generalTable">
         <div className="TableTitles">
           {
             //Return the table's categors row
@@ -26,9 +28,9 @@ class GeneralTable extends React.Component {
             })
           }
         </div>
-        {this.props.haveMoreData &&
-          this.props.allData.length === 0 ? (
-            <LoadingTable />) :
+        {this.props.haveMoreData && this.props.allData.length === 0 ? (
+          <LoadingTable />
+        ) : (
           <>
             <div className="AllData">
               {
@@ -46,29 +48,26 @@ class GeneralTable extends React.Component {
                 })
               }
             </div>
-            {
-              this.props.startGetInfo ? 
+            {this.props.startGetInfo ? (
               <img
-              style={{ width: "8vw", height:'8vw', marginTop: '1vh' }}
-              src="/icons/loading.gif"
-              alt="loading..."
-            ></img> :
-            <button
-              className="showMoreGamesB"
-              onClick={this.props.loadMore}
-              style={{
-                marginTop: '1vh',
-                display:
-                  this.props.haveMoreData
-                    ? "inline-block"
-                    : "none",
-              }}
-            >
-              הצג עוד
-            </button>
-            }
+                style={{ width: "8vw", height: "8vw", marginTop: "1vh" }}
+                src="/icons/loading.gif"
+                alt="loading..."
+              ></img>
+            ) : (
+              <button
+                className="showMoreGamesB"
+                onClick={this.props.loadMore}
+                style={{
+                  marginTop: "1vh",
+                  display: this.props.haveMoreData ? "inline-block" : "none",
+                }}
+              >
+                הצג עוד
+              </button>
+            )}
           </>
-        }
+        )}
       </div>
     );
   }

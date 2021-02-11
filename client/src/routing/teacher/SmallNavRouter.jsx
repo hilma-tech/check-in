@@ -4,8 +4,8 @@ import Games from "../../pages/teacher/Games.jsx";
 import Students from "../../pages/teacher/Students.jsx";
 import SignIn from "../../pages/SignIn.jsx";
 import { PrivateRoute } from "@hilma/auth";
-import EditGame from '../../pages/teacher/EditGame.jsx'
-import StudentDetails from '../../pages/teacher/StudentDetails.jsx'
+import EditGame from "../../pages/teacher/EditGame.jsx";
+import StudentDetails from "../../pages/teacher/StudentDetails.jsx";
 import ShowGame from "../../pages/teacher/ShowGame.jsx";
 import ErrorPage from "../../pages/404Page.jsx";
 
@@ -40,13 +40,13 @@ class SmallNavRouter extends Component {
         {/*    <Route path={"/teacher/classes/permissions"} exact
               component={Permissions}/> */}
         <PrivateRoute
-          path='/teacher/classes/editGame'
+          path="/teacher/classes/editGame"
           exact
           componentName="TeacherEditGame"
           component={EditGame}
         />
         <PrivateRoute
-          path='/teacher/classes/showGame'
+          path="/teacher/classes/showGame"
           exact
           componentName="TeacherShowGame"
           component={ShowGame}

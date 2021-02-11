@@ -14,10 +14,7 @@ import { StudentModule } from './student/student.module';
 import { SchoolModule } from './school/school.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { ClassroomModule } from './classroom/classroom.module';
-import {
-  RoleModule,
-  UserModule,
-} from '@hilma/auth-nest';
+import { RoleModule, UserModule } from '@hilma/auth-nest';
 import { ClassroomFieldModule } from './classroom-field/classroom-field.module';
 
 @Module({

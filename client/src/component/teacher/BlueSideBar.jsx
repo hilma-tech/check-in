@@ -4,17 +4,15 @@ import "../../style/teacher/blue_side_bar_style.scss";
 import { withRouter } from "react-router-dom";
 import { LogoutContext } from "@hilma/auth";
 import { withContext } from "@hilma/tools";
-import { nameContext } from "../../stores/userName.store";
+import { userNameContext } from "../../stores/userName.store";
 
-const mapContextToProps = {
-  logout: LogoutContext,
-  name: nameContext,
-};
-
+//gives teacher the ability to switch between pages
+//is a pop up in mobile, sidebar in web
 class BlueSideBar extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
   }
+
   render() {
     return (
       <>
@@ -31,10 +29,19 @@ class BlueSideBar extends React.Component {
                 onClick={this.props.closeSideBar}
                 alt="closeIcon"
               />
-              <p id="teacherName">{this.props.name.firstName + " " + this.props.name.lastName}</p>
+              <p id="teacherName">
+                {this.props.name.firstName + " " + this.props.name.lastName}
+              </p>
             </div>
             <div className="blueSideBarOptions">
-              <p className="sideBarOption" onClick={() => { this.props.history.push("/teacher/classes") }}>כיתות</p>
+              <p
+                className="sideBarOption"
+                onClick={() => {
+                  this.props.history.push("/teacher/classes");
+                }}
+              >
+                כיתות
+              </p>
               {/* <p className="sideBarOption">ניהול</p> */}
             </div>
 
@@ -42,7 +49,7 @@ class BlueSideBar extends React.Component {
               className="blueSideBarLogOut"
               onClick={async () => {
                 await this.props.logout();
-                await this.props.name.resetUser()
+                await this.props.name.resetUser();
                 this.props.history.push("/signin");
               }}
             >
@@ -54,19 +61,42 @@ class BlueSideBar extends React.Component {
         <div className="webBlueSideBar">
           <div className="blueSideBar">
             <div className="blueSideBarUserName">
-              <p id="teacherName">{this.props.name.firstName + " " + this.props.name.lastName}</p>
+              <p id="teacherName">
+                {this.props.name.firstName + " " + this.props.name.lastName}
+              </p>
               <img src="/icons/CheckIn.svg" id="checkInIcon" alt="checkin" />
             </div>
             <div className="blueSideBarOptions">
-              <p className="sideBarOption" onClick={() => { this.props.history.push("/teacher/classes") }}>כיתות</p>
-              {
-                this.props.location.pathname !== "/teacher/classes" ?
-                  <>
-                    <p className="sideBarClassOption" onClick={() => { this.props.history.push("/teacher/classes/games") }}>משחקים</p>
-                    <p className="sideBarClassOption" onClick={() => { this.props.history.push("/teacher/classes/students") }}>תלמידים</p>
-                  </>
-                  : <></>
-              }
+              <p
+                className="sideBarOption"
+                onClick={() => {
+                  this.props.history.push("/teacher/classes");
+                }}
+              >
+                כיתות
+              </p>
+              {this.props.location.pathname !== "/teacher/classes" ? (
+                <>
+                  <p
+                    className="sideBarClassOption"
+                    onClick={() => {
+                      this.props.history.push("/teacher/classes/games");
+                    }}
+                  >
+                    משחקים
+                  </p>
+                  <p
+                    className="sideBarClassOption"
+                    onClick={() => {
+                      this.props.history.push("/teacher/classes/students");
+                    }}
+                  >
+                    תלמידים
+                  </p>
+                </>
+              ) : (
+                <></>
+              )}
               {/* <p className="sideBarOption">ניהול</p> */}
             </div>
 
@@ -74,7 +104,7 @@ class BlueSideBar extends React.Component {
               className="blueSideBarLogOut"
               onClick={async () => {
                 await this.props.logout();
-                await this.props.name.resetUser()
+                await this.props.name.resetUser();
                 this.props.history.push("/signin");
               }}
             >
@@ -87,5 +117,10 @@ class BlueSideBar extends React.Component {
     );
   }
 }
+
+const mapContextToProps = {
+  logout: LogoutContext,
+  name: userNameContext,
+};
 
 export default withRouter(withContext(mapContextToProps)(BlueSideBar));

@@ -1,17 +1,15 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import React from "react";
+import { withRouter } from "react-router-dom";
 import Select from "react-select";
-import addicon from "../../img/addicon.svg";
 import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import ClassSelection from "../../component/superAdmin/ClassSelection.jsx";
 import "../../style/superAdmin/form_style.scss";
 import "../../style/superAdmin/add_game_style.scss";
 import SelectStyle from "../../style/superAdmin/select_style";
 import { observer } from "mobx-react";
-import { withContext } from '@hilma/tools';
-import { teachersContext } from '../../stores/teachers.store';
-import { errorMsgContext } from '../../stores/error.store';
-
+import { withContext } from "@hilma/tools";
+import { teachersContext } from "../../stores/teachers.store";
+import { errorMsgContext } from "../../stores/error.store";
 
 class EditTeacher extends React.Component {
   constructor() {
@@ -36,21 +34,26 @@ class EditTeacher extends React.Component {
       teacherNameError: { toShow: "none", mess: "" },
       schoolNameError: { toShow: "none", mess: "" },
       emailNameError: { toShow: "none", mess: "" },
-      passwordNameError: { toShow: "none", mess: "" }
+      passwordNameError: { toShow: "none", mess: "" },
     };
   }
 
   componentDidMount() {
     if (this.props.teachers.chosenTeacher !== null) {
-      let fields = this.props.teachers.chosenTeacher.classroomTeacher.map((classroom)=>{
-        return {id: classroom.id, value: classroom.name}
-      })
+      let fields = this.props.teachers.chosenTeacher.classroomTeacher.map(
+        (classroom) => {
+          return { id: classroom.id, value: classroom.name };
+        }
+      );
       this.setState({
-        teacherName: this.props.teachers.chosenTeacher.first_name + ' ' + this.props.teachers.chosenTeacher.last_name,
+        teacherName:
+          this.props.teachers.chosenTeacher.first_name +
+          " " +
+          this.props.teachers.chosenTeacher.last_name,
         email: this.props.teachers.chosenTeacher.username,
         schoolName: this.props.teachers.chosenTeacher.school.name,
-        fieldsData: fields
-      })
+        fieldsData: fields,
+      });
     }
   }
 
@@ -100,7 +103,6 @@ class EditTeacher extends React.Component {
     // this.setState((prevState) => {
     //   let oldFieldArray = prevState.fieldsData;
     //   let newArray = oldFieldArray.filter((field) => field.id !== id);
-
     //   return { fieldsData: newArray };
     // });
   };
@@ -160,8 +162,6 @@ class EditTeacher extends React.Component {
     //   this.setState({ passwordNameError: { toShow: "none", mess: "" } });
     //   allOk = true;
     // }
-
-
     // //after all the validetion we need to send the data to sql
     // if (allOk) {
     //   this.props.history.goBack(); // after saving go back
@@ -169,47 +169,54 @@ class EditTeacher extends React.Component {
   };
 
   render() {
-      return (
-        <>
-          <div className="pageContainer withMenu">
-            <WhiteBar />
-            <div>
-              <form className='formData'>
-                {/* מורה */}
-                <label className='labelFields'>
-                  שם המורה:
-                    </label>
-                <p className='error' style={{ display: this.state.teacherNameError.toShow }}>{this.state.teacherNameError.mess}</p>
-                <input
-                  className='inputFields'
-                  type="text"
-                  placeholder="הכנס את שם המורה..."
-                  onBlur={this.saveTeacherName}
-                  value={this.state.teacherName}
-                  readOnly={true}
-                />
+    return (
+      <>
+        <div className="pageContainer withMenu">
+          <WhiteBar />
+          <div>
+            <form className="formData">
+              {/* מורה */}
+              <label className="labelFields">שם המורה:</label>
+              <p
+                className="error"
+                style={{ display: this.state.teacherNameError.toShow }}
+              >
+                {this.state.teacherNameError.mess}
+              </p>
+              <input
+                className="inputFields"
+                type="text"
+                placeholder="הכנס את שם המורה..."
+                onBlur={this.saveTeacherName}
+                value={this.state.teacherName}
+                readOnly={true}
+              />
 
-                {/* בית ספר */}
-                <label className='labelFields'>
-                  בית ספר:
-                    </label>
-                <p className='error' style={{ display: this.state.schoolNameError.toShow }}>{this.state.schoolNameError.mess}</p>
-                <Select
-                  className='selectStyle'
-                  onChange={this.saveSchoolName}
-                  options={this.schoolOptions}
-                  styles={SelectStyle()}
-                  placeholder={this.state.schoolName}
-                  // defaultValue={{ value: "schoolName", label: String(this.state.schoolName) }}
-                  // native={true}
-                  isDisabled={true}
-                />
-                {/* כיתה */}
-                <label className='labelFields'>כיתה:</label>
-                <div>
-                  {this.state.fieldsData.length === 0 ?
+              {/* בית ספר */}
+              <label className="labelFields">בית ספר:</label>
+              <p
+                className="error"
+                style={{ display: this.state.schoolNameError.toShow }}
+              >
+                {this.state.schoolNameError.mess}
+              </p>
+              <Select
+                className="selectStyle"
+                onChange={this.saveSchoolName}
+                options={this.schoolOptions}
+                styles={SelectStyle()}
+                placeholder={this.state.schoolName}
+                // defaultValue={{ value: "schoolName", label: String(this.state.schoolName) }}
+                // native={true}
+                isDisabled={true}
+              />
+              {/* כיתה */}
+              <label className="labelFields">כיתה:</label>
+              <div>
+                {this.state.fieldsData.length === 0 ? (
                   <p>למורה זה אין כיתות</p>
-                  : this.state.fieldsData.map((fieldObj) => {
+                ) : (
+                  this.state.fieldsData.map((fieldObj) => {
                     return (
                       <ClassSelection
                         key={fieldObj.id}
@@ -222,11 +229,12 @@ class EditTeacher extends React.Component {
                         defaultValue={fieldObj.value}
                       />
                     );
-                  })}
-                </div>
-              </form >
-              {/* הוספת כיתה */}
-              {/* <div
+                  })
+                )}
+              </div>
+            </form>
+            {/* הוספת כיתה */}
+            {/* <div
                 style={{ marginRight: '9vw' }}
                 className='addSomethingNew'
                 onClick={this.addNewFieldData}
@@ -234,52 +242,58 @@ class EditTeacher extends React.Component {
                 <img className='addIcon' src={addicon} alt="addIcon"></img>
                 <p className='addTitle'>הוסף כיתה</p>
               </div> */}
-              <form className='formData' style={{ marginTop: '0' }}>
-                {/* אימייל */}
-                <label className='labelFields'>
-                  אימייל:
-                    </label>
-                <p className='error' style={{ display: this.state.emailNameError.toShow }}>{this.state.emailNameError.mess}</p>
-                <input
-                  className='inputFields'
-                  onBlur={this.saveEmail}
-                  type="text"
-                  placeholder="הכנס כתובת מייל..."
-                  readOnly={true}
-                  value={this.state.email}
-                />
-                {/* סיסמא */}
-                <label className='labelFields'>
-                  סיסמא:
-                    </label>
-                <p className='error' style={{ display: this.state.passwordNameError.toShow }}>{this.state.passwordNameError.mess}</p>
-                <input
-                  className='inputFields'
-                  onBlur={this.savePassword}
-                  type="text"
-                  placeholder="הכנס סיסמא..."
-                  readOnly={true}
-                />
-              </form>
+            <form className="formData" style={{ marginTop: "0" }}>
+              {/* אימייל */}
+              <label className="labelFields">אימייל:</label>
+              <p
+                className="error"
+                style={{ display: this.state.emailNameError.toShow }}
+              >
+                {this.state.emailNameError.mess}
+              </p>
+              <input
+                className="inputFields"
+                onBlur={this.saveEmail}
+                type="text"
+                placeholder="הכנס כתובת מייל..."
+                readOnly={true}
+                value={this.state.email}
+              />
+              {/* סיסמא */}
+              <label className="labelFields">סיסמא:</label>
+              <p
+                className="error"
+                style={{ display: this.state.passwordNameError.toShow }}
+              >
+                {this.state.passwordNameError.mess}
+              </p>
+              <input
+                className="inputFields"
+                onBlur={this.savePassword}
+                type="text"
+                placeholder="הכנס סיסמא..."
+                readOnly={true}
+              />
+            </form>
 
-              {/* <div className='spacerFromSaveButton'></div>
+            {/* <div className='spacerFromSaveButton'></div>
               <div className='saveButtonBackground'>
                 <button className="saveButton" onClick={this.validateInputFields}>
                   שמור
                   </button>
               </div> */}
-            </div>
           </div>
-        </>
-      );
-    }
+        </div>
+      </>
+    );
+  }
 }
-
-
 
 const mapContextToProps = {
   teachers: teachersContext,
-  errorMsg: errorMsgContext
+  errorMsg: errorMsgContext,
 };
 
-export default withContext(mapContextToProps)(observer(withRouter(EditTeacher)));
+export default withContext(mapContextToProps)(
+  observer(withRouter(EditTeacher))
+);

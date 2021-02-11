@@ -15,8 +15,8 @@ class TeachersList extends React.Component {
       categors: ["שם המורה", "בית ספר", "כיתות"],
       enCategor: {
         "שם המורה": "name",
-        "כיתות": "classes",
-        "בית ספר": "schoolName"
+        כיתות: "classes",
+        "בית ספר": "schoolName",
       },
       listDataTeachers: [],
       searchVal: "",
@@ -26,18 +26,20 @@ class TeachersList extends React.Component {
 
   componentDidMount = async () => {
     this.getTeachers();
-  }
+  };
 
+  //! not in use
   //Save the user search value as searchVal in state.
-  handleChang = (e) => {
-    this.setState({ searchVal: e.target.value });
-  };
-
+  // handleChange = (e) => {
+  //   this.setState({ searchVal: e.target.value });
+  // };
+  //! not in use
   //When the user press the search icon it's start to show the input text for the searching.
-  activateSearch = () => {
-    this.setState({ displaySearch: true });
-  };
+  // activateSearch = () => {
+  //   this.setState({ displaySearch: true });
+  // };
 
+  //gets teachers from the DB
   getTeachers = async () => {
     await this.props.teachers.getTeachers();
     if (!this.props.teachers.successGettingTeachers) {
@@ -46,6 +48,7 @@ class TeachersList extends React.Component {
       );
     }
   };
+
   render() {
     return (
       <div className="TeachersList withMenu" dir="rtl">
@@ -64,7 +67,7 @@ class TeachersList extends React.Component {
                 name="search"
                 value={this.state.searchVal}
                 placeholder="חיפוש"
-                onChange={this.handleChang}
+                onChange={this.handleChange}
               />
             </Slide>
             <p className="searchIcon" onClick={this.activateSearch}></p>
@@ -78,27 +81,24 @@ class TeachersList extends React.Component {
           this.props.teachers.listDataTeachers.length === 0 ? (
             <LoadingTable />) :
           <> */}
-            <GeneralTable
-              allData={this.props.teachers.listDataTeachers}
-              categors={this.state.categors}
-              enCategor={this.state.enCategor}
-              loadMore={this.getTeachers}
-              haveMoreData={this.props.teachers.haveMoreTeachers}
-              startGetInfo={this.props.teachers.startGetTeachers}
-              setClickedRow={this.props.teachers.getChosenTeacher}
-            />
-          {/* </>} */}
+        <GeneralTable
+          allData={this.props.teachers.listDataTeachers}
+          categors={this.state.categors}
+          enCategor={this.state.enCategor}
+          loadMore={this.getTeachers}
+          haveMoreData={this.props.teachers.haveMoreTeachers}
+          startGetInfo={this.props.teachers.startGetTeachers}
+          setClickedRow={this.props.teachers.getChosenTeacher}
+        />
+        {/* </>} */}
       </div>
     );
   }
 }
 
-
-
-
 const mapContextToProps = {
   teachers: teachersContext,
-  errorMsg: errorMsgContext
+  errorMsg: errorMsgContext,
 };
 
 export default withContext(mapContextToProps)(observer(TeachersList));

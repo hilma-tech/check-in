@@ -1,16 +1,7 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-} from "typeorm";
-import {
-  IsDefined,
-  IsString,
-  Length,
-} from "class-validator";
-import { Student } from "src/student/student.entity";
-import { Teacher } from "src/teacher/teacher.entity";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { IsDefined, IsString, Length } from 'class-validator';
+import { Student } from 'src/student/student.entity';
+import { Teacher } from 'src/teacher/teacher.entity';
 
 @Entity()
 export class School {
@@ -20,24 +11,24 @@ export class School {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Column({ type: "varchar", length: 50 })
+  @Column({ type: 'varchar', length: 50 })
   name: string;
 
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Column({ type: "varchar", length: 50 })
+  @Column({ type: 'varchar', length: 50 })
   city: string;
 
   @OneToMany(
     () => Student,
-    student => student.school
+    student => student.school,
   )
   students: Student[];
 
   @OneToMany(
     () => Teacher,
-    teacher => teacher.school
+    teacher => teacher.school,
   )
   teachers: Teacher[];
 }

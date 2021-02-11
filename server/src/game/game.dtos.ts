@@ -102,7 +102,6 @@ export class GetGameSkip {
   gamesLength: string;
 }
 
-
 export class GameIdDto {
   @IsDefined()
   @IsString()

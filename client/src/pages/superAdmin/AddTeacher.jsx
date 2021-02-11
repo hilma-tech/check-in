@@ -10,7 +10,7 @@ import {
   nameValidation,
   mustInputValidation,
   passwordValidation,
-  emailValidation
+  emailValidation,
 } from "../../tools/ValidationFunctions";
 import { withRouter } from "react-router-dom";
 
@@ -37,7 +37,7 @@ class AddTeacher extends Component {
       teacherNameError: { toShow: "none", mess: "" },
       schoolNameError: { toShow: "none", mess: "" },
       emailNameError: { toShow: "none", mess: "" },
-      passwordNameError: { toShow: "none", mess: "" }
+      passwordNameError: { toShow: "none", mess: "" },
     };
   }
 
@@ -54,7 +54,7 @@ class AddTeacher extends Component {
     });
   };
 
-  saveValue = (newValue, id) => {
+  saveChosenClassValue = (newValue, id) => {
     this.setState((prevState) => {
       let updateData = [...prevState.fieldsData];
       updateData[id].value = newValue;
@@ -148,7 +148,6 @@ class AddTeacher extends Component {
       allOk = true;
     }
 
-
     //after all the validetion we need to send the data to sql
     if (allOk) {
       this.props.history.goBack(); // after saving go back
@@ -161,33 +160,39 @@ class AddTeacher extends Component {
         <div className="pageContainer">
           <WhiteBar />
           <div>
-            <form className='formData'>
+            <form className="formData">
               {/* מורה */}
-              <label className='labelFields'>
-                שם המורה:
-              </label>
-              <p className='error' style={{ display: this.state.teacherNameError.toShow }}>{this.state.teacherNameError.mess}</p>
+              <label className="labelFields">שם המורה:</label>
+              <p
+                className="error"
+                style={{ display: this.state.teacherNameError.toShow }}
+              >
+                {this.state.teacherNameError.mess}
+              </p>
               <input
-                className='inputFields'
+                className="inputFields"
                 type="text"
                 placeholder="הכנס את שם המורה..."
                 onBlur={this.saveTeacherName}
               />
 
               {/* בית ספר */}
-              <label className='labelFields'>
-                בית ספר:
-              </label>
-              <p className='error' style={{ display: this.state.schoolNameError.toShow }}>{this.state.schoolNameError.mess}</p>
+              <label className="labelFields">בית ספר:</label>
+              <p
+                className="error"
+                style={{ display: this.state.schoolNameError.toShow }}
+              >
+                {this.state.schoolNameError.mess}
+              </p>
               <Select
-                className='selectStyle'
+                className="selectStyle"
                 onChange={this.saveSchoolName}
                 options={this.schoolOptions}
                 styles={SelectStyle()}
                 defaultValue={{ value: "default", label: "שייך לבית ספר" }}
               />
               {/* כיתה */}
-              <label className='labelFields'>כיתה:</label>
+              <label className="labelFields">כיתה:</label>
               <div>
                 {this.state.fieldsData.map((fieldObj) => {
                   return (
@@ -195,53 +200,59 @@ class AddTeacher extends Component {
                       key={fieldObj.id}
                       id={fieldObj.id}
                       removal={this.triggerRemoval}
-                      saveValue={this.saveValue}
+                      saveValue={this.saveChosenClassValue}
                       options={this.classOptions}
                       onChange={this.saveChange}
                     />
                   );
                 })}
               </div>
-            </form >
+            </form>
             {/* הוספת כיתה */}
             <div
-              style={{ marginRight: '9vw' }}
-              className='addSomethingNew'
+              style={{ marginRight: "9vw" }}
+              className="addSomethingNew"
               onClick={this.addNewFieldData}
             >
-              <img className='addIcon' src={addicon} alt="addIcon"></img>
-              <p className='addTitle'>הוסף כיתה</p>
+              <img className="addIcon" src={addicon} alt="addIcon"></img>
+              <p className="addTitle">הוסף כיתה</p>
             </div>
-            <form className='formData' style={{ marginTop: '0' }}>
+            <form className="formData" style={{ marginTop: "0" }}>
               {/* אימייל */}
-              <label className='labelFields'>
-                אימייל:
-              </label>
-              <p className='error' style={{ display: this.state.emailNameError.toShow }}>{this.state.emailNameError.mess}</p>
+              <label className="labelFields">אימייל:</label>
+              <p
+                className="error"
+                style={{ display: this.state.emailNameError.toShow }}
+              >
+                {this.state.emailNameError.mess}
+              </p>
               <input
-                className='inputFields'
+                className="inputFields"
                 onBlur={this.saveEmail}
                 type="text"
                 placeholder="הכנס כתובת מייל..."
               />
               {/* סיסמא */}
-              <label className='labelFields'>
-                סיסמא:
-              </label>
-              <p className='error' style={{ display: this.state.passwordNameError.toShow }}>{this.state.passwordNameError.mess}</p>
+              <label className="labelFields">סיסמא:</label>
+              <p
+                className="error"
+                style={{ display: this.state.passwordNameError.toShow }}
+              >
+                {this.state.passwordNameError.mess}
+              </p>
               <input
-                className='inputFields'
+                className="inputFields"
                 onBlur={this.savePassword}
                 type="text"
                 placeholder="הכנס סיסמא..."
               />
             </form>
 
-            <div className='spacerFromSaveButton'></div>
-            <div className='saveButtonBackground'>
+            <div className="spacerFromSaveButton"></div>
+            <div className="saveButtonBackground">
               <button className="saveButton" onClick={this.validateInputFields}>
                 שמור
-            </button>
+              </button>
             </div>
           </div>
         </div>

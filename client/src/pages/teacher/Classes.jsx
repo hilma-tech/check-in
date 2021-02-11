@@ -9,13 +9,15 @@ import { chosenClassContext } from "../../stores/chosenClass.store";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { errorMsgContext } from "../../stores/error.store";
-import { nameContext } from "../../stores/userName.store";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { userNameContext } from "../../stores/userName.store";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { gamesContext } from "../../stores/games.store";
 
 class Classes extends Component {
   constructor() {
     super();
+    // we chose specific, happy colors
+    //because random ones wouldn't necessarily fit the theme we want
     this.colors = [
       "#188749",
       "#f4c90a",
@@ -37,17 +39,23 @@ class Classes extends Component {
     ];
     this.state = {
       classes: [],
-      name: ""
+      name: "",
     };
   }
 
+  //we clear up any leftover information from past entries
+  //then retrive the classes that belong to current teacher
   componentDidMount = async () => {
-    this.props.games.resetGamesStore()
-    if(this.props.name.haveMoreClasses && this.props.name.teacherClasses.length === 0){
-      await this.props.name.setTeacher()
+    this.props.games.resetGamesStore();
+    if (
+      this.props.name.haveMoreClasses &&
+      this.props.name.teacherClasses.length === 0
+    ) {
+      await this.props.name.getTeacherInfo();
     }
   };
 
+  //alows teacher to move to slected class
   moveToClass = (classId, classroomName) => {
     this.props.chosenClass.setClassId(classId, classroomName);
     this.props.history.push("/teacher/classes/games");
@@ -59,10 +67,13 @@ class Classes extends Component {
         <div className="smallSticky">
           <SmallMenuBar />
         </div>
-        <PageTitle className="officialTitle" title={"שלום המורה " + this.props.name.firstName + "!"} />
-        <p className='classesArrowBarText'>
+        <PageTitle
+          className="officialTitle"
+          title={"שלום המורה " + this.props.name.firstName + "!"}
+        />
+        <p className="classesArrowBarText">
           בחר/י כיתה כדי לראות את פרטי הכיתה
-                </p>
+        </p>
         <div id="teacherClassesPage">
           <div className="griddler">
             {this.props.name.teacherClasses.map((classObj, index) => {
@@ -72,33 +83,40 @@ class Classes extends Component {
                     this.moveToClass(classObj.id, classObj.name);
                   }}
                   className="circleCont"
-                  style={{ borderColor: this.colors[(index+1)%this.colors.length] }}
+                  style={{
+                    borderColor: this.colors[(index + 1) % this.colors.length],
+                  }}
                   key={classObj.id}
                 >
-                  <h3 className="className" key={index} style={{ color: this.colors[(index+1)%this.colors.length] }}>
+                  <h3
+                    className="className"
+                    key={index}
+                    style={{
+                      color: this.colors[(index + 1) % this.colors.length],
+                    }}
+                  >
                     {classObj.name}
                   </h3>
                 </div>
               );
             })}
           </div>
-          {
-            this.props.name.startGetClasses ?
-            <CircularProgress size="1.5rem"/> :
-              <button
-                className="showMoreGamesB"
-                onClick={this.props.name.getMoreClasses}
-                style={{
-                  marginTop: '1vh',
-                  display:
-                    this.props.name.haveMoreClasses
-                      ? "inline-block"
-                      : "none",
-                }}
-              >
-                הצג עוד
+          {this.props.name.startGetClasses ? (
+            <CircularProgress size="1.5rem" />
+          ) : (
+            <button
+              className="showMoreGamesB"
+              onClick={this.props.name.getMoreClasses}
+              style={{
+                marginTop: "1vh",
+                display: this.props.name.haveMoreClasses
+                  ? "inline-block"
+                  : "none",
+              }}
+            >
+              הצג עוד
             </button>
-          }
+          )}
         </div>
       </>
     );
@@ -108,7 +126,7 @@ class Classes extends Component {
 const mapContextToProps = {
   chosenClass: chosenClassContext,
   errorMsg: errorMsgContext,
-  name: nameContext,
+  name: userNameContext,
   games: gamesContext,
 };
 
