@@ -39,7 +39,6 @@ export class ClassroomService {
     let newRemovedGame = await this.classroomRepository.save(ans);
     return { newRemovedGame: newRemovedGame };
   }
-
   async getSchoolClasses(schoolId: string) {
     let classes = await this.classroomRepository.find({
       relations: ['teachers'],
@@ -47,4 +46,5 @@ export class ClassroomService {
     });
     return classes;
   }
+
 }

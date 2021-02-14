@@ -43,35 +43,31 @@ export class StudentService extends UserService {
     return classes;
   }
 
-  async CheckUserInfoAndGetClassId(
-    username: string,
-    password: string,
-    classId: string,
-  ) {
+  async CheckUserInfoAndGetClassId(username: string, password: string, classId: string) {
     let findUser = await this.userRepository.findOne({
       where: [{ username: username }],
-      select: ['id', 'password'],
-    });
-    let pass = bcrypt.compareSync(password, findUser.password);
+      select: ['id', 'password']
+    })
+    if (findUser) {
+      let pass = bcrypt.compareSync(password, findUser.password)
 
-    let Class = await this.userRepository.findOne({
-      relations: ['classroomStudent'],
-      where: [{ id: findUser.id }],
-    });
+      let Class = await this.userRepository.findOne({
+        relations: ['classroomStudent'],
+        where: [{ id: findUser.id }]
+      })
 
-    const classID = () => {
-      Class.classroomStudent.map(IsInClass => {
-        if (IsInClass.id !== Number(classId)) {
-          return true;
+      let classID = Class.classroomStudent.map(IsInClass => {
+        if (Number(IsInClass.id) === Number(classId)) {
+          return true
         }
-      });
-    };
-    if (findUser && pass && classID) {
-      return true;
-    } else {
-      return false;
+      })
+
+      if (pass && classID.includes(true)) {
+        return true
+      }
     }
   }
+
 
   async getClassStudents(classId: string, studentLength: number) {
     let students = await this.userRepository

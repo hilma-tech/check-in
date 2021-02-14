@@ -5,7 +5,6 @@ import "../../style/superAdmin/form_style.scss";
 import { FileInput, withFiles } from "@hilma/fileshandler-client";
 import "../../style/superAdmin/game_field_selection_style.scss";
 import { withContext } from "@hilma/tools";
-import { observer } from "mobx-react";
 import { errorMsgContext } from "../../stores/error.store";
 
 class GameFieldSelection extends Component {

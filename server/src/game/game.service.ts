@@ -11,6 +11,7 @@ import {
 } from './game.dtos';
 import { FieldService } from 'src/field/field.service';
 import { FilesType, ImageService } from '@hilma/fileshandler-typeorm';
+import { ClassroomFieldService } from 'src/classroom-field/classroom-field.service';
 
 @Injectable()
 export class GameService {
@@ -18,8 +19,9 @@ export class GameService {
     @InjectRepository(Game)
     private gameRepository: Repository<Game>,
     private fieldService: FieldService,
+    private classFieldService: ClassroomFieldService,
     private readonly imageService: ImageService,
-  ) {}
+  ) { }
 
   async addGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
     // if(req.game.image.value){
@@ -113,7 +115,6 @@ export class GameService {
       where: [{ suspended: false }],
     });
   }
-
   async getGameById(gameId: number) {
     return await this.gameRepository.find({
       where: { id: gameId },
@@ -121,7 +122,7 @@ export class GameService {
   }
 
   async deleteGameById(id) {
-    await this.fieldService.deleteField(id.Id);
+    await this.classFieldService.deleteClassField(id.Id)
     await this.gameRepository.delete(id.Id);
   }
 

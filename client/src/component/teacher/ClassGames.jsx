@@ -22,7 +22,8 @@ class ClassGames extends React.Component {
         <img
           className="classGameImg"
           alt=""
-          src={this.props.image}
+          src="https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg"
+          // src={this.props.image}
           onClick={this.showGameInfo}
         />
         <img

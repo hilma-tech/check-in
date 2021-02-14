@@ -35,11 +35,10 @@ class PopUpError extends React.Component {
         window.location.pathname = "teacher/classes";
       }
     }
-    if (this.props.errorMsg.question === true) {
       this.props.errorMsg.approveFunction();
-    }
-    this.props.errorMsg.resetMsg();
-  };
+   
+    this.props.errorMsg.resetMsg()
+  }
 
   //cancellation button, removes the popup and allows the user to continue
   cancelButton = () => {

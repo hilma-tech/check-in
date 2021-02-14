@@ -31,6 +31,7 @@ class Games extends React.Component {
   componentDidMount() {
     if (this.props.chosenClass.classId === 0) {
       this.props.history.push("/teacher/classes");
+      return;
     }
     this.getClassGames();
   }
@@ -64,11 +65,10 @@ class Games extends React.Component {
   limitedRemoval = async (index, id) => {
     if (this.props.games.chosenGameList.length > 2) {
       // bigger than two
-      return this.openPopUpClick(index, id);
+      this.openPopUpClick(index, id);
     } else {
       // equal to two
       this.props.errorMsg.setErrorMsg("לכל כיתה חייב להיות שני משחקים לפחות");
-      return null;
     }
   };
 
