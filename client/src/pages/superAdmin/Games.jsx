@@ -123,7 +123,6 @@ class Games extends Component {
                     <div key={image.id}>
                       <div className="imageContainer item3">
                         <Fade
-                        // onExit=
                           in={image.showOption}
                           timeout={{
                             appear: 500,
