@@ -40,7 +40,7 @@ class GameFieldSelection extends Component {
           ) : (
             <FileInput
             onError={()=>{
-              this.props.errorMsg.setErrorMsg("הייתה שגיאה בהעלאת התמונה. נסו לשמור את התמונה בפורמט אחר.");
+              this.props.errorMsg.setErrorMsg("הייתה שגיאה בהעלאת התמונה. התמונה חייבת להיות באחד מן הפורמטים הבאים: jpg/jpeg/png");
             
           }}
               id="image"
@@ -126,7 +126,6 @@ class GameFieldSelection extends Component {
 
   //sends image field the user entered to parent
   sendImageFieldValue = (value) => {
-    console.log('value: ', value);
     this.props.fieldValue(
       value.value,
       this.props.fieldI,
@@ -142,7 +141,6 @@ class GameFieldSelection extends Component {
   };
 
   render() {
-    console.log("yo",this.props.errorMsg.errorMsg)
     let errorMess =
       this.props.errorMessage !== undefined
         ? this.props.errorMessage
