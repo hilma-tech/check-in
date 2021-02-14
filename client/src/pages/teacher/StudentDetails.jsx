@@ -21,14 +21,15 @@ class StudentDetails extends Component {
   componentDidMount() {
     if (this.props.chosenClass.classId === 0) {
       this.props.history.push("/teacher/classes");
+    } else {
+      let studentInfo = this.props.chosenClass.getCurrStudent();
+      let classrooms = this.props.chosenClass.studentClassrooms;
+      this.setState({
+        name: studentInfo.first_name + " " + studentInfo.last_name,
+        userName: studentInfo.username,
+        classrooms: classrooms,
+      });
     }
-    let studentInfo = this.props.chosenClass.getCurrStudent();
-    let classrooms = this.props.chosenClass.studentClassrooms;
-    this.setState({
-      name: studentInfo.first_name + " " + studentInfo.last_name,
-      userName: studentInfo.username,
-      classrooms: classrooms,
-    });
   }
 
   render() {

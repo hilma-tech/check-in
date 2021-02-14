@@ -37,7 +37,7 @@ class GamePopUpMenu extends Component {
         <hr className="divider" />
         <div
           className="optionRow"
-          onClick={() => this.props.onClickDeleteGame()}
+          onClick={()=>this.props.onClickDeleteGame(this.props.gameId)}
         >
           <DeleteIcon
             style={{
@@ -50,12 +50,7 @@ class GamePopUpMenu extends Component {
           />
           <h1 className="popUpOpt">מחק</h1>
         </div>
-        <PopUpError
-          question={true}
-          OnApprove={() => {
-            this.props.OnApprove(this.props.gameId);
-          }}
-        />
+        <PopUpError/>
         {/* <hr className="divider"/>
         <div className="optionRow">
         <img src='/icons/ionic-ios-stopwatch.svg' className="popUpIcon"/>

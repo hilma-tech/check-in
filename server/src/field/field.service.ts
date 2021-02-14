@@ -35,16 +35,8 @@ export class FieldService {
     });
   }
 
-  async deleteField(gameId) {
-    let ans = await this.fieldRepository.find({
-      relations: ['game'],
-      where: { game: gameId },
-    });
-    if (ans.length > 0) {
-      ans.map(field => {
-        let deleteField = this.fieldRepository.delete(field);
-      });
-    }
+  async deleteField(fields) {
+  return await this.fieldRepository.delete(fields)
   }
 
   async getGameFields(gameId) {
