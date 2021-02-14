@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@hilma/auth": "^0.2.37",
-    "@hilma/fileshandler-client": "0.0.7",
+    "@hilma/fileshandler-client": "0.0.12",
     "@hilma/tools": "^0.1.15",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",

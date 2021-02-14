@@ -4,6 +4,7 @@ import SelectStyle from "../../style/superAdmin/select_style";
 import "../../style/superAdmin/form_style.scss";
 import { FileInput, withFiles } from "@hilma/fileshandler-client";
 import "../../style/superAdmin/game_field_selection_style.scss";
+import { observer } from "mobx-react";
 
 class GameFieldSelection extends Component {
   constructor(props) {
@@ -36,6 +37,7 @@ class GameFieldSelection extends Component {
             <></>
           ) : (
             <FileInput
+            onError={()=>{console.log("kxlkdjwi");}}
               id="image"
               className="hiddenInput"
               type="image"
@@ -191,4 +193,5 @@ class GameFieldSelection extends Component {
     );
   }
 }
+
 export default withFiles(GameFieldSelection);
