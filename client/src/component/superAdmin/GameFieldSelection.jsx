@@ -4,6 +4,9 @@ import SelectStyle from "../../style/superAdmin/select_style";
 import "../../style/superAdmin/form_style.scss";
 import { FileInput, withFiles } from "@hilma/fileshandler-client";
 import "../../style/superAdmin/game_field_selection_style.scss";
+import { withContext } from "@hilma/tools";
+import { observer } from "mobx-react";
+import { errorMsgContext } from "../../stores/error.store";
 
 class GameFieldSelection extends Component {
   constructor(props) {
@@ -36,6 +39,10 @@ class GameFieldSelection extends Component {
             <></>
           ) : (
             <FileInput
+            onError={()=>{
+              this.props.errorMsg.setErrorMsg("הייתה שגיאה בהעלאת התמונה. נסו לשמור את התמונה בפורמט אחר.");
+            
+          }}
               id="image"
               className="hiddenInput"
               type="image"
@@ -119,6 +126,7 @@ class GameFieldSelection extends Component {
 
   //sends image field the user entered to parent
   sendImageFieldValue = (value) => {
+    console.log('value: ', value);
     this.props.fieldValue(
       value.value,
       this.props.fieldI,
@@ -134,6 +142,7 @@ class GameFieldSelection extends Component {
   };
 
   render() {
+    console.log("yo",this.props.errorMsg.errorMsg)
     let errorMess =
       this.props.errorMessage !== undefined
         ? this.props.errorMessage
@@ -191,4 +200,11 @@ class GameFieldSelection extends Component {
     );
   }
 }
-export default withFiles(GameFieldSelection);
+
+const mapContextToProps = {
+  errorMsg: errorMsgContext,
+};
+
+//!מובקס לא מתעדכן
+export default  withContext(mapContextToProps)( withFiles(GameFieldSelection))
+  
