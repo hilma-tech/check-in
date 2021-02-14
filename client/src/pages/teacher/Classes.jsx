@@ -52,7 +52,7 @@ class Classes extends Component {
       this.props.name.teacherClasses.length === 0
     ) {
       await this.props.name.getTeacherInfo();
-      if(!this.props.name.startGetClasses){
+      if(!this.props.name.successGettingClasses){
         this.props.errorMsg.setErrorMsg(
           "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
         );
