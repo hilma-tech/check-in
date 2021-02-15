@@ -47,6 +47,7 @@ class Classes extends Component {
   //then retrive the classes that belong to current teacher
   componentDidMount = async () => {
     this.props.games.resetGamesStore();
+    this.props.chosenClass.resetChosenClass()
     if (
       this.props.name.haveMoreClasses &&
       this.props.name.teacherClasses.length === 0

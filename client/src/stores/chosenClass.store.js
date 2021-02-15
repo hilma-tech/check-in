@@ -25,6 +25,7 @@ class ChosenClass {
       successGetInfo: observable,
       haveMoreStudents: observable,
       startGetInfo: observable,
+      resetChosenClass: action,
     });
   }
 
@@ -71,6 +72,14 @@ class ChosenClass {
     this.classId = id;
     this.classroomName = classroomName;
   };
+
+  resetChosenClass = () => {
+    this.classId = 0;
+    this.classroomName = "";
+    this.students = [];
+    this.currStudentIndex = 0;
+    this.studentClassrooms = [];
+  }
 }
 
 const chosenClass = new ChosenClass();
