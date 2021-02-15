@@ -1,5 +1,11 @@
-import { createMobXContext } from "@hilma/tools";
-import { makeObservable, observable, action } from "mobx";
+import {
+  createMobXContext
+} from "@hilma/tools";
+import {
+  makeObservable,
+  observable,
+  action
+} from "mobx";
 
 class ErrorMsg {
   errorMsg = "";
@@ -21,6 +27,8 @@ class ErrorMsg {
   resetMsg = () => {
     this.errorMsg = "";
     this.showMsg = false;
+    this.question = false;
+    this.approveFunction = () => {};
   };
 
   //activates the popup, its an error message

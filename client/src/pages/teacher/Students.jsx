@@ -5,7 +5,7 @@ import ArrowBar from "../../component/teacher/ArrowBar.jsx";
 import PageTitle from "../../component/teacher/PageTitle.jsx";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 import SmallNavBar from "../../component/teacher/SmallNavBar.jsx";
-import "../../style/teacher/students.css";
+import "../../style/teacher/students.scss";
 import { observer } from "mobx-react";
 import { chosenClassContext } from "../../stores/chosenClass.store";
 import CircularProgress from "@material-ui/core/CircularProgress";
