@@ -72,8 +72,8 @@ class ShowGame extends Component {
                 className="classGameImg"
                 id="classGameImgTeacherWeb"
                 alt=""
-                src={this.state.image}
-              />
+                src="https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg"
+                />
               <h2 className="mobileClassGameTitleBackground"></h2>
               <h1 className="mobileClassGameTitle">{this.state.gameName}</h1>
             </div>

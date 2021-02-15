@@ -22,11 +22,11 @@ export function nameValidation(name) {
     } else if (name.length > 30) {
         return '** שדה זה לא יכול להכיל יותר מ-30 תווים **'
     } else if (name.trim().length === 0) {
-        return '** שם זה לא תקין **'
+        return '** נא למלא שדה זה **'
     }  else if ((/[@#$%^&*()_+=[\]{};:\\|<>/~`]/).test(name)) {
         return '** שדה זה לא יכול להכיל תווים מיוחדים **'
     } else if (name.includes('"') || name.includes("'") || name.includes(',') || name.includes('-')) {
-        return '** שם זה לא תקין **'
+        return '** שדה זה לא יכול להכיל תווים מיוחדים **'
     } else {
         return ''
     }
@@ -121,7 +121,7 @@ export function mustInputValidation(input) {
 //validation for description field in game
 export function descriptionValidation(desc) {
     if (desc === null || desc.length === 0) {
-        return '** נא למלא שדה זה **'
+        return ''
     } else if (desc.length > 30) {
         return '** שדה זה לא יכול להכיל יותר מ-30 תווים **'
     } else if (!(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/).test(desc)) {
