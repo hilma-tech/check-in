@@ -77,10 +77,6 @@ class TeachersList extends React.Component {
                 Create the teacher table with the general table.
             */}
 
-        {/* {!this.props.teachers.haveMoreTeachers &&
-          this.props.teachers.listDataTeachers.length === 0 ? (
-            <LoadingTable />) :
-          <> */}
         <GeneralTable
           allData={this.props.teachers.listDataTeachers}
           categors={this.state.categors}
@@ -90,7 +86,7 @@ class TeachersList extends React.Component {
           startGetInfo={this.props.teachers.startGetTeachers}
           setClickedRow={this.props.teachers.getChosenTeacher}
         />
-        {/* </>} */}
+        
       </div>
     );
   }

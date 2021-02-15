@@ -68,6 +68,7 @@ class GeneralTable extends React.Component {
             )}
           </>
         )}
+        <div className="addingButton" onClick={this.onClickAdd}></div>
       </div>
     );
   }
