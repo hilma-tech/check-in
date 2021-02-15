@@ -44,7 +44,7 @@ class Students extends Component {
             style={{ textAlign: "center" }}
           >
             <div>
-              {this.props.chosenClass.students.length === 0 ? (
+              {this.props.chosenClass.students.length === 0 && !this.props.chosenClass.startGetInfo ? (
                 <p>אין תלמידים לכיתה זו</p>
               ) : (
                 this.props.chosenClass.students.map((student, index) => {

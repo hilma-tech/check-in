@@ -18,7 +18,7 @@ class ClassGames extends React.Component {
 
   render() {
     return (
-      <div className="gameContainer">
+      <div className={this.props.chosen ? "chosenGameForClassContainer": "gameContainer"}>
         <img
           className="classGameImg"
           alt=""
@@ -41,7 +41,7 @@ class ClassGames extends React.Component {
           }
         />
         <h2
-          className="classGameTitleBackground"
+        className="classGameTitleBackground"
           onClick={this.showGameInfo}
         ></h2>
         <h1 className="classGameTitle" onClick={this.showGameInfo}>
