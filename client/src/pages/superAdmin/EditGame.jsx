@@ -259,7 +259,7 @@ class EditGame extends Component {
               </p>
               <TextareaAutosize
                 className="inputFields"
-                placeholder="הכנס תיאור משחק..."
+                placeholder="אין תיאור משחק"
                 id="gameDescription"
                 onBlur={this.updateBasicInfo}
                 defaultValue={this.state.gameDescription}
@@ -276,7 +276,7 @@ class EditGame extends Component {
               </p>
               <TextareaAutosize
                 className="inputFields"
-                placeholder="הכנס דרישות משחק..."
+                placeholder="אין דרישות משחק"
                 id="gameRequirements"
                 onBlur={this.updateBasicInfo}
                 defaultValue={this.state.gameRequirements}

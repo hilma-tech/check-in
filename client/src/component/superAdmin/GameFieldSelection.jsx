@@ -4,7 +4,8 @@ import SelectStyle from "../../style/superAdmin/select_style";
 import "../../style/superAdmin/form_style.scss";
 import { FileInput, withFiles } from "@hilma/fileshandler-client";
 import "../../style/superAdmin/game_field_selection_style.scss";
-import { observer } from "mobx-react";
+import { withContext } from "@hilma/tools";
+import { errorMsgContext } from "../../stores/error.store";
 
 class GameFieldSelection extends Component {
   constructor(props) {
@@ -37,7 +38,10 @@ class GameFieldSelection extends Component {
             <></>
           ) : (
             <FileInput
-            onError={()=>{console.log("kxlkdjwi");}}
+            onError={()=>{
+              this.props.errorMsg.setErrorMsg("הייתה שגיאה בהעלאת התמונה. התמונה חייבת להיות באחד מן הפורמטים הבאים: jpg/jpeg/png");
+            
+          }}
               id="image"
               className="hiddenInput"
               type="image"
@@ -194,4 +198,10 @@ class GameFieldSelection extends Component {
   }
 }
 
-export default withFiles(GameFieldSelection);
+const mapContextToProps = {
+  errorMsg: errorMsgContext,
+};
+
+//!מובקס לא מתעדכן
+export default  withContext(mapContextToProps)( withFiles(GameFieldSelection))
+  

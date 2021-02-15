@@ -87,9 +87,9 @@ class EditGame extends Component {
               <h1 className="mobileClassGameTitle">{this.state.gameName}</h1>
             </div>
             <h3 className="mobileGameDesc">תיאור המשחק</h3>
-            <p className="mobileGameDP">{this.state.gameDescription}</p>
+            <p className="mobileGameDP">{this.state.gameDescription ? this.state.gameDescription : "אין תיאור משחק"}</p>
             <h3 className="mobileGameReq">דרישות המשחק</h3>
-            <p className="mobileGameRP">{this.state.gameRequirements}</p>
+            <p className="mobileGameRP">{this.state.gameRequirements ? this.state.gameRequirements : "אין דרישות משחק"}</p>
             <h1 className="mobileGameFields">שדות:</h1>
             {this.state.fieldsData.length === 0 ? 
             <p className="noFields">אין שדות למשחק זה</p>:
