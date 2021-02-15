@@ -97,33 +97,33 @@ class SignIn extends Component {
       <div className="background">
         <div className="centeredPage">
           <img className="webName" src="/icons/blueCheckIn.svg"></img>
-          <p
-            className="error"
-            style={{ display: this.state.errorMessages[0].toShow }}
-          >
-            {this.state.errorMessages[0].mess}
-          </p>
-          <input
-            className="username input"
-            placeholder="כתובת מייל"
-            onBlur={this.updateUser}
-          />
-          <br />
-          <p
-            className="error"
-            style={{ display: this.state.errorMessages[1].toShow }}
-          >
-            {this.state.errorMessages[1].mess}
-          </p>
-          <input
-            type="password"
-            className="password input"
-            placeholder="סיסמא"
-            onBlur={this.updatePass}
-          />
-          <br />
-          <button className="signInButton" onClick={this.login}>
-            כניסה
+            <p
+              className="error"
+              style={{ display: this.state.errorMessages[0].toShow }}
+            >
+              {this.state.errorMessages[0].mess}
+            </p>
+            <input
+              className="username input"
+              placeholder="כתובת מייל"
+              onBlur={this.updateUser}
+            />
+            <br />
+            <p
+              className="error"
+              style={{ display: this.state.errorMessages[1].toShow }}
+            >
+              {this.state.errorMessages[1].mess}
+            </p>
+            <input
+              type="password"
+              className="password input"
+              placeholder="סיסמא"
+              onBlur={this.updatePass}
+            />
+            <br />
+            <button className="signInButton" onClick={this.login}>
+              כניסה
           </button>
           {/* <h3 className="forgot">שכחת סיסמא?</h3> */}
           <img alt="hilma logo" className="hilmalogo" src={hilmaicon} />
