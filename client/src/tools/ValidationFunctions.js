@@ -138,7 +138,7 @@ export function requirementValidation(reqs) {
     if (reqs === null || reqs.length === 0) {
         return ''
     } else if (reqs.length > 100) {
-        return ''
+        return '** שדה זה לא יכול להכיל יותר מ-100 תווים **'
     } else if (!(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/).test(reqs)) {
         return '** שדה זה לא תקין **'
     } else if (reqs.includes('"') || reqs.includes("'") || reqs.includes('-') || reqs.includes("?") || reqs.includes("!") || reqs.includes("&") || reqs.includes("%") || reqs.includes("`") ) {
