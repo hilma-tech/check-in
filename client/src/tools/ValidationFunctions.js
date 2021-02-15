@@ -121,7 +121,7 @@ export function mustInputValidation(input) {
 //validation for description field in game
 export function descriptionValidation(desc) {
     if (desc === null || desc.length === 0) {
-        return '** נא למלא שדה זה **'
+        return ''
     } else if (desc.length > 30) {
         return '** שדה זה לא יכול להכיל יותר מ-30 תווים **'
     } else if (!(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/).test(desc)) {
