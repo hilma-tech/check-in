@@ -1,34 +1,38 @@
 import {
-    IsDefined,
-    IsNumber,
-    IsString,
-    Length,
-    Matches,
-    ValidateNested,
+  IsDefined,
+  IsNumber,
+  IsNumberString,
+  IsString,
+  Length,
+  Matches,
+  ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class ClassroomIdDto {
-    @IsDefined()
-    @IsString()
-    classId: string;
+  @IsDefined()
+  @IsString()
+  @IsNumberString()
+  classId: string;
 
-    @IsDefined()
-    @IsString()
-    dataLength: string;
+  @IsDefined()
+  @IsString()
+  @IsNumberString()
+  dataLength: string;
 }
 
 export class ClassroomGameDto {
-    @IsDefined()
-    @IsNumber()
-    classId: number;
-    @IsDefined()
-    @IsNumber()
-    gameId: number;
+  @IsDefined()
+  @IsNumber()
+  classId: number;
+  @IsDefined()
+  @IsNumber()
+  gameId: number;
 }
 
 export class GetClassSkip {
-    @IsDefined()
-    @IsString()
-    classesLength: string;
-  }
+  @IsDefined()
+  @IsString()
+  @IsNumberString()
+  classesLength: string;
+}

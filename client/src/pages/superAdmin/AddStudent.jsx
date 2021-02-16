@@ -5,11 +5,16 @@ import "../../style/superAdmin/form_style.scss";
 import addicon from "../../img/addicon.svg";
 import ArrowNavBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import { withRouter } from "react-router-dom";
-import {userNameValidation, nameValidation, passwordValidation,mustInputValidation} from '../../tools/ValidationFunctions'
-import "../../style/superAdmin/class_selection_style.css"
+import {
+  userNameValidation,
+  nameValidation,
+  passwordValidation,
+  mustInputValidation,
+} from "../../tools/ValidationFunctions";
+import "../../style/superAdmin/class_selection_style.css";
 
 class AddStudent extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       studentNameError: { toShow: "none", mess: "" },
@@ -27,7 +32,7 @@ class AddStudent extends React.Component {
         { id: 3, name: "ג'2" },
       ],
     };
-    this.allSchoole = ["עשה חיל", "בית ספר עם שם אחר"];
+    this.allSchools = ["עשה חיל", "בית ספר עם שם אחר"];
   }
 
   //Return the classes list as list of object for the Select.
@@ -49,13 +54,14 @@ class AddStudent extends React.Component {
     });
     return options;
   };
+
   returnClassesSelections = () => {
     let classesSelections = [];
     for (let i = 0; i < this.state.chosenClasses.length; i++) {
       classesSelections.push(
-        <div key={this.state.chosenClasses[i].id} className='classSelection'>
+        <div key={this.state.chosenClasses[i].id} className="classSelection">
           <Select
-          className='classSelectionInAddTecher'
+            className="classSelectionInAddTecher"
             styles={SelectStyle()}
             options={this.makeClassesOption(i)}
             onChange={this.chooseClass}
@@ -65,7 +71,7 @@ class AddStudent extends React.Component {
             }}
           />
           <img
-          className='removeFieldIcon'
+            className="removeFieldIcon"
             onClick={() => this.removeClass(i)}
             src="/icons/delete.svg"
           />
@@ -74,7 +80,8 @@ class AddStudent extends React.Component {
     }
     return classesSelections;
   };
-  addClassOption = () => {
+
+  addClassSelection = () => {
     this.setState((prevState) => {
       prevState.chosenClasses.push({
         id: -1 * prevState.chosenClasses.length,
@@ -90,6 +97,7 @@ class AddStudent extends React.Component {
       return { chosenClasses: prevState.chosenClasses };
     });
   };
+
   removeClass = (classIndex) => {
     this.setState((prevState) => {
       let tempData = [...prevState.chosenClasses];
@@ -97,10 +105,11 @@ class AddStudent extends React.Component {
       return { chosenClasses: tempData };
     });
   };
+
   //Return the schools list as list of object for the Select.
   makeSchoolOption = (indexSelect) => {
     let options = [];
-    this.allSchoole.map((nameSchool) => {
+    this.allSchools.map((nameSchool) => {
       if (nameSchool !== this.state.school) {
         options.push({
           value: nameSchool,
@@ -116,6 +125,7 @@ class AddStudent extends React.Component {
     this.setState({ school: e.value });
   };
 
+  //saves changes in entered data to the state
   handlechanges = (e) => {
     let updateData = e.target;
     this.setState((prevState) => {
@@ -123,11 +133,13 @@ class AddStudent extends React.Component {
       return { [updateData.name]: prevState[updateData.name] };
     });
   };
+
+  //when clicking on save we first validate the information
   saveButton = (e) => {
     e.preventDefault();
     let allOk = true;
-    /* data validetion  */
-    // ----------student name validetion-------------------
+    /* data validation  */
+    // ----------student name validation-------------------
     let studentNameErrorMess = nameValidation(this.state.studentName);
     if (studentNameErrorMess.length !== 0) {
       this.setState((prevState) => {
@@ -140,7 +152,7 @@ class AddStudent extends React.Component {
       this.setState({ studentNameError: { toShow: "none", mess: "" } });
     }
 
-    // ----------user name validetion-------------------
+    // ----------user name validation-------------------
     let userNameErrorMess = userNameValidation(this.state.userName);
     if (userNameErrorMess.length !== 0) {
       this.setState((prevState) => {
@@ -153,7 +165,7 @@ class AddStudent extends React.Component {
       this.setState({ userNameError: { toShow: "none", mess: "" } });
     }
 
-    // ---------------password validetion-------------------
+    // ---------------password validation-------------------
     let passwordErrorMess = passwordValidation(this.state.password);
     if (passwordErrorMess.length !== 0) {
       this.setState((prevState) => {
@@ -166,7 +178,7 @@ class AddStudent extends React.Component {
       this.setState({ passwordError: { toShow: "none", mess: "" } });
     }
 
-    // ---------------school name validetion-------------------
+    // ---------------school name validation-------------------
     let schoolNameErrorMess = mustInputValidation(this.state.school);
     if (schoolNameErrorMess.length !== 0) {
       this.setState((prevState) => {
@@ -179,7 +191,7 @@ class AddStudent extends React.Component {
       this.setState({ schoolNameError: { toShow: "none", mess: "" } });
     }
 
-    //after all the validetion we need to send the data to sql
+    //after all the validation we need to send the data to sql
     if (allOk) {
       this.props.history.goBack(); // after saving go back
     }
@@ -189,8 +201,10 @@ class AddStudent extends React.Component {
     return (
       <div>
         <ArrowNavBar />
-        <form className='formData'>
-          <label for="studentName" className='labelFields'>שם התלמיד:</label>
+        <form className="formData">
+          <label for="studentName" className="labelFields">
+            שם התלמיד:
+          </label>
           <p
             className="error"
             style={{ display: this.state.studentNameError.toShow }}
@@ -198,31 +212,41 @@ class AddStudent extends React.Component {
             {this.state.studentNameError.mess}
           </p>
           <input
-            className='inputFields'
+            className="inputFields"
             value={this.state.studentName}
             onChange={this.handlechanges}
             placeholder="הכנס את שם התלמיד..."
             name="studentName"
           ></input>
 
-          <label for="userName" className='labelFields'>שם משתמש:</label>
-          <p className="error" style={{ display: this.state.userNameError.toShow }}>
+          <label for="userName" className="labelFields">
+            שם משתמש:
+          </label>
+          <p
+            className="error"
+            style={{ display: this.state.userNameError.toShow }}
+          >
             {this.state.userNameError.mess}
           </p>
           <input
-          className='inputFields'
+            className="inputFields"
             value={this.state.userName}
             onChange={this.handlechanges}
             placeholder="הכנס שם משתמש"
             name="userName"
           ></input>
 
-          <label for="password" className='labelFields'>סיסמא:</label>
-          <p className="error" style={{ display: this.state.passwordError.toShow }}>
+          <label for="password" className="labelFields">
+            סיסמא:
+          </label>
+          <p
+            className="error"
+            style={{ display: this.state.passwordError.toShow }}
+          >
             {this.state.passwordError.mess}
           </p>
           <input
-          className='inputFields'
+            className="inputFields"
             value={this.state.password}
             onChange={this.handlechanges}
             type="password"
@@ -230,7 +254,7 @@ class AddStudent extends React.Component {
             name="password"
           ></input>
 
-          <label className='labelFields'>בית ספר:</label>
+          <label className="labelFields">בית ספר:</label>
           <p
             className="error"
             style={{ display: this.state.schoolNameError.toShow }}
@@ -238,7 +262,7 @@ class AddStudent extends React.Component {
             {this.state.schoolNameError.mess}
           </p>
           <Select
-          className='selectStyle'
+            className="selectStyle"
             placeholder="בחר..."
             styles={SelectStyle()}
             options={this.makeSchoolOption()}
@@ -246,24 +270,21 @@ class AddStudent extends React.Component {
             placeholder="שייך לבית ספר"
           />
 
-          <label className='labelFields'>כיתה:</label>
+          <label className="labelFields">כיתה:</label>
           {this.returnClassesSelections()}
 
-          <div
-          className='addSomethingNew'
-            onClick={this.addClassOption}
-          >
+          <div className="addSomethingNew" onClick={this.addClassSelection}>
             <img className="addIcon" src={addicon} alt="add icon"></img>
             <p className="addTitle">הוסף כיתה</p>
           </div>
         </form>
 
-        <div className='spacerFromSaveButton'></div>
-          <div className='saveButtonBackground'>
-            <button className="saveButton" onClick={this.saveButton}>
-              שמור
-            </button>
-          </div>
+        <div className="spacerFromSaveButton"></div>
+        <div className="saveButtonBackground">
+          <button className="saveButton" onClick={this.saveButton}>
+            שמור
+          </button>
+        </div>
       </div>
     );
   }

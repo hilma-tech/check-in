@@ -2,10 +2,8 @@ import React from "react";
 import Select from "react-select";
 import SelectStyle from "../../style/superAdmin/select_style";
 import "../../style/superAdmin/form_style.scss";
-import addicon from "../../img/addicon.svg";
 import ArrowNavBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import { withRouter } from "react-router-dom";
-import {userNameValidation, nameValidation, passwordValidation,mustInputValidation} from '../../tools/ValidationFunctions'
 import "../../style/superAdmin/class_selection_style.css"
 import { studentsContext } from "../../stores/students.store";
 import { errorMsgContext } from "../../stores/error.store";
@@ -13,7 +11,7 @@ import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 
 class EditStudent extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       studentNameError: { toShow: "none", mess: "" },
@@ -62,6 +60,7 @@ class EditStudent extends React.Component {
     // });
     // return options;
   };
+
   returnClassesSelections = () => {
     let classesSelections = [];
     if(this.state.chosenClasses.length === 0){
@@ -265,7 +264,6 @@ class EditStudent extends React.Component {
             options={this.makeSchoolOption()}
             onChange={this.chooseSchool}
             placeholder={this.state.school}
-            // placeholder="שייך לבית ספר"
             isDisabled={true}
           />
 

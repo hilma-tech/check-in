@@ -10,9 +10,10 @@ class GameNavBar extends Component {
     };
   }
 
+  //moves user to the selected page
   movePageFunc = (props) => {
     if (props.target.id === "suspended") {
-      this.props.history.push(this.props.match.url +"/suspended");
+      this.props.history.push(this.props.match.url + "/suspended");
     } else {
       this.props.history.push("/superAdmin/games");
     }

@@ -2,12 +2,10 @@ import React, { Component } from "react";
 import Select from "react-select";
 import SelectStyle from "../../style/superAdmin/select_style";
 import "../../style/superAdmin/form_style.scss";
-import {
-  FilesUploader,
-  FileInput,
-  withFiles,
-} from "@hilma/fileshandler-client";
+import { FileInput, withFiles } from "@hilma/fileshandler-client";
 import "../../style/superAdmin/game_field_selection_style.scss";
+import { withContext } from "@hilma/tools";
+import { errorMsgContext } from "../../stores/error.store";
 
 class GameFieldSelection extends Component {
   constructor(props) {
@@ -18,7 +16,6 @@ class GameFieldSelection extends Component {
       { value: "image", label: "תמונה" },
       { value: "multi-choice", label: "בחירה מרובה" },
     ];
-    // this.imageUploader = new FilesUploader();
     this.imageUploader = props.ourImageUploader;
   }
 
@@ -37,15 +34,21 @@ class GameFieldSelection extends Component {
     } else if (this.props.changeInputType === "image") {
       return (
         <label className="cameraFieldBorder">
-          {this.props.reading ? <></> :
-          <FileInput
-            id="image"
-            className="hiddenInput"
-            type="image"
-            filesUploader={this.imageUploader}
-            onChange={this.sendImageFieldValue}
+          {this.props.reading ? (
+            <></>
+          ) : (
+            <FileInput
+            onError={()=>{
+              this.props.errorMsg.setErrorMsg("הייתה שגיאה בהעלאת התמונה. התמונה חייבת להיות באחד מן הפורמטים הבאים: jpg/jpeg/png");
             
-          />}
+          }}
+              id="image"
+              className="hiddenInput"
+              type="image"
+              filesUploader={this.imageUploader}
+              onChange={this.sendImageFieldValue}
+            />
+          )}
           <img
             className={
               this.props.originalValue[0].value.length !== 0
@@ -68,7 +71,6 @@ class GameFieldSelection extends Component {
         <label className="gridFieldInputs">
           {sixArray.map((inputId, index) => {
             let input = this.props.originalValue.filter(
-
               (valueArray) => valueArray.id === inputId
             );
             if (input[0]) {
@@ -121,6 +123,7 @@ class GameFieldSelection extends Component {
     );
   };
 
+  //sends image field the user entered to parent
   sendImageFieldValue = (value) => {
     this.props.fieldValue(
       value.value,
@@ -131,6 +134,7 @@ class GameFieldSelection extends Component {
     );
   };
 
+  //triggers the removal of specific field from this game
   removeField = () => {
     this.props.removal(this.props.fieldId);
   };
@@ -150,12 +154,16 @@ class GameFieldSelection extends Component {
         </p>
         <div className="gameFieldSelection">
           {/* fieldSelection */}
-          {this.props.reading? <></> :<img
-            alt="remove field icon"
-            onClick={this.removeField}
-            className="removeFieldIcon"
-            src="/icons/delete.svg"
-          />}
+          {this.props.reading ? (
+            <></>
+          ) : (
+            <img
+              alt="remove field icon"
+              onClick={this.removeField}
+              className="removeFieldIcon"
+              src="/icons/delete.svg"
+            />
+          )}
 
           <div className="fieldSelection">
             {/* name of field */}
@@ -172,7 +180,7 @@ class GameFieldSelection extends Component {
             <Select
               id="fieldType"
               styles={SelectStyle()}
-             isDisabled={this.props.reading}
+              isDisabled={this.props.reading}
               options={this.options}
               onChange={this.sendSelection}
               defaultValue={
@@ -189,4 +197,11 @@ class GameFieldSelection extends Component {
     );
   }
 }
-export default withFiles(GameFieldSelection);
+
+const mapContextToProps = {
+  errorMsg: errorMsgContext,
+};
+
+//!מובקס לא מתעדכן
+export default  withContext(mapContextToProps)( withFiles(GameFieldSelection))
+  

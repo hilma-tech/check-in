@@ -13,8 +13,7 @@ import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import LoadingPage from "../../component/superAdmin/LoadingGamePage.jsx";
 import { IsAuthenticatedContext } from "@hilma/auth";
-import OutsideClickHandler from 'react-outside-click-handler';
-
+import OutsideClickHandler from "react-outside-click-handler";
 
 class Games extends Component {
   constructor() {
@@ -45,33 +44,35 @@ class Games extends Component {
     this.props.history.push(this.props.location.pathname + "Add");
   };
 
-  //TEMPORARILY COMMENTED OUT, WILL BE RETURN UPON PROPER ROUTING
   onClickEditGame = (gameId) => {
     this.props.chosenGameEditContext.setgameId(gameId);
     this.props.history.push(this.props.location.pathname + "Edit");
   };
 
-  onClickDeleteGame = () => {
-    this.props.errorMsg.setErrorMsg(
-      "האם אתה בטוח שברצונך למחוק משחק זה?"
-    );
-    this.props.errorMsg.question = true;
-  };
-
-  OnApprove = async (gameId) => {
-    await this.props.games.deleteGame(gameId);
+  OnApprove = async (info) => {
+    await this.props.games.deleteGame(info);
     window.location.pathname = "superAdmin/games"
   }
 
-  //Save the user search value as searchVal in state.
-  handleChang = (e) => {
-    this.setState({ searchVal: e.target.value });
+  //todo lol doesnt work for shit
+  onClickDeleteGame = (gameId) => {
+    this.props.errorMsg.setQuestion("האם אתה בטוח שברצונך למחוק משחק זה?", () => this.OnApprove(gameId));
+    this.props.errorMsg.question = true;
   };
 
+
+
+  //Save the user search value as searchVal in state.
+  //! not in use
+  // handleChange = (e) => {
+  //   this.setState({ searchVal: e.target.value });
+  // };
+  //!not in use
   //When the user press the search icon it's start to show the input text for the searching.
   activateSearch = () => {
     this.setState({ displaySearch: true });
   };
+
   render() {
     let displayLoading = false;
     return (
@@ -95,7 +96,7 @@ class Games extends Component {
                   name="search"
                   value={this.state.searchVal}
                   placeholder="חיפוש"
-                  onChange={this.handleChang}
+                  onChange={this.handleChange}
                 />
               </Slide>
               <p className="searchIcon" onClick={this.activateSearch}></p>
@@ -139,7 +140,11 @@ class Games extends Component {
                           />
                         </Fade>
                         <div id="holdImg">
-                          <img className="gameImg" alt="" src="https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg" />
+                          <img
+                            className="gameImg"
+                            alt=""
+                            src="https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg"
+                          />
                         </div>
                         <h2 className="gameTitleBackground"></h2>
                         <h1 className="gameTitle">
@@ -148,9 +153,11 @@ class Games extends Component {
                             : image.game_name}
                         </h1>
                         <OutsideClickHandler
-                        onOutsideClick={()=>this.props.games.resetShowOptions()}>
+                          onOutsideClick={() =>
+                            this.props.games.resetShowOptions()
+                          }
+                        >
                           <img
-
                             className="optionIcon"
                             onClick={() => {
                               this.props.games.setShowOption(index);

@@ -10,20 +10,25 @@ class RowData extends React.Component {
     this.state = {};
   }
 
-  //When we press on row it's passed to the edit page of the item
+  //When we press on row the user is passed on to the edit page of the item
   onClickEdit = async (id) => {
-    await this.props.setClickedRow(id)
+    await this.props.setClickedRow(id);
     //for now
     this.props.history.push(this.props.location.pathname + "Edit");
   };
 
   render() {
     return (
-      <div onClick={() => { this.onClickEdit(this.props.data.id) }} className="rowData">
+      <div
+        onClick={() => {
+          this.onClickEdit(this.props.data.id);
+        }}
+        className="rowData"
+      >
         <div className="Details">
           {
             // Order the data (the keys are the categories).
-            // If there is class array it maps the class array 
+            // If there is class array it maps the class array
             // and returns all the classes.
             this.props.categors.map((categor, index) => {
               return categor !== "כיתות" ? (
@@ -31,13 +36,19 @@ class RowData extends React.Component {
                   {this.props.data[this.props.enCategor[categor]]}
                 </p>
               ) : (
-                  <div key={index} className={"item" + index + " classes"}>
-                    {" "}
-                    {this.props.data[this.props.enCategor[categor]] ? this.props.data[this.props.enCategor[categor]].map((val, categorIndex) => {
-                      return <p key={categorIndex}>{val}</p>;
-                    }) : <p></p>}{" "}
-                  </div>
-                );
+                <div key={index} className={"item" + index + " classes"}>
+                  {" "}
+                  {this.props.data[this.props.enCategor[categor]] ? (
+                    this.props.data[this.props.enCategor[categor]].map(
+                      (val, categorIndex) => {
+                        return <p key={categorIndex}>{val}</p>;
+                      }
+                    )
+                  ) : (
+                    <p></p>
+                  )}{" "}
+                </div>
+              );
             })
           }
         </div>

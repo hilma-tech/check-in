@@ -26,7 +26,12 @@ class EditGame extends Component {
     };
   }
 
+  //gets information needed to display the selected game's info
   componentDidMount() {
+    if (this.props.chosenClass.classId === 0) {
+      this.props.history.push("/teacher/classes");
+      return;
+    }
     this.getGameInfo();
   }
 
@@ -52,6 +57,8 @@ class EditGame extends Component {
     }
   };
 
+  //adds relation between the current class and the selected game
+  //then moves the user back to the game page
   addGameToDB = async () => {
     await this.props.games.addGameToClass(
       this.props.chosenGame.index,
@@ -74,15 +81,15 @@ class EditGame extends Component {
                 className="classGameImg"
                 id="classGameImgTeacherWeb"
                 alt=""
-                src={this.state.image}
-              />
+                src="https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg"
+                />
               <h2 className="mobileClassGameTitleBackground"></h2>
               <h1 className="mobileClassGameTitle">{this.state.gameName}</h1>
             </div>
             <h3 className="mobileGameDesc">תיאור המשחק</h3>
-            <p className="mobileGameDP">{this.state.gameDescription}</p>
+            <p className="mobileGameDP">{this.state.gameDescription ? this.state.gameDescription : "אין תיאור משחק"}</p>
             <h3 className="mobileGameReq">דרישות המשחק</h3>
-            <p className="mobileGameRP">{this.state.gameRequirements}</p>
+            <p className="mobileGameRP">{this.state.gameRequirements ? this.state.gameRequirements : "אין דרישות משחק"}</p>
             <h1 className="mobileGameFields">שדות:</h1>
             {this.state.fieldsData.length === 0 ? 
             <p className="noFields">אין שדות למשחק זה</p>:
@@ -95,6 +102,7 @@ class EditGame extends Component {
                       <input
                       key={i}
                         defaultValue={field.value[0].value}
+                        readOnly={true}
                         className="mobileChangingInput"
                       />
                     ) :( <div className="mobileChangingInputGrid">
@@ -104,6 +112,7 @@ class EditGame extends Component {
                           <input
                           key={i}
                             defaultValue={value.value}
+                            readOnly={true}
                             className="mobileChangingInputChoice"
                           />
                         );

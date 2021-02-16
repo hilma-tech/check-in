@@ -46,7 +46,8 @@
     display: flex;
     position: fixed;
     top: 90vh;
-    right: 15vw;
+    right: 8vw;
+    height: 8vh;
     @include mouse(point);
 }
 
@@ -61,6 +62,7 @@
 
 .blueSideBarLogOut img {
     width: 5vw;
+    height: 8vh;
     margin-left: 1.5vw;
 }
 
@@ -116,8 +118,9 @@
     }
 
     .blueSideBarLogOut {
-        top: 85vh;
-        right: 2.5vw;
+        top: 90vh;
+    right: 2.5vw;
+    height: 10vh;
         @include mouse(point);
     }
 
@@ -133,6 +136,7 @@
     .blueSideBarLogOut img {
         width: 1vw;
         margin-left: 0.25vw;
+        height: 10vh;
     }
 
     .sideBarClassOption {

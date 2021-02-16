@@ -17,10 +17,11 @@ class Students {
             startGetStudents: observable,
             chosenStudent: observable,
             getStudents: action,
-            getChosenStudet: action,
+            getChosenStudent: action,
         })
     }
 
+    //gets 50 students from DB for superadmin
     getStudents = async () => {
         try{
             this.startGetStudents = true;
@@ -41,7 +42,8 @@ class Students {
         }
     }
 
-    getChosenStudet = (studentId) => {
+    //gets all info on a specific student to display
+    getChosenStudent = (studentId) => {
         this.chosenStudent = (this.listDataStudents.filter((student)=>{
             return student.id === studentId
         }))[0]

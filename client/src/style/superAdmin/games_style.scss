@@ -52,7 +52,7 @@ $gameimgwidth: 20vw;
   height: 5vw;
   width: 5vw;
   position: relative;
-  top: 2.5vw; 
+  top: 2.5vw;
   @include mouse(point);
 }
 
@@ -144,4 +144,13 @@ img {
   // @include imgCover(true);
   height: 11.5vw;
   width: 20vw;
+}
+
+@media only screen and (max-width: 500px) {
+  .showMoreGamesB {
+    height: 10vw;
+    width: 20vw;
+    font-size: 3vw;
+    border-radius: 1.5vw;
+  }
 }

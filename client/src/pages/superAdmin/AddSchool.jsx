@@ -1,18 +1,19 @@
 import React from "react";
 import ArrowNavBar from "../../component/superAdmin/ArrowNavBar.jsx";
-import ClassData from "../../component/superAdmin/SchoolClassData.jsx";
 import "../../style/superAdmin/form_style.scss";
 import { withRouter } from "react-router-dom";
-import { nameValidation, classNameValidation } from '../../tools/ValidationFunctions'
-
+import {
+  nameValidation,
+  classNameValidation,
+} from "../../tools/ValidationFunctions";
 
 class AddSchool extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       schoolNameError: { toShow: "none", mess: "" },
       schoolName: "",
-      //List of all the classes in the school. The numTeachers represent the number of teachers in the class.
+      //List of all the classes in the school.
       classes: [],
     };
   }
@@ -66,6 +67,7 @@ class AddSchool extends React.Component {
     }
   };
 
+  //כשמו כן הוא
   addTeacherToClass = (classIndex) => {
     this.setState((prevState) => {
       let tempData = [...prevState.classes];
@@ -77,6 +79,7 @@ class AddSchool extends React.Component {
     });
   };
 
+  //כשמו כן הוא
   removeTeacherFromClass = (classIndex, teacherIndex) => {
     this.setState((prevState) => {
       let tempData = [...prevState.classes];
@@ -85,6 +88,7 @@ class AddSchool extends React.Component {
     });
   };
 
+  //כשמו כן הוא
   removeClass = (classIndex) => {
     this.setState((prevState) => {
       let tempData = [...prevState.classes];
@@ -93,11 +97,12 @@ class AddSchool extends React.Component {
     });
   };
 
-  saveData = (e) => {
+  //right before adding the data to DB we validate the information
+  validateData = (e) => {
     e.preventDefault();
     let allOk = true;
-    /* data validetion  */
-    // ----------school name validetion-------------------
+    /* data validation  */
+    // ----------school name validation-------------------
     let nameSchoolMess = nameValidation(this.state.schoolName);
     if (nameSchoolMess.length !== 0) {
       this.setState((prevState) => {
@@ -111,7 +116,7 @@ class AddSchool extends React.Component {
       allOk = true;
     }
 
-    // ----------classes name validetion-------------------
+    // ----------classes name validation-------------------
     for (let i = 0; i < this.state.classes.length; i++) {
       let nameClassMess = classNameValidation(this.state.classes[i].name);
       if (nameClassMess.length !== 0) {
@@ -131,7 +136,7 @@ class AddSchool extends React.Component {
       }
     }
 
-    //after all the validetion we need to send the data to sql
+    //after all the validation we need to send the data to sql
     if (allOk) {
       this.props.history.goBack(); // after saving go back
     }
@@ -141,57 +146,57 @@ class AddSchool extends React.Component {
     return (
       <div>
         <ArrowNavBar />
-        <form className='formData'>
-            <label for="schoolName" className='labelFields'>
-              שם בית ספר:
-            </label>
-            <p
-              className="error"
-              style={{ display: this.state.schoolNameError.toShow }}
-            >
-              {this.state.schoolNameError.mess}
-            </p>
-            <input
-            className='inputFields'
-              value={this.state.schoolName} //The input will show schoolName.
-              name="schoolName"
-              onChange={this.handleChange} //In charge of on the set state of schoolName.
-            ></input>
+        <form className="formData">
+          <label for="schoolName" className="labelFields">
+            שם בית ספר:
+          </label>
+          <p
+            className="error"
+            style={{ display: this.state.schoolNameError.toShow }}
+          >
+            {this.state.schoolNameError.mess}
+          </p>
+          <input
+            className="inputFields"
+            value={this.state.schoolName} //The input will show schoolName.
+            name="schoolName"
+            onChange={this.handleChange} //In charge of on the set state of schoolName.
+          ></input>
 
-            <label for="schoolClasses" className='labelFields'>
-              כיתות:
-            </label>
+          <label for="schoolClasses" className="labelFields">
+            כיתות:
+          </label>
 
-            {
-              //Passes on all the classes in the list and make them the class component with the name and the teacher's selects.
-              this.state.classes.map((classData, classIndex) => {
-                //The component get the class data as props.classData.
-                return (
-                  <ClassData
-                    key={classData.id}
-                    canAddExistTeacher={false}
-                    classData={classData}
-                    classIndex={classIndex}
-                    addTeacherToClass={this.addTeacherToClass}
-                    handleChange={this.handleChange}
-                    chooseTeacher={this.chooseTeacher}
-                    removeTeacherFromClass={this.removeTeacherFromClass}
-                    removeClass={this.removeClass}
-                  />
-                );
-              })
-            }
-            <button
-              type="button"
-              className='editSchoolAddClass'
-              onClick={this.addClassToSchool} //Add class to the list.
-            >
-              הוסף כיתה
-            </button>
+          {
+            //Passes on all the classes in the list and make them the class component with the name and the teacher's selects.
+            this.state.classes.map((classData, classIndex) => {
+              //The component get the class data as props.classData.
+              return (
+                <SchoolClassData
+                  key={classData.id}
+                  canAddExistTeacher={false}
+                  classData={classData}
+                  classIndex={classIndex}
+                  addTeacherToClass={this.addTeacherToClass}
+                  handleChange={this.handleChange}
+                  chooseTeacher={this.chooseTeacher}
+                  removeTeacherFromClass={this.removeTeacherFromClass}
+                  removeClass={this.removeClass}
+                />
+              );
+            })
+          }
+          <button
+            type="button"
+            className="editSchoolAddClass"
+            onClick={this.addClassToSchool} //Add class to the list.
+          >
+            הוסף כיתה
+          </button>
 
-          <div className='spacerFromSaveButton'></div>
-          <div className='saveButtonBackground'>
-            <button className="saveButton" onClick={this.saveData}>
+          <div className="spacerFromSaveButton"></div>
+          <div className="saveButtonBackground">
+            <button className="saveButton" onClick={this.validateData}>
               שמור
             </button>
           </div>

@@ -10,7 +10,7 @@ import SignIn from "./pages/SignIn.jsx";
 import SuperAdminRoute from "./routing/superAdmin/SuperAdminRoute.jsx";
 import TeacherRoute from "./routing/teacher/TeacherRoute.jsx";
 import { provide } from "@hilma/tools";
-import { nameProvider } from "./stores/userName.store";
+import { userNameProvider } from "./stores/userName.store";
 import { errorMsgProvider } from "./stores/error.store";
 import { gamesProvider } from "./stores/games.store";
 import { chosenGameEditProvider } from "./stores/chosenGameEdit.store";
@@ -57,10 +57,10 @@ function App() {
           />
           <PrivateRoute
             path="/teacher"
-            component={TeacherRoute}
             componentName="TeacherRoute"
             redirectPath="/signin"
             redirectComponent={SignIn}
+            component={TeacherRoute}
           />
           {/* <Route path="/draft" exact>
               <Draft />
@@ -73,7 +73,7 @@ function App() {
 }
 
 export default provide(
-  [nameProvider, {}],
+  [userNameProvider, {}],
   [errorMsgProvider, {}],
   [gamesProvider, {}],
   [chosenGameEditProvider, {}],

@@ -4,8 +4,15 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
-import { IsDefined, IsString, Length, Matches, IsEnum, IsNumber, ValidateNested } from 'class-validator';
+import {
+  IsDefined,
+  IsString,
+  Length,
+  Matches,
+  IsNumber,
+} from 'class-validator';
 
 @Entity()
 export class Field {
@@ -25,7 +32,11 @@ export class Field {
   @Column({ type: 'varchar', length: 50 })
   type: string;
 
-  @ManyToOne(type => Game, game => game.id)
+  @ManyToOne(
+    type => Game,
+    game => game.id,
+  )
+  @JoinColumn({ referencedColumnName: 'id', name: 'game_id' })
   game: number;
 
   @IsDefined()

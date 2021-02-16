@@ -14,10 +14,8 @@ import { StudentModule } from './student/student.module';
 import { SchoolModule } from './school/school.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { ClassroomModule } from './classroom/classroom.module';
-import { ClassFieldController } from './class-field/class-field.controller';
-import { ClassFieldService } from './class-field/class-field.service';
-import { ClassFieldModule } from './class-field/class-field.module';
-import { JwtStrategy, RoleModule, UserModule, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
+import { RoleModule, UserModule } from '@hilma/auth-nest';
+import { ClassroomFieldModule } from './classroom-field/classroom-field.module';
 
 @Module({
   imports: [
@@ -26,7 +24,10 @@ import { JwtStrategy, RoleModule, UserModule, USER_MODULE_OPTIONS } from '@hilma
     SuperAdminModule,
     ConfigModule.forRoot({ load: [configuration], isGlobal: true }),
     FieldModule,
-    FilesHandlerModule.register({folder: "../../filesHandlerUploads", autoAllow: true}),
+    FilesHandlerModule.register({
+      folder: '../../filesHandlerUploads',
+      autoAllow: true,
+    }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../../', 'client/build'),
     }),
@@ -34,15 +35,11 @@ import { JwtStrategy, RoleModule, UserModule, USER_MODULE_OPTIONS } from '@hilma
     SchoolModule,
     TeacherModule,
     ClassroomModule,
-    ClassFieldModule,
-    UserModule, RoleModule
+    UserModule,
+    RoleModule,
+    ClassroomFieldModule,
   ],
   controllers: [AppController],
-  providers: [AppService,
-    JwtStrategy,
-    {
-      provide: USER_MODULE_OPTIONS,
-      useValue: {},
-    }],
+  providers: [AppService],
 })
 export class AppModule {}

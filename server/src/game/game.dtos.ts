@@ -3,6 +3,7 @@ import {
   IsDefined,
   IsEnum,
   IsNumber,
+  IsNumberString,
   IsObject,
   IsString,
   Length,
@@ -41,16 +42,15 @@ export class GameSaveDto {
   @ValidateNested({ each: true })
   @Type(() => ImageDto)
   image: ImageDto;
-
-  @IsDefined()
-  @IsString()
-  @Length(1, 30)
-  @Matches(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
+  
+  @Length(0, 30)
+  @Matches(/^$|^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
   description: string;
 
-  @Length(0, 255)
+  @Length(0, 100)
   @Matches(/^$|^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
   requirements: string;
+
   @IsDefined()
   @IsBoolean()
   suspended: boolean;
@@ -97,13 +97,14 @@ export class GameSaveReq {
 export class GetGameSkip {
   @IsDefined()
   @IsString()
+  @IsNumberString()
   gamesLength: string;
 }
-
 
 export class GameIdDto {
   @IsDefined()
   @IsString()
+  @IsNumberString()
   id: string;
 }
 
@@ -120,9 +121,11 @@ export class GetGameDto {
 export class ClassroomIdDto {
   @IsDefined()
   @IsString()
+  @IsNumberString()
   classId: string;
 
   @IsDefined()
   @IsString()
+  @IsNumberString()
   dataLength: string;
 }

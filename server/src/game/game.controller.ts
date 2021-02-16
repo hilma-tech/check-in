@@ -8,24 +8,26 @@ import {
   UploadedFiles,
 } from '@nestjs/common';
 import { GameService } from './game.service';
-import { GameSaveReq, GameIdDto, GetGameSkip, GetGameDto, ClassroomIdDto } from './game.dtos';
 import {
-  UseFilesHandler,
-  FilesType,
-} from '@hilma/fileshandler-typeorm';
+  GameSaveReq,
+  GameIdDto,
+  GetGameSkip,
+  GetGameDto,
+  ClassroomIdDto,
+} from './game.dtos';
+import { UseFilesHandler, FilesType } from '@hilma/fileshandler-typeorm';
 import { UseJwtAuth } from '@hilma/auth-nest';
-import { Field } from 'src/field/field.entity';
 import { FieldService } from 'src/field/field.service';
-const { mustValid } = require("../serverTools/ServerValid")
+const { mustValid } = require('../serverTools/ServerValid');
 
 @Controller('api/game')
 export class GameController {
   constructor(
     private gameService: GameService,
-    private fieldService: FieldService
-  ) { }
+    private fieldService: FieldService,
+  ) {}
 
-  // IS FOR DANIEL
+  //! IS FOR DANIEL
   @Get('/gameToFields')
   async getGameFields(@Req() req: GetGameDto) {
     return await this.gameService.returnGames(req.skipON, req.numOfGames);
@@ -58,9 +60,9 @@ export class GameController {
       if (emptyField > 4) {
         throw new Error();
       }
-      emptyField = 0
+      emptyField = 0;
     });
-    
+
     return await this.gameService.addGame(files, req);
   }
 
@@ -78,8 +80,7 @@ export class GameController {
 
   @UseJwtAuth('teacher')
   @Get('/getClassroomGames')
-  async getClassroomGames(@Query() req: ClassroomIdDto){
-      return await this.gameService.getClassroomGames(req);
+  async getClassroomGames(@Query() req: ClassroomIdDto) {
+    return await this.gameService.getClassroomGames(req);
   }
-
 }

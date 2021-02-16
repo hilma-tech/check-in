@@ -13,7 +13,7 @@ import { chosenClassContext } from "../../stores/chosenClass.store";
 import { gamesContext } from "../../stores/games.store";
 
 const axios = require("axios").default;
-
+//shows game whilst you are unable to add it to a class
 class ShowGame extends Component {
   constructor() {
     super();
@@ -27,8 +27,11 @@ class ShowGame extends Component {
   }
 
   componentDidMount() {
+    if (this.props.chosenClass.classId === 0) {
+      this.props.history.push("/teacher/classes");
+      return;
+    }
     this.getGameInfo();
-    this.props.errorMsg.setErrorMsg("לכל כיתה יכול להית עד שישה משחקים.");
   }
 
   getGameInfo = async () => {
@@ -69,58 +72,64 @@ class ShowGame extends Component {
                 className="classGameImg"
                 id="classGameImgTeacherWeb"
                 alt=""
-                src={this.state.image}
-              />
+                src="https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg"
+                />
               <h2 className="mobileClassGameTitleBackground"></h2>
               <h1 className="mobileClassGameTitle">{this.state.gameName}</h1>
             </div>
             <h3 className="mobileGameDesc">תיאור המשחק</h3>
-            <p className="mobileGameDP">{this.state.gameDescription}</p>
+            <p className="mobileGameDP">{this.state.gameDescription ? this.state.gameDescription : "אין תיאור משחק"}</p>
             <h3 className="mobileGameReq">דרישות המשחק</h3>
-            <p className="mobileGameRP">{this.state.gameRequirements}</p>
+            <p className="mobileGameRP">{this.state.gameRequirements ? this.state.gameRequirements : "אין דרישות משחק"}</p>
             <h1 className="mobileGameFields">שדות:</h1>
-            {this.state.fieldsData.map((field, i) => {
-              return (
-                <>
-                  <h2 className="mobileFieldName" key={i + 1}>
-                    {field.field_name}
-                  </h2>
-                  {field.selection !== "image" ? (
-                    field.selection === "text" ? (
-                      <input
-                        key={i}
-                        defaultValue={field.value[0].value}
-                        className="mobileChangingInput"
-                      />
+            {this.state.fieldsData.length === 0 ? (
+              <p className="noFields">אין שדות למשחק זה</p>
+            ) : (
+              this.state.fieldsData.map((field, i) => {
+                return (
+                  <>
+                    <h2 className="mobileFieldName" key={i + 1}>
+                      {field.field_name}
+                    </h2>
+                    {field.selection !== "image" ? (
+                      field.selection === "text" ? (
+                        <input
+                          key={i}
+                          readOnly={true}
+                          defaultValue={field.value[0].value}
+                          className="mobileChangingInput"
+                        />
+                      ) : (
+                        <div className="mobileChangingInputGrid">
+                          {field.value.map((value, i) => {
+                            if (value.value.length !== 0) {
+                              return (
+                                <input
+                                  key={i}
+                                  readOnly={true}
+                                  defaultValue={value.value}
+                                  className="mobileChangingInputChoice"
+                                />
+                              );
+                            } else {
+                              return <></>;
+                            }
+                          })}
+                        </div>
+                      )
                     ) : (
-                      <div className="mobileChangingInputGrid">
-                        {field.value.map((value, i) => {
-                          if (value.value.length !== 0) {
-                            return (
-                              <input
-                                key={i}
-                                defaultValue={value.value}
-                                className="mobileChangingInputChoice"
-                              />
-                            );
-                          } else {
-                            return <></>;
-                          }
-                        })}
+                      <div key={i} className="mobileBorderCameraIcon">
+                        <img
+                          alt="photograph icon"
+                          className="mobileImg"
+                          src={field.value[0].value}
+                        />
                       </div>
-                    )
-                  ) : (
-                    <div key={i} className="mobileBorderCameraIcon">
-                      <img
-                        alt="photograph icon"
-                        className="mobileImg"
-                        src={field.value[0].value}
-                      />
-                    </div>
-                  )}
-                </>
-              );
-            })}
+                    )}
+                  </>
+                );
+              })
+            )}
           </div>
         </div>
       </>

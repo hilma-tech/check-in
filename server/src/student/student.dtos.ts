@@ -1,8 +1,15 @@
-import { IsDefined, IsEmail, IsNumber, IsString, Length } from "class-validator";
+import {
+  IsDefined,
+  IsEmail,
+  IsNumberString,
+  IsString,
+  Length,
+} from 'class-validator';
 
 export class GetStudentSkip {
   @IsDefined()
   @IsString()
+  @IsNumberString()
   studentsLength: string;
 }
 
@@ -15,7 +22,7 @@ export class StudentIdDto {
 export class GamesForClassDto {
   @IsDefined()
   @IsString()
-  @Length(6,8)
+  @Length(6, 9)
   password: string;
 
   @IsDefined()
@@ -25,16 +32,18 @@ export class GamesForClassDto {
 
   @IsDefined()
   @IsString()
+  @IsNumberString()
   classId: string;
 }
-
 
 export class ClassroomIdDto {
   @IsDefined()
   @IsString()
+  @IsNumberString()
   classId: string;
 
   @IsDefined()
   @IsString()
+  @IsNumberString()
   dataLength: string;
 }

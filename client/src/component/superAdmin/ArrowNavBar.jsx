@@ -6,27 +6,37 @@ class ArrowNavBar extends Component {
   constructor(props) {
     super();
     this.state = {
-      hi: ""
-    }
+      hi: "",
+    };
   }
 
   findPageName = () => {
-    switch(this.props.location.pathname) {
-      case "/superAdmin/schoolsEdit": return ("עריכת בית ספר");
-      case "/superAdmin/gamesEdit": return ("הצגת משחק");
-      case "/superAdmin/teachersEdit": return ("עריכת מורה");
-      case "/superAdmin/studentsEdit": return ("עריכת תלמיד");
-      case "/superAdmin/gamesAdd" : return ("הוספת משחק");
-      case "/superAdmin/teachersAdd" : return ("הוספת מורה");
-      case "/superAdmin/studentsAdd" : return ("הוספת תלמיד");
-      case "/superAdmin/schoolsAdd" : return ("הוספת בית ספר");
-      default : return;
+    switch (this.props.location.pathname) {
+      case "/superAdmin/schoolsEdit":
+        return "עריכת בית ספר";
+      case "/superAdmin/gamesEdit":
+        return "הצגת משחק";
+      case "/superAdmin/teachersEdit":
+        return "עריכת מורה";
+      case "/superAdmin/studentsEdit":
+        return "עריכת תלמיד";
+      case "/superAdmin/gamesAdd":
+        return "הוספת משחק";
+      case "/superAdmin/teachersAdd":
+        return "הוספת מורה";
+      case "/superAdmin/studentsAdd":
+        return "הוספת תלמיד";
+      case "/superAdmin/schoolsAdd":
+        return "הוספת בית ספר";
+      default:
+        return;
     }
-  }
+  };
 
+  //goes back to last page
   backToGames = () => {
     if (this.props.location.pathname) {
-      this.props.history.goBack()
+      this.props.history.goBack();
     }
   };
 

@@ -22,7 +22,7 @@
   margin-left: 5vw;
   margin-right: 5vw;
 
-  .gameContainer {
+  .gameContainer, .chosenGameForClassContainer {
     display: inline-block;
   }
 }
@@ -61,7 +61,7 @@
   border: 1px solid rgba(4, 49, 99, 0.5);
 }
 
-.scrollChosenGames .gameContainer:not(:first-child) {
+.scrollChosenGames .gameContainer:not(:first-child), .chosenGameForClassContainer:not(:first-child) {
   margin-right: 6vw;
 }
 
@@ -102,7 +102,7 @@
   top: 25.75vh;
   padding-top: 25vw;
   background-repeat: repeat;
-  height: 75.25vh;
+  height: 83.3vh;
   background-color: #F2F7FC;
 }
 
@@ -111,6 +111,17 @@
   font-weight: bold;
   font-size: 4vw;
   text-align: center;
+}
+
+.chosenGameForClassContainer{
+  @include mouse(point);
+  position: relative;
+  width: 40vw;
+  height: 37vw;
+  opacity: 1;
+  margin-bottom: 2vh;
+  border-radius: 2vw;
+  border: 1px solid rgba(4, 49, 99, 0.5);
 }
 
 @media only screen and (min-width: 500px) {
@@ -142,14 +153,14 @@
     border-radius: 1vw;
   }
 
-  .gameContainer {
+  .gameContainer , .chosenGameForClassContainer {
     width: 11vw;
     height: 11vw;
     margin-bottom: 2vh;
     border-radius: 1vw;
   }
 
-  .scrollChosenGames .gameContainer:not(:first-child) {
+  .scrollChosenGames .gameContainer:not(:first-child) ,.chosenGameForClassContainer:not(:first-child) {
     margin-right: 1.5vw;
   }
 
@@ -180,7 +191,7 @@
   }
 
   #smallAlignClassGames {
-    height: 73.5vh;
+    height: 79.5vh;
     margin: 0;
     position: absolute;
     top: 20.5vh;

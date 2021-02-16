@@ -2,23 +2,23 @@ import { Injectable, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { GetSchoolSkip } from './school.dtos';
-import {School} from './school.entity'
+import { School } from './school.entity';
 
 @Injectable()
 export class SchoolService {
+  constructor(
+    @InjectRepository(School)
+    private schoolRepository: Repository<School>,
+  ) {}
 
-    constructor(
-        @InjectRepository(School)
-        private schoolRepository: Repository<School>
-      ) {}
-
-    async getSchools(@Req() skipON: GetSchoolSkip){
-      let numSchools = await this.schoolRepository.count();
-      let haveMoreSchools = numSchools > Number(skipON.schoolsLength) + 50 ? true : false;
-        let schools = await this.schoolRepository.find({
-          skip: Number(skipON.schoolsLength),
-          take: 50,
-      });
-      return { schoolsInfo: schools, haveMoreSchools: haveMoreSchools }    }
+  async getSchools(@Req() skipON: GetSchoolSkip) {
+    let numSchools = await this.schoolRepository.count();
+    let haveMoreSchools =
+      numSchools > Number(skipON.schoolsLength) + 50 ? true : false;
+    let schools = await this.schoolRepository.find({
+      skip: Number(skipON.schoolsLength),
+      take: 50,
+    });
+    return { schoolsInfo: schools, haveMoreSchools: haveMoreSchools };
+  }
 }
-

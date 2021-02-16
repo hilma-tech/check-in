@@ -1,17 +1,18 @@
-import { withRouter } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import React, { Component } from "react";
 import Games from "../../pages/teacher/Games.jsx";
 import Students from "../../pages/teacher/Students.jsx";
 import SignIn from "../../pages/SignIn.jsx";
 import { PrivateRoute } from "@hilma/auth";
-import EditGame from '../../pages/teacher/EditGame.jsx'
-import StudentDetails from '../../pages/teacher/StudentDetails.jsx'
+import EditGame from "../../pages/teacher/EditGame.jsx";
+import StudentDetails from "../../pages/teacher/StudentDetails.jsx";
 import ShowGame from "../../pages/teacher/ShowGame.jsx";
+import ErrorPage from "../../pages/404Page.jsx";
 
 class SmallNavRouter extends Component {
   render() {
     return (
-      <>
+      <Switch>
         <PrivateRoute
           path={"/teacher/classes/games"}
           exact
@@ -39,20 +40,22 @@ class SmallNavRouter extends Component {
         {/*    <Route path={"/teacher/classes/permissions"} exact
               component={Permissions}/> */}
         <PrivateRoute
-          path='/teacher/classes/editGame'
+          path="/teacher/classes/editGame"
           exact
           componentName="TeacherEditGame"
           component={EditGame}
         />
         <PrivateRoute
-          path='/teacher/classes/showGame'
+          path="/teacher/classes/showGame"
           exact
           componentName="TeacherShowGame"
           component={ShowGame}
         />
+        <Route path="/teacher/:smth" exact component={ErrorPage} />
+        <Route path="/teacher/classes/:smth" exact component={ErrorPage} />
+        <Route path="/teacher/classes/students/:smth" exact component={ErrorPage} />
         {/* <Route path={"/teacher/classes/students/studentInfo"} exact component={StudentDetails} /> */}
-
-      </>
+      </Switch>
     );
   }
 }

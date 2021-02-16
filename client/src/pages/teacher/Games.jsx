@@ -13,11 +13,7 @@ import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { chosenClassContext } from "../../stores/chosenClass.store.js";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 class Games extends React.Component {
   constructor() {
@@ -31,10 +27,13 @@ class Games extends React.Component {
     this.gameIndex = 0;
   }
 
+  //retrieves the games to be shown for this class
   componentDidMount() {
-    if (this.state.gamesList.length === 0) {
-      this.getClassGames();
+    if (this.props.chosenClass.classId === 0) {
+      this.props.history.push("/teacher/classes");
+      return;
     }
+    this.getClassGames();
   }
 
   getClassGames = async () => {
@@ -46,6 +45,7 @@ class Games extends React.Component {
     }
   };
 
+  // limits addition of games until 6 games per class
   limitedAddition = async (index) => {
     if (this.props.games.chosenGameList.length < 6) {
       //smaller than six
@@ -56,26 +56,24 @@ class Games extends React.Component {
         this.props.games.gamesList[index].id,
         index
       );
-      this.props.history.push("/teacher/classes/showGame")
-
+      this.props.errorMsg.setErrorMsg("לכל כיתה יכול להיות עד שישה משחקים.");
+      this.props.history.push("/teacher/classes/showGame");
     }
   };
 
+  // limits removal of games until 2 minimum games per class
   limitedRemoval = async (index, id) => {
     if (this.props.games.chosenGameList.length > 2) {
       // bigger than two
-      return this.openPopUpClick(index, id);
+      this.openPopUpClick(index, id);
     } else {
       // equal to two
-      this.props.errorMsg.setErrorMsg(
-        "לכל כיתה חייב להיות שני משחקים לפחות"
-      );
-      return null;
+      this.props.errorMsg.setErrorMsg("לכל כיתה חייב להיות שני משחקים לפחות");
     }
   };
 
+  //allows the user to add game to the current classroom
   addGameToClass = async (index) => {
-
     await this.props.chosenGame.setgameId(
       this.props.games.gamesList[index].id,
       index
@@ -83,6 +81,7 @@ class Games extends React.Component {
     this.props.history.push("/teacher/classes/editGame");
   };
 
+  //allows the user to remove game from the current classroom
   removeGameFromClass = () => {
     this.props.games.removeGameFromClass(
       this.gameIndex,
@@ -91,10 +90,14 @@ class Games extends React.Component {
     );
   };
 
+  //warns the user before allowing to remove a game from the class
   openPopUpClick = (index, id) => {
     this.gameIndex = index;
     this.gameId = id;
-    this.props.errorMsg.setQuestion("האם הנך בטוח שברצונך להסיר משחק זה מכיתה זו?", this.removeGameFromClass)
+    this.props.errorMsg.setQuestion(
+      "האם הנך בטוח שברצונך להסיר משחק זה מכיתה זו?",
+      this.removeGameFromClass
+    );
   };
 
   changePopUpstate = () => {
@@ -134,40 +137,44 @@ class Games extends React.Component {
           </div>
           <p className="gameListTitle">משחקים שניתן להוסיף:</p>
           {/*add search option */}
-          {!this.props.games.haveMoreGames && this.props.games.gamesList.length ===0 ?
-          <p className="gameListTitle">אין עוד משחקים שניתן להוסיף</p>:
-          <div className="listGamesForClass">
-            {this.props.games.gamesList.map((image, index) => {
-              return (
-                <ClassGames
-                  changeGameStatus={this.limitedAddition}
-                  chosen={false}
-                  name={image.game_name}
-                  image={image.image}
-                  index={index}
-                  key={index}
-                />
-              );
-            })}
-          </div>}
+          {!this.props.games.haveMoreGames &&
+          this.props.games.gamesList.length === 0 ? (
+            <p className="gameListTitle" style={{ fontStyle: "italic" }}>
+              אין עוד משחקים שניתן להוסיף
+            </p>
+          ) : (
+            <div className="listGamesForClass">
+              {this.props.games.gamesList.map((image, index) => {
+                return (
+                  <ClassGames
+                    changeGameStatus={this.limitedAddition}
+                    chosen={false}
+                    name={image.game_name}
+                    image={image.image}
+                    index={index}
+                    key={index}
+                  />
+                );
+              })}
+            </div>
+          )}
           <div style={{ textAlign: "center" }}>
-            {
-              this.props.games.startGetGames ?
-                <CircularProgress color="#043163" size="1.5rem" /> :
-                <button
-                  className="showMoreGamesB"
-                  onClick={this.getClassGames}
-                  style={{
-                    marginTop: '1vh',
-                    display:
-                      this.props.games.haveMoreGames
-                        ? "inline-block"
-                        : "none",
-                  }}
-                >
-                  הצג עוד
-            </button>
-            }
+            {this.props.games.startGetGames ? (
+              <CircularProgress size="1.5rem" />
+            ) : (
+              <button
+                className="showMoreGamesB"
+                onClick={this.getClassGames}
+                style={{
+                  marginTop: "1vh",
+                  display: this.props.games.haveMoreGames
+                    ? "inline-block"
+                    : "none",
+                }}
+              >
+                הצג עוד
+              </button>
+            )}
           </div>
         </div>
       </div>

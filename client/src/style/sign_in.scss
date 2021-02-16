@@ -24,8 +24,8 @@
   color: #043163;
   font-family: "Segoe UI";
   margin: 3vh;
-  font-size: 8vh;
   margin-top: 0;
+  position: relative;
 }
 
 .username {
@@ -69,11 +69,14 @@
   margin-top: 1vh;
 }
 
-.hilmalogo{
+.hilmalogo {
   padding-top: 1vh;
   height: 9vh;
+  position: relative;
 }
+
 @media only screen and (max-width: 600px) {
+
   .centeredPage {
     margin: 0vh;
     position: absolute;
@@ -95,14 +98,25 @@
   
   .input {
     font-size: 2vh;
-    width: 60%;
+    width: 83%;
   }
   
   .signInButton {
     font-size: 3vh;
     margin: 0vh;
-    width: 60%;
+    width: 83%;
+  }
+
+  .webName {
+    position: absolute;
+    top: 18vh;
+    width: 50vw;
   }
   
+  .hilmalogo{
+    height: 10vh;
+    position: absolute;
+    top: 85vh;
+    width: 35vw;
+  }
 }
-
