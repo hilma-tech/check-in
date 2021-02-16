@@ -6,8 +6,7 @@ import "../../style/superAdmin/add_student_pop_up_style.scss"
 class AddStudentPopUp extends React.Component {
     constructor(props) {
         console.log('props: ', props);
-        super(props);
-        this.state = {}
+        super();
     }
     //moves the user to page where they
     //can add a row to the table they came from

@@ -12,28 +12,50 @@ import {
   mustInputValidation,
 } from "../../tools/ValidationFunctions";
 import "../../style/superAdmin/class_selection_style.css";
+import { errorMsgContext } from "../../stores/error.store";
+import { schoolsContext } from "../../stores/schools.store";
+import { withContext } from "@hilma/tools";
+import { observer } from "mobx-react";
+
+const axios = require("axios").default;
 
 class AddStudent extends React.Component {
   constructor() {
     super();
     this.state = {
-      studentNameError: { toShow: "none", mess: "" },
-      studentName: "",
+      studentFirstNameError: { toShow: "none", mess: "" },
+      studentFirstName: "",
+      studentLastNameError: { toShow: "none", mess: "" },
+      studentLastName: "",
       userNameError: { toShow: "none", mess: "" },
       userName: "",
       passwordError: { toShow: "none", mess: "" },
       password: "",
       schoolNameError: { toShow: "none", mess: "" },
       school: "",
+      schoolId: 0,
       chosenClasses: [],
       allClasses: [
-        { id: 1, name: "א'2" },
-        { id: 2, name: "ב'2" },
-        { id: 3, name: "ג'2" },
+        // { id: 1, name: "א'2" },
+        // { id: 2, name: "ב'2" },
+        // { id: 3, name: "ג'2" },
       ],
     };
     this.allSchools = ["עשה חיל", "בית ספר עם שם אחר"];
   }
+  componentDidMount = async() => {
+    await this.props.schools.getAllSchoolsNames();
+    if (!this.props.schools.successGettingSchools) {
+      this.props.errorMsg.setErrorMsg(
+        "הייתה שגיאה בשרת. לא ניתן לקבל בתי ספר מהשרת."
+      );
+    } else {
+      this.allSchools = this.props.schools.schoolsNames.map((school)=>{
+        return school.name
+      })
+    }
+    }
+
 
   //Return the classes list as list of object for the Select.
   makeClassesOption = (indexSelect) => {
@@ -121,8 +143,18 @@ class AddStudent extends React.Component {
     return options;
   };
 
-  chooseSchool = (e) => {
-    this.setState({ school: e.value });
+  chooseSchool = async(e) => {
+    console.log('this.props.schools.schoolsNames: ', this.props.schools.schoolsNames);
+    let chosenScoolId = (this.props.schools.schoolsNames.filter((school)=>{
+      return school.name === e.value
+    }))[0]
+    console.log('chosenScoolId: ', chosenScoolId);
+    const { data } = await axios.get("/api/classroom/getSchoolClasses", {
+      params: { schoolId: chosenScoolId.id },
+    });
+    this.setState({ school: e.value, allClasses: data, schoolId: chosenScoolId.id});
+    // this.setState({ school: e.value });
+
   };
 
   //saves changes in entered data to the state
@@ -135,88 +167,118 @@ class AddStudent extends React.Component {
   };
 
   //when clicking on save we first validate the information
-  saveButton = (e) => {
+  saveButton = async(e) => {
     e.preventDefault();
     let allOk = true;
     /* data validation  */
     // ----------student name validation-------------------
-    let studentNameErrorMess = nameValidation(this.state.studentName);
-    if (studentNameErrorMess.length !== 0) {
-      this.setState((prevState) => {
-        prevState.studentNameError.toShow = "block";
-        prevState.studentNameError.mess = studentNameErrorMess;
-        return { studentNameError: prevState.studentNameError };
-      });
-      allOk = false;
-    } else {
-      this.setState({ studentNameError: { toShow: "none", mess: "" } });
-    }
+    // let studentNameErrorMess = nameValidation(this.state.studentName);
+    // if (studentNameErrorMess.length !== 0) {
+    //   this.setState((prevState) => {
+    //     prevState.studentNameError.toShow = "block";
+    //     prevState.studentNameError.mess = studentNameErrorMess;
+    //     return { studentNameError: prevState.studentNameError };
+    //   });
+    //   allOk = false;
+    // } else {
+    //   this.setState({ studentNameError: { toShow: "none", mess: "" } });
+    // }
 
     // ----------user name validation-------------------
-    let userNameErrorMess = userNameValidation(this.state.userName);
-    if (userNameErrorMess.length !== 0) {
-      this.setState((prevState) => {
-        prevState.userNameError.toShow = "block";
-        prevState.userNameError.mess = userNameErrorMess;
-        return { userNameError: prevState.userNameError };
-      });
-      allOk = false;
-    } else {
-      this.setState({ userNameError: { toShow: "none", mess: "" } });
-    }
+    // let userNameErrorMess = userNameValidation(this.state.userName);
+    // if (userNameErrorMess.length !== 0) {
+    //   this.setState((prevState) => {
+    //     prevState.userNameError.toShow = "block";
+    //     prevState.userNameError.mess = userNameErrorMess;
+    //     return { userNameError: prevState.userNameError };
+    //   });
+    //   allOk = false;
+    // } else {
+    //   this.setState({ userNameError: { toShow: "none", mess: "" } });
+    // }
 
     // ---------------password validation-------------------
-    let passwordErrorMess = passwordValidation(this.state.password);
-    if (passwordErrorMess.length !== 0) {
-      this.setState((prevState) => {
-        prevState.passwordError.toShow = "block";
-        prevState.passwordError.mess = passwordErrorMess;
-        return { passwordError: prevState.passwordError };
-      });
-      allOk = false;
-    } else {
-      this.setState({ passwordError: { toShow: "none", mess: "" } });
-    }
+    // let passwordErrorMess = passwordValidation(this.state.password);
+    // if (passwordErrorMess.length !== 0) {
+    //   this.setState((prevState) => {
+    //     prevState.passwordError.toShow = "block";
+    //     prevState.passwordError.mess = passwordErrorMess;
+    //     return { passwordError: prevState.passwordError };
+    //   });
+    //   allOk = false;
+    // } else {
+    //   this.setState({ passwordError: { toShow: "none", mess: "" } });
+    // }
 
     // ---------------school name validation-------------------
-    let schoolNameErrorMess = mustInputValidation(this.state.school);
-    if (schoolNameErrorMess.length !== 0) {
-      this.setState((prevState) => {
-        prevState.schoolNameError.toShow = "block";
-        prevState.schoolNameError.mess = schoolNameErrorMess;
-        return { schoolNameError: prevState.schoolNameError };
-      });
-      allOk = false;
-    } else {
-      this.setState({ schoolNameError: { toShow: "none", mess: "" } });
-    }
+    // let schoolNameErrorMess = mustInputValidation(this.state.school);
+    // if (schoolNameErrorMess.length !== 0) {
+    //   this.setState((prevState) => {
+    //     prevState.schoolNameError.toShow = "block";
+    //     prevState.schoolNameError.mess = schoolNameErrorMess;
+    //     return { schoolNameError: prevState.schoolNameError };
+    //   });
+    //   allOk = false;
+    // } else {
+    //   this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+    // }
 
     //after all the validation we need to send the data to sql
     if (allOk) {
-      this.props.history.goBack(); // after saving go back
+      try {
+        await axios.post("/api/student/register", {
+          username: this.state.userName,
+          password: this.state.password,
+          firstName: this.state.studentFirstName,
+          lastName: this.state.studentLastName,
+          classrooms: this.state.chosenClasses,
+          schoolId: this.state.schoolId
+        });
+        this.props.history.goBack(); // after saving go back
+      } catch (err) {
+        console.log("save student error: ", err);
+      }
     }
   };
 
   render() {
+    console.log("nxkjdsncjkendkjcnkjdnckj");
     return (
-      <div>
+      <div className='withMenu'>
         <ArrowNavBar />
         <form className="formData">
-          <label for="studentName" className="labelFields">
-            שם התלמיד:
+          <label for="studentFirstName" className="labelFields">
+            שם פרטי:
           </label>
           <p
             className="error"
-            style={{ display: this.state.studentNameError.toShow }}
+            style={{ display: this.state.studentFirstNameError.toShow }}
           >
-            {this.state.studentNameError.mess}
+            {this.state.studentFirstNameError.mess}
           </p>
           <input
             className="inputFields"
             value={this.state.studentName}
             onChange={this.handlechanges}
             placeholder="הכנס את שם התלמיד..."
-            name="studentName"
+            name="studentFirstName"
+          ></input>
+
+          <label for="studentLastName" className="labelFields">
+            שם משפחה:
+          </label>
+          <p
+            className="error"
+            style={{ display: this.state.studentLastNameError.toShow }}
+          >
+            {this.state.studentLastNameError.mess}
+          </p>
+          <input
+            className="inputFields"
+            value={this.state.studentName}
+            onChange={this.handlechanges}
+            placeholder="הכנס את שם התלמיד..."
+            name="studentLastName"
           ></input>
 
           <label for="userName" className="labelFields">
@@ -270,13 +332,17 @@ class AddStudent extends React.Component {
             placeholder="שייך לבית ספר"
           />
 
-          <label className="labelFields">כיתה:</label>
-          {this.returnClassesSelections()}
+          {this.state.school.length === 0 ? <></> :
+            <>
+              <label className="labelFields">כיתה:</label>
+              {this.returnClassesSelections()}
 
-          <div className="addSomethingNew" onClick={this.addClassSelection}>
-            <img className="addIcon" src={addicon} alt="add icon"></img>
-            <p className="addTitle">הוסף כיתה</p>
-          </div>
+              <div className="addSomethingNew" onClick={this.addClassSelection}>
+                <img className="addIcon" src={addicon} alt="add icon"></img>
+                <p className="addTitle">הוסף כיתה</p>
+              </div>
+            </>
+          }
         </form>
 
         <div className="spacerFromSaveButton"></div>
@@ -290,4 +356,9 @@ class AddStudent extends React.Component {
   }
 }
 
-export default withRouter(AddStudent);
+const mapContextToProps = {
+  schools: schoolsContext,
+  errorMsg: errorMsgContext,
+};
+
+export default withContext(mapContextToProps)(observer(withRouter(AddStudent)));
