@@ -28,16 +28,22 @@ class AddTeacher extends Component {
       { value: "f1", label: "ו'1" },
       { value: "c6", label: "ג'6" },
     ];
+    this.rakazOptions = [
+      { value: "true", label: "כן" },
+      { value: "false", label: "לא" },
+    ];
     this.state = {
       teacherName: "",
       schoolName: "",
       fieldsData: [{ id: 0, value: "" }],
       email: "",
       password: "",
+      rakaz: "לא",
       teacherNameError: { toShow: "none", mess: "" },
       schoolNameError: { toShow: "none", mess: "" },
       emailNameError: { toShow: "none", mess: "" },
       passwordNameError: { toShow: "none", mess: "" },
+      rakazError: { toShow: "none", mess: "" },
     };
   }
 
@@ -51,6 +57,14 @@ class AddTeacher extends Component {
       let prevSchool = prevState.schoolName;
       prevSchool = props.value;
       return { schoolName: prevSchool };
+    });
+  };
+
+  saveRole = (props) => {
+    this.setState((prevState) => {
+      let prevRole = prevState.rakaz;
+      prevRole = props.value;
+      return { rakaz: prevRole };
     });
   };
 
@@ -119,6 +133,20 @@ class AddTeacher extends Component {
       allOk = false;
     } else {
       this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+      allOk = true;
+    }
+    // ----------rakaz validation-------------------
+    let rakazMess = mustInputValidation(this.state.rakaz);
+    console.log('JSON', this.state.rakaz);
+    if (rakazMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.rakazError.toShow = "inline-block";
+        prevState.rakazError.mess = rakazMess;
+        return { rakazError: prevState.rakazError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ rakazError: { toShow: "none", mess: "" } });
       allOk = true;
     }
     //------------email validation---------------
@@ -190,6 +218,21 @@ class AddTeacher extends Component {
                 options={this.schoolOptions}
                 styles={SelectStyle()}
                 defaultValue={{ value: "default", label: "שייך לבית ספר" }}
+              />
+              {/* רכז */}
+              <label className="labelFields">רכז:</label>
+              <p
+                className="error"
+                style={{ display: this.state.rakazError.toShow }}
+              >
+                {this.state.rakazError.mess}
+              </p>
+              <Select
+                className="selectStyle"
+                onChange={this.saveRole}
+                options={this.rakazOptions}
+                styles={SelectStyle()}
+                defaultValue={{ value: "default", label: "לא" }}
               />
               {/* כיתה */}
               <label className="labelFields">כיתה:</label>
