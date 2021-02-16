@@ -89,7 +89,7 @@ class SuperAdminRoute extends React.Component {
               exact
               componentName="SAdminAddTeachers"
               redirectComponent={GamesRouter}
-              component={AddStudent}
+              component={AddTeacher}
             />*/}
           {/*<PrivateRoute
               path="/superAdmin/schoolsAdd"
