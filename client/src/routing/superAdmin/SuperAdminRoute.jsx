@@ -14,6 +14,7 @@ import ErrorPage from "../../pages/404Page.jsx";
 import "../../style/superAdmin/disp.scss";
 import EditTeacher from "../../pages/superAdmin/EditTeacher.jsx";
 import EditStudent from "../../pages/superAdmin/EditStudent.jsx";
+import AddTeacher from "../../pages/superAdmin/AddTeacher.jsx";
 
 class SuperAdminRoute extends React.Component {
   render() {
@@ -83,14 +84,14 @@ class SuperAdminRoute extends React.Component {
               componentName="SAdminAddStudents"
               redirectComponent={GamesRouter}
               component={AddStudent}
-            /> 
+            />  */}
             <PrivateRoute
               path="/superAdmin/teachersAdd"
               exact
               componentName="SAdminAddTeachers"
               redirectComponent={GamesRouter}
               component={AddTeacher}
-            />*/}
+            />
           {/*<PrivateRoute
               path="/superAdmin/schoolsAdd"
               exact
