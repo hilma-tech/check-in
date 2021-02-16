@@ -33,7 +33,7 @@ export class StudentController {
     student.first_name = req.firstName;
     student.last_name = req.lastName;
     
-    if(req.classrooms !== undefined){
+    if(req.classrooms !== undefined || req.classrooms.length !== 0){
       student.classroomStudent = req.classrooms.map((classroom)=>{
         console.log('classroom: ', classroom);
         let studentClassroom = new Classroom()

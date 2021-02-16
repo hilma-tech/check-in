@@ -13,7 +13,7 @@ class ClassSelection extends Component {
 
   //sends the id and name of chosen class
   sendValue = (props) => {
-    this.props.saveValue(props.value, this.props.id);
+    this.props.saveValue(props.value, this.props.id, props.id);
   };
 
   //sends the id of the field of the class we want to remove from a specific user

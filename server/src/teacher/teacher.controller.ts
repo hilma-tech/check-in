@@ -37,18 +37,23 @@ export class TeacherController {
 
   @Post('/register')
   register(@Body() req) {
-    let username = req.username;
+    let username = req.email;
     let password = req.password;
     let fullName = req.name.split(' ');
     let user: Partial<Teacher> = new Teacher({ username, password });
     user.first_name = fullName[0]
     user.last_name = fullName[1]
-    user.school = 1;
-    let classroom = new Classroom();
-    classroom.id = 2;
-    classroom.name = "א'1";
-    classroom.school_id = 1;
-    user.classroomTeacher = [classroom];
+    if(req.fields_data !== undefined || req.fields_data.length !== 0){
+      user.classroomTeacher = req.fields_data.map((classroom)=>{
+        console.log('classroom: ', classroom);
+        let classroomTeacher = new Classroom()
+        classroomTeacher.id = classroom.id
+        classroomTeacher.name = classroom.name
+        classroomTeacher.school_id = req.school_id
+        return classroomTeacher
+      })
+    }
+    user.school = req.school_id
     let userRole = new Role();
     userRole.id = req.rakaz ? 2 : 3; //you set the role id.
     user.roles = [userRole];

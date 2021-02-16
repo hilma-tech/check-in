@@ -16,27 +16,30 @@ import { withRouter } from "react-router-dom";
 import { errorMsgContext } from "../../stores/error.store";
 import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
+import { schoolsContext } from "../../stores/schools.store";
 const axios = require("axios").default;
 
 class AddTeacher extends Component {
   constructor() {
     super();
-    this.schoolOptions = [
-      { value: "maalot", label: "מעלות התורה" },
-      { value: "orot", label: "אורות בנות" },
-      { value: "shaalei", label: "שעלי תורה" },
-    ];
-    this.classOptions = [
-      { value: "a3", label: "א'3" },
-      { value: "b2", label: "ב'2" },
-      { value: "f1", label: "ו'1" },
-      { value: "c6", label: "ג'6" },
-    ];
+    // this.schoolOptions = [
+    // { value: "maalot", label: "מעלות התורה" },
+    // { value: "orot", label: "אורות בנות" },
+    // { value: "shaalei", label: "שעלי תורה" },
+    // ];
+    // this.classOptions = [
+    // { value: "a3", label: "א'3" },
+    //   { value: "b2", label: "ב'2" },
+    //   { value: "f1", label: "ו'1" },
+    //   { value: "c6", label: "ג'6" },
+    // ];
     this.rakazOptions = [
       { value: "true", label: "כן" },
       { value: "false", label: "לא" },
     ];
     this.state = {
+      classOptions: [],
+      schoolOptions: [],
       teacherName: "",
       schoolName: "",
       fieldsData: [{ id: 0, value: "" }],
@@ -51,16 +54,43 @@ class AddTeacher extends Component {
     };
   }
 
+  componentDidMount = async () => {
+    await this.props.schools.getAllSchoolsNames();
+    if (!this.props.schools.successGettingSchools) {
+      this.props.errorMsg.setErrorMsg(
+        "הייתה שגיאה בשרת. לא ניתן לקבל בתי ספר מהשרת."
+      );
+    } else {
+      console.log(
+        "this.props.schools.schoolsNames: ",
+        this.props.schools.schoolsNames
+      );
+      let schools = this.props.schools.schoolsNames.map((school) => {
+        return { value: school.name, label: school.name };
+      });
+      this.setState({ schoolOptions: schools });
+    }
+  };
+
   saveTeacherName = (props) => {
     let myprops = props.target;
     this.setState({ teacherName: myprops.value });
   };
 
-  saveSchoolName = (props) => {
+  saveSchoolName = async (props) => {
+    let chosenScoolId = this.props.schools.schoolsNames.filter((school) => {
+      return school.name === props.value;
+    })[0];
+    const { data } = await axios.get("/api/classroom/getSchoolClasses", {
+      params: { schoolId: chosenScoolId.id },
+    });
+    let classroomOption = data.map((classroom) => {
+      return { value: classroom.name, label: classroom.name, id: classroom.id };
+    });
     this.setState((prevState) => {
       let prevSchool = prevState.schoolName;
       prevSchool = props.value;
-      return { schoolName: prevSchool };
+      return { schoolName: prevSchool, classOptions: classroomOption };
     });
   };
 
@@ -73,10 +103,14 @@ class AddTeacher extends Component {
     });
   };
 
-  saveChosenClassValue = (newValue, id) => {
+  saveChosenClassValue = (newValue, i, id) => {
+    console.log('i: ', i);
+    console.log("id: ", id);
+    console.log("newValue: ", newValue);
     this.setState((prevState) => {
       let updateData = [...prevState.fieldsData];
-      updateData[id].value = newValue;
+      updateData[i].value = newValue;
+      updateData[i].id = id;
       return { fieldsData: updateData };
     });
   };
@@ -115,71 +149,71 @@ class AddTeacher extends Component {
     e.preventDefault();
     let allOk = true;
     // ----------teacher name validetion-------------------
-    let nameTeacherMess = nameValidation(this.state.teacherName);
-    if (nameTeacherMess.length !== 0) {
-      this.setState((prevState) => {
-        prevState.teacherNameError.toShow = "inline-block";
-        prevState.teacherNameError.mess = nameTeacherMess;
-        return { teacherNameError: prevState.teacherNameError };
-      });
-      allOk = false;
-    } else {
-      this.setState({ teacherNameError: { toShow: "none", mess: "" } });
-      allOk = true;
-    }
+    // let nameTeacherMess = nameValidation(this.state.teacherName);
+    // if (nameTeacherMess.length !== 0) {
+    //   this.setState((prevState) => {
+    //     prevState.teacherNameError.toShow = "inline-block";
+    //     prevState.teacherNameError.mess = nameTeacherMess;
+    //     return { teacherNameError: prevState.teacherNameError };
+    //   });
+    //   allOk = false;
+    // } else {
+    //   this.setState({ teacherNameError: { toShow: "none", mess: "" } });
+    //   allOk = true;
+    // }
     // ----------school name validetion-------------------
-    let nameSchoolMess = mustInputValidation(this.state.schoolName);
-    if (nameSchoolMess.length !== 0) {
-      this.setState((prevState) => {
-        prevState.schoolNameError.toShow = "inline-block";
-        prevState.schoolNameError.mess = nameSchoolMess;
-        return { schoolNameError: prevState.schoolNameError };
-      });
-      allOk = false;
-    } else {
-      this.setState({ schoolNameError: { toShow: "none", mess: "" } });
-      allOk = true;
-    }
+    // let nameSchoolMess = mustInputValidation(this.state.schoolName);
+    // if (nameSchoolMess.length !== 0) {
+    //   this.setState((prevState) => {
+    //     prevState.schoolNameError.toShow = "inline-block";
+    //     prevState.schoolNameError.mess = nameSchoolMess;
+    //     return { schoolNameError: prevState.schoolNameError };
+    //   });
+    //   allOk = false;
+    // } else {
+    //   this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+    //   allOk = true;
+    // }
     // ----------rakaz validation-------------------
-    let rakazMess = mustInputValidation(this.state.rakaz);
-    console.log('JSON', this.state.rakaz);
-    if (rakazMess.length !== 0) {
-      this.setState((prevState) => {
-        prevState.rakazError.toShow = "inline-block";
-        prevState.rakazError.mess = rakazMess;
-        return { rakazError: prevState.rakazError };
-      });
-      allOk = false;
-    } else {
-      this.setState({ rakazError: { toShow: "none", mess: "" } });
-      allOk = true;
-    }
+    // let rakazMess = mustInputValidation(this.state.rakaz);
+    // console.log('JSON', this.state.rakaz);
+    // if (rakazMess.length !== 0) {
+    //   this.setState((prevState) => {
+    //     prevState.rakazError.toShow = "inline-block";
+    //     prevState.rakazError.mess = rakazMess;
+    //     return { rakazError: prevState.rakazError };
+    //   });
+    //   allOk = false;
+    // } else {
+    //   this.setState({ rakazError: { toShow: "none", mess: "" } });
+    //   allOk = true;
+    // }
     //------------email validation---------------
-    let emailMess = emailValidation(this.state.email);
-    if (emailMess.length !== 0) {
-      this.setState((prevState) => {
-        prevState.emailNameError.toShow = "inline-block";
-        prevState.emailNameError.mess = emailMess;
-        return { emailNameError: prevState.emailNameError };
-      });
-      allOk = false;
-    } else {
-      this.setState({ emailNameError: { toShow: "none", mess: "" } });
-      allOk = true;
-    }
+    // let emailMess = emailValidation(this.state.email);
+    // if (emailMess.length !== 0) {
+    //   this.setState((prevState) => {
+    //     prevState.emailNameError.toShow = "inline-block";
+    //     prevState.emailNameError.mess = emailMess;
+    //     return { emailNameError: prevState.emailNameError };
+    //   });
+    //   allOk = false;
+    // } else {
+    //   this.setState({ emailNameError: { toShow: "none", mess: "" } });
+    //   allOk = true;
+    // }
     // ----------password validetion-------------------
-    let passwordMess = passwordValidation(this.state.password);
-    if (passwordMess.length !== 0) {
-      this.setState((prevState) => {
-        prevState.passwordNameError.toShow = "inline-block";
-        prevState.passwordNameError.mess = passwordMess;
-        return { passwordNameError: prevState.passwordNameError };
-      });
-      allOk = false;
-    } else {
-      this.setState({ passwordNameError: { toShow: "none", mess: "" } });
-      allOk = true;
-    }
+    // let passwordMess = passwordValidation(this.state.password);
+    // if (passwordMess.length !== 0) {
+    //   this.setState((prevState) => {
+    //     prevState.passwordNameError.toShow = "inline-block";
+    //     prevState.passwordNameError.mess = passwordMess;
+    //     return { passwordNameError: prevState.passwordNameError };
+    //   });
+    //   allOk = false;
+    // } else {
+    //   this.setState({ passwordNameError: { toShow: "none", mess: "" } });
+    //   allOk = true;
+    // }
 
     //after all the validetion we need to send the data to sql
     if (allOk) {
@@ -190,7 +224,9 @@ class AddTeacher extends Component {
   saveTeacherInDB = async () => {
     let currTeacherInfo = {
       name: this.state.teacherName,
-      school_name: this.state.schoolName,
+      school_id: this.props.schools.schoolsNames.filter((school) => {
+        return school.name === this.state.schoolName;
+      })[0].id,
       fields_data: this.state.fieldsData,
       email: this.state.email,
       password: this.state.password,
@@ -200,13 +236,11 @@ class AddTeacher extends Component {
       // this.setState({ savingInfo: true });
       const response = await axios.post(
         "/api/teacher/register",
-        JSON.stringify({
-          teacherInfo: currTeacherInfo,
-        })
+        currTeacherInfo
       );
       console.log(response);
       // this.props.games.addGame(response.data);
-      this.props.history.goBack(); 
+      this.props.history.goBack();
     } catch (error) {
       this.setState({ savingInfo: false });
       if (error.status === 500) {
@@ -215,7 +249,7 @@ class AddTeacher extends Component {
         this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסו לבדוק את החיבור");
       }
     }
-  }
+  };
 
   render() {
     return (
@@ -250,7 +284,7 @@ class AddTeacher extends Component {
               <Select
                 className="selectStyle"
                 onChange={this.saveSchoolName}
-                options={this.schoolOptions}
+                options={this.state.schoolOptions}
                 styles={SelectStyle()}
                 defaultValue={{ value: "default", label: "שייך לבית ספר" }}
               />
@@ -279,7 +313,7 @@ class AddTeacher extends Component {
                       id={fieldObj.id}
                       removal={this.triggerRemoval}
                       saveValue={this.saveChosenClassValue}
-                      options={this.classOptions}
+                      options={this.state.classOptions}
                       onChange={this.saveChange}
                     />
                   );
@@ -340,6 +374,7 @@ class AddTeacher extends Component {
 }
 
 const mapContextToProps = {
+  schools: schoolsContext,
   errorMsg: errorMsgContext,
 };
 
