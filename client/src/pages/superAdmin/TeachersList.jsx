@@ -1,6 +1,6 @@
 import React from "react";
 import GeneralTable from "../../component/superAdmin/GeneralTable.jsx";
-import "../../style/superAdmin/table_style.css";
+import "../../style/superAdmin/table_style.scss";
 import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import { teachersContext } from "../../stores/teachers.store.js";

@@ -1,0 +1,35 @@
+@import "../general_style.scss";
+
+.addingButtonForStudent:hover {
+    .addStudentPopUpFlex {
+        display: flex;
+        height: 3.5vw;
+        width: 20vw;
+        border: 1px solid #043163;
+    }
+}
+
+.addStudentPopUpFlex {
+    font-size: 1.5vw;
+    text-align: left;
+    left:6vw;
+    transition: width 2s;
+    white-space: nowrap;
+    overflow: hidden;
+    justify-content: space-evenly;
+    color: #043163;
+    align-items: center;
+    height: 0;
+    position: absolute;
+    border-radius: 90vw;
+    top: 86.8vh;
+    width: 1px;
+
+    padding-left: 2.5vw;
+}
+
+
+.addingButtonForStudent {
+    @include mouse(point);
+
+}
