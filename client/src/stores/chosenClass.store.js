@@ -36,10 +36,7 @@ class ChosenClass {
       let { data } = await axios.get("/api/student/getStudentsClassrooms", {
         params: { id: this.students[studentIndex].id },
       });
-      let classId = this.classId;
-      this.studentClassrooms = data.filter((classroom) => {
-        return classroom.id != classId;
-      });
+      this.studentClassrooms = data
     } catch (err) {
       this.successGetInfo = false;
     }

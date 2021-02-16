@@ -29,6 +29,12 @@ export class TeacherController {
     return this.teacherService.getTeacherInfo(req);
   }
 
+  @UseJwtAuth('superAdmin')
+  @Post('/addTeacher')
+  addTeacher(@Body() req: any) {
+    return this.teacherService.addTeacherInfo(req)
+  }
+
   @Post('/register')
   register(@Body() req) {
     let username = req.username;

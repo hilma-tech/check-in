@@ -13,6 +13,10 @@ import {
   emailValidation,
 } from "../../tools/ValidationFunctions";
 import { withRouter } from "react-router-dom";
+import { errorMsgContext } from "../../stores/error.store";
+import { observer } from "mobx-react";
+import { withContext } from "@hilma/tools";
+const axios = require("axios").default;
 
 class AddTeacher extends Component {
   constructor() {
@@ -38,7 +42,7 @@ class AddTeacher extends Component {
       fieldsData: [{ id: 0, value: "" }],
       email: "",
       password: "",
-      rakaz: "לא",
+      rakaz: "false",
       teacherNameError: { toShow: "none", mess: "" },
       schoolNameError: { toShow: "none", mess: "" },
       emailNameError: { toShow: "none", mess: "" },
@@ -64,6 +68,7 @@ class AddTeacher extends Component {
     this.setState((prevState) => {
       let prevRole = prevState.rakaz;
       prevRole = props.value;
+      console.log(props.value);
       return { rakaz: prevRole };
     });
   };
@@ -178,14 +183,44 @@ class AddTeacher extends Component {
 
     //after all the validetion we need to send the data to sql
     if (allOk) {
-      this.props.history.goBack(); // after saving go back
+      this.saveTeacherInDB();
     }
   };
+
+  saveTeacherInDB = async () => {
+    let currTeacherInfo = {
+      teacher_name: this.state.teacherName,
+      school_name: this.state.schoolName,
+      fields_data: this.state.fieldsData,
+      email: this.state.email,
+      password: this.state.password,
+      rakaz: this.state.rakaz,
+    };
+    try {
+      // this.setState({ savingInfo: true });
+      const response = await axios.post(
+        "/api/teacher/addTeacher",
+        JSON.stringify({
+          teacherInfo: currTeacherInfo,
+        })
+      );
+      console.log(response);
+      // this.props.games.addGame(response.data);
+      this.props.history.goBack(); 
+    } catch (error) {
+      this.setState({ savingInfo: false });
+      if (error.status === 500) {
+        this.props.errorMsg.setErrorMsg("ארור 500. נסו שוב.");
+      } else {
+        this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסו לבדוק את החיבור");
+      }
+    }
+  }
 
   render() {
     return (
       <>
-        <div className="pageContainer">
+        <div className="pageContainer withMenu">
           <WhiteBar />
           <div>
             <form className="formData">
@@ -304,4 +339,8 @@ class AddTeacher extends Component {
   }
 }
 
-export default withRouter(AddTeacher);
+const mapContextToProps = {
+  errorMsg: errorMsgContext,
+};
+
+export default withContext(mapContextToProps)(withRouter(observer(AddTeacher)));
