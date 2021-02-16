@@ -5,6 +5,7 @@ const axios = require("axios").default;
 
 class Schools {
   listDataSchools = [];
+  schoolsNames = [];
   haveMoreSchools = true;
   successGettingSchools = true;
   startGetSchools = false;
@@ -16,9 +17,21 @@ class Schools {
       successGettingSchools: observable,
       startGetSchools: observable,
       chosenSchool: observable,
+      schoolsNames: observable,
       getSchools: action,
       getChosenSchool: action,
+      getAllSchoolsNames: action,
     });
+  }
+
+  getAllSchoolsNames = async () => {
+    try {
+      const { data } = await axios.get("/api/school/getSchoolsNames");
+      this.schoolsNames = data
+      this.successGettingSchools = true;
+    } catch (error) {
+      this.successGettingSchools = false;
+    }
   }
 
   //gets 50 schools for the superadmin

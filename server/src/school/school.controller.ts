@@ -12,4 +12,10 @@ export class SchoolController {
   async getSchoolsInfo(@Query() skipON: GetSchoolSkip) {
     return await this.schoolService.getSchools(skipON);
   }
+
+  @UseJwtAuth('superAdmin')
+  @Get('/getSchoolsNames')
+  async getSchoolsNames() {
+    return await this.schoolService.getSchoolsNames();
+  }
 }

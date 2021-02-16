@@ -15,6 +15,7 @@ import "../../style/superAdmin/disp.scss";
 import EditTeacher from "../../pages/superAdmin/EditTeacher.jsx";
 import EditStudent from "../../pages/superAdmin/EditStudent.jsx";
 import AddTeacher from "../../pages/superAdmin/AddTeacher.jsx";
+import AddStudent from "../../pages/superAdmin/AddStudent.jsx";
 
 class SuperAdminRoute extends React.Component {
   render() {
@@ -78,13 +79,13 @@ class SuperAdminRoute extends React.Component {
             redirectComponent={SignIn}
             component={StudentsList}
           />
-          {/* <PrivateRoute
+          <PrivateRoute
               path="/superAdmin/studentsAdd"
               exact
               componentName="SAdminAddStudents"
               redirectComponent={GamesRouter}
               component={AddStudent}
-            />  */}
+            /> 
             <PrivateRoute
               path="/superAdmin/teachersAdd"
               exact

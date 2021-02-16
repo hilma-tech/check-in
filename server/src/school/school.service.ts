@@ -21,4 +21,10 @@ export class SchoolService {
     });
     return { schoolsInfo: schools, haveMoreSchools: haveMoreSchools };
   }
+
+  async getSchoolsNames(){
+    return await this.schoolRepository.find({
+      select: ["id","name"]
+    })
+  }
 }

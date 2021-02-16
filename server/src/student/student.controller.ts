@@ -11,6 +11,7 @@ import {
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { GameModule } from 'src/game/game.module';
 import { GameService } from 'src/game/game.service';
+import { Classroom } from 'src/classroom/classroom.entity';
 
 @Controller('api/student')
 export class StudentController {
@@ -25,17 +26,26 @@ export class StudentController {
 
   @Post('/register')
   async register(@Body() req) {
+    console.log('req: ', req);
     let username = req.username;
     let password = req.password;
-    let fullName = req.name.split(' ');
     let student: Partial<Student> = new Student({ username, password });
-    student.first_name = fullName[0];
-    student.last_name = fullName[1];
-    // let classroom = new Classroom()
-    // classroom.id = 2
-    // classroom.name = "א'1"
-    // classroom.school_id = 1
-    // student.classroomStudent = [classroom]
+    student.first_name = req.firstName;
+    student.last_name = req.lastName;
+    
+    if(req.classrooms !== undefined){
+      student.classroomStudent = req.classrooms.map((classroom)=>{
+        console.log('classroom: ', classroom);
+        let studentClassroom = new Classroom()
+        studentClassroom.id = classroom.id
+        studentClassroom.name = classroom.name
+        studentClassroom.school_id = req.schoolId
+        return studentClassroom
+      })
+    }
+
+    student.school = req.schoolId
+    console.log('student.classroomStudent: ', student.classroomStudent);
     let userRole = new Role();
     userRole.id = 4; //you set the role id.
     student.roles = [userRole];
