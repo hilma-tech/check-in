@@ -29,11 +29,11 @@ export class TeacherController {
     return this.teacherService.getTeacherInfo(req);
   }
 
-  @UseJwtAuth('superAdmin')
-  @Post('/addTeacher')
-  addTeacher(@Body() req: any) {
-    return this.teacherService.addTeacherInfo(req)
-  }
+  // @UseJwtAuth('superAdmin')
+  // @Post('/addTeacher')
+  // addTeacher(@Body() req: any) {
+  //   return this.teacherService.addTeacherInfo(req)
+  // }
 
   @Post('/register')
   register(@Body() req) {
@@ -41,8 +41,8 @@ export class TeacherController {
     let password = req.password;
     let fullName = req.name.split(' ');
     let user: Partial<Teacher> = new Teacher({ username, password });
-    // user.first_name = "רון"
-    // user.last_name = "איסר"
+    user.first_name = fullName[0]
+    user.last_name = fullName[1]
     user.school = 1;
     let classroom = new Classroom();
     classroom.id = 2;
@@ -50,7 +50,7 @@ export class TeacherController {
     classroom.school_id = 1;
     user.classroomTeacher = [classroom];
     let userRole = new Role();
-    userRole.id = 3; //you set the role id.
+    userRole.id = req.rakaz ? 2 : 3; //you set the role id.
     user.roles = [userRole];
     this.userService.createUser<Teacher>(user);
   }

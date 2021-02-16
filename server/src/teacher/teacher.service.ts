@@ -19,10 +19,10 @@ export class TeacherService extends UserService {
     super(config_options, userRepository, jwtService, configService);
   }
 
-  async addTeacherInfo(@Body() teacherInfo: any) {
-    console.log('teacherInfo: ', teacherInfo);
+  // async addTeacherInfo(@Body() teacherInfo: any) {
+  //   console.log('teacherInfo: ', teacherInfo);
 
-  }
+  // }
 
   async getTeacherClasses(@Body() userinfo: string, skipON: GetClassSkip) {
     let currTeacher = await this.userRepository.findOne({

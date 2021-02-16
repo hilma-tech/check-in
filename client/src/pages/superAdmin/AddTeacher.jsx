@@ -189,7 +189,7 @@ class AddTeacher extends Component {
 
   saveTeacherInDB = async () => {
     let currTeacherInfo = {
-      teacher_name: this.state.teacherName,
+      name: this.state.teacherName,
       school_name: this.state.schoolName,
       fields_data: this.state.fieldsData,
       email: this.state.email,
@@ -199,7 +199,7 @@ class AddTeacher extends Component {
     try {
       // this.setState({ savingInfo: true });
       const response = await axios.post(
-        "/api/teacher/addTeacher",
+        "/api/teacher/register",
         JSON.stringify({
           teacherInfo: currTeacherInfo,
         })
