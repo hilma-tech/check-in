@@ -43,11 +43,12 @@ export class TeacherController {
     let user: Partial<Teacher> = new Teacher({ username, password });
     user.first_name = fullName[0]
     user.last_name = fullName[1]
+    console.log('req.fields_data: ', req.fields_data);
     if(req.fields_data !== undefined || req.fields_data.length !== 0){
       user.classroomTeacher = req.fields_data.map((classroom)=>{
         console.log('classroom: ', classroom);
         let classroomTeacher = new Classroom()
-        classroomTeacher.id = classroom.id
+        classroomTeacher.id = classroom.classId
         classroomTeacher.name = classroom.name
         classroomTeacher.school_id = req.school_id
         return classroomTeacher

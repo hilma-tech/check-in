@@ -104,13 +104,10 @@ class AddTeacher extends Component {
   };
 
   saveChosenClassValue = (newValue, i, id) => {
-    console.log('i: ', i);
-    console.log("id: ", id);
-    console.log("newValue: ", newValue);
     this.setState((prevState) => {
       let updateData = [...prevState.fieldsData];
       updateData[i].value = newValue;
-      updateData[i].id = id;
+      updateData[i].classId = id;
       return { fieldsData: updateData };
     });
   };
