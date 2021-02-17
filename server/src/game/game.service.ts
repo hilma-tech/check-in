@@ -139,8 +139,8 @@ export class GameService {
     let gamesLength = (
       await this.gameRepository.query(
         'select id from game where id not in(select game_id from classroom_game where classroom_id = ' +
-          req.classId +
-          ');',
+        req.classId +
+        ');',
       )
     ).length;
 
@@ -149,15 +149,32 @@ export class GameService {
 
     let allGames = await this.gameRepository.query(
       'select id, game_name, image from game where id not in(select game_id from classroom_game where classroom_id = ' +
-        req.classId +
-        ')  limit 50 offset ' +
-        req.dataLength +
-        ';',
+      req.classId +
+      ')  limit 50 offset ' +
+      req.dataLength +
+      ';',
     );
     return {
       currClassGames: currClassGames,
       allGames: allGames,
       haveMoreGames: haveMoreGames,
     };
+  }
+
+  async GetGamesForStudent(req) {
+    let GamesByClassId = await this.gameRepository
+      .createQueryBuilder('Game')
+      .innerJoinAndSelect('Game.classrooms', 'Classroom')
+      .select('Game.id')
+      .addSelect('Game.game_name')
+      .addSelect('Game.image')
+      .where('Classroom.id = :id', { id: Number(req) })
+      .getMany();
+    return Promise.all(GamesByClassId.map(async (game) => {
+      var fields = await this.classFieldService.checkFieldAltValue(game.id, req)
+      return { ...game, fields: fields }
+    })).then((games) => {
+      return { classId: req, classGames: games }
+    })
   }
 }

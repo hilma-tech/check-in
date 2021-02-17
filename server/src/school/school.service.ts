@@ -9,7 +9,7 @@ export class SchoolService {
   constructor(
     @InjectRepository(School)
     private schoolRepository: Repository<School>,
-  ) {}
+  ) { }
 
   async getSchools(@Req() skipON: GetSchoolSkip) {
     let numSchools = await this.schoolRepository.count();
@@ -20,5 +20,13 @@ export class SchoolService {
       take: 50,
     });
     return { schoolsInfo: schools, haveMoreSchools: haveMoreSchools };
+  }
+
+  async getSchoolNameById(schoolId) {
+    let schoolName = await this.schoolRepository.findOne({
+      where: [{ id: schoolId }],
+      select: ['name']
+    })
+    return schoolName
   }
 }

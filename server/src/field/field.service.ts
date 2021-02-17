@@ -9,7 +9,7 @@ export class FieldService {
   constructor(
     @InjectRepository(Field)
     private fieldRepository: Repository<Field>,
-  ) {}
+  ) { }
 
   async saveField(@Body() req: SaveFieldDto) {
     req.data.map(async fieldObject => {
@@ -36,7 +36,7 @@ export class FieldService {
   }
 
   async deleteField(fields) {
-  return await this.fieldRepository.delete(fields)
+    return await this.fieldRepository.delete(fields)
   }
 
   async getGameFields(gameId) {
@@ -49,4 +49,6 @@ export class FieldService {
       .getMany();
     return fields;
   }
+
+  
 }

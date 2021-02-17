@@ -43,7 +43,7 @@ export class StudentService extends UserService {
     return classes;
   }
 
-  async CheckUserInfoAndGetClassId(username: string, password: string, classId: string) {
+  async CheckUserInfoAndGetClassId(username: string, password: string) {
     let findUser = await this.userRepository.findOne({
       where: [{ username: username }],
       select: ['id', 'password']
@@ -55,15 +55,8 @@ export class StudentService extends UserService {
         relations: ['classroomStudent'],
         where: [{ id: findUser.id }]
       })
-
-      let classID = Class.classroomStudent.map(IsInClass => {
-        if (Number(IsInClass.id) === Number(classId)) {
-          return true
-        }
-      })
-
-      if (pass && classID.includes(true)) {
-        return true
+      if (pass) {
+        return Class
       }
     }
   }

@@ -11,14 +11,18 @@ import {
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { GameModule } from 'src/game/game.module';
 import { GameService } from 'src/game/game.service';
+import { SchoolService } from 'src/school/school.service';
+import { FieldService } from 'src/field/field.service';
 
 @Controller('api/student')
 export class StudentController {
   constructor(
     private readonly userService: UserService,
     private studentService: StudentService,
+    private schoolService: SchoolService,
     private classroomService: ClassroomService,
-    private gameService: GameService
+    private gameService: GameService,
+    private fieldService: FieldService
   ) {
     // this.register({username: 'student2@gmail.com', password: 'student11', name: 'בת-ציון רוז'})
   }
@@ -54,19 +58,27 @@ export class StudentController {
     return this.studentService.getStudentsClassrooms(req.id);
   }
 
-  @Get('/gamesForClass')
+  @Get('/gamesAndStudentInfo')
   async getGamesForClass(@Query() info: GamesForClassDto) {
-    let getClassId = await this.studentService.CheckUserInfoAndGetClassId(info.username, info.password, info.classId);
-    if (Boolean(getClassId) === true) {
-      let gamesForClass = await this.gameService.getClassroomGames({ classId: info.classId, dataLength: '0' });
-      if (gamesForClass.currClassGames.length > 0) {
-        return gamesForClass.currClassGames
+    let getStudentInfo = await this.studentService.CheckUserInfoAndGetClassId(info.username, info.password);
+    var Classes = []
+    return Promise.all(getStudentInfo.classroomStudent.map(async (classroom) => {
+      Classes.push(classroom.name);
+      var getGames = await this.gameService.GetGamesForStudent(classroom.id);
+      return getGames
+    })).then(async (getGames) => {
+
+      let schoolName = await this.schoolService.getSchoolNameById(getStudentInfo.classroomStudent[0].school_id);
+     
+      let StudentInfo = {
+        first_name: getStudentInfo.first_name,
+        last_name: getStudentInfo.last_name,
+        classes: Classes,
+        school: schoolName.name,
+        games: getGames
       }
-      else { return "no games for this class" }
-    }
-    else {
-      return 'problem with info'
-    }
+      return StudentInfo
+    })
   }
 
   @UseJwtAuth('teacher')
