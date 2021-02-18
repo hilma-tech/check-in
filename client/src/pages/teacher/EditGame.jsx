@@ -193,7 +193,8 @@ class EditGame extends Component {
                         </div>
                       )
                     ) : (
-                      <label key={i} className="mobileBorderCameraIcon">
+                      <div key={i+3} className="mobileBorderCameraIcon">
+                      <label key={i} className="mobileTeacherBorder">
                         <FileInput
                           onError={() => {
                             this.props.errorMsg.setErrorMsg(
@@ -208,11 +209,11 @@ class EditGame extends Component {
                         />
                         <img
                           alt="photograph icon"
-                          className="mobileImg"
+                          className="mobileTeacherImg"
                           src={field.value[0].value}
                         />
                         
-                      </label>
+                      </label></div>
                     )}
                   </>
                 );
