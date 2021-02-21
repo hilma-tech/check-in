@@ -77,7 +77,9 @@ export function passwordValidation(password) {
         return '** סיסמא לא תקינה **'
     } else if (password.trim().length === 0) {
         return '** סיסמא לא תקינה **'
-    } else if ((/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
+    } else if (!(/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
+        console.log((/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password));
+        console.log('password: ', password);
         return '** סיסמא לא תקינה **'
     } else if (!(/[A-Za-z\u0590-\u05EA0-9]/).test(password)) {
         return '** סיסמא לא תקינה **'
