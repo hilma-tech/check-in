@@ -21,8 +21,8 @@ class GamePopUpMenu extends Component {
           >
             <EditIcon
               style={{
-                height: "0.9vw",
-                width: "0.9vw",
+                height: "1vw",
+                width: "1vw",
                 marginRight: "0.5vw",
                 marginTop: "0.3vw",
                 color: "#043163",
@@ -37,8 +37,8 @@ class GamePopUpMenu extends Component {
           >
             <DeleteIcon
               style={{
-                height: "0.9vw",
-                width: "0.9vw",
+                height: "1vw",
+                width: "1vw",
                 marginRight: "0.5vw",
                 marginTop: "0.3vw",
                 color: "#043163",
@@ -49,7 +49,7 @@ class GamePopUpMenu extends Component {
           {/* <hr className="divider" />
 
           <div className="optionRow" onClick={() => { this.props.onClickEditGame(this.props.gameId) }}>
-            <EditIcon style={{ height: "0.9vw", width: "0.9vw", marginRight: "0.5vw", marginTop: '0.3vw', color: '#043163' }} />
+            <EditIcon style={{ height: "1vw", width: "1vw", marginRight: "0.5vw", marginTop: '0.3vw', color: '#043163' }} />
             <h1 className="popUpOpt">ערוך</h1>
           </div> */}
 
