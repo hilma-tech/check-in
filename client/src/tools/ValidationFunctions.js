@@ -73,7 +73,7 @@ export function classNameValidation(name) {
 export function passwordValidation(password) {
     if (password === null || password.length === 0) {
         return '** חייב להכניס סיסמא **'
-    } else if (password.length > 9 || password.length < 6) {
+    } else if (password.length > 20 || password.length < 6) {
         return '** סיסמא לא תקינה **'
     } else if (password.trim().length === 0) {
         return '** סיסמא לא תקינה **'
