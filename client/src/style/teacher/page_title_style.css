@@ -84,8 +84,7 @@
   }
 
   .secondTitle{
-    background-color: #00000000;
-    color: #00000000;
+    display: none;
     z-index: 99;
   }
 }
