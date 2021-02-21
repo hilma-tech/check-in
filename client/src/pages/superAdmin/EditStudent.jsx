@@ -236,7 +236,7 @@ class EditStudent extends React.Component {
             readOnly={true}
           ></input>
 
-          <label for="password" className='labelFields'>סיסמא:</label>
+          {/* <label for="password" className='labelFields'>סיסמא:</label>
           <p className="error" style={{ display: this.state.passwordError.toShow }}>
             {this.state.passwordError.mess}
           </p>
@@ -248,7 +248,7 @@ class EditStudent extends React.Component {
             placeholder="הכנס סיסמא"
             name="password"
             readOnly={true}
-          ></input>
+          ></input> */}
 
           <label className='labelFields'>בית ספר:</label>
           <p
