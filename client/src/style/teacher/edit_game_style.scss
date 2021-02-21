@@ -187,7 +187,7 @@
   margin-bottom: 1vh;
 }
 
-.mobileImg {
+.mobileTeacherImg {
   margin: 0px;
   padding: 0px;
   height: 100%;
@@ -195,6 +195,7 @@
   object-fit: cover;
   border-radius: 2vw;
 }
+
 
 
 #editGameForClass {
@@ -347,13 +348,14 @@
     margin-bottom: 1vh;
   }
 
-  .mobileImg {
+  .mobileTeacherImg {
     margin: 0px;
     padding: 0px;
     height: 100%;
     width: 100%;
     object-fit: cover;
     border-radius: 2vw;
+    @include mouse(point);
   }
 
   #classGameImgTeacherWeb{

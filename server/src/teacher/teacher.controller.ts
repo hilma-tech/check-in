@@ -39,10 +39,9 @@ export class TeacherController {
   register(@Body() req) {
     let username = req.email;
     let password = req.password;
-    let fullName = req.name.split(' ');
     let user: Partial<Teacher> = new Teacher({ username, password });
-    user.first_name = fullName[0]
-    user.last_name = fullName[1]
+    user.first_name = req.first_name
+    user.last_name = req.last_name
     console.log('req.fields_data: ', req.fields_data);
     if(req.fields_data !== undefined || req.fields_data.length !== 0){
       user.classroomTeacher = req.fields_data.map((classroom)=>{

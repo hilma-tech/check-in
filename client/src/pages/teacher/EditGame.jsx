@@ -71,6 +71,7 @@ class EditGame extends Component {
   };
 
   sendImageFieldValue = (value) => {
+    console.log('value: ', value);
     this.saveFieldValue(
       value.value,
       this.props.fieldI,
@@ -192,7 +193,8 @@ class EditGame extends Component {
                         </div>
                       )
                     ) : (
-                      <div key={i} className="mobileBorderCameraIcon">
+                      <div key={i+3} className="mobileBorderCameraIcon">
+                      <label key={i} className="mobileTeacherBorder">
                         <FileInput
                           onError={() => {
                             this.props.errorMsg.setErrorMsg(
@@ -207,11 +209,11 @@ class EditGame extends Component {
                         />
                         <img
                           alt="photograph icon"
-                          className="mobileImg"
+                          className="mobileTeacherImg"
                           src={field.value[0].value}
                         />
                         
-                      </div>
+                      </label></div>
                     )}
                   </>
                 );
