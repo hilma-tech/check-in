@@ -260,7 +260,7 @@ class EditTeacher extends React.Component {
                 value={this.state.email}
               />
               {/* סיסמא */}
-              <label className="labelFields">סיסמא:</label>
+              {/* <label className="labelFields">סיסמא:</label>
               <p
                 className="error"
                 style={{ display: this.state.passwordNameError.toShow }}
@@ -273,7 +273,7 @@ class EditTeacher extends React.Component {
                 type="text"
                 placeholder="הכנס סיסמא..."
                 readOnly={true}
-              />
+              /> */}
             </form>
 
             {/* <div className='spacerFromSaveButton'></div>
