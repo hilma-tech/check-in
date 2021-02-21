@@ -109,7 +109,8 @@ class Classes extends Component {
           </div>
           {this.props.name.startGetClasses ? (
             <CircularProgress size="1.5rem" />
-          ) : (
+          ) : 
+          !this.props.name.successGettingClasses ? <></> :(
             <button
               className="showMoreGamesB"
               onClick={this.props.name.getMoreClasses}

@@ -40,7 +40,8 @@ class AddTeacher extends Component {
     this.state = {
       classOptions: [],
       schoolOptions: [],
-      teacherName: "",
+      teacherFirstName: "",
+      teacherLastName: "",
       schoolName: "",
       fieldsData: [{ id: 0, value: "" }],
       email: "",
@@ -72,9 +73,13 @@ class AddTeacher extends Component {
     }
   };
 
-  saveTeacherName = (props) => {
+  saveTFirstName = (props) => {
     let myprops = props.target;
-    this.setState({ teacherName: myprops.value });
+    this.setState({ teacherFirstName: myprops.value });
+  };
+  saveTLastName = (props) => {
+    let myprops = props.target;
+    this.setState({ teacherLastName: myprops.value });
   };
 
   saveSchoolName = async (props) => {
@@ -220,7 +225,8 @@ class AddTeacher extends Component {
 
   saveTeacherInDB = async () => {
     let currTeacherInfo = {
-      name: this.state.teacherName,
+      first_name: this.state.teacherFirstName,
+      last_name: this.state.teacherLastName,
       school_id: this.props.schools.schoolsNames.filter((school) => {
         return school.name === this.state.schoolName;
       })[0].id,
@@ -256,7 +262,7 @@ class AddTeacher extends Component {
           <div>
             <form className="formData">
               {/* מורה */}
-              <label className="labelFields">שם המורה:</label>
+              <label className="labelFields">שם פרטי:</label>
               <p
                 className="error"
                 style={{ display: this.state.teacherNameError.toShow }}
@@ -266,8 +272,21 @@ class AddTeacher extends Component {
               <input
                 className="inputFields"
                 type="text"
-                placeholder="הכנס את שם המורה..."
-                onBlur={this.saveTeacherName}
+                placeholder="הכנס שם פרטי..."
+                onBlur={this.saveTFirstName}
+              />
+              <label className="labelFields">שם משפחה:</label>
+              <p
+                className="error"
+                style={{ display: this.state.teacherNameError.toShow }}
+              >
+                {this.state.teacherNameError.mess}
+              </p>
+              <input
+                className="inputFields"
+                type="text"
+                placeholder="הכנס שם משפחה..."
+                onBlur={this.saveTLastName}
               />
 
               {/* בית ספר */}

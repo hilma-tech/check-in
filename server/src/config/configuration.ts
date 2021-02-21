@@ -42,6 +42,13 @@ export default () => ({
     },
     superTeacher: {
       components: [
+        "TeacherRoute",
+        "TeacherClasses",
+        "SmallTeacherRoute",
+        "TeacherEditGame",
+        "TeacherShowGame",
+        "TeacherStudentInfo",
+        "TeacherStudentsList",
       ],
       defaultHomePage: "SAdminGames"
     },

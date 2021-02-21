@@ -11,11 +11,12 @@ import { errorMsgContext } from "../../stores/error.store";
 import { chosenGameEditContext } from "../../stores/chosenGameEdit.store";
 import { chosenClassContext } from "../../stores/chosenClass.store";
 import { gamesContext } from "../../stores/games.store";
+import { FileInput, withFiles } from "@hilma/fileshandler-client";
 
 const axios = require("axios").default;
 
 class EditGame extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       gameName: "",
@@ -24,6 +25,7 @@ class EditGame extends Component {
       image: "",
       fieldsData: [],
     };
+    this.imageUploader = props.filesUploader;
   }
 
   //gets information needed to display the selected game's info
@@ -64,15 +66,73 @@ class EditGame extends Component {
       this.props.chosenGame.index,
       this.props.chosenClass.classId
     );
-    await this.props.games.resetGamesStore()
+    await this.props.games.resetGamesStore();
     this.props.history.push("/teacher/classes/games");
+  };
+
+  sendImageFieldValue = (value) => {
+    console.log('value: ', value);
+    this.saveFieldValue(
+      value.value,
+      this.props.fieldI,
+      null,
+      value.link,
+      value.id
+    );
+  };
+  //כשמו כן הוא
+  saveFieldValue = (fieldValue, fieldI, inputId, inputImage, imgId) => {
+    //only relevant to choice/multi-choice
+    if (inputId) {
+      this.setState((prevState) => {
+        if (prevState.fieldsData[fieldI].value.length < inputId) {
+          for (
+            let i = prevState.fieldsData[fieldI].value.length;
+            i < inputId;
+            i++
+          ) {
+            prevState.fieldsData[fieldI].value[i] = {
+              id: Number(i),
+              value: "",
+            };
+          }
+        }
+        prevState.fieldsData[fieldI].value[inputId] = {
+          id: Number(inputId),
+          value: fieldValue,
+        };
+        return { fieldsData: prevState.fieldsData };
+      });
+      //only relevant to image
+    } else if (inputImage) {
+      this.setState((prevState) => {
+        prevState.fieldsData[fieldI].value[0] = {
+          id: imgId,
+          value: inputImage,
+        };
+        return { fieldsData: prevState.fieldsData };
+      });
+      //only relevant to text
+    } else {
+      this.setState((prevState) => {
+        prevState.fieldsData[fieldI].value = [];
+        prevState.fieldsData[fieldI].value[0] = {
+          id: 0,
+          value: fieldValue,
+        };
+        return { fieldsData: prevState.fieldsData };
+      });
+    }
   };
 
   render() {
     return (
       <>
         <SmallMenuBar />
-        <PageTitle title="משחקים" titleTwo={"כיתה " + this.props.chosenClass.classroomName} />
+        <PageTitle
+          title="משחקים"
+          titleTwo={"כיתה " + this.props.chosenClass.classroomName}
+        />
         <ArrowBar page="editGame" />
         <div className="smallAlign mobileGap" id="editGameForClass">
           <div className="mobileBackground">
@@ -82,57 +142,83 @@ class EditGame extends Component {
                 id="classGameImgTeacherWeb"
                 alt=""
                 src="https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg"
-                />
+              />
               <h2 className="mobileClassGameTitleBackground"></h2>
               <h1 className="mobileClassGameTitle">{this.state.gameName}</h1>
             </div>
             <h3 className="mobileGameDesc">תיאור המשחק</h3>
-            <p className="mobileGameDP">{this.state.gameDescription ? this.state.gameDescription : "אין תיאור משחק"}</p>
+            <p className="mobileGameDP">
+              {this.state.gameDescription
+                ? this.state.gameDescription
+                : "אין תיאור משחק"}
+            </p>
             <h3 className="mobileGameReq">דרישות המשחק</h3>
-            <p className="mobileGameRP">{this.state.gameRequirements ? this.state.gameRequirements : "אין דרישות משחק"}</p>
+            <p className="mobileGameRP">
+              {this.state.gameRequirements
+                ? this.state.gameRequirements
+                : "אין דרישות משחק"}
+            </p>
             <h1 className="mobileGameFields">שדות:</h1>
-            {this.state.fieldsData.length === 0 ? 
-            <p className="noFields">אין שדות למשחק זה</p>:
-            this.state.fieldsData.map((field, i) => {
-              return (
-                <>
-                  <h2 className="mobileFieldName"key={i+1} >{field.field_name}</h2>
-                  {field.selection !== "image" ? (
-                    field.selection === "text" ? (
-                      <input
-                      key={i}
-                        defaultValue={field.value[0].value}
-                        readOnly={true}
-                        className="mobileChangingInput"
-                      />
-                    ) :( <div className="mobileChangingInputGrid">
-{                    field.value.map((value, i) => {
-                      if (value.value.length !== 0) {
-                        return (
-                          <input
+            {this.state.fieldsData.length === 0 ? (
+              <p className="noFields">אין שדות למשחק זה</p>
+            ) : (
+              this.state.fieldsData.map((field, i) => {
+                return (
+                  <>
+                    <h2 className="mobileFieldName" key={i + 1}>
+                      {field.field_name}
+                    </h2>
+                    {field.selection !== "image" ? (
+                      field.selection === "text" ? (
+                        <input
                           key={i}
-                            defaultValue={value.value}
-                            readOnly={true}
-                            className="mobileChangingInputChoice"
-                          />
-                        );
-                      } else {
-                        return <></>
-                      }
-                    })}
-                    </div>)
-                  ) : (
-                    <div key={i} className="mobileBorderCameraIcon">
-                      <img
-                        alt="photograph icon"
-                        className="mobileImg"
-                        src={field.value[0].value}
-                      />
-                    </div>
-                  )}
-                </>
-              );
-            })}
+                          defaultValue={field.value[0].value}
+                          className="mobileChangingInput"
+                        />
+                      ) : (
+                        <div className="mobileChangingInputGrid">
+                          {field.value.map((value, i) => {
+                            if (value.value.length !== 0) {
+                              return (
+                                <input
+                                  key={i}
+                                  defaultValue={value.value}
+                                  className="mobileChangingInputChoice"
+                                />
+                              );
+                            } else {
+                              return <></>;
+                            }
+                          })}
+                        </div>
+                      )
+                    ) : (
+                      <div key={i+3} className="mobileBorderCameraIcon">
+                      <label key={i} className="mobileTeacherBorder">
+                        <FileInput
+                          onError={() => {
+                            this.props.errorMsg.setErrorMsg(
+                              "הייתה שגיאה בהעלאת התמונה. התמונה חייבת להיות באחד מן הפורמטים הבאים: jpg/jpeg/png"
+                            );
+                          }}
+                          id="image"
+                          className="hiddenInput"
+                          type="image"
+                          filesUploader={this.imageUploader}
+                          onChange={this.sendImageFieldValue}
+                        />
+                        <img
+                          alt="photograph icon"
+                          className="mobileTeacherImg"
+                          src={field.value[0].value}
+                        />
+                        
+                      </label></div>
+                    )}
+                  </>
+                );
+              })
+            )}
             <div className="mobileSaveButtonBackground">
               <button className="mobileSaveButton" onClick={this.addGameToDB}>
                 שמור
@@ -149,7 +235,9 @@ const mapContextToProps = {
   errorMsg: errorMsgContext,
   chosenGame: chosenGameEditContext,
   chosenClass: chosenClassContext,
-  games: gamesContext
+  games: gamesContext,
 };
 
-export default withContext(mapContextToProps)(withRouter(observer(EditGame)));
+export default withContext(mapContextToProps)(
+  withFiles(withRouter(observer(EditGame)))
+);
