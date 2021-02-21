@@ -76,8 +76,7 @@ class StudentDetails extends Component {
                   border: "none",
                   backgroundColor: 'rgba(188, 188, 203, 0)',
                   fontWeight:'600',
-                  width: '87%',
-                  // marginTop: '1vh',
+                  width: '90%',
                   fontFamily: 'Assistant'
                 }}
                 className="passInput"
