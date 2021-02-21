@@ -7,6 +7,7 @@ import {
   StudentIdDto,
   GamesForClassDto,
   ClassroomIdDto,
+  UserRegisterDto,
 } from './student.dtos';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { GameModule } from 'src/game/game.module';
@@ -24,8 +25,9 @@ export class StudentController {
     // this.register({username: 'student2@gmail.com', password: 'student11', name: 'בת-ציון רוז'})
   }
 
+  @UseJwtAuth('superAdmin')
   @Post('/register')
-  async register(@Body() req) {
+  async register(@Body() req:UserRegisterDto) {
     console.log('req: ', req);
     let username = req.username;
     let password = req.password;

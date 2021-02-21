@@ -1,9 +1,12 @@
+import { Type } from 'class-transformer';
 import {
   IsDefined,
   IsEmail,
+  IsNumber,
   IsNumberString,
   IsString,
   Length,
+  ValidateNested,
 } from 'class-validator';
 
 export class GetStudentSkip {
@@ -46,4 +49,41 @@ export class ClassroomIdDto {
   @IsString()
   @IsNumberString()
   dataLength: string;
+}
+
+export class ClassForSaveDto{
+  @IsDefined()
+  @IsNumber()
+  id: number;
+
+  @IsDefined()
+  @IsString()
+  name: string;
+}
+
+export class UserRegisterDto {
+  @IsDefined()
+  @IsString()
+  username: string;
+
+  @IsDefined()
+  @IsString()
+  password: string;
+
+  @IsDefined()
+  @IsString()
+  firstName: string;
+
+  @IsDefined()
+  @IsString()
+  lastName: string;
+
+  @IsDefined()
+  @IsNumber()
+  schoolId: number;
+
+  @IsDefined()
+  @ValidateNested({ each: true })
+  @Type(() => ClassForSaveDto)
+  classrooms: ClassForSaveDto[];
 }
