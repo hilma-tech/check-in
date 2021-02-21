@@ -45,7 +45,9 @@ class ClassGames extends React.Component {
           onClick={this.showGameInfo}
         ></h2>
         <h1 className="classGameTitle" onClick={this.showGameInfo}>
-          {this.props.name}
+          {this.props.name.length > 15
+                            ? this.props.name.slice(0, 15) + "..."
+                            : this.props.name}
         </h1>
       </div>
     );
