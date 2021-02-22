@@ -21,6 +21,7 @@ class GameFieldSelection extends Component {
 
   // creates input based on "type"
   fieldCreator = () => {
+    console.log('this.props.originalValue[: ', this.props.originalValue);
     if (this.props.changeInputType === "text") {
       return (
         <input
@@ -52,7 +53,8 @@ class GameFieldSelection extends Component {
           <img
             className={
               this.props.originalValue[0].value.length !== 0
-                ? "chosenImg"
+              ? "chosenImg"
+              
                 : "cameraIcon"
             }
             src={

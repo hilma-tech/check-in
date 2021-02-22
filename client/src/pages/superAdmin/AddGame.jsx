@@ -86,7 +86,6 @@ class AddGame extends Component {
         return { fieldsData: prevState.fieldsData };
       });
       //only relevant to image
-    } else if (inputImage) {
       this.setState((prevState) => {
         prevState.fieldsData[fieldI].value[0] = {
           id: imgId,
