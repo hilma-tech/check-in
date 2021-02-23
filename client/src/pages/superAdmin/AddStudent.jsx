@@ -8,6 +8,7 @@ import { withRouter } from "react-router-dom";
 import {
   emailValidation,
   nameValidation,
+  userNameValidation,
   studentPasswordValidation,
   mustInputValidation,
 } from "../../tools/ValidationFunctions";
@@ -190,7 +191,7 @@ class AddStudent extends React.Component {
     }
 
     // ----------user name validation-------------------
-    let userNameErrorMess = emailValidation(this.state.userName);
+    let userNameErrorMess = userNameValidation(this.state.userName);
     if (userNameErrorMess.length !== 0) {
       this.setState((prevState) => {
         prevState.userNameError.toShow = "block";
