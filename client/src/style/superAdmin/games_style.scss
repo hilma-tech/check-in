@@ -27,6 +27,9 @@ $gameimgwidth: 20vw;
 
 .gameTitle {
   /*text*/
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   font: normal normal normal 2vw Assistant;
   letter-spacing: 0.52px;
   color: #ffffff;

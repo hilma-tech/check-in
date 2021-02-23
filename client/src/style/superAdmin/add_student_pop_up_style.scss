@@ -10,10 +10,14 @@
 }
 
 .addStudentPopUpFlex {
+    label, p{
+        @include mouse(point);
+    }
     font-size: 1.5vw;
     text-align: left;
-    left:6vw;
-    transition: width 2s;
+    background-color: white;
+    left:4.6vw;
+    transition: width 1s;
     white-space: nowrap;
     overflow: hidden;
     justify-content: space-evenly;
@@ -24,12 +28,5 @@
     border-radius: 90vw;
     top: 86.8vh;
     width: 1px;
-
     padding-left: 2.5vw;
-}
-
-
-.addingButtonForStudent {
-    @include mouse(point);
-
 }

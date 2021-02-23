@@ -29,6 +29,9 @@
 
 .classGameTitle {
   /*text*/
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   font: normal normal normal 5vw Assistant;
   letter-spacing: 0.52px;
   color: #ffffff;

@@ -1,12 +1,13 @@
-import { Injectable, Inject, Req } from '@nestjs/common';
+import { Injectable, Inject, Req, Body } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserConfig, UserService, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
+import { Role, UserConfig, UserService, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { Student } from './student.entity';
-import { GetStudentSkip } from './student.dtos';
+import { GetStudentSkip, UserRegisterDto } from './student.dtos';
 import * as bcrypt from 'bcrypt';
+import { Classroom } from 'src/classroom/classroom.entity';
 
 @Injectable()
 export class StudentService extends UserService {
@@ -68,7 +69,6 @@ export class StudentService extends UserService {
     }
   }
 
-
   async getClassStudents(classId: string, studentLength: number) {
     let students = await this.userRepository
       .createQueryBuilder('Student')
@@ -87,5 +87,32 @@ export class StudentService extends UserService {
       students: students[0],
       haveMoreStudents: students[1] > studentLength + 50 ? true : false,
     };
+  }
+
+  async addStudent(@Body() req:UserRegisterDto){
+    console.log('req: ', req);
+    let username = req.username;
+    let password = req.password;
+    let student: Partial<Student> = new Student({ username, password });
+    student.first_name = req.firstName;
+    student.last_name = req.lastName;
+    
+    if(req.classrooms !== undefined || req.classrooms.length !== 0){
+      student.classroomStudent = req.classrooms.map((classroom)=>{
+        console.log('classroom: ', classroom);
+        let studentClassroom = new Classroom()
+        studentClassroom.id = classroom.id
+        studentClassroom.name = classroom.name
+        studentClassroom.school_id = req.schoolId
+        return studentClassroom
+      })
+    }
+
+    student.school = req.schoolId
+    console.log('student.classroomStudent: ', student.classroomStudent);
+    let userRole = new Role();
+    userRole.id = 4; //you set the role id.
+    student.roles = [userRole];
+    this.createUser<Student>(student);
   }
 }

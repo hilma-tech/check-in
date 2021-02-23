@@ -8,7 +8,8 @@ import { withRouter } from "react-router-dom";
 import {
   emailValidation,
   nameValidation,
-  passwordValidation,
+  userNameValidation,
+  studentPasswordValidation,
   mustInputValidation,
 } from "../../tools/ValidationFunctions";
 import "../../style/superAdmin/class_selection_style.css";
@@ -190,7 +191,7 @@ class AddStudent extends React.Component {
     }
 
     // ----------user name validation-------------------
-    let userNameErrorMess = emailValidation(this.state.userName);
+    let userNameErrorMess = userNameValidation(this.state.userName);
     if (userNameErrorMess.length !== 0) {
       this.setState((prevState) => {
         prevState.userNameError.toShow = "block";
@@ -203,7 +204,7 @@ class AddStudent extends React.Component {
     }
 
     // ---------------password validation-------------------
-    let passwordErrorMess = passwordValidation(this.state.password);
+    let passwordErrorMess = studentPasswordValidation(this.state.password);
     console.log('this.state.password: ', this.state.password);
     if (passwordErrorMess.length !== 0) {
       this.setState((prevState) => {
