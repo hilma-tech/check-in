@@ -6,7 +6,7 @@ import addicon from "../../img/addicon.svg";
 import ArrowNavBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import { withRouter } from "react-router-dom";
 import {
-  userNameValidation,
+  emailValidation,
   nameValidation,
   passwordValidation,
   mustInputValidation,
@@ -35,26 +35,22 @@ class AddStudent extends React.Component {
       school: "",
       schoolId: 0,
       chosenClasses: [],
-      allClasses: [
-        // { id: 1, name: "א'2" },
-        // { id: 2, name: "ב'2" },
-        // { id: 3, name: "ג'2" },
-      ],
+      allClasses: [],
     };
     this.allSchools = ["עשה חיל", "בית ספר עם שם אחר"];
   }
-  componentDidMount = async() => {
+  componentDidMount = async () => {
     await this.props.schools.getAllSchoolsNames();
     if (!this.props.schools.successGettingSchools) {
       this.props.errorMsg.setErrorMsg(
         "הייתה שגיאה בשרת. לא ניתן לקבל בתי ספר מהשרת."
       );
     } else {
-      this.allSchools = this.props.schools.schoolsNames.map((school)=>{
+      this.allSchools = this.props.schools.schoolsNames.map((school) => {
         return school.name
       })
     }
-    }
+  }
 
 
   //Return the classes list as list of object for the Select.
@@ -143,14 +139,14 @@ class AddStudent extends React.Component {
     return options;
   };
 
-  chooseSchool = async(e) => {
-    let chosenScoolId = (this.props.schools.schoolsNames.filter((school)=>{
+  chooseSchool = async (e) => {
+    let chosenScoolId = (this.props.schools.schoolsNames.filter((school) => {
       return school.name === e.value
     }))[0]
     const { data } = await axios.get("/api/classroom/getSchoolClasses", {
       params: { schoolId: chosenScoolId.id },
     });
-    this.setState({ school: e.value, allClasses: data, schoolId: chosenScoolId.id});
+    this.setState({ school: e.value, allClasses: data, schoolId: chosenScoolId.id });
     // this.setState({ school: e.value });
 
   };
@@ -165,61 +161,73 @@ class AddStudent extends React.Component {
   };
 
   //when clicking on save we first validate the information
-  saveButton = async(e) => {
+  saveButton = async (e) => {
     e.preventDefault();
     let allOk = true;
     /* data validation  */
     // ----------student name validation-------------------
-    // let studentNameErrorMess = nameValidation(this.state.studentName);
-    // if (studentNameErrorMess.length !== 0) {
-    //   this.setState((prevState) => {
-    //     prevState.studentNameError.toShow = "block";
-    //     prevState.studentNameError.mess = studentNameErrorMess;
-    //     return { studentNameError: prevState.studentNameError };
-    //   });
-    //   allOk = false;
-    // } else {
-    //   this.setState({ studentNameError: { toShow: "none", mess: "" } });
-    // }
+    let studentFirstNameErrorMess = nameValidation(this.state.studentFirstName);
+    if (studentFirstNameErrorMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.studentFirstNameError.toShow = "block";
+        prevState.studentFirstNameError.mess = studentFirstNameErrorMess;
+        return { studentFirstNameError: prevState.studentFirstNameError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ studentFirstNameError: { toShow: "none", mess: "" } });
+    }
+    let studentLastNameErrorMess = nameValidation(this.state.studentLastName);
+    if (studentLastNameErrorMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.studentLastNameError.toShow = "block";
+        prevState.studentLastNameError.mess = studentLastNameErrorMess;
+        return { studentLastNameError: prevState.studentLastNameError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ studentLastNameError: { toShow: "none", mess: "" } });
+    }
 
     // ----------user name validation-------------------
-    // let userNameErrorMess = userNameValidation(this.state.userName);
-    // if (userNameErrorMess.length !== 0) {
-    //   this.setState((prevState) => {
-    //     prevState.userNameError.toShow = "block";
-    //     prevState.userNameError.mess = userNameErrorMess;
-    //     return { userNameError: prevState.userNameError };
-    //   });
-    //   allOk = false;
-    // } else {
-    //   this.setState({ userNameError: { toShow: "none", mess: "" } });
-    // }
+    let userNameErrorMess = emailValidation(this.state.userName);
+    if (userNameErrorMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.userNameError.toShow = "block";
+        prevState.userNameError.mess = userNameErrorMess;
+        return { userNameError: prevState.userNameError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ userNameError: { toShow: "none", mess: "" } });
+    }
 
     // ---------------password validation-------------------
-    // let passwordErrorMess = passwordValidation(this.state.password);
-    // if (passwordErrorMess.length !== 0) {
-    //   this.setState((prevState) => {
-    //     prevState.passwordError.toShow = "block";
-    //     prevState.passwordError.mess = passwordErrorMess;
-    //     return { passwordError: prevState.passwordError };
-    //   });
-    //   allOk = false;
-    // } else {
-    //   this.setState({ passwordError: { toShow: "none", mess: "" } });
-    // }
+    let passwordErrorMess = passwordValidation(this.state.password);
+    console.log('this.state.password: ', this.state.password);
+    if (passwordErrorMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.passwordError.toShow = "block";
+        prevState.passwordError.mess = passwordErrorMess;
+        return { passwordError: prevState.passwordError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ passwordError: { toShow: "none", mess: "" } });
+    }
 
     // ---------------school name validation-------------------
-    // let schoolNameErrorMess = mustInputValidation(this.state.school);
-    // if (schoolNameErrorMess.length !== 0) {
-    //   this.setState((prevState) => {
-    //     prevState.schoolNameError.toShow = "block";
-    //     prevState.schoolNameError.mess = schoolNameErrorMess;
-    //     return { schoolNameError: prevState.schoolNameError };
-    //   });
-    //   allOk = false;
-    // } else {
-    //   this.setState({ schoolNameError: { toShow: "none", mess: "" } });
-    // }
+    let schoolNameErrorMess = mustInputValidation(this.state.school);
+    if (schoolNameErrorMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.schoolNameError.toShow = "block";
+        prevState.schoolNameError.mess = schoolNameErrorMess;
+        return { schoolNameError: prevState.schoolNameError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+    }
 
     //after all the validation we need to send the data to sql
     if (allOk) {
@@ -240,7 +248,6 @@ class AddStudent extends React.Component {
   };
 
   render() {
-    console.log("nxkjdsncjkendkjcnkjdnckj");
     return (
       <div className='withMenu'>
         <ArrowNavBar />
@@ -296,7 +303,7 @@ class AddStudent extends React.Component {
             name="userName"
           ></input>
 
-          <label for="password" className="labelFields">
+          {/* <label for="password" className="labelFields">
             סיסמא:
           </label>
           <p
@@ -312,7 +319,7 @@ class AddStudent extends React.Component {
             type="password"
             placeholder="הכנס סיסמא"
             name="password"
-          ></input>
+          ></input> */}
 
           <label className="labelFields">בית ספר:</label>
           <p

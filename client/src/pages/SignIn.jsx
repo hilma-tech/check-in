@@ -52,6 +52,8 @@ class SignIn extends Component {
     let username = this.state.username;
     let password = this.state.password;
     try {
+      console.log('emailValidation(username).length: ', emailValidation(username).length);
+      console.log('passwordValidation(password).length: ', passwordValidation(password));
       if (
         emailValidation(username).length === 0 &&
         passwordValidation(password).length === 0
@@ -69,6 +71,7 @@ class SignIn extends Component {
           }
         } else {
           if (response.msg.status === 401) {
+            console.log('response.msg.statu: njdw', response.msg.statu);
             this.props.errorMsg.setErrorMsg("שם המשתמש והסיסמא אינם תואמים.");
           } else {
             this.props.errorMsg.setErrorMsg(
@@ -85,6 +88,7 @@ class SignIn extends Component {
       }
     } catch (error) {
       if (error.status === 401) {
+        console.log('error.status: ', error.status);
         this.props.errorMsg.setErrorMsg("שם המשתמש והסיסמא אינם תואמים.");
       } else {
         this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת. לא ניתן להתחבר.");

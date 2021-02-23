@@ -73,11 +73,13 @@ export function classNameValidation(name) {
 export function passwordValidation(password) {
     if (password === null || password.length === 0) {
         return '** חייב להכניס סיסמא **'
-    } else if (password.length > 30 || password.length < 8) {
+    } else if (password.length > 20 || password.length < 6) {
         return '** סיסמא לא תקינה **'
     } else if (password.trim().length === 0) {
         return '** סיסמא לא תקינה **'
     } else if (!(/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
+        console.log((/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password));
+        console.log('password: ', password);
         return '** סיסמא לא תקינה **'
     } else if (!(/[A-Za-z\u0590-\u05EA0-9]/).test(password)) {
         return '** סיסמא לא תקינה **'

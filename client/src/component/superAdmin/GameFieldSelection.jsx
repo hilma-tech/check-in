@@ -54,7 +54,6 @@ class GameFieldSelection extends Component {
             className={
               this.props.originalValue[0].value.length !== 0
               ? "chosenImg"
-              
                 : "cameraIcon"
             }
             src={

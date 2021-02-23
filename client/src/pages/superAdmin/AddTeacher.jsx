@@ -361,7 +361,7 @@ class AddTeacher extends Component {
                 placeholder="הכנס כתובת מייל..."
               />
               {/* סיסמא */}
-              <label className="labelFields">סיסמא:</label>
+              {/* <label className="labelFields">סיסמא:</label>
               <p
                 className="error"
                 style={{ display: this.state.passwordNameError.toShow }}
@@ -373,7 +373,7 @@ class AddTeacher extends Component {
                 onBlur={this.savePassword}
                 type="text"
                 placeholder="הכנס סיסמא..."
-              />
+              /> */}
             </form>
 
             <div className="spacerFromSaveButton"></div>

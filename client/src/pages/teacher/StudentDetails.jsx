@@ -7,6 +7,7 @@ import SmallMenuBar from "../../component/teacher/SmallMenuBar";
 import "../../style/teacher/student_details_style.css";
 import { chosenClassContext } from "../../stores/chosenClass.store";
 import ArrowBar from "../../component/teacher/ArrowBar";
+import EditIcon from '@material-ui/icons/Edit';
 
 class StudentDetails extends Component {
   constructor() {
@@ -15,8 +16,10 @@ class StudentDetails extends Component {
       name: "",
       userName: "",
       classrooms: [],
+      newPass: ""
     };
   }
+
 
   componentDidMount() {
     if (this.props.chosenClass.classId === 0) {
@@ -33,6 +36,11 @@ class StudentDetails extends Component {
   }
 
   render() {
+    const updatePass = () => {
+      this.setState({ newPass: 'sa' })
+      // console.log('changed!');
+    }
+
     return (
       <>
         <div className="smallPage">
@@ -57,31 +65,56 @@ class StudentDetails extends Component {
           <div className="studentDeets top">
             <h1 className="detail">{this.state.name}</h1>
           </div>
-          <div className="studentDeets">
-            <h1 className="detail">{this.state.userName}</h1>
-          </div>
-          <div className="studentDeets">
-            <h1 className="detail">1234</h1>
-          </div>
-          <div className="studentDeets">
-            <h1 className="detail">
-              {this.state.classrooms.length === 0 ? (
-                <p style={{ display: "inline-block", margin: "0" }}>
-                  לתלמיד/ה זה/זו אין עוד כיתות
-                </p>
-              ) : (
-                this.state.classrooms.map((classroom, ind) => {
-                  return (
-                    <p style={{ display: "inline-block", margin: "0" }}>
-                      {classroom.name}
-                      {ind < this.state.classrooms.length - 1
-                        ? "\u00A0"
-                        : ""}{" "}
-                    </p>
-                  );
-                })
-              )}
-            </h1>
+          <div className="inputBoxes">
+
+            <div className="studentDeets edit">
+              <h1 className="detail">{this.state.userName}</h1>
+            </div>
+            <div className="studentDeets">
+              <input
+                style={{
+                  border: "none",
+                  backgroundColor: 'rgba(188, 188, 203, 0)',
+                  fontWeight:'600',
+                  width: '90%',
+                  fontFamily: 'Assistant'
+                }}
+                className="passInput"
+                onBlur={updatePass}
+                defaultValue={'שינוי סיסמת תלמיד'}
+                type="text"
+              />
+              {/* <EditIcon
+                style={{
+                  height: "2vw",
+                  width: "2vw",
+                  position: 'relative',
+                  marginRight: "54vw",
+                  // marginTop: "-25vw",
+                  color: "#043163",
+                }} /> */}
+
+            </div>
+            <div className="studentDeets">
+              <h1 className="detail">
+                {this.state.classrooms.length === 0 ? (
+                  <p style={{ display: "inline-block", margin: "0" }}>
+                    לתלמיד/ה זה/זו אין עוד כיתות
+                  </p>
+                ) : (
+                    this.state.classrooms.map((classroom, ind) => {
+                      return (
+                        <p style={{ display: "inline-block", margin: "0" }}>
+                          {classroom.name}
+                          {ind < this.state.classrooms.length - 1
+                            ? "\u00A0"
+                            : ""}{" "}
+                        </p>
+                      );
+                    })
+                  )}
+              </h1>
+            </div>
           </div>
         </div>
       </>
