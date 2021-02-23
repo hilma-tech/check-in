@@ -28,30 +28,13 @@ export class StudentController {
   @UseJwtAuth('superAdmin')
   @Post('/register')
   async register(@Body() req:UserRegisterDto) {
-    console.log('req: ', req);
-    let username = req.username;
-    let password = req.password;
-    let student: Partial<Student> = new Student({ username, password });
-    student.first_name = req.firstName;
-    student.last_name = req.lastName;
-    
-    if(req.classrooms !== undefined || req.classrooms.length !== 0){
-      student.classroomStudent = req.classrooms.map((classroom)=>{
-        console.log('classroom: ', classroom);
-        let studentClassroom = new Classroom()
-        studentClassroom.id = classroom.id
-        studentClassroom.name = classroom.name
-        studentClassroom.school_id = req.schoolId
-        return studentClassroom
-      })
-    }
+    this.studentService.addStudent(req);
+  }
 
-    student.school = req.schoolId
-    console.log('student.classroomStudent: ', student.classroomStudent);
-    let userRole = new Role();
-    userRole.id = 4; //you set the role id.
-    student.roles = [userRole];
-    this.userService.createUser<Student>(student);
+  @UseJwtAuth('superAdmin')
+  @Post('/multiRegister')
+  async multiRegister(@Body() req: any) {
+    console.log('req: ', req);
   }
 
   @UseJwtAuth('teacher', 'superAdmin')

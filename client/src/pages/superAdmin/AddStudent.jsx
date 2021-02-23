@@ -8,7 +8,7 @@ import { withRouter } from "react-router-dom";
 import {
   emailValidation,
   nameValidation,
-  passwordValidation,
+  studentPasswordValidation,
   mustInputValidation,
 } from "../../tools/ValidationFunctions";
 import "../../style/superAdmin/class_selection_style.css";
@@ -203,7 +203,7 @@ class AddStudent extends React.Component {
     }
 
     // ---------------password validation-------------------
-    let passwordErrorMess = passwordValidation(this.state.password);
+    let passwordErrorMess = studentPasswordValidation(this.state.password);
     console.log('this.state.password: ', this.state.password);
     if (passwordErrorMess.length !== 0) {
       this.setState((prevState) => {
