@@ -6,7 +6,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { errorMsgContext } from '../../stores/error.store';
 import "../../style/superAdmin/add_student_pop_up_style.scss"
-import { emailValidation, mustInputValidation, nameValidation, passwordValidation, userNameValidation } from '../../tools/ValidationFunctions';
+import { emailValidation, mustInputValidation, nameValidation, passwordValidation, schoolNameValidation, studentPasswordValidation, userNameValidation } from '../../tools/ValidationFunctions';
 
 var xlsxParser = require('xlsx');
 const axios = require("axios").default;
@@ -27,6 +27,9 @@ class AddStudentPopUp extends React.Component {
         props.preventDefault();
         const files = props.target.files;
         const targetFile = files[0];
+        if(targetFile === undefined){
+            return;
+        }
         console.log('targetFile.type: ', targetFile.type);
         let dataParse = "";
         let isOk = true;
@@ -51,43 +54,44 @@ class AddStudentPopUp extends React.Component {
                         openPopUpError("הקובץ ריק. הכנס מידע בקובץ על מנת לשמור תלמידים")
                     } else {
                         for (let i = 0; i < dataParse.length; i++) {
+                            console.log('i: ', i);
                             for (let j = 0; j < 5; j++) {
                                 if (dataParse[i][j] === undefined) {
                                     errorsMsg.push(`חסר מידע בשורה ${i + 1}.`)
-                                    // openPopUpError(`חסר מידע בשורה ${i + 1}.`)
-                                } else if(j === 0 && nameValidation(String(dataParse[i][j])).length !== 0){
+                                } else if (j === 0 && nameValidation(String(dataParse[i][j])).length !== 0) {
                                     errorsMsg.push(`השם הפרטי של התלמיד בשורה ${i + 1} לא תקין.`)
-                                } else if(j === 1 && nameValidation(String(dataParse[i][j])).length !== 0){
+                                } else if (j === 1 && nameValidation(String(dataParse[i][j])).length !== 0) {
                                     errorsMsg.push(`השם המשפחה של התלמיד בשורה ${i + 1} לא תקין.`)
-                                } else if(j === 2 && userNameValidation(String(dataParse[i][j])).length !== 0){
+                                } else if (j === 2 && userNameValidation(String(dataParse[i][j])).length !== 0) {
                                     errorsMsg.push(`השם משתמש של התלמיד בשורה ${i + 1} לא תקין.`)
-                                } else if(j === 3 && passwordValidation(String(dataParse[i][j])).length !== 0){
-                                    errorsMsg.push(`הסיסמה של התלמיד בשורה ${i + 1} לא תקין.`)
-                                } else if(j === 4 && nameValidation(String(dataParse[i][j])).length !== 0){
+                                } else if (j === 3 && studentPasswordValidation(String(dataParse[i][j])).length !== 0) {
+                                    errorsMsg.push(`הסיסמה של התלמיד בשורה ${i + 1} לא תקינה.`)
+                                } else if (j === 4 && schoolNameValidation(String(dataParse[i][j])).length !== 0) {
                                     errorsMsg.push(`הבית ספר של התלמיד בשורה ${i + 1} לא תקין.`)
                                 }
                             }
                         }
-                        
-                        try {
-                            await axios.post("/api/student/multiRegister",dataParse);
-                        //     // const successfulSave = await axios.post("api/dialogue/upload", { data: dataParse, fileName: targetFile.name });
-                        //     // if (successfulSave.data) {
-                        //     //     onOpenPopup("successfully uploaded excel file");
-                        //     // }
-                        //     // else {
-                        //     //     onOpenPopup("something went wrong, please make sure all sentences meet the standard requirement");
-                        //     // }
-                        }
-                        catch (e) {
-                            console.log(e);
-                            if(errorsMsg.length !== 0){
-                                console.log('errorsMsg: ', errorsMsg);
-                            } else {
+                        if (errorsMsg.length === 0) {
+                            try {
+                                let {data} = await axios.post("/api/student/multiRegister", dataParse);
+                                if (!data.success){
+                                    openPopUpError(data.errorsMsg.map((errMsg, i)=>{
+                                        return <p key={i}>{errMsg}</p>
+                                    }))
+                                }else {
+                                    openPopUpError('כל התלמידים נשמרו בהצלחה.')
+                                }
+                                // console.log('response: ', response);
+                            }
+                            catch (e) {
+                                console.log(e);
                                 openPopUpError("הייתה שגיאה בשרת. לא ניתן לשמור את התלמידים.")
                             }
+                        } else {
+                            openPopUpError(errorsMsg.map((errMsg, i)=>{
+                                return <p key={i}>{errMsg}</p>
+                            }))
                         }
-                        console.log('errorsMsg: ', errorsMsg);
                     }
                 }
                 reader.readAsBinaryString(targetFile);

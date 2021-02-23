@@ -9,7 +9,7 @@ export class SchoolService {
   constructor(
     @InjectRepository(School)
     private schoolRepository: Repository<School>,
-  ) {}
+  ) { }
 
   async getSchools(@Req() skipON: GetSchoolSkip) {
     let numSchools = await this.schoolRepository.count();
@@ -22,9 +22,17 @@ export class SchoolService {
     return { schoolsInfo: schools, haveMoreSchools: haveMoreSchools };
   }
 
-  async getSchoolsNames(){
+  async getSchoolsNames() {
     return await this.schoolRepository.find({
-      select: ["id","name"]
+      select: ["id", "name"]
+    })
+  }
+
+  //if the school not exist it's will return undifiend
+  async getSchoolIdByName(schoolName: string) {
+    return await this.schoolRepository.findOne({
+      select: ["id"],
+      where: [{ name: schoolName }]
     })
   }
 }

@@ -13,6 +13,7 @@ import { ClassroomService } from 'src/classroom/classroom.service';
 import { GameModule } from 'src/game/game.module';
 import { GameService } from 'src/game/game.service';
 import { Classroom } from 'src/classroom/classroom.entity';
+import { SchoolService } from 'src/school/school.service';
 
 @Controller('api/student')
 export class StudentController {
@@ -20,14 +21,15 @@ export class StudentController {
     private readonly userService: UserService,
     private studentService: StudentService,
     private classroomService: ClassroomService,
-    private gameService: GameService
+    private gameService: GameService,
+    private schoolService: SchoolService
   ) {
     // this.register({username: 'student2@gmail.com', password: 'student11', name: 'בת-ציון רוז'})
   }
 
   @UseJwtAuth('superAdmin')
   @Post('/register')
-  async register(@Body() req:UserRegisterDto) {
+  async register(@Body() req: UserRegisterDto) {
     this.studentService.addStudent(req);
   }
 
@@ -35,6 +37,31 @@ export class StudentController {
   @Post('/multiRegister')
   async multiRegister(@Body() req: any) {
     console.log('req: ', req);
+    let errorsMsg = []
+    for (let i = 0; i < req.length; i++) {
+      let schoolId = await this.schoolService.getSchoolIdByName(req[i][4])
+      console.log('schoolId: ', schoolId);
+      if (schoolId === undefined) {
+        errorsMsg.push(`הבית ספר בשורה ${i + 1} לא קיים במערכת. אנא נסה להכניס בית ספר אחר`)
+      } else {
+        req[i][4] = schoolId.id
+      }
+    }
+    if (errorsMsg.length !== 0) {
+      return { success: false, errorsMsg: errorsMsg }
+    } else {
+      for (let i = 0; i < req.length; i++) {
+        this.studentService.addStudent({
+          firstName: req[i][0],
+          lastName: req[i][1],
+          username: req[i][2],
+          password: req[i][3],
+          schoolId: req[i][4],
+          classrooms: []
+        })
+      }
+      return { success: true }
+    }
   }
 
   @UseJwtAuth('teacher', 'superAdmin')
