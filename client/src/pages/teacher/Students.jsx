@@ -63,9 +63,9 @@ class Students extends Component {
                       <h1 className="smallStudentName justForWeb" id={index}>
                         שם משתמש: {student.username}
                       </h1>
-                      <h1 className="smallStudentName justForWeb" id={index}>
+                      {/* <h1 className="smallStudentName justForWeb" id={index}>
                         סיסמא: {student.id}
-                      </h1>
+                      </h1> */}
                     </div>
                   );
                 })

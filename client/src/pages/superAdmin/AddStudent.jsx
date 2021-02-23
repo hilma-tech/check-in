@@ -303,7 +303,7 @@ class AddStudent extends React.Component {
             name="userName"
           ></input>
 
-          <label for="password" className="labelFields">
+          {/* <label for="password" className="labelFields">
             סיסמא:
           </label>
           <p
@@ -319,7 +319,7 @@ class AddStudent extends React.Component {
             type="password"
             placeholder="הכנס סיסמא"
             name="password"
-          ></input>
+          ></input> */}
 
           <label className="labelFields">בית ספר:</label>
           <p
