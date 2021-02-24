@@ -69,6 +69,12 @@ export class StudentService extends UserService {
   }
 
 
+  async changeStudentPassword(userInfo) {
+    const hash = bcrypt.hashSync(userInfo.password, 10);
+    // return await this.userRepository.save({ ...userInfo, password: hash }) 
+  }
+
+
   async getClassStudents(classId: string, studentLength: number) {
     let students = await this.userRepository
       .createQueryBuilder('Student')

@@ -15,17 +15,67 @@
     align-self: start;
 
 }
-
-.edit{
-    flex-direction: row;
+.passchange, .editIcon, .changePasstext{
+    cursor:pointer;
 }
-.passInput{
+.passchange{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    width: max-content;
+    height:4vh;
+    background-color: #E7EBEF;
+    border: 2px solid #043163;
+    border-radius:2vw ;
+    margin-top: 3vh;
+    margin-right: 3vh;
+    box-shadow: 0px 3px 6px #04316329
+}
+.editIcon{
+    margin-top: 0.5vh;
+    position: 'absolute';
+    /* margin-right: 1vw; */
+    padding-left: 1vw;
+}
+
+.changePasstext{
+    color: #043163;
+    font-size: 3vh;
+    padding-right: 1vw;
+    padding-left: 1vw;
+    margin-top: 0vh;
+
+}
+ .passInput{
     text-align: right;
     font-size: 3.5vh;
     margin: 0px;
     padding-top: 0.75vh;
-    color: #043163;
+    color: #043163; 
+        }
+.approveOrNot{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
+.extraMargin{
+    margin-left: -5vw;
+}
+
+.inputError {
+    color: red;
+    position: absolute;
+    font-size: '3vh';
+    margin: 0px;
+    font-weight: lighter;
+    margin-right: 7vw;
+    margin-top: 1vh;
+
+}
+.edit{
+    flex-direction: row;
+}
+
 .top {
     margin-top: 34vh;
 }
@@ -84,10 +134,30 @@
     padding-top: 0.75vh;
     color: #043163;     }
 
+    .passchange{
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        margin-right: 32vw;
+        margin-top: 3vh;
+        border-radius: .75vw;
+    }
+    .inputError {
+        color: red;
+        position: absolute;
+        font-size: '3vh';
+        margin: 0px;
+        font-weight: lighter;
+        margin-right: 33vw;
+        margin-top: 1vh;
+    }
+
     .justForWeb{
         display: inline-block;
     }
-
+    .extraMargin{
+        margin-left: -2vw;
+    }
     .studentDeets {
         width: 60vw;
         height: 6vh;
@@ -98,6 +168,7 @@
         box-shadow: 0px 3px 6px #04316329;
     }
     
+   
     .top {
         margin-top: 25vh;
     }
