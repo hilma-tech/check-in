@@ -14,6 +14,7 @@ import { withContext } from "@hilma/tools";
 import LoadingPage from "../../component/superAdmin/LoadingGamePage.jsx";
 import { IsAuthenticatedContext } from "@hilma/auth";
 import OutsideClickHandler from "react-outside-click-handler";
+import { Slide } from "@material-ui/core";
 
 class Games extends Component {
   constructor() {
@@ -63,11 +64,10 @@ class Games extends Component {
 
 
   //Save the user search value as searchVal in state.
-  //! not in use
-  // handleChange = (e) => {
-  //   this.setState({ searchVal: e.target.value });
-  // };
-  //!not in use
+  
+  handleChange = (e) => {
+    this.setState({ searchVal: e.target.value });
+  };
   //When the user press the search icon it's start to show the input text for the searching.
   activateSearch = () => {
     this.setState({ displaySearch: true });
@@ -83,24 +83,28 @@ class Games extends Component {
         <div id="wholepage">
           <div id="searchbar">
             <h5 className="title">משחקים</h5>
-            {/* for now */}
-            {/* <form className="search">
-              <Slide
-                direction="right"
+            <form className={this.state.displaySearch ? "gameSearchbar bordered" : "gameSearchbar"}>
+              <Fade
                 in={this.state.displaySearch}
+                timeout={{
+                  appear: 500,
+                  enter: 400,
+                  exit: 100,
+                }}
                 mountOnEnter
                 unmountOnExit
               >
                 <input
                   type="text"
                   name="search"
+                  className="searchInp"
                   value={this.state.searchVal}
                   placeholder="חיפוש"
                   onChange={this.handleChange}
                 />
-              </Slide>
+              </Fade>
               <p className="searchIcon" onClick={this.activateSearch}></p>
-            </form> */}
+            </form>
           </div>
           {this.props.games.haveMoreGames &&
             this.props.games.gamesList.length === 0
@@ -112,7 +116,7 @@ class Games extends Component {
             ) : (
               <div className="grid">
                 <div onClick={this.onClickAddGame}>
-                  <div className="imageContainer item3">
+                  <div className="imageContainer item3 pointyboi">
                     <img className="addImg" src={addicon} alt="" />
                     <h2 className="gameTitleBackground"></h2>
                     <h1 className="gameTitle">הוסף משחק</h1>
