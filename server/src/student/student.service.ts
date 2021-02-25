@@ -24,11 +24,11 @@ export class StudentService extends UserService {
   async getStudents(@Req() skipON: GetStudentSkip) {
     let numStudents = await this.userRepository.count();
     let haveMoreStudents =
-      numStudents > Number(skipON.studentsLength) + 50 ? true : false;
+      numStudents > Number(skipON.studentsLength) + 4 ? true : false;
     let students = await this.userRepository.find({
       relations: ['school', 'classroomStudent'],
       skip: Number(skipON.studentsLength),
-      take: 50,
+      take: 4,
     });
     return { studentsInfo: students, haveMoreStudents: haveMoreStudents };
   }
@@ -90,7 +90,6 @@ export class StudentService extends UserService {
   }
 
   async addStudent(@Body() req:UserRegisterDto){
-    console.log('req: ', req);
     let username = req.username;
     let password = req.password;
     let student: Partial<Student> = new Student({ username, password });
@@ -99,7 +98,6 @@ export class StudentService extends UserService {
     
     if(req.classrooms !== undefined || req.classrooms.length !== 0){
       student.classroomStudent = req.classrooms.map((classroom)=>{
-        console.log('classroom: ', classroom);
         let studentClassroom = new Classroom()
         studentClassroom.id = classroom.id
         studentClassroom.name = classroom.name
@@ -109,10 +107,9 @@ export class StudentService extends UserService {
     }
 
     student.school = req.schoolId
-    console.log('student.classroomStudent: ', student.classroomStudent);
     let userRole = new Role();
     userRole.id = 4; //you set the role id.
     student.roles = [userRole];
-    this.createUser<Student>(student);
+    return await this.createUser<Student>(student);
   }
 }
