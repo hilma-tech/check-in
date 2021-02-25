@@ -8,6 +8,7 @@ import "../../style/teacher/student_details_style.css";
 import { chosenClassContext } from "../../stores/chosenClass.store";
 import ArrowBar from "../../component/teacher/ArrowBar";
 import EditIcon from '@material-ui/icons/Edit';
+import { passwordValidation } from "../../tools/ValidationFunctions";
 
 class StudentDetails extends Component {
   constructor() {
@@ -16,10 +17,12 @@ class StudentDetails extends Component {
       name: "",
       userName: "",
       classrooms: [],
-      newPass: ""
+      showPassChanger: false,
+      passDisplay: '',
+      newPass: '',
+      passErr: ''
     };
   }
-
 
   componentDidMount() {
     if (this.props.chosenClass.classId === 0) {
@@ -35,12 +38,28 @@ class StudentDetails extends Component {
     }
   }
 
-  render() {
-    const updatePass = () => {
-      this.setState({ newPass: 'sa' })
-      // console.log('changed!');
-    }
 
+
+  render() {
+    var updatePass = () => {
+      var passValidation = passwordValidation(this.state.passDisplay)
+      console.log('passValidation: ', passValidation);
+      this.setState({ passErr: passValidation })
+    }
+    var onPassChange = (val) => {
+      this.setState({ passDisplay: val.target.value })
+    }
+    var closePassChange = (type) => {
+      if (!this.state.passErr) {
+        this.setState({
+          showPassChanger: !this.state.showPassChanger,
+          passErr: ''
+        })
+      } else if (type = false) {
+        this.setState({ passErr: '' })
+      }
+
+    }
     return (
       <>
         <div className="smallPage">
@@ -70,31 +89,7 @@ class StudentDetails extends Component {
             <div className="studentDeets edit">
               <h1 className="detail">{this.state.userName}</h1>
             </div>
-            <div className="studentDeets">
-              <input
-                style={{
-                  border: "none",
-                  backgroundColor: 'rgba(188, 188, 203, 0)',
-                  fontWeight:'600',
-                  width: '90%',
-                  fontFamily: 'Assistant'
-                }}
-                className="passInput"
-                onBlur={updatePass}
-                defaultValue={'שינוי סיסמת תלמיד'}
-                type="text"
-              />
-              {/* <EditIcon
-                style={{
-                  height: "2vw",
-                  width: "2vw",
-                  position: 'relative',
-                  marginRight: "54vw",
-                  // marginTop: "-25vw",
-                  color: "#043163",
-                }} /> */}
 
-            </div>
             <div className="studentDeets">
               <h1 className="detail">
                 {this.state.classrooms.length === 0 ? (
@@ -114,6 +109,58 @@ class StudentDetails extends Component {
                     })
                   )}
               </h1>
+            </div>
+
+
+            <div className="passchange" onClick={() => {
+              this.setState({
+                passDisplay: 'הכנס סיסמה חדשה',
+                showPassChanger: !this.state.showPassChanger,
+                passErr: ''
+              });
+            }} >
+              <h2 className="changePasstext" >שינוי סיסמה</h2>
+              <div className='editIcon'>
+                <EditIcon
+                  style={{
+                    height: "3vh",
+                    width: "3vh",
+                    color: "#043163"
+                  }} />
+              </div>
+            </div>
+            <div style={{ display: this.state.showPassChanger ? "block" : "none" }}>
+              <h4 className='inputError'>{this.state.passErr}</h4>
+              <div style={this.state.passErr ? { marginTop: '5vh' } : {}}>
+                <div className="studentDeets">
+                  <input
+                    style={{
+                      border: "none",
+                      backgroundColor: 'rgba(188, 188, 203, 0)',
+                      fontWeight: '600',
+                      width: '90%',
+                      fontFamily: 'Assistant',
+                    }}
+                    className="passInput"
+                    onFocus={() => this.setState({ passDisplay: '' })}
+                    onChange={(val) => onPassChange(val)}
+                    value={this.state.passDisplay}
+                    type="text"
+                  />
+                </div></div>
+              <div className='approveOrNot'>
+                <div className='passchange' onClick={() => { closePassChange(false) }}>
+                  <h3 style={{ fontWeight: 'lighter' }} className='changePasstext'>ביטול</h3>
+                </div>
+                <div className='passchange extraMargin' onClick={async () => {
+                  await updatePass()
+                  closePassChange(true)
+                }} >
+                  <h3 style={{ fontWeight: 'lighter' }} className='changePasstext'>שמור</h3>
+
+                </div>
+
+              </div>
             </div>
           </div>
         </div>

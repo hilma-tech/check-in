@@ -56,7 +56,13 @@ class AddStudentPopUp extends React.Component {
                     const wsname = readedData.SheetNames[0];
                     const ws = readedData.Sheets[wsname];
                     /* Convert array to json*/
+<<<<<<< HEAD
                     dataParse = xlsxParser.utils.sheet_to_json(ws);
+=======
+                    dataParse = xlsxParser.utils.sheet_to_json(ws, { header: 1 });
+                    dataParse = []
+                    console.log('dataParse: ', dataParse);
+>>>>>>> c34c367a1d2137b4d188f35ecc431cc8e653e17c
                     if (dataParse.length === 0) {
                         openPopUpError("הקובץ ריק. הכנס מידע בקובץ על מנת לשמור תלמידים")
                     } else {

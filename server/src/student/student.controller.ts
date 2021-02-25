@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
 import { UserService, Role, UseJwtAuth } from '@hilma/auth-nest';
 import { Student } from './student.entity';
 import { StudentService } from './student.service';
@@ -100,5 +100,11 @@ export class StudentController {
       data.classId,
       Number(data.dataLength),
     );
+  }
+
+  // @UseJwtAuth('teacher')
+  @Post('/changestudentpass')
+  async changePass(@Req() newPass: any){
+return await this.studentService.changeStudentPassword(newPass.query)
   }
 }

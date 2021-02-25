@@ -84,20 +84,19 @@ export function classNameValidation(name) {
 //Check validation for password
 export function passwordValidation(password) {
     if (password === null || password.length === 0) {
-        return '** חייב להכניס סיסמא **'
+        return '** נא להכניס סיסמא **'
     } else if (password.length > 20 || password.length < 6) {
-        return '** סיסמא לא תקינה **'
+        return '** על הסיסמה להיות בין 6-20 תווים **'
     } else if (password.trim().length === 0) {
-        return '** סיסמא לא תקינה **'
+        return '** נא להכניס סיסמא **'
     } else if (!(/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
-        return '** סיסמא לא תקינה **'
+        return '** על הסיסמה להכל אותיות ומספרים בלבד  **'
     } else if (!(/[A-Za-z\u0590-\u05EA0-9]/).test(password)) {
-        return '** סיסמא לא תקינה **'
+        return '** סיסמה לא תקינה **'
     } else {
         return ''
     }
 }
-
 //Check validation for password
 export function studentPasswordValidation(password) {
     if (password === null || password.length === 0) {
