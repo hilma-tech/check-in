@@ -253,8 +253,6 @@ class AddStudent extends React.Component {
               return classInfo.name
             })
           })
-        } else {
-          this.props.students.listDataStudents = []
         }
         this.props.history.goBack(); // after saving go back
       } catch (err) {

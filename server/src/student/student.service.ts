@@ -24,11 +24,12 @@ export class StudentService extends UserService {
   async getStudents(@Req() skipON: GetStudentSkip) {
     let numStudents = await this.userRepository.count();
     let haveMoreStudents =
-      numStudents > Number(skipON.studentsLength) + 4 ? true : false;
+      numStudents > Number(skipON.studentsLength) + 50 ? true : false;
     let students = await this.userRepository.find({
       relations: ['school', 'classroomStudent'],
       skip: Number(skipON.studentsLength),
-      take: 4,
+      take: 50,
+      order: {created: "ASC"}
     });
     return { studentsInfo: students, haveMoreStudents: haveMoreStudents };
   }

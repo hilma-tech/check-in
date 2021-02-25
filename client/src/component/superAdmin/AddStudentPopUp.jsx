@@ -39,9 +39,6 @@ class AddStudentPopUp extends React.Component {
         let addStudentToTheList = (studentsInfo) => {
             if (!this.props.students.haveMoreStudents) {
                 this.props.students.addMultiStudents(studentsInfo)
-            } else {
-                this.props.students.listDataStudents = []
-                this.props.students.getStudents()
             }
             this.props.errorMsg.setErrorMsg('כל התלמידים נשמרו בהצלחה.');
         }
