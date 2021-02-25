@@ -5,6 +5,7 @@ import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import { teachersContext } from "../../stores/teachers.store.js";
 import { errorMsgContext } from "../../stores/error.store.js";
+import { Slide } from "@material-ui/core";
 
 const axios = require("axios").default;
 
@@ -33,11 +34,11 @@ class TeachersList extends React.Component {
   // handleChange = (e) => {
   //   this.setState({ searchVal: e.target.value });
   // };
-  //! not in use
+
   //When the user press the search icon it's start to show the input text for the searching.
-  // activateSearch = () => {
-  //   this.setState({ displaySearch: true });
-  // };
+  activateSearch = () => {
+    this.setState({ displaySearch: true });
+  };
 
   //gets teachers from the DB
   getTeachers = async () => {
@@ -54,8 +55,7 @@ class TeachersList extends React.Component {
       <div className="TeachersList withMenu" dir="rtl">
         <div className="PageTitles">
           <p>מורים</p>
-          {/* for now */}
-          {/* <form className="search">
+          <form className="search">
             <Slide
               direction="right"
               in={this.state.displaySearch}
@@ -71,7 +71,7 @@ class TeachersList extends React.Component {
               />
             </Slide>
             <p className="searchIcon" onClick={this.activateSearch}></p>
-          </form> */}
+          </form>
         </div>
         {/*
                 Create the teacher table with the general table.

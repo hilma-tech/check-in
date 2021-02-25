@@ -30,37 +30,39 @@ export class StudentController {
   @UseJwtAuth('superAdmin')
   @Post('/register')
   async register(@Body() req: UserRegisterDto) {
-    this.studentService.addStudent(req);
+    return await this.studentService.addStudent(req);
   }
 
   @UseJwtAuth('superAdmin')
   @Post('/multiRegister')
   async multiRegister(@Body() req: any) {
-    console.log('req: ', req);
+    let ans = []
     let errorsMsg = []
     for (let i = 0; i < req.length; i++) {
-      let schoolId = await this.schoolService.getSchoolIdByName(req[i][4])
-      console.log('schoolId: ', schoolId);
+      let schoolId = await this.schoolService.getSchoolIdByName(req[i].schoolName)
+      req[i].classrooms = []
       if (schoolId === undefined) {
         errorsMsg.push(`הבית ספר בשורה ${i + 1} לא קיים במערכת. אנא נסה להכניס בית ספר אחר`)
       } else {
-        req[i][4] = schoolId.id
+        req[i].schoolId = schoolId.id
       }
     }
     if (errorsMsg.length !== 0) {
       return { success: false, errorsMsg: errorsMsg }
     } else {
       for (let i = 0; i < req.length; i++) {
-        this.studentService.addStudent({
-          firstName: req[i][0],
-          lastName: req[i][1],
-          username: req[i][2],
-          password: req[i][3],
-          schoolId: req[i][4],
-          classrooms: []
+        let info = await this.studentService.addStudent(req[i])
+        ans.push({
+          first_name: req[i].firstName,
+          last_name: req[i].lastName,
+          name: req[i].firstName + " " + req[i].lastName,
+          username: req[i].username,
+          schoolName: req[i].schoolName,
+          id: info.id,
+          classes: []
         })
       }
-      return { success: true }
+      return { success: true, students: ans }
     }
   }
 

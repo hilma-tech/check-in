@@ -43,6 +43,7 @@ class StudentsList extends React.Component {
         "הייתה שגיאה בשרת. לא ניתן לקבל תלמידים מהשרת."
       );
     }
+    console.log('this.props.students.listDataStudents: ', this.props.students.listDataStudents);
   };
 
   render() {
@@ -73,7 +74,7 @@ class StudentsList extends React.Component {
                 Create the school table with the general teble.
             */}
 
-  
+
         <GeneralTable
           allData={this.props.students.listDataStudents}
           categors={this.state.categors}

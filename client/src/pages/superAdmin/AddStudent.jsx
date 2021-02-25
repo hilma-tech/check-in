@@ -17,6 +17,7 @@ import { errorMsgContext } from "../../stores/error.store";
 import { schoolsContext } from "../../stores/schools.store";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
+import { studentsContext } from "../../stores/students.store";
 
 const axios = require("axios").default;
 
@@ -205,7 +206,6 @@ class AddStudent extends React.Component {
 
     // ---------------password validation-------------------
     let passwordErrorMess = studentPasswordValidation(this.state.password);
-    console.log('this.state.password: ', this.state.password);
     if (passwordErrorMess.length !== 0) {
       this.setState((prevState) => {
         prevState.passwordError.toShow = "block";
@@ -233,7 +233,7 @@ class AddStudent extends React.Component {
     //after all the validation we need to send the data to sql
     if (allOk) {
       try {
-        await axios.post("/api/student/register", {
+        let {data} = await axios.post("/api/student/register", {
           username: this.state.userName,
           password: this.state.password,
           firstName: this.state.studentFirstName,
@@ -241,6 +241,19 @@ class AddStudent extends React.Component {
           classrooms: this.state.chosenClasses,
           schoolId: this.state.schoolId
         });
+        if(!this.props.students.haveMoreStudents){
+          this.props.students.addStudent({
+            first_name: data.first_name,
+            last_name: data.last_name,
+            name: data.first_name + " " +data.last_name,
+            username: data.username,
+            schoolName: this.state.school,
+            id: data.id,
+            classes: data.classroomStudent.map((classInfo)=>{
+              return classInfo.name
+            })
+          })
+        }
         this.props.history.goBack(); // after saving go back
       } catch (err) {
         console.log("save student error: ", err);
@@ -304,7 +317,7 @@ class AddStudent extends React.Component {
             name="userName"
           ></input>
 
-          {/* <label for="password" className="labelFields">
+          <label for="password" className="labelFields">
             סיסמא:
           </label>
           <p
@@ -320,7 +333,7 @@ class AddStudent extends React.Component {
             type="password"
             placeholder="הכנס סיסמא"
             name="password"
-          ></input> */}
+          ></input>
 
           <label className="labelFields">בית ספר:</label>
           <p
@@ -364,6 +377,7 @@ class AddStudent extends React.Component {
 
 const mapContextToProps = {
   schools: schoolsContext,
+  students: studentsContext,
   errorMsg: errorMsgContext,
 };
 

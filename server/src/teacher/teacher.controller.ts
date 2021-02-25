@@ -42,10 +42,8 @@ export class TeacherController {
     let user: Partial<Teacher> = new Teacher({ username, password });
     user.first_name = req.first_name
     user.last_name = req.last_name
-    console.log('req.fields_data: ', req.fields_data);
     if(req.fields_data !== undefined || req.fields_data.length !== 0){
       user.classroomTeacher = req.fields_data.map((classroom)=>{
-        console.log('classroom: ', classroom);
         let classroomTeacher = new Classroom()
         classroomTeacher.id = classroom.classId
         classroomTeacher.name = classroom.name
