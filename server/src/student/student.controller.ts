@@ -13,6 +13,7 @@ import { ClassroomService } from 'src/classroom/classroom.service';
 import { GameModule } from 'src/game/game.module';
 import { GameService } from 'src/game/game.service';
 import { Classroom } from 'src/classroom/classroom.entity';
+import { SchoolService } from 'src/school/school.service';
 
 @Controller('api/student')
 export class StudentController {
@@ -20,38 +21,47 @@ export class StudentController {
     private readonly userService: UserService,
     private studentService: StudentService,
     private classroomService: ClassroomService,
-    private gameService: GameService
+    private gameService: GameService,
+    private schoolService: SchoolService
   ) {
     // this.register({username: 'student2@gmail.com', password: 'student11', name: 'בת-ציון רוז'})
   }
 
   @UseJwtAuth('superAdmin')
   @Post('/register')
-  async register(@Body() req:UserRegisterDto) {
-    console.log('req: ', req);
-    let username = req.username;
-    let password = req.password;
-    let student: Partial<Student> = new Student({ username, password });
-    student.first_name = req.firstName;
-    student.last_name = req.lastName;
-    
-    if(req.classrooms !== undefined || req.classrooms.length !== 0){
-      student.classroomStudent = req.classrooms.map((classroom)=>{
-        console.log('classroom: ', classroom);
-        let studentClassroom = new Classroom()
-        studentClassroom.id = classroom.id
-        studentClassroom.name = classroom.name
-        studentClassroom.school_id = req.schoolId
-        return studentClassroom
-      })
-    }
+  async register(@Body() req: UserRegisterDto) {
+    this.studentService.addStudent(req);
+  }
 
-    student.school = req.schoolId
-    console.log('student.classroomStudent: ', student.classroomStudent);
-    let userRole = new Role();
-    userRole.id = 4; //you set the role id.
-    student.roles = [userRole];
-    this.userService.createUser<Student>(student);
+  @UseJwtAuth('superAdmin')
+  @Post('/multiRegister')
+  async multiRegister(@Body() req: any) {
+    console.log('req: ', req);
+    let errorsMsg = []
+    for (let i = 0; i < req.length; i++) {
+      let schoolId = await this.schoolService.getSchoolIdByName(req[i][4])
+      console.log('schoolId: ', schoolId);
+      if (schoolId === undefined) {
+        errorsMsg.push(`הבית ספר בשורה ${i + 1} לא קיים במערכת. אנא נסה להכניס בית ספר אחר`)
+      } else {
+        req[i][4] = schoolId.id
+      }
+    }
+    if (errorsMsg.length !== 0) {
+      return { success: false, errorsMsg: errorsMsg }
+    } else {
+      for (let i = 0; i < req.length; i++) {
+        this.studentService.addStudent({
+          firstName: req[i][0],
+          lastName: req[i][1],
+          username: req[i][2],
+          password: req[i][3],
+          schoolId: req[i][4],
+          classrooms: []
+        })
+      }
+      return { success: true }
+    }
   }
 
   @UseJwtAuth('teacher', 'superAdmin')

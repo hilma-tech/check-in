@@ -148,9 +148,7 @@ class Games extends Component {
                         </div>
                         <h2 className="gameTitleBackground"></h2>
                         <h1 className="gameTitle">
-                          {image.game_name.length > 15
-                            ? image.game_name.slice(0, 15) + "..."
-                            : image.game_name}
+                          {image.game_name}
                         </h1>
                         <OutsideClickHandler
                           onOutsideClick={() =>

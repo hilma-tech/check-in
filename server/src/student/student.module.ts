@@ -12,6 +12,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { Student } from './student.entity';
 import { ClassroomModule } from 'src/classroom/classroom.module';
 import { GameModule } from 'src/game/game.module';
+import { SchoolModule } from 'src/school/school.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { GameModule } from 'src/game/game.module';
     UserModule,
     RoleModule,
     GameModule,
+    SchoolModule,
     TypeOrmModule.forFeature([Student]),
     JwtModule.register({}),
   ],

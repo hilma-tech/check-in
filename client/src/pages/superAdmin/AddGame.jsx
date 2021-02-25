@@ -61,9 +61,10 @@ class AddGame extends Component {
       return { fieldsData: prevState.fieldsData, newKey: prevState.newKey + 1 };
     });
   };
-
+  
   //כשמו כן הוא
   saveFieldValue = (fieldValue, fieldI, inputId, inputImage, imgId) => {
+    console.log(fieldValue, fieldI, inputId, inputImage, "imgid: ",imgId);
     //only relevant to choice/multi-choice
     if (inputId) {
       this.setState((prevState) => {
@@ -104,8 +105,8 @@ class AddGame extends Component {
         };
         return { fieldsData: prevState.fieldsData };
       });
-    }
-  };
+    }}
+
 
   //adds another field to the form
   addNewFieldData = () => {
