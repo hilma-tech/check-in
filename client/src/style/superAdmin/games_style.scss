@@ -107,6 +107,10 @@ $gameimgwidth: 20vw;
   left: -0.2vw;
 }
 
+.pointyboi{
+  @include mouse(point)
+}
+
 .optionIcon {
   height: 1.5vw;
   width: 3.5vw;
@@ -119,16 +123,34 @@ $gameimgwidth: 20vw;
   width: 1.3vw;
 }
 
+.gameSearchbar{
+  display: flex;
+  height: 5vh;
+
+}
+
+.bordered{
+  border: 1px solid #043163;
+}
+
+.searchInp{
+  border: none;
+  width: 10vw;
+  padding-top: 1vh;
+  padding-right: 1vw;
+}
+
 .searchIcon {
   display: inline-block;
+  height: 3vh;
 }
 
 #searchbar {
   display: flex;
-  margin-right: 2.5vw;
+  margin-right: 7vw;
   align-items: center;
   justify-content: space-between;
-  width: 75vw;
+  width: 68vw;
   height: 12vh;
 }
 
