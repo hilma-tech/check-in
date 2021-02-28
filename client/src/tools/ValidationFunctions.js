@@ -15,7 +15,6 @@ export function userNameValidation(userName) {
 
 //Check validation for names (teacher, student or game name)
 export function nameValidation(name) {
-    console.log('name: ', name);
     if (name === null || name.length === 0) {
         return '** נא למלא שדה זה **'
     } else if (name.length > 30) {
@@ -91,7 +90,7 @@ export function passwordValidation(password) {
     } else if (password.trim().length === 0) {
         return '** סיסמה לא תקינה **'
     } else if (!(/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
-        return '** על הסיסמה להכל אותיות ומספרים  **'
+        return '** על הסיסמה להכל אותיות ומספרים בלבד  **'
     } else if (!(/[A-Za-z\u0590-\u05EA0-9]/).test(password)) {
         return '** סיסמה לא תקינה **'
     } else {

@@ -108,7 +108,7 @@ class StudentDetails extends Component {
                 ) : (
                     this.state.classrooms.map((classroom, ind) => {
                       return (
-                        <p style={{ display: "inline-block", margin: "0" }}>
+                        <p style={{ display: "inline-block", margin: "0" }} key={ind}>
                           {classroom.name}
                           {ind < this.state.classrooms.length - 1
                             ? "\u00A0"

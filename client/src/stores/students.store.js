@@ -18,6 +18,8 @@ class Students {
             chosenStudent: observable,
             getStudents: action,
             getChosenStudent: action,
+            addStudent: action,
+            addMultiStudents: action,
         })
     }
 
@@ -40,6 +42,15 @@ class Students {
             this.successGettingStudents = false
             this.startGetStudents = false;
         }
+    }
+
+    addStudent = (studentInfo) => {
+        this.listDataStudents.push(studentInfo)
+    }
+
+    addMultiStudents = (studentsList) => {
+        console.log('studentsList: ', studentsList);
+        this.listDataStudents = this.listDataStudents.concat(studentsList)
     }
 
     //gets all info on a specific student to display
