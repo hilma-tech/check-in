@@ -1,9 +1,9 @@
 import { Injectable, Inject, Req, Body } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Role, UserConfig, UserService, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
+import { Role, User, UserConfig, UserService, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { Repository } from 'typeorm';
+import { getConnection, Repository } from 'typeorm';
 import { Student } from './student.entity';
 import { GetStudentSkip, UserRegisterDto } from './student.dtos';
 import * as bcrypt from 'bcrypt';
@@ -72,7 +72,11 @@ export class StudentService extends UserService {
 
   async changeStudentPassword(userInfo) {
     const hash = bcrypt.hashSync(userInfo.password, 10);
-    // return await this.userRepository.save({ ...userInfo, password: hash }) 
+    this.userRepository.createQueryBuilder()
+      .update(User)
+      .set({ password: hash })
+      .where("username = :username", { username: userInfo.username })
+      .execute();
   }
 
 
@@ -96,16 +100,16 @@ export class StudentService extends UserService {
     };
   }
 
-  async addStudent(@Body() req:UserRegisterDto){
+  async addStudent(@Body() req: UserRegisterDto) {
     console.log('req: ', req);
     let username = req.username;
     let password = req.password;
     let student: Partial<Student> = new Student({ username, password });
     student.first_name = req.firstName;
     student.last_name = req.lastName;
-    
-    if(req.classrooms !== undefined || req.classrooms.length !== 0){
-      student.classroomStudent = req.classrooms.map((classroom)=>{
+
+    if (req.classrooms !== undefined || req.classrooms.length !== 0) {
+      student.classroomStudent = req.classrooms.map((classroom) => {
         console.log('classroom: ', classroom);
         let studentClassroom = new Classroom()
         studentClassroom.id = classroom.id

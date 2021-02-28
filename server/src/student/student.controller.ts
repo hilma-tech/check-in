@@ -100,9 +100,9 @@ export class StudentController {
     );
   }
 
-  // @UseJwtAuth('teacher')
+  @UseJwtAuth('teacher')
   @Post('/changestudentpass')
   async changePass(@Req() newPass: any){
-return await this.studentService.changeStudentPassword(newPass.query)
+return await this.studentService.changeStudentPassword(newPass.body)
   }
 }

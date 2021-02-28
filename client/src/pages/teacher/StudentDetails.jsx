@@ -8,7 +8,8 @@ import "../../style/teacher/student_details_style.css";
 import { chosenClassContext } from "../../stores/chosenClass.store";
 import ArrowBar from "../../component/teacher/ArrowBar";
 import EditIcon from '@material-ui/icons/Edit';
-import { passwordValidation } from "../../tools/ValidationFunctions";
+import { studentPasswordValidation } from "../../tools/ValidationFunctions";
+import axios from "axios";
 
 class StudentDetails extends Component {
   constructor() {
@@ -41,10 +42,21 @@ class StudentDetails extends Component {
 
 
   render() {
-    var updatePass = () => {
-      var passValidation = passwordValidation(this.state.passDisplay)
-      console.log('passValidation: ', passValidation);
+    var updatePass = async () => {
+      var passValidation = studentPasswordValidation(this.state.passDisplay)
       this.setState({ passErr: passValidation })
+      if (passValidation === '') {
+        try {
+          await axios.post("/api/student/changestudentpass",
+            {
+              username: this.state.userName,
+              password: this.state.passDisplay
+            });
+          closePassChange(true)
+        } catch (err) {
+          console.log("save pass error: ", err);
+        }
+      }
     }
     var onPassChange = (val) => {
       this.setState({ passDisplay: val.target.value })
@@ -55,10 +67,7 @@ class StudentDetails extends Component {
           showPassChanger: !this.state.showPassChanger,
           passErr: ''
         })
-      } else if (type = false) {
-        this.setState({ passErr: '' })
       }
-
     }
     return (
       <>
@@ -149,12 +158,16 @@ class StudentDetails extends Component {
                   />
                 </div></div>
               <div className='approveOrNot'>
-                <div className='passchange' onClick={() => { closePassChange(false) }}>
+                <div className='passchange' onClick={() => {
+                  this.setState({
+                    showPassChanger: !this.state.showPassChanger,
+                    passErr: ''
+                  })
+                }}>
                   <h3 style={{ fontWeight: 'lighter' }} className='changePasstext'>ביטול</h3>
                 </div>
                 <div className='passchange extraMargin' onClick={async () => {
                   await updatePass()
-                  closePassChange(true)
                 }} >
                   <h3 style={{ fontWeight: 'lighter' }} className='changePasstext'>שמור</h3>
 

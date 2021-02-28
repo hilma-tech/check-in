@@ -87,11 +87,10 @@ export function passwordValidation(password) {
     if (password === null || password.length === 0) {
         return '** נא להכניס סיסמא **'
     } else if (password.length > 20 || password.length < 6) {
-        return '** על הסיסמה להיות בין 6-20 תווים **'
+        return '** סיסמה לא תקינה **'
     } else if (password.trim().length === 0) {
-        return '** נא להכניס סיסמא **'
+        return '** סיסמה לא תקינה **'
     } else if (!(/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
-        console.log('password: ', password);
         return '** על הסיסמה להכל אותיות ומספרים  **'
     } else if (!(/[A-Za-z\u0590-\u05EA0-9]/).test(password)) {
         return '** סיסמה לא תקינה **'
@@ -102,15 +101,15 @@ export function passwordValidation(password) {
 //Check validation for password
 export function studentPasswordValidation(password) {
     if (password === null || password.length === 0) {
-        return '** חייב להכניס סיסמא **'
+        return '** נא להכניס סיסמא **'
     } else if (password.length > 15 || password.length < 6) {
-        return '** סיסמא לא תקינה **'
+        return '** על הסיסמה להיות בין 6-15 תווים **'
     } else if (password.trim().length === 0) {
-        return '** סיסמא לא תקינה **'
+        return '** נא להכניס סיסמא **'
     } else if ((/[\u0590-\u05EA]/).test(password)) {
-        return '** סיסמא לא תקינה **'
+        return '** על הסיסמה להכיל אותיות ומספרים/ תווים מיוחדים **'
     } else if (!((/[A-Za-z]/).test(password) && (/[0-9]/).test(password) && (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password))) {
-        return '** סיסמא לא תקינה **'
+        return '** על הסיסמה להכיל אותיות ומספרים/ תווים מיוחדים **'
     } else {
         return ''
     }
