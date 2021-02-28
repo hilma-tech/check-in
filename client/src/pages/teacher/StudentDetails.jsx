@@ -166,10 +166,11 @@ class StudentDetails extends Component {
                 }}>
                   <h3 style={{ fontWeight: 'lighter' }} className='changePasstext'>ביטול</h3>
                 </div>
-                <div className='passchange extraMargin' onClick={async () => {
+                <div className='passchange savepass' onClick={async () => {
                   await updatePass()
                 }} >
-                  <h3 style={{ fontWeight: 'lighter' }} className='changePasstext'>שמור</h3>
+                  <h3 style={{ fontWeight: 'lighter' }} className='changePasstext' style={{
+                    color: 'white', fontSize: '3vh', fontWeight:'lighter' }}>שמור</h3>
 
                 </div>
 
