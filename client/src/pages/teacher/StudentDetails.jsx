@@ -114,12 +114,12 @@ class StudentDetails extends Component {
 
             <div className="passchange" onClick={() => {
               this.setState({
-                passDisplay: 'הכנס סיסמה חדשה',
+                passDisplay: 'הכנס סיסמא חדשה',
                 showPassChanger: !this.state.showPassChanger,
                 passErr: ''
               });
             }} >
-              <h2 className="changePasstext" >שינוי סיסמה</h2>
+              <h2 className="changePasstext" >שינוי סיסמא</h2>
               <div className='editIcon'>
                 <EditIcon
                   style={{

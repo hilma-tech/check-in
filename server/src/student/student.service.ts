@@ -29,7 +29,7 @@ export class StudentService extends UserService {
       relations: ['school', 'classroomStudent'],
       skip: Number(skipON.studentsLength),
       take: 50,
-      order: {created: "ASC"}
+      order: {created: "DESC"}
     });
     return { studentsInfo: students, haveMoreStudents: haveMoreStudents };
   }

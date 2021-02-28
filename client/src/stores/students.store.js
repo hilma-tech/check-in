@@ -45,12 +45,11 @@ class Students {
     }
 
     addStudent = (studentInfo) => {
-        this.listDataStudents.push(studentInfo)
+        this.listDataStudents = [studentInfo, ...this.listDataStudents]
     }
 
     addMultiStudents = (studentsList) => {
-        console.log('studentsList: ', studentsList);
-        this.listDataStudents = this.listDataStudents.concat(studentsList)
+        this.listDataStudents = studentsList.concat(this.listDataStudents)
     }
 
     //gets all info on a specific student to display

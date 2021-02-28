@@ -5,6 +5,7 @@ import { studentsContext } from "../../stores/students.store.js";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { errorMsgContext } from "../../stores/error.store.js";
+import { Slide } from "@material-ui/core";
 
 class StudentsList extends React.Component {
   constructor() {
@@ -27,14 +28,14 @@ class StudentsList extends React.Component {
 
   //! not in use
   //Save the user search value as searchVal in state.
-  // handleChange = (e) => {
-  //   this.setState({ searchVal: e.target.value });
-  // };
+  handleChange = (e) => {
+    this.setState({ searchVal: e.target.value });
+  };
   //! not in use
   //When the user press the search icon it's start to show the input text for the searching.
-  // activateSearch = () => {
-  //   this.setState({ displaySearch: true });
-  // };
+  activateSearch = () => {
+    this.setState({ displaySearch: true });
+  };
 
   getStudents = async () => {
     await this.props.students.getStudents();
@@ -52,7 +53,7 @@ class StudentsList extends React.Component {
         <div className="PageTitles">
           <p>תלמידים</p>
           {/* for now */}
-          {/* <form className="search">
+          <form className="search">
             <Slide
               direction="right"
               in={this.state.displaySearch}
@@ -68,7 +69,7 @@ class StudentsList extends React.Component {
               />
             </Slide>
             <p className="searchIcon" onClick={this.activateSearch}></p>
-          </form> */}
+          </form>
         </div>
         {/*
                 Create the school table with the general teble.
@@ -76,7 +77,9 @@ class StudentsList extends React.Component {
 
 
         <GeneralTable
-          allData={this.props.students.listDataStudents}
+          allData={this.props.students.listDataStudents.filter((student)=>{
+            return student.name.includes(this.state.searchVal)
+          })}
           categors={this.state.categors}
           enCategor={this.state.enCategor}
           loadMore={this.getStudents}
