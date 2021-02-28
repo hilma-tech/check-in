@@ -101,14 +101,14 @@ export function passwordValidation(password) {
 export function studentPasswordValidation(password) {
     if (password === null || password.length === 0) {
         return '** נא להכניס סיסמא **'
-    } else if (password.length > 15 || password.length < 6) {
-        return '** על הסיסמה להיות בין 6-15 תווים **'
+    } else if (password.length > 15 || password.length < 8) {
+        return '** על הסיסמה להיות בין 8-15 תווים **'
     } else if (password.trim().length === 0) {
         return '** נא להכניס סיסמא **'
-    } else if ((/[\u0590-\u05EA]/).test(password)) {
-        return '** יש להשתמש באותיות באנגלית **'
-    } else if (!((/[A-Za-z]/).test(password) && (/[0-9]/).test(password) && (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password))) {
-        return '** על הסיסמה להכיל אותיות ומספרים/ תווים מיוחדים **'
+    } else if (!(/[A-Za-z\u0590-\u05FF]/).test(password)) {
+        return '** ניתן להשתמש באותיות באנגלית ובעברית בלבד **'
+    } else if (!((/[0-9]/).test(password) && (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password))) {
+        return '** על הסיסמה להכיל מספרים ו/או תווים מיוחדים **'
     } else {
         return ''
     }

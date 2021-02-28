@@ -1,6 +1,6 @@
 import { Injectable, Inject, Req, Body } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Role, User, UserConfig, UserService, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
+import { Role, User, UserConfig, UserService, USER_MODULE_OPTIONS , SALT} from '@hilma/auth-nest';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { getConnection, Repository } from 'typeorm';
@@ -72,11 +72,12 @@ export class StudentService extends UserService {
 
 
   async changeStudentPassword(userInfo) {
-    const hash = bcrypt.hashSync(userInfo.password, 10);
+    let Info= userInfo.body
+    const hash = bcrypt.hashSync(Info.password, SALT);
     this.userRepository.createQueryBuilder()
       .update(User)
       .set({ password: hash })
-      .where("username = :username", { username: userInfo.username })
+      .where("username = :username", { username: Info.username })
       .execute();
   }
 
