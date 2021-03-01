@@ -33,8 +33,8 @@ class TeachersList extends React.Component {
   handleChange = (e) => {
     console.log(e.target.value);
     this.setState({ searchVal: e.target.value });
-    this.findSearchResults();
-  };
+
+    }
 
   //When the user press the search icon it's start to show the input text for the searching.
   activateSearch = () => {
@@ -86,7 +86,9 @@ class TeachersList extends React.Component {
             */}
 
         <GeneralTable
-          allData={this.props.teachers.listDataTeachers}
+          allData={this.props.teachers.listDataTeachers.filter((teacher)=>{
+            return teacher.name.includes(this.state.searchVal)
+          })}
           categors={this.state.categors}
           enCategor={this.state.enCategor}
           loadMore={this.getTeachers}
