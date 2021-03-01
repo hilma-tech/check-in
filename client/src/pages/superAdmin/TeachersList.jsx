@@ -5,7 +5,7 @@ import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import { teachersContext } from "../../stores/teachers.store.js";
 import { errorMsgContext } from "../../stores/error.store.js";
-import { Slide } from "@material-ui/core";
+import { Fade, Slide } from "@material-ui/core";
 
 const axios = require("axios").default;
 
@@ -29,11 +29,12 @@ class TeachersList extends React.Component {
     this.getTeachers();
   };
 
-  //! not in use
   //Save the user search value as searchVal in state.
-  // handleChange = (e) => {
-  //   this.setState({ searchVal: e.target.value });
-  // };
+  handleChange = (e) => {
+    console.log(e.target.value);
+    this.setState({ searchVal: e.target.value });
+    this.findSearchResults();
+  };
 
   //When the user press the search icon it's start to show the input text for the searching.
   activateSearch = () => {
@@ -55,23 +56,30 @@ class TeachersList extends React.Component {
       <div className="TeachersList withMenu" dir="rtl">
         <div className="PageTitles">
           <p>מורים</p>
-          <form className="search">
-            <Slide
-              direction="right"
-              in={this.state.displaySearch}
-              mountOnEnter
-              unmountOnExit
-            >
-              <input
-                type="text"
-                name="search"
-                value={this.state.searchVal}
-                placeholder="חיפוש"
-                onChange={this.handleChange}
-              />
-            </Slide>
-            <p className="searchIcon" onClick={this.activateSearch}></p>
-          </form>
+          <div id="searchbar">
+            <h5 className="title">משחקים</h5>
+            <form className={this.state.displaySearch ? "gameSearchbar bordered" : "gameSearchbar"}>
+              <Fade
+                in={this.state.displaySearch}
+                timeout={{
+                  appear: 500,
+                  enter: 400,
+                  exit: 100,
+                }}
+                mountOnEnter
+                unmountOnExit
+              >
+                <input
+                  type="text"
+                  name="search"
+                  className="searchInp"
+                  placeholder="חיפוש"
+                  onChange={this.handleChange}
+                />
+              </Fade>
+              <p className="searchIcon" onClick={this.activateSearch}></p>
+            </form>
+          </div>
         </div>
         {/*
                 Create the teacher table with the general table.

@@ -81,7 +81,7 @@ class Games extends Component {
           <WhiteBar active="games" />
         </div>
         <div id="wholepage">
-          <div id="searchbar">
+          {/* <div id="searchbar">
             <h5 className="title">משחקים</h5>
             <form className={this.state.displaySearch ? "gameSearchbar bordered" : "gameSearchbar"}>
               <Fade
@@ -105,7 +105,7 @@ class Games extends Component {
               </Fade>
               <p className="searchIcon" onClick={this.activateSearch}></p>
             </form>
-          </div>
+          </div> */}
           {this.props.games.haveMoreGames &&
             this.props.games.gamesList.length === 0
             ? (displayLoading = true)
