@@ -8,6 +8,8 @@
   // justify-content: space-between;
   align-items: center;
   height: 8vh;
+  justify-content: space-between;
+  width: 78vw
 }
 
 .PageTitles p {
@@ -57,9 +59,6 @@
   font-size: 1vw;
 }
 
-.PageTitles {
-  display: flex;
-}
 
 .addingButton {
   @include mouse(point);
@@ -100,17 +99,15 @@
   margin-top: 1.5vh;
 }
 
-.teacherSearchbar{
+.tablesSearchbar{
   display: flex;
   height: 5vh;
 }
 
 #TableSearchbar {
   display: flex;
-  margin-right: 15vw;
+  margin-right: 12vw;
   align-items: center;
-  justify-content: space-between;
-  width: 68vw;
   height: 12vh;
 }
 

@@ -54,12 +54,12 @@ class TeachersList extends React.Component {
       <div className="TeachersList withMenu" dir="rtl">
           <div id="TableSearchbar">
         <div className="PageTitles">
-          <p>מורים</p></div>
+          <p>מורים</p>
             <form
               className={
                 this.state.displaySearch
-                  ? "teacherSearchbar bordered"
-                  : "teacherSearchbar"
+                  ? "tablesSearchbar bordered"
+                  : "tablesSearchbar"
               }
             >
               <Fade
@@ -81,7 +81,7 @@ class TeachersList extends React.Component {
                 />
               </Fade>
               <p className="searchIcon" onClick={this.activateSearch}></p>
-            </form>
+            </form></div>
           </div>
         
         {/*

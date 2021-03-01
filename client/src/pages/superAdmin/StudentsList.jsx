@@ -5,7 +5,7 @@ import { studentsContext } from "../../stores/students.store.js";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { errorMsgContext } from "../../stores/error.store.js";
-import { Slide } from "@material-ui/core";
+import { Fade } from "@material-ui/core";
 
 class StudentsList extends React.Component {
   constructor() {
@@ -52,24 +52,33 @@ class StudentsList extends React.Component {
         <div id="TableSearchbar">
         <div className="PageTitles">
           <p>תלמידים</p>
-          {/* for now */}
-          <form className="search">
-            <Slide
-              direction="right"
-              in={this.state.displaySearch}
-              mountOnEnter
-              unmountOnExit
+          <form
+              className={
+                this.state.displaySearch
+                  ? "tablesSearchbar bordered"
+                  : "tablesSearchbar"
+              }
             >
-              <input
-                type="text"
-                name="search"
-                value={this.state.searchVal}
-                placeholder="חיפוש"
-                onChange={this.handleChange}
-              />
-            </Slide>
-            <p className="searchIcon" onClick={this.activateSearch}></p>
-          </form>
+              <Fade
+                in={this.state.displaySearch}
+                timeout={{
+                  appear: 500,
+                  enter: 400,
+                  exit: 100,
+                }}
+                mountOnEnter
+                unmountOnExit
+              >
+                <input
+                  type="text"
+                  name="search"
+                  className="searchInp"
+                  placeholder="חיפוש"
+                  onChange={this.handleChange}
+                />
+              </Fade>
+              <p className="searchIcon" onClick={this.activateSearch}></p>
+            </form>
         </div></div>
         {/*
                 Create the school table with the general teble.
