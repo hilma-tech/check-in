@@ -87,3 +87,17 @@ export class UserRegisterDto {
   @Type(() => ClassForSaveDto)
   classrooms: ClassForSaveDto[];
 }
+
+export class StudentPassword {
+  @IsDefined()
+  @IsString()
+  username: string;
+
+  @IsDefined()
+  @IsString()
+  @Length(8, 15)
+  password: string;
+
+}
+
+

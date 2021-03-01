@@ -31,6 +31,11 @@
     margin-right: 3vh;
     box-shadow: 0px 3px 6px #04316329
 }
+
+.savepass{
+    margin-left: -5vw;
+    background-color:  #043163;
+}
 .editIcon{
     margin-top: 0.5vh;
     position: 'absolute';
@@ -58,10 +63,6 @@
     flex-direction: row;
     justify-content: space-between;
 }
-.extraMargin{
-    margin-left: -5vw;
-}
-
 .inputError {
     color: red;
     position: absolute;
@@ -142,6 +143,10 @@
         margin-top: 3vh;
         border-radius: .75vw;
     }
+    .savepass{
+        margin-left: -2vw;
+        background-color:  #043163;
+    }
     .inputError {
         color: red;
         position: absolute;
@@ -154,9 +159,6 @@
 
     .justForWeb{
         display: inline-block;
-    }
-    .extraMargin{
-        margin-left: -2vw;
     }
     .studentDeets {
         width: 60vw;

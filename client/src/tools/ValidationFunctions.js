@@ -86,13 +86,13 @@ export function passwordValidation(password) {
     if (password === null || password.length === 0) {
         return '** נא להכניס סיסמא **'
     } else if (password.length > 20 || password.length < 6) {
-        return '** על הסיסמה להיות בין 6-20 תווים **'
+        return '** על הסיסמא להיות בין 6-20 תווים **'
     } else if (password.trim().length === 0) {
-        return '** נא להכניס סיסמא **'
-    } else if (!(/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
-        return '** על הסיסמה להכל אותיות ומספרים בלבד  **'
-    } else if (!(/[A-Za-z\u0590-\u05EA0-9]/).test(password)) {
         return '** סיסמה לא תקינה **'
+    } else if (!(/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
+        return '** על הסיסמא להכל אותיות ומספרים בלבד  **'
+    } else if (!(/[A-Za-z\u0590-\u05EA0-9]/).test(password)) {
+        return '** סיסמא לא תקינה **'
     } else {
         return ''
     }
@@ -100,15 +100,15 @@ export function passwordValidation(password) {
 //Check validation for password
 export function studentPasswordValidation(password) {
     if (password === null || password.length === 0) {
-        return '** חייב להכניס סיסמא **'
-    } else if (password.length > 15 || password.length < 6) {
-        return '** סיסמא לא תקינה **'
+        return '** נא להכניס סיסמא **'
+    } else if (password.length > 15 || password.length < 8) {
+        return '** על הסיסמה להיות בין 8-15 תווים **'
     } else if (password.trim().length === 0) {
-        return '** סיסמא לא תקינה **'
-    } else if ((/[\u0590-\u05EA]/).test(password)) {
-        return '** סיסמא לא תקינה **'
-    } else if (!((/[A-Za-z]/).test(password) && (/[0-9]/).test(password) && (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password))) {
-        return '** סיסמא לא תקינה **'
+        return '** נא להכניס סיסמא **'
+    } else if (!(/[A-Za-z\u0590-\u05FF]/).test(password)) {
+        return '** ניתן להשתמש באותיות באנגלית ובעברית בלבד **'
+    } else if (!((/[0-9]/).test(password) && (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password))) {
+        return '** על הסיסמה להכיל מספרים ו/או תווים מיוחדים **'
     } else {
         return ''
     }

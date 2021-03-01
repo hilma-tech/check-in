@@ -1,9 +1,9 @@
 import { Injectable, Inject, Req, Body } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Role, UserConfig, UserService, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
+import { Role, User, UserConfig, UserService, USER_MODULE_OPTIONS , SALT} from '@hilma/auth-nest';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { Repository } from 'typeorm';
+import { getConnection, Repository } from 'typeorm';
 import { Student } from './student.entity';
 import { GetStudentSkip, UserRegisterDto } from './student.dtos';
 import * as bcrypt from 'bcrypt';
@@ -29,7 +29,7 @@ export class StudentService extends UserService {
       relations: ['school', 'classroomStudent'],
       skip: Number(skipON.studentsLength),
       take: 50,
-      order: {created: "ASC"}
+      order: {created: "DESC"}
     });
     return { studentsInfo: students, haveMoreStudents: haveMoreStudents };
   }
@@ -72,8 +72,13 @@ export class StudentService extends UserService {
 
 
   async changeStudentPassword(userInfo) {
-    const hash = bcrypt.hashSync(userInfo.password, 10);
-    // return await this.userRepository.save({ ...userInfo, password: hash }) 
+    let Info= userInfo.body
+    const hash = bcrypt.hashSync(Info.password, SALT);
+    this.userRepository.createQueryBuilder()
+      .update(User)
+      .set({ password: hash })
+      .where("username = :username", { username: Info.username })
+      .execute();
   }
 
 

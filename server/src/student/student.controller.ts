@@ -8,6 +8,7 @@ import {
   GamesForClassDto,
   ClassroomIdDto,
   UserRegisterDto,
+  StudentPassword,
 } from './student.dtos';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { GameModule } from 'src/game/game.module';
@@ -102,9 +103,9 @@ export class StudentController {
     );
   }
 
-  // @UseJwtAuth('teacher')
+  @UseJwtAuth('teacher')
   @Post('/changestudentpass')
-  async changePass(@Req() newPass: any){
-return await this.studentService.changeStudentPassword(newPass.query)
+  async changePass(@Req() newPass: StudentPassword){
+return await this.studentService.changeStudentPassword(newPass)
   }
 }

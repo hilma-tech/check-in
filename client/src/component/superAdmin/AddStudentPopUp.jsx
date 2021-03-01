@@ -37,9 +37,7 @@ class AddStudentPopUp extends React.Component {
             this.props.errorMsg.setErrorMsg(msg);
         }
         let addStudentToTheList = (studentsInfo) => {
-            if (!this.props.students.haveMoreStudents) {
-                this.props.students.addMultiStudents(studentsInfo)
-            }
+            this.props.students.addMultiStudents(studentsInfo)
             this.props.errorMsg.setErrorMsg('כל התלמידים נשמרו בהצלחה.');
         }
         if (targetFile) {
@@ -67,7 +65,7 @@ class AddStudentPopUp extends React.Component {
                             } else if (userNameValidation(String(dataParse[i].username)).length !== 0) {
                                 errorsMsg.push(`השם משתמש של התלמיד בשורה ${i + 1} לא תקין.`)
                             } else if (studentPasswordValidation(String(dataParse[i].password)).length !== 0) {
-                                errorsMsg.push(`הסיסמה של התלמיד בשורה ${i + 1} לא תקינה.`)
+                                errorsMsg.push(`הסיסמא של התלמיד בשורה ${i + 1} לא תקינה.`)
                             } else if (schoolNameValidation(String(dataParse[i].schoolName)).length !== 0) {
                                 errorsMsg.push(`הבית ספר של התלמיד בשורה ${i + 1} לא תקין.`)
                             }
