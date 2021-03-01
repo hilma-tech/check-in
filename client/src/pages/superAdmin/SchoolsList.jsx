@@ -47,6 +47,7 @@ class SchoolsList extends React.Component {
   render() {
     return (
       <div className="SchoolsList withMenu" dir="rtl">
+        <div id="TableSearchbar">
         <div className="PageTitles">
           <p>בתי ספר</p>
           {/* for now */}
@@ -67,7 +68,7 @@ class SchoolsList extends React.Component {
             </Slide>
             <p className="searchIcon" onClick={this.activateSearch}></p>
           </form> */}
-        </div>
+        </div></div>
         {/*
             Create the school table with the general teble.
         */}

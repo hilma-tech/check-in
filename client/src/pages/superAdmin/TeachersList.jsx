@@ -33,8 +33,7 @@ class TeachersList extends React.Component {
   handleChange = (e) => {
     console.log(e.target.value);
     this.setState({ searchVal: e.target.value });
-
-    }
+  };
 
   //When the user press the search icon it's start to show the input text for the searching.
   activateSearch = () => {
@@ -54,11 +53,16 @@ class TeachersList extends React.Component {
   render() {
     return (
       <div className="TeachersList withMenu" dir="rtl">
+          <div id="TableSearchbar">
         <div className="PageTitles">
-          <p>מורים</p>
-          <div id="searchbar">
-            <h5 className="title">משחקים</h5>
-            <form className={this.state.displaySearch ? "gameSearchbar bordered" : "gameSearchbar"}>
+          <p>מורים</p></div>
+            <form
+              className={
+                this.state.displaySearch
+                  ? "teacherSearchbar bordered"
+                  : "teacherSearchbar"
+              }
+            >
               <Fade
                 in={this.state.displaySearch}
                 timeout={{
@@ -80,14 +84,14 @@ class TeachersList extends React.Component {
               <p className="searchIcon" onClick={this.activateSearch}></p>
             </form>
           </div>
-        </div>
+        
         {/*
                 Create the teacher table with the general table.
             */}
 
         <GeneralTable
-          allData={this.props.teachers.listDataTeachers.filter((teacher)=>{
-            return teacher.name.includes(this.state.searchVal)
+          allData={this.props.teachers.listDataTeachers.filter((teacher) => {
+            return teacher.name.includes(this.state.searchVal);
           })}
           categors={this.state.categors}
           enCategor={this.state.enCategor}
@@ -96,7 +100,6 @@ class TeachersList extends React.Component {
           startGetInfo={this.props.teachers.startGetTeachers}
           setClickedRow={this.props.teachers.getChosenTeacher}
         />
-        
       </div>
     );
   }

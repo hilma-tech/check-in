@@ -2,10 +2,10 @@
 
 .PageTitles {
   display: flex;
-  width: 83%;
-  margin-left: 8.5%;
-  margin-right: 8.5%;
-  justify-content: space-between;
+  // width: 83%;
+  // margin-left: 8.5%;
+  // margin-right: 8.5%;
+  // justify-content: space-between;
   align-items: center;
   height: 8vh;
 }
@@ -99,6 +99,21 @@
 .search .searchIcon {
   margin-top: 1.5vh;
 }
+
+.teacherSearchbar{
+  display: flex;
+  height: 5vh;
+}
+
+#TableSearchbar {
+  display: flex;
+  margin-right: 15vw;
+  align-items: center;
+  justify-content: space-between;
+  width: 68vw;
+  height: 12vh;
+}
+
 
 .searchIcon {
   display: inline;
