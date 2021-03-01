@@ -47,7 +47,8 @@ class AddTeacher extends Component {
       email: "",
       password: "",
       rakaz: "false",
-      teacherNameError: { toShow: "none", mess: "" },
+      teacherFirstNameError: { toShow: "none", mess: "" },
+      teacherLastNameError: { toShow: "none", mess: "" },
       schoolNameError: { toShow: "none", mess: "" },
       emailNameError: { toShow: "none", mess: "" },
       passwordNameError: { toShow: "none", mess: "" },
@@ -147,71 +148,84 @@ class AddTeacher extends Component {
     e.preventDefault();
     let allOk = true;
     // ----------teacher name validetion-------------------
-    // let nameTeacherMess = nameValidation(this.state.teacherName);
-    // if (nameTeacherMess.length !== 0) {
-    //   this.setState((prevState) => {
-    //     prevState.teacherNameError.toShow = "inline-block";
-    //     prevState.teacherNameError.mess = nameTeacherMess;
-    //     return { teacherNameError: prevState.teacherNameError };
-    //   });
-    //   allOk = false;
-    // } else {
-    //   this.setState({ teacherNameError: { toShow: "none", mess: "" } });
-    //   allOk = true;
-    // }
+    let firstNameTeacherMess = nameValidation(this.state.teacherFirstName);
+    if (firstNameTeacherMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.teacherFirstNameError.toShow = "inline-block";
+        prevState.teacherFirstNameError.mess = firstNameTeacherMess;
+        return { teacherFirstNameError: prevState.teacherFirstNameError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ teacherFirstNameError: { toShow: "none", mess: "" } });
+      allOk = true;
+    }
+
+    let lastNameTeacherMess = nameValidation(this.state.teacherLastName);
+    if (lastNameTeacherMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.teacherLastNameError.toShow = "inline-block";
+        prevState.teacherLastNameError.mess = lastNameTeacherMess;
+        return { teacherLastNameError: prevState.teacherLastNameError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ teacherLastNameError: { toShow: "none", mess: "" } });
+      allOk = true;
+    }
     // ----------school name validetion-------------------
-    // let nameSchoolMess = mustInputValidation(this.state.schoolName);
-    // if (nameSchoolMess.length !== 0) {
-    //   this.setState((prevState) => {
-    //     prevState.schoolNameError.toShow = "inline-block";
-    //     prevState.schoolNameError.mess = nameSchoolMess;
-    //     return { schoolNameError: prevState.schoolNameError };
-    //   });
-    //   allOk = false;
-    // } else {
-    //   this.setState({ schoolNameError: { toShow: "none", mess: "" } });
-    //   allOk = true;
-    // }
+    let nameSchoolMess = mustInputValidation(this.state.schoolName);
+    if (nameSchoolMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.schoolNameError.toShow = "inline-block";
+        prevState.schoolNameError.mess = nameSchoolMess;
+        return { schoolNameError: prevState.schoolNameError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+      allOk = true;
+    }
     // ----------rakaz validation-------------------
-    // let rakazMess = mustInputValidation(this.state.rakaz);
-    // console.log('JSON', this.state.rakaz);
-    // if (rakazMess.length !== 0) {
-    //   this.setState((prevState) => {
-    //     prevState.rakazError.toShow = "inline-block";
-    //     prevState.rakazError.mess = rakazMess;
-    //     return { rakazError: prevState.rakazError };
-    //   });
-    //   allOk = false;
-    // } else {
-    //   this.setState({ rakazError: { toShow: "none", mess: "" } });
-    //   allOk = true;
-    // }
+    let rakazMess = mustInputValidation(this.state.rakaz);
+    console.log('JSON', this.state.rakaz);
+    if (rakazMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.rakazError.toShow = "inline-block";
+        prevState.rakazError.mess = rakazMess;
+        return { rakazError: prevState.rakazError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ rakazError: { toShow: "none", mess: "" } });
+      allOk = true;
+    }
     //------------email validation---------------
-    // let emailMess = emailValidation(this.state.email);
-    // if (emailMess.length !== 0) {
-    //   this.setState((prevState) => {
-    //     prevState.emailNameError.toShow = "inline-block";
-    //     prevState.emailNameError.mess = emailMess;
-    //     return { emailNameError: prevState.emailNameError };
-    //   });
-    //   allOk = false;
-    // } else {
-    //   this.setState({ emailNameError: { toShow: "none", mess: "" } });
-    //   allOk = true;
-    // }
+    let emailMess = emailValidation(this.state.email);
+    if (emailMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.emailNameError.toShow = "inline-block";
+        prevState.emailNameError.mess = emailMess;
+        return { emailNameError: prevState.emailNameError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ emailNameError: { toShow: "none", mess: "" } });
+      allOk = true;
+    }
     // ----------password validetion-------------------
-    // let passwordMess = passwordValidation(this.state.password);
-    // if (passwordMess.length !== 0) {
-    //   this.setState((prevState) => {
-    //     prevState.passwordNameError.toShow = "inline-block";
-    //     prevState.passwordNameError.mess = passwordMess;
-    //     return { passwordNameError: prevState.passwordNameError };
-    //   });
-    //   allOk = false;
-    // } else {
-    //   this.setState({ passwordNameError: { toShow: "none", mess: "" } });
-    //   allOk = true;
-    // }
+    let passwordMess = passwordValidation(this.state.password);
+    if (passwordMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.passwordNameError.toShow = "inline-block";
+        prevState.passwordNameError.mess = passwordMess;
+        return { passwordNameError: prevState.passwordNameError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ passwordNameError: { toShow: "none", mess: "" } });
+      allOk = true;
+    }
 
     //after all the validetion we need to send the data to sql
     if (allOk) {
@@ -280,9 +294,9 @@ class AddTeacher extends Component {
               <label className="labelFields">שם פרטי:</label>
               <p
                 className="error"
-                style={{ display: this.state.teacherNameError.toShow }}
+                style={{ display: this.state.teacherFirstNameError.toShow }}
               >
-                {this.state.teacherNameError.mess}
+                {this.state.teacherFirstNameError.mess}
               </p>
               <input
                 className="inputFields"
@@ -293,9 +307,9 @@ class AddTeacher extends Component {
               <label className="labelFields">שם משפחה:</label>
               <p
                 className="error"
-                style={{ display: this.state.teacherNameError.toShow }}
+                style={{ display: this.state.teacherLastNameError.toShow }}
               >
-                {this.state.teacherNameError.mess}
+                {this.state.teacherLastNameError.mess}
               </p>
               <input
                 className="inputFields"
