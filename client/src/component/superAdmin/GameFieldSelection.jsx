@@ -21,7 +21,6 @@ class GameFieldSelection extends Component {
 
   // creates input based on "type"
   fieldCreator = () => {
-    console.log('this.props.originalValue[: ', this.props.originalValue);
     if (this.props.changeInputType === "text") {
       return (
         <input

@@ -106,9 +106,7 @@ class EditGame extends Component {
       });
       //only relevant to image
     } else if (inputImage) {
-      console.log('inputImage: ', inputImage);
       this.setState((prevState) => {
-        console.log('fieldI: ', fieldI);
         prevState.fieldsData[fieldI].value[0] = {
           id: imgId,
           value: inputImage,

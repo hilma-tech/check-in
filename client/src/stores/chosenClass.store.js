@@ -44,7 +44,6 @@ class ChosenClass {
 
   //says which student is currently chosen
   getCurrStudent = () => {
-    console.log(this.studentClassrooms);
     return this.students[this.currStudentIndex];
   };
 

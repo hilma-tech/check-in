@@ -44,8 +44,7 @@ class StudentsList extends React.Component {
         "הייתה שגיאה בשרת. לא ניתן לקבל תלמידים מהשרת."
       );
     }
-    console.log('this.props.students.listDataStudents: ', this.props.students.listDataStudents);
-  };
+    };
 
   render() {
     return (

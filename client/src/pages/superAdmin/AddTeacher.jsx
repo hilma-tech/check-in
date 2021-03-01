@@ -62,10 +62,7 @@ class AddTeacher extends Component {
         "הייתה שגיאה בשרת. לא ניתן לקבל בתי ספר מהשרת."
       );
     } else {
-      console.log(
-        "this.props.schools.schoolsNames: ",
-        this.props.schools.schoolsNames
-      );
+      
       let schools = this.props.schools.schoolsNames.map((school) => {
         return { value: school.name, label: school.name };
       });
@@ -103,7 +100,6 @@ class AddTeacher extends Component {
     this.setState((prevState) => {
       let prevRole = prevState.rakaz;
       prevRole = props.value;
-      console.log(props.value);
       return { rakaz: prevRole };
     });
   };
@@ -241,7 +237,6 @@ class AddTeacher extends Component {
         "/api/teacher/register",
         currTeacherInfo
       );
-      console.log(response);
       // this.props.games.addGame(response.data);
       this.props.history.goBack();
     } catch (error) {

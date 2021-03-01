@@ -5,9 +5,9 @@ import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import { teachersContext } from "../../stores/teachers.store.js";
 import { errorMsgContext } from "../../stores/error.store.js";
-import { Fade, Slide } from "@material-ui/core";
+import { Fade } from "@material-ui/core";
 
-const axios = require("axios").default;
+// const axios = require("axios").default;
 
 class TeachersList extends React.Component {
   constructor() {
@@ -31,7 +31,6 @@ class TeachersList extends React.Component {
 
   //Save the user search value as searchVal in state.
   handleChange = (e) => {
-    console.log(e.target.value);
     this.setState({ searchVal: e.target.value });
   };
 

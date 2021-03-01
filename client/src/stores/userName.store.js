@@ -39,7 +39,6 @@ class UserName {
     } catch (err) {
       this.startGetClasses = false;
       this.successGettingClasses = false;
-      console.log("set teacher err: ", err);
     }
   };
 
