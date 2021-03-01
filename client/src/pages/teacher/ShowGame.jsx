@@ -121,7 +121,7 @@ class ShowGame extends Component {
                       <div key={i} className="mobileBorderCameraIcon">
                         <img
                           alt="photograph icon"
-                          className="mobileImg"
+                          className="mobileTeacherImg"
                           src={field.value[0].value}
                         />
                       </div>
