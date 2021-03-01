@@ -80,6 +80,7 @@ class SchoolsList extends React.Component {
           haveMoreData={this.props.schools.haveMoreSchools}
           startGetInfo={this.props.schools.startGetSchools}
           setClickedRow={this.props.schools.getChosenSchool}
+          tableType="בתי ספר"
         />
       </div>
     );

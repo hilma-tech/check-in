@@ -98,6 +98,7 @@ class TeachersList extends React.Component {
           haveMoreData={this.props.teachers.haveMoreTeachers}
           startGetInfo={this.props.teachers.startGetTeachers}
           setClickedRow={this.props.teachers.getChosenTeacher}
+          tableType="מורים"
         />
       </div>
     );

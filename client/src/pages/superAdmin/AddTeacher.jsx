@@ -249,6 +249,26 @@ class AddTeacher extends Component {
     }
   };
 
+  //Return the classes list as list of object for the Select.
+  makeClassesOption = (indexSelect) => {
+    let options = [];
+    this.state.classOptions.map((classData) => {
+      if (
+        this.state.fieldsData.filter((chosenClassData) => {
+          return chosenClassData.value === classData.value;
+        }).length === 0
+      ) {
+        options.push({
+          value: classData.value,
+          label: classData.value,
+          classIndex: indexSelect,
+          id: classData.id,
+        });
+      }
+    });
+    return options;
+  };
+
   render() {
     return (
       <>
@@ -317,14 +337,14 @@ class AddTeacher extends Component {
               {/* כיתה */}
               <label className="labelFields">כיתה:</label>
               <div>
-                {this.state.fieldsData.map((fieldObj) => {
+                {this.state.fieldsData.map((fieldObj,i) => {
                   return (
                     <ClassSelection
                       key={fieldObj.id}
                       id={fieldObj.id}
                       removal={this.triggerRemoval}
                       saveValue={this.saveChosenClassValue}
-                      options={this.state.classOptions}
+                      options={this.makeClassesOption(i)}
                       onChange={this.saveChange}
                     />
                   );
