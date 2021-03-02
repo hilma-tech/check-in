@@ -125,4 +125,11 @@ export class StudentService extends UserService {
     student.roles = [userRole];
     return await this.createUser<Student>(student);
   }
+
+  async isStudentExist(username: string){
+    let user = await this.userRepository.findOne({
+      where: [{username: username}]
+    })
+    return username === undefined ? false : true
+  }
 }

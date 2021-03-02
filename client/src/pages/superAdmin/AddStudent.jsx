@@ -241,18 +241,22 @@ class AddStudent extends React.Component {
           classrooms: this.state.chosenClasses,
           schoolId: this.state.schoolId
         });
-        this.props.students.addStudent({
-          first_name: data.first_name,
-          last_name: data.last_name,
-          name: data.first_name + " " + data.last_name,
-          username: data.username,
-          schoolName: this.state.school,
-          id: data.id,
-          classes: data.classroomStudent.map((classInfo) => {
-            return classInfo.name
+        if(data){
+          this.props.students.addStudent({
+            first_name: data.first_name,
+            last_name: data.last_name,
+            name: data.first_name + " " + data.last_name,
+            username: data.username,
+            schoolName: this.state.school,
+            id: data.id,
+            classes: data.classroomStudent.map((classInfo) => {
+              return classInfo.name
+            })
           })
-        })
-        this.props.history.goBack(); // after saving go back
+          this.props.history.goBack(); // after saving go back
+        } else {
+          this.props.errorMsg.setErrorMsg('שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר.');
+        }
       } catch (err) {
         console.log("save student error: ", err);
       }
