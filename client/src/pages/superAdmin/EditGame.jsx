@@ -309,10 +309,10 @@ class EditGame extends Component {
               {this.state.fieldsData.length === 0 ? (
                 <p style={{ marginTop: "0" }}>אין שדות למשחק זה</p>
               ) : (
-                this.state.fieldsData.map((fieldObj) => {
+                this.state.fieldsData.map((fieldObj, ind) => {
                   return (
                     <GameFieldSelection
-                      key={fieldObj.id}
+                      key={ind}
                       fieldId={fieldObj.id}
                       name={this.saveFieldName}
                       selection={this.saveSelection}

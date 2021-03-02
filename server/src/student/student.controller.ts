@@ -31,7 +31,11 @@ export class StudentController {
   @UseJwtAuth('superAdmin')
   @Post('/register')
   async register(@Body() req: UserRegisterDto) {
-    return await this.studentService.addStudent(req);
+    try{
+      return await this.studentService.addStudent(req);
+    } catch(e) {
+      return false
+    }
   }
 
   @UseJwtAuth('superAdmin')
@@ -46,6 +50,9 @@ export class StudentController {
         errorsMsg.push(`הבית ספר בשורה ${i + 1} לא קיים במערכת. אנא נסה להכניס בית ספר אחר`)
       } else {
         req[i].schoolId = schoolId.id
+      }
+      if(await this.studentService.isStudentExist(req[i].username)){
+        errorsMsg.push(`שם המשתמש בשורה ${i + 1} כבר קיים. אנא נסה להכניס שם משתמש אחר.`)
       }
     }
     if (errorsMsg.length !== 0) {
@@ -106,6 +113,6 @@ export class StudentController {
   @UseJwtAuth('teacher')
   @Post('/changestudentpass')
   async changePass(@Req() newPass: StudentPassword){
-return await this.studentService.changeStudentPassword(newPass)
+    return await this.studentService.changeStudentPassword(newPass)
   }
 }

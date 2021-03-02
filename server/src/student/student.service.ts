@@ -29,7 +29,7 @@ export class StudentService extends UserService {
       relations: ['school', 'classroomStudent'],
       skip: Number(skipON.studentsLength),
       take: 50,
-      order: {created: "ASC"}
+      order: {created: "DESC"}
     });
     return { studentsInfo: students, haveMoreStudents: haveMoreStudents };
   }
@@ -124,5 +124,12 @@ export class StudentService extends UserService {
     userRole.id = 4; //you set the role id.
     student.roles = [userRole];
     return await this.createUser<Student>(student);
+  }
+
+  async isStudentExist(username: string){
+    let user = await this.userRepository.findOne({
+      where: [{username: username}]
+    })
+    return username === undefined ? false : true
   }
 }

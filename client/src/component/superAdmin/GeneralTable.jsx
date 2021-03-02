@@ -36,7 +36,8 @@ class GeneralTable extends React.Component {
         ) : (
             <>
               <div className="AllData">
-                {
+                {this.props.allData.length === 0 ?
+                  <p>אין {this.props.tableType} במערכת</p> :
                   //Make the rows in the table
                   this.props.allData.map((val, index) => {
                     return (
@@ -78,6 +79,7 @@ class GeneralTable extends React.Component {
             <AddStudentPopUp />
           </div>
           :
+          this.props.location.pathname.includes("school") ? <></> :
           <div className="addingButton" onClick={this.onClickAdd}></div>
         }
       </div>

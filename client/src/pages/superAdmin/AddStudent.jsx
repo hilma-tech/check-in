@@ -233,7 +233,7 @@ class AddStudent extends React.Component {
     //after all the validation we need to send the data to sql
     if (allOk) {
       try {
-        let {data} = await axios.post("/api/student/register", {
+        let { data } = await axios.post("/api/student/register", {
           username: this.state.userName,
           password: this.state.password,
           firstName: this.state.studentFirstName,
@@ -241,20 +241,22 @@ class AddStudent extends React.Component {
           classrooms: this.state.chosenClasses,
           schoolId: this.state.schoolId
         });
-        if(!this.props.students.haveMoreStudents){
+        if(data){
           this.props.students.addStudent({
             first_name: data.first_name,
             last_name: data.last_name,
-            name: data.first_name + " " +data.last_name,
+            name: data.first_name + " " + data.last_name,
             username: data.username,
             schoolName: this.state.school,
             id: data.id,
-            classes: data.classroomStudent.map((classInfo)=>{
+            classes: data.classroomStudent.map((classInfo) => {
               return classInfo.name
             })
           })
+          this.props.history.goBack(); // after saving go back
+        } else {
+          this.props.errorMsg.setErrorMsg('שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר.');
         }
-        this.props.history.goBack(); // after saving go back
       } catch (err) {
         console.log("save student error: ", err);
       }

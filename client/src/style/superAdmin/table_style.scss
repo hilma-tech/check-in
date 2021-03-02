@@ -2,12 +2,10 @@
 
 .PageTitles {
   display: flex;
-  width: 83%;
-  margin-left: 8.5%;
-  margin-right: 8.5%;
-  justify-content: space-between;
   align-items: center;
   height: 8vh;
+  justify-content: space-between;
+  width: 78vw
 }
 
 .PageTitles p {
@@ -57,9 +55,6 @@
   font-size: 1vw;
 }
 
-.PageTitles {
-  display: flex;
-}
 
 .addingButton {
   @include mouse(point);
@@ -99,6 +94,19 @@
 .search .searchIcon {
   margin-top: 1.5vh;
 }
+
+.tablesSearchbar{
+  display: flex;
+  height: 5vh;
+}
+
+#TableSearchbar {
+  display: flex;
+  margin-right: 12vw;
+  align-items: center;
+  height: 12vh;
+}
+
 
 .searchIcon {
   display: inline;

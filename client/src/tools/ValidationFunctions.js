@@ -86,13 +86,13 @@ export function passwordValidation(password) {
     if (password === null || password.length === 0) {
         return '** נא להכניס סיסמא **'
     } else if (password.length > 20 || password.length < 6) {
-        return '** סיסמה לא תקינה **'
+        return '** על הסיסמא להיות בין 6-20 תווים **'
     } else if (password.trim().length === 0) {
         return '** סיסמה לא תקינה **'
     } else if (!(/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
-        return '** על הסיסמה להכל אותיות ומספרים בלבד  **'
+        return '** על הסיסמא להכל אותיות ומספרים בלבד  **'
     } else if (!(/[A-Za-z\u0590-\u05EA0-9]/).test(password)) {
-        return '** סיסמה לא תקינה **'
+        return '** סיסמא לא תקינה **'
     } else {
         return ''
     }

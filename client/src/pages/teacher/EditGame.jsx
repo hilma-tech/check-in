@@ -12,6 +12,10 @@ import { chosenGameEditContext } from "../../stores/chosenGameEdit.store";
 import { chosenClassContext } from "../../stores/chosenClass.store";
 import { gamesContext } from "../../stores/games.store";
 import { FileInput, withFiles } from "@hilma/fileshandler-client";
+import {
+  fieldInputValidation,
+  fieldNameValidation,
+} from "../../tools/ValidationFunctions";
 
 const axios = require("axios").default;
 
@@ -46,7 +50,10 @@ class EditGame extends Component {
         this.props.history.push("/teacher/classes/games");
       }
       this.setState({
-        fieldsData: data.fields,
+        fieldsData: data.fields.map((field) => {
+          field.errorMessage = { toShow: "none", mess: "" };
+          return field;
+        }),
         gameName: data.game_name,
         gameDescription: data.description,
         gameRequirements: data.requirements,
@@ -56,6 +63,101 @@ class EditGame extends Component {
       this.props.errorMsg.setErrorMsg(
         "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
       );
+    }
+  };
+
+  validateGame = () => {
+    let isOk = true;
+    let countFullFields = 0;
+    let fieldEmpt = 0;
+    let firstErrMsg = "";
+    this.state.fieldsData.map((fields, index) => {
+      if (fields.selection !== "image") {
+        fields.value.map((field) => {
+          console.log("field.value: ", field.value);
+          let errMess = fieldInputValidation(field.value);
+          if (errMess.length !== 0) {
+            if (
+              errMess === "** שדה זה לא יכול להכיל תווים מיוחדים **" ||
+              errMess === "** שדה זה לא יכול להכיל יותר מ-100 תווים **"
+            ) {
+              fieldEmpt++;
+              if (firstErrMsg.length === 0) {
+                firstErrMsg = errMess;
+              }
+            }
+            this.setState((prevState) => {
+              prevState.fieldsData[index].errorMessage.toShow = "block";
+              prevState.fieldsData[index].errorMessage.mess = errMess;
+              return { fieldsData: prevState.fieldsData };
+            });
+            isOk = false;
+          } else {
+            countFullFields++;
+            this.setState((prevState) => {
+              prevState.fieldsData[index].errorMessage.toShow = "none";
+              prevState.fieldsData[index].errorMessage.mess = "";
+              return { fieldsData: prevState.fieldsData };
+            });
+          }
+        });
+        if (
+          fields.selection === "choice" ||
+          fields.selection === "multi-choice"
+        ) {
+          if (countFullFields >= 2 && fieldEmpt === 0) {
+            // isOk = true;
+            this.setState((prevState) => {
+              prevState.fieldsData[index].errorMessage.toShow = "none";
+              prevState.fieldsData[index].errorMessage.mess = "";
+              return { fieldsData: prevState.fieldsData };
+            });
+          } else if (fieldEmpt === 0) {
+            this.setState((prevState) => {
+              prevState.fieldsData[index].errorMessage.toShow = "block";
+              prevState.fieldsData[index].errorMessage.mess =
+                "** נא למלא לפחות 2 שדות **";
+              return { fieldsData: prevState.fieldsData };
+            });
+          } else if (firstErrMsg.length !== 0) {
+            this.setState((prevState) => {
+              prevState.fieldsData[index].errorMessage.toShow = "block";
+              prevState.fieldsData[index].errorMessage.mess = firstErrMsg;
+              return { fieldsData: prevState.fieldsData };
+            });
+          }
+        }
+      } else {
+        let errMess = fieldNameValidation(fields.name);
+        if (errMess.length !== 0) {
+          this.setState((prevState) => {
+            prevState.fieldsData[index].errorMessage.toShow = "block";
+            prevState.fieldsData[index].errorMessage.mess = errMess;
+            return { fieldsData: prevState.fieldsData };
+          });
+          isOk = false;
+        } else {
+          if (fields.value[0].value.length === 0) {
+            this.setState((prevState) => {
+              prevState.fieldsData[index].errorMessage.toShow = "block";
+              prevState.fieldsData[index].errorMessage.mess =
+                "** חייב להכניס שדה זה **";
+              return { fieldsData: prevState.fieldsData };
+            });
+            isOk = false;
+          } else {
+            this.setState((prevState) => {
+              prevState.fieldsData[index].errorMessage.toShow = "none";
+              prevState.fieldsData[index].errorMessage.mess = "";
+              return { fieldsData: prevState.fieldsData };
+            });
+          }
+        }
+      }
+    });
+    console.log("isOk: ", isOk);
+    if (isOk) {
+      this.addGameToDB();
     }
   };
 
@@ -70,45 +172,27 @@ class EditGame extends Component {
     this.props.history.push("/teacher/classes/games");
   };
 
-  // sendImageFieldValue = (value) => {
-  //   // console.log('props: ', props);
-  //   console.log('value: ', value);
-  //   this.saveFieldValue(
-  //     value.value,
-  //     value.fieldI,
-  //     null,
-  //     value.link,
-  //     value.id
-  //   );
-  // };
+  sendImageFieldValue = (value) => {
+    // console.log('props: ', props);
+    console.log("value: ", value);
+    this.saveFieldValue(value.value, value.fieldI, null, value.link, value.id);
+  };
   //כשמו כן הוא
   saveFieldValue = (fieldValue, fieldI, inputId, inputImage, imgId) => {
+    
+    console.log('inputId: ', inputId);
+    console.log("fieldEye: ", fieldI);
     //only relevant to choice/multi-choice
-    if (inputId) {
+    if (inputId !== null) {
       this.setState((prevState) => {
-        if (prevState.fieldsData[fieldI].value.length < inputId) {
-          for (
-            let i = prevState.fieldsData[fieldI].value.length;
-            i < inputId;
-            i++
-          ) {
-            prevState.fieldsData[fieldI].value[i] = {
-              id: Number(i),
-              value: "",
-            };
-          }
-        }
-        prevState.fieldsData[fieldI].value[inputId] = {
-          id: Number(inputId),
-          value: fieldValue,
-        };
+        console.log('prevState.fieldsData: ', prevState.fieldsData);
+        prevState.fieldsData[fieldI].value[inputId].id = Number(inputId)
+        prevState.fieldsData[fieldI].value[inputId].value = fieldValue
         return { fieldsData: prevState.fieldsData };
       });
       //only relevant to image
     } else if (inputImage) {
-      console.log('inputImage: ', inputImage);
       this.setState((prevState) => {
-        console.log('fieldI: ', fieldI);
         prevState.fieldsData[fieldI].value[0] = {
           id: imgId,
           value: inputImage,
@@ -129,6 +213,7 @@ class EditGame extends Component {
   };
 
   render() {
+    console.log('this.state.fieldsData: ', this.state.fieldsData);
     return (
       <>
         <SmallMenuBar />
@@ -165,73 +250,88 @@ class EditGame extends Component {
             {this.state.fieldsData.length === 0 ? (
               <p className="noFields">אין שדות למשחק זה</p>
             ) : (
-                this.state.fieldsData.map((field, i) => {
-                  return (
-                    <>
-                      <h2 className="mobileFieldName" key={i + 1}>
-                        {field.field_name}
-                      </h2>
-                      {field.selection !== "image" ? (
-                        field.selection === "text" ? (
-                          <input
-                            key={i}
-                            defaultValue={field.value[0].value}
-                            className="mobileChangingInput"
-                          />
-                        ) : (
-                            <div className="mobileChangingInputGrid">
-                              {field.value.map((value, i) => {
-                                if (value.value.length !== 0) {
-                                  return (
-                                    <input
-                                      key={i}
-                                      defaultValue={value.value}
-                                      className="mobileChangingInputChoice"
-                                    />
-                                  );
-                                } else {
-                                  return <></>;
-                                }
-                              })}
-                            </div>
-                          )
+              this.state.fieldsData.map((field, i) => {
+                return (
+                  <>
+                    <h2 className="mobileFieldName" key={i + 1}>
+                      {field.field_name}
+                    </h2>
+                    <p
+                      className="error"
+                      style={{ display: field.errorMessage.toShow }}
+                    >
+                      {field.errorMessage.mess}
+                    </p>
+                    {field.selection !== "image" ? (
+                      field.selection === "text" ? (
+                        <input
+                          key={i}
+                          defaultValue={field.value[0].value}
+                          className="mobileChangingInput"
+                        />
                       ) : (
-                          <div key={i + 3} className="mobileBorderCameraIcon">
-                            <label key={i} className="mobileTeacherBorder">
-                              <FileInput
-                                onError={() => {
-                                  this.props.errorMsg.setErrorMsg(
-                                    "הייתה שגיאה בהעלאת התמונה. התמונה חייבת להיות באחד מן הפורמטים הבאים: jpg/jpeg/png"
-                                  );
-                                }}
-                                id="image"
-                                className="hiddenInput"
-                                type="image"
-                                filesUploader={this.imageUploader}
-                                onChange={(value) => {
-                                  this.saveFieldValue(
-                                    value.value,
-                                    i,
-                                    null,
-                                    value.link,
-                                    value.id
-                                  );
-                                }}
-                              />
-                              <img
-                                alt="photograph icon"
-                                className="mobileTeacherImg"
-                                src={field.value[0].value}
-                              />
-
-                            </label></div>
-                        )}
-                    </>
-                  );
-                })
-              )}
+                        <div className="mobileChangingInputGrid">
+                          {field.value.map((value, index) => {
+                            if (value.length !== 0) {
+                              return (
+                                <input
+                                  key={i}
+                                  onBlur={(value) => {
+                                    this.saveFieldValue(
+                                      value.target.value,
+                                      i,
+                                      index,
+                                      null,
+                                      null
+                                    );
+                                  }}
+                                  defaultValue={value.value}
+                                  className="mobileChangingInputChoice"
+                                />
+                              );
+                            } else {
+                              return <></>;
+                            }
+                          })}
+                        </div>
+                      )
+                    ) : (
+                      <div key={i + 3} className="mobileBorderCameraIcon">
+                        <label key={i} className="mobileTeacherBorder">
+                          <FileInput
+                            onError={() => {
+                              this.props.errorMsg.setErrorMsg(
+                                "הייתה שגיאה בהעלאת התמונה. התמונה חייבת להיות באחד מן הפורמטים הבאים: jpg/jpeg/png"
+                              );
+                            }}
+                            id="image"
+                            className="hiddenInput"
+                            type="image"
+                            filesUploader={this.imageUploader}
+                            onChange={(value) => {
+                              this.saveFieldValue(
+                                value.value,
+                                i,
+                                null,
+                                value.link,
+                                value.id
+                              );
+                            }}
+                          />
+                          <img
+                            alt="photograph icon"
+                            className="mobileTeacherImg"
+                            src={field.value[0].value}
+                          />
+                        </label>
+                      </div>
+                    )}
+                  </>
+                );
+              })
+            )}
             <div className="mobileSaveButtonBackground">
-              <button className="mobileSaveButton" onClick={this.addGameToDB}>
+              <button className="mobileSaveButton" onClick={this.validateGame}>
                 שמור
               </button>
             </div>
