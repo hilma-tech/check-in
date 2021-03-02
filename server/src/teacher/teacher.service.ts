@@ -1,11 +1,12 @@
 import { Injectable, Inject, Body, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserConfig, UserService, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
+import { MailerInterface, User, UserConfig, UserService, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { Teacher } from './teacher.entity';
 import { GetTeacherSkip, TeacherIdDto, GetClassSkip } from './teacher.dtos';
+import { env } from 'process';
 
 @Injectable()
 export class TeacherService extends UserService {
@@ -15,8 +16,10 @@ export class TeacherService extends UserService {
     protected readonly userRepository: Repository<Teacher>,
     protected readonly jwtService: JwtService,
     protected readonly configService: ConfigService,
+    @Inject('MailService')
+    protected readonly mailer: MailerInterface
   ) {
-    super(config_options, userRepository, jwtService, configService);
+    super(config_options, userRepository, jwtService, configService, mailer);
   }
 
   // async addTeacherInfo(@Body() teacherInfo: any) {
@@ -85,4 +88,24 @@ export class TeacherService extends UserService {
     });
     return teacherInfo;
   }
+
+  async createAndSaveToken(email) {
+    let token = await this.generateVerificationToken();
+    // this.userRepository.createQueryBuilder()
+    //   .update()
+    //   .set({verificationToken: token })
+    //   .where( { username: email })
+    //   .execute();
+    return token
+  }
+
+  async sendVerificationEmail(verifyInfo, token) {
+    let email = verifyInfo.email
+    let html = `http://localhost:3000/signin/?token=${token}`
+    // this.sendEmail(email, 'לחצו על הקישור לאימות האימיל', 'fkghh bukh fuukhjcfg',
+    //   html,
+    //   []
+    // );
+  }
+
 }

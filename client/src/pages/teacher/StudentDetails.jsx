@@ -41,34 +41,35 @@ class StudentDetails extends Component {
 
 
 
+  updatePass = async () => {
+    var passValidation = studentPasswordValidation(this.state.passDisplay)
+    this.setState({ passErr: passValidation })
+    if (passValidation === '') {
+      try {
+        await axios.post("/api/student/changestudentpass",
+          {
+            username: this.state.userName,
+            password: this.state.passDisplay
+          });
+        this.closePassChange(true)
+      } catch (err) {
+        console.log("save pass error: ", err);
+      }
+    }
+  }
+  onPassChange = (val) => {
+    this.setState({ passDisplay: val.target.value })
+  }
+  closePassChange = (type) => {
+    if (!this.state.passErr) {
+      this.setState({
+        showPassChanger: !this.state.showPassChanger,
+        passErr: ''
+      })
+    }
+  }
   render() {
-    var updatePass = async () => {
-      var passValidation = studentPasswordValidation(this.state.passDisplay)
-      this.setState({ passErr: passValidation })
-      if (passValidation === '') {
-        try {
-          await axios.post("/api/student/changestudentpass",
-            {
-              username: this.state.userName,
-              password: this.state.passDisplay
-            });
-          closePassChange(true)
-        } catch (err) {
-          console.log("save pass error: ", err);
-        }
-      }
-    }
-    var onPassChange = (val) => {
-      this.setState({ passDisplay: val.target.value })
-    }
-    var closePassChange = (type) => {
-      if (!this.state.passErr) {
-        this.setState({
-          showPassChanger: !this.state.showPassChanger,
-          passErr: ''
-        })
-      }
-    }
+
     return (
       <>
         <div className="smallPage">
@@ -152,7 +153,7 @@ class StudentDetails extends Component {
                     }}
                     className="passInput"
                     onFocus={() => this.setState({ passDisplay: '' })}
-                    onChange={(val) => onPassChange(val)}
+                    onChange={(val) => this.onPassChange(val)}
                     value={this.state.passDisplay}
                     type="text"
                   />
@@ -167,10 +168,11 @@ class StudentDetails extends Component {
                   <h3 style={{ fontWeight: 'lighter' }} className='changePasstext'>ביטול</h3>
                 </div>
                 <div className='passchange savepass' onClick={async () => {
-                  await updatePass()
+                  await this.updatePass()
                 }} >
                   <h3 style={{ fontWeight: 'lighter' }} className='changePasstext' style={{
-                    color: 'white', fontSize: '3vh', fontWeight:'lighter' }}>שמור</h3>
+                    color: 'white', fontSize: '3vh', fontWeight: 'lighter'
+                  }}>שמור</h3>
 
                 </div>
 
