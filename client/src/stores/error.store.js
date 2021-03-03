@@ -9,12 +9,14 @@ import {
 
 class ErrorMsg {
   errorMsg = "";
+  arrErrorMsg = [];
   showMsg = false;
   question = false;
   approveFunction = () => {};
   constructor() {
     makeObservable(this, {
       errorMsg: observable,
+      arrErrorMsg: observable,
       question: observable,
       approveFunction: observable,
       setErrorMsg: action,
@@ -26,6 +28,7 @@ class ErrorMsg {
   //closes a popup and resets current error msg
   resetMsg = () => {
     this.errorMsg = "";
+    this.arrErrorMsg = [];
     this.showMsg = false;
     this.question = false;
     this.approveFunction = () => {};
@@ -33,7 +36,11 @@ class ErrorMsg {
 
   //activates the popup, its an error message
   setErrorMsg = (msg) => {
-    this.errorMsg = msg;
+    if(typeof msg === 'string'){
+      this.errorMsg = msg;
+    } else {
+      this.arrErrorMsg = msg;
+    }
     this.question = false;
     this.showMsg = true;
   };

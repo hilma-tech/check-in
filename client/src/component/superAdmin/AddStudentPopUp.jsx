@@ -97,18 +97,14 @@ class AddStudentPopUp extends React.Component {
                         this.props.students.addMultiStudents(data.students)
                         this.props.errorMsg.setErrorMsg('כל התלמידים נשמרו בהצלחה.');
                     } else {
-                        this.props.errorMsg.setErrorMsg(data.errorsMsg.map((errMsg, i) => {
-                            return <p key={i}>{errMsg}</p>
-                        }))
+                        this.props.errorMsg.setErrorMsg(data.errorsMsg)
                     }
                 }
                 catch (e) {
                     this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת. לא ניתן לשמור את התלמידים.")
                 }
             } else {
-                this.props.errorMsg.setErrorMsg(errorsMsg.map((errMsg, i) => {
-                    return <p key={i}>{errMsg}</p>
-                }))
+                this.props.errorMsg.setErrorMsg(errorsMsg)
             }
         }
     }
