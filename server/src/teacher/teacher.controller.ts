@@ -1,9 +1,11 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Res } from '@nestjs/common';
 import { UserService, RequestUser, Role, UseJwtAuth } from '@hilma/auth-nest';
 import { Teacher } from './teacher.entity';
 import { TeacherService } from './teacher.service';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { TeacherIdDto, GetTeacherSkip, GetClassSkip } from './teacher.dtos';
+import { info } from 'console';
+import { Verify } from 'crypto';
 
 @Controller('api/teacher')
 export class TeacherController {
@@ -42,8 +44,8 @@ export class TeacherController {
     let user: Partial<Teacher> = new Teacher({ username, password });
     user.first_name = req.first_name
     user.last_name = req.last_name
-    if(req.fields_data !== undefined || req.fields_data.length !== 0){
-      user.classroomTeacher = req.fields_data.map((classroom)=>{
+    if (req.fields_data !== undefined || req.fields_data.length !== 0) {
+      user.classroomTeacher = req.fields_data.map((classroom) => {
         let classroomTeacher = new Classroom()
         classroomTeacher.id = classroom.classId
         classroomTeacher.name = classroom.name
@@ -62,5 +64,11 @@ export class TeacherController {
   @Get('/getTeachers')
   getTeachers(@Query() skipON: GetTeacherSkip) {
     return this.teacherService.getTeacher(skipON);
+  }
+
+  @Post('/Verify')
+  async verifyEmail(@Query() VerifyInfo: any) {
+     let token= await this.teacherService.createAndSaveToken(VerifyInfo.email)
+    await this.teacherService.sendVerificationEmail(VerifyInfo,token )
   }
 }

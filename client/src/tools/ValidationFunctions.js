@@ -108,7 +108,7 @@ export function studentPasswordValidation(password) {
     } else if (!(/[A-Za-z\u0590-\u05FF]/).test(password)) {
         return '** ניתן להשתמש באותיות באנגלית ובעברית בלבד **'
     } else if (!((/[0-9]/).test(password) && (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password))) {
-        return '** על הסיסמה להכיל מספרים ו/או תווים מיוחדים **'
+        return '** על הסיסמה להכיל מספרים ותווים מיוחדים **'
     } else {
         return ''
     }
