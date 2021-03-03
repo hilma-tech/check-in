@@ -47,4 +47,12 @@ export class ClassroomService {
     return classes;
   }
 
+   //if the classroom not exist it's will return undifiend
+   async getClassroomInfoByName(classroomName: string, schoolId: number) {
+     return await this.classroomRepository.findOne({
+      select: ["id", "name"],
+      where: [{ name: classroomName, school_id:  schoolId}],
+    })
+  
+  }
 }

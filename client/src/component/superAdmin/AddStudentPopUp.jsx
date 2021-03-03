@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { errorMsgContext } from '../../stores/error.store';
 import { studentsContext } from '../../stores/students.store';
 import "../../style/superAdmin/add_student_pop_up_style.scss"
-import { emailValidation, mustInputValidation, nameValidation, passwordValidation, schoolNameValidation, studentPasswordValidation, userNameValidation } from '../../tools/ValidationFunctions';
+import { emailValidation, classNameValidation, mustInputValidation, nameValidation, passwordValidation, schoolNameValidation, studentPasswordValidation, userNameValidation } from '../../tools/ValidationFunctions';
 
 var xlsxParser = require('xlsx');
 const axios = require("axios").default;
@@ -36,20 +36,60 @@ class AddStudentPopUp extends React.Component {
             this.props.errorMsg.setErrorMsg("הקובץ ריק. הכנס מידע בקובץ על מנת לשמור תלמידים")
         } else {
             for (let i = 0; i < dataParse.length; i++) {
-                if (dataParse[i].firstName === undefined || dataParse[i].lastName === undefined || dataParse[i].username === undefined || dataParse[i].password === undefined || dataParse[i].schoolName === undefined) {
-                    errorsMsg.push(`חסר מידע בשורה ${i + 1}.`)
+                //------------ first name validation -----------------
+                if (dataParse[i].firstName === undefined) {
+                    errorsMsg.push(`חסר שם פרטי בשורה ${i + 1}.`)
                 } else if (nameValidation(String(dataParse[i].firstName)).length !== 0) {
                     errorsMsg.push(`השם הפרטי של התלמיד בשורה ${i + 1} לא תקין.`)
+                }
+
+                //------------ last name validation ------------------
+                if (dataParse[i].lastName === undefined) {
+                    errorsMsg.push(`חסר שם משפחה בשורה ${i + 1}.`)
                 } else if (nameValidation(String(dataParse[i].lastName)).length !== 0) {
                     errorsMsg.push(`השם המשפחה של התלמיד בשורה ${i + 1} לא תקין.`)
+                }
+
+                //------------ ussername validation --------------------
+                if (dataParse[i].username === undefined) {
+                    errorsMsg.push(`חסר שם משתמש בשורה ${i + 1}.`)
                 } else if (userNameValidation(String(dataParse[i].username)).length !== 0) {
                     errorsMsg.push(`השם משתמש של התלמיד בשורה ${i + 1} לא תקין.`)
+                }
+
+                //------------ password validation ---------------------
+                if (dataParse[i].password === undefined) {
+                    errorsMsg.push(`חסרה סיסמא בשורה ${i + 1}.`)
                 } else if (studentPasswordValidation(String(dataParse[i].password)).length !== 0) {
                     errorsMsg.push(`הסיסמא של התלמיד בשורה ${i + 1} לא תקינה.`)
+                }
+
+                //--------------- school validation --------------------
+                if (dataParse[i].schoolName === undefined) {
+                    errorsMsg.push(`חסר בית ספר בשורה ${i + 1}.`)
                 } else if (schoolNameValidation(String(dataParse[i].schoolName)).length !== 0) {
                     errorsMsg.push(`הבית ספר של התלמיד בשורה ${i + 1} לא תקין.`)
                 }
+
+                //--------------- classes validation --------------------
+                if (dataParse[i].classes === undefined) {
+                    dataParse[i].classrooms = []
+                } else {
+                    if (typeof dataParse[i].classes === "string") {
+                        let studentClasses = dataParse[i].classes.split(",")
+                        studentClasses.forEach((studentClass, index) => {
+                            if (classNameValidation(studentClass.trim()).length !== 0) {
+                                errorsMsg.push(`הכיתה ה${index + 1} בשורה ${i + 1} לא תקינה.`)
+                            }
+                            studentClasses[index] = studentClass.trim()
+                        })
+                        dataParse[i].classrooms = studentClasses
+                    } else {
+                        errorsMsg.push(`הכיתות של התלמיד בשורה ${i + 1} לא תקינות.`)
+                    }
+                }
             }
+
             if (errorsMsg.length === 0) {
                 try {
                     let { data } = await axios.post("/api/student/multiRegister", dataParse);
@@ -94,7 +134,9 @@ class AddStudentPopUp extends React.Component {
                 );
             }
         }
+        props.target.value = ""
     }
+    
     render() {
         return (<>
             <div className="addStudentPopUpFlex">
@@ -102,6 +144,7 @@ class AddStudentPopUp extends React.Component {
                     <input type="file"
                         className="hiddenInput"
                         onChange={this.uploadFile}
+                        // onClick={(props)=>{props.target.files = {length: 0}}}
                         accept=".xlr,.xlsx,.xlsm,.xlsb,.xltx,.xltm,.xls,.xlt,.xml,.xlam,.xla,.xlw,.ods"></input>
                     <p>העלאת קובץ</p>
                 </label>
