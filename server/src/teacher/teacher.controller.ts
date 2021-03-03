@@ -66,9 +66,15 @@ export class TeacherController {
     return this.teacherService.getTeacher(skipON);
   }
 
-  @Post('/Verify')
+  @Post('/SendEmail')
   async verifyEmail(@Query() VerifyInfo: any) {
      let token= await this.teacherService.createAndSaveToken(VerifyInfo.email)
-    await this.teacherService.sendVerificationEmail(VerifyInfo,token )
+    await this.teacherService.sendVerificationEmail(VerifyInfo.email,token )
+  }
+
+  @Get('/Verify')
+  async  MakeLogInAvailable(@Query() Token: any) {
+    console.log('Token: ', Token);
+    return'email verified'
   }
 }

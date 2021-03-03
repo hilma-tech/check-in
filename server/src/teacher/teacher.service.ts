@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { Teacher } from './teacher.entity';
 import { GetTeacherSkip, TeacherIdDto, GetClassSkip } from './teacher.dtos';
 import { env } from 'process';
+import Config from '../config/configuration.jsx'
 
 @Injectable()
 export class TeacherService extends UserService {
@@ -16,10 +17,11 @@ export class TeacherService extends UserService {
     protected readonly userRepository: Repository<Teacher>,
     protected readonly jwtService: JwtService,
     protected readonly configService: ConfigService,
+    protected readonly Config,
     @Inject('MailService')
     protected readonly mailer: MailerInterface
   ) {
-    super(config_options, userRepository, jwtService, configService, mailer);
+    super(config_options, userRepository, jwtService, configService, mailer,Config);
   }
 
   async getTeacherClasses(@Body() userinfo: string, skipON: GetClassSkip) {
@@ -86,21 +88,21 @@ export class TeacherService extends UserService {
 
   async createAndSaveToken(email) {
     let token = await this.generateVerificationToken();
-    // this.userRepository.createQueryBuilder()
+    // await this.userRepository.createQueryBuilder()
     //   .update()
     //   .set({verificationToken: token })
     //   .where( { username: email })
     //   .execute();
     return token
   }
+  // `http://localhost:3000/signin/?token=${token}`
+  async sendVerificationEmail(email, token) {
+    // let email = verifyInfo.email
+    let html = this.Config.auth.verification_email.html
+    console.log('his.Config.auth.verification_email.html: ', this.Config.auth.verification_email.);
+    // this.sendVerificationEmail(email, token);
+    // this.sendEmail(email, '', '', html, [])
 
-  async sendVerificationEmail(verifyInfo, token) {
-    let email = verifyInfo.email
-    let html = `http://localhost:3000/signin/?token=${token}`
-    // this.sendEmail(email, 'לחצו על הקישור לאימות האימיל', 'fkghh bukh fuukhjcfg',
-    //   html,
-    //   []
-    // );
   }
 
 }
