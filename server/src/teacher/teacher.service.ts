@@ -99,7 +99,7 @@ export class TeacherService extends UserService {
   async sendVerificationEmail(email, token) {
     // let email = verifyInfo.email
     let html = this.Config.auth.verification_email.html
-    console.log('his.Config.auth.verification_email.html: ', this.Config.auth.verification_email.);
+    console.log('his.Config.auth.verification_email.html: ', this.Config.auth.verification_email);
     // this.sendVerificationEmail(email, token);
     // this.sendEmail(email, '', '', html, [])
 
