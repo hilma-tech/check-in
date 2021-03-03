@@ -7,11 +7,12 @@ module.exports ={
   "password": process.env.DB_PWD,
   "database": "checkin",
   "entities": [
+    "node_modules/@hilma/auth-nest/dist/**/*.entity{.ts,.js}",
     "dist/**/*.entity{.ts,.js}",
     "node_modules/@hilma/fileshandler-typeorm/**/*.entity.{ts,js}",
-    "node_modules/@hilma/auth-nest/dist/**/*.entity{.ts,.js}"
   ],
   "synchronize": true,
+  logging:true
   // "ssl": true
 }
 

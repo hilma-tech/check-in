@@ -65,7 +65,11 @@ class PopUpError extends React.Component {
         {/* it takes the message that's saved in the store and shows it */}
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <span className="popUpQuesion">{this.props.errorMsg.errorMsg}</span>
+            <span className="popUpQuesion">
+              {this.props.errorMsg.errorMsg.length !== 0 ?
+            this.props.errorMsg.errorMsg :
+            this.props.errorMsg.arrErrorMsg.map((errMsg,i)=>{return <span key={i}>{errMsg}<br/></span>})}
+            </span>
           </DialogContentText>
         </DialogContent>
         <DialogActions>

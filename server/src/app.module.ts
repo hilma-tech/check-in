@@ -21,7 +21,6 @@ import { ClassroomFieldModule } from './classroom-field/classroom-field.module';
   imports: [
     GameModule,
     TypeOrmModule.forRoot(),
-    SuperAdminModule,
     ConfigModule.forRoot({ load: [configuration], isGlobal: true }),
     FieldModule,
     FilesHandlerModule.register({
@@ -31,11 +30,12 @@ import { ClassroomFieldModule } from './classroom-field/classroom-field.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../../', 'client/build'),
     }),
-    StudentModule,
-    SchoolModule,
     TeacherModule,
-    ClassroomModule,
+    SuperAdminModule,
+    StudentModule,
     UserModule,
+    SchoolModule,
+    ClassroomModule,
     RoleModule,
     ClassroomFieldModule,
   ],

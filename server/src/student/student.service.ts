@@ -109,7 +109,7 @@ export class StudentService extends UserService {
     student.first_name = req.firstName;
     student.last_name = req.lastName;
     
-    if(req.classrooms !== undefined || req.classrooms.length !== 0){
+    if(req.classrooms.length !== 0){
       student.classroomStudent = req.classrooms.map((classroom)=>{
         let studentClassroom = new Classroom()
         studentClassroom.id = classroom.id
@@ -130,6 +130,6 @@ export class StudentService extends UserService {
     let user = await this.userRepository.findOne({
       where: [{username: username}]
     })
-    return username === undefined ? false : true
+    return user === undefined ? false : true
   }
 }

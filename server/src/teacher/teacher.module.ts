@@ -30,7 +30,7 @@ import { Teacher } from './teacher.entity';
       provide: USER_MODULE_OPTIONS,
       useValue: {},
     },
-    LocalStrategy,
+    // LocalStrategy,
     {
       provide: "MailService",
       useClass: NodeMailerService

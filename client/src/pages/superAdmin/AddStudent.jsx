@@ -75,32 +75,6 @@ class AddStudent extends React.Component {
     return options;
   };
 
-  returnClassesSelections = () => {
-    let classesSelections = [];
-    for (let i = 0; i < this.state.chosenClasses.length; i++) {
-      classesSelections.push(
-        <div key={this.state.chosenClasses[i].id} className="classSelection">
-          <Select
-            className="classSelectionInAddTecher"
-            styles={SelectStyle()}
-            options={this.makeClassesOption(i)}
-            onChange={this.chooseClass}
-            defaultValue={{
-              value: this.state.chosenClasses[i].name,
-              label: this.state.chosenClasses[i].name,
-            }}
-          />
-          <img
-            className="removeFieldIcon"
-            onClick={() => this.removeClass(i)}
-            src="/icons/delete.svg"
-          />
-        </div>
-      );
-    }
-    return classesSelections;
-  };
-
   addClassSelection = () => {
     this.setState((prevState) => {
       prevState.chosenClasses.push({
@@ -268,7 +242,7 @@ class AddStudent extends React.Component {
       <div className='withMenu'>
         <ArrowNavBar />
         <form className="formData">
-          <label for="studentFirstName" className="labelFields">
+          <label className="labelFields">
             שם פרטי:
           </label>
           <p
@@ -285,7 +259,7 @@ class AddStudent extends React.Component {
             name="studentFirstName"
           ></input>
 
-          <label for="studentLastName" className="labelFields">
+          <label className="labelFields">
             שם משפחה:
           </label>
           <p
@@ -302,7 +276,7 @@ class AddStudent extends React.Component {
             name="studentLastName"
           ></input>
 
-          <label for="userName" className="labelFields">
+          <label className="labelFields">
             שם משתמש:
           </label>
           <p
@@ -319,7 +293,7 @@ class AddStudent extends React.Component {
             name="userName"
           ></input>
 
-          <label for="password" className="labelFields">
+          <label className="labelFields">
             סיסמא:
           </label>
           <p
@@ -356,7 +330,27 @@ class AddStudent extends React.Component {
           {this.state.school.length === 0 ? <></> :
             <>
               <label className="labelFields">כיתה:</label>
-              {this.returnClassesSelections()}
+              {
+                this.state.chosenClasses.map((val, i)=>{
+                  return  (<div key={val.id} className="classSelection">
+                  <Select
+                    className="classSelectionInAddTecher"
+                    styles={SelectStyle()}
+                    options={this.makeClassesOption(i)}
+                    onChange={this.chooseClass}
+                    defaultValue={{
+                      value: val.name,
+                      label: val.name,
+                    }}
+                  />
+                  <img
+                    className="removeFieldIcon"
+                    onClick={() => this.removeClass(i)}
+                    src="/icons/delete.svg"
+                  />
+                </div>)
+                })
+              }
 
               <div className="addSomethingNew" onClick={this.addClassSelection}>
                 <img className="addIcon" src={addicon} alt="add icon"></img>

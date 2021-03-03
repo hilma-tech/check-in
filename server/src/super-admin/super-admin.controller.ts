@@ -5,7 +5,7 @@ import { SuperAdmin } from './super-admin.entity';
 @Controller('api/super-admin')
 export class SuperAdminController {
   constructor(private readonly userService: UserService) {
-    // this.register({username: 'superadmin@gmail.com', password:'superadmin1'})
+    // this.register({username: 'shirush@gmail.com', password: 'shiraa123'})
   }
 
   @UseJwtAuth('teacher', 'superAdmin')
