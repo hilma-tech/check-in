@@ -190,7 +190,6 @@ class AddTeacher extends Component {
     }
     // ----------rakaz validation-------------------
     let rakazMess = mustInputValidation(this.state.rakaz);
-    console.log('JSON', this.state.rakaz);
     if (rakazMess.length !== 0) {
       this.setState((prevState) => {
         prevState.rakazError.toShow = "inline-block";

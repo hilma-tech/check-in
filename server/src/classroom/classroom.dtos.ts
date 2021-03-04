@@ -21,6 +21,15 @@ export class ClassroomIdDto {
   dataLength: string;
 }
 
+export class RemoveClassroomGameDto {
+  @IsDefined()
+  @IsNumber()
+  classId: number;
+  @IsDefined()
+  @IsNumber()
+  gameId: number;
+}
+
 export class ClassroomGameDto {
   @IsDefined()
   @IsNumber()
@@ -28,6 +37,8 @@ export class ClassroomGameDto {
   @IsDefined()
   @IsNumber()
   gameId: number;
+  @IsDefined()
+  fieldsData: any
 }
 
 export class GetClassSkip {

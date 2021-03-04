@@ -45,6 +45,7 @@ export class FieldService {
       .innerJoinAndSelect('Field.game', 'Game')
       .select('Field.id')
       .addSelect('Field.default_value')
+      .addSelect('Field.type')
       .where('Game.id = :id', { id: Number(gameId) })
       .getMany();
     return fields;

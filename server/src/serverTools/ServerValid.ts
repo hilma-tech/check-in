@@ -1,6 +1,7 @@
 //Check validation for inputs that the user must field
 //it's not matter how he field them...
 module.exports.mustValid = function (input) {
+
     if (input === null || input.length === 0) {
         return '** נא למלא שדה זה **'
     } else if (input.trim().length === 0) {

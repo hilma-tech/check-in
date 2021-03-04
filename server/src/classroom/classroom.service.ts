@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { GameService } from 'src/game/game.service';
 import { ClassroomFieldService } from 'src/classroom-field/classroom-field.service';
 import { Repository } from 'typeorm';
-import { ClassroomGameDto } from './classroom.dtos';
+import { ClassroomGameDto, RemoveClassroomGameDto } from './classroom.dtos';
 import { Classroom } from './classroom.entity';
 
 @Injectable()
@@ -28,7 +28,7 @@ export class ClassroomService {
     return { newlyAddedGame: newlyAddedGame };
   }
 
-  async removeGameRelation(@Body() req: ClassroomGameDto) {
+  async removeGameRelation(@Body() req: RemoveClassroomGameDto) {
     let ans = await this.classroomRepository.findOne({
       relations: ['games'],
       where: [{ id: req.classId }],

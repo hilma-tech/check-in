@@ -55,7 +55,7 @@ export class TeacherController {
     }
     user.school = req.school_id
     let userRole = new Role();
-    userRole.id = req.rakaz ? 2 : 3; //you set the role id.
+    userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
     user.roles = [userRole];
     return await this.userService.createUser<Teacher>(user);
   }
