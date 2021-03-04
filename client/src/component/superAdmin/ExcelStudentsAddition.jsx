@@ -5,6 +5,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { errorMsgContext } from '../../stores/error.store';
 import { studentsContext } from '../../stores/students.store';
+import "../../style/superAdmin/excel_students_addition_style.scss"
 import { classNameValidation, nameValidation, schoolNameValidation, studentPasswordValidation, userNameValidation } from '../../tools/ValidationFunctions';
 
 var xlsxParser = require('xlsx');
@@ -127,20 +128,29 @@ class ExcelStudentsAddition extends React.Component {
     }
     render() { 
         return ( 
-            <div className="excelStudentAdd">
+            <div className="excelStudentAddBackground" style={{display: this.props.toShow ? "" : "none"}}>
+                <div className="excelStudentAdd">
+                <img
+                    onClick={this.props.handleState}
+                    alt=""
+                    className="excelStudentAddCloseIcon"
+                    src="/icons/ionic-ios-close.svg"
+                  />
                 <h1 className="excelStudentAddTitle">העלאת קובץ אקסל</h1>
                 <h2 className="excelStudentAddDesc">להלן דוגמה של מבנה קובץ</h2>
                 <img alt="excel example"  className="excelStudentAddExample" src="/images/excelExample.png"/>
                 <label
                     className="showMoreGamesB"
                     style={{marginTop: "1vh"}}
-                  >
+                    >
                       <input type="file"
+                      onClick={this.props.handleState}
                         className="hiddenInput"
                         onChange={this.uploadFile}
                         accept=".xlr,.xlsx,.xlsm,.xlsb,.xltx,.xltm,.xls,.xlt,.xml,.xlam,.xla,.xlw,.ods"></input>
                     העלאת קובץ
                   </label>
+                </div>
             </div>
          );
     }
