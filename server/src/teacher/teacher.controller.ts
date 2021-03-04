@@ -37,6 +37,7 @@ export class TeacherController {
 
   @Post('/register')
   register(@Body() req) {
+    
     let username = req.email;
     let password = req.password;
     let user: Partial<Teacher> = new Teacher({ username, password });
@@ -53,7 +54,7 @@ export class TeacherController {
     }
     user.school = req.school_id
     let userRole = new Role();
-    userRole.id = req.rakaz ? 2 : 3; //you set the role id.
+    userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
     user.roles = [userRole];
     this.userService.createUser<Teacher>(user);
   }

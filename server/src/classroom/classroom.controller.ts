@@ -2,7 +2,7 @@ import { UseJwtAuth } from '@hilma/auth-nest';
 import { Body, Controller, Get, Post, Query, } from '@nestjs/common';
 import { ClassroomService } from './classroom.service';
 import {
-  ClassroomGameDto,
+  ClassroomGameDto, RemoveClassroomGameDto,
 } from './classroom.dtos';
 import { SchoolIdDto } from 'src/school/school.dtos';
 import { ClassroomFieldService } from 'src/classroom-field/classroom-field.service';
@@ -23,7 +23,7 @@ export class ClassroomController {
 
   @UseJwtAuth('teacher')
   @Post('/removeGameRelation')
-  async removeGameRelation(@Body() req: ClassroomGameDto) {
+  async removeGameRelation(@Body() req: RemoveClassroomGameDto) {
     await this.classroomFieldService.removeGameFieldsFromClass(req);
     return await this.classroomService.removeGameRelation(req);
   }

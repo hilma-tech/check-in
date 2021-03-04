@@ -28,10 +28,11 @@ class EditGame extends Component {
       gameRequirements: "",
       image: "",
       fieldsData: [],
+      mess: "",
+      ErrorsPerField: [],
     };
     this.imageUploader = props.filesUploader;
   }
-
   //gets information needed to display the selected game's info
   componentDidMount() {
     if (this.props.chosenClass.classId === 0) {
@@ -51,7 +52,7 @@ class EditGame extends Component {
       }
       this.setState({
         fieldsData: data.fields.map((field) => {
-          field.errorMessage = { toShow: "none", mess: "" };
+          field.errorMessage = { mess: "" };
           return field;
         }),
         gameName: data.game_name,
@@ -65,129 +66,54 @@ class EditGame extends Component {
       );
     }
   };
-
   validateGame = () => {
-    let isOk = true;
-    let countFullFields = 0;
-    let fieldEmpt = 0;
-    let firstErrMsg = "";
+    this.state.ErrorsPerField = [];
+    var errors=[]
     this.state.fieldsData.map((fields, index) => {
       if (fields.selection !== "image") {
         fields.value.map((field) => {
-          console.log("field.value: ", field.value);
           let errMess = fieldInputValidation(field.value);
-          if (errMess.length !== 0) {
-            if (
-              errMess === "** שדה זה לא יכול להכיל תווים מיוחדים **" ||
-              errMess === "** שדה זה לא יכול להכיל יותר מ-100 תווים **"
-            ) {
-              fieldEmpt++;
-              if (firstErrMsg.length === 0) {
-                firstErrMsg = errMess;
-              }
-            }
-            this.setState((prevState) => {
-              prevState.fieldsData[index].errorMessage.toShow = "block";
-              prevState.fieldsData[index].errorMessage.mess = errMess;
-              return { fieldsData: prevState.fieldsData };
-            });
-            isOk = false;
-          } else {
-            countFullFields++;
-            this.setState((prevState) => {
-              prevState.fieldsData[index].errorMessage.toShow = "none";
-              prevState.fieldsData[index].errorMessage.mess = "";
-              return { fieldsData: prevState.fieldsData };
+          if (errMess != "") {
+            errors.push({
+              fieldId: fields.id,
+              err: errMess,
             });
           }
         });
-        if (
-          fields.selection === "choice" ||
-          fields.selection === "multi-choice"
-        ) {
-          if (countFullFields >= 2 && fieldEmpt === 0) {
-            // isOk = true;
-            this.setState((prevState) => {
-              prevState.fieldsData[index].errorMessage.toShow = "none";
-              prevState.fieldsData[index].errorMessage.mess = "";
-              return { fieldsData: prevState.fieldsData };
-            });
-          } else if (fieldEmpt === 0) {
-            this.setState((prevState) => {
-              prevState.fieldsData[index].errorMessage.toShow = "block";
-              prevState.fieldsData[index].errorMessage.mess =
-                "** נא למלא לפחות 2 שדות **";
-              return { fieldsData: prevState.fieldsData };
-            });
-          } else if (firstErrMsg.length !== 0) {
-            this.setState((prevState) => {
-              prevState.fieldsData[index].errorMessage.toShow = "block";
-              prevState.fieldsData[index].errorMessage.mess = firstErrMsg;
-              return { fieldsData: prevState.fieldsData };
-            });
-          }
-        }
-      } else {
-        let errMess = fieldNameValidation(fields.name);
-        if (errMess.length !== 0) {
-          this.setState((prevState) => {
-            prevState.fieldsData[index].errorMessage.toShow = "block";
-            prevState.fieldsData[index].errorMessage.mess = errMess;
-            return { fieldsData: prevState.fieldsData };
-          });
-          isOk = false;
-        } else {
-          if (fields.value[0].value.length === 0) {
-            this.setState((prevState) => {
-              prevState.fieldsData[index].errorMessage.toShow = "block";
-              prevState.fieldsData[index].errorMessage.mess =
-                "** חייב להכניס שדה זה **";
-              return { fieldsData: prevState.fieldsData };
-            });
-            isOk = false;
-          } else {
-            this.setState((prevState) => {
-              prevState.fieldsData[index].errorMessage.toShow = "none";
-              prevState.fieldsData[index].errorMessage.mess = "";
-              return { fieldsData: prevState.fieldsData };
-            });
-          }
-        }
+  
       }
+      
     });
-    console.log("isOk: ", isOk);
-    if (isOk) {
+    this.setState({ErrorsPerField: errors})
+    
+    if (this.state.ErrorsPerField.length === 0) {
       this.addGameToDB();
     }
   };
 
+  
   //adds relation between the current class and the selected game
   //then moves the user back to the game page
   addGameToDB = async () => {
     await this.props.games.addGameToClass(
       this.props.chosenGame.index,
-      this.props.chosenClass.classId
+      this.props.chosenClass.classId,
+      this.state.fieldsData
     );
     await this.props.games.resetGamesStore();
     this.props.history.push("/teacher/classes/games");
   };
 
   sendImageFieldValue = (value) => {
-    // console.log('props: ', props);
-    console.log("value: ", value);
     this.saveFieldValue(value.value, value.fieldI, null, value.link, value.id);
   };
   //כשמו כן הוא
   saveFieldValue = (fieldValue, fieldI, inputId, inputImage, imgId) => {
-    
-    console.log('inputId: ', inputId);
-    console.log("fieldEye: ", fieldI);
     //only relevant to choice/multi-choice
     if (inputId !== null) {
       this.setState((prevState) => {
-        console.log('prevState.fieldsData: ', prevState.fieldsData);
-        prevState.fieldsData[fieldI].value[inputId].id = Number(inputId)
-        prevState.fieldsData[fieldI].value[inputId].value = fieldValue
+        prevState.fieldsData[fieldI].value[inputId].id = Number(inputId);
+        prevState.fieldsData[fieldI].value[inputId].value = fieldValue;
         return { fieldsData: prevState.fieldsData };
       });
       //only relevant to image
@@ -211,9 +137,8 @@ class EditGame extends Component {
       });
     }
   };
-
   render() {
-    console.log('this.state.fieldsData: ', this.state.fieldsData);
+    
     return (
       <>
         <SmallMenuBar />
@@ -251,23 +176,44 @@ class EditGame extends Component {
               <p className="noFields">אין שדות למשחק זה</p>
             ) : (
               this.state.fieldsData.map((field, i) => {
+                
+                let Errs=  this.state.ErrorsPerField.map((err) => {
+                  if (err.fieldId === field.id) {
+                    return err.err
+                  }
+                });
+                
                 return (
                   <>
                     <h2 className="mobileFieldName" key={i + 1}>
                       {field.field_name}
                     </h2>
-                    <p
-                      className="error"
-                      style={{ display: field.errorMessage.toShow }}
+
+                    <div
+                      style={
+                        Errs
+                          ? { display: "block" }
+                          : { display: "none" }
+                      }
                     >
-                      {field.errorMessage.mess}
-                    </p>
+                      <p className="error">{Errs}</p>
+                    </div>
+
                     {field.selection !== "image" ? (
                       field.selection === "text" ? (
                         <input
                           key={i}
                           defaultValue={field.value[0].value}
                           className="mobileChangingInput"
+                          onBlur={(value) => {
+                            this.saveFieldValue(
+                              value.target.value,
+                              i,
+                              0,
+                              null,
+                              null
+                            );
+                          }}
                         />
                       ) : (
                         <div className="mobileChangingInputGrid">
