@@ -15,15 +15,17 @@ import { GameModule } from 'src/game/game.module';
 import { GameService } from 'src/game/game.service';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { SchoolService } from 'src/school/school.service';
+import { FieldService } from 'src/field/field.service';
 
 @Controller('api/student')
 export class StudentController {
   constructor(
     private readonly userService: UserService,
     private studentService: StudentService,
+    private schoolService: SchoolService,
     private classroomService: ClassroomService,
     private gameService: GameService,
-    private schoolService: SchoolService
+    private fieldService: FieldService
   ) {
     // this.register({username: 'student2@gmail.com', password: 'student11', name: 'בת-ציון רוז'})
   }
@@ -49,7 +51,7 @@ export class StudentController {
         errorsMsg.push(`הבית ספר בשורה ${i + 1} לא קיים במערכת. אנא נסה להכניס בית ספר אחר.`)
       } else {
         req[i].schoolId = schoolId.id
-        for(let z =0; z < req[i].classrooms.length; z++){
+        for (let z = 0; z < req[i].classrooms.length; z++) {
           let classroomInfo = await this.classroomService.getClassroomInfoByName(req[i].classrooms[z], schoolId.id)
           if (classroomInfo === undefined) {
             errorsMsg.push(`הכיתה ${req[i].classrooms[z]} בשורה ${i + 1} לא קיימת במערכת. אנא נסה להכניס כיתה אחרת.`)
@@ -74,7 +76,7 @@ export class StudentController {
           username: req[i].username,
           schoolName: req[i].schoolName,
           id: info.id,
-          classes: req[i].classrooms.map((studentClassroom)=>{
+          classes: req[i].classrooms.map((studentClassroom) => {
             return studentClassroom.name
           })
         })
@@ -95,18 +97,31 @@ export class StudentController {
     return this.studentService.getStudentsClassrooms(req.id);
   }
 
-  @Get('/gamesForClass')
+  @Get('/gamesAndStudentInfo')
   async getGamesForClass(@Query() info: GamesForClassDto) {
-    let getClassId = await this.studentService.CheckUserInfoAndGetClassId(info.username, info.password, info.classId);
-    if (Boolean(getClassId) === true) {
-      let gamesForClass = await this.gameService.getClassroomGames({ classId: info.classId, dataLength: '0' });
-      if (gamesForClass.currClassGames.length > 0) {
-        return gamesForClass.currClassGames
-      }
-      else { return "no games for this class" }
+    let getStudentInfo = await this.studentService.CheckUserInfoAndGetClassId(info.username, info.password);
+    if (getStudentInfo != undefined) {
+      var Classes = []
+      return Promise.all(getStudentInfo.classroomStudent.map(async (classroom) => {
+        Classes.push(classroom.name);
+        var getGames = await this.gameService.GetGamesForStudent(classroom.id);
+        return getGames
+      })).then(async (getGames) => {
+
+        let schoolName = await this.schoolService.getSchoolNameById(getStudentInfo.classroomStudent[0].school_id);
+
+        let StudentInfo = {
+          first_name: getStudentInfo.first_name,
+          last_name: getStudentInfo.last_name,
+          classes: Classes,
+          school: schoolName.name,
+          games: getGames
+        }
+        return StudentInfo
+      })
     }
-    else {
-      return 'problem with info'
+    else{
+      return 'user does not exist'
     }
   }
 
