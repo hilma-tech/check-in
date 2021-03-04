@@ -12,7 +12,6 @@ module.exports ={
     "node_modules/@hilma/fileshandler-typeorm/**/*.entity.{ts,js}",
   ],
   "synchronize": true,
-  logging:true
   // "ssl": true
 }
 

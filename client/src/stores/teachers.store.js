@@ -17,8 +17,15 @@ class Teachers {
       chosenTeacher: observable,
       getTeachers: action,
       getChosenTeacher: action,
+      addTeacher: action,
+
     });
   }
+
+  addTeacher = (teacherInfo) => {
+    console.log('teacherInfo: ', teacherInfo);
+    this.listDataTeachers = [teacherInfo, ...this.listDataTeachers]
+}
 
   //get 50 teachers from DB for superadmin
   getTeachers = async () => {

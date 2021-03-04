@@ -66,6 +66,7 @@ export class TeacherService extends UserService {
       skip: Number(skipON.teachersLength),
       take: 50,
       relations: ['school', 'classroomTeacher'],
+      order: {created: "DESC"}
     });
     return { teachersInfo: teachers, haveMoreTeachers: haveMoreTeachers };
   }

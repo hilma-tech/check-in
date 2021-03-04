@@ -9,8 +9,6 @@ export class AppController {
     private readonly userService: UserService,
 ) {
 
-  // userService
-  console.log('userService: ', userService);
 }
 
   @UseLocalAuth()
