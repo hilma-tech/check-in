@@ -110,11 +110,12 @@ class Games {
   };
 
   //adds relation class-game to the database
-  addGameToClass = async (index, classId) => {
+  addGameToClass = async (index, classId, fieldsData) => {
     try {
       await axios.post("/api/classroom/addGameRelation", {
         gameId: this.gamesList[index].id,
         classId: classId,
+        fieldsData: fieldsData
       });
     } catch (err) {
       console.log("add game err: ", err);

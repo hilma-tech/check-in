@@ -365,4 +365,6 @@
   .noFields{
     margin-right: 0;
   }
+  .error{
+    @include error-msg-style  }
 }
