@@ -35,4 +35,11 @@ export class SchoolService {
       where: [{ name: schoolName }]
     })
   }
+
+  async getSchoolNameById(Id) {
+    return await this.schoolRepository.findOne({
+      select: ["name"],
+      where: [{ id: Id }]
+    })
+  }
 }

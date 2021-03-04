@@ -32,11 +32,6 @@ export class GamesForClassDto {
   @IsString()
   @IsEmail()
   username: string;
-
-  @IsDefined()
-  @IsString()
-  @IsNumberString()
-  classId: string;
 }
 
 export class ClassroomIdDto {

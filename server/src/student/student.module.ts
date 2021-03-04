@@ -13,14 +13,16 @@ import { Student } from './student.entity';
 import { ClassroomModule } from 'src/classroom/classroom.module';
 import { GameModule } from 'src/game/game.module';
 import { SchoolModule } from 'src/school/school.module';
+import { FieldModule } from 'src/field/field.module';
 
 @Module({
   imports: [
     ClassroomModule,
+    SchoolModule,
     UserModule,
     RoleModule,
     GameModule,
-    SchoolModule,
+    FieldModule,
     TypeOrmModule.forFeature([Student]),
     JwtModule.register({}),
   ],

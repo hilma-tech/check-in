@@ -79,4 +79,20 @@ export class ClassroomFieldService {
       await this.fieldService.deleteField(fieldsForDelete);
     }
   }
+
+  async checkFieldAltValue(gameId, ClassId) {
+    let fields = await this.fieldService.getGameFields(gameId);
+
+    return Promise.all(fields.map(async (field) => {
+      let getNewVal = await this.classFieldRepository.findOne({
+        where: [{
+          classroom_id: ClassId,
+          field_id: field.id
+        }],
+        select: ['new_value']
+      })
+      return { id: field.id, value: getNewVal.new_value }
+    })).then((editedField) => { return editedField })
+
+  }
 }
