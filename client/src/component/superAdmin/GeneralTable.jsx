@@ -79,6 +79,7 @@ class GeneralTable extends React.Component {
             <AddStudentPopUp />
           </div>
           :
+          this.props.location.pathname.includes("school") ? <></> :
           <div className="addingButton" onClick={this.onClickAdd}></div>
         }
       </div>

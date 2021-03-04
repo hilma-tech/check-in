@@ -68,7 +68,7 @@ class EditGame extends Component {
   };
   validateGame = () => {
     this.state.ErrorsPerField = [];
-    var errors=[]
+    var errors = [];
     this.state.fieldsData.map((fields, index) => {
       if (fields.selection !== "image") {
         fields.value.map((field) => {
@@ -80,18 +80,17 @@ class EditGame extends Component {
             });
           }
         });
-  
       }
-      
     });
-    this.setState({ErrorsPerField: errors})
+    this.setState({ ErrorsPerField: errors });
     
-    if (this.state.ErrorsPerField.length === 0) {
+    
+
+    if (errors.length === 0) {
       this.addGameToDB();
     }
   };
 
-  
   //adds relation between the current class and the selected game
   //then moves the user back to the game page
   addGameToDB = async () => {
@@ -138,7 +137,6 @@ class EditGame extends Component {
     }
   };
   render() {
-    
     return (
       <>
         <SmallMenuBar />
@@ -176,13 +174,12 @@ class EditGame extends Component {
               <p className="noFields">אין שדות למשחק זה</p>
             ) : (
               this.state.fieldsData.map((field, i) => {
+               let Errs = this.state.ErrorsPerField.filter(err => err.fieldId===field.id);
+               if (Errs.length>0){
+                 Errs= Errs[0].err
+               }
                 
-                let Errs=  this.state.ErrorsPerField.map((err) => {
-                  if (err.fieldId === field.id) {
-                    return err.err
-                  }
-                });
-                
+
                 return (
                   <>
                     <h2 className="mobileFieldName" key={i + 1}>
@@ -190,11 +187,7 @@ class EditGame extends Component {
                     </h2>
 
                     <div
-                      style={
-                        Errs
-                          ? { display: "block" }
-                          : { display: "none" }
-                      }
+                      style={Errs[0] ? { display: "block" } : { display: "none" }}
                     >
                       <p className="error">{Errs}</p>
                     </div>

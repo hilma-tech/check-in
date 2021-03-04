@@ -6,6 +6,8 @@ import {
   UserModule,
   JwtStrategy,
   USER_MODULE_OPTIONS,
+  LocalStrategy,
+  NodeMailerService,
 } from '@hilma/auth-nest';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
@@ -28,8 +30,13 @@ import { Teacher } from './teacher.entity';
       provide: USER_MODULE_OPTIONS,
       useValue: {},
     },
+    // LocalStrategy,
+    {
+      provide: "MailService",
+      useClass: NodeMailerService
+    },
   ],
   exports: [TeacherService],
   controllers: [TeacherController],
 })
-export class TeacherModule {}
+export class TeacherModule { }

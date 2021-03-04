@@ -100,7 +100,7 @@ class ShowGame extends Component {
                           className="mobileChangingInput"
                         />
                       ) : (
-                        <div className="mobileChangingInputGrid">
+                        <div className="mobileChangingInputGrid" key={i+3}>
                           {field.value.map((value, i) => {
                             if (value.value.length !== 0) {
                               return (
@@ -120,6 +120,7 @@ class ShowGame extends Component {
                     ) : (
                       <div key={i} className="mobileBorderCameraIcon">
                         <img
+                        key={i+2}
                           alt="photograph icon"
                           className="mobileTeacherImg"
                           src={field.value[0].value}

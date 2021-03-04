@@ -31,7 +31,11 @@ export class StudentController {
   @UseJwtAuth('superAdmin')
   @Post('/register')
   async register(@Body() req: UserRegisterDto) {
-    return await this.studentService.addStudent(req);
+    try {
+      return await this.studentService.addStudent(req);
+    } catch (e) {
+      return false
+    }
   }
 
   @UseJwtAuth('superAdmin')
@@ -41,11 +45,21 @@ export class StudentController {
     let errorsMsg = []
     for (let i = 0; i < req.length; i++) {
       let schoolId = await this.schoolService.getSchoolIdByName(req[i].schoolName)
-      req[i].classrooms = []
       if (schoolId === undefined) {
-        errorsMsg.push(`הבית ספר בשורה ${i + 1} לא קיים במערכת. אנא נסה להכניס בית ספר אחר`)
+        errorsMsg.push(`הבית ספר בשורה ${i + 1} לא קיים במערכת. אנא נסה להכניס בית ספר אחר.`)
       } else {
         req[i].schoolId = schoolId.id
+        for(let z =0; z < req[i].classrooms.length; z++){
+          let classroomInfo = await this.classroomService.getClassroomInfoByName(req[i].classrooms[z], schoolId.id)
+          if (classroomInfo === undefined) {
+            errorsMsg.push(`הכיתה ${req[i].classrooms[z]} בשורה ${i + 1} לא קיימת במערכת. אנא נסה להכניס כיתה אחרת.`)
+          } else {
+            req[i].classrooms[z] = classroomInfo
+          }
+        }
+      }
+      if (await this.studentService.isStudentExist(req[i].username)) {
+        errorsMsg.push(`שם המשתמש בשורה ${i + 1} כבר קיים. אנא נסה להכניס שם משתמש אחר.`)
       }
     }
     if (errorsMsg.length !== 0) {
@@ -60,7 +74,9 @@ export class StudentController {
           username: req[i].username,
           schoolName: req[i].schoolName,
           id: info.id,
-          classes: []
+          classes: req[i].classrooms.map((studentClassroom)=>{
+            return studentClassroom.name
+          })
         })
       }
       return { success: true, students: ans }
@@ -105,7 +121,7 @@ export class StudentController {
 
   @UseJwtAuth('teacher')
   @Post('/changestudentpass')
-  async changePass(@Req() newPass: StudentPassword){
-return await this.studentService.changeStudentPassword(newPass)
+  async changePass(@Req() newPass: StudentPassword) {
+    return await this.studentService.changeStudentPassword(newPass)
   }
 }

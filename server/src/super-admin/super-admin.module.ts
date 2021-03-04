@@ -3,6 +3,8 @@ import {
   UserModule,
   JwtStrategy,
   USER_MODULE_OPTIONS,
+  LocalStrategy,
+  NodeMailerService,
 } from '@hilma/auth-nest';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -28,6 +30,10 @@ import { JwtModule } from '@nestjs/jwt';
     {
       provide: USER_MODULE_OPTIONS,
       useValue: {},
+    },
+    {
+      provide: "MailService",
+      useClass: NodeMailerService
     },
   ],
   exports: [SuperAdminService],
