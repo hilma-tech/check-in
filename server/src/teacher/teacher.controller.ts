@@ -38,7 +38,7 @@ export class TeacherController {
   // }
 
   @Post('/register')
-  register(@Body() req) {
+  async register(@Body() req) {
     let username = req.email;
     let password = req.password;
     let user: Partial<Teacher> = new Teacher({ username, password });
@@ -57,7 +57,7 @@ export class TeacherController {
     let userRole = new Role();
     userRole.id = req.rakaz ? 2 : 3; //you set the role id.
     user.roles = [userRole];
-    this.userService.createUser<Teacher>(user);
+    return await this.userService.createUser<Teacher>(user);
   }
 
   @UseJwtAuth('superAdmin')
