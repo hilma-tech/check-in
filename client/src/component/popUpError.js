@@ -36,7 +36,7 @@ class PopUpError extends React.Component {
       }
     }
     this.props.errorMsg.approveFunction();
-    
+
     this.props.errorMsg.resetMsg()
   }
 
@@ -67,8 +67,8 @@ class PopUpError extends React.Component {
           <DialogContentText id="alert-dialog-description">
             <span className="popUpQuesion">
               {this.props.errorMsg.errorMsg.length !== 0 ?
-            this.props.errorMsg.errorMsg :
-            this.props.errorMsg.arrErrorMsg.map((errMsg,i)=>{return <span key={i}>{errMsg}<br/></span>})}
+                this.props.errorMsg.errorMsg :
+                this.props.errorMsg.arrErrorMsg.map((errMsg, i) => { return <span key={i}>{errMsg}<br /></span> })}
             </span>
           </DialogContentText>
         </DialogContent>
@@ -84,10 +84,10 @@ class PopUpError extends React.Component {
               ביטול
             </button>
           ) : (
-            <></>
-          )}
+              <></>
+            )}
           <button className="popUpOkButton" onClick={this.approvalButton}>
-            {this.props.errorMsg.question ? "הבנתי" : "אישור"}
+            {this.props.errorMsg.question ? this.props.errorMsg.approveMsg :'אישור'}
           </button>
         </DialogActions>
       </Dialog>

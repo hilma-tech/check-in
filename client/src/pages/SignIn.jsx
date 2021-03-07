@@ -50,9 +50,7 @@ class SignIn extends Component {
 
   login = async () => {
     let username = this.state.username;
-    console.log('username: ', username);
     let password = this.state.password;
-    console.log('password: ', password);
     try {
       if (
         emailValidation(username).length === 0 &&
@@ -62,7 +60,6 @@ class SignIn extends Component {
           username,
           password,
         });
-        console.log('response: ', response);
         if (response.success) {
           if (response.user.type === "Teacher") {
             this.props.history.push("/teacher/classes");
