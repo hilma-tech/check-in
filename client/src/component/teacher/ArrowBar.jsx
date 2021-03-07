@@ -61,7 +61,7 @@ class ArrowBar extends React.Component {
       );
     } else if (this.props.page === "editGame") {
       return (
-        <div className="studentsInfoArrowBar">
+        <div className="studentsInfoArrowBar editGameMobile">
           <img
             alt="small back arrow"
             className="smallBackArrow"
