@@ -7,11 +7,7 @@ export class AppController {
   constructor(
     private readonly appService: AppService,
     private readonly userService: UserService,
-) {
-
-  // userService
-  console.log('userService: ', userService);
-}
+) {}
 
   @UseLocalAuth()
   @Post('/login')

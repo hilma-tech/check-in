@@ -32,7 +32,7 @@ export default function SelectStyle() {
     placeholder: (styles) => {
       return {
         ...styles,
-        color: "#043163",
+        color: "#043163b4",
         fontSize: '1.5vw'
       };
     },

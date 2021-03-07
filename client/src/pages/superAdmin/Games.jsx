@@ -99,6 +99,7 @@ class Games extends Component {
                   name="search"
                   className="searchInp"
                   value={this.state.searchVal}
+                  //todo
                   placeholder="חיפוש"
                   onChange={this.handleChange}
                 />
