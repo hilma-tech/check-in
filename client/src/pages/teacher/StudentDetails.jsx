@@ -135,7 +135,7 @@ class StudentDetails extends Component {
                   style={{
                     height: "3vh",
                     width: "3vh",
-                    color: "#043163"
+                    color: "#043163",
                   }} />
               </div>
             </div>
@@ -165,13 +165,13 @@ class StudentDetails extends Component {
                     passErr: ''
                   })
                 }}>
-                  <h3 style={{ fontWeight: 'lighter' }} className='changePasstext'>ביטול</h3>
+                  <h3 style={{ fontWeight: 'lighter', paddingLeft: '3vw',paddingRight:'3vw'}} className='changePasstext'>ביטול</h3>
                 </div>
                 <div className='passchange savepass' onClick={async () => {
                   await this.updatePass()
                 }} >
-                  <h3 style={{ fontWeight: 'lighter' }} className='changePasstext' style={{
-                    color: 'white', fontSize: '3vh', fontWeight: 'lighter'
+                  <h3 className='changePasstext' style={{
+                    color: 'white', fontSize: '3vh', fontWeight: 'lighter', paddingLeft: '3vw',paddingRight:'3vw'
                   }}>שמור</h3>
 
                 </div>
