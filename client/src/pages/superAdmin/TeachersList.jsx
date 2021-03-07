@@ -25,7 +25,7 @@ class TeachersList extends React.Component {
     };
   }
 
-  componentDidMount = async () => {
+  componentDidMount = async () => {    
     this.getTeachers();
   };
 

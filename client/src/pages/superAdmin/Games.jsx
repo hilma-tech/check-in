@@ -57,7 +57,7 @@ class Games extends Component {
 
   //todo lol doesnt work for shit
   onClickDeleteGame = (gameId) => {
-    this.props.errorMsg.setQuestion("האם אתה בטוח שברצונך למחוק משחק זה?", () => this.OnApprove(gameId));
+    this.props.errorMsg.setQuestion("האם אתה בטוח שברצונך למחוק משחק זה?", () => this.OnApprove(gameId),'מחק');
     this.props.errorMsg.question = true;
   };
 

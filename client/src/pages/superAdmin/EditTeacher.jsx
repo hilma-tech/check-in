@@ -211,7 +211,7 @@ class EditTeacher extends React.Component {
                 isDisabled={true}
               />
               {/* כיתה */}
-              <label className="labelFields">כיתה:</label>
+              <label className="labelFields">כיתות:</label>
               <div>
                 {this.state.fieldsData.length === 0 ? (
                   <p>למורה זה אין כיתות</p>

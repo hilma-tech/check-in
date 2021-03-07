@@ -7,7 +7,7 @@ class SchoolClassData extends React.Component {
   constructor() {
     super();
     this.state = {
-      showClass: true,
+      showClass: false,
     };
     this.teachers = [
       { id: 1, name: "נורית cכהן" },

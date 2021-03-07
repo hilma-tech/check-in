@@ -17,6 +17,8 @@ import { errorMsgContext } from "../../stores/error.store";
 import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import { schoolsContext } from "../../stores/schools.store";
+import data from "@iconify/icons-ion/ios-arrow-back";
+import { teachersContext } from "../../stores/teachers.store";
 const axios = require("axios").default;
 
 class AddTeacher extends Component {
@@ -246,10 +248,22 @@ class AddTeacher extends Component {
     };
     try {
       // this.setState({ savingInfo: true });
-      const response = await axios.post(
+      const {data} = await axios.post(
         "/api/teacher/register",
         currTeacherInfo
       );
+      if(data){        
+        this.props.teachers.addTeacher({
+          first_name: data.first_name,
+          last_name: data.last_name,
+          name: data.first_name + " " + data.last_name,
+          username: data.username,
+          schoolName: this.state.school,
+          id: data.id,
+          classes: this.state.fieldsData.map((classInfo) => {
+            return classInfo.value
+          })
+        })}
       // this.props.games.addGame(response.data);
       this.props.history.goBack();
     } catch (error) {
@@ -419,6 +433,7 @@ class AddTeacher extends Component {
 
 const mapContextToProps = {
   schools: schoolsContext,
+  teachers: teachersContext,
   errorMsg: errorMsgContext,
 };
 

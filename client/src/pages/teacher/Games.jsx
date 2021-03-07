@@ -96,7 +96,7 @@ class Games extends React.Component {
     this.gameId = id;
     this.props.errorMsg.setQuestion(
       "האם הנך בטוח שברצונך להסיר משחק זה מכיתה זו?",
-      this.removeGameFromClass
+      this.removeGameFromClass,'הסר'
     );
   };
 

@@ -12,8 +12,6 @@ export class AppController {
   @UseLocalAuth()
   @Post('/login')
   login(@RequestUser() userInfo, @Res() res) {
-    console.log('userInfo: ', userInfo);
-    console.log('res: ', res);
     let body = this.userService.login(userInfo, res);
     res.send(body);
   }

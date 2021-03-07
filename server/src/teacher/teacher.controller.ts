@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Redirect, Res } from '@nestjs/common';
 import { UserService, RequestUser, Role, UseJwtAuth } from '@hilma/auth-nest';
 import { Teacher } from './teacher.entity';
 import { TeacherService } from './teacher.service';
@@ -6,6 +6,7 @@ import { Classroom } from 'src/classroom/classroom.entity';
 import { TeacherIdDto, GetTeacherSkip, GetClassSkip } from './teacher.dtos';
 import { info } from 'console';
 import { Verify } from 'crypto';
+import { response } from 'express';
 
 @Controller('api/teacher')
 export class TeacherController {
@@ -38,8 +39,7 @@ export class TeacherController {
   // }
 
   @Post('/register')
-  register(@Body() req) {
-    
+  async register(@Body() req) {
     let username = req.email;
     let password = req.password;
     let user: Partial<Teacher> = new Teacher({ username, password });
@@ -58,7 +58,8 @@ export class TeacherController {
     let userRole = new Role();
     userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
     user.roles = [userRole];
-    this.userService.createUser<Teacher>(user);
+    await this.userService.createUser<Teacher>(user);
+    this.verifyEmail({ email: username, password: password })
   }
 
   @UseJwtAuth('superAdmin')
@@ -69,13 +70,13 @@ export class TeacherController {
 
   @Post('/SendEmail')
   async verifyEmail(@Query() VerifyInfo: any) {
-     let token= await this.teacherService.createAndSaveToken(VerifyInfo.email)
-    await this.teacherService.sendVerificationEmail(VerifyInfo.email,token )
+    let token = await this.teacherService.createAndSaveToken(VerifyInfo.email, VerifyInfo.password)
+    await this.teacherService.sendVerificationEmail(VerifyInfo.email, token)
   }
-
+  //real website address will go here
+  @Redirect('http://localhost:3000/signin', 202)
   @Get('/Verify')
-  async  MakeLogInAvailable(@Query() Token: any) {
-    console.log('Token: ', Token);
-    return'email verified'
+  async MakeLogInAvailable(@Query() Token: any) {
+    await this.teacherService.IsVerified(Token.token)
   }
 }

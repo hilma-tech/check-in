@@ -7,7 +7,6 @@ import { Repository } from 'typeorm';
 import { Teacher } from './teacher.entity';
 import { GetTeacherSkip, TeacherIdDto, GetClassSkip } from './teacher.dtos';
 import { env } from 'process';
-import Config from '../config/configuration.jsx'
 
 @Injectable()
 export class TeacherService extends UserService {
@@ -17,11 +16,10 @@ export class TeacherService extends UserService {
     protected readonly userRepository: Repository<Teacher>,
     protected readonly jwtService: JwtService,
     protected readonly configService: ConfigService,
-    protected readonly Config,
     @Inject('MailService')
     protected readonly mailer: MailerInterface
   ) {
-    super(config_options, userRepository, jwtService, configService, mailer,Config);
+    super(config_options, userRepository, jwtService, configService, mailer);
   }
 
   async getTeacherClasses(@Body() userinfo: string, skipON: GetClassSkip) {
@@ -66,6 +64,7 @@ export class TeacherService extends UserService {
       skip: Number(skipON.teachersLength),
       take: 50,
       relations: ['school', 'classroomTeacher'],
+      order: { created: "DESC" }
     });
     return { teachersInfo: teachers, haveMoreTeachers: haveMoreTeachers };
   }
@@ -86,23 +85,33 @@ export class TeacherService extends UserService {
     return teacherInfo;
   }
 
-  async createAndSaveToken(email) {
+  async createAndSaveToken(email, pass) {
     let token = await this.generateVerificationToken();
-    // await this.userRepository.createQueryBuilder()
-    //   .update()
-    //   .set({verificationToken: token })
-    //   .where( { username: email })
-    //   .execute();
-    return token
+    console.log('token: ', token);
+    let io = await this.userRepository.createQueryBuilder()
+      .update()
+      .set({ verificationToken: token })
+      .where({ username: email })
+      .execute();
+    return { token: token, password: pass }
   }
-  // `http://localhost:3000/signin/?token=${token}`
   async sendVerificationEmail(email, token) {
-    // let email = verifyInfo.email
-    let html = this.Config.auth.verification_email.html
-    console.log('his.Config.auth.verification_email.html: ', this.Config.auth.verification_email);
-    // this.sendVerificationEmail(email, token);
-    // this.sendEmail(email, '', '', html, [])
+    let html = `<div style= "direction:rtl"><h3 style="color:#043163">ברוכים הבאים לצ'ק אין!</h3>
+    <p>הסיסמה שלכם לאתר היא:</p>
+    <p>${token.password}</p>
+    <h3 style="color:#043163">~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h3>
+    <p> נשאר רק עוד צעד קטן כדי לסיים את ההרשמה שלכם! </p>
+    <p>לחצו על הקישור <a href="http://localhost:${env.PORT}/api/teacher/Verify?token=${token.token}">כאן</a> כדי לאמת את כתובת המייל</p>
+    </div>`
+    this.sendEmail(email, "ברוכים הבאים לצ'ק אין", '', html, [])
+  }
 
+  async IsVerified(token) {
+    await this.userRepository.createQueryBuilder()
+      .update()
+      .set({ emailVerified: true })
+      .where({ verificationToken: token })
+      .execute();
   }
 
 }
