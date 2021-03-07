@@ -252,10 +252,7 @@ class AddTeacher extends Component {
         "/api/teacher/register",
         currTeacherInfo
       );
-      console.log("data: ", data);
-      if(data){
-        console.log('im here');
-        
+      if(data){        
         this.props.teachers.addTeacher({
           first_name: data.first_name,
           last_name: data.last_name,

@@ -57,7 +57,8 @@ export class TeacherController {
     let userRole = new Role();
     userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
     user.roles = [userRole];
-    return await this.userService.createUser<Teacher>(user);
+    await this.userService.createUser<Teacher>(user);
+    this.verifyEmail({ email: username, password: password })
   }
 
   @UseJwtAuth('superAdmin')
@@ -68,13 +69,13 @@ export class TeacherController {
 
   @Post('/SendEmail')
   async verifyEmail(@Query() VerifyInfo: any) {
-     let token= await this.teacherService.createAndSaveToken(VerifyInfo.email)
-    await this.teacherService.sendVerificationEmail(VerifyInfo.email,token )
+    let token = await this.teacherService.createAndSaveToken(VerifyInfo.email, VerifyInfo.password)
+    await this.teacherService.sendVerificationEmail(VerifyInfo.email, token)
   }
 
   @Get('/Verify')
-  async  MakeLogInAvailable(@Query() Token: any) {
-    console.log('Token: ', Token);
-    return'email verified'
+  async MakeLogInAvailable(@Query() Token: any) {
+    await this.teacherService.IsVerified(Token.token)
+    return 'email verified'
   }
 }
