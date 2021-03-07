@@ -131,6 +131,7 @@ $gameimgwidth: 20vw;
 
 .bordered{
   border: 1px solid #043163;
+  border-radius: 1vw;
 }
 
 .searchInp{
@@ -138,6 +139,7 @@ $gameimgwidth: 20vw;
   width: 10vw;
   padding-top: 1vh;
   padding-right: 1vw;
+  background-color: #04306300;
 }
 
 .searchIcon {
@@ -161,6 +163,7 @@ $gameimgwidth: 20vw;
 }
 
 .showMoreGamesB {
+  @include mouse(point);
   @include blue-button-style;
   margin-bottom: 2vh;
 }

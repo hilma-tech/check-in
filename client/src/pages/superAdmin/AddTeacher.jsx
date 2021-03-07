@@ -176,11 +176,11 @@ class AddTeacher extends Component {
       allOk = true;
     }
     // ----------school name validetion-------------------
-    let nameSchoolMess = mustInputValidation(this.state.schoolName);
-    if (nameSchoolMess.length !== 0) {
+    // let nameSchoolMess = mustInputValidation(this.state.schoolName);
+    if (this.state.schoolName.length !== 0) {
       this.setState((prevState) => {
         prevState.schoolNameError.toShow = "inline-block";
-        prevState.schoolNameError.mess = nameSchoolMess;
+        prevState.schoolNameError.mess = "** חייב להכניס שדה זה **";
         return { schoolNameError: prevState.schoolNameError };
       });
       allOk = false;

@@ -141,7 +141,7 @@ class ExcelStudentsAddition extends React.Component {
                 <img alt="excel example"  className="excelStudentAddExample" src="/images/excelExample.png"/>
                 <label
                     className="showMoreGamesB"
-                    style={{marginTop: "1vh"}}
+                    style={{marginTop: "1vh", paddingRight: "1vw", paddingLeft: "1vw", paddingBottom: "0.25vh"}}
                     >
                       <input type="file"
                       onClick={this.props.handleState}
