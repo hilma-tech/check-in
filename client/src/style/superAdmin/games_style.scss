@@ -161,6 +161,7 @@ $gameimgwidth: 20vw;
 }
 
 .showMoreGamesB {
+  @include mouse(point);
   @include blue-button-style;
   margin-bottom: 2vh;
 }

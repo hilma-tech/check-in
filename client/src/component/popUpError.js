@@ -68,7 +68,7 @@ class PopUpError extends React.Component {
             <span className="popUpQuesion">
               {this.props.errorMsg.errorMsg.length !== 0 ?
                 this.props.errorMsg.errorMsg :
-                this.props.errorMsg.arrErrorMsg.map((errMsg, i) => { return <span key={i}>{errMsg}<br /></span> })}
+                this.props.errorMsg.arrErrorMsg.map((errMsg, i) => { return <span key={i}> - {errMsg}<br /></span> })}
             </span>
           </DialogContentText>
         </DialogContent>
