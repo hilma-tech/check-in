@@ -88,13 +88,11 @@ export class TeacherService extends UserService {
   async createAndSaveToken(email, pass) {
     let token = await this.generateVerificationToken();
     console.log('token: ', token);
-    let io= await this.userRepository.createQueryBuilder()
-    .update()
-    .set({ verificationToken: token })
-    .where({ username: email })
-    .execute();
-    
-    console.log('io: ', io);
+    let io = await this.userRepository.createQueryBuilder()
+      .update()
+      .set({ verificationToken: token })
+      .where({ username: email })
+      .execute();
     return { token: token, password: pass }
   }
   async sendVerificationEmail(email, token) {

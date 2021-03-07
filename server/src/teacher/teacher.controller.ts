@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Redirect, Res } from '@nestjs/common';
 import { UserService, RequestUser, Role, UseJwtAuth } from '@hilma/auth-nest';
 import { Teacher } from './teacher.entity';
 import { TeacherService } from './teacher.service';
@@ -6,6 +6,7 @@ import { Classroom } from 'src/classroom/classroom.entity';
 import { TeacherIdDto, GetTeacherSkip, GetClassSkip } from './teacher.dtos';
 import { info } from 'console';
 import { Verify } from 'crypto';
+import { response } from 'express';
 
 @Controller('api/teacher')
 export class TeacherController {
@@ -72,10 +73,10 @@ export class TeacherController {
     let token = await this.teacherService.createAndSaveToken(VerifyInfo.email, VerifyInfo.password)
     await this.teacherService.sendVerificationEmail(VerifyInfo.email, token)
   }
-
+  //real website address will go here
+  @Redirect('http://localhost:3000/signin', 202)
   @Get('/Verify')
   async MakeLogInAvailable(@Query() Token: any) {
     await this.teacherService.IsVerified(Token.token)
-    return 'email verified'
   }
 }
