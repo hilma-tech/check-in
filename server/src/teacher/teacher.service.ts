@@ -101,9 +101,20 @@ export class TeacherService extends UserService {
     <p>${token.password}</p>
     <h3 style="color:#043163">~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h3>
     <p> נשאר רק עוד צעד קטן כדי לסיים את ההרשמה שלכם! </p>
-    <p>לחצו על הקישור <a href="http://localhost:${env.PORT}/api/teacher/Verify?token=${token.token}">כאן</a> כדי לאמת את כתובת המייל</p>
+    <p>לחצו על הקישור <a href="http://localhost:${env.PORT}/api/teacher/Verify?token=${token.token}">כאן</a> כדי לאמת את כתובת המייל ומעבר לאתר</p>
+    <img src="cid:checkinlogo" height="20"/>
+    <br/>
+    <img src="cid:hilmalogo" height="40"/>
     </div>`
-    this.sendEmail(email, "ברוכים הבאים לצ'ק אין", '', html, [])
+    this.sendEmail(email, "ברוכים הבאים לצ'ק אין", '', html, [{
+      fileName: "blueCheckIn.png",
+      path: "http://localhost:3000/icons/blueCheckIn.png",
+      cid: 'checkinlogo',
+    }, {
+      fileName: "hilmaIcon.png",
+      path: "http://localhost:3000/icons/hilmaIcon.png",
+      cid: 'hilmalogo',
+    },])
   }
 
   async IsVerified(token) {
