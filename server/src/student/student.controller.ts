@@ -48,20 +48,20 @@ export class StudentController {
     for (let i = 0; i < req.length; i++) {
       let schoolId = await this.schoolService.getSchoolIdByName(req[i].schoolName)
       if (schoolId === undefined) {
-        errorsMsg.push(`הבית ספר בשורה ${i + 1} לא קיים במערכת. אנא נסה להכניס בית ספר אחר.`)
+        errorsMsg.push(`הבית ספר בשורה ${i + 1} לא קיים במערכת, אנא נסה להכניס בית ספר אחר`)
       } else {
         req[i].schoolId = schoolId.id
         for (let z = 0; z < req[i].classrooms.length; z++) {
           let classroomInfo = await this.classroomService.getClassroomInfoByName(req[i].classrooms[z], schoolId.id)
           if (classroomInfo === undefined) {
-            errorsMsg.push(`הכיתה ${req[i].classrooms[z]} בשורה ${i + 1} לא קיימת במערכת. אנא נסה להכניס כיתה אחרת.`)
+            errorsMsg.push(`הכיתה ${req[i].classrooms[z]} בשורה ${i + 1} לא קיימת במערכת, אנא נסה להכניס כיתה אחרת`)
           } else {
             req[i].classrooms[z] = classroomInfo
           }
         }
       }
       if (await this.studentService.isStudentExist(req[i].username)) {
-        errorsMsg.push(`שם המשתמש בשורה ${i + 1} כבר קיים. אנא נסה להכניס שם משתמש אחר.`)
+        errorsMsg.push(`שם המשתמש בשורה ${i + 1} כבר קיים, אנא נסה להכניס שם משתמש אחר`)
       }
     }
     if (errorsMsg.length !== 0) {
