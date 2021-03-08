@@ -85,7 +85,7 @@ export class GameService {
     });
     let classGameFields = await this.classroomFieldService.getClassroomGameFields(data);
     console.log('classGameFields: ', classGameFields);
-    if (classGameFields !== undefined) {
+    if (classGameFields.length !== 0) {
       temp[0].fields = temp[0].fields.map(
         (field, index) => {
           console.log("ind", index);
