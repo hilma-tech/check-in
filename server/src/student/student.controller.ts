@@ -104,10 +104,9 @@ export class StudentController {
       var Classes = []
       return Promise.all(getStudentInfo.classroomStudent.map(async (classroom) => {
         Classes.push(classroom.name);
-        var getGames = await this.gameService.GetGamesForStudent(classroom.id);
+        var getGames = await this.gameService.GetGamesForStudent(classroom.id, classroom.name);
         return getGames
       })).then(async (getGames) => {
-
         let schoolName = await this.schoolService.getSchoolNameById(getStudentInfo.classroomStudent[0].school_id);
 
         let StudentInfo = {
