@@ -22,11 +22,14 @@ class GameFieldSelection extends Component {
   // creates input based on "type"
   fieldCreator = () => {
     if (this.props.changeInputType === "text") {
+      let eek = this.props.originalValue[0].value.trim()
+      console.log("blop", ".", this.props.originalValue[0].value.length);
       return (
         <input
           onBlur={this.sendFieldValue}
-          className="fieldSelectionInput"
+          className={"fieldSelectionInput"}
           type="text"
+          placeholder="רשום את תוכן השדה"
           defaultValue={this.props.originalValue[0].value}
           readOnly={this.props.reading}
         />

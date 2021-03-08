@@ -8,6 +8,7 @@ class ArrowBar extends React.Component {
     this.pages = {
       games: "משחקים",
       editGame: "הוספת משחק",
+      showGame: "הצגת משחק",
       students: "תלמידים",
       permission: "הרשאות",
       studentInfo: "כרטיס תלמיד",
@@ -59,9 +60,9 @@ class ArrowBar extends React.Component {
           {/* <h4 className="linkToTeachers">לרשימת המורים של כיתה זו</h4> */}
         </div>
       );
-    } else if (this.props.page === "editGame") {
+    } else if (this.props.page === "editGame" || this.props.page === "showGame") {
       return (
-        <div className="studentsInfoArrowBar">
+        <div className="studentsInfoArrowBar editGameMobile">
           <img
             alt="small back arrow"
             className="smallBackArrow"

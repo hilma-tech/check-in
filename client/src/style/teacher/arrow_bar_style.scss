@@ -48,7 +48,7 @@
   font-size: 5vw;
   color: #043163;
   padding-right: 4%;
-  height: 13vh;
+  height: 6vh;
   z-index: 100;
   justify-items: right;
 }
@@ -101,7 +101,7 @@
 .studentsInfoArrowBar{
   background-color: #f2f7fc;
   position: fixed;
-  top: 24.75vh;
+  top: 26.75vh;
   width: 100%;
   font-size: 5vw;
   color: #043163;
@@ -110,6 +110,10 @@
   padding-top: 1vh;
   z-index: 100;
   justify-items: right;
+}
+
+.editGameMobile {
+  top: 24.75vh;
 }
 
 @media only screen and (min-width: 500px) {

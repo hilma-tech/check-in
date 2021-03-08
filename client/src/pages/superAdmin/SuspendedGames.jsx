@@ -61,6 +61,7 @@ class SuspendedGames extends Component {
                 <input
                   type="text"
                   name="search"
+                  className="searchInp"
                   value={this.state.searchVal}
                   placeholder="חיפוש"
                   onChange={this.handleChang}

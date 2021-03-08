@@ -20,8 +20,14 @@
   width: 100vw;
   z-index: 100;
   margin-bottom: 2vh;
+  padding-bottom: 2vh;
   font-size: 6vh;
   height: 9vh;
+}
+
+.secondTitle .officialTitleFlex {
+  /* padding-bottom: 2vh; */
+  background-color: #043163;
 }
 
 .officialTitle, .officialTitleClass {

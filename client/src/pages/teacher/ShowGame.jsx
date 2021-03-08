@@ -64,7 +64,7 @@ class ShowGame extends Component {
           title="משחקים"
           titleTwo={"כיתה " + this.props.chosenClass.classroomName}
         />
-        <ArrowBar page="editGame" />
+        <ArrowBar page="showGame" />
         <div className="smallAlign mobileGap" id="editGameForClass">
           <div className="mobileBackground">
             <div className="mobileGameContainer">
