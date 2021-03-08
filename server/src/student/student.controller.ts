@@ -120,7 +120,7 @@ export class StudentController {
         return StudentInfo
       })
     }
-    else{
+    else {
       return 'user does not exist'
     }
   }
@@ -136,7 +136,12 @@ export class StudentController {
 
   @UseJwtAuth('teacher')
   @Post('/changestudentpass')
-  async changePass(@Req() newPass: StudentPassword) {
-    return await this.studentService.changeStudentPassword(newPass)
+  async changePass(@Body() newPass: StudentPassword) {
+    if (((/[0-9]/).test(newPass.password) && (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(newPass.password) && (/[a-zA-Z\u0590-\u05EA]/).test(newPass.password))) {
+      return await this.studentService.changeStudentPassword(newPass)
+    }
+    else {
+      return 'password is not according to format'
+    }
   }
 }
