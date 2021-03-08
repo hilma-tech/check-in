@@ -116,6 +116,12 @@
   text-align: center;
 }
 
+.popUpErrorsList{
+  color: black;
+  font-size: 2vw;
+  width: 30vw;
+}
+
 .chosenGameForClassContainer{
   @include mouse(point);
   position: relative;

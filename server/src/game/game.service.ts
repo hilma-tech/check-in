@@ -208,20 +208,20 @@ export class GameService {
     };
   }
 
-  async GetGamesForStudent(req) {
+  async GetGamesForStudent(classId, className) {
     let GamesByClassId = await this.gameRepository
       .createQueryBuilder('Game')
       .innerJoinAndSelect('Game.classrooms', 'Classroom')
       .select('Game.id')
       .addSelect('Game.game_name')
       .addSelect('Game.image')
-      .where('Classroom.id = :id', { id: Number(req) })
+      .where('Classroom.id = :id', { id: Number(classId) })
       .getMany();
     return Promise.all(GamesByClassId.map(async (game) => {
-      var fields = await this.classroomFieldService.checkFieldAltValue(game.id, req)
+      var fields = await this.classroomFieldService.checkFieldAltValue(game.id, classId)
       return { ...game, fields: fields }
     })).then((games) => {
-      return { classId: req, classGames: games }
+      return { classId: classId, className: className, classGames: games }
     })
   }
 }

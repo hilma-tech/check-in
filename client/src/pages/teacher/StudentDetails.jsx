@@ -124,7 +124,6 @@ class StudentDetails extends Component {
 
             <div className="passchange" onClick={() => {
               this.setState({
-                passDisplay: 'הכנס סיסמא חדשה',
                 showPassChanger: !this.state.showPassChanger,
                 passErr: ''
               });
@@ -152,7 +151,7 @@ class StudentDetails extends Component {
                       fontFamily: 'Assistant',
                     }}
                     className="passInput"
-                    onFocus={() => this.setState({ passDisplay: '' })}
+                    placeholder="הכנס סיסמא חדשה"
                     onChange={(val) => this.onPassChange(val)}
                     value={this.state.passDisplay}
                     type="text"

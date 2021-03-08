@@ -48,20 +48,20 @@ export class StudentController {
     for (let i = 0; i < req.length; i++) {
       let schoolId = await this.schoolService.getSchoolIdByName(req[i].schoolName)
       if (schoolId === undefined) {
-        errorsMsg.push(`הבית ספר בשורה ${i + 1} לא קיים במערכת. אנא נסה להכניס בית ספר אחר.`)
+        errorsMsg.push(`הבית ספר בשורה ${i + 1} לא קיים במערכת, אנא נסה להכניס בית ספר אחר`)
       } else {
         req[i].schoolId = schoolId.id
         for (let z = 0; z < req[i].classrooms.length; z++) {
           let classroomInfo = await this.classroomService.getClassroomInfoByName(req[i].classrooms[z], schoolId.id)
           if (classroomInfo === undefined) {
-            errorsMsg.push(`הכיתה ${req[i].classrooms[z]} בשורה ${i + 1} לא קיימת במערכת. אנא נסה להכניס כיתה אחרת.`)
+            errorsMsg.push(`הכיתה ${req[i].classrooms[z]} בשורה ${i + 1} לא קיימת במערכת, אנא נסה להכניס כיתה אחרת`)
           } else {
             req[i].classrooms[z] = classroomInfo
           }
         }
       }
       if (await this.studentService.isStudentExist(req[i].username)) {
-        errorsMsg.push(`שם המשתמש בשורה ${i + 1} כבר קיים. אנא נסה להכניס שם משתמש אחר.`)
+        errorsMsg.push(`שם המשתמש בשורה ${i + 1} כבר קיים, אנא נסה להכניס שם משתמש אחר`)
       }
     }
     if (errorsMsg.length !== 0) {
@@ -104,10 +104,9 @@ export class StudentController {
       var Classes = []
       return Promise.all(getStudentInfo.classroomStudent.map(async (classroom) => {
         Classes.push(classroom.name);
-        var getGames = await this.gameService.GetGamesForStudent(classroom.id);
+        var getGames = await this.gameService.GetGamesForStudent(classroom.id, classroom.name);
         return getGames
       })).then(async (getGames) => {
-
         let schoolName = await this.schoolService.getSchoolNameById(getStudentInfo.classroomStudent[0].school_id);
 
         let StudentInfo = {
@@ -120,7 +119,7 @@ export class StudentController {
         return StudentInfo
       })
     }
-    else{
+    else {
       return 'user does not exist'
     }
   }
@@ -136,7 +135,12 @@ export class StudentController {
 
   @UseJwtAuth('teacher')
   @Post('/changestudentpass')
-  async changePass(@Req() newPass: StudentPassword) {
-    return await this.studentService.changeStudentPassword(newPass)
+  async changePass(@Body() newPass: StudentPassword) {
+    if (((/[0-9]/).test(newPass.password) && (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(newPass.password) && (/[a-zA-Z\u0590-\u05EA]/).test(newPass.password))) {
+      return await this.studentService.changeStudentPassword(newPass)
+    }
+    else {
+      return 'password is not according to format'
+    }
   }
 }
