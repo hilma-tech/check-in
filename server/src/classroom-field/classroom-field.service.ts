@@ -1,4 +1,5 @@
-import { Body, Injectable } from '@nestjs/common';
+import { FilesType, ImageService } from '@hilma/fileshandler-typeorm';
+import { Body, Injectable, UploadedFiles } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FieldService } from 'src/field/field.service';
 import { Repository } from 'typeorm';
@@ -11,7 +12,19 @@ export class ClassroomFieldService {
     @InjectRepository(ClassroomField)
     private classFieldRepository: Repository<ClassroomField>,
     private fieldService: FieldService,
+    private readonly imageService: ImageService,
   ) {}
+
+  async getClassroomGameFields(@Body() data: any) {
+    console.log('data: ', data);
+    let GameFields = await this.classFieldRepository.find({
+      where: [{classroom_id: Number(data.classroom_id), game_id: Number(data.game_id)}],
+      relations: ["field_id"]
+    })
+    return GameFields.map((field)=>{
+      return {id: field.id, newValue: field.new_value, field: field.field_id}
+    })
+  }
 
   async removeGameFieldsFromClass(@Body() req: any) {
     let fields = await this.fieldService.getGameFields(req.gameId);
@@ -23,13 +36,13 @@ export class ClassroomFieldService {
     });
   }
 
-  async addGameFieldsToClass(@Body() req: any) {
+  async addGameFieldsToClass(@UploadedFiles() files: FilesType, @Body() req: any) {
     let Inp = null;
-    // let fields = await this.fieldService.getGameFields(req.gameId)
-    req.fieldsData.forEach(field => {
+    req.fieldsData.forEach( async (field) => {
       let emptyField = 0;
       if (field.type !== 'image') {
         Inp = field.value[0].value;
+
         if (field.type === 'text') {
           let valid = mustValid(Inp);
           if (valid.length !== 0) {
@@ -56,7 +69,18 @@ export class ClassroomFieldService {
           Inp = JSON.stringify(newArr);
         }
       } else {
-        Inp = field.value[0].value;
+        console.log('files, field.value[0].id: ', files, field.value[0].id);
+        if (files.length !== 0) {
+          try {
+            Inp = await this.imageService.save(files, field.value[0].id) ;
+          } catch (error) {
+            Inp = field.value[0].value
+          }
+        } else {
+          Inp = field.value[0].value
+        }
+
+        
       }
 
       emptyField = 0;
@@ -64,6 +88,7 @@ export class ClassroomFieldService {
       newField.classroom_id = req.classId;
       newField.field_id = field.id;
       newField.new_value = Inp;
+      newField.game_id = req.gameId
       this.classFieldRepository.save(newField);
     });
   }

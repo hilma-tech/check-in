@@ -1,5 +1,6 @@
 import { Classroom } from 'src/classroom/classroom.entity';
 import { Field } from 'src/field/field.entity';
+import { Game } from 'src/game/game.entity';
 import {
   Column,
   Entity,
@@ -12,6 +13,13 @@ import {
 export class ClassroomField {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(
+    type => Game,
+    game => game.id,
+  )
+  @JoinColumn({ referencedColumnName: 'id', name: 'game_id' })
+  game_id: number;
 
   @Column()
   new_value: string;

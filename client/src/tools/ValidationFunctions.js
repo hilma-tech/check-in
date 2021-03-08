@@ -117,11 +117,15 @@ export function studentPasswordValidation(password) {
 
 //Check validation for email
 export function emailValidation(email) {
+    console.log("VALIDATING");
     if (email === null || email.length === 0) {
+        console.log("null");
         return '** נא למלא שדה זה **'
     } else if (email.trim().length === 0) {
+        console.log("spaces");
         return '** כתובת איימל לא תקינה **'
-    } else if (!(/[a-zA-Z0-9]+@+[a-zA-Z]+.+[a-zA-Z0-9]/).test(email)) {
+    } else if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(email)) {
+        console.log("not an email");
         return '** כתובת איימל לא תקינה **'
     } else {
         return ''

@@ -87,6 +87,7 @@ class EditGame extends Component {
     
 
     if (errors.length === 0) {
+      console.log(this.imageUploader, "PLOP");
       this.addGameToDB();
     }
   };
@@ -246,7 +247,7 @@ class EditGame extends Component {
                             id="image"
                             className="hiddenInput"
                             type="image"
-                            filesUploader={this.imageUploader}
+                            filesUploader={this.props.games.imageUploader}
                             onChange={(value) => {
                               this.saveFieldValue(
                                 value.value,

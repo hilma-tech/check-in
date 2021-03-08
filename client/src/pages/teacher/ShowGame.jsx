@@ -13,7 +13,7 @@ import { chosenClassContext } from "../../stores/chosenClass.store";
 import { gamesContext } from "../../stores/games.store";
 
 const axios = require("axios").default;
-//shows game whilst you are unable to add it to a class
+//shows game whilst you are unable to add it to a class or after being added
 class ShowGame extends Component {
   constructor() {
     super();
@@ -36,8 +36,9 @@ class ShowGame extends Component {
 
   getGameInfo = async () => {
     try {
-      const { data } = await axios.get("/api/game/getGameInfo", {
-        params: { id: this.props.chosenGame.gameId },
+      const { data } = await axios.get("/api/game/getShowGameInfo", {
+        params: { game_id: this.props.chosenGame.gameId,
+        classroom_id: this.props.chosenClass.classId },
       });
       if (data.game_name === null || data.game_name === undefined) {
         this.props.history.push("/teacher/classes/games");

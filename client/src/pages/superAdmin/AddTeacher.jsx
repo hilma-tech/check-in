@@ -160,7 +160,6 @@ class AddTeacher extends Component {
       allOk = false;
     } else {
       this.setState({ teacherFirstNameError: { toShow: "none", mess: "" } });
-      allOk = true;
     }
 
     let lastNameTeacherMess = nameValidation(this.state.teacherLastName);
@@ -173,11 +172,10 @@ class AddTeacher extends Component {
       allOk = false;
     } else {
       this.setState({ teacherLastNameError: { toShow: "none", mess: "" } });
-      allOk = true;
     }
     // ----------school name validetion-------------------
-    // let nameSchoolMess = mustInputValidation(this.state.schoolName);
-    if (this.state.schoolName.length !== 0) {
+    let nameSchoolMess = mustInputValidation(this.state.schoolName);
+    if (nameSchoolMess.length !== 0) {
       this.setState((prevState) => {
         prevState.schoolNameError.toShow = "inline-block";
         prevState.schoolNameError.mess = "** חייב להכניס שדה זה **";
@@ -186,7 +184,6 @@ class AddTeacher extends Component {
       allOk = false;
     } else {
       this.setState({ schoolNameError: { toShow: "none", mess: "" } });
-      allOk = true;
     }
     // ----------rakaz validation-------------------
     let rakazMess = mustInputValidation(this.state.rakaz);
@@ -199,7 +196,6 @@ class AddTeacher extends Component {
       allOk = false;
     } else {
       this.setState({ rakazError: { toShow: "none", mess: "" } });
-      allOk = true;
     }
     //------------email validation---------------
     let emailMess = emailValidation(this.state.email);
@@ -212,9 +208,8 @@ class AddTeacher extends Component {
       allOk = false;
     } else {
       this.setState({ emailNameError: { toShow: "none", mess: "" } });
-      allOk = true;
     }
-    // ----------password validetion-------------------
+    // ----------password validation-------------------
     let passwordMess = passwordValidation(this.state.password);
     if (passwordMess.length !== 0) {
       this.setState((prevState) => {
@@ -225,7 +220,6 @@ class AddTeacher extends Component {
       allOk = false;
     } else {
       this.setState({ passwordNameError: { toShow: "none", mess: "" } });
-      allOk = true;
     }
 
     //after all the validetion we need to send the data to sql
