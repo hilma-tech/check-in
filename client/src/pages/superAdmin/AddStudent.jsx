@@ -290,6 +290,7 @@ class AddStudent extends React.Component {
             value={this.state.userName}
             onChange={this.handlechanges}
             placeholder="הכנס שם משתמש"
+            type="text"
             name="userName"
           ></input>
 
@@ -306,7 +307,8 @@ class AddStudent extends React.Component {
             className="inputFields"
             value={this.state.password}
             onChange={this.handlechanges}
-            type="password"
+            // type="password"
+            type="text"
             placeholder="הכנס סיסמא"
             name="password"
           ></input>

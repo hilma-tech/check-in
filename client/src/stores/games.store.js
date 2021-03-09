@@ -1,3 +1,4 @@
+import { FilesUploader } from "@hilma/fileshandler-client";
 import { createMobXContext } from "@hilma/tools";
 import { makeObservable, observable, action, runInAction } from "mobx";
 const axios = require("axios").default;
@@ -8,8 +9,10 @@ class Games {
   haveMoreGames = true;
   successGettingGames = true;
   startGetGames = false;
+  imageUploader = new FilesUploader();
   constructor() {
     makeObservable(this, {
+      imageUploader: observable,
       successGettingGames: observable,
       chosenGameList: observable,
       gamesList: observable,
@@ -112,11 +115,12 @@ class Games {
   //adds relation class-game to the database
   addGameToClass = async (index, classId, fieldsData) => {
     try {
-      await axios.post("/api/classroom/addGameRelation", {
+      console.log("LOG", this.imageUploader);
+      await this.imageUploader.post("/api/classroom/addGameRelation", JSON.stringify({
         gameId: this.gamesList[index].id,
         classId: classId,
         fieldsData: fieldsData
-      });
+      }));
     } catch (err) {
       console.log("add game err: ", err);
     }

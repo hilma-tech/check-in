@@ -1,11 +1,12 @@
 import { UseJwtAuth } from '@hilma/auth-nest';
-import { Body, Controller, Get, Post, Query, } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UploadedFiles, } from '@nestjs/common';
 import { ClassroomService } from './classroom.service';
 import {
   ClassroomGameDto, RemoveClassroomGameDto,
 } from './classroom.dtos';
 import { SchoolIdDto } from 'src/school/school.dtos';
 import { ClassroomFieldService } from 'src/classroom-field/classroom-field.service';
+import { FilesType, UseFilesHandler } from '@hilma/fileshandler-typeorm';
 
 @Controller('api/classroom')
 export class ClassroomController {
@@ -16,8 +17,9 @@ export class ClassroomController {
 
   @UseJwtAuth('teacher')
   @Post('/addGameRelation')
-  async addGameRelation(@Body() req: ClassroomGameDto) {
-    await this.classroomFieldService.addGameFieldsToClass(req);
+  @UseFilesHandler()
+  async addGameRelation(@UploadedFiles() files: FilesType, @Body() req: ClassroomGameDto) {
+    await this.classroomFieldService.addGameFieldsToClass(files, req);
     return await this.classroomService.addGameRelation(req);
   }
 
