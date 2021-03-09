@@ -56,7 +56,7 @@ export class TeacherController {
     let userRole = new Role();
     userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
     user.roles = [userRole];
-     let createUser = await this.userService.createUser<Teacher>(user);
+    let createUser = await this.userService.createUser<Teacher>(user);
     this.verifyEmail({ email: username, password: password })
     return createUser
   }
@@ -74,11 +74,9 @@ export class TeacherController {
     await this.teacherService.sendVerificationEmail(VerifyInfo.email, token)
   }
   @Get('/Verify')
-  async MakeLogInAvailable(@Query() Token: any, @Res() res:any) {
+  async MakeLogInAvailable(@Query() Token: any, @Res() res: any) {
     await this.teacherService.IsVerified(Token.token)
-    //please don't kill me:
-    let redirectTo='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-    // 'http://localhost:3000/signin' or the real domain
+    var redirectTo = 'http://localhost:3000/signin'//to be replaced with read domain
     res.redirect(redirectTo)
   }
 }
