@@ -246,13 +246,14 @@ class AddTeacher extends Component {
         "/api/teacher/register",
         currTeacherInfo
       );
-      if(data){        
+      if(data){      
+        console.log("HERE");  
         this.props.teachers.addTeacher({
           first_name: data.first_name,
           last_name: data.last_name,
           name: data.first_name + " " + data.last_name,
           username: data.username,
-          schoolName: this.state.school,
+          schoolName: this.state.schoolName,
           id: data.id,
           classes: this.state.fieldsData.map((classInfo) => {
             return classInfo.value
