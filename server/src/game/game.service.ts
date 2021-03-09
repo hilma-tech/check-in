@@ -84,14 +84,14 @@ export class GameService {
       where: { id: data.game_id },
     });
     let classGameFields = await this.classroomFieldService.getClassroomGameFields(data);
-    console.log('classGameFields: ', classGameFields);
+    //console.log('classGameFields: ', classGameFields);
     if (classGameFields.length !== 0) {
       temp[0].fields = temp[0].fields.map(
         (field, index) => {
-          console.log("ind", index);
+          //console.log("ind", index);
           field.default_value = classGameFields[index].newValue
-          console.log('classGameFields[index].new_value: ', classGameFields[index].newValue);
-          console.log('field.default_value: ', field.default_value);
+          //console.log('classGameFields[index].new_value: ', classGameFields[index].newValue);
+          //console.log('field.default_value: ', field.default_value);
           return field;
         }
       )
@@ -101,7 +101,7 @@ export class GameService {
     games = [...temp];
     for (let i = 0; i < games.length; i++) {
       for (let j = 0; j < games[i].fields.length; j++) {
-        console.log("PPP",games[i].fields[j]);
+        //console.log("PPP",games[i].fields[j]);
         if (
           games[i].fields[j].type === 'image' ||
           games[i].fields[j].type === 'text'
@@ -110,7 +110,7 @@ export class GameService {
             { id: 0, value: games[i].fields[j].default_value },
           ];
         } else {
-          console.log("TTTTTT",games[i].fields[j].default_value, typeof games[i].fields[j].default_value);
+          //console.log("TTTTTT",games[i].fields[j].default_value, typeof games[i].fields[j].default_value);
           games[i].fields[j].value = JSON.parse(
             games[i].fields[j].default_value
           ).map((value, index) => {

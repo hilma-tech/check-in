@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ClassroomGameDto } from 'src/classroom/classroom.dtos';
 import { FieldService } from 'src/field/field.service';
 import { Repository } from 'typeorm';
+import { getCGFDto, removeFFromCDto } from './classroom-field.dtos';
 import { ClassroomField } from './classroom-field.entity';
 const { mustValid } = require('../serverTools/ServerValid');
 
@@ -16,8 +17,7 @@ export class ClassroomFieldService {
     private readonly imageService: ImageService,
   ) {}
 
-  async getClassroomGameFields(@Body() data: any) {
-    console.log('data: ', data);
+  async getClassroomGameFields(@Body() data: getCGFDto) {
     let GameFields = await this.classFieldRepository.find({
       where: [{classroom_id: Number(data.classroom_id), game_id: Number(data.game_id)}],
       relations: ["field_id"]
@@ -27,7 +27,8 @@ export class ClassroomFieldService {
     })
   }
 
-  async removeGameFieldsFromClass(@Body() req: any) {
+  async removeGameFieldsFromClass(@Body() req: removeFFromCDto) {
+
     let fields = await this.fieldService.getGameFields(req.gameId);
     fields.forEach(field => {
       this.classFieldRepository.delete({
@@ -70,7 +71,7 @@ export class ClassroomFieldService {
           Inp = JSON.stringify(newArr);
         }
       } else {
-        console.log('files, field.value[0].id: ', files, field.value[0].id);
+        //console.log('files, field.value[0].id: ', files, field.value[0].id);
         if (files.length !== 0) {
           try {
             Inp = await this.imageService.save(files, field.value[0].id) ;
@@ -94,7 +95,7 @@ export class ClassroomFieldService {
     });
   }
 
-  async deleteClassField(@Body() req: any) {
+  async deleteClassField(@Body() req: number) {
     let deleteFieldAndGetFieldId = await this.fieldService.getGameFields(req);
     let fieldsForDelete = [];
     deleteFieldAndGetFieldId.map(async fieldId => {
@@ -106,7 +107,10 @@ export class ClassroomFieldService {
     }
   }
 
-  async checkFieldAltValue(gameId, ClassId) {
+  //!
+  async checkFieldAltValue(gameId: any, ClassId: any) {
+    console.log('ClassId: ', ClassId);
+    console.log('gameId: ', gameId);
     let fields = await this.fieldService.getGameFields(gameId);
 
     return Promise.all(fields.map(async (field) => {

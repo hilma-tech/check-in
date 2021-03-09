@@ -9,8 +9,8 @@ import SelectStyle from "../../style/superAdmin/select_style";
 import {
   nameValidation,
   mustInputValidation,
-  passwordValidation,
   emailValidation,
+  teacherPasswordValidation,
 } from "../../tools/ValidationFunctions";
 import { withRouter } from "react-router-dom";
 import { errorMsgContext } from "../../stores/error.store";
@@ -210,7 +210,7 @@ class AddTeacher extends Component {
       this.setState({ emailNameError: { toShow: "none", mess: "" } });
     }
     // ----------password validation-------------------
-    let passwordMess = passwordValidation(this.state.password);
+    let passwordMess = teacherPasswordValidation(this.state.password);
     if (passwordMess.length !== 0) {
       this.setState((prevState) => {
         prevState.passwordNameError.toShow = "inline-block";
@@ -247,7 +247,7 @@ class AddTeacher extends Component {
         currTeacherInfo
       );
       if(data){      
-        console.log("HERE");  
+        //console.log("HERE");  
         this.props.teachers.addTeacher({
           first_name: data.first_name,
           last_name: data.last_name,

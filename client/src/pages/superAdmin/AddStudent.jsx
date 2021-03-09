@@ -39,7 +39,7 @@ class AddStudent extends React.Component {
       chosenClasses: [],
       allClasses: [],
     };
-    this.allSchools = ["עשה חיל", "בית ספר עם שם אחר"];
+    this.allSchools = [];
   }
   componentDidMount = async () => {
     await this.props.schools.getAllSchoolsNames();
@@ -116,9 +116,11 @@ class AddStudent extends React.Component {
   };
 
   chooseSchool = async (e) => {
+    //console.log('e: ', e);
     let chosenScoolId = (this.props.schools.schoolsNames.filter((school) => {
       return school.name === e.value
     }))[0]
+    //console.log('chosenScoolId: ', chosenScoolId);
     const { data } = await axios.get("/api/classroom/getSchoolClasses", {
       params: { schoolId: chosenScoolId.id },
     });
