@@ -6,7 +6,7 @@ export function userNameValidation(userName) {
         return '** שם משתמש לא תקין **'
     } else if (userName.trim().length === 0) {
         return '** שם משתמש לא תקין **'
-    } else if (!(/[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(userName)) {
+    } else if (!(/[A-Za-z\u0590-\u05EA0-9?!-_]/).test(userName)) {
         return '** שם משתמש לא תקין **'
     } else {
         return ''
@@ -105,10 +105,10 @@ export function studentPasswordValidation(password) {
         return '** על הסיסמה להיות בין 8-15 תווים **'
     } else if (password.trim().length === 0) {
         return '** נא להכניס סיסמא **'
-    } else if (!(/[A-Za-z\u0590-\u05EA0-9]/).test(password)) {
-        return '** ניתן להשתמש באותיות באנגלית ובעברית בלבד **'
+    } else if (!(/[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
+        return '** ניתן להשתמש באותיות באנגלית ובעברית, מספרים ותווים מיוחדים בלבד **'
     } else if (!((/[0-9]/).test(password) && (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password) && (/[a-zA-Z\u0590-\u05EA]/).test(password))) {
-        return '** על הסיסמה להכיל אותיות באנגלית מספרים ותווים מיוחדים **'
+        return '** על הסיסמה להכיל אותיות באנגלית ובעברית, מספרים ותווים מיוחדים **'
     } else {
         return ''
     }
