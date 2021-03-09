@@ -48,7 +48,7 @@ class ExcelStudentsAddition extends React.Component {
                 if (dataParse[i].username === undefined) {
                     errorsMsg.push(`חסר שם משתמש בשורה ${i + 1}`)
                 } else if (userNameValidation(String(dataParse[i].username)).length !== 0) {
-                    errorsMsg.push(`שם משתמש של התלמיד בשורה ${i + 1} לא תקין`)
+                    errorsMsg.push(`שם המשתמש של התלמיד בשורה ${i + 1} לא תקין`)
                 }
 
                 //------------ password validation ---------------------
@@ -82,6 +82,15 @@ class ExcelStudentsAddition extends React.Component {
                         errorsMsg.push(`הכיתות של התלמיד בשורה ${i + 1} לא תקינות`)
                     }
                 }
+            }
+
+            // --------------- usernames dont duplicates ----------------
+            let allUsernames = dataParse.map((row)=>{
+                return row.username
+            })
+            let uniqueUsernames = [...new Set(allUsernames)]
+            if(allUsernames.length !== uniqueUsernames.length){
+                errorsMsg.push('לא יכולים להיות שני משתמשים עם אותו שם משתמש')
             }
 
             if (errorsMsg.length === 0) {

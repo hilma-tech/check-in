@@ -38,7 +38,7 @@ export class ClassroomGameDto {
   @IsNumber()
   gameId: number;
   @IsDefined()
-  fieldsData: any
+  fieldsData: any;
 }
 
 export class GetClassSkip {
