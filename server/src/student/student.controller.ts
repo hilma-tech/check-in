@@ -143,4 +143,9 @@ export class StudentController {
       return 'password is not according to format'
     }
   }
+
+  @Get('/search')
+  async searchStudent(@Query() val: any) {
+  return await this.studentService.searchInStudent(val.val) 
+  }
 }

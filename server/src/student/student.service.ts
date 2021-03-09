@@ -125,4 +125,14 @@ export class StudentService extends UserService {
     })
     return user === undefined ? false : true
   }
+
+  async searchInStudent(val){
+    let students= await this.userRepository.find()
+    let Search= students.map((student)=>{
+      if(student.first_name.includes(val) || student.last_name.includes(val)){
+        return student
+      }
+    })
+    return Search
+  }
 }
