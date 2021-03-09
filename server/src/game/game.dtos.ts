@@ -129,3 +129,15 @@ export class ClassroomIdDto {
   @IsNumberString()
   dataLength: string;
 }
+
+export class showGameDto {
+  @IsDefined()
+  @IsString()
+  @IsNumberString()
+  game_id: string;
+
+  @IsDefined()
+  @IsString()
+  @IsNumberString()
+  classroom_id: string;
+}

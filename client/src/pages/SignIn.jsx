@@ -84,7 +84,7 @@ class SignIn extends Component {
         }
       }
     } catch (error) {
-      console.log('catch error: ', error);
+      //console.log('catch error: ', error);
       if (error.status === 401) {
         this.props.errorMsg.setErrorMsg("שם המשתמש והסיסמא אינם תואמים.");
       } else {

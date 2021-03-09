@@ -23,7 +23,7 @@ class Teachers {
   }
 
   addTeacher = (teacherInfo) => {
-    console.log('teacherInfo: ', teacherInfo);
+    //console.log('teacherInfo: ', teacherInfo);
     this.listDataTeachers = [teacherInfo, ...this.listDataTeachers]
 }
 
