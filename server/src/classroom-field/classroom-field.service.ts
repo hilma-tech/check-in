@@ -1,6 +1,7 @@
 import { FilesType, ImageService } from '@hilma/fileshandler-typeorm';
 import { Body, Injectable, UploadedFiles } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ClassroomGameDto } from 'src/classroom/classroom.dtos';
 import { FieldService } from 'src/field/field.service';
 import { Repository } from 'typeorm';
 import { ClassroomField } from './classroom-field.entity';
@@ -36,7 +37,7 @@ export class ClassroomFieldService {
     });
   }
 
-  async addGameFieldsToClass(@UploadedFiles() files: FilesType, @Body() req: any) {
+  async addGameFieldsToClass(@UploadedFiles() files: FilesType, @Body() req: ClassroomGameDto) {
     let Inp = null;
     req.fieldsData.forEach( async (field) => {
       let emptyField = 0;
