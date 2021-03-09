@@ -76,6 +76,7 @@ export class StudentController {
           username: req[i].username,
           schoolName: req[i].schoolName,
           id: info.id,
+          classroomStudent: req[i].classrooms,
           classes: req[i].classrooms.map((studentClassroom) => {
             return studentClassroom.name
           })

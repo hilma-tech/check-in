@@ -38,8 +38,8 @@ class AddStudent extends React.Component {
       schoolId: 0,
       chosenClasses: [],
       allClasses: [],
+      allSchools: [],
     };
-    this.allSchools = [];
   }
   componentDidMount = async () => {
     await this.props.schools.getAllSchoolsNames();
@@ -48,9 +48,9 @@ class AddStudent extends React.Component {
         "הייתה שגיאה בשרת. לא ניתן לקבל בתי ספר מהשרת."
       );
     } else {
-      this.allSchools = this.props.schools.schoolsNames.map((school) => {
+      this.setState({allSchools: this.props.schools.schoolsNames.map((school) => {
         return school.name
-      })
+      })})
     }
   }
 
@@ -103,7 +103,7 @@ class AddStudent extends React.Component {
   //Return the schools list as list of object for the Select.
   makeSchoolOption = (indexSelect) => {
     let options = [];
-    this.allSchools.map((nameSchool) => {
+    this.state.allSchools.map((nameSchool) => {
       if (nameSchool !== this.state.school) {
         options.push({
           value: nameSchool,
@@ -217,7 +217,7 @@ class AddStudent extends React.Component {
           classrooms: this.state.chosenClasses,
           schoolId: this.state.schoolId
         });
-        if(data){
+        if (data) {
           this.props.students.addStudent({
             first_name: data.first_name,
             last_name: data.last_name,
@@ -335,24 +335,24 @@ class AddStudent extends React.Component {
             <>
               <label className="labelFields">כיתה:</label>
               {
-                this.state.chosenClasses.map((val, i)=>{
-                  return  (<div key={val.id} className="classSelection">
-                  <Select
-                    className="classSelectionInAddTecher"
-                    styles={SelectStyle()}
-                    options={this.makeClassesOption(i)}
-                    onChange={this.chooseClass}
-                    defaultValue={{
-                      value: val.name,
-                      label: val.name,
-                    }}
-                  />
-                  <img
-                    className="removeFieldIcon"
-                    onClick={() => this.removeClass(i)}
-                    src="/icons/delete.svg"
-                  />
-                </div>)
+                this.state.chosenClasses.map((val, i) => {
+                  return (<div key={val.id} className="classSelection">
+                    <Select
+                      className="classSelectionInAddTecher"
+                      styles={SelectStyle()}
+                      options={this.makeClassesOption(i)}
+                      onChange={this.chooseClass}
+                      defaultValue={{
+                        value: val.name,
+                        label: val.name,
+                      }}
+                    />
+                    <img
+                      className="removeFieldIcon"
+                      onClick={() => this.removeClass(i)}
+                      src="/icons/delete.svg"
+                    />
+                  </div>)
                 })
               }
 

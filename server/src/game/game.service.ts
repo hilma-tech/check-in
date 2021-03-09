@@ -126,10 +126,13 @@ export class GameService {
   }
 
   async getGameInfo(gameId: GameIdDto) {
-    let temp = await this.gameRepository.find({
-      relations: ['fields'],
-      where: { id: gameId.id },
-    });
+    let temp = await this.gameRepository
+      .createQueryBuilder('Game')
+      .innerJoinAndSelect('Game.fields', 'Field')
+      .where('Game.id = :id', { id: gameId.id })
+      .orderBy('Field.order')
+      .getMany();
+
     let games: any;
     games = [...temp];
     for (let i = 0; i < games.length; i++) {

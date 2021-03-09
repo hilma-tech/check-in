@@ -32,13 +32,13 @@ class EditStudent extends React.Component {
     this.allSchoole = ["עשה חיל", "בית ספר עם שם אחר"];
   }
 
-  componentDidMount(){
-      this.setState({
-        studentName: this.props.students.chosenStudent.name,
-        userName: this.props.students.chosenStudent.username,
-        school: this.props.students.chosenStudent.schoolName,
-        chosenClasses: this.props.students.chosenStudent.classroomStudent,
-      })
+  componentDidMount() {
+    this.setState({
+      studentName: this.props.students.chosenStudent.name,
+      userName: this.props.students.chosenStudent.username,
+      school: this.props.students.chosenStudent.schoolName,
+      chosenClasses: this.props.students.chosenStudent.classroomStudent,
+    })
   }
 
   //Return the classes list as list of object for the Select.
@@ -63,14 +63,14 @@ class EditStudent extends React.Component {
 
   returnClassesSelections = () => {
     let classesSelections = [];
-    if(this.state.chosenClasses.length === 0){
+    if (this.state.chosenClasses.length === 0) {
       return <p>לתלמיד זה אין כיתות</p>
     }
     for (let i = 0; i < this.state.chosenClasses.length; i++) {
       classesSelections.push(
         <div key={this.state.chosenClasses[i].id} className='classSelection'>
           <Select
-          className='classSelectionInAddTecher'
+            className='classSelectionInAddTecher'
             styles={SelectStyle()}
             options={this.makeClassesOption(i)}
             onChange={this.chooseClass}
@@ -228,7 +228,7 @@ class EditStudent extends React.Component {
             {this.state.userNameError.mess}
           </p>
           <input
-          className='inputFields'
+            className='inputFields'
             value={this.state.userName}
             onChange={this.handlechanges}
             placeholder="הכנס שם משתמש"
@@ -258,7 +258,7 @@ class EditStudent extends React.Component {
             {this.state.schoolNameError.mess}
           </p>
           <Select
-          className='selectStyle'
+            className='selectStyle'
             placeholder="בחר..."
             styles={SelectStyle()}
             options={this.makeSchoolOption()}
@@ -269,7 +269,7 @@ class EditStudent extends React.Component {
 
           <label className='labelFields'>כיתה:</label>
           {this.returnClassesSelections()}
-{/* 
+          {/* 
           <div
           className='addSomethingNew'
             onClick={this.addClassOption}
@@ -294,9 +294,9 @@ class EditStudent extends React.Component {
 
 
 const mapContextToProps = {
-    students: studentsContext,
-    errorMsg: errorMsgContext
-  };
-  
-  export default withContext(mapContextToProps)(observer(withRouter(EditStudent)));
-  
+  students: studentsContext,
+  errorMsg: errorMsgContext
+};
+
+export default withContext(mapContextToProps)(observer(withRouter(EditStudent)));
+

@@ -1,18 +1,16 @@
 //Check validation for user name
 export function userNameValidation(userName) {
-  if (userName === null || userName.length === 0) {
-    return "** חייב להכניס שם משתמש **";
-  } else if (userName.length > 15 || userName.length < 4) {
-    return "** שם משתמש לא תקין **";
-  } else if (userName.trim().length === 0) {
-    return "** שם משתמש לא תקין **";
-  } else if (
-    !/[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/.test(userName)
-  ) {
-    return "** שם משתמש לא תקין **";
-  } else {
-    return "";
-  }
+    if (userName === null || userName.length === 0) {
+        return '** חייב להכניס שם משתמש **'
+    } else if (userName.length > 15 || userName.length < 4) {
+        return '** שם משתמש לא תקין **'
+    } else if (userName.trim().length === 0) {
+        return '** שם משתמש לא תקין **'
+    } else if (!(/[A-Za-z\u0590-\u05EA0-9?!-_]/).test(userName)) {
+        return '** שם משתמש לא תקין **'
+    } else {
+        return ''
+    }
 }
 
 //Check validation for names (teacher, student or game name)
@@ -130,25 +128,19 @@ export function teacherPasswordValidation(password) {
 
 //Check validation for password
 export function studentPasswordValidation(password) {
-  if (password === null || password.length === 0) {
-    return "** נא להכניס סיסמא **";
-  } else if (password.length > 15 || password.length < 8) {
-    return "** על הסיסמה להיות בין 8-15 תווים **";
-  } else if (password.trim().length === 0) {
-    return "** נא להכניס סיסמא **";
-  } else if (/[A-Za-z\u0590-\u05EA0-9]/.test(password)) {
-    return "** ניתן להשתמש באותיות באנגלית ובעברית בלבד **";
-  } else if (
-    !(
-      /[0-9]/.test(password) &&
-      /[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/.test(password) &&
-      /[a-zA-Z\u0590-\u05EA]/.test(password)
-    )
-  ) {
-    return "** על הסיסמה להכיל אותיות באנגלית מספרים ותווים מיוחדים **";
-  } else {
-    return "";
-  }
+    if (password === null || password.length === 0) {
+        return '** נא להכניס סיסמא **'
+    } else if (password.length > 15 || password.length < 8) {
+        return '** על הסיסמה להיות בין 8-15 תווים **'
+    } else if (password.trim().length === 0) {
+        return '** נא להכניס סיסמא **'
+    } else if (!(/[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
+        return '** ניתן להשתמש באותיות באנגלית ובעברית, מספרים ותווים מיוחדים בלבד **'
+    } else if (!((/[0-9]/).test(password) && (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password) && (/[a-zA-Z\u0590-\u05EA]/).test(password))) {
+        return '** על הסיסמה להכיל אותיות באנגלית ובעברית, מספרים ותווים מיוחדים **'
+    } else {
+        return ''
+    }
 }
 
 //Check validation for email
