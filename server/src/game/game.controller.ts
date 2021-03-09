@@ -14,6 +14,7 @@ import {
   GetGameSkip,
   GetGameDto,
   ClassroomIdDto,
+  showGameDto,
 } from './game.dtos';
 import { UseFilesHandler, FilesType } from '@hilma/fileshandler-typeorm';
 import { UseJwtAuth } from '@hilma/auth-nest';
@@ -41,7 +42,7 @@ export class GameController {
 
   @UseJwtAuth('teacher')
   @Get('/getShowGameInfo')
-  async getShowGameInfo(@Query() data: any) {
+  async getShowGameInfo(@Query() data: showGameDto) {
     return await this.gameService.getShowGameInfo(data);
   }
 
