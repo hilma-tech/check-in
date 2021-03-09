@@ -9,6 +9,7 @@ import "../../style/teacher/students.scss";
 import { observer } from "mobx-react";
 import { chosenClassContext } from "../../stores/chosenClass.store";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import SearchIcon from '@material-ui/icons/Search';
 
 class Students extends Component {
   constructor() {
@@ -43,54 +44,74 @@ class Students extends Component {
             id="smallAlignStudentList"
             style={{ textAlign: "center" }}
           >
+            <div className="searchBar">
+              <div className="marginOnSearchIcon">
+                <SearchIcon style={{color: '#043163' }} />
+              </div>
+              <input
+                style={{
+                  border: "none",
+                  backgroundColor: 'rgba(188, 188, 203, 0)',
+                  fontWeight: '400',
+                  width: '80%',
+                  fontFamily: 'Assistant',
+                }}
+                className="searchInput"
+                placeholder="חיפוש"
+                onChange={console.log('hj')}
+                type="text"
+              />
+            </div>
+
+
             <div>
               {this.props.chosenClass.students.length === 0 && !this.props.chosenClass.startGetInfo ? (
                 <p>אין תלמידים לכיתה זו</p>
               ) : (
-                this.props.chosenClass.students.map((student, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="smallStudentCont"
-                      id={index}
-                      onClick={() => {
-                        this.moveToStudent(index);
-                      }}
-                    >
-                      <h1 className="smallStudentName">
-                        {student.first_name + " " + student.last_name}
-                      </h1>
-                      <h1 className="smallStudentName justForWeb" id={index}>
-                        שם משתמש: {student.username}
-                      </h1>
-                      {/* <h1 className="smallStudentName justForWeb" id={index}>
+                  this.props.chosenClass.students.map((student, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="smallStudentCont"
+                        id={index}
+                        onClick={() => {
+                          this.moveToStudent(index);
+                        }}
+                      >
+                        <h1 className="smallStudentName">
+                          {student.first_name + " " + student.last_name}
+                        </h1>
+                        <h1 className="smallStudentName justForWeb" id={index}>
+                          שם משתמש: {student.username}
+                        </h1>
+                        {/* <h1 className="smallStudentName justForWeb" id={index}>
                         סיסמא: {student.id}
                       </h1> */}
-                    </div>
-                  );
-                })
-              )}
+                      </div>
+                    );
+                  })
+                )}
             </div>
             {this.props.chosenClass.startGetInfo ? (
               <CircularProgress size="1.5rem" />
             ) : (
-              <button
-                className="showMoreGamesB"
-                onClick={() => {
-                  this.props.chosenClass.callStudents(
-                    this.props.chosenClass.classId
-                  );
-                }}
-                style={{
-                  marginTop: "1vh",
-                  display: this.props.chosenClass.haveMoreStudents
-                    ? "inline-block"
-                    : "none",
-                }}
-              >
-                הצג עוד
-              </button>
-            )}
+                <button
+                  className="showMoreGamesB"
+                  onClick={() => {
+                    this.props.chosenClass.callStudents(
+                      this.props.chosenClass.classId
+                    );
+                  }}
+                  style={{
+                    marginTop: "1vh",
+                    display: this.props.chosenClass.haveMoreStudents
+                      ? "inline-block"
+                      : "none",
+                  }}
+                >
+                  הצג עוד
+                </button>
+              )}
           </div>
         </div>
       </>

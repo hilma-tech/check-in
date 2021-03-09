@@ -34,21 +34,21 @@ class ExcelStudentsAddition extends React.Component {
                 if (dataParse[i].firstName === undefined) {
                     errorsMsg.push(`חסר שם פרטי בשורה ${i + 1}`)
                 } else if (nameValidation(String(dataParse[i].firstName)).length !== 0) {
-                    errorsMsg.push(`השם הפרטי של התלמיד בשורה ${i + 1} לא תקין`)
+                    errorsMsg.push(`שם הפרטי של התלמיד בשורה ${i + 1} לא תקין`)
                 }
 
                 //------------ last name validation ------------------
                 if (dataParse[i].lastName === undefined) {
                     errorsMsg.push(`חסר שם משפחה בשורה ${i + 1}`)
                 } else if (nameValidation(String(dataParse[i].lastName)).length !== 0) {
-                    errorsMsg.push(`השם המשפחה של התלמיד בשורה ${i + 1} לא תקין`)
+                    errorsMsg.push(`שם המשפחה של התלמיד בשורה ${i + 1} לא תקין`)
                 }
 
                 //------------ ussername validation --------------------
                 if (dataParse[i].username === undefined) {
                     errorsMsg.push(`חסר שם משתמש בשורה ${i + 1}`)
                 } else if (userNameValidation(String(dataParse[i].username)).length !== 0) {
-                    errorsMsg.push(`השם משתמש של התלמיד בשורה ${i + 1} לא תקין`)
+                    errorsMsg.push(`שם משתמש של התלמיד בשורה ${i + 1} לא תקין`)
                 }
 
                 //------------ password validation ---------------------
@@ -62,7 +62,7 @@ class ExcelStudentsAddition extends React.Component {
                 if (dataParse[i].schoolName === undefined) {
                     errorsMsg.push(`חסר בית ספר בשורה ${i + 1}`)
                 } else if (schoolNameValidation(String(dataParse[i].schoolName)).length !== 0) {
-                    errorsMsg.push(`הבית ספר של התלמיד בשורה ${i + 1} לא תקין`)
+                    errorsMsg.push(`בית הספר של התלמיד בשורה ${i + 1} לא תקין`)
                 }
 
                 //--------------- classes validation --------------------
