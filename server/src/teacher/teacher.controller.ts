@@ -58,8 +58,8 @@ export class TeacherController {
     let userRole = new Role();
     userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
     user.roles = [userRole];
-    await this.userService.createUser<Teacher>(user);
     this.verifyEmail({ email: username, password: password })
+    return await this.userService.createUser<Teacher>(user);
   }
 
   @UseJwtAuth('superAdmin')
