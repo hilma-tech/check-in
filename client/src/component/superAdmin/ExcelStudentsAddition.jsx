@@ -7,6 +7,7 @@ import { errorMsgContext } from '../../stores/error.store';
 import { studentsContext } from '../../stores/students.store';
 import "../../style/superAdmin/excel_students_addition_style.scss"
 import { classNameValidation, nameValidation, schoolNameValidation, studentPasswordValidation, userNameValidation } from '../../tools/ValidationFunctions';
+import { CircularProgress } from '@material-ui/core';
 
 var xlsxParser = require('xlsx');
 const axios = require("axios").default;
@@ -14,6 +15,9 @@ const axios = require("axios").default;
 class ExcelStudentsAddition extends React.Component {
     constructor(props) {
         super();
+        this.state = {
+            startSaveStudents: false
+        }
         this.fileUploader = props.filesUploader;
     }
 
@@ -26,7 +30,9 @@ class ExcelStudentsAddition extends React.Component {
         const ws = readedData.Sheets[wsname];
         /* Convert array to json*/
         dataParse = xlsxParser.utils.sheet_to_json(ws);
+        this.setState({startSaveStudents: true})
         if (dataParse.length === 0) {
+            this.setState({startSaveStudents: false})
             this.props.errorMsg.setErrorMsg("הקובץ ריק. הכנס מידע בקובץ על מנת לשמור תלמידים")
         } else {
             for (let i = 0; i < dataParse.length; i++) {
@@ -98,15 +104,19 @@ class ExcelStudentsAddition extends React.Component {
                     let { data } = await axios.post("/api/student/multiRegister", dataParse);
                     if (data.success) {
                         this.props.students.addMultiStudents(data.students)
+                        this.setState({startSaveStudents: false})
                         this.props.errorMsg.setErrorMsg('כל התלמידים נשמרו בהצלחה.');
                     } else {
+                        this.setState({startSaveStudents: false})
                         this.props.errorMsg.setErrorMsg(data.errorsMsg)
                     }
                 }
                 catch (e) {
+                    this.setState({startSaveStudents: false})
                     this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת. לא ניתן לשמור את התלמידים.")
                 }
             } else {
+                this.setState({startSaveStudents: false})
                 this.props.errorMsg.setErrorMsg(errorsMsg)
             }
         }
@@ -130,14 +140,16 @@ class ExcelStudentsAddition extends React.Component {
             else {
                 this.props.errorMsg.setErrorMsg(
                     "הפורמט של הקובץ לא מתאים. עליך להעלות קובץ אקסל"
-                );
+                    );
+                }
             }
+            props.target.value = ""
         }
-        props.target.value = ""
-    }
-    
-    render() { 
+        
+        render() { 
+        console.log('this.state.startSaveStudents: ', this.state.startSaveStudents);
         return ( 
+            <>
             <div className="excelStudentAddBackground" style={{display: this.props.toShow ? "" : "none"}}>
                 <div className="excelStudentAdd">
                 <img
@@ -162,6 +174,8 @@ class ExcelStudentsAddition extends React.Component {
                   </label>
                 </div>
             </div>
+            {this.state.startSaveStudents ? <CircularProgress size="1.5rem" style={{position: 'fixed', top: '50vh'}} /> : <></>}
+            </>
          );
     }
 }
