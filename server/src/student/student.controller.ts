@@ -61,7 +61,7 @@ export class StudentController {
         }
       }
       if (await this.studentService.isStudentExist(req[i].username)) {
-        errorsMsg.push(`שם המשתמש בשורה ${i + 1} כבר קיים, אנא נסה להכניס שם משתמש אחר`)
+        errorsMsg.push(`שם המשתמש בשורה ${i + 1} כבר קיים, אנא נסה להכניס שם המשתמש אחר`)
       }
     }
     if (errorsMsg.length !== 0) {
