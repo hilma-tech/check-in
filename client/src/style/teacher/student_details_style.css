@@ -58,6 +58,10 @@
     padding-top: 0.75vh;
     color: #043163; 
         }
+ .passInput::placeholder{
+    font-size: 3.5vh;
+
+    }
 .approveOrNot{
     display: flex;
     flex-direction: row;
@@ -135,6 +139,10 @@
     padding-top: 0.75vh;
     color: #043163;     }
 
+    .passInput::placeholder{
+        font-size: 3.5vh;
+
+    }
     .passchange{
         display: flex;
         flex-direction: row;

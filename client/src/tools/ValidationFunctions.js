@@ -105,9 +105,9 @@ export function studentPasswordValidation(password) {
         return '** על הסיסמה להיות בין 8-15 תווים **'
     } else if (password.trim().length === 0) {
         return '** נא להכניס סיסמא **'
-    } else if (!(/[A-Za-z0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
+    } else if (!(/[A-Za-z\u0590-\u05EA0-9]/).test(password)) {
         return '** ניתן להשתמש באותיות באנגלית ובעברית בלבד **'
-    } else if (!((/[0-9]/).test(password) && (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password) && (/[a-zA-Z]/).test(password))) {
+    } else if (!((/[0-9]/).test(password) && (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password) && (/[a-zA-Z\u0590-\u05EA]/).test(password))) {
         return '** על הסיסמה להכיל אותיות באנגלית מספרים ותווים מיוחדים **'
     } else {
         return ''
@@ -117,11 +117,15 @@ export function studentPasswordValidation(password) {
 
 //Check validation for email
 export function emailValidation(email) {
+    console.log("VALIDATING");
     if (email === null || email.length === 0) {
+        console.log("null");
         return '** נא למלא שדה זה **'
     } else if (email.trim().length === 0) {
+        console.log("spaces");
         return '** כתובת איימל לא תקינה **'
-    } else if (!(/[a-zA-Z0-9]+@+[a-zA-Z]+.+[a-zA-Z0-9]/).test(email)) {
+    } else if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(email)) {
+        console.log("not an email");
         return '** כתובת איימל לא תקינה **'
     } else {
         return ''

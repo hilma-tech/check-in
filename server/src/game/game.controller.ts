@@ -39,6 +39,12 @@ export class GameController {
     return await this.gameService.getGameInfo(ide);
   }
 
+  @UseJwtAuth('teacher')
+  @Get('/getShowGameInfo')
+  async getShowGameInfo(@Query() data: any) {
+    return await this.gameService.getShowGameInfo(data);
+  }
+
   @UseJwtAuth('superAdmin')
   @Post('/addGame')
   @UseFilesHandler()
