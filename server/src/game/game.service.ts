@@ -101,7 +101,7 @@ export class GameService {
     games = [...temp];
     for (let i = 0; i < games.length; i++) {
       for (let j = 0; j < games[i].fields.length; j++) {
-        console.log("PPP",games[i].fields[j]);
+        console.log("PPP", games[i].fields[j]);
         if (
           games[i].fields[j].type === 'image' ||
           games[i].fields[j].type === 'text'
@@ -110,7 +110,7 @@ export class GameService {
             { id: 0, value: games[i].fields[j].default_value },
           ];
         } else {
-          console.log("TTTTTT",games[i].fields[j].default_value, typeof games[i].fields[j].default_value);
+          console.log("TTTTTT", games[i].fields[j].default_value, typeof games[i].fields[j].default_value);
           games[i].fields[j].value = JSON.parse(
             games[i].fields[j].default_value
           ).map((value, index) => {
@@ -126,10 +126,13 @@ export class GameService {
   }
 
   async getGameInfo(gameId: GameIdDto) {
-    let temp = await this.gameRepository.find({
-      relations: ['fields'],
-      where: { id: gameId.id },
-    });
+    let temp = await this.gameRepository
+      .createQueryBuilder('Game')
+      .innerJoinAndSelect('Game.fields', 'Field')
+      .where('Game.id = :id', { id: gameId.id })
+      .orderBy('Field.order')
+      .getMany();
+
     let games: any;
     games = [...temp];
     for (let i = 0; i < games.length; i++) {
