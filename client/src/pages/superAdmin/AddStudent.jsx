@@ -223,9 +223,9 @@ class AddStudent extends React.Component {
             username: data.username,
             schoolName: this.state.school,
             id: data.id,
-            classes: data.classroomStudent.map((classInfo) => {
+            classes: data.classroomStudent !== undefined ? data.classroomStudent.map((classInfo) => {
               return classInfo.name
-            })
+            }) : []
           })
           this.props.history.goBack(); // after saving go back
         } else {
