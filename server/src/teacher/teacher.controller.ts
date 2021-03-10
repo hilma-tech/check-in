@@ -69,7 +69,6 @@ export class TeacherController {
 
   @Post('/SendEmail')
   async verifyEmail(@Query() VerifyInfo: any) {
-    console.log('VerifyInfo: ', VerifyInfo);
     let token = await this.teacherService.createAndSaveToken(VerifyInfo.email, VerifyInfo.password)
     await this.teacherService.sendVerificationEmail(VerifyInfo.email, token)
   }
@@ -78,5 +77,10 @@ export class TeacherController {
     await this.teacherService.IsVerified(Token.token)
     var redirectTo = 'http://localhost:3000/signin'//to be replaced with read domain
     res.redirect(redirectTo)
+  }
+
+  @Get('/searchTeacherSuperadmin')
+  async searchTeacher(@Query() val: any) {
+  return await this.teacherService.searchInTeacher(val.val) 
   }
 }

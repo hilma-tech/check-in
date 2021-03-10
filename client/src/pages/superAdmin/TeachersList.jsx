@@ -6,6 +6,8 @@ import { withContext } from "@hilma/tools";
 import { teachersContext } from "../../stores/teachers.store.js";
 import { errorMsgContext } from "../../stores/error.store.js";
 import { Fade } from "@material-ui/core";
+import OutsideClickHandler from "react-outside-click-handler";
+
 
 // const axios = require("axios").default;
 
@@ -22,10 +24,11 @@ class TeachersList extends React.Component {
       listDataTeachers: [],
       searchVal: "",
       displaySearch: false,
+      searched: false
     };
   }
 
-  componentDidMount = async () => {    
+  componentDidMount = async () => {
     this.getTeachers();
   };
 
@@ -48,13 +51,22 @@ class TeachersList extends React.Component {
       );
     }
   };
-
+  searchTeachers = async () => {
+    this.props.teachers.searchTeachersReplace()
+    this.setState({ searched: true })
+    await this.props.teachers.searchTeachers(this.state.searchVal)
+  }
   render() {
     return (
       <div className="TeachersList withMenu" dir="rtl">
-          <div id="TableSearchbar">
-        <div className="PageTitles">
-          <p>מורים</p>
+        <div id="TableSearchbar">
+          <div className="PageTitles">
+            <p>מורים</p>
+            <OutsideClickHandler
+              onOutsideClick={() =>
+               this.setState({searched:false, searchVal:'',displaySearch:false })
+              }
+            > 
             <form
               className={
                 this.state.displaySearch
@@ -80,18 +92,19 @@ class TeachersList extends React.Component {
                   onChange={this.handleChange}
                 />
               </Fade>
-              <p className="searchIcon" onClick={this.activateSearch}></p>
-            </form></div>
-          </div>
-        
+              <p className="searchIcon" onClick={!this.state.displaySearch ? this.activateSearch : this.searchTeachers}></p>
+            </form>
+            </OutsideClickHandler>
+            </div>
+        </div>
+
         {/*
                 Create the teacher table with the general table.
             */}
 
         <GeneralTable
-          allData={this.props.teachers.listDataTeachers.filter((teacher) => {
-            return teacher.name.includes(this.state.searchVal);
-          })}
+          allData={this.state.searched ? this.props.teachers.searchedTeachers : this.props.teachers.listDataTeachers}
+          search={this.state.searched}
           categors={this.state.categors}
           enCategor={this.state.enCategor}
           loadMore={this.getTeachers}
