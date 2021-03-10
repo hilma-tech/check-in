@@ -36,7 +36,7 @@ export class GameController {
 
   @UseJwtAuth('superAdmin', 'teacher')
   @Get('/getGameInfo')
-  async getGameInfo(@Query() ide: GameIdDto) {
+  async getGameInfo(@Query() ide: any) {
     return await this.gameService.getGameInfo(ide);
   }
 
@@ -87,7 +87,7 @@ export class GameController {
 
   @UseJwtAuth('teacher')
   @Get('/getClassroomGames')
-  async getClassroomGames(@Query() req: ClassroomIdDto) {
+  async getClassroomGames(@Query() req: any) {
     return await this.gameService.getClassroomGames(req);
   }
 }

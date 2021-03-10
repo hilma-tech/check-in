@@ -17,7 +17,7 @@ export class ClassroomFieldService {
     private readonly imageService: ImageService,
   ) {}
 
-  async getClassroomGameFields(@Body() data: getCGFDto) {
+  async getClassroomGameFields(@Body() data: any) {
     let GameFields = await this.classFieldRepository.find({
       where: [{classroom_id: Number(data.classroom_id), game_id: Number(data.game_id)}],
       relations: ["field_id"]
