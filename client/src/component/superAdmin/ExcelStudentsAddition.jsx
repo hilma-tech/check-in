@@ -7,7 +7,7 @@ import { errorMsgContext } from '../../stores/error.store';
 import { studentsContext } from '../../stores/students.store';
 import "../../style/superAdmin/excel_students_addition_style.scss"
 import { classNameValidation, nameValidation, schoolNameValidation, studentPasswordValidation, userNameValidation } from '../../tools/ValidationFunctions';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Dialog } from '@material-ui/core';
 
 var xlsxParser = require('xlsx');
 const axios = require("axios").default;
@@ -174,7 +174,24 @@ class ExcelStudentsAddition extends React.Component {
                   </label>
                 </div>
             </div>
-            {this.state.startSaveStudents ? <CircularProgress size="1.5rem" style={{position: 'fixed', top: '50vh'}} /> : <></>}
+            <Dialog
+        // PaperProps={{
+        //   style: {
+        //     backgroundColor: "white",
+        //     boxShadow: "0px 3px 6px #00000029",
+        //     border: "1px solid #707070",
+        //     padding: "5px",
+        //   },
+        // }}
+        // decides if the popup is hidden or shown
+        open={this.state.startSaveStudents}
+        // onClose={handleClose}
+        // aria-labelledby="alert-dialog-title"
+        // aria-describedby="alert-dialog-description"
+      >
+          <CircularProgress size="1.5rem" style={{position: 'fixed', top: '50vh'}} />
+      </Dialog>
+            {/* {this.state.startSaveStudents ? <CircularProgress size="1.5rem" style={{position: 'fixed', top: '50vh'}} /> : <></>} */}
             </>
          );
     }
