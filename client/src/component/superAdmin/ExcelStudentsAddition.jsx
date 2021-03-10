@@ -30,9 +30,9 @@ class ExcelStudentsAddition extends React.Component {
         const ws = readedData.Sheets[wsname];
         /* Convert array to json*/
         dataParse = xlsxParser.utils.sheet_to_json(ws);
-        this.setState({startSaveStudents: true})
+        this.setState({ startSaveStudents: true })
         if (dataParse.length === 0) {
-            this.setState({startSaveStudents: false})
+            this.setState({ startSaveStudents: false })
             this.props.errorMsg.setErrorMsg("הקובץ ריק. הכנס מידע בקובץ על מנת לשמור תלמידים")
         } else {
             for (let i = 0; i < dataParse.length; i++) {
@@ -91,11 +91,11 @@ class ExcelStudentsAddition extends React.Component {
             }
 
             // --------------- usernames dont duplicates ----------------
-            let allUsernames = dataParse.map((row)=>{
+            let allUsernames = dataParse.map((row) => {
                 return row.username
             })
             let uniqueUsernames = [...new Set(allUsernames)]
-            if(allUsernames.length !== uniqueUsernames.length){
+            if (allUsernames.length !== uniqueUsernames.length) {
                 errorsMsg.push('לא יכולים להיות שני משתמשים עם אותו שם משתמש')
             }
 
@@ -104,19 +104,19 @@ class ExcelStudentsAddition extends React.Component {
                     let { data } = await axios.post("/api/student/multiRegister", dataParse);
                     if (data.success) {
                         this.props.students.addMultiStudents(data.students)
-                        this.setState({startSaveStudents: false})
+                        this.setState({ startSaveStudents: false })
                         this.props.errorMsg.setErrorMsg('כל התלמידים נשמרו בהצלחה.');
                     } else {
-                        this.setState({startSaveStudents: false})
+                        this.setState({ startSaveStudents: false })
                         this.props.errorMsg.setErrorMsg(data.errorsMsg)
                     }
                 }
                 catch (e) {
-                    this.setState({startSaveStudents: false})
+                    this.setState({ startSaveStudents: false })
                     this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת. לא ניתן לשמור את התלמידים.")
                 }
             } else {
-                this.setState({startSaveStudents: false})
+                this.setState({ startSaveStudents: false })
                 this.props.errorMsg.setErrorMsg(errorsMsg)
             }
         }
@@ -140,60 +140,47 @@ class ExcelStudentsAddition extends React.Component {
             else {
                 this.props.errorMsg.setErrorMsg(
                     "הפורמט של הקובץ לא מתאים. עליך להעלות קובץ אקסל"
-                    );
-                }
+                );
             }
-            props.target.value = ""
         }
-        
-        render() { 
+        props.target.value = ""
+    }
+
+    render() {
         console.log('this.state.startSaveStudents: ', this.state.startSaveStudents);
-        return ( 
+        return (
             <>
-            <div className="excelStudentAddBackground" style={{display: this.props.toShow ? "" : "none"}}>
-                <div className="excelStudentAdd">
-                <img
-                    onClick={this.props.handleState}
-                    alt=""
-                    className="excelStudentAddCloseIcon"
-                    src="/icons/ionic-ios-close.svg"
-                  />
-                <h1 className="excelStudentAddTitle">העלאת קובץ אקסל</h1>
-                <h2 className="excelStudentAddDesc">להלן דוגמה של מבנה קובץ</h2>
-                <img alt="excel example"  className="excelStudentAddExample" src="/images/excelExample.png"/>
-                <label
-                    className="showMoreGamesB"
-                    style={{marginTop: "1vh", paddingRight: "1vw", paddingLeft: "1vw", paddingBottom: "0.25vh"}}
-                    >
-                      <input type="file"
-                      onClick={this.props.handleState}
-                        className="hiddenInput"
-                        onChange={this.uploadFile}
-                        accept=".xlr,.xlsx,.xlsm,.xlsb,.xltx,.xltm,.xls,.xlt,.xml,.xlam,.xla,.xlw,.ods"></input>
+                <div className="excelStudentAddBackground" style={{ display: this.props.toShow ? "" : "none" }}>
+                    <div className="excelStudentAdd">
+                        <img
+                            onClick={this.props.handleState}
+                            alt=""
+                            className="excelStudentAddCloseIcon"
+                            src="/icons/ionic-ios-close.svg"
+                        />
+                        <h1 className="excelStudentAddTitle">העלאת קובץ אקסל</h1>
+                        <h2 className="excelStudentAddDesc">להלן דוגמה של מבנה קובץ</h2>
+                        <img alt="excel example" className="excelStudentAddExample" src="/images/excelExample.png" />
+                        <label
+                            className="showMoreGamesB"
+                            style={{ marginTop: "1vh", paddingRight: "1vw", paddingLeft: "1vw", paddingBottom: "0.25vh" }}
+                        >
+                            <input type="file"
+                                onClick={this.props.handleState}
+                                className="hiddenInput"
+                                onChange={this.uploadFile}
+                                accept=".xlr,.xlsx,.xlsm,.xlsb,.xltx,.xltm,.xls,.xlt,.xml,.xlam,.xla,.xlw,.ods"></input>
                     העלאת קובץ
                   </label>
+                    </div>
                 </div>
-            </div>
-            <Dialog
-        // PaperProps={{
-        //   style: {
-        //     backgroundColor: "white",
-        //     boxShadow: "0px 3px 6px #00000029",
-        //     border: "1px solid #707070",
-        //     padding: "5px",
-        //   },
-        // }}
-        // decides if the popup is hidden or shown
-        open={this.state.startSaveStudents}
-        // onClose={handleClose}
-        // aria-labelledby="alert-dialog-title"
-        // aria-describedby="alert-dialog-description"
-      >
-          <CircularProgress size="1.5rem" style={{position: 'fixed', top: '50vh'}} />
-      </Dialog>
-            {/* {this.state.startSaveStudents ? <CircularProgress size="1.5rem" style={{position: 'fixed', top: '50vh'}} /> : <></>} */}
+                <Dialog
+                    open={this.state.startSaveStudents}
+                >
+                    <CircularProgress size="1.5rem" style={{ position: 'fixed', top: '50vh' }} />
+                </Dialog>
             </>
-         );
+        );
     }
 }
 
