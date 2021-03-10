@@ -134,9 +134,9 @@ export class StudentController {
     );
   }
 
-  @UseJwtAuth('teacher')
+  // @UseJwtAuth('teacher')
   @Post('/changestudentpass')
-  async changePass(@Body() newPass: StudentPassword) {
+  async changePass(@Query() newPass: any) {
     if (((/[0-9]/).test(newPass.password) && (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(newPass.password) && (/[a-zA-Z\u0590-\u05EA]/).test(newPass.password))) {
       return await this.studentService.changeStudentPassword(newPass)
     }
@@ -145,7 +145,7 @@ export class StudentController {
     }
   }
 
-  @Get('/search')
+  @Get('/searchStudentSuperadmin')
   async searchStudent(@Query() val: any) {
   return await this.studentService.searchInStudent(val.val) 
   }

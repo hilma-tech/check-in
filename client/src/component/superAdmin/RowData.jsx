@@ -16,7 +16,6 @@ class RowData extends React.Component {
     //for now
     this.props.history.push(this.props.location.pathname + "Edit");
   };
-
   render() {
     return (
       <div

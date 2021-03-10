@@ -6,9 +6,12 @@ import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { errorMsgContext } from "../../stores/error.store.js";
 import { Fade } from "@material-ui/core";
+import OutsideClickHandler from "react-outside-click-handler";
+
 
 class StudentsList extends React.Component {
   constructor() {
+
     super();
     this.state = {
       categors: ["שם התלמיד", "בית ספר", "כיתות"],
@@ -19,6 +22,7 @@ class StudentsList extends React.Component {
       },
       searchVal: "",
       displaySearch: false,
+      searched: false
     };
   }
 
@@ -44,59 +48,69 @@ class StudentsList extends React.Component {
         "הייתה שגיאה בשרת. לא ניתן לקבל תלמידים מהשרת."
       );
     }
-    };
+  };
+  searchStudents = async () => {
+    this.props.students.searchStudentsReplace()
+    this.setState({ searched: true })
+    await this.props.students.searchStudents(this.state.searchVal)
+  }
 
   render() {
     return (
       <div className="StudentsList withMenu" dir="rtl">
         <div id="TableSearchbar">
-        <div className="PageTitles">
-          <p>תלמידים</p>
-          <form
+          <div className="PageTitles">
+            <p>תלמידים</p>
+            <OutsideClickHandler
+              onOutsideClick={() =>
+               this.setState({searched:false, searchVal:'',displaySearch:false })
+              }
+            > <form
               className={
                 this.state.displaySearch
                   ? "tablesSearchbar bordered"
                   : "tablesSearchbar"
               }
             >
-              <Fade
-                in={this.state.displaySearch}
-                timeout={{
-                  appear: 500,
-                  enter: 400,
-                  exit: 100,
-                }}
-                mountOnEnter
-                unmountOnExit
-              >
-                <input
-                  type="text"
-                  name="search"
-                  className="searchInp"
-                  placeholder="חיפוש"
-                  onChange={this.handleChange}
-                />
-              </Fade>
-              <p className="searchIcon" onClick={this.activateSearch}></p>
-            </form>
-        </div></div>
+
+                <Fade
+                  in={this.state.displaySearch}
+                  timeout={{
+                    appear: 500,
+                    enter: 400,
+                    exit: 100,
+                  }}
+                  mountOnEnter
+                  unmountOnExit
+                >
+                  <input
+                    type="text"
+                    name="search"
+                    className="searchInp"
+                    placeholder="חיפוש"
+                    onChange={this.handleChange}
+                  />
+                </Fade>
+                <p className="searchIcon" onClick={!this.state.displaySearch ? this.activateSearch : this.searchStudents}></p>
+              </form></OutsideClickHandler>
+          </div></div>
         {/*
                 Create the school table with the general teble.
             */}
 
-
-        <GeneralTable
-          allData={this.props.students.listDataStudents.filter((student)=>{
-            return student.name.includes(this.state.searchVal)
-          })}
-          categors={this.state.categors}
-          enCategor={this.state.enCategor}
-          loadMore={this.getStudents}
-          haveMoreData={this.props.students.haveMoreStudents}
-          startGetInfo={this.props.students.startGetStudents}
-          setClickedRow={this.props.students.getChosenStudent}
-          tableType="תלמידים"
-        />
+        {this.props.students.searchedStudents.lenght === 0 && this.state.searched ? (<p>אין תלמידים בשם זה</p>) : (
+          <GeneralTable
+            allData={this.state.searched ? this.props.students.searchedStudents : this.props.students.listDataStudents}
+            search={this.state.searched}
+            categors={this.state.categors}
+            enCategor={this.state.enCategor}
+            loadMore={this.getStudents}
+            haveMoreData={this.props.students.haveMoreStudents}
+            startGetInfo={this.props.students.startGetStudents}
+            setClickedRow={this.props.students.getChosenStudent}
+            tableType="תלמידים"
+          />
+        )}
       </div>
     );
   }

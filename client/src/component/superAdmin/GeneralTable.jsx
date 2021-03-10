@@ -37,19 +37,20 @@ class GeneralTable extends React.Component {
             <>
               <div className="AllData">
                 {this.props.allData.length === 0 ?
+                this.props.search? <p>אין {this.props.tableType} במערכת בשם זה</p>:
                   <p>אין {this.props.tableType} במערכת</p> :
-                  //Make the rows in the table
-                  this.props.allData.map((val, index) => {
-                    return (
-                      <RowData
-                        key={index}
-                        data={val}
-                        categors={this.props.categors}
-                        enCategor={this.props.enCategor}
-                        setClickedRow={this.props.setClickedRow}
-                      />
-                    );
-                  })
+                    //Make the rows in the table
+                    this.props.allData.map((val, index) => {
+                      return (
+                        <RowData
+                          key={index}
+                          data={val}
+                          categors={this.props.categors}
+                          enCategor={this.props.enCategor}
+                          setClickedRow={this.props.setClickedRow}
+                        />
+                      );
+                    })
                 }
               </div>
               {this.props.startGetInfo ? (
@@ -80,7 +81,7 @@ class GeneralTable extends React.Component {
           </div>
           :
           this.props.location.pathname.includes("school") ? <></> :
-          <div className="addingButton" onClick={this.onClickAdd}></div>
+            <div className="addingButton" onClick={this.onClickAdd}></div>
         }
       </div>
     );

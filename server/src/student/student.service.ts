@@ -1,6 +1,6 @@
 import { Injectable, Inject, Req, Body } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Role, User, UserConfig, UserService, USER_MODULE_OPTIONS , SALT} from '@hilma/auth-nest';
+import { Role, User, UserConfig, UserService, USER_MODULE_OPTIONS, SALT } from '@hilma/auth-nest';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { getConnection, Repository } from 'typeorm';
@@ -29,7 +29,7 @@ export class StudentService extends UserService {
       relations: ['school', 'classroomStudent'],
       skip: Number(skipON.studentsLength),
       take: 50,
-      order: {created: "DESC"}
+      order: { created: "DESC" }
     });
     return { studentsInfo: students, haveMoreStudents: haveMoreStudents };
   }
@@ -65,7 +65,7 @@ export class StudentService extends UserService {
 
 
   async changeStudentPassword(userInfo) {
-    let Info= userInfo
+    let Info = userInfo
     const hash = bcrypt.hashSync(userInfo.password, SALT);
     this.userRepository.createQueryBuilder()
       .update(User)
@@ -95,15 +95,15 @@ export class StudentService extends UserService {
     };
   }
 
-  async addStudent(@Body() req:UserRegisterDto){
+  async addStudent(@Body() req: UserRegisterDto) {
     let username = req.username;
     let password = req.password;
     let student: Partial<Student> = new Student({ username, password });
     student.first_name = req.firstName;
     student.last_name = req.lastName;
-    
-    if(req.classrooms.length !== 0){
-      student.classroomStudent = req.classrooms.map((classroom)=>{
+
+    if (req.classrooms.length !== 0) {
+      student.classroomStudent = req.classrooms.map((classroom) => {
         let studentClassroom = new Classroom()
         studentClassroom.id = classroom.id
         studentClassroom.name = classroom.name
@@ -119,20 +119,23 @@ export class StudentService extends UserService {
     return await this.createUser<Student>(student);
   }
 
-  async isStudentExist(username: string){
+  async isStudentExist(username: string) {
     let user = await this.userRepository.findOne({
-      where: [{username: username}]
+      where: [{ username: username }]
     })
     return user === undefined ? false : true
   }
 
-  async searchInStudent(val){
-    let students= await this.userRepository.find()
-    let Search= students.map((student)=>{
-      if(student.first_name.includes(val) || student.last_name.includes(val)){
+  async searchInStudent(val) {
+    let students = await this.userRepository.find({ relations: ['school', 'classroomStudent'] })
+    let Search = students.map((student) => {
+      if (student.first_name.includes(val) || student.last_name.includes(val)) {
         return student
       }
     })
-    return Search
+    var searchresult = Search.filter(function (student) {
+      return student != null;
+    });
+    return searchresult
   }
 }
