@@ -125,7 +125,7 @@ export class GameService {
     return games[0];
   }
 
-  async getGameInfo(gameId: GameIdDto) {
+  async getGameInfo(gameId: any) {
     let temp = await this.gameRepository
       .createQueryBuilder('Game')
       .innerJoinAndSelect('Game.fields', 'Field')
