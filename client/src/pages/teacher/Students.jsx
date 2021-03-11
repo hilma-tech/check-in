@@ -88,19 +88,16 @@ class Students extends Component {
 
             {this.state.searched && this.state.searchVal ?
               <div>
-                {this.props.chosenClass.searchedStudents.length === 0 && this.props.searched ?
-                 <div><p>לא קיימים תלמידים בשם זה בכיתה זו</p></div>
-                  :
+                {this.props.chosenClass.searchedStudents.length === 0 && this.state.searched ?
+                 ( <p> אין תלמידים בשם זה בכיתה זו</p> ):
                   (<div>
                     {this.props.chosenClass.searchedStudents.map((student, index) => {
-                      // console.log('student: ', student);
                       return (
                         <div
                           key={index}
                           className="smallStudentCont"
                           id={index}
                           onClick={() => {
-                            console.log('student');
                             this.moveToStudent(index);
                           }}>
                           <h1 className="smallStudentName">
