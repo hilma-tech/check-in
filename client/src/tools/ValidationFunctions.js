@@ -55,7 +55,7 @@ export function fieldNameValidation(name) {
     return "** שדה זה לא יכול להכיל יותר מ-30 תווים **";
   } else if (name.trim().length === 0) {
     return "** שם זה לא תקין **";
-  } else if (/[@#$%^&*()_+=[\]{};:\\|<>/~`]/.test(name)) {
+  } else if (/[@#$%^&*()_+=[\]{};:\\|<>/~`!?]/.test(name)) {
     return "** שדה זה לא יכול להכיל תווים מיוחדים **";
   } else if (
     name.includes('"') ||
