@@ -134,9 +134,9 @@ export class StudentController {
     );
   }
 
-  // @UseJwtAuth('teacher')
+  @UseJwtAuth('teacher')
   @Post('/changestudentpass')
-  async changePass(@Query() newPass: any) {
+  async changePass(@Body() newPass: any) {
     if (newPass.password === null || newPass.password.length === 0 || newPass.password.trim().length === 0
       || newPass.password.length > 15 || newPass.password.length < 8 || !(/^\S+$/).test(newPass.password)
       || !(/[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(newPass.password) ||
