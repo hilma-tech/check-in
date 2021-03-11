@@ -98,7 +98,6 @@ class StudentsList extends React.Component {
                 Create the school table with the general teble.
             */}
 
-        {this.props.students.searchedStudents.lenght === 0 && this.state.searched ? (<p>אין תלמידים בשם זה</p>) : (
           <GeneralTable
             allData={this.state.searched ? this.props.students.searchedStudents : this.props.students.listDataStudents}
             search={this.state.searched}
@@ -110,7 +109,6 @@ class StudentsList extends React.Component {
             setClickedRow={this.props.students.getChosenStudent}
             tableType="תלמידים"
           />
-        )}
       </div>
     );
   }
