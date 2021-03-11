@@ -32,9 +32,8 @@ class Students extends Component {
   };
 
   // allows to move to student details page
-  moveToStudent = async (index) => {
-    console.log('index: ', index);
-    await this.props.chosenClass.setCurrStudentClasses(index);
+  moveToStudent = async (id) => {
+    await this.props.chosenClass.setCurrStudentClasses(id);
     this.props.history.push(this.props.location.pathname + "/studentInfo");
   };
 
@@ -93,15 +92,13 @@ class Students extends Component {
                   :
                   (<div>
                     {this.props.chosenClass.searchedStudents.map((student, index) => {
-                      // console.log('student: ', student);
                       return (
                         <div
-                          key={index}
+                          key={student.Student_id}
                           className="smallStudentCont"
                           id={index}
                           onClick={() => {
-                            console.log('student');
-                            this.moveToStudent(index);
+                            this.moveToStudent(student.Student_id);
                           }}>
                           <h1 className="smallStudentName">
                             {student.Student_first_name + " " + student.Student_last_name}
@@ -123,11 +120,11 @@ class Students extends Component {
                     this.props.chosenClass.students.map((student, index) => {
                       return (
                         <div
-                          key={index}
+                          key={student.id}
                           className="smallStudentCont"
                           id={index}
                           onClick={() => {
-                            this.moveToStudent(index);
+                            this.moveToStudent(student.id);
                           }}
                         >
                           <h1 className="smallStudentName">
