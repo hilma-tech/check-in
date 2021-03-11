@@ -1,9 +1,10 @@
 import { createMobXContext } from "@hilma/tools";
-import { makeObservable, observable, action } from "mobx";
+import { makeObservable, observable, action, override } from "mobx";
 const axios = require("axios").default;
 
 class Teachers {
   listDataTeachers = [];
+  searchedTeachers=[];
   haveMoreTeachers = true;
   successGettingTeachers = true;
   startGetTeachers = false;
@@ -11,6 +12,7 @@ class Teachers {
   constructor() {
     makeObservable(this, {
       listDataTeachers: observable,
+      searchedTeachers: observable,
       haveMoreTeachers: observable,
       successGettingTeachers: observable,
       startGetTeachers: observable,
@@ -18,6 +20,8 @@ class Teachers {
       getTeachers: action,
       getChosenTeacher: action,
       addTeacher: action,
+      searchTeachersReplace:action,
+      searchTeachers:action
 
     });
   }
@@ -52,6 +56,25 @@ class Teachers {
       this.startGetTeachers = false;
     }
   };
+
+  searchTeachers = async (val) => {
+    let Teachers = await axios.get(`/api/teacher/searchTeacherSuperadmin/?val=${val}`);
+    if (Teachers.data[0] != null) {
+        let newTeachersSearch = Teachers.data.map((teacher) => {
+          teacher.name = teacher.first_name + " " + teacher.last_name;
+          teacher.schoolName = teacher.school.name;
+          teacher.classes = teacher.classroomTeacher.map((classroom) => {
+            return classroom.name;
+          });
+          return teacher;
+        })
+        this.searchedTeachers = [...newTeachersSearch]
+    }
+}
+
+searchTeachersReplace=()=>{
+    this.searchedTeachers.replace([])
+}
 
   //gets all info about a specific teacher for superadmin
   getChosenTeacher = async (teacherId) => {

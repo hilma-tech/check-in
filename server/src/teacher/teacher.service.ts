@@ -70,7 +70,6 @@ export class TeacherService extends UserService {
   }
 
   async getTeacherInfo(@Req() req: TeacherIdDto) {
-    console.log('req: ', req);
     let teacherInfo = await this.userRepository.findOne({
       where: [{ id: req.teacherId }],
       relations: ['school', 'classroomTeacher'],
@@ -132,6 +131,19 @@ export class TeacherService extends UserService {
       .set({ emailVerified: true, verificationToken: null })
       .where({ verificationToken: token })
       .execute();
+  }
+
+  async searchInTeacher(val) {
+    let students = await this.userRepository.find({ relations: ['school', 'classroomTeacher'] })
+    let Search = students.map((student) => {
+      if (student.first_name.includes(val) || student.last_name.includes(val)) {
+        return student
+      }
+    })
+    var searchresult = Search.filter(function (student) {
+      return student != null;
+    });
+    return searchresult
   }
 
 }
