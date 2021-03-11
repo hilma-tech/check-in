@@ -125,7 +125,7 @@ export class StudentService extends UserService {
     })
     return user === undefined ? false : true
   }
-
+//superadmn student search
   async searchInStudent(val) {
     let students = await this.userRepository.find({ relations: ['school', 'classroomStudent'] })
     let Search = students.map((student) => {
@@ -138,4 +138,32 @@ export class StudentService extends UserService {
     });
     return searchresult
   }
+
+  //teacher student search
+   async searchStudents(@Body() val:any, classId:any ){
+    let Searchstudents = await this.userRepository
+    .createQueryBuilder('Student')
+    .innerJoinAndSelect('Student.classroomStudent', 'Classroom')
+    .select('Student.id')
+    .addSelect('Student.first_name')
+    .addSelect('Student.last_name')
+    .addSelect('Student.username')
+    .groupBy('Student.id')
+    .where('Classroom.id = :id', { id: classId })
+    .execute()
+    
+    let Search = Searchstudents.map((student) => {
+      if (student.Student_first_name.includes(val) || student.Student_last_name.includes(val)) {
+        return student
+      }
+    })
+    var searchresult = Search.filter(function (student) {
+      return student != null;
+    });
+    return searchresult
+  
+  
+  
+  }
+
 }

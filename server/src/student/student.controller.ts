@@ -134,19 +134,27 @@ export class StudentController {
     );
   }
 
-  // @UseJwtAuth('teacher')
+  @UseJwtAuth('teacher')
   @Post('/changestudentpass')
-  async changePass(@Query() newPass: any) {
-    if (((/[0-9]/).test(newPass.password) && (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(newPass.password) && (/[a-zA-Z\u0590-\u05EA]/).test(newPass.password))) {
+  async changePass(@Body() newPass: any) {
+    if (newPass.password === null || newPass.password.length === 0 || newPass.password.trim().length === 0
+      || newPass.password.length > 15 || newPass.password.length < 8 || !(/^\S+$/).test(newPass.password)
+      || !(/[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(newPass.password) ||
+      /[A-Za-z\u0590-\u05EA]/.test(newPass.password) === false || /[0-9]/.test(newPass.password) === false) {
+      return 'password not according to format'
+    } else {
       return await this.studentService.changeStudentPassword(newPass)
     }
-    else {
-      return 'password is not according to format'
-    }
+
   }
 
   @Get('/searchStudentSuperadmin')
   async searchStudent(@Query() val: any) {
-  return await this.studentService.searchInStudent(val.val) 
+    return await this.studentService.searchInStudent(val.val)
+  }
+
+  @Get('/searchStudentInTeacher')
+  async searchStudentInChosenClass(@Query() info: any) {
+    return await this.studentService.searchStudents(info.value, info.classId)
   }
 }

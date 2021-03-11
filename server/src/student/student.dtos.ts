@@ -25,12 +25,11 @@ export class StudentIdDto {
 export class GamesForClassDto {
   @IsDefined()
   @IsString()
-  @Length(6, 9)
+  @Length(8, 15)
   password: string;
 
   @IsDefined()
   @IsString()
-  @IsEmail()
   username: string;
 }
 
