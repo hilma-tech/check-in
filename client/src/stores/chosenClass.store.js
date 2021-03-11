@@ -32,11 +32,15 @@ class ChosenClass {
   }
 
   //gets the classrooms the student belongs to (besides the current class)
-  setCurrStudentClasses = async (studentIndex) => {
+  setCurrStudentClasses = async (studentId) => {
     try {
-      this.currStudentIndex = studentIndex;
+      for(let i=0; i <this.students.length; i++){
+        if(studentId === this.students[i].id){
+          this.currStudentIndex = i;
+        }
+      }
       let { data } = await axios.get("/api/student/getStudentsClassrooms", {
-        params: { id: this.students[studentIndex].id },
+        params: { id: studentId },
       });
       this.studentClassrooms = data
     } catch (err) {

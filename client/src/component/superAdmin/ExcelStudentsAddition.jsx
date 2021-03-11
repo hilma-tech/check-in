@@ -147,7 +147,6 @@ class ExcelStudentsAddition extends React.Component {
     }
 
     render() {
-        console.log('this.state.startSaveStudents: ', this.state.startSaveStudents);
         return (
             <>
                 <div className="excelStudentAddBackground" style={{ display: this.props.toShow ? "" : "none" }}>
