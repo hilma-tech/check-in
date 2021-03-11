@@ -149,4 +149,9 @@ export class StudentController {
   async searchStudent(@Query() val: any) {
   return await this.studentService.searchInStudent(val.val) 
   }
+
+  @Get('/searchStudentInTeacher')
+  async searchStudentInChosenClass(@Query() info: any) {
+  return await this.studentService.searchStudents(info.value, info.classId) 
+  }
 }
