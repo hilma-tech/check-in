@@ -40,10 +40,10 @@ class GeneralTable extends React.Component {
                 this.props.search? <p>אין {this.props.tableType} במערכת בשם זה</p>:
                   <p>אין {this.props.tableType} במערכת</p> :
                     //Make the rows in the table
-                    this.props.allData.map((val, index) => {
+                    this.props.allData.map((val) => {
                       return (
                         <RowData
-                          key={index}
+                          key={val.id}
                           data={val}
                           categors={this.props.categors}
                           enCategor={this.props.enCategor}
