@@ -65,7 +65,6 @@ export class StudentService extends UserService {
 
 
   async changeStudentPassword(userInfo) {
-    let Info = userInfo
     const hash = bcrypt.hashSync(userInfo.password, SALT);
     this.userRepository.createQueryBuilder()
       .update(User)
@@ -125,6 +124,7 @@ export class StudentService extends UserService {
     })
     return user === undefined ? false : true
   }
+
 //superadmn student search
   async searchInStudent(val) {
     let students = await this.userRepository.find({ relations: ['school', 'classroomStudent'] })
