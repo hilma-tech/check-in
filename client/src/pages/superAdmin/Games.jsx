@@ -51,20 +51,25 @@ class Games extends Component {
   };
 
   OnApprove = async (info) => {
-    await this.props.games.deleteGame(info);
-    window.location.pathname = "superAdmin/games"
+    let isDeleted = await this.props.games.deleteGame(info);
+    if (isDeleted) {
+      window.location.pathname = "superAdmin/games"
+    }
+    else{
+      this.props.errorMsg.setErrorMsg('תקלה בשרת, משחק לא נמחק')
+    }
   }
 
   //todo lol doesnt work for shit
   onClickDeleteGame = (gameId) => {
-    this.props.errorMsg.setQuestion("האם אתה בטוח שברצונך למחוק משחק זה?", () => this.OnApprove(gameId),'מחק');
+    this.props.errorMsg.setQuestion("האם אתה בטוח שברצונך למחוק משחק זה?", () => this.OnApprove(gameId), 'מחק');
     this.props.errorMsg.question = true;
   };
 
 
 
   //Save the user search value as searchVal in state.
-  
+
   handleChange = (e) => {
     this.setState({ searchVal: e.target.value });
   };

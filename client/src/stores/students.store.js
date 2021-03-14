@@ -22,8 +22,8 @@ class Students {
             getChosenStudent: action,
             addStudent: action,
             addMultiStudents: action,
-            searchStudents:action,
-            searchStudentsReplace:action
+            searchStudents: action,
+            searchStudentsReplace: action
         })
     }
 
@@ -69,7 +69,7 @@ class Students {
         }
     }
 
-    searchStudentsReplace=()=>{
+    searchStudentsReplace = () => {
         this.searchedStudents.replace([])
     }
     //gets all info on a specific student to display
