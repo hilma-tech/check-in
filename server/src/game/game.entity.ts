@@ -41,12 +41,12 @@ export class Game {
 
   @Length(0, 30)
   @Matches(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
-  @Column({ type: 'varchar', length: 30, nullable: true })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   description: string;
 
   @Length(0, 100)
   @Matches(/^$|^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
-  @Column({ type: 'varchar', length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   requirements: string;
 
   @IsDefined()
