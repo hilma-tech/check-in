@@ -32,8 +32,9 @@ class StudentsList extends React.Component {
 
   //! not in use
   //Save the user search value as searchVal in state.
-  handleChange = (e) => {
-    this.setState({ searchVal: e.target.value });
+  handleChange =async  (e) => {
+    await this.setState({ searchVal: e.target.value });
+    this.searchStudents()
   };
   //! not in use
   //When the user press the search icon it's start to show the input text for the searching.
@@ -91,7 +92,7 @@ class StudentsList extends React.Component {
                     onChange={this.handleChange}
                   />
                 </Fade>
-                <p className="searchIcon" onClick={!this.state.displaySearch ? this.activateSearch : this.searchStudents}></p>
+                <p className="searchIcon" onClick={ this.activateSearch}></p>
               </form></OutsideClickHandler>
           </div></div>
         {/*

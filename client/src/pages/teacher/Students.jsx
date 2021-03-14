@@ -10,7 +10,6 @@ import { observer } from "mobx-react";
 import { chosenClassContext } from "../../stores/chosenClass.store";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SearchIcon from '@material-ui/icons/Search';
-import OutsideClickHandler from "react-outside-click-handler";
 
 
 class Students extends Component {
@@ -37,8 +36,9 @@ class Students extends Component {
     this.props.history.push(this.props.location.pathname + "/studentInfo");
   };
 
-  handleChange = (e) => {
-    this.setState({ searchVal: e.target.value, searched: false });
+  handleChange = async (e) => {
+    await this.setState({ searchVal: e.target.value, searched: false });
+    this.searchStudents()
   };
   closeSearch = () => {
     this.setState({ searchable: false, searchVal: '', searched: false })
@@ -65,9 +65,7 @@ class Students extends Component {
 
             <div className="searchBar">
               <div className="marginOnSearchIcon">
-                <SearchIcon
-                  style={this.state.searchVal ? { color: '#043163' } : { color: 'gray' }}
-                  onClick={this.state.searchVal ? this.searchStudents : () => { }} />
+                <SearchIcon style={{ color: '#043163' }} />
               </div>
               <input
                 style={{
@@ -88,7 +86,7 @@ class Students extends Component {
             {this.state.searched && this.state.searchVal ?
               <div>
                 {this.props.chosenClass.searchedStudents.length === 0 && this.state.searched ?
-                 ( <p> אין תלמידים בשם זה בכיתה זו</p> ):
+                  (<p> אין תלמידים בשם זה בכיתה זו</p>) :
                   (<div>
                     {this.props.chosenClass.searchedStudents.map((student, index) => {
                       return (

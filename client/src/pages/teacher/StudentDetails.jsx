@@ -54,10 +54,10 @@ class StudentDetails extends Component {
             password: this.state.passDisplay
           });
         this.closePassChange(true)
-        this.setState({passDisplay:''})
-          this.props.errorMsg.setErrorMsg(" הסיסמה שונתה בהצלחה! ");      
+        this.setState({ passDisplay: '' })
+        this.props.errorMsg.setErrorMsg(" הסיסמה שונתה בהצלחה! ");
       } catch (err) {
-        console.log("save pass error: ", err);
+        this.props.errorMsg.setErrorMsg("סיסמה לא נשמרה, נסו שנית :(")
       }
     }
   }
