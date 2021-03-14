@@ -78,6 +78,7 @@ class Students extends Component {
                 className="searchInput"
                 placeholder="חיפוש"
                 onChange={this.handleChange}
+                onBlur={this.closeSearch}
                 value={this.state.searchVal}
                 type="text"
               />
@@ -148,8 +149,8 @@ class Students extends Component {
                     );
                   }}
                   style={{
-                    marginTop: "1vh",
-                    display: this.props.chosenClass.haveMoreStudents
+                    marginTop: "2vh",
+                    display: this.props.chosenClass.haveMoreStudents &&  !this.state.searched
                       ? "inline-block"
                       : "none",
                   }}
@@ -157,6 +158,7 @@ class Students extends Component {
                   הצג עוד
                 </button>
               )}
+              <div style={{paddingBottom:'2vh'}}></div>
           </div>
         </div>
       </>

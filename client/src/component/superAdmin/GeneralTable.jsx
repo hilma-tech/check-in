@@ -37,20 +37,20 @@ class GeneralTable extends React.Component {
             <>
               <div className="AllData">
                 {this.props.allData.length === 0 ?
-                this.props.search? <p>אין {this.props.tableType} במערכת בשם זה</p>:
-                  <p>אין {this.props.tableType} במערכת</p> :
-                    //Make the rows in the table
-                    this.props.allData.map((val) => {
-                      return (
-                        <RowData
-                          key={val.id}
-                          data={val}
-                          categors={this.props.categors}
-                          enCategor={this.props.enCategor}
-                          setClickedRow={this.props.setClickedRow}
-                        />
-                      );
-                    })
+                  this.props.search ? <p>אין {this.props.tableType} במערכת בשם זה</p> :
+                    <p>אין {this.props.tableType} במערכת</p> :
+                  //Make the rows in the table
+                  this.props.allData.map((val) => {
+                    return (
+                      <RowData
+                        key={val.id}
+                        data={val}
+                        categors={this.props.categors}
+                        enCategor={this.props.enCategor}
+                        setClickedRow={this.props.setClickedRow}
+                      />
+                    );
+                  })
                 }
               </div>
               {this.props.startGetInfo ? (
@@ -65,7 +65,7 @@ class GeneralTable extends React.Component {
                     onClick={this.props.loadMore}
                     style={{
                       marginTop: "1vh",
-                      display: this.props.haveMoreData ? "inline-block" : "none",
+                      display: this.props.haveMoreData && !this.props.search? "inline-block" : "none",
                     }}
                   >
                     הצג עוד
