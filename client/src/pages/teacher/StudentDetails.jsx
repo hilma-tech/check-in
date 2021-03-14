@@ -151,7 +151,7 @@ class StudentDetails extends Component {
             <div style={{ display: this.state.showPassChanger ? "block" : "none" }}>
               <h4 className='inputError'>{this.state.passErr}</h4>
               <div style={this.state.passErr ? { marginTop: '5vh' } : {}}>
-                <div className="studentDeets box" style={{ marginTop: '2vh'}} >
+                <div className="studentDeets box" style={{ marginTop: '2.5vh'}} >
                   <input
                     style={{
                       border: "none",
