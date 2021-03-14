@@ -82,6 +82,40 @@ export class UserRegisterDto {
   classrooms: ClassForSaveDto[];
 }
 
+export class ExcelUserRegisterDto {
+  @IsDefined()
+  @IsString()
+  username: string;
+
+  @IsDefined()
+  @IsString()
+  password: string;
+
+  @IsDefined()
+  @IsString()
+  firstName: string;
+
+  @IsDefined()
+  @IsString()
+  lastName: string;
+
+  @IsDefined()
+  @IsString()
+  schoolName: string;
+
+  @IsDefined()
+  @IsNumber()
+  schoolId: number;
+
+  @IsDefined()
+  @ValidateNested({ each: true })
+  userClassrooms: string[];
+
+  @ValidateNested({ each: true })
+  @Type(() => ClassForSaveDto)
+  classrooms: ClassForSaveDto[];
+}
+
 export class StudentPassword {
   @IsDefined()
   @IsString()
