@@ -87,13 +87,11 @@ export class TeacherService extends UserService {
 
   async createAndSaveToken(email, pass) {
     let token = await this.generateVerificationToken();
-    console.log('token: ', token);
     let gf = await this.userRepository.createQueryBuilder()
       .update()
       .set({ verificationToken: token })
       .where({ username: email })
       .execute();
-    console.log('gf: ', gf);
     return { token: token, password: pass }
   }
 

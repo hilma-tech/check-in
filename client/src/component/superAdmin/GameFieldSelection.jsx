@@ -23,7 +23,6 @@ class GameFieldSelection extends Component {
   fieldCreator = () => {
     if (this.props.changeInputType === "text") {
       let eek = this.props.originalValue[0].value.trim()
-      //console.log("blop", ".", this.props.originalValue[0].value.length);
       return (
         <input
           onBlur={this.sendFieldValue}

@@ -247,7 +247,6 @@ class AddTeacher extends Component {
         currTeacherInfo
       );
       if(data){      
-        //console.log("HERE");  
         this.props.teachers.addTeacher({
           first_name: data.first_name,
           last_name: data.last_name,
