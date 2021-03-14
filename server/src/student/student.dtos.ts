@@ -88,18 +88,26 @@ export class UserRegisterDto {
 export class ExcelUserRegisterDto {
   @IsDefined()
   @IsString()
+  @Length(4, 15)
+  @Matches(/^[A-Za-z\u0590-\u05EA0-9?!-_]+$/)
   username: string;
 
   @IsDefined()
   @IsString()
+  @Length(8, 15)
+  @Matches(/^[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]+$/)
   password: string;
 
   @IsDefined()
   @IsString()
+  @Length(1, 30)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
   firstName: string;
 
   @IsDefined()
   @IsString()
+  @Length(1, 30)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
   lastName: string;
 
   @IsDefined()
