@@ -234,7 +234,7 @@ class AddStudent extends React.Component {
           this.props.errorMsg.setErrorMsg('שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר.');
         }
       } catch (err) {
-        console.log("save student error: ", err);
+        this.props.errorMsg.setErrorMsg('שגיאה בשרת, תלמיד לא נשמר, נסו שוב.');
       }
     }
   };

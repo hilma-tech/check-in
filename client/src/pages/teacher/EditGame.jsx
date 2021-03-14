@@ -95,13 +95,17 @@ class EditGame extends Component {
   //adds relation between the current class and the selected game
   //then moves the user back to the game page
   addGameToDB = async () => {
-    await this.props.games.addGameToClass(
+    let isAdded= await this.props.games.addGameToClass(
       this.props.chosenGame.index,
       this.props.chosenClass.classId,
       this.state.fieldsData
-    );
+      );
+      if(!isAdded){
+        this.props.errorMsg.setErrorMsg('תקלה בשרת, משחק לא התווסף')
+      }
+      else{
     await this.props.games.resetGamesStore();
-    this.props.history.push("/teacher/classes/games");
+    this.props.history.push("/teacher/classes/games");}
   };
 
   sendImageFieldValue = (value) => {

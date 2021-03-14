@@ -49,7 +49,7 @@ class Games extends React.Component {
   limitedAddition = async (index) => {
     if (this.props.games.chosenGameList.length < 6) {
       //smaller than six
-      return this.addGameToClass(index);
+       return await this.addGameToClass(index);
     } else {
       // equal to six
       await this.props.chosenGame.setgameId(
@@ -75,19 +75,24 @@ class Games extends React.Component {
   //allows the user to add game to the current classroom
   addGameToClass = async (index) => {
     await this.props.chosenGame.setgameId(
-      this.props.games.gamesList[index].id,
-      index
-    );
-    this.props.history.push("/teacher/classes/editGame");
+     this.props.games.gamesList[index].id,
+     index
+     );
+    ;
+      this.props.history.push("/teacher/classes/editGame");
+    
   };
 
   //allows the user to remove game from the current classroom
-  removeGameFromClass = () => {
-    this.props.games.removeGameFromClass(
+  removeGameFromClass = async () => {
+    let isremoved = await this.props.games.removeGameFromClass(
       this.gameIndex,
       this.props.chosenClass.classId,
       this.gameId
     );
+    if (!isremoved) {
+      this.props.errorMsg.setErrorMsg('משחק לא הוסר עקב תקלה בשרת')
+    }
   };
 
   //warns the user before allowing to remove a game from the class
@@ -96,7 +101,7 @@ class Games extends React.Component {
     this.gameId = id;
     this.props.errorMsg.setQuestion(
       "האם הנך בטוח שברצונך להסיר משחק זה מכיתה זו?",
-      this.removeGameFromClass,'הסר'
+      this.removeGameFromClass, 'הסר'
     );
   };
 
@@ -138,43 +143,43 @@ class Games extends React.Component {
           <p className="gameListTitle">משחקים שניתן להוסיף:</p>
           {/*add search option */}
           {!this.props.games.haveMoreGames &&
-          this.props.games.gamesList.length === 0 ? (
-            <p className="gameListTitle" style={{ fontStyle: "italic" }}>
-              אין עוד משחקים שניתן להוסיף
-            </p>
-          ) : (
-            <div className="listGamesForClass">
-              {this.props.games.gamesList.map((image, index) => {
-                return (
-                  <ClassGames
-                    changeGameStatus={this.limitedAddition}
-                    chosen={false}
-                    name={image.game_name}
-                    image={image.image}
-                    index={index}
-                    key={index}
-                  />
-                );
-              })}
-            </div>
-          )}
+            this.props.games.gamesList.length === 0 ? (
+              <p className="gameListTitle" style={{ fontStyle: "italic" }}>
+                אין עוד משחקים שניתן להוסיף
+              </p>
+            ) : (
+              <div className="listGamesForClass">
+                {this.props.games.gamesList.map((image, index) => {
+                  return (
+                    <ClassGames
+                      changeGameStatus={this.limitedAddition}
+                      chosen={false}
+                      name={image.game_name}
+                      image={image.image}
+                      index={index}
+                      key={index}
+                    />
+                  );
+                })}
+              </div>
+            )}
           <div style={{ textAlign: "center" }}>
             {this.props.games.startGetGames ? (
               <CircularProgress size="1.5rem" />
             ) : (
-              <button
-                className="showMoreGamesB"
-                onClick={this.getClassGames}
-                style={{
-                  marginTop: "1vh",
-                  display: this.props.games.haveMoreGames
-                    ? "inline-block"
-                    : "none",
-                }}
-              >
-                הצג עוד
-              </button>
-            )}
+                <button
+                  className="showMoreGamesB"
+                  onClick={this.getClassGames}
+                  style={{
+                    marginTop: "1vh",
+                    display: this.props.games.haveMoreGames
+                      ? "inline-block"
+                      : "none",
+                  }}
+                >
+                  הצג עוד
+                </button>
+              )}
           </div>
         </div>
       </div>

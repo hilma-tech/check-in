@@ -107,8 +107,10 @@ class Games {
         this.gamesList = [...this.gamesList, this.chosenGameList[index]];
       });
       this.chosenGameList.splice(index, 1);
+      return true
     } catch (err) {
       console.log("remove game err: ", err);
+      return false
     }
   };
 
@@ -121,8 +123,10 @@ class Games {
         classId: classId,
         fieldsData: fieldsData
       }));
+      return true
     } catch (err) {
       console.log("add game err: ", err);
+      return false
     }
   };
 
@@ -130,8 +134,10 @@ class Games {
   deleteGame = async (Id) => {
     try {
       await axios.post("/api/game/deleteGameById", { Id });
+      return true
     } catch (err) {
       console.log("delete game err: ", err);
+      return false
     }
   };
 }
