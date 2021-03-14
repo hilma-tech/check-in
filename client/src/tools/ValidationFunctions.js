@@ -8,6 +8,8 @@ export function userNameValidation(userName) {
         return '** שם משתמש לא תקין **'
     } else if (!(/[A-Za-z\u0590-\u05EA0-9?!-_]/).test(userName)) {
         return '** שם משתמש לא תקין **'
+    } else if ((/[@#$%^&*()_+=[\]{};:\\|<>/~`\s]/).test(userName)) {
+      return '** שם משתמש לא תקין **'
     } else {
         return ''
     }
