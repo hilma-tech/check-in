@@ -64,7 +64,6 @@ class AddGame extends Component {
   
   //כשמו כן הוא
   saveFieldValue = (fieldValue, fieldI, inputId, inputImage, imgId) => {
-    // //console.log(fieldValue, fieldI, inputId, inputImage, "imgid: ",imgId);
     //only relevant to choice/multi-choice
     if (inputId) {
       this.setState((prevState) => {

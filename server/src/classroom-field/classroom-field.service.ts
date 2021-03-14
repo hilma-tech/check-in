@@ -71,7 +71,6 @@ export class ClassroomFieldService {
           Inp = JSON.stringify(newArr);
         }
       } else {
-        //console.log('files, field.value[0].id: ', files, field.value[0].id);
         if (files.length !== 0) {
           try {
             Inp = await this.imageService.save(files, field.value[0].id) ;
@@ -109,8 +108,6 @@ export class ClassroomFieldService {
 
   //!
   async checkFieldAltValue(gameId: any, ClassId: any) {
-    console.log('ClassId: ', ClassId);
-    console.log('gameId: ', gameId);
     let fields = await this.fieldService.getGameFields(gameId);
 
     return Promise.all(fields.map(async (field) => {

@@ -87,7 +87,6 @@ class EditGame extends Component {
     
 
     if (errors.length === 0) {
-      //console.log(this.imageUploader, "PLOP");
       this.addGameToDB();
     }
   };

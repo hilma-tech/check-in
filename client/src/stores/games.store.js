@@ -115,7 +115,6 @@ class Games {
   //adds relation class-game to the database
   addGameToClass = async (index, classId, fieldsData) => {
     try {
-      //console.log("LOG", this.imageUploader);
       await this.imageUploader.post("/api/classroom/addGameRelation", JSON.stringify({
         gameId: this.gamesList[index].id,
         classId: classId,
