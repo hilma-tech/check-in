@@ -212,7 +212,7 @@ class EditGame extends Component {
                       ) : (
                         <div className="mobileChangingInputGrid">
                           {field.value.map((value, index) => {
-                            if (value.length !== 0) {
+                            if (value.value.length !== 0) {
                               return (
                                 <input
                                   key={i}

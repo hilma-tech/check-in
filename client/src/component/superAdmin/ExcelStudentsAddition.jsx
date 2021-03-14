@@ -31,7 +31,7 @@ class ExcelStudentsAddition extends React.Component {
         /* Convert array to json*/
         dataParse = xlsxParser.utils.sheet_to_json(ws);
         this.setState({ startSaveStudents: true })
-        console.log('dataParse: ', dataParse);
+        // console.log('dataParse: ', dataParse);
         if (dataParse.length === 0) {
             this.setState({ startSaveStudents: false })
             this.props.errorMsg.setErrorMsg("הקובץ ריק. הכנס מידע בקובץ על מנת לשמור תלמידים")
