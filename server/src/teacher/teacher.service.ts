@@ -88,12 +88,12 @@ export class TeacherService extends UserService {
   async createAndSaveToken(email, pass) {
     let token = await this.generateVerificationToken();
     console.log('token: ', token);
-   let gf= await this.userRepository.createQueryBuilder()
-   .update()
-   .set({ verificationToken: token })
-   .where({ username: email })
-   .execute();
-   console.log('gf: ', gf);
+    let gf = await this.userRepository.createQueryBuilder()
+      .update()
+      .set({ verificationToken: token })
+      .where({ username: email })
+      .execute();
+    console.log('gf: ', gf);
     return { token: token, password: pass }
   }
 
@@ -134,14 +134,15 @@ export class TeacherService extends UserService {
   }
 
   async searchInTeacher(val) {
-    let students = await this.userRepository.find({ relations: ['school', 'classroomTeacher'] })
-    let Search = students.map((student) => {
-      if (student.first_name.includes(val) || student.last_name.includes(val)) {
-        return student
+    let teachers = await this.userRepository.find({ relations: ['school', 'classroomTeacher'] })
+    let Search = teachers.map((teacher) => {
+      let fullname = teacher.first_name + ' ' + teacher.last_name
+      if (fullname.includes(val)) {
+        return teacher
       }
     })
-    var searchresult = Search.filter(function (student) {
-      return student != null;
+    var searchresult = Search.filter(function (teacher) {
+      return teacher != null;
     });
     return searchresult
   }
