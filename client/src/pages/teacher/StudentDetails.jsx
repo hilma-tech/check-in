@@ -10,6 +10,8 @@ import ArrowBar from "../../component/teacher/ArrowBar";
 import EditIcon from '@material-ui/icons/Edit';
 import { studentPasswordValidation } from "../../tools/ValidationFunctions";
 import axios from "axios";
+import PopUpError from "../../component/popUpError";
+import { errorMsgContext } from "../../stores/error.store";
 
 class StudentDetails extends Component {
   constructor() {
@@ -52,8 +54,10 @@ class StudentDetails extends Component {
             password: this.state.passDisplay
           });
         this.closePassChange(true)
+        this.setState({ passDisplay: '' })
+        this.props.errorMsg.setErrorMsg(" הסיסמה שונתה בהצלחה! ");
       } catch (err) {
-        console.log("save pass error: ", err);
+        this.props.errorMsg.setErrorMsg("סיסמה לא נשמרה, נסו שנית :(")
       }
     }
   }
@@ -73,6 +77,7 @@ class StudentDetails extends Component {
     return (
       <>
         <div className="smallPage">
+          <PopUpError />
           <SmallMenuBar />
           <PageTitle
             title="תלמידים"
@@ -164,13 +169,13 @@ class StudentDetails extends Component {
                     passErr: ''
                   })
                 }}>
-                  <h3 style={{ fontWeight: 'lighter', paddingLeft: '3vw',paddingRight:'3vw'}} className='changePasstext'>ביטול</h3>
+                  <h3 style={{ fontWeight: 'lighter', paddingLeft: '3vw', paddingRight: '3vw' }} className='changePasstext'>ביטול</h3>
                 </div>
                 <div className='passchange savepass' onClick={async () => {
                   await this.updatePass()
                 }} >
                   <h3 className='changePasstext' style={{
-                    color: 'white', fontSize: '3vh', fontWeight: 'lighter', paddingLeft: '3vw',paddingRight:'3vw'
+                    color: 'white', fontSize: '3vh', fontWeight: 'lighter', paddingLeft: '3vw', paddingRight: '3vw'
                   }}>שמור</h3>
 
                 </div>
@@ -186,6 +191,7 @@ class StudentDetails extends Component {
 
 const mapContextToProps = {
   chosenClass: chosenClassContext,
+  errorMsg: errorMsgContext
 };
 
 export default withContext(mapContextToProps)(

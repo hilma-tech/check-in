@@ -11,10 +11,15 @@ import { chosenClassContext } from "../../stores/chosenClass.store";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SearchIcon from '@material-ui/icons/Search';
 
+
 class Students extends Component {
   constructor() {
     super();
     this.students = [];
+    this.state = {
+      searchVal: '',
+      searched: false
+    }
   }
 
   componentDidMount = () => {
@@ -26,10 +31,23 @@ class Students extends Component {
   };
 
   // allows to move to student details page
-  moveToStudent = async (index) => {
-    await this.props.chosenClass.setCurrStudentClasses(index);
+  moveToStudent = async (id) => {
+    await this.props.chosenClass.setCurrStudentClasses(id);
     this.props.history.push(this.props.location.pathname + "/studentInfo");
   };
+
+  handleChange = async (e) => {
+    await this.setState({ searchVal: e.target.value, searched: false });
+    this.searchStudents()
+  };
+  closeSearch = () => {
+    this.setState({ searchable: false, searchVal: '', searched: false })
+  }
+  searchStudents = async () => {
+    this.props.chosenClass.searchStudentsReplace()
+    this.setState({ searched: true })
+    await this.props.chosenClass.searchStudentsInClass(this.state.searchVal, this.props.chosenClass.classId)
+  }
 
   render() {
     return (
@@ -44,9 +62,10 @@ class Students extends Component {
             id="smallAlignStudentList"
             style={{ textAlign: "center" }}
           >
+
             <div className="searchBar">
               <div className="marginOnSearchIcon">
-                <SearchIcon style={{color: '#043163' }} />
+                <SearchIcon style={{ color: '#043163' }} />
               </div>
               <input
                 style={{
@@ -58,40 +77,66 @@ class Students extends Component {
                 }}
                 className="searchInput"
                 placeholder="חיפוש"
-                onChange={console.log('hj')}
+                onChange={this.handleChange}
+                value={this.state.searchVal}
                 type="text"
               />
             </div>
 
+            {this.state.searched && this.state.searchVal ?
+              <div>
+                {this.props.chosenClass.searchedStudents.length === 0 && this.state.searched ?
+                  (<p> אין תלמידים בשם זה בכיתה זו</p>) :
+                  (<div>
+                    {this.props.chosenClass.searchedStudents.map((student, index) => {
+                      return (
+                        <div
+                          key={student.Student_id}
+                          className="smallStudentCont"
+                          id={index}
+                          onClick={() => {
+                            this.moveToStudent(student.Student_id);
+                          }}>
+                          <h1 className="smallStudentName">
+                            {student.Student_first_name + " " + student.Student_last_name}
+                          </h1>
+                          <h1 className="smallStudentName justForWeb" id={index}>
+                            שם משתמש: {student.Student_username}
+                          </h1>
+                        </div>)
+                    })
+                    }
+                  </div>)
+                }
+              </div>
+              :
+              (<div>
+                {this.props.chosenClass.students.length === 0 && !this.props.chosenClass.startGetInfo ? (
+                  <p>אין תלמידים לכיתה זו</p>
+                ) : (
+                    this.props.chosenClass.students.map((student, index) => {
+                      return (
+                        <div
+                          key={student.id}
+                          className="smallStudentCont"
+                          id={index}
+                          onClick={() => {
+                            this.moveToStudent(student.id);
+                          }}
+                        >
+                          <h1 className="smallStudentName">
+                            {student.first_name + " " + student.last_name}
+                          </h1>
+                          <h1 className="smallStudentName justForWeb" id={index}>
+                            שם משתמש: {student.username}
+                          </h1>
+                        </div>
+                      );
+                    })
+                  )}
+              </div>)
 
-            <div>
-              {this.props.chosenClass.students.length === 0 && !this.props.chosenClass.startGetInfo ? (
-                <p>אין תלמידים לכיתה זו</p>
-              ) : (
-                  this.props.chosenClass.students.map((student, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="smallStudentCont"
-                        id={index}
-                        onClick={() => {
-                          this.moveToStudent(index);
-                        }}
-                      >
-                        <h1 className="smallStudentName">
-                          {student.first_name + " " + student.last_name}
-                        </h1>
-                        <h1 className="smallStudentName justForWeb" id={index}>
-                          שם משתמש: {student.username}
-                        </h1>
-                        {/* <h1 className="smallStudentName justForWeb" id={index}>
-                        סיסמא: {student.id}
-                      </h1> */}
-                      </div>
-                    );
-                  })
-                )}
-            </div>
+            }
             {this.props.chosenClass.startGetInfo ? (
               <CircularProgress size="1.5rem" />
             ) : (

@@ -6,6 +6,7 @@ class ChosenClass {
   classId = 0;
   classroomName = "";
   students = [];
+  searchedStudents = [];
   currStudentIndex = 0;
   studentClassrooms = [];
   successGetInfo = true;
@@ -17,6 +18,7 @@ class ChosenClass {
       classroomName: observable,
       setClassId: action,
       students: observable,
+      searchedStudents: observable,
       callStudents: action,
       currStudentIndex: observable,
       setCurrStudentClasses: action,
@@ -30,11 +32,15 @@ class ChosenClass {
   }
 
   //gets the classrooms the student belongs to (besides the current class)
-  setCurrStudentClasses = async (studentIndex) => {
+  setCurrStudentClasses = async (studentId) => {
     try {
-      this.currStudentIndex = studentIndex;
+      for(let i=0; i <this.students.length; i++){
+        if(studentId === this.students[i].id){
+          this.currStudentIndex = i;
+        }
+      }
       let { data } = await axios.get("/api/student/getStudentsClassrooms", {
-        params: { id: this.students[studentIndex].id },
+        params: { id: studentId },
       });
       this.studentClassrooms = data
     } catch (err) {
@@ -46,6 +52,17 @@ class ChosenClass {
   getCurrStudent = () => {
     return this.students[this.currStudentIndex];
   };
+
+  searchStudentsInClass = async (val, classId) => {
+    let Students = await axios.get(`/api/student/searchStudentInTeacher`, {
+      params: { classId: classId, value: val },
+    });
+    this.searchedStudents = [...Students.data]
+  }
+
+  searchStudentsReplace = () => {
+    this.searchedStudents.replace([])
+  }
 
   //gets 50 students of this specific class
   callStudents = async (classnum) => {
