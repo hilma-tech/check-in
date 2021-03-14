@@ -55,6 +55,10 @@ class EditTeacher extends React.Component {
         fieldsData: fields,
       });
     }
+    else {
+      this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת, אנא נסו שנית')
+      
+    }
   }
 
   saveTeacherName = (props) => {
@@ -216,21 +220,21 @@ class EditTeacher extends React.Component {
                 {this.state.fieldsData.length === 0 ? (
                   <p>למורה זה אין כיתות</p>
                 ) : (
-                  this.state.fieldsData.map((fieldObj) => {
-                    return (
-                      <ClassSelection
-                        key={fieldObj.id}
-                        id={fieldObj.id}
-                        removal={this.triggerRemoval}
-                        saveValue={this.saveValue}
-                        options={this.classOptions}
-                        onChange={this.saveChange}
-                        reading={true}
-                        defaultValue={fieldObj.value}
-                      />
-                    );
-                  })
-                )}
+                    this.state.fieldsData.map((fieldObj) => {
+                      return (
+                        <ClassSelection
+                          key={fieldObj.id}
+                          id={fieldObj.id}
+                          removal={this.triggerRemoval}
+                          saveValue={this.saveValue}
+                          options={this.classOptions}
+                          onChange={this.saveChange}
+                          reading={true}
+                          defaultValue={fieldObj.value}
+                        />
+                      );
+                    })
+                  )}
               </div>
             </form>
             {/* הוספת כיתה */}

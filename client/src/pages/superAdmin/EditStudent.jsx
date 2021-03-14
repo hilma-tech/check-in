@@ -33,12 +33,18 @@ class EditStudent extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      studentName: this.props.students.chosenStudent.name,
-      userName: this.props.students.chosenStudent.username,
-      school: this.props.students.chosenStudent.schoolName,
-      chosenClasses: this.props.students.chosenStudent.classroomStudent,
-    })
+    if (this.props.students.chosenStudent.classroomStudent === undefined) {
+      this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת, אנא נסו שנית')
+    } else {
+      this.setState({
+        studentName: this.props.students.chosenStudent.name,
+        userName: this.props.students.chosenStudent.username,
+        school: this.props.students.chosenStudent.schoolName,
+        chosenClasses: this.props.students.chosenStudent.classroomStudent,
+      })
+    }
+
+
   }
 
   //Return the classes list as list of object for the Select.

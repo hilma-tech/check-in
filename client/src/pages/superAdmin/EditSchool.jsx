@@ -17,22 +17,19 @@ class EditSchool extends Component {
       schoolNameError: { toShow: "none", mess: "" },
       schoolName: "",
       //List of all the classes in the school. The numTeachers represent the number of teachers in the class.
-      classes: [
-        {
-          id: 1,
-          name: "ד'2",
-          chosenTeachers: [],
-          classNameError: { toShow: "none", mess: "" },
-        },
-      ],
+      classes: [],
     };
   }
 
   componentDidMount() {
-    this.setState({
-      schoolName: this.props.schools.chosenSchool.name,
-      classes: this.props.schools.chosenSchool.classrooms,
-    });
+    if (this.props.schools.chosenSchool.classrooms === undefined) {
+      this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת, אנא נסו שנית')
+    } else {
+      this.setState({
+        schoolName: this.props.schools.chosenSchool.name,
+        classes: this.props.schools.chosenSchool.classrooms,
+      });
+    }
   }
   /*
       Get e, prevent refresh and take the classes in state, 
@@ -248,23 +245,23 @@ class EditSchool extends Component {
             this.state.classes.length === 0 ? (
               <p>לבית ספר זה אין כיתות</p>
             ) : (
-              this.state.classes.map((classData, classIndex) => {
-                //The component get the class data as props.classData.
-                return (
-                  <SchoolClassData
-                    key={classData.id}
-                    canAddExistTeacher={true}
-                    classData={classData}
-                    classIndex={classIndex}
-                    addTeacherToClass={this.addTeacherToClass}
-                    handleChange={this.handleChange}
-                    chooseTeacher={this.chooseTeacher}
-                    removeTeacherFromClass={this.removeTeacherFromClass}
-                    removeClass={this.removeClass}
-                  />
-                );
-              })
-            )
+                this.state.classes.map((classData, classIndex) => {
+                  //The component get the class data as props.classData.
+                  return (
+                    <SchoolClassData
+                      key={classData.id}
+                      canAddExistTeacher={true}
+                      classData={classData}
+                      classIndex={classIndex}
+                      addTeacherToClass={this.addTeacherToClass}
+                      handleChange={this.handleChange}
+                      chooseTeacher={this.chooseTeacher}
+                      removeTeacherFromClass={this.removeTeacherFromClass}
+                      removeClass={this.removeClass}
+                    />
+                  );
+                })
+              )
           }
           {/* <button
             className='editSchoolAddClass'
