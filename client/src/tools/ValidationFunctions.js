@@ -149,19 +149,15 @@ export function studentPasswordValidation(password) {
 
 //Check validation for email
 export function emailValidation(email) {
-  //console.log("VALIDATING");
   if (email === null || email.length === 0) {
-    //console.log("null");
     return "** נא למלא שדה זה **";
   } else if (email.trim().length === 0) {
-    //console.log("spaces");
     return "** כתובת איימל לא תקינה **";
   } else if (
     !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
       email
     )
   ) {
-    //console.log("not an email");
     return "** כתובת איימל לא תקינה **";
   } else {
     return "";
@@ -196,8 +192,8 @@ export function mustInputValidation(input) {
 export function descriptionValidation(desc) {
   if (desc === null || desc.length === 0) {
     return "";
-  } else if (desc.length > 30) {
-    return "** שדה זה לא יכול להכיל יותר מ-30 תווים **";
+  } else if (desc.length > 255) {
+    return "** שדה זה לא יכול להכיל יותר מ-255 תווים **";
   } else if (!/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/.test(desc)) {
     return "** שדה זה לא תקין **";
   } else if (
@@ -220,8 +216,8 @@ export function descriptionValidation(desc) {
 export function requirementValidation(reqs) {
   if (reqs === null || reqs.length === 0) {
     return "";
-  } else if (reqs.length > 100) {
-    return "** שדה זה לא יכול להכיל יותר מ-100 תווים **";
+  } else if (reqs.length > 255) {
+    return "** שדה זה לא יכול להכיל יותר מ-255 תווים **";
   } else if (!/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/.test(reqs)) {
     return "** שדה זה לא תקין **";
   } else if (

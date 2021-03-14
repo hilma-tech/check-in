@@ -64,7 +64,6 @@ class AddGame extends Component {
   
   //כשמו כן הוא
   saveFieldValue = (fieldValue, fieldI, inputId, inputImage, imgId) => {
-    // //console.log(fieldValue, fieldI, inputId, inputImage, "imgid: ",imgId);
     //only relevant to choice/multi-choice
     if (inputId) {
       this.setState((prevState) => {
@@ -363,7 +362,7 @@ class AddGame extends Component {
           <div className="pageContainer">
             <WhiteBar />
             <form className="formData">
-              <label className="labelFields">שם המשחק:</label>
+              <label className="labelFields">* שם המשחק:</label>
               <p
                 className="error"
                 style={{ display: this.state.gameNameErrorMessages.toShow }}

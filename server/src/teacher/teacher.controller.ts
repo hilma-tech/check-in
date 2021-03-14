@@ -37,7 +37,7 @@ export class TeacherController {
   // }
 
   @Post('/register')
-  async register(@Body() req) {
+  async register(@Body() req: any) {
     let username = req.email;
     let password = req.password;
     let user: Partial<Teacher> = new Teacher({ username, password });

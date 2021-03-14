@@ -9,6 +9,7 @@ import {
   ClassroomIdDto,
   UserRegisterDto,
   StudentPassword,
+  ExcelUserRegisterDto,
 } from './student.dtos';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { GameModule } from 'src/game/game.module';
@@ -42,7 +43,7 @@ export class StudentController {
 
   @UseJwtAuth('superAdmin')
   @Post('/multiRegister')
-  async multiRegister(@Body() req: any) {
+  async multiRegister(@Body() req: ExcelUserRegisterDto[]) {
     let ans = []
     let errorsMsg = []
     for (let i = 0; i < req.length; i++) {
@@ -51,10 +52,10 @@ export class StudentController {
         errorsMsg.push(`הבית ספר בשורה ${i + 2} לא קיים במערכת, אנא נסה להכניס בית ספר אחר`)
       } else {
         req[i].schoolId = schoolId.id
-        for (let z = 0; z < req[i].classrooms.length; z++) {
-          let classroomInfo = await this.classroomService.getClassroomInfoByName(req[i].classrooms[z], schoolId.id)
+        for (let z = 0; z < req[i].userClassrooms.length; z++) {
+          let classroomInfo = await this.classroomService.getClassroomInfoByName(req[i].userClassrooms[z], schoolId.id)
           if (classroomInfo === undefined) {
-            errorsMsg.push(`הכיתה ${req[i].classrooms[z]} בשורה ${i + 2} לא קיימת במערכת, אנא נסה להכניס כיתה אחרת`)
+            errorsMsg.push(`הכיתה ${req[i].userClassrooms[z]} בשורה ${i + 2} לא קיימת במערכת, אנא נסה להכניס כיתה אחרת`)
           } else {
             req[i].classrooms[z] = classroomInfo
           }

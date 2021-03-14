@@ -116,17 +116,13 @@ class AddStudent extends React.Component {
   };
 
   chooseSchool = async (e) => {
-    //console.log('e: ', e);
     let chosenScoolId = (this.props.schools.schoolsNames.filter((school) => {
       return school.name === e.value
     }))[0]
-    //console.log('chosenScoolId: ', chosenScoolId);
     const { data } = await axios.get("/api/classroom/getSchoolClasses", {
       params: { schoolId: chosenScoolId.id },
     });
     this.setState({ school: e.value, allClasses: data, schoolId: chosenScoolId.id });
-    // this.setState({ school: e.value });
-
   };
 
   //saves changes in entered data to the state
@@ -244,9 +240,7 @@ class AddStudent extends React.Component {
       <div className='withMenu'>
         <ArrowNavBar />
         <form className="formData">
-          <label className="labelFields">
-            שם פרטי:
-          </label>
+          <label className="labelFields">* שם פרטי:</label>
           <p
             className="error"
             style={{ display: this.state.studentFirstNameError.toShow }}
@@ -261,9 +255,7 @@ class AddStudent extends React.Component {
             name="studentFirstName"
           ></input>
 
-          <label className="labelFields">
-            שם משפחה:
-          </label>
+          <label className="labelFields">* שם משפחה:</label>
           <p
             className="error"
             style={{ display: this.state.studentLastNameError.toShow }}
@@ -278,9 +270,7 @@ class AddStudent extends React.Component {
             name="studentLastName"
           ></input>
 
-          <label className="labelFields">
-            שם משתמש:
-          </label>
+          <label className="labelFields">* שם משתמש:</label>
           <p
             className="error"
             style={{ display: this.state.userNameError.toShow }}
@@ -296,9 +286,7 @@ class AddStudent extends React.Component {
             name="userName"
           ></input>
 
-          <label className="labelFields">
-            סיסמא:
-          </label>
+          <label className="labelFields">* סיסמא:</label>
           <p
             className="error"
             style={{ display: this.state.passwordError.toShow }}
@@ -315,7 +303,7 @@ class AddStudent extends React.Component {
             name="password"
           ></input>
 
-          <label className="labelFields">בית ספר:</label>
+          <label className="labelFields">* בית ספר:</label>
           <p
             className="error"
             style={{ display: this.state.schoolNameError.toShow }}
