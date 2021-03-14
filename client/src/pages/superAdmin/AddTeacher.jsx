@@ -264,7 +264,7 @@ class AddTeacher extends Component {
     } catch (error) {
       this.setState({ savingInfo: false });
       if (error.status === 500) {
-        this.props.errorMsg.setErrorMsg("ארור 500. נסו שוב.");
+        this.props.errorMsg.setErrorMsg("קיים כבר משתמש עם האימייל הזה. נסו שוב.");
       } else {
         this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסו לבדוק את החיבור");
       }
