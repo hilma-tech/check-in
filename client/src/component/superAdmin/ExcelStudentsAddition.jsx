@@ -31,6 +31,7 @@ class ExcelStudentsAddition extends React.Component {
         /* Convert array to json*/
         dataParse = xlsxParser.utils.sheet_to_json(ws);
         this.setState({ startSaveStudents: true })
+        console.log('dataParse: ', dataParse);
         if (dataParse.length === 0) {
             this.setState({ startSaveStudents: false })
             this.props.errorMsg.setErrorMsg("הקובץ ריק. הכנס מידע בקובץ על מנת לשמור תלמידים")
@@ -38,37 +39,37 @@ class ExcelStudentsAddition extends React.Component {
             for (let i = 0; i < dataParse.length; i++) {
                 //------------ first name validation -----------------
                 if (dataParse[i].firstName === undefined) {
-                    errorsMsg.push(`חסר שם פרטי בשורה ${i + 1}`)
+                    errorsMsg.push(`חסר שם פרטי בשורה ${i + 2}`)
                 } else if (nameValidation(String(dataParse[i].firstName)).length !== 0) {
-                    errorsMsg.push(`שם הפרטי של התלמיד בשורה ${i + 1} לא תקין`)
+                    errorsMsg.push(`שם הפרטי של התלמיד בשורה ${i + 2} לא תקין`)
                 }
 
                 //------------ last name validation ------------------
                 if (dataParse[i].lastName === undefined) {
-                    errorsMsg.push(`חסר שם משפחה בשורה ${i + 1}`)
+                    errorsMsg.push(`חסר שם משפחה בשורה ${i + 2}`)
                 } else if (nameValidation(String(dataParse[i].lastName)).length !== 0) {
-                    errorsMsg.push(`שם המשפחה של התלמיד בשורה ${i + 1} לא תקין`)
+                    errorsMsg.push(`שם המשפחה של התלמיד בשורה ${i + 2} לא תקין`)
                 }
 
                 //------------ ussername validation --------------------
                 if (dataParse[i].username === undefined) {
-                    errorsMsg.push(`חסר שם משתמש בשורה ${i + 1}`)
+                    errorsMsg.push(`חסר שם משתמש בשורה ${i + 2}`)
                 } else if (userNameValidation(String(dataParse[i].username)).length !== 0) {
-                    errorsMsg.push(`שם המשתמש של התלמיד בשורה ${i + 1} לא תקין`)
+                    errorsMsg.push(`שם המשתמש של התלמיד בשורה ${i + 2} לא תקין`)
                 }
 
                 //------------ password validation ---------------------
                 if (dataParse[i].password === undefined) {
-                    errorsMsg.push(`חסרה סיסמא בשורה ${i + 1}`)
+                    errorsMsg.push(`חסרה סיסמא בשורה ${i + 2}`)
                 } else if (studentPasswordValidation(String(dataParse[i].password)).length !== 0) {
-                    errorsMsg.push(`הסיסמא של התלמיד בשורה ${i + 1} לא תקינה`)
+                    errorsMsg.push(`הסיסמא של התלמיד בשורה ${i + 2} לא תקינה`)
                 }
 
                 //--------------- school validation --------------------
                 if (dataParse[i].schoolName === undefined) {
-                    errorsMsg.push(`חסר בית ספר בשורה ${i + 1}`)
+                    errorsMsg.push(`חסר בית ספר בשורה ${i + 2}`)
                 } else if (schoolNameValidation(String(dataParse[i].schoolName)).length !== 0) {
-                    errorsMsg.push(`בית הספר של התלמיד בשורה ${i + 1} לא תקין`)
+                    errorsMsg.push(`בית הספר של התלמיד בשורה ${i + 2} לא תקין`)
                 }
 
                 //--------------- classes validation --------------------
@@ -79,13 +80,13 @@ class ExcelStudentsAddition extends React.Component {
                         let studentClasses = dataParse[i].classes.split(",")
                         studentClasses.forEach((studentClass, index) => {
                             if (classNameValidation(studentClass.trim()).length !== 0) {
-                                errorsMsg.push(`הכיתה ה${index + 1} בשורה ${i + 1} לא תקינה`)
+                                errorsMsg.push(`הכיתה ה${index + 2} בשורה ${i + 2} לא תקינה`)
                             }
                             studentClasses[index] = studentClass.trim()
                         })
                         dataParse[i].classrooms = studentClasses
                     } else {
-                        errorsMsg.push(`הכיתות של התלמיד בשורה ${i + 1} לא תקינות`)
+                        errorsMsg.push(`הכיתות של התלמיד בשורה ${i + 2} לא תקינות`)
                     }
                 }
             }
