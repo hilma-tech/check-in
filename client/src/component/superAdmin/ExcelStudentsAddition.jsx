@@ -84,7 +84,7 @@ class ExcelStudentsAddition extends React.Component {
                             }
                             studentClasses[index] = studentClass.trim()
                         })
-                        dataParse[i].classrooms = studentClasses
+                        dataParse[i].userClassrooms = studentClasses
                     } else {
                         errorsMsg.push(`הכיתות של התלמיד בשורה ${i + 2} לא תקינות`)
                     }
