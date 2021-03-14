@@ -43,11 +43,11 @@ export class GameSaveDto {
   @Type(() => ImageDto)
   image: ImageDto;
   
-  @Length(0, 30)
+  @Length(0, 255)
   @Matches(/^$|^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
   description: string;
 
-  @Length(0, 100)
+  @Length(0, 255)
   @Matches(/^$|^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
   requirements: string;
 
