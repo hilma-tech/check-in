@@ -33,6 +33,7 @@ export class StudentController {
   @UseJwtAuth('superAdmin')
   @Post('/register')
   async register(@Body() req: UserRegisterDto) {
+    console.log('req: ', req);
     try {
       return await this.studentService.addStudent(req);
     } catch (e) {

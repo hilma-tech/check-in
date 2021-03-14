@@ -1,4 +1,15 @@
-import { IsDefined, IsNumberString, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  IsBooleanString,
+  IsDefined,
+  IsEmail,
+  IsNumber,
+  IsNumberString,
+  IsString,
+  Length,
+  Matches,
+  ValidateNested,
+} from 'class-validator';
 
 export class GetTeacherSkip {
   @IsDefined()
@@ -18,4 +29,49 @@ export class TeacherIdDto {
   @IsDefined()
   @IsString()
   teacherId: string;
+}
+
+export class TeacherRegisterDto {
+  @IsDefined()
+  @IsString()
+  @Length(1, 30)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
+  first_name: string;
+  @IsDefined()
+  @IsString()
+  @Length(1, 30)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
+  last_name: string;
+  @IsDefined()
+  @IsNumber()
+  school_id: number;
+  @IsDefined()
+  @ValidateNested({ each: true })
+  @Type(() => TeacherFieldsDataDto)
+  fields_data: TeacherFieldsDataDto[];
+  @IsDefined()
+  @IsString()
+  @IsEmail()
+  email: string;
+  @IsDefined()
+  @IsString()
+  @Length(8, 15)
+  @Matches(/^[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]+$/)
+  password: string;
+  @IsDefined()
+  @IsString()
+  @IsBooleanString()
+  rakaz: 'false';
+}
+
+export class TeacherFieldsDataDto {
+  @IsDefined()
+  @IsNumber()
+  id: number;
+  @IsDefined()
+  @IsString()
+  value: string;
+  @IsDefined()
+  @IsNumber()
+  classId: number;
 }
