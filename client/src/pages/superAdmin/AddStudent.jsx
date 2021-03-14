@@ -230,7 +230,7 @@ class AddStudent extends React.Component {
           this.props.errorMsg.setErrorMsg('שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר.');
         }
       } catch (err) {
-        console.log("save student error: ", err);
+        this.props.errorMsg.setErrorMsg('שגיאה בשרת, תלמיד לא נשמר, נסו שוב.');
       }
     }
   };
@@ -240,9 +240,7 @@ class AddStudent extends React.Component {
       <div className='withMenu'>
         <ArrowNavBar />
         <form className="formData">
-          <label className="labelFields">
-            שם פרטי:
-          </label>
+          <label className="labelFields">* שם פרטי:</label>
           <p
             className="error"
             style={{ display: this.state.studentFirstNameError.toShow }}
@@ -257,9 +255,7 @@ class AddStudent extends React.Component {
             name="studentFirstName"
           ></input>
 
-          <label className="labelFields">
-            שם משפחה:
-          </label>
+          <label className="labelFields">* שם משפחה:</label>
           <p
             className="error"
             style={{ display: this.state.studentLastNameError.toShow }}
@@ -274,9 +270,7 @@ class AddStudent extends React.Component {
             name="studentLastName"
           ></input>
 
-          <label className="labelFields">
-            שם משתמש:
-          </label>
+          <label className="labelFields">* שם משתמש:</label>
           <p
             className="error"
             style={{ display: this.state.userNameError.toShow }}
@@ -292,9 +286,7 @@ class AddStudent extends React.Component {
             name="userName"
           ></input>
 
-          <label className="labelFields">
-            סיסמא:
-          </label>
+          <label className="labelFields">* סיסמא:</label>
           <p
             className="error"
             style={{ display: this.state.passwordError.toShow }}
@@ -311,7 +303,7 @@ class AddStudent extends React.Component {
             name="password"
           ></input>
 
-          <label className="labelFields">בית ספר:</label>
+          <label className="labelFields">* בית ספר:</label>
           <p
             className="error"
             style={{ display: this.state.schoolNameError.toShow }}

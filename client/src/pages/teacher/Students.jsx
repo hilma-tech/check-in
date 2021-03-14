@@ -32,7 +32,7 @@ class Students extends Component {
 
   // allows to move to student details page
   moveToStudent = async (id) => {
-    await this.props.chosenClass.setCurrStudentClasses(id);
+  await this.props.chosenClass.setCurrStudentClasses(id);
     this.props.history.push(this.props.location.pathname + "/studentInfo");
   };
 
@@ -40,9 +40,7 @@ class Students extends Component {
     await this.setState({ searchVal: e.target.value, searched: false });
     this.searchStudents()
   };
-  closeSearch = () => {
-    this.setState({ searchable: false, searchVal: '', searched: false })
-  }
+
   searchStudents = async () => {
     this.props.chosenClass.searchStudentsReplace()
     this.setState({ searched: true })
@@ -78,7 +76,6 @@ class Students extends Component {
                 className="searchInput"
                 placeholder="חיפוש"
                 onChange={this.handleChange}
-                onBlur={this.closeSearch}
                 value={this.state.searchVal}
                 type="text"
               />

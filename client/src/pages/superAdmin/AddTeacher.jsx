@@ -298,7 +298,7 @@ class AddTeacher extends Component {
           <div>
             <form className="formData">
               {/* מורה */}
-              <label className="labelFields">שם פרטי:</label>
+              <label className="labelFields">* שם פרטי:</label>
               <p
                 className="error"
                 style={{ display: this.state.teacherFirstNameError.toShow }}
@@ -311,7 +311,7 @@ class AddTeacher extends Component {
                 placeholder="הכנס שם פרטי..."
                 onBlur={this.saveTFirstName}
               />
-              <label className="labelFields">שם משפחה:</label>
+              <label className="labelFields">* שם משפחה:</label>
               <p
                 className="error"
                 style={{ display: this.state.teacherLastNameError.toShow }}
@@ -326,7 +326,7 @@ class AddTeacher extends Component {
               />
 
               {/* בית ספר */}
-              <label className="labelFields">בית ספר:</label>
+              <label className="labelFields">* בית ספר:</label>
               <p
                 className="error"
                 style={{ display: this.state.schoolNameError.toShow }}
@@ -383,7 +383,7 @@ class AddTeacher extends Component {
             </div>
             <form className="formData" style={{ marginTop: "0" }}>
               {/* אימייל */}
-              <label className="labelFields">אימייל:</label>
+              <label className="labelFields">* אימייל:</label>
               <p
                 className="error"
                 style={{ display: this.state.emailNameError.toShow }}
@@ -397,7 +397,7 @@ class AddTeacher extends Component {
                 placeholder="הכנס כתובת מייל..."
               />
               {/* סיסמא */}
-              <label className="labelFields">סיסמא:</label>
+              <label className="labelFields">* סיסמא:</label>
               <p
                 className="error"
                 style={{ display: this.state.passwordNameError.toShow }}

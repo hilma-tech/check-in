@@ -96,37 +96,42 @@ class StudentDetails extends Component {
           />
           <h3 className="smallArrowTitle">כרטיס תלמיד</h3>
           <br /> */}
-          <div className="studentDeets top">
-            <h1 className="detail">{this.state.name}</h1>
+          <div className="box top">
+            <h3 className="TitleForDeet">שם:</h3>
+            <div className="studentDeets">
+              <h1 className="detail">{this.state.name}</h1>
+            </div>
           </div>
           <div className="inputBoxes">
-
-            <div className="studentDeets edit">
-              <h1 className="detail">{this.state.userName}</h1>
+            <div className="box">
+              <h3 className="TitleForDeet">שם משתמש:</h3>
+              <div className="studentDeets edit">
+                <h1 className="detail">{this.state.userName}</h1>
+              </div>
             </div>
-
-            <div className="studentDeets">
-              <h1 className="detail">
-                {this.state.classrooms.length === 0 ? (
-                  <p style={{ display: "inline-block", margin: "0" }}>
-                    לתלמיד/ה זה/זו אין עוד כיתות
-                  </p>
-                ) : (
-                    this.state.classrooms.map((classroom, ind) => {
-                      return (
-                        <p style={{ display: "inline-block", margin: "0" }} key={ind}>
-                          {classroom.name}
-                          {ind < this.state.classrooms.length - 1
-                            ? "\u00A0"
-                            : ""}{" "}
-                        </p>
-                      );
-                    })
-                  )}
-              </h1>
+            <div className="box">
+              <h3 className="TitleForDeet">כיתות:</h3>
+              <div className="studentDeets">
+                <h1 className="detail">
+                  {this.state.classrooms.length === 0 ? (
+                    <p style={{ display: "inline-block", margin: "0" }}>
+                      לתלמיד/ה זה/זו אין עוד כיתות
+                    </p>
+                  ) : (
+                      this.state.classrooms.map((classroom, ind) => {
+                        return (
+                          <p style={{ display: "inline-block", margin: "0" }} key={ind}>
+                            {classroom.name}
+                            {ind < this.state.classrooms.length - 1
+                              ? "\u00A0"
+                              : ""}{" "}
+                          </p>
+                        );
+                      })
+                    )}
+                </h1>
+              </div>
             </div>
-
-
             <div className="passchange" onClick={() => {
               this.setState({
                 showPassChanger: !this.state.showPassChanger,
@@ -146,7 +151,7 @@ class StudentDetails extends Component {
             <div style={{ display: this.state.showPassChanger ? "block" : "none" }}>
               <h4 className='inputError'>{this.state.passErr}</h4>
               <div style={this.state.passErr ? { marginTop: '5vh' } : {}}>
-                <div className="studentDeets">
+                <div className="studentDeets box" style={{ marginTop: '2.5vh'}} >
                   <input
                     style={{
                       border: "none",

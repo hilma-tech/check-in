@@ -362,7 +362,7 @@ class AddGame extends Component {
           <div className="pageContainer">
             <WhiteBar />
             <form className="formData">
-              <label className="labelFields">שם המשחק:</label>
+              <label className="labelFields">* שם המשחק:</label>
               <p
                 className="error"
                 style={{ display: this.state.gameNameErrorMessages.toShow }}

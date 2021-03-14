@@ -1,12 +1,26 @@
 
-.studentDeets {
-    width: 90vw;
-    height: 6vh;
+.box{
     margin-top: 3vh;
     margin-right: 5vw;
+
+}
+.TitleForDeet{
+  font-family: Assistant;
+  font-weight: 600;
+  font-size: 3vh;
+  text-align: right;
+  color: #043163;
+  margin: 0px;
+  margin-right: 2vw;
+}
+.studentDeets {
+    width: 90vw;
+    height: max-content;
     border-radius: 2vw;
     background-color: #E7EBEF;
     box-shadow: 0px 3px 6px #04316329;
+    margin-top: 0.5vh;
+
 }
 .inputBoxes{
     width: 90vw;  
@@ -55,12 +69,14 @@
     text-align: right;
     font-size: 3.5vh;
     margin: 0px;
-    padding-top: 0.75vh;
+    padding-top: 0.5vh;
     color: #043163; 
+    padding-bottom: 0.5vh;
+
         }
  .passInput::placeholder{
     font-size: 3.5vh;
-
+    padding-bottom: 0.5vh;
     }
 .approveOrNot{
     display: flex;
@@ -92,6 +108,8 @@
     margin: 0px;
     padding-right: 4vw;
     padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+
     color: #043163;
 }
 
@@ -136,11 +154,14 @@
     font-size: 3.5vh;
     margin: 0px;
     padding-right: 3vh;
-    padding-top: 0.75vh;
-    color: #043163;     }
+    padding-top: 0.5vh;
+    color: #043163;   
+    padding-bottom: 0.5vh;
+  }
 
     .passInput::placeholder{
         font-size: 3.5vh;
+        padding-bottom: 0.5vh;
 
     }
     .passchange{
@@ -168,11 +189,25 @@
     .justForWeb{
         display: inline-block;
     }
-    .studentDeets {
-        width: 60vw;
-        height: 6vh;
+
+    .box{
         margin-top: 3vh;
         margin-right: 32vw;
+    
+    }
+    .TitleForDeet{
+      font-family: Assistant;
+      font-weight: 600;
+      font-size: 3vh;
+      text-align: right;
+      color: #043163;
+      margin: 0px;
+      margin-right: 1vw;
+    }
+    .studentDeets {
+        width: 60vw;
+        height: max-content;
+        margin-top: 0.5vh;
         border-radius: 0.75vw;
         background-color: #E7EBEF;
         box-shadow: 0px 3px 6px #04316329;
