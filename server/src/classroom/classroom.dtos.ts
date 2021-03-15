@@ -3,8 +3,6 @@ import {
   IsNumber,
   IsNumberString,
   IsString,
-  Length,
-  Matches,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -38,7 +36,54 @@ export class ClassroomGameDto {
   @IsNumber()
   gameId: number;
   @IsDefined()
-  fieldsData: any;
+  @ValidateNested({ each: true })
+  @Type(() => ClassroomFieldsDataDto)
+  fieldsData: ClassroomFieldsDataDto[];
+}
+
+export class ErrorMessDto {
+  @IsDefined()
+  @IsString()
+  mess: string
+}
+
+export class ValueArrayDto {
+  @IsDefined()
+  @IsNumber()
+  id: number
+  @IsDefined()
+  @IsString()
+  value: string
+}
+
+export class ClassroomFieldsDataDto {
+  @IsDefined()
+  @IsNumber()
+  id: number;
+  @IsDefined()
+  @IsString()
+  field_name: string;
+  @IsDefined()
+  @IsString()
+  type: string;
+  @IsDefined()
+  @IsString()
+  default_value: string;
+  @IsDefined()
+  @IsNumber()
+  order: number;
+  @IsDefined()
+  @ValidateNested({ each: true })
+  @Type(() => ValueArrayDto)
+  value: ValueArrayDto[];
+  @IsDefined()
+  @IsString()
+  name: string;
+  @IsDefined()
+  @IsString()
+  selection: string;
+  @IsDefined()
+  errorMessage: ErrorMessDto;
 }
 
 export class GetClassSkip {

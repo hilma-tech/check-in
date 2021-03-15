@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { getConnection, Repository } from 'typeorm';
 import { Student } from './student.entity';
-import { GetStudentSkip, UserRegisterDto } from './student.dtos';
+import { GetStudentSkip, SearchValDto, UserRegisterDto } from './student.dtos';
 import * as bcrypt from 'bcrypt';
 import { Classroom } from 'src/classroom/classroom.entity';
 
@@ -141,7 +141,7 @@ export class StudentService extends UserService {
   }
 
   //teacher student search
-  async searchStudents(@Body() val: any, classId: any) {
+  async searchStudents(@Body() val: string, classId: SearchValDto) {
     let Searchstudents = await this.userRepository
       .createQueryBuilder('Student')
       .innerJoinAndSelect('Student.classroomStudent', 'Classroom')

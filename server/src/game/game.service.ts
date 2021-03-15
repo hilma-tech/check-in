@@ -8,10 +8,13 @@ import {
   GameSaveReq,
   GameIdDto,
   ClassroomIdDto,
+  IdeDto,
+  DeleteGameIdDto,
 } from './game.dtos';
 import { FieldService } from 'src/field/field.service';
 import { FilesType, ImageService } from '@hilma/fileshandler-typeorm';
 import { ClassroomFieldService } from 'src/classroom-field/classroom-field.service';
+import { getCGFDto } from 'src/classroom-field/classroom-field.dtos';
 
 @Injectable()
 export class GameService {
@@ -78,7 +81,8 @@ export class GameService {
     return { gamesInfo: gamesInfo, haveMoreGames: haveMoreGames };
   }
 
-  async getShowGameInfo(data: any) {
+  async getShowGameInfo(data: getCGFDto) {
+
     let temp = await this.gameRepository.find({
       relations: ['fields'],
       where: { id: data.game_id },
@@ -119,7 +123,7 @@ export class GameService {
     return games[0];
   }
 
-  async getGameInfo(gameId: any) {
+  async getGameInfo(gameId: IdeDto) {
     let temp = await this.gameRepository.find({
       where: [{id: Number(gameId.id)}],
       relations: ["fields"],
@@ -164,7 +168,7 @@ export class GameService {
     });
   }
 
-  async deleteGameById(id) {
+  async deleteGameById(id: DeleteGameIdDto) {
     await this.classroomFieldService.deleteClassField(id.Id)
     await this.gameRepository.delete(id.Id);
   }

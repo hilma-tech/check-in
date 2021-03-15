@@ -10,6 +10,7 @@ import {
   UserRegisterDto,
   StudentPassword,
   ExcelUserRegisterDto,
+  ValDto,
 } from './student.dtos';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { GameModule } from 'src/game/game.module';
@@ -150,12 +151,13 @@ export class StudentController {
   }
 
   @Get('/searchStudentSuperadmin')
-  async searchStudent(@Query() val: any) {
+  async searchStudent(@Query() val: ValDto) {
     return await this.studentService.searchInStudent(val.val)
   }
 
   @Get('/searchStudentInTeacher')
   async searchStudentInChosenClass(@Query() info: any) {
+    console.log('info: ', info);
     return await this.studentService.searchStudents(info.value, info.classId)
   }
 }

@@ -75,3 +75,9 @@ export class TeacherFieldsDataDto {
   @IsNumber()
   classId: number;
 }
+
+export class TeacherValDto {
+  @IsDefined()
+  @IsString()
+  val: string;
+}
