@@ -8,7 +8,7 @@ export function userNameValidation(userName) {
         return '** שם משתמש לא תקין **'
     } else if (!(/[A-Za-z\u0590-\u05EA0-9?!-_]/).test(userName)) {
         return '** שם משתמש לא תקין **'
-    } else if ((/[@#$%^&*()_+=[\]{};:\\|<>/~`\s]/).test(userName)) {
+    } else if ((/[@#$%^&*()_+=[\]{};:,.\\|<>/~`\s]/).test(userName)) {
       return '** שם משתמש לא תקין **'
     } else {
         return ''
@@ -23,7 +23,7 @@ export function nameValidation(name) {
     return "** שדה זה לא יכול להכיל יותר מ-30 תווים **";
   } else if (name.trim().length === 0) {
     return "** נא למלא שדה זה **";
-  } else if (/[@#$%^&*()_+=[\]{};:\\|<>/~`0-9]/.test(name)) {
+  } else if (/[@#$%^&*()_+=[\]{};:,.\\|<>/~`0-9]/.test(name)) {
     return "** שדה זה לא יכול להכיל תווים מיוחדים **";
   } else if (!/[A-Za-z\u0590-\u05EA"'-]/.test(name)) {
     return "** שדה זה לא יכול להכיל תווים מיוחדים **";
