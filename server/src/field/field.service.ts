@@ -22,9 +22,12 @@ export class FieldService {
       ) {
         field.default_value = fieldObject.value[0].value;
       } else {
+        let tempValue = fieldObject.value.map(valField => {
+          return valField === null ? '' : valField.value;
+        })
         field.default_value = JSON.stringify(
-          fieldObject.value.map(valField => {
-            return valField === null ? '' : valField.value;
+          tempValue.filter(valField => {
+            return valField.length !== 0;
           }),
         );
       }
