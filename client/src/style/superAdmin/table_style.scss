@@ -58,12 +58,9 @@
 
 .addingButton {
   @include mouse(point);
-  background-color: white;
-
   position: fixed;
   top: 85vh;
   right: 90.75vw;
-
   display: inline-block;
   background-image: url("/icons/addicon.svg");
   width: 3.5vw;

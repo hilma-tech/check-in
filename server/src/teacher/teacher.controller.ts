@@ -3,7 +3,7 @@ import { UserService, RequestUser, Role, UseJwtAuth } from '@hilma/auth-nest';
 import { Teacher } from './teacher.entity';
 import { TeacherService } from './teacher.service';
 import { Classroom } from 'src/classroom/classroom.entity';
-import { TeacherIdDto, GetTeacherSkip, GetClassSkip, TeacherValDto } from './teacher.dtos';
+import { TeacherIdDto, GetTeacherSkip, GetClassSkip, TeacherValDto, TeacherRegisterDto } from './teacher.dtos';
 
 
 @Controller('api/teacher')
@@ -36,19 +36,21 @@ export class TeacherController {
   //   return this.teacherService.addTeacherInfo(req)
   // }
 
+  @UseJwtAuth('superAdmin')
   @Post('/register')
-  async register(@Body() req: any) {
+  async register(@Body() req: TeacherRegisterDto) {
     let username = req.email;
     let password = req.password;
     let user: Partial<Teacher> = new Teacher({ username, password });
     user.first_name = req.first_name
     user.last_name = req.last_name
+    // [ { id: 0, value: "ה'2", classId: 3 } ]
+    console.log('req.fields_data: ', req.fields_data);
     if (req.fields_data !== undefined || req.fields_data.length !== 0) {
       user.classroomTeacher = req.fields_data.map((classroom) => {
+        console.log('classroom: ', classroom);
         let classroomTeacher = new Classroom()
         classroomTeacher.id = classroom.classId
-        classroomTeacher.name = classroom.name
-        classroomTeacher.school_id = req.school_id
         return classroomTeacher
       })
     }

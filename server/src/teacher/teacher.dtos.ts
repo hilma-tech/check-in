@@ -61,7 +61,7 @@ export class TeacherRegisterDto {
   @IsDefined()
   @IsString()
   @IsBooleanString()
-  rakaz: 'false';
+  rakaz: string;
 }
 
 export class TeacherFieldsDataDto {
