@@ -36,12 +36,11 @@ class StudentsList extends React.Component {
   handleChange = async (e) => {
     let value = e.target.value
     if (delayTime) clearTimeout(delayTime)
+    await this.setState({ searchVal: value });
     if (value === '') {
-      await this.setState({ searchVal: value });
       this.searchStudents()
     }
     else delayTime = setTimeout(async () => {
-      await this.setState({ searchVal: value });
       this.searchStudents()
     }, 300)
   };

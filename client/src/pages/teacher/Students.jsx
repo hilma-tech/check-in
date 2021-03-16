@@ -40,12 +40,11 @@ class Students extends Component {
   handleChange = async (e) => {
     let value = e.target.value
     if (delayTime) clearTimeout(delayTime)
+    await this.setState({ searchVal: value, searched: false  });
     if (value === '') {
-      await this.setState({ searchVal: value, searched: false  });
       this.searchStudents()
     }
     else delayTime = setTimeout(async () => {
-      await this.setState({ searchVal: value, searched: false  });
       this.searchStudents()
     }, 300)
   };
