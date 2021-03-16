@@ -8,6 +8,7 @@ import { Student } from './student.entity';
 import { GetStudentSkip, SearchValDto, UserRegisterDto } from './student.dtos';
 import * as bcrypt from 'bcrypt';
 import { Classroom } from 'src/classroom/classroom.entity';
+import { ClassroomService } from 'src/classroom/classroom.service';
 
 @Injectable()
 export class StudentService extends UserService {
@@ -17,6 +18,7 @@ export class StudentService extends UserService {
     protected readonly userRepository: Repository<Student>,
     protected readonly jwtService: JwtService,
     protected readonly configService: ConfigService,
+    private classroomService: ClassroomService
   ) {
     super(config_options, userRepository, jwtService, configService);
   }
@@ -103,6 +105,9 @@ export class StudentService extends UserService {
 
     if (req.classrooms.length !== 0) {
       student.classroomStudent = req.classrooms.map((classroom) => {
+        if(this.classroomService.isClassroomInSchool(classroom.id, req.schoolId)){
+          throw new Error()
+        }
         let studentClassroom = new Classroom()
         studentClassroom.id = classroom.id
         studentClassroom.name = classroom.name
