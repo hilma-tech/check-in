@@ -142,17 +142,18 @@ $gameimgwidth: 20vw;
   background-color: #04306300;
 }
 
-.searchIcon {
-  display: inline-block;
+.searchIconGames {
+  // display: inline-block;
+  display: hidden;
   height: 3vh;
 }
 
 #searchbar {
   display: flex;
-  margin-right: 7vw;
+  margin-right: 3.5vw;
   align-items: center;
   justify-content: space-between;
-  width: 68vw;
+  width: 73.7vw;
   height: 12vh;
 }
 
