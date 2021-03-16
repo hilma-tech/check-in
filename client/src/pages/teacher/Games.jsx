@@ -140,7 +140,7 @@ class Games extends React.Component {
               })}
             </div>
           </div>
-          <p className="gameListTitle">משחקים שניתן להוסיף:</p>
+          <p className="gameListTitle">משחקים שניתן להוסיף לכיתה זו:</p>
           {/*add search option */}
           {!this.props.games.haveMoreGames &&
             this.props.games.gamesList.length === 0 ? (
