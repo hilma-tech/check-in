@@ -109,7 +109,7 @@ class Games extends Component {
                   onChange={this.handleChange}
                 />
               </Fade>
-              <p className="searchIcon" onClick={this.activateSearch}></p>
+              <p className="searchIconGames" onClick={this.activateSearch}></p>
             </form>
           </div>
           {this.props.games.haveMoreGames &&
