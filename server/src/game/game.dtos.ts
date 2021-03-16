@@ -2,6 +2,7 @@ import {
   IsBoolean,
   IsDefined,
   IsEnum,
+  isNumber,
   IsNumber,
   IsNumberString,
   IsObject,
@@ -123,7 +124,6 @@ export class ClassroomIdDto {
   @IsString()
   @IsNumberString()
   classId: string;
-
   @IsDefined()
   @IsString()
   @IsNumberString()
@@ -141,3 +141,18 @@ export class showGameDto {
   @IsNumberString()
   classroom_id: string;
 }
+
+export class IdeDto { 
+  @IsDefined()
+  @IsString()
+  @IsNumberString()
+  id: string
+ }
+
+ export class DeleteGameIdDto {
+   @IsDefined()
+   @IsNumber()
+   Id: number
+ }
+
+ 

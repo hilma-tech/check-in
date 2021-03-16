@@ -21,3 +21,14 @@ export class removeFFromCDto {
   @IsNumber()
   classId: number;
 }
+
+export class GetClassGameFieldsDto {
+  @IsDefined()
+  @IsString()
+  @IsNumberString()
+  game_id: string
+  @IsDefined()
+  @IsString()
+  @IsNumberString()
+  classroom_id: string
+}
