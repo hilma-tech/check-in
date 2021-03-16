@@ -4,6 +4,7 @@ import { Teacher } from './teacher.entity';
 import { TeacherService } from './teacher.service';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { TeacherIdDto, GetTeacherSkip, GetClassSkip, TeacherValDto, TeacherRegisterDto } from './teacher.dtos';
+import { ClassroomService } from 'src/classroom/classroom.service';
 
 
 @Controller('api/teacher')
@@ -11,6 +12,7 @@ export class TeacherController {
   constructor(
     private readonly userService: UserService,
     private teacherService: TeacherService,
+    private classroomService: ClassroomService
   ) {
     // this.register({username: 'teacher2@gmail.com', password: 'teacher1'})
   }
@@ -48,7 +50,9 @@ export class TeacherController {
     console.log('req.fields_data: ', req.fields_data);
     if (req.fields_data !== undefined || req.fields_data.length !== 0) {
       user.classroomTeacher = req.fields_data.map((classroom) => {
-        console.log('classroom: ', classroom);
+        if(this.classroomService.isClassroomInSchool(classroom.classId, req.school_id)){
+          throw new Error()
+        }
         let classroomTeacher = new Classroom()
         classroomTeacher.id = classroom.classId
         return classroomTeacher

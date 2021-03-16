@@ -53,6 +53,12 @@ export class ClassroomService {
       select: ["id", "name"],
       where: [{ name: classroomName, school_id:  schoolId}],
     })
-  
+  }
+
+  async isClassroomInSchool(classroomId: number, schoolId: number){
+    let classroom = await this.classroomRepository.findOne({
+      where: [{ id: classroomId, school_id:  schoolId}],
+    })
+    return classroom === undefined ? false : true
   }
 }
