@@ -105,7 +105,7 @@ class StudentsList extends React.Component {
             categors={this.state.categors}
             enCategor={this.state.enCategor}
             loadMore={this.getStudents}
-            haveMoreData={this.props.students.haveMoreStudents}
+            haveMoreData={this.state.searched ? false : this.props.students.haveMoreStudents}
             startGetInfo={this.props.students.startGetStudents}
             setClickedRow={this.props.students.getChosenStudent}
             tableType="תלמידים"

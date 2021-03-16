@@ -109,7 +109,7 @@ class TeachersList extends React.Component {
           categors={this.state.categors}
           enCategor={this.state.enCategor}
           loadMore={this.getTeachers}
-          haveMoreData={this.props.teachers.haveMoreTeachers}
+          haveMoreData={this.state.searched ? false : this.props.teachers.haveMoreTeachers}
           startGetInfo={this.props.teachers.startGetTeachers}
           setClickedRow={this.props.teachers.getChosenTeacher}
           tableType="מורים"

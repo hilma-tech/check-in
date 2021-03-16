@@ -47,10 +47,9 @@ export class TeacherController {
     user.first_name = req.first_name
     user.last_name = req.last_name
     // [ { id: 0, value: "ה'2", classId: 3 } ]
-    console.log('req.fields_data: ', req.fields_data);
     if (req.fields_data !== undefined || req.fields_data.length !== 0) {
       user.classroomTeacher = req.fields_data.map((classroom) => {
-        if(this.classroomService.isClassroomInSchool(classroom.classId, req.school_id)){
+        if(!this.classroomService.isClassroomInSchool(classroom.classId, req.school_id)){
           throw new Error()
         }
         let classroomTeacher = new Classroom()
@@ -87,7 +86,6 @@ export class TeacherController {
 
   @Get('/searchTeacherSuperadmin')
   async searchTeacher(@Query() val: TeacherValDto) {
-    console.log('val: ', val);
   return await this.teacherService.searchInTeacher(val.val) 
   }
 }

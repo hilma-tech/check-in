@@ -30,7 +30,6 @@ class ExcelStudentsAddition extends React.Component {
         const ws = readedData.Sheets[wsname];
         /* Convert array to json*/
         dataParse = xlsxParser.utils.sheet_to_json(ws);
-        console.log('dataParse: ', dataParse);
         
         this.setState({ startSaveStudents: true })
         if (dataParse.length === 0) {

@@ -17,8 +17,8 @@ export class StudentService extends UserService {
     @InjectRepository(Student)
     protected readonly userRepository: Repository<Student>,
     protected readonly jwtService: JwtService,
+    private classroomService: ClassroomService,
     protected readonly configService: ConfigService,
-    private classroomService: ClassroomService
   ) {
     super(config_options, userRepository, jwtService, configService);
   }
@@ -102,18 +102,18 @@ export class StudentService extends UserService {
     let student: Partial<Student> = new Student({ username, password });
     student.first_name = req.firstName;
     student.last_name = req.lastName;
-
+    student.classroomStudent =[]
     if (req.classrooms.length !== 0) {
-      student.classroomStudent = req.classrooms.map((classroom) => {
-        if(this.classroomService.isClassroomInSchool(classroom.id, req.schoolId)){
+      for(let i=0; i< req.classrooms.length;i++){
+        if(!this.classroomService.isClassroomInSchool(req.classrooms[i].id, req.schoolId)){
           throw new Error()
         }
         let studentClassroom = new Classroom()
-        studentClassroom.id = classroom.id
-        studentClassroom.name = classroom.name
+        studentClassroom.id = req.classrooms[i].id
+        studentClassroom.name = req.classrooms[i].name
         studentClassroom.school_id = req.schoolId
-        return studentClassroom
-      })
+        student.classroomStudent[i] = studentClassroom
+      }
     }
 
     student.school = req.schoolId
