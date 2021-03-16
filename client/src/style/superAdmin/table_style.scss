@@ -124,7 +124,12 @@
 .TeachersList {
   padding: 0;
   margin: 0;
+  // overflow-y: scroll;
 }
+.TeachersList::-webkit-scrollbar {
+  display: none;
+  }
+
 
 .generalTable {
   padding-bottom: 1.5vh;
