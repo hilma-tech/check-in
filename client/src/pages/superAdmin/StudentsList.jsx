@@ -75,6 +75,7 @@ class StudentsList extends React.Component {
                 this.setState({ searched: false, searchVal: '', displaySearch: false })
               }
             > <form
+              onSubmit={(e) => { e.preventDefault(); }}
               className={
                 this.state.displaySearch
                   ? "tablesSearchbar bordered"
