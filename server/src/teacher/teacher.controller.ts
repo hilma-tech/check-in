@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Query, Redirect, Res } from '@nestjs/common';
-import { UserService, RequestUser, Role, UseJwtAuth } from '@hilma/auth-nest';
+import { UserService, RequestUser, Role, UseJwtAuth, UseLocalAuth } from '@hilma/auth-nest';
 import { Teacher } from './teacher.entity';
 import { TeacherService } from './teacher.service';
 import { Classroom } from 'src/classroom/classroom.entity';
@@ -31,7 +31,12 @@ export class TeacherController {
   getTeacherInfo(@Query() req: TeacherIdDto) {
     return this.teacherService.getTeacherInfo(req);
   }
-
+  @UseLocalAuth()
+  @Post('/login')
+  login(@RequestUser() userInfo, @Res() res) {
+    let body = this.userService.login(userInfo, res);
+    res.send(body);
+  }
   // @UseJwtAuth('superAdmin')
   // @Post('/addTeacher')
   // addTeacher(@Body() req: any) {
@@ -49,7 +54,7 @@ export class TeacherController {
     // [ { id: 0, value: "ה'2", classId: 3 } ]
     if (req.fields_data !== undefined || req.fields_data.length !== 0) {
       user.classroomTeacher = req.fields_data.map((classroom) => {
-        if(!this.classroomService.isClassroomInSchool(classroom.classId, req.school_id)){
+        if (!this.classroomService.isClassroomInSchool(classroom.classId, req.school_id)) {
           throw new Error()
         }
         let classroomTeacher = new Classroom()
@@ -61,9 +66,8 @@ export class TeacherController {
     let userRole = new Role();
     userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
     user.roles = [userRole];
-    let createUser = await this.userService.createUser<Teacher>(user);
-    this.verifyEmail({ email: username, password: password })
-    return createUser
+    return await this.userService.createUser<Teacher>(user);
+
   }
 
   @UseJwtAuth('superAdmin')
@@ -72,20 +76,15 @@ export class TeacherController {
     return this.teacherService.getTeacher(skipON);
   }
 
-  @Post('/SendEmail')
-  async verifyEmail(@Query() VerifyInfo: any) {
-    let token = await this.teacherService.createAndSaveToken(VerifyInfo.email, VerifyInfo.password)
-    await this.teacherService.sendVerificationEmail(VerifyInfo.email, token)
-  }
   @Get('/Verify')
   async MakeLogInAvailable(@Query() Token: any, @Res() res: any) {
-    await this.teacherService.IsVerified(Token.token)
-    var redirectTo = 'http://localhost:3000/signin'//to be replaced with read domain
+    await this.teacherService.verifyEmailByToken(Token.token)
+    var redirectTo = 'http://localhost:3000/signin'//to be replaced with real domain
     res.redirect(redirectTo)
   }
 
   @Get('/searchTeacherSuperadmin')
   async searchTeacher(@Query() val: TeacherValDto) {
-  return await this.teacherService.searchInTeacher(val.val) 
+    return await this.teacherService.searchInTeacher(val.val)
   }
 }

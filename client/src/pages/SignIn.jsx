@@ -56,7 +56,7 @@ class SignIn extends Component {
         emailValidation(username).length === 0 &&
         passwordValidation(password).length === 0
       ) {
-        const response = await this.props.LoginContext("/api/login", {
+        const response = await this.props.LoginContext("/api/super-admin/login", {
           username,
           password,
         });

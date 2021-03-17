@@ -27,13 +27,12 @@ import { ClassroomFieldModule } from './classroom-field/classroom-field.module';
       folder: '../../filesHandlerUploads',
       autoAllow: true,
     }),
-    // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '../../', 'client/build'),
-    // }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../../', 'client/build'),
+    }),
     TeacherModule,
     SuperAdminModule,
     StudentModule,
-    UserModule,
     SchoolModule,
     ClassroomModule,
     RoleModule,

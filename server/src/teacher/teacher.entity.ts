@@ -37,8 +37,8 @@ export class Teacher extends User {
   @JoinColumn({ referencedColumnName: 'id', name: 'school_id' })
   school: number;
 
-  @Column({ default: 0 })
-  emailVerified: boolean
+  @Column({ default: 0, type: "tinyint" })
+  emailVerified: number
 
   @Column({ nullable: true, length: 150 })
   verificationToken: string
