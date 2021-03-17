@@ -134,8 +134,8 @@ export class TeacherService extends UserService {
   async searchInTeacher(val: string) {
     let teachers = await this.userRepository.find({ relations: ['school', 'classroomTeacher'] })
     let Search = teachers.map((teacher) => {
-      let fullname = teacher.first_name + ' ' + teacher.last_name
-      if (fullname.includes(val)) {
+      let fullname = (teacher.first_name + ' ' + teacher.last_name).toLowerCase()
+      if (fullname.includes(val.toLowerCase())) {
         return teacher
       }
     })
