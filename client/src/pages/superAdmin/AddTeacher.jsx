@@ -218,13 +218,16 @@ class AddTeacher extends Component {
   };
 
   saveTeacherInDB = async () => {
+    let classesNotEmp = this.state.fieldsData.filter((classroom)=>{
+      return classroom.classId !== undefined
+    })
     let currTeacherInfo = {
       first_name: this.state.teacherFirstName,
       last_name: this.state.teacherLastName,
       school_id: this.props.schools.schoolsNames.filter((school) => {
         return school.name === this.state.schoolName;
       })[0].id,
-      fields_data: this.state.fieldsData,
+      fields_data: classesNotEmp,
       email: this.state.email,
       password: this.state.password,
       rakaz: this.state.rakaz,
@@ -243,7 +246,7 @@ class AddTeacher extends Component {
           username: data.username,
           schoolName: this.state.schoolName,
           id: data.id,
-          classes: this.state.fieldsData.map((classInfo) => {
+          classes: classesNotEmp.map((classInfo) => {
             return classInfo.value
           })
         })}
