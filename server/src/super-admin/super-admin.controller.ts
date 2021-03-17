@@ -15,7 +15,7 @@ export class SuperAdminController {
   }
 
   @Post('/register')
-  register(@Body() req) {
+  register(@Body() req: any) {
     let username = req.username;
     let password = req.password;
     let user: Partial<SuperAdmin> = new SuperAdmin({ username, password });

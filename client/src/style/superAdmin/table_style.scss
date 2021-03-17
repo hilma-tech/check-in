@@ -5,7 +5,7 @@
   align-items: center;
   height: 8vh;
   justify-content: space-between;
-  width: 78vw
+  width: 85vw
 }
 
 .PageTitles p {
@@ -58,12 +58,9 @@
 
 .addingButton {
   @include mouse(point);
-  background-color: white;
-
   position: fixed;
   top: 85vh;
   right: 90.75vw;
-
   display: inline-block;
   background-image: url("/icons/addicon.svg");
   width: 3.5vw;
@@ -102,11 +99,10 @@
 
 #TableSearchbar {
   display: flex;
-  margin-right: 12vw;
+  margin-right: 8vw;
   align-items: center;
   height: 12vh;
 }
-
 
 .searchIcon {
   @include mouse(point);
@@ -127,7 +123,12 @@
 .TeachersList {
   padding: 0;
   margin: 0;
+  // overflow-y: scroll;
 }
+.TeachersList::-webkit-scrollbar {
+  display: none;
+  }
+
 
 .generalTable {
   padding-bottom: 1.5vh;

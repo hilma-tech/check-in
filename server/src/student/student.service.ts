@@ -5,9 +5,10 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { getConnection, Repository } from 'typeorm';
 import { Student } from './student.entity';
-import { GetStudentSkip, UserRegisterDto } from './student.dtos';
+import { GetStudentSkip, SearchValDto, UserRegisterDto } from './student.dtos';
 import * as bcrypt from 'bcrypt';
 import { Classroom } from 'src/classroom/classroom.entity';
+import { ClassroomService } from 'src/classroom/classroom.service';
 
 @Injectable()
 export class StudentService extends UserService {
@@ -16,6 +17,7 @@ export class StudentService extends UserService {
     @InjectRepository(Student)
     protected readonly userRepository: Repository<Student>,
     protected readonly jwtService: JwtService,
+    private classroomService: ClassroomService,
     protected readonly configService: ConfigService,
   ) {
     super(config_options, userRepository, jwtService, configService);
@@ -100,15 +102,18 @@ export class StudentService extends UserService {
     let student: Partial<Student> = new Student({ username, password });
     student.first_name = req.firstName;
     student.last_name = req.lastName;
-
+    student.classroomStudent =[]
     if (req.classrooms.length !== 0) {
-      student.classroomStudent = req.classrooms.map((classroom) => {
+      for(let i=0; i< req.classrooms.length;i++){
+        if(!this.classroomService.isClassroomInSchool(req.classrooms[i].id, req.schoolId)){
+          throw new Error()
+        }
         let studentClassroom = new Classroom()
-        studentClassroom.id = classroom.id
-        studentClassroom.name = classroom.name
+        studentClassroom.id = req.classrooms[i].id
+        studentClassroom.name = req.classrooms[i].name
         studentClassroom.school_id = req.schoolId
-        return studentClassroom
-      })
+        student.classroomStudent[i] = studentClassroom
+      }
     }
 
     student.school = req.schoolId
@@ -141,7 +146,7 @@ export class StudentService extends UserService {
   }
 
   //teacher student search
-  async searchStudents(@Body() val: any, classId: any) {
+  async searchStudents(@Body() val: string, classId: SearchValDto) {
     let Searchstudents = await this.userRepository
       .createQueryBuilder('Student')
       .innerJoinAndSelect('Student.classroomStudent', 'Classroom')

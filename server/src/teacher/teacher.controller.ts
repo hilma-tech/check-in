@@ -3,7 +3,8 @@ import { UserService, RequestUser, Role, UseJwtAuth } from '@hilma/auth-nest';
 import { Teacher } from './teacher.entity';
 import { TeacherService } from './teacher.service';
 import { Classroom } from 'src/classroom/classroom.entity';
-import { TeacherIdDto, GetTeacherSkip, GetClassSkip } from './teacher.dtos';
+import { TeacherIdDto, GetTeacherSkip, GetClassSkip, TeacherValDto, TeacherRegisterDto } from './teacher.dtos';
+import { ClassroomService } from 'src/classroom/classroom.service';
 
 
 @Controller('api/teacher')
@@ -11,6 +12,7 @@ export class TeacherController {
   constructor(
     private readonly userService: UserService,
     private teacherService: TeacherService,
+    private classroomService: ClassroomService
   ) {
     // this.register({username: 'teacher2@gmail.com', password: 'teacher1'})
   }
@@ -36,19 +38,22 @@ export class TeacherController {
   //   return this.teacherService.addTeacherInfo(req)
   // }
 
+  @UseJwtAuth('superAdmin')
   @Post('/register')
-  async register(@Body() req: any) {
+  async register(@Body() req: TeacherRegisterDto) {
     let username = req.email;
     let password = req.password;
     let user: Partial<Teacher> = new Teacher({ username, password });
     user.first_name = req.first_name
     user.last_name = req.last_name
+    // [ { id: 0, value: "ה'2", classId: 3 } ]
     if (req.fields_data !== undefined || req.fields_data.length !== 0) {
       user.classroomTeacher = req.fields_data.map((classroom) => {
+        if(!this.classroomService.isClassroomInSchool(classroom.classId, req.school_id)){
+          throw new Error()
+        }
         let classroomTeacher = new Classroom()
         classroomTeacher.id = classroom.classId
-        classroomTeacher.name = classroom.name
-        classroomTeacher.school_id = req.school_id
         return classroomTeacher
       })
     }
@@ -80,7 +85,7 @@ export class TeacherController {
   }
 
   @Get('/searchTeacherSuperadmin')
-  async searchTeacher(@Query() val: any) {
+  async searchTeacher(@Query() val: TeacherValDto) {
   return await this.teacherService.searchInTeacher(val.val) 
   }
 }

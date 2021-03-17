@@ -15,6 +15,8 @@ import {
   GetGameDto,
   ClassroomIdDto,
   showGameDto,
+  IdeDto,
+  DeleteGameIdDto,
 } from './game.dtos';
 import { UseFilesHandler, FilesType } from '@hilma/fileshandler-typeorm';
 import { UseJwtAuth } from '@hilma/auth-nest';
@@ -36,7 +38,7 @@ export class GameController {
 
   @UseJwtAuth('superAdmin', 'teacher')
   @Get('/getGameInfo')
-  async getGameInfo(@Query() ide: any) {
+  async getGameInfo(@Query() ide: IdeDto) {
     return await this.gameService.getGameInfo(ide);
   }
 
@@ -81,13 +83,13 @@ export class GameController {
 
   @UseJwtAuth('superAdmin')
   @Post('/deleteGameById')
-  deleteGame(@Body() req: any) {
+  deleteGame(@Body() req: DeleteGameIdDto) {
     return this.gameService.deleteGameById(req);
   }
 
   @UseJwtAuth('teacher')
   @Get('/getClassroomGames')
-  async getClassroomGames(@Query() req: any) {
+  async getClassroomGames(@Query() req: ClassroomIdDto) {
     return await this.gameService.getClassroomGames(req);
   }
 }

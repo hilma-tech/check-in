@@ -8,8 +8,7 @@ import { errorMsgContext } from "../../stores/error.store.js";
 import { Fade } from "@material-ui/core";
 import OutsideClickHandler from "react-outside-click-handler";
 
-
-// const axios = require("axios").default;
+let delayTime = null
 
 class TeachersList extends React.Component {
   constructor() {
@@ -34,8 +33,15 @@ class TeachersList extends React.Component {
 
   //Save the user search value as searchVal in state.
   handleChange = async (e) => {
-   await this.setState({ searchVal: e.target.value });
-   this.searchTeachers()
+    let value = e.target.value
+    if (delayTime) clearTimeout(delayTime)
+    await this.setState({ searchVal: value });
+    if (value === '') {
+      this.searchTeachers()
+    }
+    else delayTime = setTimeout(async () => {
+      this.searchTeachers()
+    }, 300)
   };
 
   //When the user press the search icon it's start to show the input text for the searching.
@@ -109,7 +115,7 @@ class TeachersList extends React.Component {
           categors={this.state.categors}
           enCategor={this.state.enCategor}
           loadMore={this.getTeachers}
-          haveMoreData={this.props.teachers.haveMoreTeachers}
+          haveMoreData={this.state.searched ? false : this.props.teachers.haveMoreTeachers}
           startGetInfo={this.props.teachers.startGetTeachers}
           setClickedRow={this.props.teachers.getChosenTeacher}
           tableType="מורים"

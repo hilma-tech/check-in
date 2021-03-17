@@ -30,6 +30,7 @@ class ExcelStudentsAddition extends React.Component {
         const ws = readedData.Sheets[wsname];
         /* Convert array to json*/
         dataParse = xlsxParser.utils.sheet_to_json(ws);
+        
         this.setState({ startSaveStudents: true })
         if (dataParse.length === 0) {
             this.setState({ startSaveStudents: false })
@@ -79,7 +80,7 @@ class ExcelStudentsAddition extends React.Component {
                         let studentClasses = dataParse[i].classes.split(",")
                         studentClasses.forEach((studentClass, index) => {
                             if (classNameValidation(studentClass.trim()).length !== 0) {
-                                errorsMsg.push(`הכיתה ה${index + 2} בשורה ${i + 2} לא תקינה`)
+                                errorsMsg.push(`הכיתה ${studentClass.trim()} בשורה ${i + 2} לא תקינה`)
                             }
                             studentClasses[index] = studentClass.trim()
                         })

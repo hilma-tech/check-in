@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ClassroomGameDto } from 'src/classroom/classroom.dtos';
 import { FieldService } from 'src/field/field.service';
 import { Repository } from 'typeorm';
-import { getCGFDto, removeFFromCDto } from './classroom-field.dtos';
+import { getCGFDto, GetClassGameFieldsDto, removeFFromCDto } from './classroom-field.dtos';
 import { ClassroomField } from './classroom-field.entity';
 const { mustValid } = require('../serverTools/ServerValid');
 
@@ -17,7 +17,7 @@ export class ClassroomFieldService {
     private readonly imageService: ImageService,
   ) {}
 
-  async getClassroomGameFields(@Body() data: any) {
+  async getClassroomGameFields(@Body() data: GetClassGameFieldsDto) {
     let GameFields = await this.classFieldRepository.find({
       where: [{classroom_id: Number(data.classroom_id), game_id: Number(data.game_id)}],
       relations: ["field_id"]

@@ -46,7 +46,7 @@ export class ClassroomIdDto {
   dataLength: string;
 }
 
-export class ClassForSaveDto{
+export class ClassForSaveDto {
   @IsDefined()
   @IsNumber()
   id: number;
@@ -136,7 +136,27 @@ export class StudentPassword {
   @IsString()
   @Length(8, 15)
   password: string;
-
 }
 
+export class ValDto {
+  @IsDefined()
+  @IsString()
+  val: string;
+}
 
+export class SearchValDto {
+  @IsDefined()
+  @IsString()
+  @IsNumberString()
+  classId: string;
+}
+
+export class SearchClassForStudentDto {
+  @IsDefined()
+  @IsString()
+  @IsNumberString()
+  classId: string;
+  @IsDefined()
+  @IsString()
+  value: string;
+}

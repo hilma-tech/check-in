@@ -10,6 +10,7 @@ import {
   UserRegisterDto,
   StudentPassword,
   ExcelUserRegisterDto,
+  ValDto,
 } from './student.dtos';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { GameModule } from 'src/game/game.module';
@@ -52,12 +53,13 @@ export class StudentController {
         errorsMsg.push(`הבית ספר בשורה ${i + 2} לא קיים במערכת, אנא נסה להכניס בית ספר אחר`)
       } else {
         req[i].schoolId = schoolId.id
+        req[i].classrooms = []
         for (let z = 0; z < req[i].userClassrooms.length; z++) {
           let classroomInfo = await this.classroomService.getClassroomInfoByName(req[i].userClassrooms[z], schoolId.id)
-          if (classroomInfo === undefined) {
+          if (classroomInfo === undefined) {            
             errorsMsg.push(`הכיתה ${req[i].userClassrooms[z]} בשורה ${i + 2} לא קיימת במערכת, אנא נסה להכניס כיתה אחרת`)
           } else {
-            req[i].classrooms[z] = classroomInfo
+            req[i].classrooms.push(classroomInfo)
           }
         }
       }
@@ -150,7 +152,7 @@ export class StudentController {
   }
 
   @Get('/searchStudentSuperadmin')
-  async searchStudent(@Query() val: any) {
+  async searchStudent(@Query() val: ValDto) {
     return await this.studentService.searchInStudent(val.val)
   }
 

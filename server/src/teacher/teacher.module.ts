@@ -12,10 +12,12 @@ import {
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { Teacher } from './teacher.entity';
+import { ClassroomModule } from 'src/classroom/classroom.module';
 @Module({
   imports: [
     UserModule,
     RoleModule,
+    ClassroomModule,
     TypeOrmModule.forFeature([Teacher]),
     JwtModule.register({}),
   ],
