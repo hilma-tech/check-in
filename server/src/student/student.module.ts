@@ -18,7 +18,7 @@ import { FieldModule } from 'src/field/field.module';
   imports: [
     ClassroomModule,
     SchoolModule,
-    // UserModule,
+    UserModule,
     RoleModule,
     GameModule,
     FieldModule,

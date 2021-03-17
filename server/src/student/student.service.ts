@@ -105,8 +105,10 @@ export class StudentService extends UserService {
     student.classroomStudent = []
     if (req.classrooms.length !== 0) {
       for (let i = 0; i < req.classrooms.length; i++) {
-        if (!this.classroomService.isClassroomInSchool(req.classrooms[i].id, req.schoolId)) {
-          throw new Error()
+        if(this.classroomService !== undefined){
+          if (!this.classroomService.isClassroomInSchool(req.classrooms[i].id, req.schoolId)) {
+            throw new Error()
+          }
         }
         let studentClassroom = new Classroom()
         studentClassroom.id = req.classrooms[i].id
