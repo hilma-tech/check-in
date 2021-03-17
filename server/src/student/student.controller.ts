@@ -101,6 +101,7 @@ export class StudentController {
     return this.studentService.getStudentsClassrooms(req.id);
   }
 
+  //!FOR DANIEL
   @Get('/gamesAndStudentInfo')
   async getGamesForClass(@Query() info: GamesForClassDto) {
     let getStudentInfo = await this.studentService.CheckUserInfoAndGetClassId(info.username, info.password);
@@ -151,11 +152,13 @@ export class StudentController {
 
   }
 
+  @UseJwtAuth('superAdmin')
   @Get('/searchStudentSuperadmin')
   async searchStudent(@Query() val: ValDto) {
     return await this.studentService.searchInStudent(val.val)
   }
 
+  @UseJwtAuth('teacher')
   @Get('/searchStudentInTeacher')
   async searchStudentInChosenClass(@Query() info: any) {
     return await this.studentService.searchStudents(info.value, info.classId)

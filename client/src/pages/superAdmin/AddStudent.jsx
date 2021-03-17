@@ -210,7 +210,9 @@ class AddStudent extends React.Component {
           password: this.state.password,
           firstName: this.state.studentFirstName,
           lastName: this.state.studentLastName,
-          classrooms: this.state.chosenClasses,
+          classrooms: this.state.chosenClasses.filter((classroom)=>{
+            return classroom.name !== 'שייך לכיתה'
+          }),
           schoolId: this.state.schoolId
         });
         if (data) {
