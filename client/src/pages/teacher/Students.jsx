@@ -11,6 +11,7 @@ import { chosenClassContext } from "../../stores/chosenClass.store";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SearchIcon from '@material-ui/icons/Search';
 
+let delayTime = null
 
 class Students extends Component {
   constructor() {
@@ -37,14 +38,28 @@ class Students extends Component {
   };
 
   handleChange = async (e) => {
-    await this.setState({ searchVal: e.target.value, searched: false });
-    this.searchStudents()
+    let value = e.target.value
+    if (delayTime) clearTimeout(delayTime)
+    if (value === '') {
+      await this.setState({ searchVal: value, searched: false  });
+      this.searchStudents()
+    }
+    else delayTime = setTimeout(async () => {
+      await this.setState({ searchVal: value, searched: true  });
+      this.searchStudents()
+    }, 300)
   };
 
   searchStudents = async () => {
     this.props.chosenClass.searchStudentsReplace()
     this.setState({ searched: true })
     await this.props.chosenClass.searchStudentsInClass(this.state.searchVal, this.props.chosenClass.classId)
+  }
+
+  handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      this.handleChange(e)
+    }
   }
 
   render() {
@@ -78,6 +93,7 @@ class Students extends Component {
                 onChange={this.handleChange}
                 value={this.state.searchVal}
                 type="text"
+                onKeyDown={this.handleKeyDown}
               />
             </div>
 

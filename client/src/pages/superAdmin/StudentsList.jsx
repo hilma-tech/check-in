@@ -8,6 +8,7 @@ import { errorMsgContext } from "../../stores/error.store.js";
 import { Fade } from "@material-ui/core";
 import OutsideClickHandler from "react-outside-click-handler";
 
+let delayTime = null
 
 class StudentsList extends React.Component {
   constructor() {
@@ -32,9 +33,16 @@ class StudentsList extends React.Component {
 
   //! not in use
   //Save the user search value as searchVal in state.
-  handleChange =async  (e) => {
-    await this.setState({ searchVal: e.target.value });
-    this.searchStudents()
+  handleChange = async (e) => {
+    let value = e.target.value
+    if (delayTime) clearTimeout(delayTime)
+    await this.setState({ searchVal: value });
+    if (value === '') {
+      this.searchStudents()
+    }
+    else delayTime = setTimeout(async () => {
+      this.searchStudents()
+    }, 300)
   };
   //! not in use
   //When the user press the search icon it's start to show the input text for the searching.
@@ -64,7 +72,7 @@ class StudentsList extends React.Component {
             <p>תלמידים</p>
             <OutsideClickHandler
               onOutsideClick={() =>
-               this.setState({searched:false, searchVal:'',displaySearch:false })
+                this.setState({ searched: false, searchVal: '', displaySearch: false })
               }
             > <form
               className={
@@ -92,24 +100,24 @@ class StudentsList extends React.Component {
                     onChange={this.handleChange}
                   />
                 </Fade>
-                <p className="searchIcon" onClick={ this.activateSearch}></p>
+                <p className="searchIcon" onClick={this.activateSearch}></p>
               </form></OutsideClickHandler>
           </div></div>
         {/*
                 Create the school table with the general teble.
             */}
 
-          <GeneralTable
-            allData={this.state.searched ? this.props.students.searchedStudents : this.props.students.listDataStudents}
-            search={this.state.displaySearch}
-            categors={this.state.categors}
-            enCategor={this.state.enCategor}
-            loadMore={this.getStudents}
-            haveMoreData={this.state.searched ? false : this.props.students.haveMoreStudents}
-            startGetInfo={this.props.students.startGetStudents}
-            setClickedRow={this.props.students.getChosenStudent}
-            tableType="תלמידים"
-          />
+        <GeneralTable
+          allData={this.state.searched ? this.props.students.searchedStudents : this.props.students.listDataStudents}
+          search={this.state.displaySearch}
+          categors={this.state.categors}
+          enCategor={this.state.enCategor}
+          loadMore={this.getStudents}
+          haveMoreData={this.state.searched ? false : this.props.students.haveMoreStudents}
+          startGetInfo={this.props.students.startGetStudents}
+          setClickedRow={this.props.students.getChosenStudent}
+          tableType="תלמידים"
+        />
       </div>
     );
   }

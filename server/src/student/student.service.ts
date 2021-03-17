@@ -134,8 +134,8 @@ export class StudentService extends UserService {
   async searchInStudent(val) {
     let students = await this.userRepository.find({ relations: ['school', 'classroomStudent'] })
     let Search = students.map((student) => {
-      let fullname = student.first_name + ' ' + student.last_name
-      if (fullname.includes(val)) {
+      let fullname = (student.first_name + ' ' + student.last_name).toLowerCase()
+      if (fullname.includes(val.toLowerCase())) {
         return student
       }
     })
@@ -159,9 +159,9 @@ export class StudentService extends UserService {
       .execute()
 
     let Search = Searchstudents.map((student) => {
-      let fullname = student.Student_first_name + ' ' + student.Student_last_name
+      let fullname = (student.Student_first_name + ' ' + student.Student_last_name).toLowerCase()
 
-      if (fullname.includes(val)) {
+      if (fullname.includes(val.toLowerCase())) {
         return student
       }
     })
