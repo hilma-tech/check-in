@@ -34,7 +34,7 @@ export class TeacherController {
   @UseLocalAuth()
   @Post('/login')
   login(@RequestUser() userInfo, @Res() res) {
-    console.log('userInfo: ', userInfo);
+    // console.log('userInfo: ', userInfo);
     let body = this.userService.login(userInfo, res);
     res.send(body);
   }
@@ -84,6 +84,7 @@ export class TeacherController {
     res.redirect(redirectTo)
   }
 
+  @UseJwtAuth('superAdmin')
   @Get('/searchTeacherSuperadmin')
   async searchTeacher(@Query() val: TeacherValDto) {
     return await this.teacherService.searchInTeacher(val.val)
