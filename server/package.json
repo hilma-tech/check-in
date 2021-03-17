@@ -21,7 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@hilma/auth-nest": "^0.1.54",
+    "@hilma/auth-nest": "^0.2.0",
     "@hilma/fileshandler-typeorm": "^0.1.2",
     "@nestjs/common": "^7.6.12",
     "@nestjs/config": "^0.5.0",
