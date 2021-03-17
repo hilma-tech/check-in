@@ -28,20 +28,10 @@ class SignIn extends Component {
 
   componentDidMount = async () => {
     //! gives the type picked in the initial page
-    console.log("state", this.props.location.state.data );
-
-    
-    let isAuthed = this.props.isAuthenticated;
-    if (isAuthed === true) {
-      let kl = atob(this.props.AuthContext.kls.kl);
-      kl = kl.replace('["', "");
-      kl = kl.replace('"]', "");
-      if (kl == "mlkdsef98uxmwieau89" || kl == "mxdired9432udxjdoi8e") {
-        this.props.history.push("/teacher/classes");
-      } else {
-        this.props.history.push("/superAdmin/games");
-      }
+    if (!this.props.location.state) {
+      this.props.history.push("/")
     }
+    // console.log("state", this.props.location.state.data );
   };
 
   updateUser = (props) => {

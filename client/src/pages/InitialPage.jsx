@@ -3,10 +3,27 @@ import { Component } from "react";
 import "../style/sign_in.scss";
 import hilmaicon from "../img/hilmaIcon.svg";
 import { withRouter } from "react-router-dom";
+import { withContext } from "@hilma/tools";
+import { AuthContext, IsAuthenticatedContext } from "@hilma/auth";
+import { observer } from "mobx-react";
 
-class IconsPage extends Component {
-  constructor() {
+class InitialPage extends Component {
+  constructor(props) {
     super();
+  }
+
+  componentDidMount = async () => {
+    let isAuthed = this.props.isAuthenticated;
+    if (isAuthed === true) {
+      let kl = atob(this.props.AuthContext.kls.kl);
+      kl = kl.replace('["', "");
+      kl = kl.replace('"]', "");
+      if (kl == "mlkdsef98uxmwieau89" || kl == "mxdired9432udxjdoi8e") {
+        this.props.history.push("/teacher/classes");
+      } else {
+        this.props.history.push("/superAdmin/games");
+      }
+    }
   }
 
   goToLogin = (type) => {
@@ -36,4 +53,10 @@ class IconsPage extends Component {
     );
   }
 }
-export default withRouter(IconsPage);
+
+const mapContextToProps = {
+    AuthContext: AuthContext,
+    isAuthenticated: IsAuthenticatedContext,
+  };
+
+export default withContext(mapContextToProps)(withRouter(observer(InitialPage)));

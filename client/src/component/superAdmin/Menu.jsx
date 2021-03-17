@@ -54,7 +54,7 @@ class Menu extends React.Component {
             className="logOut"
             onClick={async () => {
               await this.props.logout();
-              this.props.history.push("/signin");
+              this.props.history.push("/");
             }}
           >
             {/*The img option cut the image so i used the background-image */}
