@@ -56,6 +56,12 @@ class Students extends Component {
     await this.props.chosenClass.searchStudentsInClass(this.state.searchVal, this.props.chosenClass.classId)
   }
 
+  handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      this.handleChange(e)
+    }
+  }
+
   render() {
     return (
       <>
@@ -87,6 +93,7 @@ class Students extends Component {
                 onChange={this.handleChange}
                 value={this.state.searchVal}
                 type="text"
+                onKeyDown={this.handleKeyDown}
               />
             </div>
 
