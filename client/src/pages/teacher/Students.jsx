@@ -56,10 +56,6 @@ class Students extends Component {
       this.handleChange(e)
     }
   }
-
-  closesearch = () => {
-    this.setState({ searched: false, searching: false, searchVal: '' })
-  }
   render() {
     return (
       <>
@@ -92,7 +88,6 @@ class Students extends Component {
                 value={this.state.searchVal}
                 type="text"
                 onKeyDown={this.handleKeyDown}
-                onBlur={this.closesearch}
               />
             </div>
             {this.state.searching ?
