@@ -14,7 +14,7 @@ import {
 } from "../tools/ValidationFunctions";
 
 class SignIn extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       username: "",
@@ -27,6 +27,10 @@ class SignIn extends Component {
   }
 
   componentDidMount = async () => {
+    //! gives the type picked in the initial page
+    console.log("state", this.props.location.state.data );
+
+    
     let isAuthed = this.props.isAuthenticated;
     if (isAuthed === true) {
       let kl = atob(this.props.AuthContext.kls.kl);
