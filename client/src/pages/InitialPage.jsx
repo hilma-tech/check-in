@@ -44,7 +44,7 @@ class InitialPage extends Component {
               התחבר כמורה
           </button>
             <br />
-            <button className="goButton superAGo" onClick={()=>{this.goToLogin("superAdmin")}}>
+            <button className="goButton superAGo" onClick={()=>{this.goToLogin("super-admin")}}>
               התחבר כמנהל מערכת
           </button>
           <img alt="hilma logo " className="initialHilma hilmalogo" src={hilmaicon} />

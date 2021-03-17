@@ -17,10 +17,10 @@ export class StudentService extends UserService {
     @InjectRepository(Student)
     protected readonly userRepository: Repository<Student>,
     protected readonly jwtService: JwtService,
-    private classroomService: ClassroomService,
     protected readonly configService: ConfigService,
+    private classroomService: ClassroomService,
   ) {
-    super(config_options, userRepository, jwtService, configService);
+    super(config_options, userRepository, jwtService, configService);    
   }
 
   async getStudents(@Req() skipON: GetStudentSkip) {
@@ -102,10 +102,10 @@ export class StudentService extends UserService {
     let student: Partial<Student> = new Student({ username, password });
     student.first_name = req.firstName;
     student.last_name = req.lastName;
-    student.classroomStudent =[]
+    student.classroomStudent = []
     if (req.classrooms.length !== 0) {
-      for(let i=0; i< req.classrooms.length;i++){
-        if(!this.classroomService.isClassroomInSchool(req.classrooms[i].id, req.schoolId)){
+      for (let i = 0; i < req.classrooms.length; i++) {
+        if (!this.classroomService.isClassroomInSchool(req.classrooms[i].id, req.schoolId)) {
           throw new Error()
         }
         let studentClassroom = new Classroom()

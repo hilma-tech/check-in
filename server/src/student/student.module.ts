@@ -4,7 +4,6 @@ import { StudentController } from './student.controller';
 import {
   RoleModule,
   UserModule,
-  JwtStrategy,
   USER_MODULE_OPTIONS,
 } from '@hilma/auth-nest';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -19,7 +18,7 @@ import { FieldModule } from 'src/field/field.module';
   imports: [
     ClassroomModule,
     SchoolModule,
-    UserModule,
+    // UserModule,
     RoleModule,
     GameModule,
     FieldModule,
@@ -27,7 +26,6 @@ import { FieldModule } from 'src/field/field.module';
     JwtModule.register({}),
   ],
   providers: [
-    JwtStrategy,
     {
       provide: 'UserService',
       useExisting: StudentService,

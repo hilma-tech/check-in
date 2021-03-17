@@ -4,9 +4,7 @@ import { TeacherController } from './teacher.controller';
 import {
   RoleModule,
   UserModule,
-  JwtStrategy,
   USER_MODULE_OPTIONS,
-  LocalStrategy,
   NodeMailerService,
 } from '@hilma/auth-nest';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -22,7 +20,6 @@ import { ClassroomModule } from 'src/classroom/classroom.module';
     JwtModule.register({}),
   ],
   providers: [
-    JwtStrategy,
     {
       provide: 'UserService',
       useExisting: TeacherService,
@@ -30,9 +27,8 @@ import { ClassroomModule } from 'src/classroom/classroom.module';
     TeacherService,
     {
       provide: USER_MODULE_OPTIONS,
-      useValue: {},
+      useValue: { emailVerification: true},
     },
-    // LocalStrategy,
     {
       provide: "MailService",
       useClass: NodeMailerService

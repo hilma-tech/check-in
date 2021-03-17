@@ -6,13 +6,7 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly userService: UserService,
 ) {}
 
-  @UseLocalAuth()
-  @Post('/login')
-  login(@RequestUser() userInfo, @Res() res) {
-    let body = this.userService.login(userInfo, res);
-    res.send(body);
-  }
+
 }

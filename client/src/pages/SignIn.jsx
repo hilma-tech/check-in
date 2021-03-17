@@ -31,7 +31,7 @@ class SignIn extends Component {
     if (!this.props.location.state) {
       this.props.history.push("/")
     }
-    // console.log("state", this.props.location.state.data );
+    // 
   };
 
   updateUser = (props) => {
@@ -50,7 +50,7 @@ class SignIn extends Component {
         emailValidation(username).length === 0 &&
         passwordValidation(password).length === 0
       ) {
-        const response = await this.props.LoginContext("/api/login", {
+        const response = await this.props.LoginContext(`/api/${this.props.location.state.data}/login`, {
           username,
           password,
         });
@@ -63,7 +63,11 @@ class SignIn extends Component {
           }
         } else {
           if (response.msg.status === 401) {
-            this.props.errorMsg.setErrorMsg("שם המשתמש והסיסמא אינם תואמים.");
+            if (response.msg.data.key === "EmailNotVerified") {
+              this.props.errorMsg.setErrorMsg("יש לאמת את כתובת האימייל");
+            } else {
+              this.props.errorMsg.setErrorMsg("שם המשתמש והסיסמא אינם תואמים.");
+            }
           } else {
             this.props.errorMsg.setErrorMsg(
               "הייתה שגיאה בשרת. לא ניתן להתחבר."
@@ -91,33 +95,33 @@ class SignIn extends Component {
       <div className="background">
         <div className="centeredPage">
           <img className="webName" src="/icons/blueCheckIn.svg"></img>
-            <p
-              className="error"
-              style={{ display: this.state.errorMessages[0].toShow }}
-            >
-              {this.state.errorMessages[0].mess}
-            </p>
-            <input
-              className="username input"
-              placeholder="כתובת מייל"
-              onBlur={this.updateUser}
-            />
-            <br />
-            <p
-              className="error"
-              style={{ display: this.state.errorMessages[1].toShow }}
-            >
-              {this.state.errorMessages[1].mess}
-            </p>
-            <input
-              type="password"
-              className="password input"
-              placeholder="סיסמא"
-              onBlur={this.updatePass}
-            />
-            <br />
-            <button className="signInButton" onClick={this.login}>
-              כניסה
+          <p
+            className="error"
+            style={{ display: this.state.errorMessages[0].toShow }}
+          >
+            {this.state.errorMessages[0].mess}
+          </p>
+          <input
+            className="username input"
+            placeholder="כתובת מייל"
+            onBlur={this.updateUser}
+          />
+          <br />
+          <p
+            className="error"
+            style={{ display: this.state.errorMessages[1].toShow }}
+          >
+            {this.state.errorMessages[1].mess}
+          </p>
+          <input
+            type="password"
+            className="password input"
+            placeholder="סיסמא"
+            onBlur={this.updatePass}
+          />
+          <br />
+          <button className="signInButton" onClick={this.login}>
+            כניסה
           </button>
           {/* <h3 className="forgot">שכחת סיסמא?</h3> */}
           <img alt="hilma logo" className="hilmalogo" src={hilmaicon} />
