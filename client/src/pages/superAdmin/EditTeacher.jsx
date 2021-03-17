@@ -31,6 +31,7 @@ class EditTeacher extends React.Component {
       fieldsData: [],
       email: "",
       password: "",
+      rakaz: "",
       teacherNameError: { toShow: "none", mess: "" },
       schoolNameError: { toShow: "none", mess: "" },
       emailNameError: { toShow: "none", mess: "" },
@@ -53,6 +54,7 @@ class EditTeacher extends React.Component {
         email: this.props.teachers.chosenTeacher.username,
         schoolName: this.props.teachers.chosenTeacher.school.name,
         fieldsData: fields,
+        rakaz: this.props.teachers.chosenTeacher.roles[0].name === 'teacher' ? false : true
       });
     }
     else {
@@ -212,6 +214,22 @@ class EditTeacher extends React.Component {
                 placeholder={this.state.schoolName}
                 // defaultValue={{ value: "schoolName", label: String(this.state.schoolName) }}
                 // native={true}
+                isDisabled={true}
+              />
+              {/* רכז*/}
+              <label className="labelFields">רכז:</label>
+              <p
+                className="error"
+                style={{ display: this.state.schoolNameError.toShow }}
+              >
+                {this.state.schoolNameError.mess}
+              </p>
+              <Select
+                className="selectStyle"
+                // onChange={this.saveSchoolName}
+                options={this.schoolOptions}
+                styles={SelectStyle()}
+                placeholder={this.state.rakaz === true ? "כן" : "לא"}
                 isDisabled={true}
               />
               {/* כיתה */}

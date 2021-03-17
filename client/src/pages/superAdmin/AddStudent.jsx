@@ -122,7 +122,7 @@ class AddStudent extends React.Component {
     const { data } = await axios.get("/api/classroom/getSchoolClasses", {
       params: { schoolId: chosenScoolId.id },
     });
-    this.setState({ school: e.value, allClasses: data, schoolId: chosenScoolId.id });
+    this.setState({ school: e.value, allClasses: data, schoolId: chosenScoolId.id, chosenClasses: [] });
   };
 
   //saves changes in entered data to the state
@@ -344,10 +344,11 @@ class AddStudent extends React.Component {
                 })
               }
 
-              <div className="addSomethingNew" onClick={this.addClassSelection}>
+              {this.state.allClasses.length === this.state.chosenClasses.length ? <></> :
+                <div className="addSomethingNew" onClick={this.addClassSelection}>
                 <img className="addIcon" src={addicon} alt="add icon"></img>
                 <p className="addTitle">הוסף כיתה</p>
-              </div>
+              </div>}
             </>
           }
         </form>

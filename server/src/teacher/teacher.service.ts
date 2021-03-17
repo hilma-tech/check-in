@@ -72,7 +72,7 @@ export class TeacherService extends UserService {
   async getTeacherInfo(@Req() req: TeacherIdDto) {
     let teacherInfo = await this.userRepository.findOne({
       where: [{ id: req.teacherId }],
-      relations: ['school', 'classroomTeacher'],
+      relations: ['school', 'classroomTeacher', 'roles'],
     });
     return teacherInfo;
   }
