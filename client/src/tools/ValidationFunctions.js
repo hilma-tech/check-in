@@ -3,12 +3,12 @@ export function userNameValidation(userName) {
     if (userName === null || userName.length === 0) {
         return '** חייב להכניס שם משתמש **'
     } else if (userName.length > 15 || userName.length < 4) {
-        return '** שם משתמש לא תקין **'
+        return '** שם משתמש צריך להכיל 4-15 תווים **'
     } else if (userName.trim().length === 0) {
         return '** שם משתמש לא תקין **'
     } else if (!(/[A-Za-z\u0590-\u05EA0-9?!-_]/).test(userName)) {
         return '** שם משתמש לא תקין **'
-    } else if ((/[@#$%^&*()_+=[\]{};:,.\\|<>/~`\s]/).test(userName)) {
+    } else if ((/[@#$%^&*()+=[\]{};:,.\\|<>/~`\s]/).test(userName)) {
       return '** שם משתמש לא תקין **'
     } else {
         return ''
