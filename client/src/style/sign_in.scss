@@ -13,6 +13,19 @@
   justify-content: center
 }
 
+.splitPage {
+  margin: 0vh;
+  position: absolute;
+  // margin-right: 32.5%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: #d1e4fa00;
+  align-items: center;
+  height: 100vh;
+  justify-content: space-around
+}
+
 .background {
   background-color: #a2cdffa9;
   width: 100vw;
@@ -20,76 +33,167 @@
   z-index: 3;
 }
 
+.signInTitle {
+  font-weight: 800;
+  font-size: 4vh;
+}
+//!for unused iconpage
+// .initialIcons {
+//   height: 24vh;
+//   width: 24vh;
+// }
+//!for unused iconpage
+// .signInIcons {
+//   display: flex;
+//   border: 0.3vw dashed #043163;
+//   border-radius: 90vh;
+//   flex-direction: column;
+//   height: 45vh;
+//   width: 45vh;
+//   align-items: center;
+//   justify-content: center;
+// }
+
 .webName {
   color: #043163;
   font-family: "Segoe UI";
-  margin: 3vh;
-  margin-top: 0;
+  top: 2vh;
   position: relative;
+  margin-right: 1.8vw;
 }
 
-.username {
-  color: #043163;
+.initial {
+  top: -2vh;
 }
 
-.password {
-  color: #043163;
-}
 
-.input {
-  color: #043163;
-  border: none;
+.middleThirdFlex{
   margin: 0vh;
-  padding: 0vh;
-  height: 6vh;
-  border-radius: 3vw;
-  padding-right: 1.5vw;
-  font-size: 2.5vh;
-  width: 30vw;
+  // margin-right: 32.5%;
+  display: flex;
+  width: 50vw;
+  flex-direction: row;
+  background-color: #d1e4fa00;
+  align-items: center;
+  height: 22vh;
+  justify-content: space-between;
 }
 
-
-
-.signInButton {
-  @include mouse(point);
-  background-color: #043163;
-  color: white;
-  margin: 0vh;
-  padding: 0vh;
-  height: 6vh;
-  font-size: 3vh;
-  font-weight: bolder;
-  border-radius: 3vw;
-  border: none;
-  width: 30vw;
-  margin-bottom: 3vh;
-}
-
-.forgot {
-  color: #043163;
-  margin: 0vh;
-  margin-top: 1vh;
-}
-
-.hilmalogo {
-  padding-top: 1vh;
-  height: 9vh;
-  position: relative;
-}
-
+//!for unused iconpage
+// .superAdminSignIn{
+  //   margin: 0vh;
+  //   display: flex;
+  //   flex-direction: column;
+  //   background-color: #d1e4fa00;
+  //   align-items: center;
+  //   justify-content: space-around
+  // }
+  // .teachSignIn{
+    //   margin: 0vh;
+    //   display: flex;
+    //   flex-direction: column;
+    //   background-color: #d1e4fa00;
+    //   align-items: center;
+    //   justify-content: space-around
+    // }
+    
+    .teacherGo {
+      background-color: #043163;
+      color: white;
+    }
+    
+    .superAGo {
+      background-color: white;
+      color: #043163;
+    }
+    
+    .goButton {
+      @include mouse(point);
+      margin: 0vh;
+      padding: 0vh;
+      height: 6vh;
+      font-size: 3vh;
+      font-weight: bolder;
+      border-radius: 3vw;
+      border: none;
+      width: 30vw;
+      margin-bottom: 1vh;
+    }
+    
+    .verticalLine {
+      width: 0.5px;
+      height: 40vh;
+      border: 0.5px solid #043163;
+      // border-left: 0.5px solid #043163;
+      background-color: #043163;
+    }
+    
+    .username {
+      color: #043163;
+    }
+    
+    .password {
+      color: #043163;
+    }
+    
+    .input {
+      color: #043163;
+      border: none;
+      margin: 0vh;
+      padding: 0vh;
+      height: 6vh;
+      border-radius: 3vw;
+      padding-right: 1.5vw;
+      font-size: 2.5vh;
+      width: 30vw;
+    }
+    
+    
+    
+    .signInButton {
+      @include mouse(point);
+      background-color: #043163;
+      color: white;
+      margin: 0vh;
+      padding: 0vh;
+      height: 6vh;
+      font-size: 3vh;
+      font-weight: bolder;
+      border-radius: 3vw;
+      border: none;
+      width: 30vw;
+      margin-bottom: 3vh;
+    }
+    
+    .forgot {
+      color: #043163;
+      margin: 0vh;
+      margin-top: 1vh;
+    }
+    
+    .hilmalogo {
+      padding-top: 1vh;
+      margin-top: 1vh;
+      height: 9vh;
+      position: relative;
+    }
+    
+    .initialHilma {
+      margin-top: 5vh;
+    }
 @media only screen and (max-width: 600px) {
 
-  .centeredPage {
-    margin: 0vh;
-    position: absolute;
-    margin-right: 10%;
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    background-color: #bd078000;
-    height: 100vh;
-    justify-content: center
-  }
+  // .centeredPage {
+  //   margin: 0vh;
+  //   position: absolute;
+  //   margin-right: 10%;
+  //   display: flex;
+  //   flex-direction: column;
+  //   width: 80%;
+  //   background-color: #bd078000;
+  //   height: 100vh;
+  //   justify-content: center
+  // }
   
   .background {
     background-color: #a2cdffa9;

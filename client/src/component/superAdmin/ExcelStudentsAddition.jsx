@@ -74,7 +74,7 @@ class ExcelStudentsAddition extends React.Component {
 
                 //--------------- classes validation --------------------
                 if (dataParse[i].classes === undefined) {
-                    dataParse[i].classrooms = []
+                    dataParse[i].userClassrooms = []
                 } else {
                     if (typeof dataParse[i].classes === "string") {
                         let studentClasses = dataParse[i].classes.split(",")

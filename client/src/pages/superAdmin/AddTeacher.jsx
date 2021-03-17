@@ -24,17 +24,6 @@ const axios = require("axios").default;
 class AddTeacher extends Component {
   constructor() {
     super();
-    // this.schoolOptions = [
-    // { value: "maalot", label: "מעלות התורה" },
-    // { value: "orot", label: "אורות בנות" },
-    // { value: "shaalei", label: "שעלי תורה" },
-    // ];
-    // this.classOptions = [
-    // { value: "a3", label: "א'3" },
-    //   { value: "b2", label: "ב'2" },
-    //   { value: "f1", label: "ו'1" },
-    //   { value: "c6", label: "ג'6" },
-    // ];
     this.rakazOptions = [
       { value: "true", label: "כן" },
       { value: "false", label: "לא" },
@@ -45,7 +34,7 @@ class AddTeacher extends Component {
       teacherFirstName: "",
       teacherLastName: "",
       schoolName: "",
-      fieldsData: [{ id: 0, value: "" }],
+      fieldsData: [],
       email: "",
       password: "",
       rakaz: "false",
@@ -95,7 +84,7 @@ class AddTeacher extends Component {
     this.setState((prevState) => {
       let prevSchool = prevState.schoolName;
       prevSchool = props.value;
-      return { schoolName: prevSchool, classOptions: classroomOption };
+      return { schoolName: prevSchool, classOptions: classroomOption, fieldsData:[] };
     });
   };
 
@@ -356,7 +345,8 @@ class AddTeacher extends Component {
                 defaultValue={{ value: "default", label: "לא" }}
               />
               {/* כיתה */}
-              <label className="labelFields">כיתה:</label>
+            {this.state.schoolName.length===0 ? <></> :
+              <><label className="labelFields">כיתה:</label>
               <div>
                 {this.state.fieldsData.map((fieldObj,i) => {
                   return (
@@ -370,9 +360,10 @@ class AddTeacher extends Component {
                     />
                   );
                 })}
-              </div>
+              </div></>}
             </form>
             {/* הוספת כיתה */}
+            { this.state.classOptions.length === this.state.fieldsData.length ? <></> :
             <div
               style={{ marginRight: "9vw" }}
               className="addSomethingNew"
@@ -381,6 +372,7 @@ class AddTeacher extends Component {
               <img className="addIcon" src={addicon} alt="addIcon"></img>
               <p className="addTitle">הוסף כיתה</p>
             </div>
+  }
             <form className="formData" style={{ marginTop: "0" }}>
               {/* אימייל */}
               <label className="labelFields">* אימייל:</label>

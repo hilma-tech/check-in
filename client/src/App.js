@@ -22,6 +22,8 @@ import { studentsProvider } from "./stores/students.store";
 import { teachersProvider } from "./stores/teachers.store";
 import { schoolsProvider } from "./stores/schools.store";
 import { chosenClassProvider } from "./stores/chosenClass.store";
+import IconsPage from "./pages/IconsPage";
+import InitialPage from "./pages/InitialPage";
 
 function App() {
   let isAuthenticated = useIsAuthenticated();
@@ -43,8 +45,14 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" exact>
-            <Redirect to="/signin" />
+            <Redirect to="/initialPage" />
           </Route>
+          <Route path="/initialPage" exact>
+            <InitialPage/>
+          </Route>
+          {/* <Route path="/iconsPage" exact>
+            <IconsPage/>
+          </Route> */}
           <Route path="/signin" exact>
             <SignIn />
           </Route>
