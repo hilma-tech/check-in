@@ -14,14 +14,14 @@ import { Classroom } from 'src/classroom/classroom.entity';
 export class Student extends User {
   @IsDefined()
   @IsString()
-  @Length(1, 50)
-  @Column({ type: 'varchar', length: 50 })
+  @Length(1, 30)
+  @Column({ type: 'varchar', length: 30 })
   first_name: string;
 
   @IsDefined()
   @IsString()
-  @Length(1, 50)
-  @Column({ type: 'varchar', length: 50 })
+  @Length(1, 30)
+  @Column({ type: 'varchar', length: 30 })
   last_name: string;
 
   @ManyToOne(

@@ -332,7 +332,7 @@ class AddTeacher extends Component {
                 styles={SelectStyle()}
                 defaultValue={{ value: "default", label: "שייך לבית ספר" }}
               />
-              {/* רכז */}
+              {/* רכז
               <label className="labelFields">רכז:</label>
               <p
                 className="error"
@@ -346,7 +346,7 @@ class AddTeacher extends Component {
                 options={this.rakazOptions}
                 styles={SelectStyle()}
                 defaultValue={{ value: "default", label: "לא" }}
-              />
+              /> */}
               {/* כיתה */}
             {this.state.schoolName.length===0 ? <></> :
               <><label className="labelFields">כיתה:</label>

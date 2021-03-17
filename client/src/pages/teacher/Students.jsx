@@ -33,27 +33,22 @@ class Students extends Component {
 
   // allows to move to student details page
   moveToStudent = async (id) => {
-  await this.props.chosenClass.setCurrStudentClasses(id);
+    await this.props.chosenClass.setCurrStudentClasses(id);
     this.props.history.push(this.props.location.pathname + "/studentInfo");
   };
 
   handleChange = async (e) => {
     let value = e.target.value
-    if (delayTime) clearTimeout(delayTime)
-    if (value === '') {
-      await this.setState({ searchVal: value, searched: false  });
+    await this.setState({ searchVal: value, searching: true });
+    setTimeout(async () => {
       this.searchStudents()
-    }
-    else delayTime = setTimeout(async () => {
-      await this.setState({ searchVal: value, searched: true  });
-      this.searchStudents()
-    }, 300)
+    }, 1000)
   };
 
   searchStudents = async () => {
     this.props.chosenClass.searchStudentsReplace()
-    this.setState({ searched: true })
     await this.props.chosenClass.searchStudentsInClass(this.state.searchVal, this.props.chosenClass.classId)
+    this.setState({ searched: true, searching: false })
   }
 
   handleKeyDown = (e) => {
@@ -61,7 +56,6 @@ class Students extends Component {
       this.handleChange(e)
     }
   }
-
   render() {
     return (
       <>
@@ -96,60 +90,64 @@ class Students extends Component {
                 onKeyDown={this.handleKeyDown}
               />
             </div>
-
-            {this.state.searched && this.state.searchVal ?
-              <div>
-                {this.props.chosenClass.searchedStudents.length === 0 && this.state.searched ?
-                  (<p> אין תלמידים בשם זה בכיתה זו</p>) :
-                  (<div>
-                    {this.props.chosenClass.searchedStudents.map((student, index) => {
-                      return (
-                        <div
-                          key={student.Student_id}
-                          className="smallStudentCont"
-                          id={index}
-                          onClick={() => {
-                            this.moveToStudent(student.Student_id);
-                          }}>
-                          <h1 className="smallStudentName">
-                            {student.Student_first_name + " " + student.Student_last_name}
-                          </h1>
-                          <h1 className="smallStudentName justForWeb" id={index}>
-                            שם משתמש: {student.Student_username}
-                          </h1>
-                        </div>)
-                    })
+            {this.state.searching ?
+              <CircularProgress size="1.5rem" />
+              : <div>
+                {this.state.searched && this.state.searchVal ?
+                  <div>
+                    {this.props.chosenClass.searchedStudents.length === 0 && this.state.searched ?
+                      (<p> אין תלמידים בשם זה בכיתה זו</p>) :
+                      (<div>
+                        {this.props.chosenClass.searchedStudents.map((student, index) => {
+                          return (
+                            <div
+                              key={student.Student_id}
+                              className="smallStudentCont"
+                              id={index}
+                              onClick={() => {
+                                this.moveToStudent(student.Student_id);
+                              }}>
+                              <h1 className="smallStudentName">
+                                {student.Student_first_name + " " + student.Student_last_name}
+                              </h1>
+                              <h1 className="smallStudentName justForWeb" id={index}>
+                                שם משתמש: {student.Student_username}
+                              </h1>
+                            </div>)
+                        })
+                        }
+                      </div>)
                     }
+                  </div>
+                  :
+                  (<div>
+                    {this.props.chosenClass.students.length === 0 && !this.props.chosenClass.startGetInfo ? (
+                      <p>אין תלמידים לכיתה זו</p>
+                    ) : (
+                        this.props.chosenClass.students.map((student, index) => {
+                          return (
+                            <div
+                              key={student.id}
+                              className="smallStudentCont"
+                              id={index}
+                              onClick={() => {
+                                this.moveToStudent(student.id);
+                              }}
+                            >
+                              <h1 className="smallStudentName">
+                                {student.first_name + " " + student.last_name}
+                              </h1>
+                              <h1 className="smallStudentName justForWeb" id={index}>
+                                שם משתמש: {student.username}
+                              </h1>
+                            </div>
+                          );
+                        })
+                      )}
                   </div>)
+
                 }
               </div>
-              :
-              (<div>
-                {this.props.chosenClass.students.length === 0 && !this.props.chosenClass.startGetInfo ? (
-                  <p>אין תלמידים לכיתה זו</p>
-                ) : (
-                    this.props.chosenClass.students.map((student, index) => {
-                      return (
-                        <div
-                          key={student.id}
-                          className="smallStudentCont"
-                          id={index}
-                          onClick={() => {
-                            this.moveToStudent(student.id);
-                          }}
-                        >
-                          <h1 className="smallStudentName">
-                            {student.first_name + " " + student.last_name}
-                          </h1>
-                          <h1 className="smallStudentName justForWeb" id={index}>
-                            שם משתמש: {student.username}
-                          </h1>
-                        </div>
-                      );
-                    })
-                  )}
-              </div>)
-
             }
             {this.props.chosenClass.startGetInfo ? (
               <CircularProgress size="1.5rem" />
@@ -163,7 +161,7 @@ class Students extends Component {
                   }}
                   style={{
                     marginTop: "2vh",
-                    display: this.props.chosenClass.haveMoreStudents &&  !this.state.searched
+                    display: this.props.chosenClass.haveMoreStudents && !this.state.searched && !this.state.searching
                       ? "inline-block"
                       : "none",
                   }}
@@ -171,7 +169,7 @@ class Students extends Component {
                   הצג עוד
                 </button>
               )}
-              <div style={{paddingBottom:'2vh'}}></div>
+            <div style={{ paddingBottom: '2vh' }}></div>
           </div>
         </div>
       </>
