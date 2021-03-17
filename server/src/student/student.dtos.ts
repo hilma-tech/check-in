@@ -1,7 +1,6 @@
 import { Type } from 'class-transformer';
 import {
   IsDefined,
-  IsEmail,
   IsNumber,
   IsNumberString,
   IsString,
@@ -27,10 +26,11 @@ export class GamesForClassDto {
   @IsDefined()
   @IsString()
   @Length(8, 15)
+  @Matches(/^[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]+$/)
   password: string;
-
   @IsDefined()
   @IsString()
+  @Matches(/^[A-Za-z\u0590-\u05EA0-9?!-_]+$/)
   username: string;
 }
 
@@ -128,13 +128,17 @@ export class ExcelUserRegisterDto {
 }
 
 export class StudentPassword {
+  
   @IsDefined()
   @IsString()
+  @Length(4, 15)
+  @Matches(/^[A-Za-z\u0590-\u05EA0-9?!-_]+$/)
   username: string;
 
   @IsDefined()
   @IsString()
   @Length(8, 15)
+  @Matches(/^[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]+$/)
   password: string;
 }
 
