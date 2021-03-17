@@ -71,38 +71,39 @@ class TeachersList extends React.Component {
             <p>מורים</p>
             <OutsideClickHandler
               onOutsideClick={() =>
-               this.setState({searched:false, searchVal:'',displaySearch:false })
-              }
-            > 
-            <form
-              className={
-                this.state.displaySearch
-                  ? "tablesSearchbar bordered"
-                  : "tablesSearchbar"
+                this.setState({ searched: false, searchVal: '', displaySearch: false })
               }
             >
-              <Fade
-                in={this.state.displaySearch}
-                timeout={{
-                  appear: 500,
-                  enter: 400,
-                  exit: 100,
-                }}
-                mountOnEnter
-                unmountOnExit
+              <form
+                onSubmit={(e) => { e.preventDefault(); }}
+                className={
+                  this.state.displaySearch
+                    ? "tablesSearchbar bordered"
+                    : "tablesSearchbar"
+                }
               >
-                <input
-                  type="text"
-                  name="search"
-                  className="searchInp"
-                  placeholder="חיפוש"
-                  onChange={this.handleChange}
-                />
-              </Fade>
-              <p className="searchIcon" onClick={this.activateSearch}></p>
-            </form>
+                <Fade
+                  in={this.state.displaySearch}
+                  timeout={{
+                    appear: 500,
+                    enter: 400,
+                    exit: 100,
+                  }}
+                  mountOnEnter
+                  unmountOnExit
+                >
+                  <input
+                    type="text"
+                    name="search"
+                    className="searchInp"
+                    placeholder="חיפוש"
+                    onChange={this.handleChange}
+                  />
+                </Fade>
+                <p className="searchIcon" onClick={this.activateSearch}></p>
+              </form>
             </OutsideClickHandler>
-            </div>
+          </div>
         </div>
 
         {/*
