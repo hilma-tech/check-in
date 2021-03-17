@@ -34,6 +34,7 @@ export class TeacherController {
   @UseLocalAuth()
   @Post('/login')
   login(@RequestUser() userInfo, @Res() res) {
+    console.log('userInfo: ', userInfo);
     let body = this.userService.login(userInfo, res);
     res.send(body);
   }
