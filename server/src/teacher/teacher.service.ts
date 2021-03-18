@@ -85,27 +85,15 @@ export class TeacherService extends UserService {
     return teacherInfo;
   }
 
-  // async createAndSaveToken(email, pass) {
-  //   let token = await this.generateVerificationToken();
-  //   let gf = await this.userRepository.createQueryBuilder()
-  //     .update()
-  //     .set({ verificationToken: token })
-  //     .where({ username: email })
-  //     .execute();
-  //   return { token: token, password: pass }
-  // }
-
-
-
   async sendVerificationEmail(email, token, user) {
     let html =
-      `<div style= "direction:rtl; background-color:whitesmoke">
-    <h3 style="color:#043163">ברוכים הבאים לצ'ק אין!</h3>
-    <p>הסיסמה שלכם לאתר היא:</p>
-    <p style="background-color:#dcdcdc;width:max-content">${user.password}</p>
+      `<div style= "direction:rtl; background-color:whitesmoke;">
+    <h3 style="color:#043163; font-size:17px">ברוכים הבאים לצ'ק אין!</h3>
+    <p style="font-size:17px">הסיסמה שלכם לאתר היא:</p>
+    <p style="background-color:#dcdcdc;width:max-content; font-size:17px;">${user.password}</p>
     <h3 style="color:#043163">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h3>
-    <p>על מנת לסיים את ההרשמה שלכם,</p>
-    <p>לחצו על הקישור <a href="http://localhost:${env.PORT}/api/teacher/Verify?token=${token}">כאן</a> כדי לאמת את כתובת המייל ומעבר לאתר</p>
+    <p style="font-size:17px">על מנת לסיים את ההרשמה שלכם,</p>
+    <p style="font-size:17px; margin-top:-3px">לחצו על הקישור <a href="http://localhost:${env.PORT}/api/teacher/Verify?token=${token}">כאן</a> כדי לאמת את כתובת המייל ומעבר לאתר</p>
    <div style="display:flex;flex-direction:row;align-self:center;style="padding-bottom:10px"">
     <img src="cid:checkinlogo" height="20" style="padding:10px"/>
     <img src="cid:hilmalogo" height="40"/>
@@ -114,11 +102,11 @@ export class TeacherService extends UserService {
     </div>`
     this.sendEmail(email, "ברוכים הבאים לצ'ק אין", '', html, [{
       fileName: "blueCheckIn.png",
-      path: "http://localhost:3000/icons/blueCheckIn.png",
+      path: `http://${env.HOST}/icons/blueCheckIn.png`,
       cid: 'checkinlogo',
     }, {
       fileName: "hilmaIcon.png",
-      path: "http://localhost:3000/icons/hilmaIcon.png",
+      path: `http://${env.HOST}/icons/hilmaIcon.png`,
       cid: 'hilmalogo',
     },])
   }
