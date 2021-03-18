@@ -5,6 +5,7 @@ import { TeacherService } from './teacher.service';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { TeacherIdDto, GetTeacherSkip, GetClassSkip, TeacherValDto, TeacherRegisterDto } from './teacher.dtos';
 import { ClassroomService } from 'src/classroom/classroom.service';
+import { env } from 'process';
 
 
 @Controller('api/teacher')
@@ -80,7 +81,7 @@ export class TeacherController {
   @Get('/Verify')
   async MakeLogInAvailable(@Query() Token: any, @Res() res: any) {
     await this.teacherService.verifyEmailByToken(Token.token)
-    var redirectTo = 'http://localhost:3000/signin'//to be replaced with real domain
+    var redirectTo = `http://${env.HOST}/initialPage`//to be replaced with real domain
     res.redirect(redirectTo)
   }
 
