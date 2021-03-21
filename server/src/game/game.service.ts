@@ -6,7 +6,6 @@ import {
   GameSaveDto,
   GetGameSkip,
   GameSaveReq,
-  GameIdDto,
   ClassroomIdDto,
   IdeDto,
   DeleteGameIdDto,
