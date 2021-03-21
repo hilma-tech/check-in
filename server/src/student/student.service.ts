@@ -171,9 +171,10 @@ export class StudentService extends UserService {
       return student != null;
     });
     return searchresult
+  }
 
-
-
+  async deleteStudent(@Body() studentId: string){
+    await this.userRepository.delete(studentId)
   }
 
 }
