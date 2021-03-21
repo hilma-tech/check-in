@@ -1,5 +1,13 @@
 @import "./general_style.scss";
 
+.signInBackArrow{
+  position: absolute;
+  top: 5vh;
+  right: 5vh;
+  height: 2vw;
+  width: 2vw;
+}
+
 .centeredPage {
   margin: 0vh;
   position: absolute;
@@ -196,10 +204,29 @@
   // }
   
   .background {
+    // background-color: brown;
     background-color: #a2cdffa9;
     width: 100vw;
     height: 100vh;
     z-index: 3;
+  }
+
+  .goButton {
+    @include mouse(point);
+    margin: 0vh;
+    padding: 0vh;
+    height: 6vh;
+    font-size: 3vh;
+    font-weight: bolder;
+    border-radius: 3vw;
+    border: none;
+    width: 75vw;
+    margin-bottom: 1vh;
+  }
+
+  .initialHilma {
+    
+    margin-top: 0px;
   }
   
   .input {
@@ -215,14 +242,14 @@
 
   .webName {
     position: absolute;
-    top: 18vh;
+    top: 22vh;
     width: 50vw;
   }
   
   .hilmalogo{
-    height: 10vh;
+    // height: 15vh;
     position: absolute;
-    top: 85vh;
-    width: 35vw;
+    top: 65vh;
+    width: 50vw;
   }
 }

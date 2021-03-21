@@ -34,6 +34,10 @@ class SignIn extends Component {
     // 
   };
 
+  moveToInitialPage = async () => {
+    this.props.history.goBack();
+  }
+
   updateUser = (props) => {
     this.setState({ username: props.target.value });
   };
@@ -93,6 +97,12 @@ class SignIn extends Component {
   render() {
     return (
       <div className="background">
+        <img
+            alt="small back arrow"
+            className="signInBackArrow"
+            src="/icons/awesome-arrow-right.svg"
+            onClick={this.moveToInitialPage}
+          />
         <div className="centeredPage">
           <img className="webName" src="/icons/blueCheckIn.svg"></img>
           <p

@@ -79,6 +79,7 @@ class GameFieldSelection extends Component {
               return (
                 <input
                   key={index}
+                  placeholder="רשום את תוכן השדה"
                   defaultValue={input[0].value}
                   onBlur={this.sendFieldValue}
                   className="fieldSelectionInput"
@@ -92,6 +93,7 @@ class GameFieldSelection extends Component {
                 <input
                   key={index}
                   onBlur={this.sendFieldValue}
+                  placeholder="רשום את תוכן השדה"
                   className="fieldSelectionInput"
                   type="text"
                   id={inputId}

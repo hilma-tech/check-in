@@ -13,6 +13,7 @@ module.exports ={
   ],
   "synchronize": true,
   // "ssl": true
+  "logging": true
 }
 
 
