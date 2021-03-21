@@ -224,4 +224,24 @@ export class GameService {
       return { classId: classId, className: className, classGames: games }
     })
   }
+
+ async searchGames (val){
+    let gamesInfo = await this.gameRepository.find({
+      where: [{ suspended: false }],
+      select: ['id', 'game_name', 'image'],
+      order: {
+        id: 'DESC',
+      },
+    });
+
+    let Search = gamesInfo.map((game) => {
+      if (game.game_name.includes(val.val.toLowerCase())) {
+        return game
+      }
+    })
+    var searchresult = Search.filter(function (game) {
+      return game != null;
+    });
+    return searchresult
+  }
 }

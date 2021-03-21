@@ -42,4 +42,18 @@ export class SchoolService {
       where: [{ id: Id }]
     })
   }
+
+  async searchSchools(val){
+    let schools = await this.schoolRepository.find({
+    });
+    let Search = schools.map((school) => {
+      if (school.name.includes(val.val.toLowerCase())) {
+        return school
+      }
+    })
+    var searchresult = Search.filter(function (school) {
+      return school != null;
+    });
+    return searchresult
+  }
 }
