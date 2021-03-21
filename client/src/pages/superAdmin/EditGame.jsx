@@ -19,6 +19,7 @@ class EditGame extends Component {
       gameNameErrorMessages: { toShow: "none", mess: "" },
       gameDescriptionErrorMessages: { toShow: "none", mess: "" },
       gameRequirementsErrorMessages: { toShow: "none", mess: "" },
+      gameLinkErrorMessages: { toShow: "none", mess: "" },
       fieldsData: [],
       image:
         "https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg",
@@ -53,6 +54,7 @@ class EditGame extends Component {
         gameName: data.game_name,
         gameDescription: data.description,
         gameRequirements: data.requirements,
+        gameLink: data.video_link,
         gameId: data.id,
       });
     } catch (error) {
@@ -280,6 +282,24 @@ class EditGame extends Component {
                 id="gameRequirements"
                 onBlur={this.updateBasicInfo}
                 defaultValue={this.state.gameRequirements}
+                readOnly={true}
+              />
+
+<label className="labelFields">קישור לסרטון:</label>
+              <p
+                className="error"
+                style={{ display: this.state.gameLinkErrorMessages.toShow }}
+              >
+                {this.state.gameLinkErrorMessages.mess}
+              </p>
+              <input
+                className="inputFields"
+                id="gameLink"
+                type="text"
+                placeholder="הכנס קישור..."
+                onBlur={this.updateBasicInfo}
+                onChange={this.validation}
+                defaultValue={this.state.gameLink}
                 readOnly={true}
               />
               {/* <label className="labelFields">תמונה:</label> */}
