@@ -31,7 +31,6 @@ class StudentsList extends React.Component {
     this.getStudents();
   };
 
-  //! not in use
   //Save the user search value as searchVal in state.
   handleChange = async (e) => {
     let value = e.target.value
@@ -44,10 +43,16 @@ class StudentsList extends React.Component {
       this.searchStudents()
     }, 300)
   };
-  //! not in use
   //When the user press the search icon it's start to show the input text for the searching.
   activateSearch = () => {
     this.setState({ displaySearch: true });
+  };
+  closeSearch = () => {
+    this.setState({
+      searchVal: "",
+      searched: false,
+      displaySearch: false,
+    });
   };
 
   getStudents = async () => {
@@ -70,11 +75,7 @@ class StudentsList extends React.Component {
         <div id="TableSearchbar">
           <div className="PageTitles">
             <p>תלמידים</p>
-            <OutsideClickHandler
-              onOutsideClick={() =>
-                this.setState({ searched: false, searchVal: '', displaySearch: false })
-              }
-            > <form
+             <form
               onSubmit={(e) => { e.preventDefault(); }}
               className={
                 this.state.displaySearch
@@ -101,8 +102,12 @@ class StudentsList extends React.Component {
                     onChange={this.handleChange}
                   />
                 </Fade>
-                <p className="searchIcon" onClick={this.activateSearch}></p>
-              </form></OutsideClickHandler>
+                <p className="searchIcon" onClick={
+                  !this.state.displaySearch
+                    ? this.activateSearch
+                    : this.closeSearch
+                }></p>
+              </form>
           </div></div>
         {/*
                 Create the school table with the general teble.

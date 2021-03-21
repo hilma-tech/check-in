@@ -48,7 +48,13 @@ class TeachersList extends React.Component {
   activateSearch = () => {
     this.setState({ displaySearch: true });
   };
-
+  closeSearch = () => {
+    this.setState({
+      searchVal: "",
+      searched: false,
+      displaySearch: false,
+    });
+  };
   //gets teachers from the DB
   getTeachers = async () => {
     await this.props.teachers.getTeachers();
@@ -69,11 +75,6 @@ class TeachersList extends React.Component {
         <div id="TableSearchbar">
           <div className="PageTitles">
             <p>מורים</p>
-            <OutsideClickHandler
-              onOutsideClick={() =>
-                this.setState({ searched: false, searchVal: '', displaySearch: false })
-              }
-            >
               <form
                 onSubmit={(e) => { e.preventDefault(); }}
                 className={
@@ -100,9 +101,12 @@ class TeachersList extends React.Component {
                     onChange={this.handleChange}
                   />
                 </Fade>
-                <p className="searchIcon" onClick={this.activateSearch}></p>
+                <p className="searchIcon" onClick={
+                  !this.state.displaySearch
+                    ? this.activateSearch
+                    : this.closeSearch
+                }></p>
               </form>
-            </OutsideClickHandler>
           </div>
         </div>
 
