@@ -59,6 +59,7 @@ export class GameService {
     game.description = req.description;
     game.requirements = req.requirements;
     game.image = req.image.value;
+    game.video_link = req.gameLink;
     game.suspended = false;
     let res = await this.gameRepository.save(game);
     return res;

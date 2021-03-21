@@ -15,6 +15,19 @@ export function userNameValidation(userName) {
     }
 }
 
+//check loom link
+export function linkValidation(link) {
+  if (link === null || link.length === 0) {
+    return "";
+  } else if (link.length > 255) {
+    return "** שדה זה לא יכול להכיל יותר מ-255 תווים **";
+  } else if (!/^$|(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(link)) {
+    return "** שדה זה לא תקין **";
+  } else {
+    return "";
+  }
+}
+
 //Check validation for names (teacher, student or game name)
 export function nameValidation(name) {
   if (name === null || name.length === 0) {

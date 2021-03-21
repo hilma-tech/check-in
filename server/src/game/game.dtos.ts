@@ -52,6 +52,10 @@ export class GameSaveDto {
   @Matches(/^$|^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
   requirements: string;
 
+  @Length(0, 255)
+  @Matches(/^$|(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi)
+  gameLink: string
+
   @IsDefined()
   @IsBoolean()
   suspended: boolean;

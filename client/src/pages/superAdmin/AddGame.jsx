@@ -13,6 +13,7 @@ import {
   requirementValidation,
   fieldNameValidation,
   fieldInputValidation,
+  linkValidation,
 } from "../../tools/ValidationFunctions";
 import { withFiles } from "@hilma/fileshandler-client";
 import PopUpError from "../../component/popUpError";
@@ -29,11 +30,13 @@ class AddGame extends Component {
       gameNameErrorMessages: { toShow: "none", mess: "" },
       gameDescriptionErrorMessages: { toShow: "none", mess: "" },
       gameRequirementsErrorMessages: { toShow: "none", mess: "" },
+      gameLinkErrorMessages: { toShow: "none", mess: "" },
       imageErrorMessages: { toShow: "none", mess: "" },
       fieldsData: [],
       gameName: "",
       gameDescription: "",
       gameRequirements: "",
+      gameLink: "",
       image: {
         id: 0,
         value:
@@ -168,6 +171,7 @@ class AddGame extends Component {
       image: this.state.image,
       description: this.state.gameDescription,
       requirements: this.state.gameRequirements,
+      gameLink: this.state.gameLink,
       suspended: false,
     };
     const fieldData = this.setUpValues();
@@ -203,6 +207,8 @@ class AddGame extends Component {
       { name: "gameName", func: nameValidation, errMsg: "" },
       { name: "gameDescription", func: descriptionValidation, errMsg: "" },
       { name: "gameRequirements", func: requirementValidation, errMsg: "" },
+      { name: "gameLink", func: linkValidation, errMsg: "" },
+
     ];
 
     //validates the basic information
@@ -406,6 +412,21 @@ class AddGame extends Component {
                 id="gameRequirements"
                 onBlur={this.updateBasicInfo}
               />
+              <label className="labelFields">קישור לסרטון:</label>
+              <p
+                className="error"
+                style={{
+                  display: this.state.gameLinkErrorMessages.toShow,
+                }}
+              >
+                {this.state.gameLinkErrorMessages.mess}
+              </p>
+              <input
+                className="inputLinkField"
+                placeholder="הכנס קישור..."
+                id="gameLink"
+                onBlur={this.updateBasicInfo}>
+              </input>
               {/* <label className="labelFields">תמונה:</label> */}
               {/* <p
                 className="error"
