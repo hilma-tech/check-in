@@ -9,6 +9,7 @@ import { observer } from "mobx-react";
 import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
 import { chosenClassContext } from "../../stores/chosenClass.store";
+import { errorMsgContext } from "../../stores/error.store";
 const axios = require("axios").default;
 
 class Permissions extends Component {
@@ -26,8 +27,15 @@ class Permissions extends Component {
     this.setState({ selectedEndTime: e.target.value })
   }
   sendInfo = async () => {
-    let classId = this.props.chosenClass.classId    
-    const sendTime = await axios.post(`/api/permission/setClassPermission`, { startTime: this.state.selectedStartTime, endTime: this.state.selectedEndTime, classId: classId });
+    let classId = this.props.chosenClass.classId
+    try {
+      await axios.post(`/api/permission/setClassPermission`, { startTime: this.state.selectedStartTime, endTime: this.state.selectedEndTime, classId: classId });
+      this.props.errorMsg.setErrorMsg('הרשאות נשמרו בהצלחה')
+    }
+    catch (err) {
+      this.props.errorMsg.setErrorMsg('תקלה בשרת, נסו לשמור שנית')
+
+    }
   }
 
   render() {
@@ -77,6 +85,7 @@ class Permissions extends Component {
 }
 const mapContextToProps = {
   chosenClass: chosenClassContext,
+  errorMsg: errorMsgContext,
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(Permissions)));
