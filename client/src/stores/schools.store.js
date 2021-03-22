@@ -24,8 +24,19 @@ class Schools {
       getAllSchoolsNames: action,
       searchSchools: action,
       searchSchoolsReplace:action,
-      searchedSchools: observable
+      searchedSchools: observable,
+      addSchool: action,
     });
+  }
+
+  addSchool = async (schoolInfo) => {
+    console.log('schoolInfo: ', schoolInfo);
+    console.log('this.listDataSchools: ', this.listDataSchools);
+    this.listDataSchools = [schoolInfo, ...this.listDataSchools]
+  
+    // console.log('...this.listDataStudents: ', this.listDataStudents);
+    // this.listDataStudents = [...this.listDataStudents]
+  
   }
 
   getAllSchoolsNames = async () => {
