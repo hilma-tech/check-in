@@ -16,6 +16,7 @@ class GeneralTable extends React.Component {
   onClickAdd = () => {
     this.props.history.push(this.props.location.pathname + "Add");
   };
+  
   render() {
     return (
       <div className="generalTable">
@@ -80,7 +81,6 @@ class GeneralTable extends React.Component {
             <AddStudentPopUp />
           </div>
           :
-          this.props.location.pathname.includes("school") ? <></> :
             <div className="addingButton" onClick={this.onClickAdd}></div>
         }
       </div>

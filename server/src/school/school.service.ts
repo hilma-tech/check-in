@@ -1,5 +1,6 @@
-import { Injectable, Req } from '@nestjs/common';
+import { Body, Injectable, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ClassroomService } from 'src/classroom/classroom.service';
 import { Repository } from 'typeorm';
 import { GetSchoolSkip } from './school.dtos';
 import { School } from './school.entity';
@@ -9,7 +10,18 @@ export class SchoolService {
   constructor(
     @InjectRepository(School)
     private schoolRepository: Repository<School>,
+    private classroomService: ClassroomService
   ) { }
+
+async addSchool(@Body() info: any) {
+  console.log('info: ', info);
+  let school = new School();
+    school.name = info.schoolName;
+    school.city = info.schoolCity;
+    let res = await this.schoolRepository.save(school);
+    await this.classroomService.addClassesWithSchool(info, res)
+    return res;
+}
 
   async getSchools(@Req() skipON: GetSchoolSkip) {
     let numSchools = await this.schoolRepository.count();

@@ -272,8 +272,8 @@ class EditSchool extends Component {
             </button> */}
           <div className="spacerFromSaveButton"></div>
           <div className="saveButtonBackground">
-            {/* <button className="deletButton">מחק בית ספר</button>
-            <button className="saveButton" onClick={this.saveData}>
+             <button className="deletButton">מחק בית ספר</button>
+           {/* <button className="saveButton" onClick={this.saveData}>
               שמור
             </button>  */}
           </div>

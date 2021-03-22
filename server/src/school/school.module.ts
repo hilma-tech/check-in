@@ -4,9 +4,11 @@ import { SchoolController } from './school.controller';
 import { UserModule } from '@hilma/auth-nest';
 import { School } from './school.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ClassroomService } from 'src/classroom/classroom.service';
+import { ClassroomModule } from 'src/classroom/classroom.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([School]), UserModule],
+  imports: [TypeOrmModule.forFeature([School]), UserModule, ClassroomModule],
   providers: [SchoolService],
   controllers: [SchoolController],
   exports: [SchoolService],
