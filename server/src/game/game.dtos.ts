@@ -7,6 +7,7 @@ import {
   IsNumberString,
   IsObject,
   IsString,
+  IsUrl,
   Length,
   Matches,
   ValidateNested,
@@ -51,6 +52,11 @@ export class GameSaveDto {
   @Length(0, 255)
   @Matches(/^$|^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
   requirements: string;
+
+  @Length(0, 255)
+  @IsUrl()
+  // @Matches(/^$|(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/i)
+  gameLink: string
 
   @IsDefined()
   @IsBoolean()

@@ -49,6 +49,11 @@ export class Game {
   @Column({ type: 'varchar', length: 255, nullable: true })
   requirements: string;
 
+  
+  @Matches(/^$|(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi)
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  video_link: string
+
   @IsDefined()
   @IsString()
   @Length(4, 1000)

@@ -6,7 +6,6 @@ import {
   GameSaveDto,
   GetGameSkip,
   GameSaveReq,
-  GameIdDto,
   ClassroomIdDto,
   IdeDto,
   DeleteGameIdDto,
@@ -60,6 +59,7 @@ export class GameService {
     game.description = req.description;
     game.requirements = req.requirements;
     game.image = req.image.value;
+    game.video_link = req.gameLink;
     game.suspended = false;
     let res = await this.gameRepository.save(game);
     return res;
@@ -223,5 +223,25 @@ export class GameService {
     })).then((games) => {
       return { classId: classId, className: className, classGames: games }
     })
+  }
+
+ async searchGames (val){
+    let gamesInfo = await this.gameRepository.find({
+      where: [{ suspended: false }],
+      select: ['id', 'game_name', 'image'],
+      order: {
+        id: 'DESC',
+      },
+    });
+
+    let Search = gamesInfo.map((game) => {
+      if (game.game_name.includes(val.val.toLowerCase())) {
+        return game
+      }
+    })
+    var searchresult = Search.filter(function (game) {
+      return game != null;
+    });
+    return searchresult
   }
 }

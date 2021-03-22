@@ -18,4 +18,11 @@ export class SchoolController {
   async getSchoolsNames() {
     return await this.schoolService.getSchoolsNames();
   }
+
+  @UseJwtAuth('superAdmin')
+  @Get('/SearchSchools')
+  async SearchSchools(@Query() val: any) {
+    return await this.schoolService.searchSchools(val);
+    
+  }
 }

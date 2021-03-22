@@ -28,9 +28,16 @@ export class ClassroomFieldService {
   }
 
   async removeGameFieldsFromClass(@Body() req: removeFFromCDto) {
-
     let fields = await this.fieldService.getGameFields(req.gameId);
-    fields.forEach(field => {
+    fields.forEach(async (field) => {
+      if(field.type === 'image'){
+        let removeField = await this.classFieldRepository.findOne({
+          where: [{field_id: field.id}]
+        })
+        if(removeField.new_value !== field.default_value){
+          await this.imageService.delete(field.default_value)
+        }
+      }
       this.classFieldRepository.delete({
         classroom_id: req.classId,
         field_id: field.id,
@@ -99,6 +106,9 @@ export class ClassroomFieldService {
     let fieldsForDelete = [];
     deleteFieldAndGetFieldId.map(async fieldId => {
       fieldsForDelete.push(fieldId.id);
+      if(fieldId.type === 'image'){
+        await this.imageService.delete(fieldId.default_value)
+      }
       await this.classFieldRepository.delete({ field_id: fieldId.id });
     });
     if (fieldsForDelete.length > 0) {
