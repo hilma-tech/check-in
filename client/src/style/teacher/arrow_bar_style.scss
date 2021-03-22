@@ -96,6 +96,7 @@
   height: 4vh;
   font-weight: 600;
   text-align: right;
+  display: none;
 }
 
 .studentsInfoArrowBar{
@@ -184,6 +185,7 @@
   }
 
   .pageNameArrowBarStudentInfo {
+    display: block;
     margin-top: 0;
     margin-right: 7vw;
     font-weight: 700;
