@@ -6,7 +6,6 @@ const axios = require("axios").default;
 class Games {
   gamesList = [];
   chosenGameList = [];
-  searchedGames=[];
   haveMoreGames = true;
   successGettingGames = true;
   startGetGames = false;
@@ -27,9 +26,6 @@ class Games {
       getClassroomGames: action,
       deleteGame: action,
       resetGamesStore: action,
-      searchGames: action,
-      searchGamesReplace:action,
-      searchedGames: observable
     });
   }
 
@@ -143,22 +139,6 @@ class Games {
       return false
     }
   };
-
-
-  searchGames = async (val) => {
-    try{
-    let Games = await axios.get(`/api/game/searchGames/?val=${val}`);
-    if (Games.data[0] != null) {
-        this.searchedGames = [...Games.data]
-    }}
-    catch(err){
-console.log("search game err:", err);
-    }
-}
-
-searchGamesReplace = () => {
-    this.searchedGames.replace([])
-}
 
 }
 

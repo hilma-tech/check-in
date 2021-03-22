@@ -168,9 +168,4 @@ export class StudentController {
     return await this.studentService.searchStudents(info.value, info.classId)
   }
 
-  @UseJwtAuth('superAdmin')
-  @Post('/deleteStudent')
-  async deleteStudent(@Body() val: any) {
-    return await this.studentService.deleteStudent(val.studentId)
-  }
 }

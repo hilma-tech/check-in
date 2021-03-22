@@ -92,10 +92,5 @@ export class GameController {
   async getClassroomGames(@Query() req: ClassroomIdDto) {
     return await this.gameService.getClassroomGames(req);
   }
-  @UseJwtAuth('superAdmin')
-  @Get('/SearchGames')
-  async SearchGames(@Query() val: any) {
-    return await this.gameService.searchGames(val);
-    
-  }
+
 }

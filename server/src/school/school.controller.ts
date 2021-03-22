@@ -14,21 +14,9 @@ export class SchoolController {
   }
 
   @UseJwtAuth('superAdmin')
-  @Post('/addSchool')
-  async addSchool(@Body() info:any) {
-    return await this.schoolService.addSchool(info.info);
-  }
-
-  @UseJwtAuth('superAdmin')
   @Get('/getSchoolsNames')
   async getSchoolsNames() {
     return await this.schoolService.getSchoolsNames();
   }
 
-  @UseJwtAuth('superAdmin')
-  @Get('/SearchSchools')
-  async SearchSchools(@Query() val: any) {
-    return await this.schoolService.searchSchools(val);
-    
-  }
 }

@@ -300,7 +300,6 @@ class EditTeacher extends React.Component {
 
             <div className='spacerFromSaveButton'></div>
               <div className='saveButtonBackground'>
-              <button className="deletButton">מחק מורה</button>
                 {/* <button className="saveButton" onClick={this.validateInputFields}>
                   שמור
                   </button> */}

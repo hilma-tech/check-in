@@ -13,16 +13,6 @@ export class SchoolService {
     private classroomService: ClassroomService
   ) { }
 
-async addSchool(@Body() info: any) {
-  console.log('info: ', info);
-  let school = new School();
-    school.name = info.schoolName;
-    school.city = info.schoolCity;
-    let res = await this.schoolRepository.save(school);
-    await this.classroomService.addClassesWithSchool(info, res)
-    return res;
-}
-
   async getSchools(@Req() skipON: GetSchoolSkip) {
     let numSchools = await this.schoolRepository.count();
     let haveMoreSchools =
@@ -53,19 +43,5 @@ async addSchool(@Body() info: any) {
       select: ["name"],
       where: [{ id: Id }]
     })
-  }
-
-  async searchSchools(val){
-    let schools = await this.schoolRepository.find({
-    });
-    let Search = schools.map((school) => {
-      if (school.name.includes(val.val.toLowerCase())) {
-        return school
-      }
-    })
-    var searchresult = Search.filter(function (school) {
-      return school != null;
-    });
-    return searchresult
   }
 }

@@ -19,9 +19,6 @@ class SchoolsList extends React.Component {
         עיר: "city",
       },
       listDataSchools: [],
-      searchVal: "",
-      displaySearch: false,
-      searched: false,
     };
   }
 
@@ -54,11 +51,6 @@ class SchoolsList extends React.Component {
     });
   };
 
-  searchSchools = async () => {
-    this.props.schools.searchSchoolsReplace();
-    this.setState({ searched: true });
-    await this.props.schools.searchSchools(this.state.searchVal);
-  };
 
   getSchools = async () => {
     await this.props.schools.getSchools();
@@ -75,55 +67,13 @@ class SchoolsList extends React.Component {
         <div id="TableSearchbar">
           <div className="PageTitles">
             <p>בתי ספר</p>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-              }}
-              className={
-                this.state.displaySearch
-                  ? "tablesSearchbar bordered"
-                  : "tablesSearchbar"
-              }
-            >
-              <Fade
-                in={this.state.displaySearch}
-                timeout={{
-                  appear: 500,
-                  enter: 400,
-                  exit: 100,
-                }}
-                mountOnEnter
-                unmountOnExit
-              >
-                <input
-                  type="text"
-                  name="search"
-                  className="searchInp"
-                  placeholder="חיפוש"
-                  onChange={this.handleChange}
-                />
-              </Fade>
-              <p
-                className="searchIcon"
-                onClick={
-                  !this.state.displaySearch
-                    ? this.activateSearch
-                    : this.closeSearch
-                }
-              ></p>
-            </form>
           </div>
         </div>
         {/*
             Create the school table with the general teble.
         */}
         <GeneralTable
-          allData={
-            this.state.searched
-              ? this.props.schools.searchedSchools
-              : this.props.schools.listDataSchools
-          }
-          search={this.state.displaySearch}
+          allData={this.props.schools.listDataSchools}
           categors={this.state.categors}
           enCategor={this.state.enCategor}
           loadMore={this.getSchools}

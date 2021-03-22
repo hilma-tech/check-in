@@ -30,7 +30,6 @@ class Students {
             addMultiStudents: action,
             searchStudents: action,
             searchStudentsReplace: action,
-            deleteStudent: action
         })
     }
 
@@ -94,20 +93,6 @@ class Students {
         this.chosenStudent = (this.listDataStudents.filter((student) => {
             return student.id === studentId
         }))[0]
-    }
-
-    deleteStudent = async () => {
-        try {
-            await axios.post("/api/student/deleteStudent", {
-                studentId: this.chosenStudent.id,
-              });
-            this.listDataStudents = this.listDataStudents.filter((student) => {
-                return student.id !== this.chosenStudent.id
-            })
-            return true
-        } catch (err) {
-            return false
-        }
     }
 }
 
