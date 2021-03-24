@@ -174,6 +174,15 @@ class EditTeacher extends React.Component {
     // }
   };
 
+  deleteTeacher = () => {
+    let success = this.props.teachers.deleteTeacher()
+    if(success){
+      this.props.history.goBack();
+    } else {
+      this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת, לא היה ניתן למחוק את המורה.')
+    }
+  }
+
   render() {
     return (
       <>
@@ -300,7 +309,7 @@ class EditTeacher extends React.Component {
 
             <div className='spacerFromSaveButton'></div>
               <div className='saveButtonBackground'>
-              <button className="deletButton">מחק מורה</button>
+              <button className="deletButton" onClick={this.deleteTeacher}>מחק מורה</button>
                 {/* <button className="saveButton" onClick={this.validateInputFields}>
                   שמור
                   </button> */}
