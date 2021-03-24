@@ -93,10 +93,18 @@ class BlueSideBar extends React.Component {
                   >
                     תלמידים
                   </p>
+                  <p
+                    className="sideBarClassOption"
+                    onClick={() => {
+                      this.props.history.push("/teacher/classes/permissions");
+                    }}
+                  >
+                    הרשאות
+              </p>
                 </>
               ) : (
-                <></>
-              )}
+                  <></>
+                )}
               {/* <p className="sideBarOption">ניהול</p> */}
             </div>
 

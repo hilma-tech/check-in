@@ -13,6 +13,7 @@ import { ClassroomModule } from 'src/classroom/classroom.module';
 import { GameModule } from 'src/game/game.module';
 import { SchoolModule } from 'src/school/school.module';
 import { FieldModule } from 'src/field/field.module';
+import { PermissionModule } from 'src/permission/permission.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { FieldModule } from 'src/field/field.module';
     UserModule,
     RoleModule,
     GameModule,
+    PermissionModule,
     FieldModule,
     TypeOrmModule.forFeature([Student]),
     JwtModule.register({}),
