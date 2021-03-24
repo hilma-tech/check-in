@@ -17,7 +17,8 @@ class Permissions extends Component {
     super()
     this.state = {
       selectedStartTime: "08:00",
-      selectedEndTime: "14:00"
+      selectedEndTime: "14:00",
+      selectedDay:''
     }
   }
   handleStartTimeChange = (e) => {
@@ -47,10 +48,21 @@ class Permissions extends Component {
         <ArrowBar page="permission" />
         <div className="smallPage">
           <div className="smallAlign extramargintop">
-            <h4 className="title">אנא בחר את השעה שבה התלמידים יוכלו לשחק:</h4>
 
+            {/* <h4 className="title">אנא בחר את השעה שבה התלמידים יוכלו לשחק:</h4> */}
             <form>
-              <h3 className="text">זמן התחלה:</h3>
+              <h3 className="text">לפי ימים:</h3>
+              <div className="days">
+               <div className="day"><p className="daytext">א</p></div>
+               <div className="day"><p className="daytext">ב</p></div>
+               <div className="day"><p className="daytext">ג</p></div>
+               <div className="day"><p className="daytext">ד</p></div>
+               <div className="day"><p className="daytext">ה</p></div>
+               <div className="day"><p className="daytext">ו</p></div>
+               <div className="day"><p className="daytext">ז</p></div>
+              </div>
+
+    <h3 className="text">יום {this.state.selectedDay}</h3>
               <div style={{ marginRight: '5vw', direction: 'ltr' }}>
                 < TextField
                   required={true}
@@ -62,8 +74,7 @@ class Permissions extends Component {
                 />
               </div>
 
-
-              <h3 className="text">זמן סיום:</h3>
+              {/* <h3 className="text">זמן סיום:</h3>
               <div style={{ marginRight: '5vw', direction: 'rtl' }}>
                 < TextField
                   required={true}
@@ -73,7 +84,7 @@ class Permissions extends Component {
                   onChange={this.handleEndTimeChange}
 
                 />
-              </div>
+              </div> */}
               <h3 className='save' onClick={this.sendInfo}>שמור</h3>
 
             </form>
