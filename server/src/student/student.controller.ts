@@ -111,7 +111,6 @@ export class StudentController {
       var Classes = []
       return Promise.all(getStudentInfo.classroomStudent.map(async (classroom) => {
         var getPermissions = await this.permissionService.getPermissionByClassId(classroom.id)
-        console.log('getPermissions: ', getPermissions);
         Classes.push(classroom.name);
         var getGames = await this.gameService.GetGamesForStudent(classroom.id, classroom.name);
         return { ...getGames, premissions: getPermissions }

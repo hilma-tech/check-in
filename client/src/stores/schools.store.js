@@ -77,7 +77,6 @@ class Schools {
       });
       return true
     } catch (error) {
-      console.log("choose school error: ", error);
       return false
     }
   };

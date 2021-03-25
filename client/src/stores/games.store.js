@@ -109,7 +109,6 @@ class Games {
       this.chosenGameList.splice(index, 1);
       return true
     } catch (err) {
-      console.log("remove game err: ", err);
       return false
     }
   };
@@ -124,7 +123,6 @@ class Games {
       }));
       return true
     } catch (err) {
-      console.log("add game err: ", err);
       return false
     }
   };
@@ -135,7 +133,6 @@ class Games {
       await axios.post("/api/game/deleteGameById", { Id });
       return true
     } catch (err) {
-      console.log("delete game err: ", err);
       return false
     }
   };

@@ -8,7 +8,7 @@ Checkin API
 
 Get games and their fields :
 
-URL:  h[ttps://checkin.carmel6000.com/api/game/gameToFields](https://checkin.carmel6000.com/api/game/gameToFields/?munOfGames=[NUMBER)
+URL:  [https://checkin.carmel6000.com/api/game/gameToFields](https://checkin.carmel6000.com/api/game/gameToFields/?munOfGames=[NUMBER)
 
 Method: GET
 
@@ -24,7 +24,7 @@ fetch("https://checkin.carmel6000.com/api/game/gameToFields/?num  OfGames=5&skip
 
 Get games for the student's class :
 
-URL:  h[ttps://checkin.carmel6000.com/](https://checkin.carmel6000.com/api/game/gameToFields/?munOfGames=[NUMBER)api/student/gamesAndStudentInfo
+URL:  [https://checkin.carmel6000.com/](https://checkin.carmel6000.com/api/game/gameToFields/?munOfGames=[NUMBER)api/student/gamesAndStudentInfo
 
 Method: GET
 
@@ -36,4 +36,4 @@ Parameters:
 
 Example:
 
-fetch("h[ttps://checkin.carmel6000.com/](https://checkin.carmel6000.com/api/game/gameToFields/?munOfGames=[NUMBER)api/student/gamesAndStudentInfo/?username=student1@gmail.com&password=student11", { method: 'GET'  }).then(response => response.json()).then(data => console.log(data));
+fetch("[https://checkin.carmel6000.com/](https://checkin.carmel6000.com/api/game/gameToFields/?munOfGames=[NUMBER)api/student/gamesAndStudentInfo/?username=student1@gmail.com&password=student11", { method: 'GET'  }).then(response => response.json()).then(data => console.log(data));

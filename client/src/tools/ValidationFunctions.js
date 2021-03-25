@@ -17,16 +17,12 @@ export function userNameValidation(userName) {
 
 //check loom link
 export function linkValidation(link) {
-  console.log('link: ', link);
 
   if (link === null || link.length === 0) {
     return "";
   } else if (link.length > 255) {
-    console.log('link.length: ', link.length);
-
     return "** שדה זה לא יכול להכיל יותר מ-255 תווים **";
   } else if (!(/^$|(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(link))) {
-    console.log("hi");
     return "** שדה זה לא תקין **";
   } else {
     return "";

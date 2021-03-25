@@ -28,7 +28,6 @@ class InitialPage extends Component {
 
   goToLogin = (type) => {
       this.props.match.type = type
-    //   console.log('his.props: ', this.props);
       this.props.history.push({
         pathname: '/signin',
         state: { data: type }
