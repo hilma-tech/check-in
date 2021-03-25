@@ -18,6 +18,7 @@ import { GameService } from 'src/game/game.service';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { SchoolService } from 'src/school/school.service';
 import { FieldService } from 'src/field/field.service';
+import { PermissionService } from 'src/permission/permission.service';
 
 @Controller('api/student')
 export class StudentController {
@@ -27,7 +28,8 @@ export class StudentController {
     private schoolService: SchoolService,
     private classroomService: ClassroomService,
     private gameService: GameService,
-    private fieldService: FieldService
+    private fieldService: FieldService,
+    private permissionService: PermissionService
   ) {
     // this.register({username: 'student2@gmail.com', password: 'student11', name: 'בת-ציון רוז'})
   }
@@ -56,7 +58,7 @@ export class StudentController {
         req[i].classrooms = []
         for (let z = 0; z < req[i].userClassrooms.length; z++) {
           let classroomInfo = await this.classroomService.getClassroomInfoByName(req[i].userClassrooms[z], schoolId.id)
-          if (classroomInfo === undefined) {            
+          if (classroomInfo === undefined) {
             errorsMsg.push(`הכיתה ${req[i].userClassrooms[z]} בשורה ${i + 2} לא קיימת במערכת, אנא נסה להכניס כיתה אחרת`)
           } else {
             req[i].classrooms.push(classroomInfo)
@@ -119,9 +121,11 @@ export class StudentController {
     if (getStudentInfo != undefined) {
       var Classes = []
       return Promise.all(getStudentInfo.classroomStudent.map(async (classroom) => {
+        var getPermissions = await this.permissionService.getPermissionByClassId(classroom.id)
+        console.log('getPermissions: ', getPermissions);
         Classes.push(classroom.name);
         var getGames = await this.gameService.GetGamesForStudent(classroom.id, classroom.name);
-        return getGames
+        return { ...getGames, premissions: getPermissions }
       })).then(async (getGames) => {
         let schoolName = await this.schoolService.getSchoolNameById(getStudentInfo.classroomStudent[0].school_id);
 

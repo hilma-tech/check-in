@@ -88,6 +88,20 @@ class ArrowBar extends React.Component {
           </p>
         </div>
       );
+    } else if (this.props.page === "permission") {
+      return (
+        <div className="studentsInfoArrowBar">
+          <img
+            alt="small back arrow"
+            className="smallBackArrow"
+            src="/icons/awesome-arrow-right.svg"
+            onClick={this.props.history.goBack}
+          />
+          <p className="pageNameArrowBarStudentInfo">
+            {this.pages[this.props.page]}
+          </p>
+        </div>
+      );
     } else {
       return <></>;
     }

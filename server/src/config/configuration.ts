@@ -11,7 +11,7 @@ export default () => ({
       html:
        `<div style= "direction:rtl"><h1>ברוכים הבאים לצ'ק אין!</h1>
       <p >נשאר רק עוד צעד קטן כדי לסיים את ההרשמה שלכם!</p>
-      <p>לחצו על הקישור <a href="http://localhost:${env.PORT}/api/teacher/Verify?token={{token}}">כאן</a> כדי לאמת את כתובת המייל</p>
+      <p>לחצו על הקישור <a href="http://localhost:${env.DOMAIN}/api/teacher/Verify?token={{token}}">כאן</a> כדי לאמת את כתובת המייל</p>
       {{{placeForLogo}}}
       </div>`,
       text: `<h1>"ברוכים הבאים לצ'ק אין"</h1>`,
@@ -39,7 +39,8 @@ export default () => ({
         "SAdminEditTeachers",
         "SAdminEditStudents",
         "SAdminAddTeachers",
-        "SAdminAddStudents"
+        "SAdminAddStudents",
+        "SAdminAddSchools"
       ],
       defaultHomePage: "SAdminGames"
     },
@@ -52,6 +53,7 @@ export default () => ({
         "TeacherShowGame",
         "TeacherStudentInfo",
         "TeacherStudentsList",
+        "TeacherPremissions",
       ],
       defaultHomePage: "TeacherClasses"
     },
