@@ -223,6 +223,7 @@ class AddStudent extends React.Component {
             username: data.username,
             schoolName: this.state.school,
             id: data.id,
+            classroomStudent: data.classroomStudent,
             classes: data.classroomStudent !== undefined ? data.classroomStudent.map((classInfo) => {
               return classInfo.name
             }) : []

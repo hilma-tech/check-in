@@ -14,6 +14,14 @@ export class permissionInfoSave {
     @Matches(/^[0-9:]+$/)
     endTime: string;
 
+
+    @IsDefined()
+    @IsString()
+    @Length(1)
+    @Matches(/^[\u0590-\u05EA]+$/)
+    day: string
+
+
     @IsDefined()
     @IsNumber()
     classId: number
