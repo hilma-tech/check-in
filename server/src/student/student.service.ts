@@ -125,6 +125,39 @@ export class StudentService extends UserService {
     return await this.createUser<Student>(student);
   }
 
+  async editStudent(req: any){
+    console.log('req: ', req);
+    let username = req.username;
+    let password = req.password;
+    let studentInfo: Partial<Student> = new Student({ username, password });
+    // studentInfo.username = req.username
+    studentInfo.first_name = req.firstName
+    studentInfo.last_name = req.lastName
+    studentInfo.school = req.schoolId
+    studentInfo.classroomStudent = []
+    if (req.classrooms.length !== 0) {
+      console.log('req.classrooms: ', req.classrooms);
+      for (let i = 0; i < req.classrooms.length; i++) {
+        console.log('i: ', i);
+        if(this.classroomService !== undefined){
+          if (!this.classroomService.isClassroomInSchool(req.classrooms[i].id, req.schoolId)) {
+            throw new Error()
+          }
+        }
+        let studentClassroom = new Classroom()
+        studentClassroom.id = req.classrooms[i].id
+        studentClassroom.name = req.classrooms[i].name
+        studentClassroom.school_id = req.schoolId
+        console.log('studentInfo.classroomStudent: cc', studentInfo.classroomStudent);
+        studentInfo.classroomStudent[i] = studentClassroom
+      }
+    }
+    // req.password = bcrypt.hashSync(req.password, SALT);
+
+    console.log('studentInfo: ', studentInfo);
+    return await this.userRepository.update({id: req.id}, studentInfo);
+  }
+
   async isStudentExist(username: string) {
     let user = await this.userRepository.findOne({
       where: [{ username: username }]
