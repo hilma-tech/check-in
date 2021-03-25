@@ -16,18 +16,27 @@ class Permissions extends Component {
   constructor() {
     super()
     this.state = {
-      selectedStartTime: "08:00",
-      selectedEndTime: "14:00"
+      selectedStartTime: "",
+      selectedEndTime: ""
     }
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     if (this.props.chosenClass.classId === 0) {
       this.props.history.push("/teacher/classes");
       return;
     }
+    var savedPermissions = await this.props.chosenClass.getClassPermissions()
+    if (savedPermissions) {
+      this.setState({
+        selectedStartTime: this.props.chosenClass.classPermissionsStart[0],
+        selectedEndTime: this.props.chosenClass.classPermissionsEnd[0]
+      })    }
   };
-
+  rews = () => {
+      
+      
+  }
   handleStartTimeChange = (e) => {
     this.setState({ selectedStartTime: e.target.value })
   }
@@ -64,9 +73,10 @@ class Permissions extends Component {
                   style={{ color: 'paleturquoise', height: '4vh', }}
                   id="time"
                   type="time"
-                  defaultValue="08:00"
+                  value={this.state.selectedStartTime}
                   onChange={this.handleStartTimeChange}
                 />
+
               </div>
 
 
@@ -76,12 +86,14 @@ class Permissions extends Component {
                   required={true}
                   id="time"
                   type="time"
-                  defaultValue="14:00"
+                  value={this.state.selectedEndTime}
                   onChange={this.handleEndTimeChange}
 
                 />
               </div>
-              <h3 className='save' onClick={this.sendInfo}>שמור</h3>
+
+              <h3 className='save' onClick={this.sendInfo}>{this.props.chosenClass.classPermissionsStart[0] ? "עדכן" : "שמור"}</h3>
+
 
             </form>
           </div>

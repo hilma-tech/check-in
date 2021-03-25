@@ -19,3 +19,12 @@ export class permissionInfoSave {
     classId: number
 
 }
+
+
+export class getpermission {
+
+    @IsDefined()
+    @IsNumber()
+    classId: number
+
+}

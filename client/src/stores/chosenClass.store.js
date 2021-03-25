@@ -12,6 +12,8 @@ class ChosenClass {
   successGetInfo = true;
   haveMoreStudents = true;
   startGetInfo = false;
+  classPermissionsStart = []
+  classPermissionsEnd = []
   constructor() {
     makeObservable(this, {
       classId: observable,
@@ -28,14 +30,18 @@ class ChosenClass {
       haveMoreStudents: observable,
       startGetInfo: observable,
       resetChosenClass: action,
+      classPermissionsStart: observable,
+      classPermissionsEnd: observable,
+      getClassPermissions: action
     });
   }
+
 
   //gets the classrooms the student belongs to (besides the current class)
   setCurrStudentClasses = async (studentId) => {
     try {
-      for(let i=0; i <this.students.length; i++){
-        if(studentId === this.students[i].id){
+      for (let i = 0; i < this.students.length; i++) {
+        if (studentId === this.students[i].id) {
           this.currStudentIndex = i;
         }
       }
@@ -92,6 +98,20 @@ class ChosenClass {
     this.students = [];
     this.currStudentIndex = 0;
     this.studentClassrooms = [];
+    this.classPermissionsStart=[];
+    this.classPermissionsEnd=[];
+  }
+  getClassPermissions = async () => {
+    let classroom = this.classId
+    let { data } = await axios.get("/api/permission/getClassPermissions", {
+      params: { classId: classroom },
+    });
+    if (data.length > 0) {
+      this.classPermissionsStart.push(data[0].start_time)
+      this.classPermissionsEnd.push(data[0].end_time)
+      return true
+    }
+    else {return false}
   }
 }
 
