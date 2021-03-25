@@ -17,7 +17,8 @@ class Permissions extends Component {
     super()
     this.state = {
       selectedStartTime: "",
-      selectedEndTime: ""
+      selectedEndTime: "",
+      Err: ''
     }
   }
 
@@ -31,12 +32,10 @@ class Permissions extends Component {
       this.setState({
         selectedStartTime: this.props.chosenClass.classPermissionsStart[0],
         selectedEndTime: this.props.chosenClass.classPermissionsEnd[0]
-      })    }
+      })
+    }
   };
-  rews = () => {
-      
-      
-  }
+
   handleStartTimeChange = (e) => {
     this.setState({ selectedStartTime: e.target.value })
   }
@@ -45,14 +44,22 @@ class Permissions extends Component {
   }
   sendInfo = async () => {
     let classId = this.props.chosenClass.classId
-    try {
-      await axios.post(`/api/permission/setClassPermission`, { startTime: this.state.selectedStartTime, endTime: this.state.selectedEndTime, classId: classId });
-      this.props.errorMsg.setErrorMsg('הרשאות נשמרו בהצלחה')
-    }
-    catch (err) {
-      this.props.errorMsg.setErrorMsg('תקלה בשרת, נסו לשמור שנית')
+    if (!this.state.selectedEndTime || !this.state.selectedStartTime) {
+      this.setState({ Err: '*יש למלא את כל השדות*' })
+    } else {
+      try {
+        this.setState({ Err: '' })
+        await axios.post(`/api/permission/setClassPermission`, { startTime: this.state.selectedStartTime, endTime: this.state.selectedEndTime, classId: classId });
+        this.props.errorMsg.setErrorMsg('הרשאות נשמרו בהצלחה')
+      }
+      catch (err) {
+        this.setState({ Err: '' })
 
+        this.props.errorMsg.setErrorMsg('תקלה בשרת, נסו לשמור שנית')
+
+      }
     }
+
   }
   render() {
     return (
@@ -91,7 +98,7 @@ class Permissions extends Component {
 
                 />
               </div>
-
+              <h4 className='inputError'>{this.state.Err}</h4>
               <h3 className='save' onClick={this.sendInfo}>{this.props.chosenClass.classPermissionsStart[0] ? "עדכן" : "שמור"}</h3>
 
 

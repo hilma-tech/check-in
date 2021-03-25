@@ -41,6 +41,17 @@
   box-shadow: 0px, 0px, 3px, 6px #04306350;
 }
 
+.inputError {
+  color: red;
+  position: absolute;
+  font-size: '2.5vh';
+  margin: 0px;
+  font-weight: lighter;
+  margin-right: 5vw;
+  margin-top: 1vh;
+
+}
+
 @media only screen and (min-width: 500px) {
   .title {
     color: #043163;
@@ -51,5 +62,15 @@
   }
   .extramargintop {
     margin-top: 22vh;
+  }
+  .inputError {
+    color: red;
+    position: absolute;
+    font-size: '3vh';
+    margin: 0px;
+    font-weight: lighter;
+    margin-right: 5vw;
+    margin-top: 1vh;
+  
   }
 }
