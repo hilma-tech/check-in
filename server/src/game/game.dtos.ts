@@ -54,7 +54,7 @@ export class GameSaveDto {
   requirements: string;
 
   @Length(0, 255)
-  @IsUrl()
+  @Matches(/^$|(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/)
   gameLink: string
 
   @IsDefined()

@@ -35,7 +35,7 @@ export class ClassroomFieldService {
           where: [{field_id: field.id}]
         })
         if(removeField.new_value !== field.default_value){
-          await this.imageService.delete(field.default_value)
+          await this.imageService.delete(removeField.new_value)
         }
       }
       this.classFieldRepository.delete({

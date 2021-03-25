@@ -183,7 +183,7 @@ class AddGame extends Component {
           game: currGameInfo,
           field: fieldData,
         })
-      );
+        );
       // this.addGameFieldsDb(response.data[0].id);
       // if (!this.props.games.haveMoreGames) {
       this.props.games.addGame(response.data);
