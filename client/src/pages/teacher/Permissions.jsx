@@ -20,6 +20,14 @@ class Permissions extends Component {
       selectedEndTime: "14:00"
     }
   }
+
+  componentDidMount = () => {
+    if (this.props.chosenClass.classId === 0) {
+      this.props.history.push("/teacher/classes");
+      return;
+    }
+  };
+
   handleStartTimeChange = (e) => {
     this.setState({ selectedStartTime: e.target.value })
   }
