@@ -91,6 +91,17 @@ export class StudentController {
     }
   }
 
+  @UseJwtAuth('superAdmin')
+  @Post('/editStudent')
+  async editStudent(@Body() req: any) {
+    try {
+      return await this.studentService.editStudent(req);
+    } catch (e) {
+      console.log('e: ', e);
+      return false
+    }
+  }
+
   @UseJwtAuth('teacher', 'superAdmin')
   @Get('/getStudents')
   getStudents(@Query() skipON: GetStudentSkip) {
