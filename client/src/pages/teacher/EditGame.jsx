@@ -178,8 +178,8 @@ class EditGame extends Component {
             </p>
             {this.state.gameLink.length !== 0 ?
             <>
-            <h3 className="mobileGameReq">סרטון הסבר למשחק</h3>
-            <a className="mobileGameRP" target="_blank" href={this.state.gameLink}>{this.state.gameLink}</a>
+            <h3 className="mobileGameLink">סרטון הסבר למשחק</h3>
+            <a className="mobileGameL" target="_blank" href={this.state.gameLink}>{this.state.gameLink}</a>
               </> : <></>}
             <h1 className="mobileGameFields">שדות:</h1>
             {this.state.fieldsData.length === 0 ? (
