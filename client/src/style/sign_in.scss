@@ -1,6 +1,7 @@
 @import "./general_style.scss";
 
 .signInBackArrow{
+  @include mouse(point);
   position: absolute;
   top: 5vh;
   right: 5vh;
