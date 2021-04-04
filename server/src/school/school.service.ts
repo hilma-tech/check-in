@@ -19,12 +19,16 @@ export class SchoolService {
   async dx(){
     
     let a = await this.schoolRepository.find({where: [{id: 8}], relations: ['classrooms']})
-    console.log(a);
+    // console.log(a);
     
   }
 
+  async deleteSchool(@Body() schoolId: string) {
+    await this.schoolRepository.delete(schoolId)
+  }
+
   async addSchool(@Body() info: any) {
-    console.log('info: ', info);
+    // console.log('info: ', info);
     let school = new School();
     school.name = info.schoolName;
     school.city = info.schoolCity;

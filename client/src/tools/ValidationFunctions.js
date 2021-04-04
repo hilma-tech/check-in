@@ -17,19 +17,19 @@ export function userNameValidation(userName) {
 
 //check loom link
 export function linkValidation(link) {
-  console.log('link: ', link);
+  // console.log('link: ', link);
   if (!link) {
-    console.log("nothing");
+    // console.log("nothing");
     return "";
     } else if (link === null || link.length === 0) {
-      console.log("actually none");
+      // console.log("actually none");
     return "";
   } else if (link.length > 255) {
-    console.log('link.length: ', link.length);
+    // console.log('link.length: ', link.length);
 
     return "** שדה זה לא יכול להכיל יותר מ-255 תווים **";
   } else if (!(/^$|(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(link))) {
-    console.log("hi");
+    // console.log("hi");
     return "** שדה זה לא תקין **";
   } else {
     return "";
@@ -286,9 +286,9 @@ export function PermissionsValidation(per) {
     return "** יש להכניס הרשאה **";
   } else {
      let arrErr = per.map((permission) => {
-      console.log('permission: ', permission);
+      // console.log('permission: ', permission);
       if (permission.startTime === undefined && permission.endTime === undefined) {
-        console.log('idiot time!');
+        // console.log('idiot time!');
         return "** יש להכניס זמני התחלה וסיום **"
       } else if (Date.parse(permission.startTime) > Date.parse(permission.endTime)) {
         return "** על זמן הסיום להיות גדול מזמן ההתחלה **"

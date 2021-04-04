@@ -130,9 +130,9 @@ export class StudentService extends UserService {
   }
 
   async editStudent(req: any) {
-    console.log('req: ', req);
+    // console.log('req: ', req);
     let student = await this.userRepository.findOne({ where: [{ id: req.id }], relations: ["classroomStudent"] })
-    console.log('student: ', student);
+    // console.log('student: ', student);
     let username = req.username;
     let password = bcrypt.hashSync(req.password, SALT);;
     let studentInfo: Partial<Student> = new Student({ username, password });
@@ -145,13 +145,13 @@ export class StudentService extends UserService {
     studentInfo.school = req.schoolId
     // studentInfo.classroomStudent = []
     if (student.classroomStudent.length !== 0) {
-      console.log('student.classroomStudent: ', student.classroomStudent);
+      // console.log('student.classroomStudent: ', student.classroomStudent);
       for (let i = 0; i < student.classroomStudent.length; i++) {
-        console.log('i: ', i);
-        console.log('student.classroomStudent[i].id: ', student.classroomStudent[i].id);
-        console.log('req.id: ', req.id);
+        // console.log('i: ', i);
+        // console.log('student.classroomStudent[i].id: ', student.classroomStudent[i].id);
+        // console.log('req.id: ', req.id);
         let a = await this.classroomService.deleteClassroom(student.classroomStudent[i].id, req.id)
-        console.log('a: ', a);
+        // console.log('a: ', a);
         //     if(this.classroomService !== undefined){
         //       if (!this.classroomService.isClassroomInSchool(req.classrooms[i].id, req.schoolId)) {
         //         throw new Error()
@@ -167,7 +167,7 @@ export class StudentService extends UserService {
     }
     // req.password = bcrypt.hashSync(req.password, SALT);
 
-    console.log('studentInfo: ', studentInfo);
+    // console.log('studentInfo: ', studentInfo);
     return await this.userRepository.update({ id: req.id }, studentInfo);
   }
 

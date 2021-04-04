@@ -42,7 +42,7 @@ class Permissions extends Component {
   validatePer = () => {
     var arr = [...this.state.extraTimes, { startTime: this.state.selectedStartTime, endTime: this.state.selectedEndTime }]
     let fds = PermissionsValidation(arr)
-    console.log('fds: ', fds);
+    // console.log('fds: ', fds);
   }
   sendInfo = async () => {
     let classId = this.props.chosenClass.classId

@@ -29,7 +29,6 @@ class Games extends Component {
   }
 
   componentDidMount() {
-    console.log("I DID MOUNT");
     if (this.props.games.gamesList.length === 0) {
       this.getGames();
     }

@@ -270,7 +270,6 @@ class EditStudent extends React.Component {
   };
 
   deleteStudent = () => {
-    console.log('deleteStudent');
     let success = this.props.students.deleteStudent()
     if (success) {
       this.props.history.goBack();
@@ -379,7 +378,6 @@ class EditStudent extends React.Component {
           >
             {this.state.schoolNameError.mess}
           </p>
-          {console.log('this.state.school: ', this.state.school)}
           <Select
             className="selectStyle"
             placeholder="בחר..."
