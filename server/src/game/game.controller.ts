@@ -50,7 +50,7 @@ export class GameController {
 
   @UseJwtAuth('superAdmin')
   @Post('/addGame')
-  @UseFilesHandler()
+  @UseFilesHandler(100)
   async saveGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
     let emptyField = 0;
     req.field.map(eachField => {
