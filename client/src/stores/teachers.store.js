@@ -4,7 +4,7 @@ const axios = require("axios").default;
 
 class Teachers {
   listDataTeachers = [];
-  searchedTeachers=[];
+  searchedTeachers = [];
   haveMoreTeachers = true;
   successGettingTeachers = true;
   startGetTeachers = false;
@@ -20,15 +20,14 @@ class Teachers {
       getTeachers: action,
       getChosenTeacher: action,
       addTeacher: action,
-      searchTeachersReplace:action,
-      searchTeachers:action
-
+      searchTeachersReplace: action,
+      searchTeachers: action,
     });
   }
 
   addTeacher = (teacherInfo) => {
-    this.listDataTeachers = [teacherInfo, ...this.listDataTeachers]
-}
+    this.listDataTeachers = [teacherInfo, ...this.listDataTeachers];
+  };
 
   //get 50 teachers from DB for superadmin
   getTeachers = async () => {
@@ -57,23 +56,39 @@ class Teachers {
   };
 
   searchTeachers = async (val) => {
-    let Teachers = await axios.get(`/api/teacher/searchTeacherSuperadmin/?val=${val}`);
+    let Teachers = await axios.get(
+      `/api/teacher/searchTeacherSuperadmin/?val=${val}`
+    );
     if (Teachers.data[0] != null) {
-        let newTeachersSearch = Teachers.data.map((teacher) => {
-          teacher.name = teacher.first_name + " " + teacher.last_name;
-          teacher.schoolName = teacher.school.name;
-          teacher.classes = teacher.classroomTeacher.map((classroom) => {
-            return classroom.name;
-          });
-          return teacher;
-        })
-        this.searchedTeachers = [...newTeachersSearch]
+      let newTeachersSearch = Teachers.data.map((teacher) => {
+        teacher.name = teacher.first_name + " " + teacher.last_name;
+        teacher.schoolName = teacher.school.name;
+        teacher.classes = teacher.classroomTeacher.map((classroom) => {
+          return classroom.name;
+        });
+        return teacher;
+      });
+      this.searchedTeachers = [...newTeachersSearch];
     }
-}
+  };
 
-searchTeachersReplace=()=>{
-    this.searchedTeachers.replace([])
-}
+  deleteTeacher = async () => {
+    try {
+      await axios.post("/api/teacher/deleteTeacher", {
+        teacherId: this.chosenTeacher.id,
+      });
+      this.listDataTeachers = this.listDataTeachers.filter((teacher) => {
+        return teacher.id !== this.chosenTeacher.id;
+      });
+      return true;
+    } catch (err) {
+      return false;
+    }
+  };
+
+  searchTeachersReplace = () => {
+    this.searchedTeachers.replace([]);
+  };
 
   //gets all info about a specific teacher for superadmin
   getChosenTeacher = async (teacherId) => {

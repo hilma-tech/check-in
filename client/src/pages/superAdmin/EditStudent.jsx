@@ -6,7 +6,6 @@ import addicon from "../../img/addicon.svg";
 import ArrowNavBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import { withRouter } from "react-router-dom";
 import {
-  emailValidation,
   nameValidation,
   userNameValidation,
   studentPasswordValidation,
@@ -59,6 +58,7 @@ class EditStudent extends React.Component {
             params: { schoolId: this.props.students.chosenStudent.school.id },
           });
           this.setState({
+            schoolId: this.props.students.chosenStudent.school.id,
             allClasses: data,
             studentFirstName: this.props.students.chosenStudent.first_name,
             studentLastName: this.props.students.chosenStudent.last_name,
@@ -242,24 +242,27 @@ class EditStudent extends React.Component {
           }),
           schoolId: this.state.schoolId
         });
-        console.log('data: ', data);
-        // if (data) {
-        //   this.props.students.addStudent({
-        //     first_name: data.first_name,
-        //     last_name: data.last_name,
-        //     name: data.first_name + " " + data.last_name,
-        //     username: data.username,
-        //     schoolName: this.state.school,
-        //     id: data.id,
-        //     classroomStudent: data.classroomStudent,
-        //     classes: data.classroomStudent !== undefined ? data.classroomStudent.map((classInfo) => {
-        //       return classInfo.name
-        //     }) : []
-        //   })
+        let classroomStudent = this.state.chosenClasses.filter((classroom) => {
+          return classroom.name !== 'שייך לכיתה'
+        })
+        if (data) {
+          this.props.students.updateStudent({
+            first_name: this.state.studentFirstName,
+            last_name: this.state.studentLastName,
+            name: this.state.studentFirstName + " " + this.state.studentLastName,
+            username: this.state.userName,
+            schoolName: this.state.school,
+            school: {id: this.state.schoolId, name: this.state.school},
+            id: this.props.students.chosenStudent.id,
+            classroomStudent: classroomStudent,
+            classes: classroomStudent !== undefined ? classroomStudent.map((classInfo) => {
+              return classInfo.name
+            }) : []
+          })
         this.props.history.goBack(); // after saving go back
-        // } else {
-        //   this.props.errorMsg.setErrorMsg('שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר.');
-        // }
+        } else {
+          this.props.errorMsg.setErrorMsg('שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר.');
+        }
       } catch (err) {
         this.props.errorMsg.setErrorMsg('שגיאה בשרת, תלמיד לא נשמר, נסו שוב.');
       }

@@ -22,6 +22,10 @@ export class TeacherService extends UserService {
     super(config_options, userRepository, jwtService, configService, mailer);
   }
 
+  async deleteTeacher(@Body() teacherId: string){
+    await this.userRepository.delete(teacherId)
+  }
+
   async getTeacherClasses(@Body() userinfo: string, skipON: GetClassSkip) {
     let currTeacher = await this.userRepository.findOne({
       relations: ['classroomTeacher'],
