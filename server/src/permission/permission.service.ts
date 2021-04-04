@@ -14,13 +14,16 @@ export class PermissionService {
     ) { }
 
     async setPermissions(info) {
-        return await this.permissionRepository.save({ start_time: info.startTime, end_time: info.endTime, day: info.day, classroom_id: info.classId })
+        console.log('info: ', info);
+        info.map(async (time) => {
+            return await this.permissionRepository.save({ start_time: time.startTime, end_time: time.endTime, day: time.day, classroom_id: time.classId })
+        })
     }
 
     async getPermissionByClassId(classId) {
         let permissions = await this.permissionRepository.find({
             where: [{ classroom_id: classId }],
-            select: ['start_time', 'end_time','day']
+            select: ['start_time', 'end_time', 'day']
         })
         let permissionWODuplicates = permissions.filter((permission, i, arr) => arr.findIndex(perr => (JSON.stringify(perr) === JSON.stringify(permission))) === i)
         return permissionWODuplicates

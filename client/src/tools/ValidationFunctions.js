@@ -1,18 +1,18 @@
 //Check validation for user name
 export function userNameValidation(userName) {
-    if (userName === null || userName.length === 0) {
-        return '** חייב להכניס שם משתמש **'
-    } else if (userName.length > 15 || userName.length < 4) {
-        return '** שם משתמש צריך להכיל 4-15 תווים **'
-    } else if (userName.trim().length === 0) {
-        return '** שם משתמש לא תקין **'
-    } else if (!(/[A-Za-z\u0590-\u05EA0-9?!-_]/).test(userName)) {
-        return '** שם משתמש לא תקין **'
-    } else if ((/[@#$%^&*()+=[\]{};:,.\\|<>/~`\s]/).test(userName)) {
-      return '** שם משתמש לא תקין **'
-    } else {
-        return ''
-    }
+  if (userName === null || userName.length === 0) {
+    return '** חייב להכניס שם משתמש **'
+  } else if (userName.length > 15 || userName.length < 4) {
+    return '** שם משתמש צריך להכיל 4-15 תווים **'
+  } else if (userName.trim().length === 0) {
+    return '** שם משתמש לא תקין **'
+  } else if (!(/[A-Za-z\u0590-\u05EA0-9?!-_]/).test(userName)) {
+    return '** שם משתמש לא תקין **'
+  } else if ((/[@#$%^&*()+=[\]{};:,.\\|<>/~`\s]/).test(userName)) {
+    return '** שם משתמש לא תקין **'
+  } else {
+    return ''
+  }
 }
 
 //check loom link
@@ -114,8 +114,8 @@ export function passwordValidation(password) {
     return "** על הסיסמא להיות בין 6-20 תווים **";
   } else if (password.trim().length === 0) {
     return "** סיסמה לא תקינה **";
-//   } else if (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/.test(password)) {
-//     return "** על הסיסמא להכל אותיות ומספרים בלבד  **";
+    //   } else if (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/.test(password)) {
+    //     return "** על הסיסמא להכל אותיות ומספרים בלבד  **";
   } else if (!/[A-Za-z\u0590-\u05EA0-9]/.test(password)) {
     return "** סיסמא לא תקינה **";
   } else {
@@ -135,11 +135,11 @@ export function teacherPasswordValidation(password) {
     return "** על הסיסמה להיות בין 8-15 תווים **";
   } else if (/\s/.test(password) === true) {
     return "** על הסיסמא להכל אותיות ומספרים בלבד  **";
-  } else if(/[\u0590-\u05EA]/.test(password) === true){
+  } else if (/[\u0590-\u05EA]/.test(password) === true) {
     return "** על הסיסמא להכיל אותיות באנגלית בלבד  **";
-} else if(/[A-Za-z]/.test(password) === false){
+  } else if (/[A-Za-z]/.test(password) === false) {
     return "** על הסיסמא להכיל לפחות אות אחת  **";
-} else if(/[0-9]/.test(password) === false){
+  } else if (/[0-9]/.test(password) === false) {
     return "** על הסיסמא להכיל לפחות מספר אחד  **";
   } else {
     return "";
@@ -156,11 +156,11 @@ export function studentPasswordValidation(password) {
     return '** הסיסמה לא יכולה להכיל רווחים **'
   } else if (!(/[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
     return '** ניתן להשתמש באותיות באנגלית ובעברית, מספרים ותווים מיוחדים בלבד **'
-  } else if(/[A-Za-z\u0590-\u05EA]/.test(password) === false){
+  } else if (/[A-Za-z\u0590-\u05EA]/.test(password) === false) {
     return "** על הסיסמה להכיל לפחות אות אחת  **";
-} else if(/[0-9]/.test(password) === false){
+  } else if (/[0-9]/.test(password) === false) {
     return "** על הסיסמה להכיל לפחות מספר אחד  **";
-  }else {
+  } else {
     return ''
   }
 }
@@ -274,4 +274,26 @@ export function fieldInputValidation(input) {
   } else {
     return "";
   }
+}
+
+
+//Permission Time Validation
+export function PermissionsValidation(per) {
+  if (per === null || per.length === 0) {
+    return "** יש להכניס הרשאה **";
+  } else {
+     let arrErr = per.map((permission) => {
+      console.log('permission: ', permission);
+      if (permission.startTime === undefined && permission.endTime === undefined) {
+        console.log('idiot time!');
+        return "** יש להכניס זמני התחלה וסיום **"
+      } else if (Date.parse(permission.startTime) > Date.parse(permission.endTime)) {
+        return "** על זמן הסיום להיות גדול מזמן ההתחלה **"
+      } else {
+        return "";
+      }
+    })
+    return arrErr
+  }
+
 }
