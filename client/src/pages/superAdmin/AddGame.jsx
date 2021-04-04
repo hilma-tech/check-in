@@ -47,6 +47,22 @@ class AddGame extends Component {
     this.imageUploader = props.filesUploader;
   }
 
+  componentDidMount() {
+    console.log("I DID MOUNT");
+    if (this.props.games.gamesList.length === 0) {
+      this.getGames();
+    }
+  }
+
+  getGames = async () => {
+    await this.props.games.getGames();
+    if (!this.props.games.successGettingGames) {
+      this.props.errorMsg.setErrorMsg(
+        "הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת."
+      );
+    }
+  };
+
   //כשמו כן הוא
   saveFieldName = (fieldName, fieldI) => {
     this.setState((prevState) => {
