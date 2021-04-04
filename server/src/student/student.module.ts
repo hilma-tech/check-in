@@ -17,12 +17,12 @@ import { PermissionModule } from 'src/permission/permission.module';
 
 @Module({
   imports: [
-    ClassroomModule,
     SchoolModule,
     UserModule,
     RoleModule,
     GameModule,
     PermissionModule,
+    ClassroomModule,
     FieldModule,
     TypeOrmModule.forFeature([Student]),
     JwtModule.register({}),

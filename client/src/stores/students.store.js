@@ -30,7 +30,8 @@ class Students {
             addMultiStudents: action,
             searchStudents: action,
             searchStudentsReplace: action,
-            deleteStudent: action
+            deleteStudent: action,
+            updateStudent: action,
         })
     }
 
@@ -108,6 +109,17 @@ class Students {
         } catch (err) {
             return false
         }
+    }
+
+    updateStudent = (newStudentInfo) => {
+        let studentId = this.chosenStudent.id
+        this.listDataStudents = this.listDataStudents.map((student)=>{
+            if(student.id === studentId){
+                return newStudentInfo
+            } else {
+                return student
+            }
+        })
     }
 }
 
