@@ -78,7 +78,10 @@
   font-weight: 900;
   margin-top: 0;
 }
-
+.ex{
+  margin-right: 3vw;
+  margin-top:1.5vh;
+}
 .marginRight {
   margin-right: 5vw;
 }
@@ -135,6 +138,10 @@
     border-radius: 1vw;
     background-color: #E7EBEF;
     box-shadow: 0px 3px 6px #04316329;
+  }
+  .ex{
+    margin-right: 1vw;
+    margin-top:1.25vh;
   }
   .addTime {
     height: 3vh;
