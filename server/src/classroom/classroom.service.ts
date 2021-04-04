@@ -94,4 +94,10 @@ export class ClassroomService {
     })    
     return await this.classroomRepository.save(classroomInfo)
   }
+
+  async addStudentToClassroom(classroom_id, student){
+    let classroomInfo = await this.classroomRepository.findOne({id: classroom_id})
+    classroomInfo.students.push(student)    
+    return await this.classroomRepository.save(classroomInfo)
+  }
 }
