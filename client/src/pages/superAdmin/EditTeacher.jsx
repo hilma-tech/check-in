@@ -10,10 +10,18 @@ import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import { teachersContext } from "../../stores/teachers.store";
 import { errorMsgContext } from "../../stores/error.store";
+import EditIcon from '@material-ui/icons/Edit';
+import addicon from "../../img/addicon.svg";
+
+import { emailValidation, mustInputValidation, nameValidation, teacherPasswordValidation } from "../../tools/ValidationFunctions.js";
 
 class EditTeacher extends React.Component {
   constructor() {
     super();
+    this.rakazOptions = [
+      { value: "true", label: "כן" },
+      { value: "false", label: "לא" },
+    ];
     this.schoolOptions = [
       { value: "maalot", label: "מעלות התורה" },
       { value: "orot", label: "אורות בנות" },
@@ -26,6 +34,7 @@ class EditTeacher extends React.Component {
       { value: "c6", label: "ג'6" },
     ];
     this.state = {
+      showPassChanger: false,
       teacherName: "",
       schoolName: "",
       fieldsData: [],
@@ -64,114 +73,115 @@ class EditTeacher extends React.Component {
   }
 
   saveTeacherName = (props) => {
-    // let myprops = props.target;
-    // this.setState({ teacherName: myprops.value });
+    let myprops = props.target;
+    this.setState({ teacherName: myprops.value });
   };
 
   saveSchoolName = (props) => {
-    // this.setState((prevState) => {
-    //   let prevSchool = prevState.schoolName;
-    //   prevSchool = props.value;
-    //   return { schoolName: prevSchool };
-    // });
+    this.setState((prevState) => {
+      let prevSchool = prevState.schoolName;
+      prevSchool = props.value;
+      return { schoolName: prevSchool };
+    });
   };
 
   saveValue = (newValue, id) => {
-    // this.setState((prevState) => {
-    //   let updateData = [...prevState.fieldsData];
-    //   updateData[id].value = newValue;
-    //   return { fieldsData: updateData };
-    // });
+    this.setState((prevState) => {
+      let updateData = [...prevState.fieldsData];
+      updateData[id].value = newValue;
+      return { fieldsData: updateData };
+    });
   };
 
   saveEmail = (props) => {
-    // let myprops = props.target;
-    // this.setState({ email: myprops.value });
+    let myprops = props.target;
+    this.setState({ email: myprops.value });
   };
 
   savePassword = (props) => {
-    // let myprops = props.target;
-    // this.setState({ password: myprops.value });
+    let myprops = props.target;
+    this.setState({ password: myprops.value });
   };
 
   addNewFieldData = () => {
-    // this.setState((prevState) => {
-    //   let tempFieldsData = [...prevState.fieldsData];
-    //   tempFieldsData.push({
-    //     id: this.state.fieldsData.length,
-    //     value: [false],
-    //   });
-    //   return { fieldsData: tempFieldsData };
-    // });
+    this.setState((prevState) => {
+      let tempFieldsData = [...prevState.fieldsData];
+      tempFieldsData.push({
+        id: this.state.fieldsData.length,
+        value: [false],
+      });
+      return { fieldsData: tempFieldsData };
+    });
   };
 
   triggerRemoval = (id) => {
-    // this.setState((prevState) => {
-    //   let oldFieldArray = prevState.fieldsData;
-    //   let newArray = oldFieldArray.filter((field) => field.id !== id);
-    //   return { fieldsData: newArray };
-    // });
+    this.setState((prevState) => {
+      let oldFieldArray = prevState.fieldsData;
+      let newArray = oldFieldArray.filter((field) => field.id !== id);
+      return { fieldsData: newArray };
+    });
   };
 
   validateInputFields = (e) => {
-    // e.preventDefault();
-    // let allOk = true;
-    // // ----------teacher name validetion-------------------
-    // let nameTeacherMess = nameValidation(this.state.teacherName);
-    // if (nameTeacherMess.length !== 0) {
-    //   this.setState((prevState) => {
-    //     prevState.teacherNameError.toShow = "inline-block";
-    //     prevState.teacherNameError.mess = nameTeacherMess;
-    //     return { teacherNameError: prevState.teacherNameError };
-    //   });
-    //   allOk = false;
-    // } else {
-    //   this.setState({ teacherNameError: { toShow: "none", mess: "" } });
-    //   allOk = true;
-    // }
-    // // ----------school name validetion-------------------
-    // let nameSchoolMess = mustInputValidation(this.state.schoolName);
-    // if (nameSchoolMess.length !== 0) {
-    //   this.setState((prevState) => {
-    //     prevState.schoolNameError.toShow = "inline-block";
-    //     prevState.schoolNameError.mess = nameSchoolMess;
-    //     return { schoolNameError: prevState.schoolNameError };
-    //   });
-    //   allOk = false;
-    // } else {
-    //   this.setState({ schoolNameError: { toShow: "none", mess: "" } });
-    //   allOk = true;
-    // }
-    // //------------email validation---------------
-    // let emailMess = emailValidation(this.state.email);
-    // if (emailMess.length !== 0) {
-    //   this.setState((prevState) => {
-    //     prevState.emailNameError.toShow = "inline-block";
-    //     prevState.emailNameError.mess = emailMess;
-    //     return { emailNameError: prevState.emailNameError };
-    //   });
-    //   allOk = false;
-    // } else {
-    //   this.setState({ emailNameError: { toShow: "none", mess: "" } });
-    //   allOk = true;
-    // }
-    // // ----------password validetion-------------------
-    // let passwordMess = passwordValidation(this.state.password);
-    // if (passwordMess.length !== 0) {
-    //   this.setState((prevState) => {
-    //     prevState.passwordNameError.toShow = "inline-block";
-    //     prevState.passwordNameError.mess = passwordMess;
-    //     return { passwordNameError: prevState.passwordNameError };
-    //   });
-    //   allOk = false;
-    // } else {
-    //   this.setState({ passwordNameError: { toShow: "none", mess: "" } });
-    //   allOk = true;
-    // }
-    // //after all the validetion we need to send the data to sql
-    // if (allOk) {
-    //   this.props.history.goBack(); // after saving go back
-    // }
+    e.preventDefault();
+    let allOk = true;
+    // ----------teacher name validetion-------------------
+    let nameTeacherMess = nameValidation(this.state.teacherName);
+    if (nameTeacherMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.teacherNameError.toShow = "inline-block";
+        prevState.teacherNameError.mess = nameTeacherMess;
+        return { teacherNameError: prevState.teacherNameError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ teacherNameError: { toShow: "none", mess: "" } });
+      allOk = true;
+    }
+    // ----------school name validetion-------------------
+    let nameSchoolMess = mustInputValidation(this.state.schoolName);
+    if (nameSchoolMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.schoolNameError.toShow = "inline-block";
+        prevState.schoolNameError.mess = nameSchoolMess;
+        return { schoolNameError: prevState.schoolNameError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+      allOk = true;
+    }
+    //------------email validation---------------
+    let emailMess = emailValidation(this.state.email);
+    if (emailMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.emailNameError.toShow = "inline-block";
+        prevState.emailNameError.mess = emailMess;
+        return { emailNameError: prevState.emailNameError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ emailNameError: { toShow: "none", mess: "" } });
+      allOk = true;
+    }
+    // ----------password validetion-------------------
+    if(this.state.showPassChanger){
+      let passwordErrorMess = teacherPasswordValidation(this.state.password);
+      if (passwordErrorMess.length !== 0) {
+        this.setState((prevState) => {
+          prevState.passwordError.toShow = "block";
+          prevState.passwordError.mess = passwordErrorMess;
+          return { passwordError: prevState.passwordError };
+        });
+        allOk = false;
+      } else {
+        this.setState({ passwordError: { toShow: "none", mess: "" } });
+      }
+    }
+    //after all the validetion we need to send the data to sql
+    if (allOk) {
+      this.props.history.goBack(); // after saving go back
+    }
   };
 
   deleteTeacher = () => {
@@ -203,8 +213,8 @@ class EditTeacher extends React.Component {
                 type="text"
                 placeholder="הכנס את שם המורה..."
                 onBlur={this.saveTeacherName}
-                value={this.state.teacherName}
-                readOnly={true}
+                defaultValue={this.state.teacherName}
+        
               />
 
               {/* בית ספר */}
@@ -223,7 +233,7 @@ class EditTeacher extends React.Component {
                 placeholder={this.state.schoolName}
                 // defaultValue={{ value: "schoolName", label: String(this.state.schoolName) }}
                 // native={true}
-                isDisabled={true}
+                
               />
               {/* רכז*/}
               <label className="labelFields">רכז:</label>
@@ -236,10 +246,10 @@ class EditTeacher extends React.Component {
               <Select
                 className="selectStyle"
                 // onChange={this.saveSchoolName}
-                options={this.schoolOptions}
+                options={this.rakazOptions}
                 styles={SelectStyle()}
                 placeholder={this.state.rakaz === true ? "כן" : "לא"}
-                isDisabled={true}
+                
               />
               {/* כיתה */}
               <label className="labelFields">כיתות:</label>
@@ -256,7 +266,7 @@ class EditTeacher extends React.Component {
                           saveValue={this.saveValue}
                           options={this.classOptions}
                           onChange={this.saveChange}
-                          reading={true}
+                          
                           defaultValue={fieldObj.value}
                         />
                       );
@@ -265,14 +275,14 @@ class EditTeacher extends React.Component {
               </div>
             </form>
             {/* הוספת כיתה */}
-            {/* <div
+            <div
                 style={{ marginRight: '9vw' }}
                 className='addSomethingNew'
                 onClick={this.addNewFieldData}
               >
                 <img className='addIcon' src={addicon} alt="addIcon"></img>
                 <p className='addTitle'>הוסף כיתה</p>
-              </div> */}
+              </div>
             <form className="formData" style={{ marginTop: "0" }}>
               {/* אימייל */}
               <label className="labelFields">אימייל:</label>
@@ -287,32 +297,59 @@ class EditTeacher extends React.Component {
                 onBlur={this.saveEmail}
                 type="text"
                 placeholder="הכנס כתובת מייל..."
-                readOnly={true}
-                value={this.state.email}
+        
+                defaultValue={this.state.email}
               />
               {/* סיסמא */}
-              {/* <label className="labelFields">סיסמא:</label>
+              {this.state.showPassChanger ?
+            <><label className="labelFields">* סיסמא:</label>
               <p
                 className="error"
-                style={{ display: this.state.passwordNameError.toShow }}
+                style={{ display: this.state.passwordError.toShow }}
               >
-                {this.state.passwordNameError.mess}
+                {this.state.passwordError.mess}
               </p>
               <input
                 className="inputFields"
-                onBlur={this.savePassword}
+                defaultValue={this.state.password}
+                onChange={this.handlechanges}
                 type="text"
-                placeholder="הכנס סיסמא..."
-                readOnly={true}
-              /> */}
+                placeholder="הכנס סיסמא"
+                name="password"
+              ></input>
+              <div className="passTeacherChange" onClick={() => {
+              this.setState({
+                showPassChanger: !this.state.showPassChanger,
+                password: ""
+              });
+            }} >
+              <h2 className="changePasstext" >ביטול</h2>
+            </div> </> :
+            <div className="passTeacherChange" onClick={() => {
+              this.setState({
+                showPassChanger: !this.state.showPassChanger,
+                password: ""
+              });
+            }} >
+              <h2 className="changePasstext" >שינוי סיסמא</h2>
+              <div className='editIcon'>
+                <EditIcon
+                  style={{
+                    height: "3vh",
+                    width: "3vh",
+                    color: "#043163",
+                  }} />
+              </div>
+            </div>
+          }
             </form>
 
             <div className='spacerFromSaveButton'></div>
               <div className='saveButtonBackground'>
               <button className="deletButton" onClick={this.deleteTeacher}>מחק מורה</button>
-                {/* <button className="saveButton" onClick={this.validateInputFields}>
+                <button className="saveButton" onClick={this.validateInputFields}>
                   שמור
-                  </button> */}
+                  </button>
               </div>
           </div>
         </div>
