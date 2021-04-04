@@ -1,14 +1,8 @@
-import { join } from 'path';
 import { Classroom } from 'src/classroom/classroom.entity';
-import { Game } from 'src/game/game.entity';
-import { Student } from 'src/student/student.entity';
-import { Teacher } from 'src/teacher/teacher.entity';
 import {
   Column,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
