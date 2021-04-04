@@ -18,8 +18,11 @@ export function userNameValidation(userName) {
 //check loom link
 export function linkValidation(link) {
   console.log('link: ', link);
-
-  if (link === null || link.length === 0) {
+  if (!link) {
+    console.log("nothing");
+    return "";
+    } else if (link === null || link.length === 0) {
+      console.log("actually none");
     return "";
   } else if (link.length > 255) {
     console.log('link.length: ', link.length);

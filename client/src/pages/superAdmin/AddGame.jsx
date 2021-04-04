@@ -177,6 +177,7 @@ class AddGame extends Component {
     const fieldData = this.setUpValues();
     try {
       this.setState({ savingInfo: true });
+      
       const response = await this.imageUploader.post(
         "/api/game/addGame",
         JSON.stringify({
