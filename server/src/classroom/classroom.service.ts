@@ -86,4 +86,12 @@ export class ClassroomService {
     })
     return classroom === undefined ? false : true
   }
+
+  async deleteClassroom(classroom_id, student_id){
+    let classroomInfo = await this.classroomRepository.findOne({id: classroom_id})
+    classroomInfo.students = classroomInfo.students.filter((student)=>{
+      return student.id !== student_id
+    })    
+    return await this.classroomRepository.save(classroomInfo)
+  }
 }
