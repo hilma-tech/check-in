@@ -8,6 +8,12 @@ export class SchoolController {
   constructor(private schoolService: SchoolService) {}
 
   @UseJwtAuth('superAdmin')
+  @Post('/deleteSchool')
+  async deleteSchool(@Body() val: any) {
+    return await this.schoolService.deleteSchool(val.schoolId)
+  }
+
+  @UseJwtAuth('superAdmin')
   @Get('/getSchools')
   async getSchoolsInfo(@Query() skipON: GetSchoolSkip) {
     return await this.schoolService.getSchools(skipON);

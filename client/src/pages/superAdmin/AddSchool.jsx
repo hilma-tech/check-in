@@ -173,7 +173,6 @@ class AddSchool extends React.Component {
             // }),
             // schoolId: this.state.schoolId
           });
-          console.log('data: ', data);
         if (data) {
           this.props.schools.addSchool({
             city: this.state.schoolCity,
@@ -183,7 +182,7 @@ class AddSchool extends React.Component {
       this.props.history.goBack(); // after saving go back
     }
   } catch (err) {
-    console.log('err: ', err);
+    // console.log('err: ', err);
     this.props.errorMsg.setErrorMsg('שגיאה בשרת, בית הספר לא נשמר, נסו שוב.');
   }};}
 

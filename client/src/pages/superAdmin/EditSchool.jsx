@@ -31,6 +31,18 @@ class EditSchool extends Component {
       });
     }
   }
+
+
+  deleteSchool = (e) => {
+    e.preventDefault();
+    let success = this.props.schools.deleteSchool()
+    if (success) {
+      this.props.history.goBack();
+    } else {
+      this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת, לא היה ניתן למחוק את בית הספר.')
+    }
+  }
+
   /*
       Get e, prevent refresh and take the classes in state, 
       copy the array to add a default class and setstate with new array
@@ -272,7 +284,7 @@ class EditSchool extends Component {
             </button> */}
           <div className="spacerFromSaveButton"></div>
           <div className="saveButtonBackground">
-             <button className="deletButton">מחק בית ספר</button>
+             <button className="deletButton" onClick={this.deleteSchool}>מחק בית ספר</button>
            {/* <button className="saveButton" onClick={this.saveData}>
               שמור
             </button>  */}

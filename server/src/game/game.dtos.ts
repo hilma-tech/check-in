@@ -54,7 +54,7 @@ export class GameSaveDto {
   requirements: string;
 
   @Length(0, 255)
-  @IsUrl()
+  // @IsUrl()
   gameLink: string
 
   @IsDefined()
@@ -90,7 +90,8 @@ export class GameSaveReq {
   @IsDefined()
   @ValidateNested({ each: true })
   @Type(() => FieldArrDto)
-  field: [
+  field:
+   [
     {
       name: string;
       selection: string;

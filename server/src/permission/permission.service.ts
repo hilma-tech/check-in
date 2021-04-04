@@ -14,7 +14,7 @@ export class PermissionService {
     ) { }
 
     async setPermissions(info) {
-        console.log('info: ', info);
+        // console.log('info: ', info);
         info.map(async (time) => {
             return await this.permissionRepository.save({ start_time: time.startTime, end_time: time.endTime, day: time.day, classroom_id: time.classId })
         })

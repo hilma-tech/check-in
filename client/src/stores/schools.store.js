@@ -26,12 +26,13 @@ class Schools {
       searchSchoolsReplace:action,
       searchedSchools: observable,
       addSchool: action,
+      deleteSchool: action,
     });
   }
 
   addSchool = async (schoolInfo) => {
-    console.log('schoolInfo: ', schoolInfo);
-    console.log('this.listDataSchools: ', this.listDataSchools);
+    // console.log('schoolInfo: ', schoolInfo);
+    // console.log('this.listDataSchools: ', this.listDataSchools);
     this.listDataSchools = [schoolInfo, ...this.listDataSchools]
   
     // console.log('...this.listDataStudents: ', this.listDataStudents);
@@ -95,6 +96,20 @@ class Schools {
       return false
     }
   };
+
+  deleteSchool = async () => {
+    try {
+        await axios.post("/api/school/deleteSchool", {
+            schoolId: this.chosenSchool.id,
+          });
+        this.listDataSchools = this.listDataSchools.filter((school) => {
+            return school.id !== this.chosenSchool.id
+        })
+        return true
+    } catch (err) {
+        return false
+    }
+}
 
   searchSchools = async (val) => {
     try{
