@@ -6,7 +6,6 @@ import addicon from "../../img/addicon.svg";
 import ArrowNavBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import { withRouter } from "react-router-dom";
 import {
-  emailValidation,
   nameValidation,
   userNameValidation,
   studentPasswordValidation,
