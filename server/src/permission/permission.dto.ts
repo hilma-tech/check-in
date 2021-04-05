@@ -1,19 +1,23 @@
-import { IsDefined, IsNumber, IsNumberString, IsString, Length, Matches } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsDefined, IsNumber, IsNumberString, IsString, Length, Matches, ValidateNested } from 'class-validator';
 
 
-export class permissionInfoSave {
+export class Permission {
     @IsDefined()
     @IsString()
-    @Length(4, 6)
+    @Length(5)
     @Matches(/^[0-9:]+$/)
     startTime: string;
 
     @IsDefined()
     @IsString()
-    @Length(4, 6)
+    @Length(5)
     @Matches(/^[0-9:]+$/)
     endTime: string;
+    index: number
+}
 
+export class allPermissions {
 
     @IsDefined()
     @IsString()
@@ -21,40 +25,13 @@ export class permissionInfoSave {
     @Matches(/^[\u0590-\u05EA]+$/)
     day: string
 
-
     @IsDefined()
     @IsNumber()
     classId: number
-
+    @IsDefined()
+    @ValidateNested({ each: true })
+    @Type(() => Permission)
+    permissions: Permission[];
 }
 
 
-
-// export class FieldDataDto {
-//     @IsDefined()
-//     @IsString()
-//     @Length(1, 50)
-//     @Matches(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
-//     name: string;
-//     @IsDefined()
-//     @IsString()
-//     @Length(1, 30)
-//     selection: string;
-//     @IsDefined()
-//     @ValidateNested({ each: true })
-//     @Type(() => DataValueDto)
-//     value: DataValueDto[];
-//     @IsDefined()
-//     @IsNumber()
-//     order: number;
-// }
-
-// export class SaveFieldDto {
-//     @IsDefined()
-//     @ValidateNested({ each: true })
-//     @Type(() => FieldDataDto)
-//     data: FieldDataDto[];
-//     @IsDefined()
-//     @IsNumber()
-//     id: number;
-// }
