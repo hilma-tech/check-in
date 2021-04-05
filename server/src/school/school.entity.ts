@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { IsDefined, IsString, Length } from 'class-validator';
+import { IsDefined, IsString, Length, Matches } from 'class-validator';
 import { Student } from 'src/student/student.entity';
 import { Teacher } from 'src/teacher/teacher.entity';
 import { Classroom } from 'src/classroom/classroom.entity';
@@ -12,12 +12,14 @@ export class School {
   @IsDefined()
   @IsString()
   @Length(1, 30)
+  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-]/)
   @Column({ type: 'varchar', length: 50 })
   name: string;
 
   @IsDefined()
   @IsString()
   @Length(1, 30)
+  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-]/)
   @Column({ type: 'varchar', length: 50 })
   city: string;
 
