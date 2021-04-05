@@ -74,10 +74,11 @@ export class TeacherController {
   @UseJwtAuth('superAdmin')
   @Post('/editTeacher')
   async editTeacher(@Body() req: any) {
+    console.log('req: ', req);
     try {
       return await this.teacherService.editTeacher(req);
     } catch (e) {
-      // console.log('e: ', e);
+      console.log('e: ', e);
       return false
     }
   }
