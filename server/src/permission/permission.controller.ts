@@ -1,9 +1,7 @@
 import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
+import { allPermissions } from './permission.dto';
 import { PermissionService } from './permission.service';
-import { ClassroomService } from 'src/classroom/classroom.service';
-import { Repository } from 'typeorm';
-import { Permission } from './permission.entity';
-import { permissionInfoSave } from './permission.dto';
+
 
 
 @Controller('api/permission')
@@ -14,8 +12,12 @@ export class PermissionController {
     }
 
     @Post('/setClassPermission')
-    async setClassPermission(@Body() req: permissionInfoSave) {
+    async setClassPermission(@Body() req: allPermissions) {
         await this.PermissionService.setPermissions(req)
     }
 
+    @Get('/dayPermissions')
+    async dayPermissions(@Query() req: any) {
+        return await this.PermissionService.getDayClassPermissions(req)
+    }
 }
