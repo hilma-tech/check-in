@@ -30,6 +30,7 @@ class EditTeacher extends React.Component {
       { value: "false", label: "לא" },
     ];
     this.state = {
+      schoolId: 0,
       showPassChanger: false,
       teacherFirstName: "",
       lastName: "",
@@ -47,7 +48,6 @@ class EditTeacher extends React.Component {
       allSchools: [],
       allClasses: [],
       chosenClasses: [],
-
     };
   }
 
@@ -59,9 +59,9 @@ class EditTeacher extends React.Component {
         }
       );
       this.setState({
-        teacherFirstName:
-          this.props.teachers.chosenTeacher.first_name,
-          lastName: this.props.teachers.chosenTeacher.last_name,
+        schoolId: this.props.teachers.chosenTeacher.school.id,
+        teacherFirstName: this.props.teachers.chosenTeacher.first_name,
+        lastName: this.props.teachers.chosenTeacher.last_name,
         email: this.props.teachers.chosenTeacher.username,
         schoolName: this.props.teachers.chosenTeacher.school.name,
         fieldsData: fields,
@@ -199,6 +199,13 @@ class EditTeacher extends React.Component {
     });
   };
 
+  chooseClass = (e) => {
+    this.setState((prevState) => {
+      prevState.chosenClasses[e.classIndex] = { id: e.id, name: e.value };
+      return { chosenClasses: prevState.chosenClasses };
+    });
+  };
+
   triggerRemoval = (id) => {
     this.setState((prevState) => {
       let oldFieldArray = prevState.fieldsData;
@@ -207,7 +214,7 @@ class EditTeacher extends React.Component {
     });
   };
 
-  validateInputFields = (e) => {
+  validateInputFields = async (e) => {
     e.preventDefault();
     let allOk = true;
     // ----------teacher first name validetion-------------------
@@ -278,7 +285,52 @@ class EditTeacher extends React.Component {
     }
     //after all the validetion we need to send the data to sql
     if (allOk) {
-      this.props.history.goBack(); // after saving go back
+      try {
+        console.log("OOOOOOOOOOOI");
+        console.log('this.state.schoolId: ', this.state.schoolId);
+        
+        console.log('this.state.chosenClasses: ', this.state.chosenClasses);
+        let { data } = await axios.post("/api/teacher/editTeacher", {
+          id: this.props.teachers.chosenTeacher.id,
+          username: this.state.email,
+          password: this.state.password,
+          firstName: this.state.teacherFirstName,
+          lastName: this.state.lastName,
+          classrooms: this.state.chosenClasses.filter((classroom) => {
+            return classroom.name !== "שייך לכיתה";
+          }),
+          schoolId: this.state.schoolId,
+        });
+        let classroomTeacher = this.state.chosenClasses.filter((classroom) => {
+          return classroom.name !== "שייך לכיתה";
+        });
+        console.log("data: ", data);
+        if (data) {
+          this.props.teachers.updateTeacher({
+            first_name: this.state.teacherFirstName,
+            last_name: this.state.lastName,
+            name: this.state.teacherFirstName + " " + this.state.lastName,
+            username: this.state.email,
+            schoolName: this.state.schoolName,
+            school: { id: this.state.schoolId, name: this.state.schoolName },
+            id: this.props.teachers.chosenTeacher.id,
+            classroomTeacher: classroomTeacher,
+            classes:
+              classroomTeacher !== undefined
+                ? classroomTeacher.map((classInfo) => {
+                    return classInfo.name;
+                  })
+                : [],
+          });
+          this.props.history.goBack(); // after saving go back
+        } else {
+          this.props.errorMsg.setErrorMsg(
+            "שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר."
+          );
+        }
+      } catch (err) {
+        this.props.errorMsg.setErrorMsg("שגיאה בשרת, המורה לא נשמר, נסו שוב.");
+      }
     }
   };
 
@@ -360,45 +412,59 @@ class EditTeacher extends React.Component {
                 // onChange={this.saveSchoolName}
                 options={this.rakazOptions}
                 styles={SelectStyle()}
+                isDisabled={true}
                 placeholder={this.state.rakaz === true ? "כן" : "לא"}
               />
               {/* כיתה */}
               <label className="labelFields">כיתות:</label>
               <div>
-              {this.state.schoolName.length === 0 ? <></> :
-            <>
-              {
-                this.state.chosenClasses.map((val, i) => {
-                  return (<div key={val.id} className="classSelection">
-                    <Select
-                      className="classSelectionInAddTecher"
-                      styles={SelectStyle()}
-                      options={this.makeClassesOption(i)}
-                      onChange={this.chooseClass}
-                      defaultValue={{
-                        value: val.name,
-                        label: val.name,
-                      }}
-                    />
-                    <img
-                      className="removeFieldIcon"
-                      onClick={() => this.removeClass(i)}
-                      src="/icons/delete.svg"
-                    />
-                  </div>)
-                })
-              }
+                {this.state.schoolName.length === 0 ? (
+                  <></>
+                ) : (
+                  <>
+                    {this.state.chosenClasses.map((val, i) => {
+                      return (
+                        <div key={val.id} className="classSelection">
+                          <Select
+                            className="classSelectionInAddTecher"
+                            styles={SelectStyle()}
+                            options={this.makeClassesOption(i)}
+                            onChange={this.chooseClass}
+                            defaultValue={{
+                              value: val.name,
+                              label: val.name,
+                            }}
+                          />
+                          <img
+                            className="removeFieldIcon"
+                            onClick={() => this.removeClass(i)}
+                            src="/icons/delete.svg"
+                          />
+                        </div>
+                      );
+                    })}
 
-              {this.state.allClasses.length === this.state.chosenClasses.length ? <></> :
-                <div className="addSomethingNew" onClick={this.addClassSelection}>
-                  <img className="addIcon" src={addicon} alt="add icon"></img>
-                  <p className="addTitle">הוסף כיתה</p>
-                </div>}
-            </>
-          }
+                    {this.state.allClasses.length ===
+                    this.state.chosenClasses.length ? (
+                      <></>
+                    ) : (
+                      <div
+                        className="addSomethingNew"
+                        onClick={this.addClassSelection}
+                      >
+                        <img
+                          className="addIcon"
+                          src={addicon}
+                          alt="add icon"
+                        ></img>
+                        <p className="addTitle">הוסף כיתה</p>
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
             </form>
-            
+
             <form className="formData" style={{ marginTop: "0" }}>
               {/* אימייל */}
               <label className="labelFields">אימייל:</label>

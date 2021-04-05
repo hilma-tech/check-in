@@ -201,7 +201,7 @@ class EditStudent extends React.Component {
     }
 
     // ---------------password validation-------------------
-    if(this.state.showPassChanger){
+    if (this.state.showPassChanger) {
       let passwordErrorMess = studentPasswordValidation(this.state.password);
       if (passwordErrorMess.length !== 0) {
         this.setState((prevState) => {
@@ -252,14 +252,14 @@ class EditStudent extends React.Component {
             name: this.state.studentFirstName + " " + this.state.studentLastName,
             username: this.state.userName,
             schoolName: this.state.school,
-            school: {id: this.state.schoolId, name: this.state.school},
+            school: { id: this.state.schoolId, name: this.state.school },
             id: this.props.students.chosenStudent.id,
             classroomStudent: classroomStudent,
             classes: classroomStudent !== undefined ? classroomStudent.map((classInfo) => {
               return classInfo.name
             }) : []
           })
-        this.props.history.goBack(); // after saving go back
+          this.props.history.goBack(); // after saving go back
         } else {
           this.props.errorMsg.setErrorMsg('שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר.');
         }
@@ -270,7 +270,6 @@ class EditStudent extends React.Component {
   };
 
   deleteStudent = () => {
-    console.log('deleteStudent');
     let success = this.props.students.deleteStudent()
     if (success) {
       this.props.history.goBack();
@@ -347,13 +346,13 @@ class EditStudent extends React.Component {
                 name="password"
               ></input>
               <div className="passStudentChange" onClick={() => {
-              this.setState({
-                showPassChanger: !this.state.showPassChanger,
-                password: ""
-              });
-            }} >
-              <h2 className="changePasstext" >ביטול</h2>
-            </div> </> :
+                this.setState({
+                  showPassChanger: !this.state.showPassChanger,
+                  password: ""
+                });
+              }} >
+                <h2 className="changePasstext" >ביטול</h2>
+              </div> </> :
             <div className="passStudentChange" onClick={() => {
               this.setState({
                 showPassChanger: !this.state.showPassChanger,
@@ -379,7 +378,6 @@ class EditStudent extends React.Component {
           >
             {this.state.schoolNameError.mess}
           </p>
-          {console.log('this.state.school: ', this.state.school)}
           <Select
             className="selectStyle"
             placeholder="בחר..."
@@ -425,7 +423,13 @@ class EditStudent extends React.Component {
 
         <div className="spacerFromSaveButton"></div>
         <div className="saveButtonBackground">
-          <button className="deletButton" onClick={this.deleteStudent}>מחק תלמיד</button>
+          <button className="deletButton" onClick={() => {
+            this.props.errorMsg.setQuestion(
+              "האם אתה בטוח שברצונך למחוק תלמיד זה?",
+              this.deleteStudent,
+              "מחק"
+            )
+          }}>מחק תלמיד</button>
           <button className="saveButton" onClick={this.saveButton}>
             שמור
           </button>

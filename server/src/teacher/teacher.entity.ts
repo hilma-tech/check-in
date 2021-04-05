@@ -27,12 +27,14 @@ export class Teacher extends User {
   @ManyToMany(
     type => Classroom,
     classroom => classroom.teachers,
+    { onDelete: 'CASCADE' }
   )
   classroomTeacher: Classroom[];
 
   @ManyToOne(
     () => School,
     school => school.teachers,
+    { onDelete: 'CASCADE' }
   )
   @JoinColumn({ referencedColumnName: 'id', name: 'school_id' })
   school: number;

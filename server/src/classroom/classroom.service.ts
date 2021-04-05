@@ -94,4 +94,24 @@ export class ClassroomService {
     })    
     return await this.classroomRepository.save(classroomInfo)
   }
+
+  async deleteTeacherClassroom(classroom_id, teacher_id){
+    let classroomInfo = await this.classroomRepository.findOne({id: classroom_id})
+    classroomInfo.teachers = classroomInfo.teachers.filter((teacher)=>{
+      return teacher.id !== teacher_id
+    })    
+    return await this.classroomRepository.save(classroomInfo)
+  }
+
+  async addStudentToClassroom(classroom_id, student){
+    let classroomInfo = await this.classroomRepository.findOne({id: classroom_id})
+    classroomInfo.students.push(student)    
+    return await this.classroomRepository.save(classroomInfo)
+  }
+
+  async addTeacherToClassroom(classroom_id, teacher){
+    let classroomInfo = await this.classroomRepository.findOne({id: classroom_id})
+    classroomInfo.teachers.push(teacher)    
+    return await this.classroomRepository.save(classroomInfo)
+  }
 }

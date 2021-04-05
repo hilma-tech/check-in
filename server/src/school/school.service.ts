@@ -1,5 +1,6 @@
 import { Body, Injectable, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Classroom } from 'src/classroom/classroom.entity';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { Repository } from 'typeorm';
 import { GetSchoolSkip } from './school.dtos';
@@ -11,17 +12,29 @@ export class SchoolService {
     @InjectRepository(School)
     private schoolRepository: Repository<School>,
     private classroomService: ClassroomService
-  ) { }
+  ) {
+    this.dx()
+  }
+  
+  async dx(){
+    
+    let a = await this.schoolRepository.find({where: [{id: 8}], relations: ['classrooms']})
+    // console.log(a);
+    
+  }
 
-async addSchool(@Body() info: any) {
-  console.log('info: ', info);
-  let school = new School();
+  async deleteSchool(@Body() schoolId: string) {
+    await this.schoolRepository.delete(schoolId)
+  }
+
+  async addSchool(@Body() info: any) {
+    let school = new School();
     school.name = info.schoolName;
     school.city = info.schoolCity;
     let res = await this.schoolRepository.save(school);
     await this.classroomService.addClassesWithSchool(info, res)
     return res;
-}
+  }
 
   async getSchools(@Req() skipON: GetSchoolSkip) {
     let numSchools = await this.schoolRepository.count();
@@ -55,7 +68,7 @@ async addSchool(@Body() info: any) {
     })
   }
 
-  async searchSchools(val){
+  async searchSchools(val) {
     let schools = await this.schoolRepository.find({
     });
     let Search = schools.map((school) => {

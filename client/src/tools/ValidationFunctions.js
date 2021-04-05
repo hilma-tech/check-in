@@ -17,16 +17,19 @@ export function userNameValidation(userName) {
 
 //check loom link
 export function linkValidation(link) {
-  console.log('link: ', link);
-
-  if (link === null || link.length === 0) {
+  // console.log('link: ', link);
+  if (!link) {
+    // console.log("nothing");
+    return "";
+    } else if (link === null || link.length === 0) {
+      // console.log("actually none");
     return "";
   } else if (link.length > 255) {
-    console.log('link.length: ', link.length);
+    // console.log('link.length: ', link.length);
 
     return "** שדה זה לא יכול להכיל יותר מ-255 תווים **";
   } else if (!(/^$|(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(link))) {
-    console.log("hi");
+    // console.log("hi");
     return "** שדה זה לא תקין **";
   } else {
     return "";
@@ -93,7 +96,7 @@ export function fieldNameValidation(name) {
 export function classNameValidation(name) {
   if (name === null || name.length === 0) {
     return "** נא למלא שדה זה **";
-  } else if (name.length > 10) {
+  } else if (name.length > 15) {
     return "** שדה זה לא יכול להכיל יותר מ-10 תווים **";
   } else if (name.trim().length === 0) {
     return "** שם זה לא תקין **";

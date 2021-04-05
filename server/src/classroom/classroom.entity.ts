@@ -1,4 +1,5 @@
 import { Game } from 'src/game/game.entity';
+import { School } from 'src/school/school.entity';
 import { Student } from 'src/student/student.entity';
 import { Teacher } from 'src/teacher/teacher.entity';
 import {
@@ -6,6 +7,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -17,13 +19,17 @@ export class Classroom {
   @Column()
   name: string;
 
-  @Column()
+  @ManyToOne(
+    () => School,
+    school => school.classrooms,
+    { onDelete: 'CASCADE' }
+  )
   school_id: number;
 
   @ManyToMany(
     type => Game,
     game => game.classrooms,
-    { eager: true },
+    { eager: true , onDelete: 'CASCADE'},
   )
   @JoinTable({
     name: 'classroom_game',
@@ -41,7 +47,7 @@ export class Classroom {
   @ManyToMany(
     type => Student,
     student => student.classroomStudent,
-    { eager: true },
+    { eager: true , onDelete: 'CASCADE'},
   )
   @JoinTable({
     name: 'student_classroom',
@@ -59,7 +65,7 @@ export class Classroom {
   @ManyToMany(
     type => Teacher,
     teacher => teacher.classroomTeacher,
-    { eager: true },
+    { eager: true, onDelete: 'CASCADE' },
   )
   @JoinTable({
     name: 'teacher_classroom',

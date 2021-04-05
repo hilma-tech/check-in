@@ -23,12 +23,14 @@ export class Game {
   @OneToMany(
     type => Field,
     field => field.game,
+    { onDelete: 'CASCADE' }
   )
   fields: Field[];
 
   @ManyToMany(
     type => Classroom,
     classroom => classroom.games,
+    { onDelete: 'CASCADE' }
   )
   classrooms: Classroom[];
 

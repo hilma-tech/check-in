@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import {
   nameValidation,
   classNameValidation,
+  schoolNameValidation,
 } from "../../tools/ValidationFunctions";
 import SchoolClassData from "../../component/superAdmin/SchoolClassData.jsx";
 import { withContext } from "@hilma/tools";
@@ -112,7 +113,7 @@ class AddSchool extends React.Component {
     let allOk = true;
     /* data validation  */
     // ----------school name validation-------------------
-    let nameSchoolMess = nameValidation(this.state.schoolName);
+    let nameSchoolMess = schoolNameValidation(this.state.schoolName);
     if (nameSchoolMess.length !== 0) {
       this.setState((prevState) => {
         prevState.schoolNameError.toShow = "inline-block";
@@ -162,8 +163,8 @@ class AddSchool extends React.Component {
     //after all the validation we need to send the data to sql
     if (allOk) {
       try {
-        let { data } = await axios.post("/api/school/addSchool", {
-          info: this.state
+        let { data } = await axios.post("/api/school/addSchool", 
+          this.state
           // username: this.state.userName,
           // password: this.state.password,
           // firstName: this.state.schoolFirstName,
@@ -172,8 +173,7 @@ class AddSchool extends React.Component {
             //   return classroom.name !== 'שייך לכיתה'
             // }),
             // schoolId: this.state.schoolId
-          });
-          console.log('data: ', data);
+          );
         if (data) {
           this.props.schools.addSchool({
             city: this.state.schoolCity,

@@ -1,12 +1,15 @@
 import { Injectable, Inject, Body, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MailerInterface, User, UserConfig, UserService, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
+import { MailerInterface, SALT, User, UserConfig, UserService, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { Teacher } from './teacher.entity';
 import { GetTeacherSkip, TeacherIdDto, GetClassSkip } from './teacher.dtos';
 import { env } from 'process';
+import * as bcrypt from 'bcrypt';
+import { ClassroomService } from 'src/classroom/classroom.service';
+
 
 @Injectable()
 export class TeacherService extends UserService {
@@ -16,11 +19,46 @@ export class TeacherService extends UserService {
     protected readonly userRepository: Repository<Teacher>,
     protected readonly jwtService: JwtService,
     protected readonly configService: ConfigService,
+    @Inject("ClassroomService")
+    private readonly classroomService: ClassroomService,
+
     @Inject('MailService')
     protected readonly mailer: MailerInterface
   ) {
     super(config_options, userRepository, jwtService, configService, mailer);
   }
+
+  async editTeacher(@Body() req: any) {
+    console.log('req: ', req);
+
+    let teacher = await this.userRepository.findOne({ where: [{ id: req.id }], relations: ["classroomTeacher"] })
+    let username = req.username;
+    let password = bcrypt.hashSync(req.password, SALT);;
+    let teacherInfo: Partial<Teacher> = new Teacher({ username, password });
+    if (req.password.length === 0) {
+      teacherInfo = { username }
+    }
+    teacherInfo.first_name = req.firstName
+    teacherInfo.last_name = req.lastName
+    teacherInfo.school = req.schoolId
+    console.log('teacher.classroomTeacher: ', teacher.classroomTeacher);
+    if (teacher.classroomTeacher.length !== 0) {
+      for (let i = 0; i < teacher.classroomTeacher.length; i++) {
+        let a = await this.classroomService.deleteTeacherClassroom(teacher.classroomTeacher[i].id, req.id)
+      }
+    }
+
+    console.log('req.classrooms: ', req.classrooms);
+    if (req.classrooms.length !== 0) {
+      for (let i = 0; i < req.classrooms.length; i++) {
+        let a = await this.classroomService.addTeacherToClassroom(req.classrooms[i].id, teacher)
+      }
+    }
+
+    return await this.userRepository.update({ id: req.id }, teacherInfo);
+  }
+
+
 
   async deleteTeacher(@Body() teacherId: string){
     await this.userRepository.delete(teacherId)
