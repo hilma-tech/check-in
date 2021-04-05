@@ -278,8 +278,43 @@ class EditTeacher extends React.Component {
     }
     //after all the validetion we need to send the data to sql
     if (allOk) {
+      try {
+      let { data } = await axios.post("/api/teacher/editTeacher", {
+        id: this.props.teachers.chosenTeacher.id,
+        username: this.state.userName,
+        password: this.state.password,
+        firstName: this.state.teacherFirstName,
+        lastName: this.state.lastName,
+        classrooms: this.state.chosenClasses.filter((classroom) => {
+          return classroom.name !== 'שייך לכיתה'
+        }),
+        schoolId: this.state.schoolId
+      });
+      let classroomTeacher = this.state.chosenClasses.filter((classroom) => {
+        return classroom.name !== 'שייך לכיתה'
+      })
+      if (data) {
+        this.props.teachers.updateTeacher({
+          first_name: this.state.teacherFirstName,
+          last_name: this.state.lastName,
+          name: this.state.teacherFirstName + " " + this.state.lastName,
+          username: this.state.userName,
+          schoolName: this.state.school,
+          school: {id: this.state.schoolId, name: this.state.school},
+          id: this.props.teachers.chosenTeacher.id,
+          classroomTeacher: classroomTeacher,
+          classes: classroomTeacher !== undefined ? classroomTeacher.map((classInfo) => {
+            return classInfo.name
+          }) : []
+        })
       this.props.history.goBack(); // after saving go back
+      } else {
+        this.props.errorMsg.setErrorMsg('שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר.');
+      }
+    } catch (err) {
+      this.props.errorMsg.setErrorMsg('שגיאה בשרת, המורה לא נשמר, נסו שוב.');
     }
+  }
   };
 
   deleteTeacher = () => {
