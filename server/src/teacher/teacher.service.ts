@@ -28,6 +28,16 @@ export class TeacherService extends UserService {
     super(config_options, userRepository, jwtService, configService, mailer);
   }
 
+
+  async changeTeacherPassword(userInfo) {
+    const hash = bcrypt.hashSync(userInfo.password, SALT);
+  return await this.userRepository.createQueryBuilder()
+  .update(User)
+  .set({ password: hash })
+  .where({ username: userInfo.username })
+  .execute();
+  }
+
   async editTeacher(@Body() req: any) {
     console.log('req: ', req);
 
