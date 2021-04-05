@@ -20,8 +20,7 @@ export class StudentService extends UserService {
     protected readonly userRepository: Repository<Student>,
     protected readonly jwtService: JwtService,
     protected readonly configService: ConfigService,
-
-    private readonly FieldService: GameService,
+    @Inject("ClassroomService")
     private readonly classroomService: ClassroomService,
   ) {
     super(config_options, userRepository, jwtService, configService);
@@ -130,44 +129,28 @@ export class StudentService extends UserService {
   }
 
   async editStudent(req: any) {
-    // console.log('req: ', req);
     let student = await this.userRepository.findOne({ where: [{ id: req.id }], relations: ["classroomStudent"] })
-    // console.log('student: ', student);
     let username = req.username;
     let password = bcrypt.hashSync(req.password, SALT);;
     let studentInfo: Partial<Student> = new Student({ username, password });
     if (req.password.length === 0) {
       studentInfo = { username }
     }
-    // studentInfo.username = req.username
     studentInfo.first_name = req.firstName
     studentInfo.last_name = req.lastName
     studentInfo.school = req.schoolId
-    // studentInfo.classroomStudent = []
     if (student.classroomStudent.length !== 0) {
-      // console.log('student.classroomStudent: ', student.classroomStudent);
       for (let i = 0; i < student.classroomStudent.length; i++) {
-        // console.log('i: ', i);
-        // console.log('student.classroomStudent[i].id: ', student.classroomStudent[i].id);
-        // console.log('req.id: ', req.id);
         let a = await this.classroomService.deleteClassroom(student.classroomStudent[i].id, req.id)
-        // console.log('a: ', a);
-        //     if(this.classroomService !== undefined){
-        //       if (!this.classroomService.isClassroomInSchool(req.classrooms[i].id, req.schoolId)) {
-        //         throw new Error()
-        //       }
-        //     }
-        //     let studentClassroom = new Classroom()
-        //     studentClassroom.id = req.classrooms[i].id
-        //     studentClassroom.name = req.classrooms[i].name
-        //     studentClassroom.school_id = req.schoolId
-        //     console.log('studentInfo.classroomStudent: cc', studentInfo.classroomStudent);
-        //     studentInfo.classroomStudent[i] = studentClassroom
       }
     }
-    // req.password = bcrypt.hashSync(req.password, SALT);
 
-    // console.log('studentInfo: ', studentInfo);
+    if (req.classrooms.length !== 0) {
+      for (let i = 0; i < req.classrooms.length; i++) {
+        let a = await this.classroomService.addStudentToClassroom(req.classrooms[i].id, student)
+      }
+    }
+
     return await this.userRepository.update({ id: req.id }, studentInfo);
   }
 

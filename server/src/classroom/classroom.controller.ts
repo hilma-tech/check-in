@@ -17,7 +17,7 @@ export class ClassroomController {
 
   @UseJwtAuth('teacher')
   @Post('/addGameRelation')
-  @UseFilesHandler()
+  @UseFilesHandler(100)
   async addGameRelation(@UploadedFiles() files: FilesType, @Body() req: ClassroomGameDto) {
     await this.classroomFieldService.addGameFieldsToClass(files, req);
     return await this.classroomService.addGameRelation(req);

@@ -49,72 +49,72 @@ class EditSchool extends Component {
     */
   addClassToSchool = (e) => {
     e.preventDefault();
-    // this.setState((prevState) => {
-    //   let tempData = [
-    //     ...prevState.classes,
-    //     {
-    //       id: prevState.classes.length + 1,
-    //       name: '',
-    //       numTeachers: 1,
-    //       chosenTeachers: [],
-    //       classNameError: { toShow: 'none', mess: '' },
-    //     },
-    //   ];
-    //   return { classes: tempData };
-    // });
+    this.setState((prevState) => {
+      let tempData = [
+        ...prevState.classes,
+        {
+          id: prevState.classes.length + 1,
+          name: '',
+          numTeachers: 1,
+          chosenTeachers: [],
+          classNameError: { toShow: 'none', mess: '' },
+        },
+      ];
+      return { classes: tempData };
+    });
   };
 
   //Need to change but update the class name.
   //It's call when the user change the value.
   chooseTeacher = (e) => {
-    // let index = e.name
-    // let value = e.value;
-    // let selectKey = e.selectKey;
-    // let id = e.id;
-    // this.setState((prevState) => {
-    //   let tempData = [...prevState.classes]
-    //   tempData[index].chosenTeachers[selectKey] = { id: id, name: value }
-    //   return { classes: tempData }
-    // })
+    let index = e.name
+    let value = e.value;
+    let selectKey = e.selectKey;
+    let id = e.id;
+    this.setState((prevState) => {
+      let tempData = [...prevState.classes]
+      tempData[index].chosenTeachers[selectKey] = { id: id, name: value }
+      return { classes: tempData }
+    })
   };
 
   //Get the element and set the schoolName by the info that the user type.
   handleChange = (e) => {
-    // if (e.target.name === 'schoolName') {
-    //   this.setState({ schoolName: e.target.value });
-    // } else {
-    //   let [fieldChangeName, classChangeIndex] = e.target.name.split('_')
-    //   let classNameValue = e.target.value;
-    //   this.setState((prevState) => {
-    //     let tempData = [...prevState.classes]
-    //     tempData[parseInt(classChangeIndex)][fieldChangeName] = classNameValue
-    //     return { classes: tempData }
-    //   })
-    // }
+    if (e.target.name === 'schoolName') {
+      this.setState({ schoolName: e.target.value });
+    } else {
+      let [fieldChangeName, classChangeIndex] = e.target.name.split('_')
+      let classNameValue = e.target.value;
+      this.setState((prevState) => {
+        let tempData = [...prevState.classes]
+        tempData[parseInt(classChangeIndex)][fieldChangeName] = classNameValue
+        return { classes: tempData }
+      })
+    }
   };
 
   addTeacherToClass = (classIndex) => {
-    // this.setState((prevState) => {
-    //   let tempData = [...prevState.classes]
-    //   tempData[classIndex].chosenTeachers.push({ id: -1 * tempData[classIndex].chosenTeachers.length, name: 'בחר...' }) //id -1 did not exist and he wont show him
-    //   return { classes: tempData }
-    // })
+    this.setState((prevState) => {
+      let tempData = [...prevState.classes]
+      tempData[classIndex].chosenTeachers.push({ id: -1 * tempData[classIndex].chosenTeachers.length, name: 'בחר...' }) //id -1 did not exist and he wont show him
+      return { classes: tempData }
+    })
   };
 
   removeTeacherFromClass = (classIndex, teacherIndex) => {
-    // this.setState((prevState) => {
-    //   let tempData = [...prevState.classes]
-    //   tempData[classIndex].chosenTeachers.splice(teacherIndex, 1)
-    //   return { classes: tempData }
-    // })
+    this.setState((prevState) => {
+      let tempData = [...prevState.classes]
+      tempData[classIndex].chosenTeachers.splice(teacherIndex, 1)
+      return { classes: tempData }
+    })
   };
 
   removeClass = (classIndex) => {
-    // this.setState((prevState) => {
-    //   let tempData = [...prevState.classes]
-    //   tempData.splice(classIndex, 1);
-    //   return { classes: tempData }
-    // })
+    this.setState((prevState) => {
+      let tempData = [...prevState.classes]
+      tempData.splice(classIndex, 1);
+      return { classes: tempData }
+    })
   };
 
   saveData = (e) => {
@@ -275,19 +275,19 @@ class EditSchool extends Component {
                 })
               )
           }
-          {/* <button
+          <button
             className='editSchoolAddClass'
             type="button"
             onClick={this.addClassToSchool} //Add class to the list.
           >
             הוסף כיתה
-            </button> */}
+            </button>
           <div className="spacerFromSaveButton"></div>
           <div className="saveButtonBackground">
              <button className="deletButton" onClick={this.deleteSchool}>מחק בית ספר</button>
-           {/* <button className="saveButton" onClick={this.saveData}>
+           <button className="saveButton" onClick={this.saveData}>
               שמור
-            </button>  */}
+            </button> 
           </div>
         </form>
       </div>
