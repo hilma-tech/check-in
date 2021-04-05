@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import {
   nameValidation,
   classNameValidation,
+  schoolNameValidation,
 } from "../../tools/ValidationFunctions";
 import SchoolClassData from "../../component/superAdmin/SchoolClassData.jsx";
 import { withContext } from "@hilma/tools";
@@ -112,7 +113,7 @@ class AddSchool extends React.Component {
     let allOk = true;
     /* data validation  */
     // ----------school name validation-------------------
-    let nameSchoolMess = nameValidation(this.state.schoolName);
+    let nameSchoolMess = schoolNameValidation(this.state.schoolName);
     if (nameSchoolMess.length !== 0) {
       this.setState((prevState) => {
         prevState.schoolNameError.toShow = "inline-block";

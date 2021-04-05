@@ -96,7 +96,7 @@ export function fieldNameValidation(name) {
 export function classNameValidation(name) {
   if (name === null || name.length === 0) {
     return "** נא למלא שדה זה **";
-  } else if (name.length > 10) {
+  } else if (name.length > 15) {
     return "** שדה זה לא יכול להכיל יותר מ-10 תווים **";
   } else if (name.trim().length === 0) {
     return "** שם זה לא תקין **";

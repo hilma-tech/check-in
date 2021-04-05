@@ -24,18 +24,21 @@ export class School {
   @OneToMany(
     () => Classroom,
     classroom => classroom.school_id,
+    { onDelete: 'CASCADE' }
   )
   classrooms: Classroom[];
 
   @OneToMany(
     () => Student,
     student => student.school,
+    { onDelete: 'CASCADE' }
   )
   students: Student[];
 
   @OneToMany(
     () => Teacher,
     teacher => teacher.school,
+    { onDelete: 'CASCADE' }
   )
   teachers: Teacher[];
 }
