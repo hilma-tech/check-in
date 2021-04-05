@@ -20,8 +20,7 @@ export class StudentService extends UserService {
     protected readonly userRepository: Repository<Student>,
     protected readonly jwtService: JwtService,
     protected readonly configService: ConfigService,
-
-    private readonly FieldService: GameService,
+    @Inject("ClassroomService")
     private readonly classroomService: ClassroomService,
   ) {
     super(config_options, userRepository, jwtService, configService);
