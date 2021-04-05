@@ -105,6 +105,7 @@ export class ClassroomFieldService {
     let deleteFieldAndGetFieldId = await this.fieldService.getGameFields(req);
     let fieldsForDelete = [];
     deleteFieldAndGetFieldId.map(async fieldId => {
+      console.log('fieldId: ', fieldId);
       fieldsForDelete.push(fieldId.id);
       if(fieldId.type === 'image'){
         await this.imageService.delete(fieldId.default_value)
