@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
-import { allPermissions } from './permission.dto';
+import { allPermissions, PermissionDelete } from './permission.dto';
 import { PermissionService } from './permission.service';
 
 
@@ -20,4 +20,10 @@ export class PermissionController {
     async dayPermissions(@Query() req: any) {
         return await this.PermissionService.getDayClassPermissions(req)
     }
+
+    @Post('/deletePermission')
+    async deletePermission(@Body() req: PermissionDelete) {
+        await this.PermissionService.deletePermission(req)
+    }
+
 }

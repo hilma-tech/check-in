@@ -30,7 +30,7 @@ class ChosenClass {
       startGetInfo: observable,
       resetChosenClass: action,
       getClassPermissions: action,
-      classPermissions: observable
+      classPermissions: observable,
     });
   }
 

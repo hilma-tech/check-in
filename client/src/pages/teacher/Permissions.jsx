@@ -96,18 +96,47 @@ class Permissions extends Component {
     try {
       await axios.post(`/api/permission/setClassPermission`, { permissions: arr, classId: classId, day: this.state.selectedDay });
       this.props.errorMsg.setErrorMsg('הרשאות נשמרו בהצלחה')
-      this.setState({
-        selectedStartTime: '',
-        selectedEndTime: '',
-        selectedDay: '',
-        extraTimes: [],
-        err: ''
-      })
     }
     catch (err) {
       this.props.errorMsg.setErrorMsg('תקלה בשרת, נסו לשמור שנית')
     }
   }
+  deletePermission = async (start, end, index) => {
+    let classId = this.props.chosenClass.classId
+    let day = this.state.selectedDay
+    var sendDelete = async () => {
+      await axios.post(`/api/permission/deletePermission`, { start_time: start, end_time: end, classroom_id: classId, day: day })
+      if (index !== null) {
+        var arrForChange = this.state.extraTimes
+        arrForChange.splice(index, 1);
+        this.setState({
+          extraTimes: arrForChange,
+        })
+      }
+      else {
+        this.dayPermissions(this.state.selectedDay)
+        if (this.props.chosenClass.classPermissions.length === 0) {
+          this.setState({
+            selectedStartTime: '',
+            selectedEndTime: ''
+
+          })
+        }
+      }
+    }
+    try {
+      this.props.errorMsg.setQuestion(
+        "האם אתה בטוח שברצונך למחוק הרשאה זו?",
+        () => sendDelete()
+        ,
+        "מחק"
+      )
+    }
+    catch (err) {
+      this.props.errorMsg.setErrorMsg('תקלה בשרת, נסו לשמור שנית')
+    }
+  }
+
   weekDays = ["א", "ב", "ג", "ד", "ה", "ו", "ש"]
 
   selectDay = async (day) => {
@@ -130,10 +159,22 @@ class Permissions extends Component {
       extraTimes: [...this.state.extraTimes, { index: index, startTime: undefined, endTime: undefined }]
     })
   }
-  deleteTime = (index) => {
+  deleteTime = async (index) => {
     var arrForChange = this.state.extraTimes
-    arrForChange.splice(index, 1);
-    this.setState({ extraTimes: arrForChange })
+    if (arrForChange[index].startTime && arrForChange[index].endTime) {
+      await this.deletePermission(arrForChange[index].startTime, arrForChange[index].endTime, index)
+    }
+    else {
+      arrForChange.splice(index, 1);
+      this.setState({ extraTimes: arrForChange })
+    }
+    this.setState({ err: '' })
+
+  }
+
+  deleteFirstTime = async () => {
+    await this.deletePermission(this.state.selectedStartTime, this.state.selectedEndTime, null)
+    this.setState({ err: '' })
   }
 
   render() {
@@ -197,6 +238,9 @@ class Permissions extends Component {
                             onChange={this.handleEndTimeChange}
                           />
                         </div>
+                        {this.state.selectedStartTime && this.state.selectedEndTime ? <div onClick={this.deleteFirstTime} className='ex'>
+                          <img style={{ height: '2.5vh', width: '2.5vh' }} src={deleteicon} alt="deleteicon" />
+                        </div> : <></>}
                       </div>
                       {this.state.extraTimes.map((time, index) => {
                         return (

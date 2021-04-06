@@ -40,4 +40,8 @@ export class PermissionService {
         return permissionWODuplicates
     }
 
+    async deletePermission(info) {
+        return await this.permissionRepository.delete(info)
+    }
+
 }

@@ -34,4 +34,28 @@ export class allPermissions {
     permissions: Permission[];
 }
 
+export class PermissionDelete {
+    @IsDefined()
+    @IsString()
+    @Length(5)
+    @Matches(/^[0-9:]+$/)
+    start_time: string;
+
+    @IsDefined()
+    @IsString()
+    @Length(5)
+    @Matches(/^[0-9:]+$/)
+    end_time: string;
+
+    @IsDefined()
+    @IsNumber()
+    classroom_id: number;
+
+    @IsDefined()
+    @IsString()
+    @Length(1)
+    @Matches(/^[\u0590-\u05FF]+$/)
+    day: string;
+}
+
 
