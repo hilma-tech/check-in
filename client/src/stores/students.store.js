@@ -100,7 +100,7 @@ class Students {
     deleteStudent = async () => {
         try {
             await axios.post("/api/student/deleteStudent", {
-                studentId: this.chosenStudent.id,
+                id: this.chosenStudent.id,
               });
             this.listDataStudents = this.listDataStudents.filter((student) => {
                 return student.id !== this.chosenStudent.id
