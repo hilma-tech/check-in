@@ -42,7 +42,6 @@ export class SchoolService {
     school.name = info.schoolName;
     school.city = info.schoolCity;
     let res = await this.schoolRepository.save(school);
-    console.log('res: ', res);
     if(info.removedClasses.length !== 0){
       await this.classroomService.removeClassesFromSchool(info.removedClasses)
     }

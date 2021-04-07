@@ -55,6 +55,7 @@ class EditStudent extends React.Component {
         );
       } else {
         try {
+          console.log('this.props.students.chosenStudent: ', this.props.students.chosenStudent);
           const { data } = await axios.get("/api/classroom/getSchoolClasses", {
             params: { schoolId: this.props.students.chosenStudent.school.id },
           });
@@ -72,7 +73,7 @@ class EditStudent extends React.Component {
           })
         } catch (err) {
           this.props.errorMsg.setErrorMsg(
-            "הייתה שגיאה בשרת. לא ניתן לקבל בתי ספר מהשרת."
+            "הייתה שגיאה בשרת. לא ניתן לקבל כיתות מהשרת."
           );
         }
       }

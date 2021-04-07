@@ -30,7 +30,6 @@ export class SuperAdminController {
   @UseLocalAuth()
   @Post('/login')
   login(@RequestUser() userInfo, @Res() res) {
-    // console.log('userInfo: ', userInfo);
     let body = this.superadminService.login(userInfo, res);
     res.send(body);
   }

@@ -189,7 +189,6 @@ export function emailValidation(email) {
 //Check validation for inputs that the user must field
 //it's not matter how he field them...
 export function mustInputValidation(input) {
-  console.log(input, "oooooooooo");
   if (input === null || input.length === 0) {
     return "** נא למלא שדה זה **";
   } else if (input.trim().length === 0) {
