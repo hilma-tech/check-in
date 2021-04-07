@@ -49,9 +49,9 @@ export class SchoolService {
     if(info.existClasses.length === 0){
       await this.classroomService.addClassesWithSchool(info, res)
     } else {
-
+      await this.classroomService.updateSchoolClasses(info.classes, info.existClasses, info.id)
     }
-    // return res;
+    return res;
   }
 
   async getSchools(@Req() skipON: GetSchoolSkip) {

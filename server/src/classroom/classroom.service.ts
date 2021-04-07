@@ -47,6 +47,23 @@ export class ClassroomService {
     return true;
   }
 
+  async updateSchoolClasses(classes: any, existClasses: any, schoolId: any) {
+    for (let i = 0; i < classes.length; i++) {
+      let ifExist = existClasses.filter((classroom) => { return classroom.id === classes[i].id })
+      if (ifExist.length === 0) {
+        let classroom = new Classroom();
+        classroom.name = classes[i].name;
+        classroom.school_id = schoolId;
+        await this.classroomRepository.save(classroom)
+      } else {
+        let classroom = new Classroom();
+        classroom.name = classes[i].name;
+        classroom.id = classes[i].id
+        await this.classroomRepository.save(classroom)
+      }
+    }
+    return true;
+  }
   async addGameRelation(@Body() req: ClassroomGameDto) {
     let classroomGame = new Classroom();
     classroomGame.games = await this.gameService.getGameById(req.gameId);
@@ -102,23 +119,23 @@ export class ClassroomService {
     return await this.classroomRepository.save(classroomInfo)
   }
 
-  async deleteTeacherClassroom(classroom_id, teacher_id){
-    let classroomInfo = await this.classroomRepository.findOne({id: classroom_id})
-    classroomInfo.teachers = classroomInfo.teachers.filter((teacher)=>{
+  async deleteTeacherClassroom(classroom_id, teacher_id) {
+    let classroomInfo = await this.classroomRepository.findOne({ id: classroom_id })
+    classroomInfo.teachers = classroomInfo.teachers.filter((teacher) => {
       return teacher.id !== teacher_id
-    })    
+    })
     return await this.classroomRepository.save(classroomInfo)
   }
 
-  async addStudentToClassroom(classroom_id, student){
-    let classroomInfo = await this.classroomRepository.findOne({id: classroom_id})
-    classroomInfo.students.push(student)    
+  async addStudentToClassroom(classroom_id, student) {
+    let classroomInfo = await this.classroomRepository.findOne({ id: classroom_id })
+    classroomInfo.students.push(student)
     return await this.classroomRepository.save(classroomInfo)
   }
 
-  async addTeacherToClassroom(classroom_id, teacher){
-    let classroomInfo = await this.classroomRepository.findOne({id: classroom_id})
-    classroomInfo.teachers.push(teacher)    
+  async addTeacherToClassroom(classroom_id, teacher) {
+    let classroomInfo = await this.classroomRepository.findOne({ id: classroom_id })
+    classroomInfo.teachers.push(teacher)
     return await this.classroomRepository.save(classroomInfo)
   }
 }

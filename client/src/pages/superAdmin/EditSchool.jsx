@@ -129,7 +129,10 @@ class EditSchool extends Component {
       let tempData = [...prevState.classes]
       let removedClassroom = tempData.splice(classIndex, 1);
       prevState.removedClasses.push(removedClassroom[0])
-      return { classes: tempData, removedClasses: prevState.removedClasses }
+      let newExistClasses = prevState.existClasses.filter((classroom)=>{
+        return classroom.id !== removedClassroom[0].id
+      })
+      return { classes: tempData, removedClasses: prevState.removedClasses, removedClasses: newExistClasses}
     })
   };
 
@@ -200,13 +203,14 @@ class EditSchool extends Component {
           }
         });
         console.log('data: ', data);
-        // if (data) {
-        //   this.props.schools.addSchool({
-        //     city: this.state.schoolCity,
-        //     name: this.state.schoolName,
-        //     id: data.id,
-        //   })
-        // this.props.history.goBack(); // after saving go back
+        if (data) {
+          this.props.schools.editSchool(
+            data.id,
+            data.name,
+            data.city,
+          )
+        this.props.history.goBack(); // after saving go back
+        }
       } catch (err) {
         this.props.errorMsg.setErrorMsg('שגיאה בשרת, בית הספר לא נשמר, נסו שוב.');
       }
