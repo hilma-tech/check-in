@@ -7,6 +7,7 @@ import { ClassroomGameDto, RemoveClassroomGameDto } from './classroom.dtos';
 import { Classroom } from './classroom.entity';
 import { ClassInfoDto, EditSchoolInfoDto } from 'src/school/school.dtos';
 import { School } from 'src/school/school.entity';
+import { Student } from 'src/student/student.entity';
 
 @Injectable()
 export class ClassroomService {
@@ -113,7 +114,7 @@ export class ClassroomService {
     return classroom === undefined ? false : true
   }
 
-  async deleteClassroom(classroom_id, student_id) {
+  async deleteClassroom(classroom_id: number, student_id: string) {
     let classroomInfo = await this.classroomRepository.findOne({ id: classroom_id })
     classroomInfo.students = classroomInfo.students.filter((student) => {
       return student.id !== student_id
@@ -121,7 +122,7 @@ export class ClassroomService {
     return await this.classroomRepository.save(classroomInfo)
   }
 
-  async deleteTeacherClassroom(classroom_id, teacher_id) {
+  async deleteTeacherClassroom(classroom_id: number, teacher_id: string) {
     let classroomInfo = await this.classroomRepository.findOne({ id: classroom_id })
     classroomInfo.teachers = classroomInfo.teachers.filter((teacher) => {
       return teacher.id !== teacher_id
@@ -129,7 +130,7 @@ export class ClassroomService {
     return await this.classroomRepository.save(classroomInfo)
   }
 
-  async addStudentToClassroom(classroom_id, student) {
+  async addStudentToClassroom(classroom_id: number, student: Student) {
     let classroomInfo = await this.classroomRepository.findOne({ id: classroom_id })
     classroomInfo.students.push(student)
     return await this.classroomRepository.save(classroomInfo)

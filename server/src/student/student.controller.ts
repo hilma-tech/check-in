@@ -11,6 +11,7 @@ import {
   StudentPassword,
   ExcelUserRegisterDto,
   ValDto,
+  UserEditDto,
 } from './student.dtos';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { GameModule } from 'src/game/game.module';
@@ -93,11 +94,10 @@ export class StudentController {
 
   @UseJwtAuth('superAdmin')
   @Post('/editStudent')
-  async editStudent(@Body() req: any) {
+  async editStudent(@Body() req: UserEditDto) {
     try {
       return await this.studentService.editStudent(req);
     } catch (e) {
-      // console.log('e: ', e);
       return false
     }
   }

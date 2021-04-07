@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { getConnection, Repository } from 'typeorm';
 import { Student } from './student.entity';
-import { GetStudentSkip, SearchValDto, UserRegisterDto } from './student.dtos';
+import { GetStudentSkip, SearchValDto, UserEditDto, UserRegisterDto } from './student.dtos';
 import * as bcrypt from 'bcrypt';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { ClassroomService } from 'src/classroom/classroom.service';
@@ -128,7 +128,7 @@ export class StudentService extends UserService {
     return await this.createUser<Student>(student);
   }
 
-  async editStudent(req: any) {
+  async editStudent(req: UserEditDto) {
     let student = await this.userRepository.findOne({ where: [{ id: req.id }], relations: ["classroomStudent"] })
     let username = req.username;
     let password = bcrypt.hashSync(req.password, SALT);;
