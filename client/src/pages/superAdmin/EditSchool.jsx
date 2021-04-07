@@ -193,14 +193,12 @@ class EditSchool extends Component {
       console.log('this.state: ', this.state);
       try {
         let { data } = await axios.post("/api/school/editSchool", {
-          info: {
             id: this.props.schools.chosenSchool.id,
             schoolName: this.state.schoolName,
             schoolCity: this.state.schoolCity,
             classes: this.state.classes,
             removedClasses: this.state.removedClasses,
             existClasses: this.state.existClasses
-          }
         });
         console.log('data: ', data);
         if (data) {

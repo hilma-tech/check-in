@@ -70,3 +70,34 @@ export class AddSchoolInfoDto {
   classes: ClassInfoDto[];
 }
 
+
+export class EditSchoolInfoDto {
+  @IsDefined()
+  @IsNumber()
+  id: number;
+  @IsDefined()
+  @IsString()
+  @Length(1, 30)
+  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-]/)
+  schoolName: string;
+  @IsDefined()
+  @IsString()
+  @Length(1, 30)
+  @Matches(/[A-Za-z\u0590-\u05EA]/)
+  schoolCity: string;
+  @IsDefined()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ClassInfoDto)
+  classes: ClassInfoDto[];
+  @IsDefined()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ClassInfoDto)
+  removedClasses: ClassInfoDto[];
+  @IsDefined()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ClassInfoDto)
+  existClasses: ClassInfoDto[];
+}

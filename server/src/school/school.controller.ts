@@ -1,7 +1,7 @@
 import { Get, Controller, Query, Post, Body } from '@nestjs/common';
 import { SchoolService } from './school.service';
 import { UseJwtAuth } from '@hilma/auth-nest';
-import { AddSchoolInfoDto, GetSchoolSkip } from './school.dtos';
+import { AddSchoolInfoDto, EditSchoolInfoDto, GetSchoolSkip } from './school.dtos';
 
 @Controller('api/school')
 export class SchoolController {
@@ -29,9 +29,8 @@ export class SchoolController {
 
   @UseJwtAuth('superAdmin')
   @Post('/editSchool')
-  async editSchool(@Body() info:any) {
-    console.log('info: ', info);
-    return await this.schoolService.editSchool(info.info);
+  async editSchool(@Body() info:EditSchoolInfoDto) {
+    return await this.schoolService.editSchool(info);
   }
 
   @UseJwtAuth('superAdmin')

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { Repository } from 'typeorm';
-import { GetSchoolSkip } from './school.dtos';
+import { EditSchoolInfoDto, GetSchoolSkip } from './school.dtos';
 import { School } from './school.entity';
 
 @Injectable()
@@ -36,7 +36,7 @@ export class SchoolService {
     return res;
   }
 
-  async editSchool(@Body() info: any) {
+  async editSchool(@Body() info: EditSchoolInfoDto) {
     let school = new School();
     school.id = info.id
     school.name = info.schoolName;

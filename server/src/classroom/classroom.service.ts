@@ -5,6 +5,8 @@ import { ClassroomFieldService } from 'src/classroom-field/classroom-field.servi
 import { Repository } from 'typeorm';
 import { ClassroomGameDto, RemoveClassroomGameDto } from './classroom.dtos';
 import { Classroom } from './classroom.entity';
+import { ClassInfoDto, EditSchoolInfoDto } from 'src/school/school.dtos';
+import { School } from 'src/school/school.entity';
 
 @Injectable()
 export class ClassroomService {
@@ -29,7 +31,7 @@ export class ClassroomService {
   // }
 
 
-  async addClassesWithSchool(@Body() info: any, res: any) {
+  async addClassesWithSchool(@Body() info: EditSchoolInfoDto, res: School) {
     let i = 0;
     for (i = 0; i < info.classes.length; i++) {
       let classroom = new Classroom();
@@ -40,14 +42,14 @@ export class ClassroomService {
     return true;
   }
 
-  async removeClassesFromSchool(classes: any) {
+  async removeClassesFromSchool(classes: ClassInfoDto[]) {
     for (let i = 0; i < classes.length; i++) {
       await this.classroomRepository.delete({ id: classes[i].id })
     }
     return true;
   }
 
-  async updateSchoolClasses(classes: any, existClasses: any, schoolId: any) {
+  async updateSchoolClasses(classes: ClassInfoDto[], existClasses: ClassInfoDto[], schoolId: number) {
     for (let i = 0; i < classes.length; i++) {
       let ifExist = existClasses.filter((classroom) => { return classroom.id === classes[i].id })
       if (ifExist.length === 0) {
