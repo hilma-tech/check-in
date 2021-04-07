@@ -49,9 +49,8 @@ export class ClassroomFieldService {
     let Inp = null;
     req.fieldsData.forEach( async (field) => {
       let emptyField = 0;
+      Inp = field.value[0].value;
       if (field.type !== 'image') {
-        Inp = field.value[0].value;
-
         if (field.type === 'text') {
           let valid = mustValid(Inp);
           if (valid.length !== 0) {
