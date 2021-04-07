@@ -79,17 +79,19 @@ export class ClassroomFieldService {
       } else {
         if (files.length !== 0) {
           try {
-            Inp = await this.imageService.save(files, field.value[0].id) ;
+            if(field.value[0].value.includes("blob:http")){
+              Inp = await this.imageService.save(files, field.value[0].id) ;
+            } else {
+              throw new Error()
+            }
           } catch (error) {
             Inp = field.value[0].value
           }
         } else {
           Inp = field.value[0].value
         }
-
-        
       }
-
+      
       emptyField = 0;
       let newField = new ClassroomField();
       newField.classroom_id = req.classId;
