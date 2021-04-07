@@ -22,13 +22,14 @@ export class Classroom {
   @ManyToOne(
     () => School,
     school => school.classrooms,
+    { onDelete: 'CASCADE' }
   )
   school_id: number;
 
   @ManyToMany(
     type => Game,
     game => game.classrooms,
-    { eager: true },
+    { eager: true , onDelete: 'CASCADE'},
   )
   @JoinTable({
     name: 'classroom_game',
@@ -46,7 +47,7 @@ export class Classroom {
   @ManyToMany(
     type => Student,
     student => student.classroomStudent,
-    { eager: true },
+    { eager: true , onDelete: 'CASCADE'},
   )
   @JoinTable({
     name: 'student_classroom',
@@ -64,7 +65,7 @@ export class Classroom {
   @ManyToMany(
     type => Teacher,
     teacher => teacher.classroomTeacher,
-    { eager: true },
+    { eager: true, onDelete: 'CASCADE' },
   )
   @JoinTable({
     name: 'teacher_classroom',

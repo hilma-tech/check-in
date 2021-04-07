@@ -7,6 +7,7 @@ class ChosenClass {
   classroomName = "";
   students = [];
   searchedStudents = [];
+  classPermissions = []
   currStudentIndex = 0;
   studentClassrooms = [];
   successGetInfo = true;
@@ -28,14 +29,16 @@ class ChosenClass {
       haveMoreStudents: observable,
       startGetInfo: observable,
       resetChosenClass: action,
+      getClassPermissions: action,
+      classPermissions: observable,
     });
   }
 
   //gets the classrooms the student belongs to (besides the current class)
   setCurrStudentClasses = async (studentId) => {
     try {
-      for(let i=0; i <this.students.length; i++){
-        if(studentId === this.students[i].id){
+      for (let i = 0; i < this.students.length; i++) {
+        if (studentId === this.students[i].id) {
           this.currStudentIndex = i;
         }
       }
@@ -92,8 +95,23 @@ class ChosenClass {
     this.students = [];
     this.currStudentIndex = 0;
     this.studentClassrooms = [];
+    this.classPermissions = []
+  }
+
+  getClassPermissions = async (day) => {
+    this.classPermissions = []
+    let classroom = this.classId
+    let { data } = await axios.get("/api/permission/dayPermissions", {
+      params: { classId: classroom, day: day },
+    });
+    if (data.length > 0) {
+      this.classPermissions.push(...data)
+      return true
+    }
+    else { return false }
   }
 }
+
 
 const chosenClass = new ChosenClass();
 

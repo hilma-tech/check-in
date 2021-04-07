@@ -30,7 +30,7 @@
   width: fit-content;
   padding-right: 1vw;
   padding-left: 1vw;
-  margin-top: 5vh;
+  margin-top: 3vh;
   color: white;
   font-size: 3vh;
   font-weight: lighter;
@@ -61,6 +61,11 @@
   margin: 0
 }
 
+.scrollTime {
+  max-height: 55vh;
+  overflow-y: scroll;
+}
+
 .time {
   width: max-content;
   padding-right: 1vw;
@@ -78,10 +83,12 @@
   font-weight: 900;
   margin-top: 0;
 }
-.ex{
+
+.ex {
   margin-right: 3vw;
-  margin-top:1.5vh;
+  margin-top: 1.5vh;
 }
+
 .marginRight {
   margin-right: 5vw;
 }
@@ -97,9 +104,15 @@
   color: #043163;
   font-size: 2.5vh;
 }
-.scroll{
-  height: 30%;
-  overflow-y:scroll;
+
+.inputError {
+  color: red;
+  position: relative;
+  font-size: '2.5vh';
+  margin: 0px;
+  font-weight: lighter;
+  margin-right: 5vw;
+  margin-top: 1vh;
 }
 
 @media only screen and (min-width: 500px) {
@@ -132,6 +145,10 @@
     margin: 0;
     margin-top: .5vh;
   }
+  .scrollTime {
+    max-height: 70vh;
+    overflow-y: scroll;
+  }
   .time {
     width: max-content;
     height: max-content;
@@ -139,9 +156,9 @@
     background-color: #E7EBEF;
     box-shadow: 0px 3px 6px #04316329;
   }
-  .ex{
+  .ex {
     margin-right: 1vw;
-    margin-top:1.25vh;
+    margin-top: 1.25vh;
   }
   .addTime {
     height: 3vh;
@@ -152,5 +169,14 @@
   }
   .marginRight {
     margin-right: 1vw;
+  }
+  .inputError {
+    color: red;
+    position: relative;
+    font-size: '3vh';
+    margin: 0px;
+    font-weight: lighter;
+    margin-right: 5vw;
+    margin-top: 2vh;
   }
 }

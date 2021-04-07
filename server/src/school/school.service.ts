@@ -28,7 +28,6 @@ export class SchoolService {
   }
 
   async addSchool(@Body() info: any) {
-    // console.log('info: ', info);
     let school = new School();
     school.name = info.schoolName;
     school.city = info.schoolCity;

@@ -49,6 +49,7 @@ class EditSchool extends Component {
     e.preventDefault();
     let success = this.props.schools.deleteSchool()
     if (success) {
+      // this.props.history.replace('https://www.youtube.com/watch?v=4G6QDNC4jPs');
       this.props.history.goBack();
     } else {
       this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת, לא היה ניתן למחוק את בית הספר.')

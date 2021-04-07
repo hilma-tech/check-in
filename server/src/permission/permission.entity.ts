@@ -28,6 +28,7 @@ export class Permission {
   @ManyToOne(
     type => Classroom,
     classroom => classroom.id,
+    { onDelete: 'CASCADE' }
   )
   @JoinColumn({ referencedColumnName: 'id', name: 'classroom_id' })
   classroom_id: number;

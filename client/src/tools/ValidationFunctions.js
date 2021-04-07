@@ -96,7 +96,7 @@ export function fieldNameValidation(name) {
 export function classNameValidation(name) {
   if (name === null || name.length === 0) {
     return "** נא למלא שדה זה **";
-  } else if (name.length > 10) {
+  } else if (name.length > 15) {
     return "** שדה זה לא יכול להכיל יותר מ-10 תווים **";
   } else if (name.trim().length === 0) {
     return "** שם זה לא תקין **";
@@ -285,18 +285,31 @@ export function PermissionsValidation(per) {
   if (per === null || per.length === 0) {
     return "** יש להכניס הרשאה **";
   } else {
-     let arrErr = per.map((permission) => {
-      // console.log('permission: ', permission);
-      if (permission.startTime === undefined && permission.endTime === undefined) {
-        // console.log('idiot time!');
+    let arrErr = per.map((permission) => {
+      if (!permission.startTime && !permission.endTime || !permission.endTime || !permission.startTime) {
         return "** יש להכניס זמני התחלה וסיום **"
-      } else if (Date.parse(permission.startTime) > Date.parse(permission.endTime)) {
-        return "** על זמן הסיום להיות גדול מזמן ההתחלה **"
-      } else {
+      } else if (permission.startTime && permission.endTime) {
+        var start = permission.startTime.split(":");
+        var end = permission.endTime.split(":");
+        if (parseInt(start[0]) > parseInt(end[0])) {
+          if (per.length > 1) {
+            return "** על זמן סיום ההרשאות להיות גדול מזמן התחלתן **"
+          } else {
+            return "** על זמן סיום ההרשאה להיות גדול מזמן התחלתה **"
+          }
+        } else if (parseInt(start[0]) === parseInt(end[0]) && parseInt(start[1]) > parseInt(end[1])) {
+          if (per.length > 1) {
+            return "** על זמן סיום ההרשאות להיות גדול מזמן התחלתן **"
+          } else {
+            return "** על זמן סיום ההרשאה להיות גדול מזמן התחלתה **"
+          }
+        }
+      }
+      else {
         return "";
       }
     })
-    return arrErr
+    return arrErr.filter(err => err !== undefined)
   }
 
 }

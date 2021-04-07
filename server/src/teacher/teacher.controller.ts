@@ -72,6 +72,36 @@ export class TeacherController {
   }
 
   @UseJwtAuth('superAdmin')
+  @Post('/changeteacherpass')
+  async changePass(@Body() newPass: any) {
+      return await this.teacherService.changeTeacherPassword(newPass)
+  }
+
+  // {
+//   id: '2de835a7-3dc6-4e5e-a36f-45892dbbf758',
+//   username: 'batzy@gmail.com',
+//   password: '',
+//   firstName: 'בתצי',
+//   lastName: 'רוזננננ',
+//   classrooms: [
+//     { id: 28, name: "א'1", games: [], students: [], teachers: [Array] }
+//   ],
+//   schoolId: 44
+// }
+
+  @UseJwtAuth('superAdmin')
+  @Post('/editTeacher')
+  async editTeacher(@Body() req: any) {
+    console.log('req: ', req);
+    try {
+      return await this.teacherService.editTeacher(req);
+    } catch (e) {
+      console.log('e: ', e);
+      return false
+    }
+  }
+
+  @UseJwtAuth('superAdmin')
   @Post('/deleteTeacher')
   async deleteTeacher(@Body() val: any) {
     return await this.teacherService.deleteTeacher(val.teacherId)

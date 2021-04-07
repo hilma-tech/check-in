@@ -27,6 +27,7 @@ export class Student extends User {
   @ManyToOne(
     () => School,
     school => school.students,
+    { onDelete: 'CASCADE' }
   )
   @JoinColumn({ referencedColumnName: 'id', name: 'school_id' })
   school: number;
@@ -34,6 +35,7 @@ export class Student extends User {
   @ManyToMany(
     type => Classroom,
     classroom => classroom.students,
+    { onDelete: 'CASCADE' }
   )
   classroomStudent: Classroom[];
 }

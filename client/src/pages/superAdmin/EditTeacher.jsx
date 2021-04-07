@@ -30,7 +30,11 @@ class EditTeacher extends React.Component {
       { value: "false", label: "לא" },
     ];
     this.state = {
+      schoolId: 0,
       showPassChanger: false,
+      passDisplay: "",
+      newPass: "",
+      passErr: "",
       teacherFirstName: "",
       lastName: "",
       schoolName: "",
@@ -44,10 +48,10 @@ class EditTeacher extends React.Component {
       schoolNameError: { toShow: "none", mess: "" },
       emailNameError: { toShow: "none", mess: "" },
       passwordNameError: { toShow: "none", mess: "" },
+      passwordError: "",
       allSchools: [],
       allClasses: [],
       chosenClasses: [],
-
     };
   }
 
@@ -59,9 +63,9 @@ class EditTeacher extends React.Component {
         }
       );
       this.setState({
-        teacherFirstName:
-          this.props.teachers.chosenTeacher.first_name,
-          lastName: this.props.teachers.chosenTeacher.last_name,
+        schoolId: this.props.teachers.chosenTeacher.school.id,
+        teacherFirstName: this.props.teachers.chosenTeacher.first_name,
+        lastName: this.props.teachers.chosenTeacher.last_name,
         email: this.props.teachers.chosenTeacher.username,
         schoolName: this.props.teachers.chosenTeacher.school.name,
         fieldsData: fields,
@@ -188,6 +192,28 @@ class EditTeacher extends React.Component {
       return { fieldsData: tempFieldsData };
     });
   };
+  closePassChange = () => {
+    if (!this.state.passErr) {
+      this.setState({
+        showPassChanger: !this.state.showPassChanger,
+        passErr: "",
+      });
+    }
+  };
+  updatePass = async () => {
+    console.log(this.state.passDisplay, "pass");
+    try {
+      await axios.post("/api/teacher/changeteacherpass", {
+        username: this.state.email,
+        password: this.state.passDisplay,
+      });
+      this.closePassChange();
+      this.setState({ passDisplay: "" });
+      this.props.errorMsg.setErrorMsg(" הסיסמה שונתה בהצלחה! ");
+    } catch (err) {
+      this.props.errorMsg.setErrorMsg("סיסמה לא נשמרה, נסו שנית :(");
+    }
+  };
 
   addClassSelection = () => {
     this.setState((prevState) => {
@@ -195,6 +221,13 @@ class EditTeacher extends React.Component {
         id: -1 * prevState.chosenClasses.length,
         name: "שייך לכיתה",
       });
+      return { chosenClasses: prevState.chosenClasses };
+    });
+  };
+
+  chooseClass = (e) => {
+    this.setState((prevState) => {
+      prevState.chosenClasses[e.classIndex] = { id: e.id, name: e.value };
       return { chosenClasses: prevState.chosenClasses };
     });
   };
@@ -207,10 +240,10 @@ class EditTeacher extends React.Component {
     });
   };
 
-  validateInputFields = (e) => {
+  validateInputFields = async (e) => {
     e.preventDefault();
     let allOk = true;
-    // ----------teacher first name validetion-------------------
+    // ----------teacher first name validation-------------------
     let nameTeacherMess = nameValidation(this.state.teacherFirstName);
     if (nameTeacherMess.length !== 0) {
       this.setState((prevState) => {
@@ -223,7 +256,7 @@ class EditTeacher extends React.Component {
       this.setState({ teacherNameError: { toShow: "none", mess: "" } });
       allOk = true;
     }
-    // ----------teacher last name validetion-------------------
+    // ----------teacher last name validation-------------------
     let lastNameTeacherMess = nameValidation(this.state.lastName);
     if (lastNameTeacherMess.length !== 0) {
       this.setState((prevState) => {
@@ -236,7 +269,7 @@ class EditTeacher extends React.Component {
       this.setState({ teacherLastNameError: { toShow: "none", mess: "" } });
       allOk = true;
     }
-    // ----------school name validetion-------------------
+    // ----------school name validation-------------------
     let nameSchoolMess = mustInputValidation(this.state.schoolName);
     if (nameSchoolMess.length !== 0) {
       this.setState((prevState) => {
@@ -262,24 +295,72 @@ class EditTeacher extends React.Component {
       this.setState({ emailNameError: { toShow: "none", mess: "" } });
       allOk = true;
     }
-    // ----------password validetion-------------------
+    // ----------password validation-------------------
     if (this.state.showPassChanger) {
-      let passwordErrorMess = teacherPasswordValidation(this.state.password);
+      let passwordErrorMess = teacherPasswordValidation(this.state.passDisplay);
       if (passwordErrorMess.length !== 0) {
-        this.setState((prevState) => {
-          prevState.passwordError.toShow = "block";
-          prevState.passwordError.mess = passwordErrorMess;
-          return { passwordError: prevState.passwordError };
+        this.setState({
+          passErr: passwordErrorMess,
         });
         allOk = false;
       } else {
-        this.setState({ passwordError: { toShow: "none", mess: "" } });
+        this.setState({ passErr: "" });
       }
     }
-    //after all the validetion we need to send the data to sql
+    //after all the validation we need to send the data to sql
     if (allOk) {
-      this.props.history.goBack(); // after saving go back
+      try {
+        await this.updatePass();
+        // console.log("OOOOOOOOOOOI");
+        // console.log("this.state.schoolId: ", this.state.schoolId);
+        // console.log("this.state.chosenClasses: ", this.state.chosenClasses);
+
+        let { data } = await axios.post("/api/teacher/editTeacher", {
+          id: this.props.teachers.chosenTeacher.id,
+          username: this.state.email,
+          password: this.state.password,
+          firstName: this.state.teacherFirstName,
+          lastName: this.state.lastName,
+          classrooms: this.state.chosenClasses.filter((classroom) => {
+            return classroom.name !== "שייך לכיתה";
+          }),
+          schoolId: this.state.schoolId,
+        });
+        let classroomTeacher = this.state.chosenClasses.filter((classroom) => {
+          return classroom.name !== "שייך לכיתה";
+        });
+        console.log("data: ", data);
+        if (data) {
+          this.props.teachers.updateTeacher({
+            first_name: this.state.teacherFirstName,
+            last_name: this.state.lastName,
+            name: this.state.teacherFirstName + " " + this.state.lastName,
+            username: this.state.email,
+            schoolName: this.state.schoolName,
+            school: { id: this.state.schoolId, name: this.state.schoolName },
+            id: this.props.teachers.chosenTeacher.id,
+            classroomTeacher: classroomTeacher,
+            classes:
+              classroomTeacher !== undefined
+                ? classroomTeacher.map((classInfo) => {
+                    return classInfo.name;
+                  })
+                : [],
+          });
+          this.props.history.goBack(); // after saving go back
+        } else {
+          this.props.errorMsg.setErrorMsg(
+            "שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר."
+          );
+        }
+      } catch (err) {
+        this.props.errorMsg.setErrorMsg("שגיאה בשרת, המורה לא נשמר, נסו שוב.");
+      }
     }
+  };
+
+  onPassChange = (val) => {
+    this.setState({ passDisplay: val.target.value });
   };
 
   deleteTeacher = () => {
@@ -360,45 +441,59 @@ class EditTeacher extends React.Component {
                 // onChange={this.saveSchoolName}
                 options={this.rakazOptions}
                 styles={SelectStyle()}
+                isDisabled={true}
                 placeholder={this.state.rakaz === true ? "כן" : "לא"}
               />
               {/* כיתה */}
               <label className="labelFields">כיתות:</label>
               <div>
-              {this.state.schoolName.length === 0 ? <></> :
-            <>
-              {
-                this.state.chosenClasses.map((val, i) => {
-                  return (<div key={val.id} className="classSelection">
-                    <Select
-                      className="classSelectionInAddTecher"
-                      styles={SelectStyle()}
-                      options={this.makeClassesOption(i)}
-                      onChange={this.chooseClass}
-                      defaultValue={{
-                        value: val.name,
-                        label: val.name,
-                      }}
-                    />
-                    <img
-                      className="removeFieldIcon"
-                      onClick={() => this.removeClass(i)}
-                      src="/icons/delete.svg"
-                    />
-                  </div>)
-                })
-              }
+                {this.state.schoolName.length === 0 ? (
+                  <></>
+                ) : (
+                  <>
+                    {this.state.chosenClasses.map((val, i) => {
+                      return (
+                        <div key={val.id} className="classSelection">
+                          <Select
+                            className="classSelectionInAddTecher"
+                            styles={SelectStyle()}
+                            options={this.makeClassesOption(i)}
+                            onChange={this.chooseClass}
+                            defaultValue={{
+                              value: val.name,
+                              label: val.name,
+                            }}
+                          />
+                          <img
+                            className="removeFieldIcon"
+                            onClick={() => this.removeClass(i)}
+                            src="/icons/delete.svg"
+                          />
+                        </div>
+                      );
+                    })}
 
-              {this.state.allClasses.length === this.state.chosenClasses.length ? <></> :
-                <div className="addSomethingNew" onClick={this.addClassSelection}>
-                  <img className="addIcon" src={addicon} alt="add icon"></img>
-                  <p className="addTitle">הוסף כיתה</p>
-                </div>}
-            </>
-          }
+                    {this.state.allClasses.length ===
+                    this.state.chosenClasses.length ? (
+                      <></>
+                    ) : (
+                      <div
+                        className="addSomethingNew"
+                        onClick={this.addClassSelection}
+                      >
+                        <img
+                          className="addIcon"
+                          src={addicon}
+                          alt="add icon"
+                        ></img>
+                        <p className="addTitle">הוסף כיתה</p>
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
             </form>
-            
+
             <form className="formData" style={{ marginTop: "0" }}>
               {/* אימייל */}
               <label className="labelFields">אימייל:</label>
@@ -416,57 +511,76 @@ class EditTeacher extends React.Component {
                 defaultValue={this.state.email}
               />
               {/* סיסמא */}
-              {this.state.showPassChanger ? (
-                <>
-                  <label className="labelFields">* סיסמא:</label>
-                  <p
-                    className="error"
-                    style={{ display: this.state.passwordError.toShow }}
-                  >
-                    {this.state.passwordError.mess}
-                  </p>
-                  <input
-                    className="inputFields"
-                    defaultValue={this.state.password}
-                    onChange={this.handlechanges}
-                    type="text"
-                    placeholder="הכנס סיסמא"
-                    name="password"
-                  ></input>
-                  <div
-                    className="passTeacherChange"
-                    onClick={() => {
-                      this.setState({
-                        showPassChanger: !this.state.showPassChanger,
-                        password: "",
-                      });
+              <div
+                className="passchangeTeacher"
+                onClick={() => {
+                  this.setState({
+                    showPassChanger: !this.state.showPassChanger,
+                    passErr: "",
+                  });
+                }}
+              >
+                <h2 className="changePasstext">שינוי סיסמא</h2>
+                <div className="editIcon">
+                  <EditIcon
+                    style={{
+                      height: "3vh",
+                      width: "3vh",
+                      color: "#043163",
                     }}
+                  />
+                </div>
+              </div>
+              <div
+                style={{
+                  display: this.state.showPassChanger ? "block" : "none",
+                }}
+              >
+                <h4 className="inputError">{this.state.passErr}</h4>
+                <div style={this.state.passErr ? { marginTop: "5vh" } : {}}>
+                  <div
+                    className="teacherDeets"
+                    style={{ marginTop: "2.5vh" }}
                   >
-                    <h2 className="changePasstext">ביטול</h2>
-                  </div>{" "}
-                </>
-              ) : (
-                <div
-                  className="passTeacherChange"
-                  onClick={() => {
-                    this.setState({
-                      showPassChanger: !this.state.showPassChanger,
-                      password: "",
-                    });
-                  }}
-                >
-                  <h2 className="changePasstext">שינוי סיסמא</h2>
-                  <div className="editIcon">
-                    <EditIcon
+                    <input
                       style={{
-                        height: "3vh",
-                        width: "3vh",
-                        color: "#043163",
+                        border: "none",
+                        backgroundColor: "rgba(188, 188, 203, 0)",
+                        fontWeight: "600",
+                        width: "90%",
+                        fontFamily: "Assistant",
                       }}
+                      className="passInputTeacher"
+                      placeholder="הכנס סיסמא חדשה"
+                      onChange={(val) => this.onPassChange(val)}
+                      value={this.state.passDisplay}
+                      type="text"
                     />
                   </div>
                 </div>
-              )}
+                <div className="approveOrNot">
+                  <div
+                    className="passchangeTeacher"
+                    onClick={() => {
+                      this.setState({
+                        showPassChanger: !this.state.showPassChanger,
+                        passErr: "",
+                      });
+                    }}
+                  >
+                    <h3
+                      style={{
+                        fontWeight: "lighter",
+                        paddingLeft: "3vw",
+                        paddingRight: "3vw",
+                      }}
+                      className="changePasstext"
+                    >
+                      ביטול
+                    </h3>
+                  </div>
+                </div>
+              </div>
             </form>
 
             <div className="spacerFromSaveButton"></div>
