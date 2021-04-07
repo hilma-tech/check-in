@@ -148,11 +148,18 @@ class EditTeacher extends React.Component {
     return options;
   };
 
-  saveSchoolName = (props) => {
-    this.setState((prevState) => {
-      let prevSchool = prevState.schoolName;
-      prevSchool = props.value;
-      return { schoolName: prevSchool };
+  saveSchoolName = async (e) => {
+    let chosenSchoolId = this.props.schools.schoolsNames.filter((school) => {
+      return school.name === e.value;
+    })[0];
+    const { data } = await axios.get("/api/classroom/getSchoolClasses", {
+      params: { schoolId: chosenSchoolId.id },
+    });
+    this.setState({
+      school: e.value,
+      allClasses: data,
+      schoolId: chosenSchoolId.id,
+      chosenClasses: [],
     });
   };
 
@@ -315,14 +322,14 @@ class EditTeacher extends React.Component {
         }
         let notEmptyClasses = this.state.chosenClasses.filter((classroom) => {
           return classroom.name !== "שייך לכיתה";
-        })
-let onlyRightFields = notEmptyClasses.map((classroom) => {
-  return {id: classroom.id, name: classroom.name}
-})
-// console.log('onlyRightFields: ', onlyRightFields);
+        });
+        let onlyRightFields = notEmptyClasses.map((classroom) => {
+          return { id: classroom.id, name: classroom.name };
+        });
+        // console.log('onlyRightFields: ', onlyRightFields);
 
-console.log('this.state.passDisplay: ', this.state.passDisplay);
-      
+        console.log("this.state.passDisplay: ", this.state.passDisplay);
+
         let { data } = await axios.post("/api/teacher/editTeacher", {
           id: this.props.teachers.chosenTeacher.id,
           username: this.state.email,
@@ -348,10 +355,10 @@ console.log('this.state.passDisplay: ', this.state.passDisplay);
             id: this.props.teachers.chosenTeacher.id,
             classroomTeacher: classroomTeacher,
             classes:
-            classroomTeacher !== undefined
-            ? classroomTeacher.map((classInfo) => {
-              return classInfo.name;
-            })
+              classroomTeacher !== undefined
+                ? classroomTeacher.map((classInfo) => {
+                    return classInfo.name;
+                  })
                 : [],
           });
           this.props.history.goBack(); // after saving go back
@@ -365,11 +372,11 @@ console.log('this.state.passDisplay: ', this.state.passDisplay);
       }
     }
   };
-  
+
   onPassChange = (val) => {
     this.setState({ passDisplay: val.target.value });
   };
-  
+
   deleteTeacher = () => {
     let success = this.props.teachers.deleteTeacher();
     if (success) {
@@ -377,12 +384,11 @@ console.log('this.state.passDisplay: ', this.state.passDisplay);
     } else {
       this.props.errorMsg.setErrorMsg(
         "הייתה שגיאה בשרת, לא היה ניתן למחוק את המורה."
-        );
-      }
+      );
+    }
   };
-  
+
   render() {
-    
     // console.log('this.state.chosenClasses: ', this.state.chosenClasses);
     return (
       <>
@@ -395,7 +401,7 @@ console.log('this.state.passDisplay: ', this.state.passDisplay);
               <p
                 className="error"
                 style={{ display: this.state.teacherNameError.toShow }}
-                >
+              >
                 {this.state.teacherNameError.mess}
               </p>
               <input
@@ -454,12 +460,13 @@ console.log('this.state.passDisplay: ', this.state.passDisplay);
                 placeholder={this.state.rakaz === true ? "כן" : "לא"}
               />
               {/* כיתה */}
-              <label className="labelFields">כיתות:</label>
               <div>
                 {this.state.schoolName.length === 0 ? (
                   <></>
-                ) : (
-                  <>
+                  ) : (
+                    <>
+                    <label className="labelFields">כיתות:</label>
+                    {this.state.chosenClasses.length === 0 ? <p>אין כיתות לבית ספר זה</p> : <></>}
                     {this.state.chosenClasses.map((val, i) => {
                       return (
                         <div key={val.id} className="classSelection">
@@ -547,10 +554,7 @@ console.log('this.state.passDisplay: ', this.state.passDisplay);
               >
                 <h4 className="inputError">{this.state.passErr}</h4>
                 <div style={this.state.passErr ? { marginTop: "5vh" } : {}}>
-                  <div
-                    className="teacherDeets"
-                    style={{ marginTop: "2.5vh" }}
-                  >
+                  <div className="teacherDeets" style={{ marginTop: "2.5vh" }}>
                     <input
                       style={{
                         border: "none",
