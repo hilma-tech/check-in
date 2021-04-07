@@ -40,7 +40,6 @@ class ShowGame extends Component {
         params: { game_id: this.props.chosenGame.gameId,
           classroom_id: this.props.chosenClass.classId },
         });
-        console.log('data: ', data);
       if (data.game_name === null || data.game_name === undefined) {
         this.props.history.push("/teacher/classes/games");
       }
