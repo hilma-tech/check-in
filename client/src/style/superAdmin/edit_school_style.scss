@@ -9,6 +9,7 @@
 }
 
 .editSchoolAddClass {
+  @include mouse(point);
   @include blue-button-style;
   width: 10vw;
   margin-top: 1vh;
@@ -62,6 +63,7 @@
 }
 
 .removeClass {
+  @include mouse(point);
   width: 1.5vw;
   margin: 0.5vw;
 }
