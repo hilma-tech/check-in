@@ -56,6 +56,7 @@ class Games extends React.Component {
         this.props.games.gamesList[index].id,
         index
       );
+      this.props.games.whatData("old")
       this.props.errorMsg.setErrorMsg("לכל כיתה יכול להיות עד שישה משחקים.");
       this.props.history.push("/teacher/classes/showGame");
     }

@@ -230,7 +230,7 @@ class EditStudent extends React.Component {
 
     //after all the validation we need to send the data to sql
     if (allOk) {
-      console.log('this.state.password: ', this.state.password);
+      // console.log('this.state.password: ', this.state.password);
       try {
         let { data } = await axios.post("/api/student/editStudent", {
           id: this.props.students.chosenStudent.id,

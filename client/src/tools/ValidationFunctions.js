@@ -38,7 +38,7 @@ export function linkValidation(link) {
 
 //Check validation for names (teacher, student or game name)
 export function nameValidation(name) {
-  console.log("VALIDATING");
+  // console.log("VALIDATING");
   if (name === null || name.length === 0) {
     return "** נא למלא שדה זה **";
   } else if (name.length > 30) {
@@ -189,7 +189,7 @@ export function emailValidation(email) {
 //Check validation for inputs that the user must field
 //it's not matter how he field them...
 export function mustInputValidation(input) {
-  console.log(input, "oooooooooo");
+  // console.log(input, "oooooooooo");
   if (input === null || input.length === 0) {
     return "** נא למלא שדה זה **";
   } else if (input.trim().length === 0) {

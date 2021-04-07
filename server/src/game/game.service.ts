@@ -23,7 +23,7 @@ export class GameService {
     private fieldService: FieldService,
     private classroomFieldService: ClassroomFieldService,
     private readonly imageService: ImageService,
-  ) { }
+  ) {}
 
   async addGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
     // if(req.game.image.value){
@@ -81,59 +81,77 @@ export class GameService {
     return { gamesInfo: gamesInfo, haveMoreGames: haveMoreGames };
   }
 
+
+  // id: 133,
+  //   newValue: '/image/GNHazZY0P0Jj22GdyiSbeaYUU77KJLkI.jpg',
+  //   field: Field {
+  //     id: 20,
+  //     field_name: 'pictchure',
+  //     type: 'image',
+  //     default_value: '/image/GNHazZY0P0Jj22GdyiSbeaYUU77KJLkI.jpg',
+  //     order: 5
+  //   }
+
   async getShowGameInfo(data: getCGFDto) {
+    console.log('data: ', data);
 
-    let temp = await this.gameRepository.find({
-      relations: ['fields'],
-      where: { id: data.game_id },
-    });
-    let classGameFields = await this.classroomFieldService.getClassroomGameFields(data);
-    if (classGameFields.length !== 0) {
-      temp[0].fields = temp[0].fields.map(
-        (field, index) => {
-          field.default_value = classGameFields[index].newValue
-          return field;
-        }
-      )
+    if (data.datatype === 'new') {
+      let GameFields = await this.classroomFieldService.getClassroomGameFields(
+        data,
+      );
+      console.log('classGameFields: ', GameFields);
+      console.log('GameFields[i].field.length: ', GameFields[0].field.length);
+
+      // for (let i = 0; i < GameFields.length; i++) {
+      //   for (let j = 0; j < GameFields[i].field.length; j++) {
+      //     if (
+      //       GameFields[i].fields[j].type === 'image' ||
+      //       GameFields[i].fields[j].type === 'text'
+      //     ) {
+      //       GameFields[i].fields[j].value = [
+      //         { id: 0, value: GameFields[i].fields[j].default_value },
+      //       ];
+      //     } else {
+      //       GameFields[i].fields[j].value = JSON.parse(
+      //         GameFields[i].fields[j].default_value,
+      //       ).map((value, index) => {
+      //         return { id: index, value: value };
+      //       });
+      //     }
+      //     GameFields[i].fields[j].name = GameFields[i].fields[j].field_name;
+      //     GameFields[i].fields[j].selection = GameFields[i].fields[j].type;
+      //   }
+      // }
+  
+      // return GameFields[0];
+
+
+    } else if (data.datatype === 'old') {
+      let GameFields = await this.gameRepository.find({
+        relations: ['fields'],
+        where: { id: data.game_id },
+      });
+      console.log('temp: ', GameFields[0].fields);
+    } else {
+      return false;
     }
 
-    let games: any;
-    games = [...temp];
-    for (let i = 0; i < games.length; i++) {
-      for (let j = 0; j < games[i].fields.length; j++) {
-        if (
-          games[i].fields[j].type === 'image' ||
-          games[i].fields[j].type === 'text'
-        ) {
-          games[i].fields[j].value = [
-            { id: 0, value: games[i].fields[j].default_value },
-          ];
-        } else {
-          games[i].fields[j].value = JSON.parse(
-            games[i].fields[j].default_value
-          ).map((value, index) => {
-            return { id: index, value: value };
-          });
-        }
-        games[i].fields[j].name = games[i].fields[j].field_name;
-        games[i].fields[j].selection = games[i].fields[j].type;
-      }
-    }
-
-    return games[0];
+    
   }
 
   async getGameInfo(gameId: IdeDto) {
     let temp = await this.gameRepository.find({
-      where: [{id: Number(gameId.id)}],
-      relations: ["fields"],
-    })
+      where: [{ id: Number(gameId.id) }],
+      relations: ['fields'],
+    });
 
     let games: any;
     games = [...temp];
     for (let i = 0; i < games.length; i++) {
       for (let j = 0; j < games[i].fields.length; j++) {
-        temp[0].fields.sort((a,b)=>{return a.order - b.order})
+        temp[0].fields.sort((a, b) => {
+          return a.order - b.order;
+        });
         if (
           games[i].fields[j].type === 'image' ||
           games[i].fields[j].type === 'text'
@@ -169,7 +187,7 @@ export class GameService {
   }
 
   async deleteGameById(id: DeleteGameIdDto) {
-    await this.classroomFieldService.deleteClassField(id.Id)
+    await this.classroomFieldService.deleteClassField(id.Id);
     await this.gameRepository.delete(id.Id);
   }
 
@@ -186,8 +204,8 @@ export class GameService {
     let gamesLength = (
       await this.gameRepository.query(
         'select id from game where id not in(select game_id from classroom_game where classroom_id = ' +
-        req.classId +
-        ');',
+          req.classId +
+          ');',
       )
     ).length;
 
@@ -196,10 +214,10 @@ export class GameService {
 
     let allGames = await this.gameRepository.query(
       'select id, game_name, image from game where id not in(select game_id from classroom_game where classroom_id = ' +
-      req.classId +
-      ')  limit 50 offset ' +
-      req.dataLength +
-      ';',
+        req.classId +
+        ')  limit 50 offset ' +
+        req.dataLength +
+        ';',
     );
     return {
       currClassGames: currClassGames,
@@ -217,15 +235,20 @@ export class GameService {
       .addSelect('Game.image')
       .where('Classroom.id = :id', { id: Number(classId) })
       .getMany();
-    return Promise.all(GamesByClassId.map(async (game) => {
-      var fields = await this.classroomFieldService.checkFieldAltValue(game.id, classId)
-      return { ...game, fields: fields }
-    })).then((games) => {
-      return { classId: classId, className: className, classGames: games }
-    })
+    return Promise.all(
+      GamesByClassId.map(async game => {
+        var fields = await this.classroomFieldService.checkFieldAltValue(
+          game.id,
+          classId,
+        );
+        return { ...game, fields: fields };
+      }),
+    ).then(games => {
+      return { classId: classId, className: className, classGames: games };
+    });
   }
 
- async searchGames (val){
+  async searchGames(val) {
     let gamesInfo = await this.gameRepository.find({
       where: [{ suspended: false }],
       select: ['id', 'game_name', 'image'],
@@ -234,14 +257,14 @@ export class GameService {
       },
     });
 
-    let Search = gamesInfo.map((game) => {
+    let Search = gamesInfo.map(game => {
       if (game.game_name.includes(val.val.toLowerCase())) {
-        return game
+        return game;
       }
-    })
-    var searchresult = Search.filter(function (game) {
+    });
+    var searchresult = Search.filter(function(game) {
       return game != null;
     });
-    return searchresult
+    return searchresult;
   }
 }

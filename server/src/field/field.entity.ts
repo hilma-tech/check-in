@@ -12,6 +12,7 @@ import {
   Length,
   Matches,
   IsNumber,
+  IsOptional,
 } from 'class-validator';
 
 @Entity()
@@ -32,13 +33,15 @@ export class Field {
   @Column({ type: 'varchar', length: 50 })
   type: string;
 
+  @IsOptional()
   @ManyToOne(
     type => Game,
     game => game.id,
-    { onDelete: 'CASCADE' }
+    { onDelete: 'CASCADE' },
+
   )
-  @JoinColumn({ referencedColumnName: 'id', name: 'game_id' })
-  game: number;
+  @JoinColumn({ referencedColumnName: 'id', name: 'game_id', })
+  game?: number;
 
   @IsDefined()
   @IsString()

@@ -4,6 +4,7 @@ import { makeObservable, observable, action, runInAction } from "mobx";
 const axios = require("axios").default;
 
 class Games {
+  datatype = '';
   gamesList = [];
   chosenGameList = [];
   searchedGames=[];
@@ -29,7 +30,9 @@ class Games {
       resetGamesStore: action,
       searchGames: action,
       searchGamesReplace:action,
-      searchedGames: observable
+      searchedGames: observable,
+      whatData: action,
+      datatype: observable,
     });
   }
 
@@ -132,6 +135,10 @@ class Games {
       return false
     }
   };
+
+  whatData = (datatype) => {
+    this.datatype = datatype
+  }
 
   //deletes game entirely from DB
   deleteGame = async (Id) => {

@@ -22,6 +22,7 @@ export class ClassroomFieldService {
       where: [{classroom_id: Number(data.classroom_id), game_id: Number(data.game_id)}],
       relations: ["field_id"]
     })
+    // console.log('GameFields: ', GameFields);
     return GameFields.map((field)=>{
       return {id: field.id, newValue: field.new_value, field: field.field_id}
     })
@@ -38,10 +39,10 @@ export class ClassroomFieldService {
           await this.imageService.delete(field.default_value)
         }
       }
-      this.classFieldRepository.delete({
-        classroom_id: req.classId,
-        field_id: field.id,
-      });
+    });
+    this.classFieldRepository.delete({
+      classroom_id: req.classId,
+      field_id: fields,
     });
   }
 
@@ -92,9 +93,9 @@ export class ClassroomFieldService {
       }
 
       emptyField = 0;
-      let newField = new ClassroomField();
+      let newField: Partial<ClassroomField> =  new ClassroomField();
       newField.classroom_id = req.classId;
-      newField.field_id = field.id;
+      newField.field_id = [field]//field.id;
       newField.new_value = Inp;
       newField.game_id = req.gameId
       this.classFieldRepository.save(newField);
@@ -109,7 +110,7 @@ export class ClassroomFieldService {
       if(fieldId.type === 'image'){
         await this.imageService.delete(fieldId.default_value)
       }
-      await this.classFieldRepository.delete({ field_id: fieldId.id });
+      // await this.classFieldRepository.delete({ field_id: fieldId.id });
     });
     if (fieldsForDelete.length > 0) {
       await this.fieldService.deleteField(fieldsForDelete);

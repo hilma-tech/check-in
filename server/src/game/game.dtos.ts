@@ -146,6 +146,10 @@ export class showGameDto {
   @IsString()
   @IsNumberString()
   classroom_id: string;
+
+  @IsDefined()
+  @IsString()
+  datatype: string
 }
 
 export class IdeDto { 

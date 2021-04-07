@@ -208,7 +208,7 @@ class EditTeacher extends React.Component {
     }
   };
   updatePass = async () => {
-    console.log(this.state.passDisplay, "HEWERO");
+    // console.log(this.state.passDisplay, "HEWERO");
     try {
       await axios.post("/api/teacher/changeteacherpass", {
         username: this.state.email,
@@ -328,7 +328,7 @@ class EditTeacher extends React.Component {
         });
         // console.log('onlyRightFields: ', onlyRightFields);
 
-        console.log("this.state.passDisplay: ", this.state.passDisplay);
+        // console.log("this.state.passDisplay: ", this.state.passDisplay);
 
         let { data } = await axios.post("/api/teacher/editTeacher", {
           id: this.props.teachers.chosenTeacher.id,

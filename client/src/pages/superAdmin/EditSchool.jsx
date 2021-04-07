@@ -190,7 +190,7 @@ class EditSchool extends Component {
 
     //after all the validetion we need to send the data to sql
     if (allOk) {
-      console.log('this.state: ', this.state);
+      // console.log('this.state: ', this.state);
       try {
         let { data } = await axios.post("/api/school/editSchool", {
             id: this.props.schools.chosenSchool.id,
@@ -200,7 +200,7 @@ class EditSchool extends Component {
             removedClasses: this.state.removedClasses,
             existClasses: this.state.existClasses
         });
-        console.log('data: ', data);
+        // console.log('data: ', data);
         if (data) {
           this.props.schools.editSchool(
             data.id,
