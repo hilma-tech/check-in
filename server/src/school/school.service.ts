@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { Repository } from 'typeorm';
-import { EditSchoolInfoDto, GetSchoolSkip } from './school.dtos';
+import { EditSchoolInfoDto, GetSchoolSkip, SearchValDto } from './school.dtos';
 import { School } from './school.entity';
 
 @Injectable()
@@ -85,7 +85,7 @@ export class SchoolService {
     })
   }
 
-  async searchSchools(val) {
+  async searchSchools(val: SearchValDto) {
     let schools = await this.schoolRepository.find({
     });
     let Search = schools.map((school) => {
