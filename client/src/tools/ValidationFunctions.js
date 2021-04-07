@@ -38,6 +38,7 @@ export function linkValidation(link) {
 
 //Check validation for names (teacher, student or game name)
 export function nameValidation(name) {
+  console.log("VALIDATING");
   if (name === null || name.length === 0) {
     return "** נא למלא שדה זה **";
   } else if (name.length > 30) {
@@ -188,22 +189,13 @@ export function emailValidation(email) {
 //Check validation for inputs that the user must field
 //it's not matter how he field them...
 export function mustInputValidation(input) {
+  console.log(input, "oooooooooo");
   if (input === null || input.length === 0) {
     return "** נא למלא שדה זה **";
   } else if (input.trim().length === 0) {
     return "** נא למלא שדה זה **";
   } else if (input.length > 30) {
     return "** שדה זה לא יכול להכיל יותר מ-30 תווים **";
-  } else if (
-    !/[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{};:\\|<>/?~\s]/.test(input)
-  ) {
-    return "** שדה זה לא תקין **";
-  } else if (
-    input.includes('"') ||
-    input.includes("'") ||
-    input.includes("-")
-  ) {
-    return "** שם זה לא תקין **";
   } else {
     return "";
   }

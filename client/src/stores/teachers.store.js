@@ -73,7 +73,6 @@ class Teachers {
   };
 
   updateTeacher = (newTeacherInfo) => {
-    console.log("listData: ", this.listDataTeachers);
     let teacherId = this.chosenTeacher.id
     this.listDataTeachers = this.listDataTeachers.map((teacher)=>{
         if(teacher.id === teacherId){

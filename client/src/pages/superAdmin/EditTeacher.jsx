@@ -148,11 +148,18 @@ class EditTeacher extends React.Component {
     return options;
   };
 
-  saveSchoolName = (props) => {
-    this.setState((prevState) => {
-      let prevSchool = prevState.schoolName;
-      prevSchool = props.value;
-      return { schoolName: prevSchool };
+  saveSchoolName = async (e) => {
+    let chosenSchoolId = this.props.schools.schoolsNames.filter((school) => {
+      return school.name === e.value;
+    })[0];
+    const { data } = await axios.get("/api/classroom/getSchoolClasses", {
+      params: { schoolId: chosenSchoolId.id },
+    });
+    this.setState({
+      school: e.value,
+      allClasses: data,
+      schoolId: chosenSchoolId.id,
+      chosenClasses: [],
     });
   };
 
@@ -201,16 +208,16 @@ class EditTeacher extends React.Component {
     }
   };
   updatePass = async () => {
-    console.log(this.state.passDisplay, "pass");
+    console.log(this.state.passDisplay, "HEWERO");
     try {
       await axios.post("/api/teacher/changeteacherpass", {
         username: this.state.email,
         password: this.state.passDisplay,
       });
       this.closePassChange();
-      this.setState({ passDisplay: "" });
-      this.props.errorMsg.setErrorMsg(" הסיסמה שונתה בהצלחה! ");
+      // this.props.errorMsg.setErrorMsg(" הסיסמה שונתה בהצלחה! ");
     } catch (err) {
+      this.setState({ passDisplay: "" });
       this.props.errorMsg.setErrorMsg("סיסמה לא נשמרה, נסו שנית :(");
     }
   };
@@ -271,7 +278,7 @@ class EditTeacher extends React.Component {
     }
     // ----------school name validation-------------------
     let nameSchoolMess = mustInputValidation(this.state.schoolName);
-    if (nameSchoolMess.length !== 0) {
+    if (this.state.schoolName.length !== 0) {
       this.setState((prevState) => {
         prevState.schoolNameError.toShow = "inline-block";
         prevState.schoolNameError.mess = nameSchoolMess;
@@ -310,26 +317,33 @@ class EditTeacher extends React.Component {
     //after all the validation we need to send the data to sql
     if (allOk) {
       try {
-        await this.updatePass();
-        // console.log("OOOOOOOOOOOI");
-        // console.log("this.state.schoolId: ", this.state.schoolId);
-        // console.log("this.state.chosenClasses: ", this.state.chosenClasses);
+        if (this.state.passDisplay.length !== 0) {
+          await this.updatePass();
+        }
+        let notEmptyClasses = this.state.chosenClasses.filter((classroom) => {
+          return classroom.name !== "שייך לכיתה";
+        });
+        let onlyRightFields = notEmptyClasses.map((classroom) => {
+          return { id: classroom.id, name: classroom.name };
+        });
+        // console.log('onlyRightFields: ', onlyRightFields);
+
+        console.log("this.state.passDisplay: ", this.state.passDisplay);
 
         let { data } = await axios.post("/api/teacher/editTeacher", {
           id: this.props.teachers.chosenTeacher.id,
           username: this.state.email,
-          password: this.state.password,
+          password: this.state.passDisplay,
           firstName: this.state.teacherFirstName,
           lastName: this.state.lastName,
-          classrooms: this.state.chosenClasses.filter((classroom) => {
-            return classroom.name !== "שייך לכיתה";
-          }),
+          classrooms: onlyRightFields,
           schoolId: this.state.schoolId,
         });
         let classroomTeacher = this.state.chosenClasses.filter((classroom) => {
           return classroom.name !== "שייך לכיתה";
         });
-        console.log("data: ", data);
+        // console.log('data: ', data);
+
         if (data) {
           this.props.teachers.updateTeacher({
             first_name: this.state.teacherFirstName,
@@ -375,6 +389,7 @@ class EditTeacher extends React.Component {
   };
 
   render() {
+    // console.log('this.state.chosenClasses: ', this.state.chosenClasses);
     return (
       <>
         <div className="pageContainer withMenu">
@@ -445,12 +460,13 @@ class EditTeacher extends React.Component {
                 placeholder={this.state.rakaz === true ? "כן" : "לא"}
               />
               {/* כיתה */}
-              <label className="labelFields">כיתות:</label>
               <div>
                 {this.state.schoolName.length === 0 ? (
                   <></>
-                ) : (
-                  <>
+                  ) : (
+                    <>
+                    <label className="labelFields">כיתות:</label>
+                    {this.state.chosenClasses.length === 0 ? <p>אין כיתות לבית ספר זה</p> : <></>}
                     {this.state.chosenClasses.map((val, i) => {
                       return (
                         <div key={val.id} className="classSelection">
@@ -538,10 +554,7 @@ class EditTeacher extends React.Component {
               >
                 <h4 className="inputError">{this.state.passErr}</h4>
                 <div style={this.state.passErr ? { marginTop: "5vh" } : {}}>
-                  <div
-                    className="teacherDeets"
-                    style={{ marginTop: "2.5vh" }}
-                  >
+                  <div className="teacherDeets" style={{ marginTop: "2.5vh" }}>
                     <input
                       style={{
                         border: "none",
