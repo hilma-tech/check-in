@@ -48,6 +48,7 @@ class EditStudent extends React.Component {
       this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת, אנא נסו שנית')
     } else {
       await this.props.schools.getAllSchoolsNames();
+      console.log('this.props.schools: ', this.props.schools);
       if (!this.props.schools.successGettingSchools) {
         this.props.errorMsg.setErrorMsg(
           "הייתה שגיאה בשרת. לא ניתן לקבל בתי ספר מהשרת."

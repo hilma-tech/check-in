@@ -49,9 +49,7 @@ class Schools {
 
   getAllSchoolsNames = async () => {
     try {
-      const {
-        data
-      } = await axios.get("/api/school/getSchoolsNames");
+      const { data } = await axios.get("/api/school/getSchoolsNames");
       this.schoolsNames = data
       this.successGettingSchools = true;
     } catch (error) {
