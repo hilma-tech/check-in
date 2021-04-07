@@ -218,9 +218,9 @@ class AddSchool extends React.Component {
           </p>
           <input
             className="inputFields"
-            defaultValue={this.state.schoolCity} //The input will show schoolName.
+            defaultValue={this.state.schoolCity} //The input will show schoolCity.
             name="schoolCity"
-            onBlur={this.handleChange} //In charge of on the set state of schoolName.
+            onBlur={this.handleChange} //In charge of on the set state of schoolCity.
           ></input>
 
           <label for="schoolClasses" className="labelFields">

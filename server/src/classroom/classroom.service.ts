@@ -13,7 +13,7 @@ export class ClassroomService {
     private classroomRepository: Repository<Classroom>,
     private gameService: GameService,
     protected classroomfieldService: ClassroomFieldService,
-  ) {}
+  ) { }
 
 
   // res:  School { name: 'לחגדכ', city: 'ךצכלכ', id: 42 }
@@ -27,15 +27,22 @@ export class ClassroomService {
   //     { id: 2, name: "צ'3", classNameError: [Object] }
   //   ]
   // }
-  
 
-  async addClassesWithSchool(@Body() info: any, res:any) {
+
+  async addClassesWithSchool(@Body() info: any, res: any) {
     let i = 0;
-    for (i = 0; i < info.classes.length; i++){
+    for (i = 0; i < info.classes.length; i++) {
       let classroom = new Classroom();
-    classroom.name = info.classes[i].name;
-    classroom.school_id = res.id;
-    await this.classroomRepository.save(classroom)
+      classroom.name = info.classes[i].name;
+      classroom.school_id = res.id;
+      await this.classroomRepository.save(classroom)
+    }
+    return true;
+  }
+
+  async removeClassesFromSchool(classes: any) {
+    for (let i = 0; i < classes.length; i++) {
+      await this.classroomRepository.delete({ id: classes[i].id })
     }
     return true;
   }
@@ -72,32 +79,32 @@ export class ClassroomService {
     return classes;
   }
 
-   //if the classroom not exist it's will return undifiend
-   async getClassroomInfoByName(classroomName: string, schoolId: number) {
-     return await this.classroomRepository.findOne({
+  //if the classroom not exist it's will return undifiend
+  async getClassroomInfoByName(classroomName: string, schoolId: number) {
+    return await this.classroomRepository.findOne({
       select: ["id", "name"],
-      where: [{ name: classroomName, school_id:  schoolId}],
+      where: [{ name: classroomName, school_id: schoolId }],
     })
   }
 
-  async isClassroomInSchool(classroomId: number, schoolId: number){
+  async isClassroomInSchool(classroomId: number, schoolId: number) {
     let classroom = await this.classroomRepository.findOne({
-      where: [{ id: classroomId, school_id:  schoolId}],
+      where: [{ id: classroomId, school_id: schoolId }],
     })
     return classroom === undefined ? false : true
   }
 
-  async deleteClassroom(classroom_id, student_id){
-    let classroomInfo = await this.classroomRepository.findOne({id: classroom_id})
-    classroomInfo.students = classroomInfo.students.filter((student)=>{
+  async deleteClassroom(classroom_id, student_id) {
+    let classroomInfo = await this.classroomRepository.findOne({ id: classroom_id })
+    classroomInfo.students = classroomInfo.students.filter((student) => {
       return student.id !== student_id
-    })    
+    })
     return await this.classroomRepository.save(classroomInfo)
   }
 
-  async addStudentToClassroom(classroom_id, student){
-    let classroomInfo = await this.classroomRepository.findOne({id: classroom_id})
-    classroomInfo.students.push(student)    
+  async addStudentToClassroom(classroom_id, student) {
+    let classroomInfo = await this.classroomRepository.findOne({ id: classroom_id })
+    classroomInfo.students.push(student)
     return await this.classroomRepository.save(classroomInfo)
   }
 }

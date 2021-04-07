@@ -26,6 +26,13 @@ export class SchoolController {
   }
 
   @UseJwtAuth('superAdmin')
+  @Post('/editSchool')
+  async editSchool(@Body() info:any) {
+    console.log('info: ', info);
+    return await this.schoolService.editSchool(info.info);
+  }
+
+  @UseJwtAuth('superAdmin')
   @Get('/getSchoolsNames')
   async getSchoolsNames() {
     return await this.schoolService.getSchoolsNames();

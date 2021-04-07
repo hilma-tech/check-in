@@ -37,6 +37,24 @@ export class SchoolService {
     return res;
   }
 
+  async editSchool(@Body() info: any) {
+    let school = new School();
+    school.id = info.id
+    school.name = info.schoolName;
+    school.city = info.schoolCity;
+    let res = await this.schoolRepository.save(school);
+    console.log('res: ', res);
+    if(info.removedClasses.length !== 0){
+      await this.classroomService.removeClassesFromSchool(info.removedClasses)
+    }
+    if(info.existClasses.length === 0){
+      await this.classroomService.addClassesWithSchool(info, res)
+    } else {
+
+    }
+    // return res;
+  }
+
   async getSchools(@Req() skipON: GetSchoolSkip) {
     let numSchools = await this.schoolRepository.count();
     let haveMoreSchools =

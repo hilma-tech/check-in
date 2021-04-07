@@ -117,7 +117,6 @@ class SchoolClassData extends React.Component {
             name={"name_" + this.props.classIndex}
             placeholder="הכנס שם כיתה"
             className="editSchoolClassesInput inputFields"
-            readOnly={false}
           ></input>
           <img
             alt="remove class button"
