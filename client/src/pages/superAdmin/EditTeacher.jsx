@@ -201,16 +201,16 @@ class EditTeacher extends React.Component {
     }
   };
   updatePass = async () => {
-    console.log(this.state.passDisplay, "pass");
+    console.log(this.state.passDisplay, "HEWERO");
     try {
       await axios.post("/api/teacher/changeteacherpass", {
         username: this.state.email,
         password: this.state.passDisplay,
       });
       this.closePassChange();
-      this.setState({ passDisplay: "" });
-      this.props.errorMsg.setErrorMsg(" הסיסמה שונתה בהצלחה! ");
+      // this.props.errorMsg.setErrorMsg(" הסיסמה שונתה בהצלחה! ");
     } catch (err) {
+      this.setState({ passDisplay: "" });
       this.props.errorMsg.setErrorMsg("סיסמה לא נשמרה, נסו שנית :(");
     }
   };
@@ -271,7 +271,7 @@ class EditTeacher extends React.Component {
     }
     // ----------school name validation-------------------
     let nameSchoolMess = mustInputValidation(this.state.schoolName);
-    if (nameSchoolMess.length !== 0) {
+    if (this.state.schoolName.length !== 0) {
       this.setState((prevState) => {
         prevState.schoolNameError.toShow = "inline-block";
         prevState.schoolNameError.mess = nameSchoolMess;
@@ -310,26 +310,33 @@ class EditTeacher extends React.Component {
     //after all the validation we need to send the data to sql
     if (allOk) {
       try {
-        await this.updatePass();
-        // console.log("OOOOOOOOOOOI");
-        // console.log("this.state.schoolId: ", this.state.schoolId);
-        // console.log("this.state.chosenClasses: ", this.state.chosenClasses);
+        if (this.state.passDisplay.length !== 0) {
+          await this.updatePass();
+        }
+        let notEmptyClasses = this.state.chosenClasses.filter((classroom) => {
+          return classroom.name !== "שייך לכיתה";
+        })
+let onlyRightFields = notEmptyClasses.map((classroom) => {
+  return {id: classroom.id, name: classroom.name}
+})
+// console.log('onlyRightFields: ', onlyRightFields);
 
+console.log('this.state.passDisplay: ', this.state.passDisplay);
+      
         let { data } = await axios.post("/api/teacher/editTeacher", {
           id: this.props.teachers.chosenTeacher.id,
           username: this.state.email,
-          password: this.state.password,
+          password: this.state.passDisplay,
           firstName: this.state.teacherFirstName,
           lastName: this.state.lastName,
-          classrooms: this.state.chosenClasses.filter((classroom) => {
-            return classroom.name !== "שייך לכיתה";
-          }),
+          classrooms: onlyRightFields,
           schoolId: this.state.schoolId,
         });
         let classroomTeacher = this.state.chosenClasses.filter((classroom) => {
           return classroom.name !== "שייך לכיתה";
         });
-        console.log("data: ", data);
+        // console.log('data: ', data);
+
         if (data) {
           this.props.teachers.updateTeacher({
             first_name: this.state.teacherFirstName,
@@ -341,10 +348,10 @@ class EditTeacher extends React.Component {
             id: this.props.teachers.chosenTeacher.id,
             classroomTeacher: classroomTeacher,
             classes:
-              classroomTeacher !== undefined
-                ? classroomTeacher.map((classInfo) => {
-                    return classInfo.name;
-                  })
+            classroomTeacher !== undefined
+            ? classroomTeacher.map((classInfo) => {
+              return classInfo.name;
+            })
                 : [],
           });
           this.props.history.goBack(); // after saving go back
@@ -358,11 +365,11 @@ class EditTeacher extends React.Component {
       }
     }
   };
-
+  
   onPassChange = (val) => {
     this.setState({ passDisplay: val.target.value });
   };
-
+  
   deleteTeacher = () => {
     let success = this.props.teachers.deleteTeacher();
     if (success) {
@@ -370,11 +377,13 @@ class EditTeacher extends React.Component {
     } else {
       this.props.errorMsg.setErrorMsg(
         "הייתה שגיאה בשרת, לא היה ניתן למחוק את המורה."
-      );
-    }
+        );
+      }
   };
-
+  
   render() {
+    
+    // console.log('this.state.chosenClasses: ', this.state.chosenClasses);
     return (
       <>
         <div className="pageContainer withMenu">
@@ -386,7 +395,7 @@ class EditTeacher extends React.Component {
               <p
                 className="error"
                 style={{ display: this.state.teacherNameError.toShow }}
-              >
+                >
                 {this.state.teacherNameError.mess}
               </p>
               <input
