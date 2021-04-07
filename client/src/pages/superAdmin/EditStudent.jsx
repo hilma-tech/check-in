@@ -48,14 +48,12 @@ class EditStudent extends React.Component {
       this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת, אנא נסו שנית')
     } else {
       await this.props.schools.getAllSchoolsNames();
-      console.log('this.props.schools: ', this.props.schools);
       if (!this.props.schools.successGettingSchools) {
         this.props.errorMsg.setErrorMsg(
           "הייתה שגיאה בשרת. לא ניתן לקבל בתי ספר מהשרת."
         );
       } else {
         try {
-          console.log('this.props.students.chosenStudent: ', this.props.students.chosenStudent);
           const { data } = await axios.get("/api/classroom/getSchoolClasses", {
             params: { schoolId: this.props.students.chosenStudent.school.id },
           });
@@ -393,6 +391,7 @@ class EditStudent extends React.Component {
           {this.state.school.length === 0 ? <></> :
             <>
               <label className="labelFields">כיתה:</label>
+              {this.state.allClasses.length === 0 ? <p>אין כיתות לבית ספר זה</p> : <></>}
               {
                 this.state.chosenClasses.map((val, i) => {
                   return (<div key={val.id} className="classSelection">

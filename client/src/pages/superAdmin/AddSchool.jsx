@@ -206,6 +206,7 @@ class AddSchool extends React.Component {
             className="inputFields"
             defaultValue={this.state.schoolName} //The input will show schoolName.
             name="schoolName"
+            placeholder = "הכנס שם בית ספר"
             onBlur={this.handleChange} //In charge of on the set state of schoolName.
           ></input>
           <label for="schoolCity" className="labelFields">
@@ -221,6 +222,7 @@ class AddSchool extends React.Component {
             className="inputFields"
             defaultValue={this.state.schoolCity} //The input will show schoolCity.
             name="schoolCity"
+            placeholder="הכנס עיר"
             onBlur={this.handleChange} //In charge of on the set state of schoolCity.
           ></input>
 
