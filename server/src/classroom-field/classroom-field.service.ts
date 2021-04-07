@@ -87,8 +87,6 @@ export class ClassroomFieldService {
         } else {
           Inp = field.value[0].value
         }
-
-        
       }
 
       emptyField = 0;
