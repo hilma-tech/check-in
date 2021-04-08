@@ -11,6 +11,7 @@
 }
 
 .deletButton {
+    @include mouse(point);
     position: fixed;
     top: 92vh;
     left: 15vw;
@@ -33,6 +34,7 @@
 }
 
 .saveButton {
+    @include mouse(point);
     position: fixed;
     font-weight: bold;
     top: 92vh;

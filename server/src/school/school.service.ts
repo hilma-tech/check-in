@@ -1,5 +1,6 @@
-import { Injectable, Req } from '@nestjs/common';
+import { Body, Injectable, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ClassroomService } from 'src/classroom/classroom.service';
 import { Repository } from 'typeorm';
 import { GetSchoolSkip } from './school.dtos';
 import { School } from './school.entity';
@@ -9,6 +10,7 @@ export class SchoolService {
   constructor(
     @InjectRepository(School)
     private schoolRepository: Repository<School>,
+    private classroomService: ClassroomService
   ) { }
 
   async getSchools(@Req() skipON: GetSchoolSkip) {
@@ -41,19 +43,5 @@ export class SchoolService {
       select: ["name"],
       where: [{ id: Id }]
     })
-  }
-
-  async searchSchools(val){
-    let schools = await this.schoolRepository.find({
-    });
-    let Search = schools.map((school) => {
-      if (school.name.includes(val.val.toLowerCase())) {
-        return school
-      }
-    })
-    var searchresult = Search.filter(function (school) {
-      return school != null;
-    });
-    return searchresult
   }
 }

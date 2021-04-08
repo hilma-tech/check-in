@@ -285,12 +285,12 @@ class EditStudent extends React.Component {
           </div> */}
         </form>
 
-        {/* <div className='spacerFromSaveButton'></div>
-          <div className='saveButtonBackground'>
-            <button className="saveButton" onClick={this.saveButton}>
-              שמור
+        <div className='spacerFromSaveButton'></div>
+        <div className='saveButtonBackground'>
+          <button className="saveButton" onClick={this.saveButton}>
+            שמור
             </button>
-          </div> */}
+        </div>
       </div>
     );
   }

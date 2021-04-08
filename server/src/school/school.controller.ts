@@ -1,4 +1,4 @@
-import { Get, Controller, Query } from '@nestjs/common';
+import { Get, Controller, Query, Post, Body } from '@nestjs/common';
 import { SchoolService } from './school.service';
 import { UseJwtAuth } from '@hilma/auth-nest';
 import { GetSchoolSkip } from './school.dtos';
@@ -19,10 +19,4 @@ export class SchoolController {
     return await this.schoolService.getSchoolsNames();
   }
 
-  @UseJwtAuth('superAdmin')
-  @Get('/SearchSchools')
-  async SearchSchools(@Query() val: any) {
-    return await this.schoolService.searchSchools(val);
-    
-  }
 }

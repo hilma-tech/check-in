@@ -59,13 +59,13 @@ class SmallNavBar extends Component {
             >
               תלמידים
             </h2>
-            {/* <h2
+            <h2
               onClick={this.state.active === "permissions" ? null : this.movePageFunc}
               className="smallNavName"
               id="permissions"
             >
               הרשאות
-            </h2> */}
+            </h2>
           </div>
           <p className={this.determineUnderline()}></p>
         </div>

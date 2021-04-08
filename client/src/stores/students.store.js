@@ -1,5 +1,11 @@
-import { createMobXContext } from '@hilma/tools'
-import { makeObservable, observable, action } from 'mobx'
+import {
+    createMobXContext
+} from '@hilma/tools'
+import {
+    makeObservable,
+    observable,
+    action
+} from 'mobx'
 
 const axios = require("axios").default;
 
@@ -23,7 +29,7 @@ class Students {
             addStudent: action,
             addMultiStudents: action,
             searchStudents: action,
-            searchStudentsReplace: action
+            searchStudentsReplace: action,
         })
     }
 
@@ -31,11 +37,19 @@ class Students {
     getStudents = async () => {
         try {
             this.startGetStudents = true;
-            const { data } = await axios.get("/api/student/getStudents", { params: { studentsLength: this.listDataStudents.length } });
+            const {
+                data
+            } = await axios.get("/api/student/getStudents", {
+                params: {
+                    studentsLength: this.listDataStudents.length
+                }
+            });
             let newStudents = data.studentsInfo.map((student) => {
                 student.name = student.first_name + " " + student.last_name;
                 student.schoolName = student.school.name
-                student.classes = student.classroomStudent.map((classroom) => { return classroom.name })
+                student.classes = student.classroomStudent.map((classroom) => {
+                    return classroom.name
+                })
                 return student
             })
             this.listDataStudents = this.listDataStudents.concat(newStudents)
@@ -62,7 +76,9 @@ class Students {
             let newStudentsSearch = Students.data.map((student) => {
                 student.name = student.first_name + " " + student.last_name;
                 student.schoolName = student.school.name
-                student.classes = student.classroomStudent.map((classroom) => { return classroom.name })
+                student.classes = student.classroomStudent.map((classroom) => {
+                    return classroom.name
+                })
                 return student
             })
             this.searchedStudents = [...newStudentsSearch]

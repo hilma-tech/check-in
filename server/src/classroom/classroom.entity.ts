@@ -1,4 +1,5 @@
 import { Game } from 'src/game/game.entity';
+import { School } from 'src/school/school.entity';
 import { Student } from 'src/student/student.entity';
 import { Teacher } from 'src/teacher/teacher.entity';
 import {
@@ -6,6 +7,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -17,7 +19,10 @@ export class Classroom {
   @Column()
   name: string;
 
-  @Column()
+  @ManyToOne(
+    () => School,
+    school => school.classrooms,
+  )
   school_id: number;
 
   @ManyToMany(

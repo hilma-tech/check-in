@@ -298,12 +298,12 @@ class EditTeacher extends React.Component {
               /> */}
             </form>
 
-            {/* <div className='spacerFromSaveButton'></div>
+            <div className='spacerFromSaveButton'></div>
               <div className='saveButtonBackground'>
-                <button className="saveButton" onClick={this.validateInputFields}>
+                {/* <button className="saveButton" onClick={this.validateInputFields}>
                   שמור
-                  </button>
-              </div> */}
+                  </button> */}
+              </div>
           </div>
         </div>
       </>

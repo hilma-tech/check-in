@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Role, User, UserConfig, UserService, USER_MODULE_OPTIONS, SALT } from '@hilma/auth-nest';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { getConnection, Repository } from 'typeorm';
+import { Any, getConnection, Repository } from 'typeorm';
 import { Student } from './student.entity';
 import { GetStudentSkip, SearchValDto, UserRegisterDto } from './student.dtos';
 import * as bcrypt from 'bcrypt';
@@ -20,7 +20,7 @@ export class StudentService extends UserService {
     protected readonly configService: ConfigService,
     private classroomService: ClassroomService,
   ) {
-    super(config_options, userRepository, jwtService, configService);    
+    super(config_options, userRepository, jwtService, configService);
   }
 
   async getStudents(@Req() skipON: GetStudentSkip) {
@@ -55,11 +55,13 @@ export class StudentService extends UserService {
     if (findUser) {
       let pass = bcrypt.compareSync(password, findUser.password)
 
-      let Class = await this.userRepository.findOne({
-        relations: ['classroomStudent'],
-        where: [{ id: findUser.id }]
+      var Class = await this.userRepository.findOne({
+        relations: ['classroomStudent', 'school'],
+        where: [{ id: findUser.id }],
+        select: ['id', "school", "first_name", "last_name"]
       })
       if (pass) {
+        //returns id, first name, last name, classes, and school info
         return Class
       }
     }
@@ -105,7 +107,7 @@ export class StudentService extends UserService {
     student.classroomStudent = []
     if (req.classrooms.length !== 0) {
       for (let i = 0; i < req.classrooms.length; i++) {
-        if(this.classroomService !== undefined){
+        if (this.classroomService !== undefined) {
           if (!this.classroomService.isClassroomInSchool(req.classrooms[i].id, req.schoolId)) {
             throw new Error()
           }
@@ -171,9 +173,7 @@ export class StudentService extends UserService {
       return student != null;
     });
     return searchresult
-
-
-
   }
+
 
 }

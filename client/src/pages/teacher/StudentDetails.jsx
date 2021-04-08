@@ -76,7 +76,6 @@ class StudentDetails extends Component {
 
     return (
       <>
-        <div className="smallPage">
           <PopUpError />
           <SmallMenuBar />
           <PageTitle
@@ -87,6 +86,7 @@ class StudentDetails extends Component {
             page="studentInfo"
             chosenClass={this.props.chosenClass.classroomName}
           />
+        <div className="smallPage">
           {/* <PageTitle title="כיתה א'1"/> */}
           {/* <img
             // className="deetBackArrow"

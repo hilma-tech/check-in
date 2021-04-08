@@ -6,7 +6,6 @@ const axios = require("axios").default;
 class Schools {
   listDataSchools = [];
   schoolsNames = [];
-  searchedSchools=[];
   haveMoreSchools = true;
   successGettingSchools = true;
   startGetSchools = false;
@@ -22,11 +21,9 @@ class Schools {
       getSchools: action,
       getChosenSchool: action,
       getAllSchoolsNames: action,
-      searchSchools: action,
-      searchSchoolsReplace:action,
-      searchedSchools: observable
     });
   }
+
 
   getAllSchoolsNames = async () => {
     try {
@@ -80,25 +77,10 @@ class Schools {
       });
       return true
     } catch (error) {
-      console.log("choose school error: ", error);
       return false
     }
   };
 
-  searchSchools = async (val) => {
-    try{
-    let Schools = await axios.get(`/api/school/searchSchools/?val=${val}`);
-    if (Schools.data[0] != null) {
-        this.searchedSchools = [...Schools.data]
-    }}
-    catch(err){
-console.log("search school err:", err);
-    }
-}
-
-searchSchoolsReplace = () => {
-    this.searchedSchools.replace([])
-}
 }
 
 const schools = new Schools();

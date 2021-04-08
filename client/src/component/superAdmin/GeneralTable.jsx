@@ -16,6 +16,7 @@ class GeneralTable extends React.Component {
   onClickAdd = () => {
     this.props.history.push(this.props.location.pathname + "Add");
   };
+
   render() {
     return (
       <div className="generalTable">
@@ -65,7 +66,7 @@ class GeneralTable extends React.Component {
                     onClick={this.props.loadMore}
                     style={{
                       marginTop: "1vh",
-                      display: this.props.haveMoreData && !this.props.search? "inline-block" : "none",
+                      display: this.props.haveMoreData && !this.props.search ? "inline-block" : "none",
                     }}
                   >
                     הצג עוד
@@ -80,8 +81,11 @@ class GeneralTable extends React.Component {
             <AddStudentPopUp />
           </div>
           :
-          this.props.location.pathname.includes("school") ? <></> :
-            <div className="addingButton" onClick={this.onClickAdd}></div>
+          <>
+            {this.props.location.pathname.includes("schools") ? <></> :
+              <div className="addingButton" onClick={this.onClickAdd}></div>}
+          </>
+
         }
       </div>
     );

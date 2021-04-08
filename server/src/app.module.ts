@@ -16,6 +16,7 @@ import { TeacherModule } from './teacher/teacher.module';
 import { ClassroomModule } from './classroom/classroom.module';
 import { RoleModule, UserModule } from '@hilma/auth-nest';
 import { ClassroomFieldModule } from './classroom-field/classroom-field.module';
+import { PermissionModule } from './permission/permission.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { ClassroomFieldModule } from './classroom-field/classroom-field.module';
     ClassroomModule,
     RoleModule,
     ClassroomFieldModule,
+    PermissionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

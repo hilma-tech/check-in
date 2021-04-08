@@ -15,6 +15,31 @@ export class ClassroomService {
     protected classroomfieldService: ClassroomFieldService,
   ) {}
 
+
+  // res:  School { name: 'לחגדכ', city: 'ךצכלכ', id: 42 }
+  // info:  {
+  //   schoolNameError: { toShow: 'none', mess: '' },
+  //   schoolCityError: { toShow: 'none', mess: '' },
+  //   schoolName: 'לחגדכ',
+  //   schoolCity: 'ךצכלכ',
+  //   classes: [
+  //     { id: 1, name: "ג'8", classNameError: [Object] },
+  //     { id: 2, name: "צ'3", classNameError: [Object] }
+  //   ]
+  // }
+  
+
+  async addClassesWithSchool(@Body() info: any, res:any) {
+    let i = 0;
+    for (i = 0; i < info.classes.length; i++){
+      let classroom = new Classroom();
+    classroom.name = info.classes[i].name;
+    classroom.school_id = res.id;
+    await this.classroomRepository.save(classroom)
+    }
+    return true;
+  }
+
   async addGameRelation(@Body() req: ClassroomGameDto) {
     let classroomGame = new Classroom();
     classroomGame.games = await this.gameService.getGameById(req.gameId);

@@ -168,21 +168,6 @@ class Games {
     }
   };
 
-  searchGames = async (val) => {
-    try {
-      let Games = await axios.get(`/api/game/searchGames/?val=${val}`);
-      if (Games.data[0] != null) {
-        this.searchedGames = [...Games.data]
-      }
-    } catch (err) {
-      console.log("search game err:", err);
-    }
-  }
-
-  searchGamesReplace = () => {
-    this.searchedGames.replace([])
-  }
-
 }
 
 const games = new Games();
