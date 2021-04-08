@@ -71,7 +71,7 @@ class EditGame extends Component {
   validateGame = () => {
     this.state.ErrorsPerField = [];
     var errors = [];
-    this.state.fieldsData.map((fields, index) => {
+    this.state.fieldsData.map((fields) => {
       if (fields.selection !== "image") {
         fields.value.map((field) => {
           let errMess = fieldInputValidation(field.value);
@@ -175,7 +175,7 @@ class EditGame extends Component {
                 ? this.state.gameRequirements
                 : "אין דרישות משחק"}
             </p>
-            {this.state.gameLink.length !== 0 ?
+            {this.state.gameLink ?
             <>
             <h3 className="mobileGameLink">סרטון הסבר למשחק</h3>
             <a className="mobileGameL" target="_blank" href={this.state.gameLink}>{this.state.gameLink}</a>
