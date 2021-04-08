@@ -290,6 +290,7 @@ class Permissions extends Component {
     );
   }
 }
+
 const mapContextToProps = {
   chosenClass: chosenClassContext,
   errorMsg: errorMsgContext,

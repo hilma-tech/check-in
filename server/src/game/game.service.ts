@@ -169,6 +169,16 @@ export class GameService {
   }
 
   async deleteGameById(id: DeleteGameIdDto) {
+    let gameInfo = await this.gameRepository
+    .createQueryBuilder('Game')
+    .innerJoinAndSelect('Game.classrooms', 'Classroom')
+    .select('Classroom.id')
+    .addSelect('Game.game_name')
+    .where('Game.id = :id', { id: Number(id.Id) })
+    .getOne();
+    for(let i =0; i< gameInfo.classrooms.length; i++){
+      await this.classroomFieldService.removeGameFieldsFromClass({gameId: id.Id, classId: gameInfo.classrooms[i].id})
+    }
     await this.classroomFieldService.deleteClassField(id.Id)
     await this.gameRepository.delete(id.Id);
   }
@@ -223,25 +233,5 @@ export class GameService {
     })).then((games) => {
       return { classId: classId, className: className, classGames: games }
     })
-  }
-
- async searchGames (val){
-    let gamesInfo = await this.gameRepository.find({
-      where: [{ suspended: false }],
-      select: ['id', 'game_name', 'image'],
-      order: {
-        id: 'DESC',
-      },
-    });
-
-    let Search = gamesInfo.map((game) => {
-      if (game.game_name.includes(val.val.toLowerCase())) {
-        return game
-      }
-    })
-    var searchresult = Search.filter(function (game) {
-      return game != null;
-    });
-    return searchresult
   }
 }

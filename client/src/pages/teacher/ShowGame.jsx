@@ -23,6 +23,7 @@ class ShowGame extends Component {
       gameRequirements: "",
       image: "",
       fieldsData: [],
+      gameLink: ""
     };
   }
 
@@ -38,8 +39,8 @@ class ShowGame extends Component {
     try {
       const { data } = await axios.get("/api/game/getShowGameInfo", {
         params: { game_id: this.props.chosenGame.gameId,
-        classroom_id: this.props.chosenClass.classId },
-      });
+          classroom_id: this.props.chosenClass.classId },
+        });
       if (data.game_name === null || data.game_name === undefined) {
         this.props.history.push("/teacher/classes/games");
       }
@@ -49,6 +50,7 @@ class ShowGame extends Component {
         gameDescription: data.description,
         gameRequirements: data.requirements,
         image: data.image,
+        gameLink: data.video_link === null ? "" : data.video_link
       });
     } catch (error) {
       this.props.errorMsg.setErrorMsg(
@@ -82,6 +84,11 @@ class ShowGame extends Component {
             <p className="mobileGameDP">{this.state.gameDescription ? this.state.gameDescription : "אין תיאור משחק"}</p>
             <h3 className="mobileGameReq">דרישות המשחק</h3>
             <p className="mobileGameRP">{this.state.gameRequirements ? this.state.gameRequirements : "אין דרישות משחק"}</p>
+            {this.state.gameLink.length !== 0 ?
+            <>
+            <h3 className="mobileGameLink">סרטון הסבר למשחק</h3>
+            <a className="mobileGameL" target="_blank" href={this.state.gameLink}>{this.state.gameLink}</a>
+              </> : <></>}
             <h1 className="mobileGameFields">שדות:</h1>
             {this.state.fieldsData.length === 0 ? (
               <p className="noFields">אין שדות למשחק זה</p>
