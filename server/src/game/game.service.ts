@@ -10,10 +10,10 @@ import {
   IdeDto,
   DeleteGameIdDto,
 } from './game.dtos';
-import { FieldService } from 'src/field/field.service';
 import { FilesType, ImageService } from '@hilma/fileshandler-typeorm';
 import { ClassroomFieldService } from 'src/classroom-field/classroom-field.service';
 import { getCGFDto } from 'src/classroom-field/classroom-field.dtos';
+import { FieldService } from 'src/field/field.service';
 
 @Injectable()
 export class GameService {
@@ -99,31 +99,40 @@ export class GameService {
       let GameFields = await this.classroomFieldService.getClassroomGameFields(
         data,
       );
-      console.log('classGameFields: ', GameFields);
-      console.log('GameFields[i].field.length: ', GameFields[0].field.length);
+      console.log('classGameFields: ', GameFields, GameFields.length);
+      console.log('GameFields[i].field.length: ', GameFields[0].field_id, typeof GameFields[0].field_id);
 
-      // for (let i = 0; i < GameFields.length; i++) {
-      //   for (let j = 0; j < GameFields[i].field.length; j++) {
-      //     if (
-      //       GameFields[i].fields[j].type === 'image' ||
-      //       GameFields[i].fields[j].type === 'text'
-      //     ) {
-      //       GameFields[i].fields[j].value = [
-      //         { id: 0, value: GameFields[i].fields[j].default_value },
+      for (let i = 0; i < GameFields.length; i++) {
+        console.log("if", GameFields[i].field_id);
+        // for (let j = 0; j < 5; j++) {
+        //   console.log('no ');
+        
+          if (
+            GameFields[i].field_id.type === 'image' ||
+            GameFields[i].field_id[0].type === 'text'
+            ) {
+            console.log('GameFields[i].field_id[0].type: ', GameFields[i].field_id[0].type);
+          } else {
+            console.log("else");
+            // console.log('GameFields[i].field_id[0].type: ', GameFields[i].field_id);
+          }
+          console.log("after");
+      //       GameFields[i].field_id[0].value = [
+      //         { id: 0, value: GameFields[i].field_id[0].default_value },
       //       ];
       //     } else {
-      //       GameFields[i].fields[j].value = JSON.parse(
-      //         GameFields[i].fields[j].default_value,
+      //       GameFields[i].field_id[0].value = JSON.parse(
+      //         GameFields[i].field_id[0].default_value,
       //       ).map((value, index) => {
       //         return { id: index, value: value };
       //       });
       //     }
-      //     GameFields[i].fields[j].name = GameFields[i].fields[j].field_name;
-      //     GameFields[i].fields[j].selection = GameFields[i].fields[j].type;
-      //   }
-      // }
+      //     GameFields[i].field_id[j].name = GameFields[i].field_id[j].field_name;
+      //     GameFields[i].field_id[j].selection = GameFields[i].field_id[j].type;
+        
+      }
   
-      // return GameFields[0];
+      return GameFields;
 
 
     } else if (data.datatype === 'old') {
@@ -131,7 +140,7 @@ export class GameService {
         relations: ['fields'],
         where: { id: data.game_id },
       });
-      console.log('temp: ', GameFields[0].fields);
+      // console.log('temp: ', GameFields[0].fields);
     } else {
       return false;
     }
