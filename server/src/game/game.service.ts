@@ -14,6 +14,7 @@ import { FieldService } from 'src/field/field.service';
 import { FilesType, ImageService } from '@hilma/fileshandler-typeorm';
 import { ClassroomFieldService } from 'src/classroom-field/classroom-field.service';
 import { getCGFDto } from 'src/classroom-field/classroom-field.dtos';
+import { ValDto } from 'src/student/student.dtos';
 
 @Injectable()
 export class GameService {
@@ -233,5 +234,25 @@ export class GameService {
     })).then((games) => {
       return { classId: classId, className: className, classGames: games }
     })
+  }
+
+  async searchGames (val: ValDto){
+    let gamesInfo = await this.gameRepository.find({
+      where: [{ suspended: false }],
+      select: ['id', 'game_name', 'image'],
+      order: {
+        id: 'DESC',
+      },
+    });
+
+    let Search = gamesInfo.map((game) => {
+      if (game.game_name.includes(val.val.toLowerCase())) {
+        return game
+      }
+    })
+    var searchresult = Search.filter(function (game) {
+      return game != null;
+    });
+    return searchresult
   }
 }

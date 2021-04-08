@@ -21,6 +21,7 @@ import {
 import { UseFilesHandler, FilesType } from '@hilma/fileshandler-typeorm';
 import { UseJwtAuth } from '@hilma/auth-nest';
 import { FieldService } from 'src/field/field.service';
+import { ValDto } from 'src/student/student.dtos';
 const { mustValid } = require('../serverTools/ServerValid');
 
 @Controller('api/game')
@@ -92,5 +93,10 @@ export class GameController {
   async getClassroomGames(@Query() req: ClassroomIdDto) {
     return await this.gameService.getClassroomGames(req);
   }
+  @UseJwtAuth('superAdmin')
+  @Get('/SearchGames')
+  async SearchGames(@Query() val: ValDto) {
+    return await this.gameService.searchGames(val);
 
+  }
 }
