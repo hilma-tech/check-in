@@ -51,7 +51,7 @@ class ShowGame extends Component {
         gameDescription: data.description,
         gameRequirements: data.requirements,
         image: data.image,
-        gameLink: data.video_link === null ? "" : data.video_link
+        gameLink: data.video_link
       });
     } catch (error) {
       this.props.errorMsg.setErrorMsg(
@@ -85,7 +85,7 @@ class ShowGame extends Component {
             <p className="mobileGameDP">{this.state.gameDescription ? this.state.gameDescription : "אין תיאור משחק"}</p>
             <h3 className="mobileGameReq">דרישות המשחק</h3>
             <p className="mobileGameRP">{this.state.gameRequirements ? this.state.gameRequirements : "אין דרישות משחק"}</p>
-            {this.state.gameLink.length !== 0 ?
+            {this.state.gameLink ?
             <>
             <h3 className="mobileGameLink">סרטון הסבר למשחק</h3>
             <a className="mobileGameL" target="_blank" href={this.state.gameLink}>{this.state.gameLink}</a>

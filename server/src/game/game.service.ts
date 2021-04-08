@@ -139,6 +139,7 @@ export class GameService {
         gameDescription: temp[0].description,
         gameRequirements: temp[0].requirements,
         image: temp[0].image,
+        gameLink: temp[0].video_link
       };
       return formattedInfo;
     } else if (data.datatype === 'old') {
@@ -180,6 +181,7 @@ export class GameService {
         gameDescription: temp[0].description,
         gameRequirements: temp[0].requirements,
         image: temp[0].image,
+        gameLink: temp[0].video_link
       };
       return formattedInfo;
     } else {
