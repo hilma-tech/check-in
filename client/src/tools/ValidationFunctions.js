@@ -1,32 +1,35 @@
 //Check validation for user name
 export function userNameValidation(userName) {
-    if (userName === null || userName.length === 0) {
-        return '** חייב להכניס שם משתמש **'
-    } else if (userName.length > 15 || userName.length < 4) {
-        return '** שם משתמש צריך להכיל 4-15 תווים **'
-    } else if (userName.trim().length === 0) {
-        return '** שם משתמש לא תקין **'
-    } else if (!(/[A-Za-z\u0590-\u05EA0-9?!-_]/).test(userName)) {
-        return '** שם משתמש לא תקין **'
-    } else if ((/[@#$%^&*()+=[\]{};:,.\\|<>/~`\s]/).test(userName)) {
-      return '** שם משתמש לא תקין **'
-    } else {
-        return ''
-    }
+  if (userName === null || userName.length === 0) {
+    return '** חייב להכניס שם משתמש **'
+  } else if (userName.length > 15 || userName.length < 4) {
+    return '** שם משתמש צריך להכיל 4-15 תווים **'
+  } else if (userName.trim().length === 0) {
+    return '** שם משתמש לא תקין **'
+  } else if (!(/[A-Za-z\u0590-\u05EA0-9?!-_]/).test(userName)) {
+    return '** שם משתמש לא תקין **'
+  } else if ((/[@#$%^&*()+=[\]{};:,.\\|<>/~`\s]/).test(userName)) {
+    return '** שם משתמש לא תקין **'
+  } else {
+    return ''
+  }
 }
 
 //check loom link
 export function linkValidation(link) {
-  console.log('link: ', link);
-
-  if (link === null || link.length === 0) {
+  // console.log('link: ', link);
+  if (!link) {
+    // console.log("nothing");
+    return "";
+    } else if (link === null || link.length === 0) {
+      // console.log("actually none");
     return "";
   } else if (link.length > 255) {
-    console.log('link.length: ', link.length);
+    // console.log('link.length: ', link.length);
 
     return "** שדה זה לא יכול להכיל יותר מ-255 תווים **";
   } else if (!(/^$|(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(link))) {
-    console.log("hi");
+    // console.log("hi");
     return "** שדה זה לא תקין **";
   } else {
     return "";
@@ -35,6 +38,7 @@ export function linkValidation(link) {
 
 //Check validation for names (teacher, student or game name)
 export function nameValidation(name) {
+  // console.log("VALIDATING");
   if (name === null || name.length === 0) {
     return "** נא למלא שדה זה **";
   } else if (name.length > 30) {
@@ -93,7 +97,7 @@ export function fieldNameValidation(name) {
 export function classNameValidation(name) {
   if (name === null || name.length === 0) {
     return "** נא למלא שדה זה **";
-  } else if (name.length > 10) {
+  } else if (name.length > 15) {
     return "** שדה זה לא יכול להכיל יותר מ-10 תווים **";
   } else if (name.trim().length === 0) {
     return "** שם זה לא תקין **";
@@ -114,8 +118,8 @@ export function passwordValidation(password) {
     return "** על הסיסמא להיות בין 6-20 תווים **";
   } else if (password.trim().length === 0) {
     return "** סיסמה לא תקינה **";
-//   } else if (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/.test(password)) {
-//     return "** על הסיסמא להכל אותיות ומספרים בלבד  **";
+    //   } else if (/[!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/.test(password)) {
+    //     return "** על הסיסמא להכל אותיות ומספרים בלבד  **";
   } else if (!/[A-Za-z\u0590-\u05EA0-9]/.test(password)) {
     return "** סיסמא לא תקינה **";
   } else {
@@ -135,11 +139,11 @@ export function teacherPasswordValidation(password) {
     return "** על הסיסמה להיות בין 8-15 תווים **";
   } else if (/\s/.test(password) === true) {
     return "** על הסיסמא להכל אותיות ומספרים בלבד  **";
-  } else if(/[\u0590-\u05EA]/.test(password) === true){
+  } else if (/[\u0590-\u05EA]/.test(password) === true) {
     return "** על הסיסמא להכיל אותיות באנגלית בלבד  **";
-} else if(/[A-Za-z]/.test(password) === false){
+  } else if (/[A-Za-z]/.test(password) === false) {
     return "** על הסיסמא להכיל לפחות אות אחת  **";
-} else if(/[0-9]/.test(password) === false){
+  } else if (/[0-9]/.test(password) === false) {
     return "** על הסיסמא להכיל לפחות מספר אחד  **";
   } else {
     return "";
@@ -156,11 +160,11 @@ export function studentPasswordValidation(password) {
     return '** הסיסמה לא יכולה להכיל רווחים **'
   } else if (!(/[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
     return '** ניתן להשתמש באותיות באנגלית ובעברית, מספרים ותווים מיוחדים בלבד **'
-  } else if(/[A-Za-z\u0590-\u05EA]/.test(password) === false){
+  } else if (/[A-Za-z\u0590-\u05EA]/.test(password) === false) {
     return "** על הסיסמה להכיל לפחות אות אחת  **";
-} else if(/[0-9]/.test(password) === false){
+  } else if (/[0-9]/.test(password) === false) {
     return "** על הסיסמה להכיל לפחות מספר אחד  **";
-  }else {
+  } else {
     return ''
   }
 }
@@ -191,16 +195,6 @@ export function mustInputValidation(input) {
     return "** נא למלא שדה זה **";
   } else if (input.length > 30) {
     return "** שדה זה לא יכול להכיל יותר מ-30 תווים **";
-  } else if (
-    !/[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{};:\\|<>/?~\s]/.test(input)
-  ) {
-    return "** שדה זה לא תקין **";
-  } else if (
-    input.includes('"') ||
-    input.includes("'") ||
-    input.includes("-")
-  ) {
-    return "** שם זה לא תקין **";
   } else {
     return "";
   }
@@ -274,4 +268,39 @@ export function fieldInputValidation(input) {
   } else {
     return "";
   }
+}
+
+
+//Permission Time Validation
+export function PermissionsValidation(per) {
+  if (per === null || per.length === 0) {
+    return "** יש להכניס הרשאה **";
+  } else {
+    let arrErr = per.map((permission) => {
+      if (!permission.startTime && !permission.endTime || !permission.endTime || !permission.startTime) {
+        return "** יש להכניס זמני התחלה וסיום **"
+      } else if (permission.startTime && permission.endTime) {
+        var start = permission.startTime.split(":");
+        var end = permission.endTime.split(":");
+        if (parseInt(start[0]) > parseInt(end[0])) {
+          if (per.length > 1) {
+            return "** על זמן סיום ההרשאות להיות גדול מזמן התחלתן **"
+          } else {
+            return "** על זמן סיום ההרשאה להיות גדול מזמן התחלתה **"
+          }
+        } else if (parseInt(start[0]) === parseInt(end[0]) && parseInt(start[1]) > parseInt(end[1])) {
+          if (per.length > 1) {
+            return "** על זמן סיום ההרשאות להיות גדול מזמן התחלתן **"
+          } else {
+            return "** על זמן סיום ההרשאה להיות גדול מזמן התחלתה **"
+          }
+        }
+      }
+      else {
+        return "";
+      }
+    })
+    return arrErr.filter(err => err !== undefined)
+  }
+
 }

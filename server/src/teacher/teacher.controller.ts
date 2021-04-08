@@ -13,7 +13,7 @@ export class TeacherController {
   constructor(
     private readonly userService: UserService,
     private teacherService: TeacherService,
-    private classroomService: ClassroomService
+    private classroomService: ClassroomService,
   ) {
     // this.register({username: 'teacher2@gmail.com', password: 'teacher1'})
   }
@@ -35,7 +35,6 @@ export class TeacherController {
   @UseLocalAuth()
   @Post('/login')
   login(@RequestUser() userInfo, @Res() res) {
-    // console.log('userInfo: ', userInfo);
     let body = this.userService.login(userInfo, res);
     res.send(body);
   }
@@ -70,6 +69,34 @@ export class TeacherController {
     user.roles = [userRole];
     return await this.userService.createUser<Teacher>(user);
 
+  }
+
+  @UseJwtAuth('superAdmin')
+  @Post('/changeteacherpass')
+  async changePass(@Body() newPass: any) {
+      return await this.teacherService.changeTeacherPassword(newPass)
+  }
+
+  
+  
+
+  @UseJwtAuth('superAdmin')
+  @Post('/editTeacher')
+  async editTeacher(@Body() req: any) {
+    try {
+      console.log('e: ');
+
+      // return await this.teacherService.editTeacher(req);
+    } catch (e) {
+      console.log('e: ', e);
+      return false
+    }
+  }
+
+  @UseJwtAuth('superAdmin')
+  @Post('/deleteTeacher')
+  async deleteTeacher(@Body() val: any) {
+    return await this.teacherService.deleteTeacher(val.teacherId)
   }
 
   @UseJwtAuth('superAdmin')

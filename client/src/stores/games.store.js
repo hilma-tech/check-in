@@ -1,15 +1,25 @@
-import { FilesUploader } from "@hilma/fileshandler-client";
-import { createMobXContext } from "@hilma/tools";
-import { makeObservable, observable, action, runInAction } from "mobx";
+import {
+  FilesUploader
+} from "@hilma/fileshandler-client";
+import {
+  createMobXContext
+} from "@hilma/tools";
+import {
+  makeObservable,
+  observable,
+  action,
+  runInAction
+} from "mobx";
 const axios = require("axios").default;
 
 class Games {
+  datatype = '';
   gamesList = [];
   chosenGameList = [];
-  searchedGames=[];
   haveMoreGames = true;
   successGettingGames = true;
   startGetGames = false;
+  searchedGames = [];
   imageUploader = new FilesUploader();
   constructor() {
     makeObservable(this, {
@@ -29,7 +39,9 @@ class Games {
       resetGamesStore: action,
       searchGames: action,
       searchGamesReplace:action,
-      searchedGames: observable
+      searchedGames: observable,
+      whatData: action,
+      datatype: observable,
     });
   }
 
@@ -46,8 +58,12 @@ class Games {
   getGames = async () => {
     try {
       this.startGetGames = true;
-      const { data } = await axios.get("/api/game/getGames", {
-        params: { gamesLength: this.gamesList.length },
+      const {
+        data
+      } = await axios.get("/api/game/getGames", {
+        params: {
+          gamesLength: this.gamesList.length
+        },
       });
       runInAction(() => {
         this.gamesList = this.gamesList.concat(data.gamesInfo);
@@ -66,8 +82,13 @@ class Games {
   getClassroomGames = async (classId) => {
     try {
       this.startGetGames = true;
-      const { data } = await axios.get("/api/game/getClassroomGames", {
-        params: { classId: classId, dataLength: this.gamesList.length },
+      const {
+        data
+      } = await axios.get("/api/game/getClassroomGames", {
+        params: {
+          classId: classId,
+          dataLength: this.gamesList.length
+        },
       });
       runInAction(() => {
         this.gamesList = this.gamesList.concat(data.allGames);
@@ -113,7 +134,6 @@ class Games {
       this.chosenGameList.splice(index, 1);
       return true
     } catch (err) {
-      console.log("remove game err: ", err);
       return false
     }
   };
@@ -128,37 +148,40 @@ class Games {
       }));
       return true
     } catch (err) {
-      console.log("add game err: ", err);
       return false
     }
   };
+
+  whatData = (datatype) => {
+    this.datatype = datatype
+  }
 
   //deletes game entirely from DB
   deleteGame = async (Id) => {
     try {
-      await axios.post("/api/game/deleteGameById", { Id });
+      await axios.post("/api/game/deleteGameById", {
+        Id
+      });
       return true
     } catch (err) {
-      console.log("delete game err: ", err);
       return false
     }
   };
 
-
   searchGames = async (val) => {
-    try{
-    let Games = await axios.get(`/api/game/searchGames/?val=${val}`);
-    if (Games.data[0] != null) {
+    try {
+      let Games = await axios.get(`/api/game/searchGames/?val=${val}`);
+      if (Games.data[0] != null) {
         this.searchedGames = [...Games.data]
-    }}
-    catch(err){
-console.log("search game err:", err);
+      }
+    } catch (err) {
+      console.log("search game err:", err);
     }
-}
+  }
 
-searchGamesReplace = () => {
+  searchGamesReplace = () => {
     this.searchedGames.replace([])
-}
+  }
 
 }
 

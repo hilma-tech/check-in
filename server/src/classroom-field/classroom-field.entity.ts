@@ -17,6 +17,7 @@ export class ClassroomField {
   @ManyToOne(
     type => Game,
     game => game.id,
+    { onDelete: 'CASCADE' }
   )
   @JoinColumn({ referencedColumnName: 'id', name: 'game_id' })
   game_id: number;
@@ -27,6 +28,7 @@ export class ClassroomField {
   @ManyToOne(
     type => Classroom,
     classroom => classroom.id,
+    { onDelete: 'CASCADE' }
   )
   @JoinColumn({ referencedColumnName: 'id', name: 'classroom_id' })
   classroom_id: number;
@@ -34,7 +36,8 @@ export class ClassroomField {
   @ManyToOne(
     type => Field,
     field => field.id,
+    { onDelete: 'CASCADE' }
   )
   @JoinColumn({ name: 'field_id', referencedColumnName: 'id' })
-  field_id: number;
+  field_id?: Field;
 }

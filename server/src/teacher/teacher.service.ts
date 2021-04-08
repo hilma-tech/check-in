@@ -1,12 +1,21 @@
 import { Injectable, Inject, Body, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MailerInterface, User, UserConfig, UserService, USER_MODULE_OPTIONS } from '@hilma/auth-nest';
+import {
+  MailerInterface,
+  SALT,
+  User,
+  UserConfig,
+  UserService,
+  USER_MODULE_OPTIONS,
+} from '@hilma/auth-nest';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { Teacher } from './teacher.entity';
 import { GetTeacherSkip, TeacherIdDto, GetClassSkip } from './teacher.dtos';
 import { env } from 'process';
+import * as bcrypt from 'bcrypt';
+import { ClassroomService } from 'src/classroom/classroom.service';
 
 @Injectable()
 export class TeacherService extends UserService {
@@ -16,10 +25,66 @@ export class TeacherService extends UserService {
     protected readonly userRepository: Repository<Teacher>,
     protected readonly jwtService: JwtService,
     protected readonly configService: ConfigService,
+    @Inject('ClassroomService')
+    private readonly classroomService: ClassroomService,
+
     @Inject('MailService')
-    protected readonly mailer: MailerInterface
+    protected readonly mailer: MailerInterface,
   ) {
     super(config_options, userRepository, jwtService, configService, mailer);
+  }
+
+  async changeTeacherPassword(userInfo) {
+    const hash = bcrypt.hashSync(userInfo.password, SALT);
+    return await this.userRepository
+      .createQueryBuilder()
+      .update(User)
+      .set({ password: hash })
+      .where({ username: userInfo.username })
+      .execute();
+  }
+
+  // async editTeacher(@Body() req: any) {
+  //   // console.log('req: ', req);
+  //   await this.sendUpdatePasswordEmail(req.username, req.password);
+  //   let teacher = await this.userRepository.findOne({
+  //     where: [{ id: req.id }],
+  //     relations: ['classroomTeacher'],
+  //   });
+  //   let username = req.username;
+  //   let password = bcrypt.hashSync(req.password, SALT);
+  //   let teacherInfo: Partial<Teacher> = new Teacher({ username, password });
+  //   if (req.password.length === 0) {
+  //     teacherInfo = { username };
+  //   }
+  //   teacherInfo.first_name = req.firstName;
+  //   teacherInfo.last_name = req.lastName;
+  //   teacherInfo.school = req.schoolId;
+  //   // console.log('teacher.classroomTeacher: ', teacher.classroomTeacher);
+  //   if (teacher.classroomTeacher.length !== 0) {
+  //     for (let i = 0; i < teacher.classroomTeacher.length; i++) {
+  //       let a = await this.classroomService.deleteTeacherClassroom(
+  //         teacher.classroomTeacher[i].id,
+  //         req.id,
+  //       );
+  //     }
+  //   }
+
+  //   // console.log('req.classrooms: ', req.classrooms);
+  //   if (req.classrooms.length !== 0) {
+  //     for (let i = 0; i < req.classrooms.length; i++) {
+  //       let a = await this.classroomService.addTeacherToClassroom(
+  //         req.classrooms[i].id,
+  //         teacher,
+  //       );
+  //     }
+  //   }
+
+  //   return await this.userRepository.update({ id: req.id }, teacherInfo);
+  // }
+
+  async deleteTeacher(@Body() teacherId: string) {
+    await this.userRepository.delete(teacherId);
   }
 
   async getTeacherClasses(@Body() userinfo: string, skipON: GetClassSkip) {
@@ -64,7 +129,7 @@ export class TeacherService extends UserService {
       skip: Number(skipON.teachersLength),
       take: 50,
       relations: ['school', 'classroomTeacher'],
-      order: { created: "DESC" }
+      order: { created: 'DESC' },
     });
     return { teachersInfo: teachers, haveMoreTeachers: haveMoreTeachers };
   }
@@ -85,9 +150,35 @@ export class TeacherService extends UserService {
     return teacherInfo;
   }
 
+  async sendUpdatePasswordEmail(email, password) {
+    // console.log('email, password: ', email, password);
+    let html = `<div style= "direction:rtl; background-color:whitesmoke;">
+    <h3 style="color:#043163; font-size:17px">שלום לך!</h3>
+    <h3 style="color:#043163; font-size:17px">הסיסמה שלך עודכנה.</h3>
+    <p style="font-size:17px">הסיסמה החדשה שלכם לאתר היא:</p>
+    <p style="background-color:#dcdcdc;width:max-content; font-size:17px;">${password}</p>
+    <h3 style="color:#043163">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h3>
+   <div style="display:flex;flex-direction:row;align-self:center;style="padding-bottom:10px"">
+    <img src="cid:checkinlogo" height="20" style="padding:10px"/>
+    <img src="cid:hilmalogo" height="40"/>
+  </div>
+    </div>`;
+    this.sendEmail(email, "עדכון סיסמא לצ'ק אין", '', html, [
+      {
+        fileName: 'blueCheckIn.png',
+        path: `http://${env.HOST}/icons/blueCheckIn.png`,
+        cid: 'checkinlogo',
+      },
+      {
+        fileName: 'hilmaIcon.png',
+        path: `http://${env.HOST}/icons/hilmaIcon.png`,
+        cid: 'hilmalogo',
+      },
+    ]);
+  }
+
   async sendVerificationEmail(email, token, user) {
-    let html =
-      `<div style= "direction:rtl; background-color:whitesmoke;">
+    let html = `<div style= "direction:rtl; background-color:whitesmoke;">
     <h3 style="color:#043163; font-size:17px">ברוכים הבאים לצ'ק אין!</h3>
     <p style="font-size:17px">הסיסמה שלכם לאתר היא:</p>
     <p style="background-color:#dcdcdc;width:max-content; font-size:17px;">${user.password}</p>
@@ -98,31 +189,38 @@ export class TeacherService extends UserService {
     <img src="cid:checkinlogo" height="20" style="padding:10px"/>
     <img src="cid:hilmalogo" height="40"/>
   </div>
-
-    </div>`
-    this.sendEmail(email, "ברוכים הבאים לצ'ק אין", '', html, [{
-      fileName: "blueCheckIn.png",
-      path: `http://${env.HOST}/icons/blueCheckIn.png`,
-      cid: 'checkinlogo',
-    }, {
-      fileName: "hilmaIcon.png",
-      path: `http://${env.HOST}/icons/hilmaIcon.png`,
-      cid: 'hilmalogo',
-    },])
+    </div>`;
+    this.sendEmail(email, "ברוכים הבאים לצ'ק אין", '', html, [
+      {
+        fileName: 'blueCheckIn.png',
+        path: `http://${env.HOST}/icons/blueCheckIn.png`,
+        cid: 'checkinlogo',
+      },
+      {
+        fileName: 'hilmaIcon.png',
+        path: `http://${env.HOST}/icons/hilmaIcon.png`,
+        cid: 'hilmalogo',
+      },
+    ]);
   }
 
   async searchInTeacher(val: string) {
-    let teachers = await this.userRepository.find({ relations: ['school', 'classroomTeacher'] })
-    let Search = teachers.map((teacher) => {
-      let fullname = (teacher.first_name + ' ' + teacher.last_name).toLowerCase()
+    let teachers = await this.userRepository.find({
+      relations: ['school', 'classroomTeacher'],
+    });
+    let Search = teachers.map(teacher => {
+      let fullname = (
+        teacher.first_name +
+        ' ' +
+        teacher.last_name
+      ).toLowerCase();
       if (fullname.includes(val.toLowerCase())) {
-        return teacher
+        return teacher;
       }
-    })
-    var searchresult = Search.filter(function (teacher) {
+    });
+    var searchresult = Search.filter(function(teacher) {
       return teacher != null;
     });
-    return searchresult
+    return searchresult;
   }
-
 }

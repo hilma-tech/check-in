@@ -1,15 +1,17 @@
-import { IsDefined, IsNumber, IsNumberString, IsString } from "class-validator";
+import { IsDefined, IsNumber, IsNumberString, IsString } from 'class-validator';
 
 export class getCGFDto {
-    @IsDefined()
+  @IsDefined()
   @IsString()
   @IsNumberString()
   game_id: string;
-
   @IsDefined()
   @IsString()
   @IsNumberString()
   classroom_id: string;
+  @IsDefined()
+  @IsString()
+  datatype: string;
 }
 
 export class removeFFromCDto {
@@ -26,9 +28,9 @@ export class GetClassGameFieldsDto {
   @IsDefined()
   @IsString()
   @IsNumberString()
-  game_id: string
+  game_id: string;
   @IsDefined()
   @IsString()
   @IsNumberString()
-  classroom_id: string
+  classroom_id: string;
 }
