@@ -96,16 +96,14 @@ export class GameService {
   // ]
 
   async getShowGameInfo(data: getCGFDto) {
-    // console.log('data: ', data);
     let temp = await this.gameRepository.find({
       relations: ['fields'],
       where: { id: data.game_id },
     });
-    console.log('temp: ', temp);
     if (data.datatype === 'new') {
       let GameFields = await this.classroomFieldService.getClassroomGameFields(
         data,
-      );
+        );
       let formattedGameFields = [];
       for (let i = 0; i < GameFields.length; i++) {
         if (
@@ -139,7 +137,7 @@ export class GameService {
         gameDescription: temp[0].description,
         gameRequirements: temp[0].requirements,
         image: temp[0].image,
-        gameLink: temp[0].video_link
+        gameLink: temp[0].video_link,
       };
       return formattedInfo;
     } else if (data.datatype === 'old') {
@@ -181,7 +179,7 @@ export class GameService {
         gameDescription: temp[0].description,
         gameRequirements: temp[0].requirements,
         image: temp[0].image,
-        gameLink: temp[0].video_link
+        gameLink: temp[0].video_link,
       };
       return formattedInfo;
     } else {
@@ -238,16 +236,19 @@ export class GameService {
 
   async deleteGameById(id: DeleteGameIdDto) {
     let gameInfo = await this.gameRepository
-    .createQueryBuilder('Game')
-    .innerJoinAndSelect('Game.classrooms', 'Classroom')
-    .select('Classroom.id')
-    .addSelect('Game.game_name')
-    .where('Game.id = :id', { id: Number(id.Id) })
-    .getOne();
-    for(let i =0; i< gameInfo.classrooms.length; i++){
-      await this.classroomFieldService.removeGameFieldsFromClass({gameId: id.Id, classId: gameInfo.classrooms[i].id})
+      .createQueryBuilder('Game')
+      .innerJoinAndSelect('Game.classrooms', 'Classroom')
+      .select('Classroom.id')
+      .addSelect('Game.game_name')
+      .where('Game.id = :id', { id: Number(id.Id) })
+      .getOne();
+    for (let i = 0; i < gameInfo.classrooms.length; i++) {
+      await this.classroomFieldService.removeGameFieldsFromClass({
+        gameId: id.Id,
+        classId: gameInfo.classrooms[i].id,
+      });
     }
-    await this.classroomFieldService.deleteClassField(id.Id)
+    await this.classroomFieldService.deleteClassField(id.Id);
     await this.gameRepository.delete(id.Id);
   }
 
