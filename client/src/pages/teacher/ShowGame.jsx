@@ -38,11 +38,12 @@ class ShowGame extends Component {
     try {
       const { data } = await axios.get("/api/game/getShowGameInfo", {
         params: { game_id: this.props.chosenGame.gameId,
-        classroom_id: this.props.chosenClass.classId, datatype: this.props.games.datatype },
-      });
-      if (data.game_name === null || data.game_name === undefined) {
-        this.props.history.push("/teacher/classes/games");
-      }
+          classroom_id: this.props.chosenClass.classId, datatype: this.props.games.datatype },
+        });
+        if (data.game_name === null || data.game_name === undefined) {
+          this.props.history.push("/teacher/classes/games");
+        }
+        console.log('data: ', data);
       this.setState({
         fieldsData: data.fields,
         gameName: data.game_name,

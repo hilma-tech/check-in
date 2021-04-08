@@ -39,5 +39,5 @@ export class ClassroomField {
     { onDelete: 'CASCADE' }
   )
   @JoinColumn({ name: 'field_id', referencedColumnName: 'id' })
-  field_id?: Field[];
+  field_id?: Field;
 }

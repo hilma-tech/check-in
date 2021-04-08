@@ -81,71 +81,109 @@ export class GameService {
     return { gamesInfo: gamesInfo, haveMoreGames: haveMoreGames };
   }
 
-
-  // id: 133,
-  //   newValue: '/image/GNHazZY0P0Jj22GdyiSbeaYUU77KJLkI.jpg',
-  //   field: Field {
-  //     id: 20,
-  //     field_name: 'pictchure',
-  //     type: 'image',
-  //     default_value: '/image/GNHazZY0P0Jj22GdyiSbeaYUU77KJLkI.jpg',
-  //     order: 5
+  // [
+  //   Game {
+  //     id: 34,
+  //     game_name: 'image text choice',
+  //     description: null,
+  //     requirements: null,
+  //     video_link: null,
+  //     image: 'https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',
+  //     suspended: <Buffer 00>,
+  //     fields: [ [Field], [Field], [Field] ]
   //   }
+  // ]
 
   async getShowGameInfo(data: getCGFDto) {
-    console.log('data: ', data);
-
+    // console.log('data: ', data);
+    let temp = await this.gameRepository.find({
+      relations: ['fields'],
+      where: { id: data.game_id },
+    });
+    console.log('temp: ', temp);
     if (data.datatype === 'new') {
       let GameFields = await this.classroomFieldService.getClassroomGameFields(
         data,
       );
-      console.log('classGameFields: ', GameFields, GameFields.length);
-      console.log('GameFields[i].field.length: ', GameFields[0].field_id, typeof GameFields[0].field_id);
-
+      let formattedGameFields = [];
       for (let i = 0; i < GameFields.length; i++) {
-        console.log("if", GameFields[i].field_id);
-        // for (let j = 0; j < 5; j++) {
-        //   console.log('no ');
-        
-          if (
-            GameFields[i].field_id.type === 'image' ||
-            GameFields[i].field_id[0].type === 'text'
-            ) {
-            console.log('GameFields[i].field_id[0].type: ', GameFields[i].field_id[0].type);
-          } else {
-            console.log("else");
-            // console.log('GameFields[i].field_id[0].type: ', GameFields[i].field_id);
-          }
-          console.log("after");
-      //       GameFields[i].field_id[0].value = [
-      //         { id: 0, value: GameFields[i].field_id[0].default_value },
-      //       ];
-      //     } else {
-      //       GameFields[i].field_id[0].value = JSON.parse(
-      //         GameFields[i].field_id[0].default_value,
-      //       ).map((value, index) => {
-      //         return { id: index, value: value };
-      //       });
-      //     }
-      //     GameFields[i].field_id[j].name = GameFields[i].field_id[j].field_name;
-      //     GameFields[i].field_id[j].selection = GameFields[i].field_id[j].type;
-        
+        if (
+          GameFields[i].field_id.type === 'image' ||
+          GameFields[i].field_id.type === 'text'
+        ) {
+          formattedGameFields[i] = {
+            id: GameFields[i].id,
+            value: [{ id: 0, value: GameFields[i].newValue }],
+            order: GameFields[i].field_id.order,
+            selection: GameFields[i].field_id.type,
+            field_name: GameFields[i].field_id.field_name,
+          };
+        } else {
+          formattedGameFields[i] = {
+            id: GameFields[i].id,
+            order: GameFields[i].field_id.order,
+            selection: GameFields[i].field_id.type,
+            field_name: GameFields[i].field_id.field_name,
+          };
+          formattedGameFields[i].value = JSON.parse(GameFields[i].newValue).map(
+            (value, index) => {
+              return { id: index, value: value };
+            },
+          );
+        }
       }
-  
-      return GameFields;
-
-
+      let formattedInfo = {
+        fields: formattedGameFields,
+        game_name: temp[0].game_name,
+        gameDescription: temp[0].description,
+        gameRequirements: temp[0].requirements,
+        image: temp[0].image,
+      };
+      return formattedInfo;
     } else if (data.datatype === 'old') {
-      let GameFields = await this.gameRepository.find({
+      let temp = await this.gameRepository.find({
         relations: ['fields'],
         where: { id: data.game_id },
       });
-      // console.log('temp: ', GameFields[0].fields);
+
+      let formattedGameFields = [];
+      for (let i = 0; i < temp[0].fields.length; i++) {
+        if (
+          temp[0].fields[i].type === 'image' ||
+          temp[0].fields[i].type === 'text'
+        ) {
+          formattedGameFields[i] = {
+            id: temp[0].fields[i].id,
+            value: [{ id: 0, value: temp[0].fields[i].default_value }],
+            order: temp[0].fields[i].order,
+            selection: temp[0].fields[i].type,
+            field_name: temp[0].fields[i].field_name,
+          };
+        } else {
+          formattedGameFields[i] = {
+            id: temp[0].fields[i].id,
+            order: temp[0].fields[i].order,
+            selection: temp[0].fields[i].type,
+            field_name: temp[0].fields[i].field_name,
+          };
+          formattedGameFields[i].value = JSON.parse(
+            temp[0].fields[i].default_value,
+          ).map((value, index) => {
+            return { id: index, value: value };
+          });
+        }
+      }
+      let formattedInfo = {
+        fields: formattedGameFields,
+        game_name: temp[0].game_name,
+        gameDescription: temp[0].description,
+        gameRequirements: temp[0].requirements,
+        image: temp[0].image,
+      };
+      return formattedInfo;
     } else {
       return false;
     }
-
-    
   }
 
   async getGameInfo(gameId: IdeDto) {

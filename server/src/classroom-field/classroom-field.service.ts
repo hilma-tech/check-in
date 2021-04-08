@@ -42,10 +42,10 @@ export class ClassroomFieldService {
           await this.imageService.delete(field.default_value)
         }
       }
-    });
-    this.classFieldRepository.delete({
-      classroom_id: req.classId,
-      field_id: fields,
+      this.classFieldRepository.delete({
+        classroom_id: req.classId,
+        field_id: field,
+      });
     });
   }
 
@@ -98,7 +98,7 @@ export class ClassroomFieldService {
       emptyField = 0;
       let newField: Partial<ClassroomField> =  new ClassroomField();
       newField.classroom_id = req.classId;
-      newField.field_id = [field]//field.id;
+      newField.field_id = field//field.id;
       newField.new_value = Inp;
       newField.game_id = req.gameId
       this.classFieldRepository.save(newField);
