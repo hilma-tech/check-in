@@ -13,6 +13,8 @@ class ChosenClass {
   successGetInfo = true;
   haveMoreStudents = true;
   startGetInfo = false;
+  classPermissionsStart = []
+  classPermissionsEnd = []
   constructor() {
     makeObservable(this, {
       classId: observable,
@@ -31,8 +33,11 @@ class ChosenClass {
       resetChosenClass: action,
       getClassPermissions: action,
       classPermissions: observable,
+      classPermissionsStart: observable,
+      classPermissionsEnd: observable,
     });
   }
+
 
   //gets the classrooms the student belongs to (besides the current class)
   setCurrStudentClasses = async (studentId) => {

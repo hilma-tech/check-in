@@ -466,7 +466,7 @@ class EditTeacher extends React.Component {
                   ) : (
                     <>
                     <label className="labelFields">כיתות:</label>
-                    {this.state.chosenClasses.length === 0 ? <p>אין כיתות לבית ספר זה</p> : <></>}
+                    {this.state.allClasses.length === 0 ? <p>אין כיתות לבית ספר זה</p> : <></>}
                     {this.state.chosenClasses.map((val, i) => {
                       return (
                         <div key={val.id} className="classSelection">

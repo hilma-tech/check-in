@@ -39,8 +39,7 @@ export default () => ({
         "SAdminEditTeachers",
         "SAdminEditStudents",
         "SAdminAddTeachers",
-        "SAdminAddStudents",
-        "SAdminAddSchools"
+        "SAdminAddStudents"
       ],
       defaultHomePage: "SAdminGames"
     },

@@ -36,8 +36,7 @@ export class PermissionService {
             where: [{ classroom_id: classId }],
             select: ['start_time', 'end_time', 'day']
         })
-        let permissionWODuplicates = permissions.filter((permission, i, arr) => arr.findIndex(perr => (JSON.stringify(perr) === JSON.stringify(permission))) === i)
-        return permissionWODuplicates
+        return permissions
     }
 
     async deletePermission(info) {

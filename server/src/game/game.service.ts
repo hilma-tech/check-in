@@ -14,6 +14,7 @@ import { FilesType, ImageService } from '@hilma/fileshandler-typeorm';
 import { ClassroomFieldService } from 'src/classroom-field/classroom-field.service';
 import { getCGFDto } from 'src/classroom-field/classroom-field.dtos';
 import { FieldService } from 'src/field/field.service';
+import { ValDto } from 'src/student/student.dtos';
 
 @Injectable()
 export class GameService {
@@ -234,7 +235,17 @@ export class GameService {
   }
 
   async deleteGameById(id: DeleteGameIdDto) {
-    await this.classroomFieldService.deleteClassField(id.Id);
+    let gameInfo = await this.gameRepository
+    .createQueryBuilder('Game')
+    .innerJoinAndSelect('Game.classrooms', 'Classroom')
+    .select('Classroom.id')
+    .addSelect('Game.game_name')
+    .where('Game.id = :id', { id: Number(id.Id) })
+    .getOne();
+    for(let i =0; i< gameInfo.classrooms.length; i++){
+      await this.classroomFieldService.removeGameFieldsFromClass({gameId: id.Id, classId: gameInfo.classrooms[i].id})
+    }
+    await this.classroomFieldService.deleteClassField(id.Id)
     await this.gameRepository.delete(id.Id);
   }
 
@@ -295,7 +306,7 @@ export class GameService {
     });
   }
 
-  async searchGames(val) {
+  async searchGames (val: ValDto){
     let gamesInfo = await this.gameRepository.find({
       where: [{ suspended: false }],
       select: ['id', 'game_name', 'image'],

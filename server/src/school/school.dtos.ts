@@ -36,6 +36,12 @@ export class ErrorDto {
   mess: string;
 }
 
+export class SearchValDto {
+  @IsDefined()
+  @IsString()
+  val: string;
+}
+
 export class ClassInfoDto {
   @IsOptional()
   @IsNumber()

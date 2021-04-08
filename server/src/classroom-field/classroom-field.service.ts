@@ -39,7 +39,7 @@ export class ClassroomFieldService {
           where: [{field_id: field.id}]
         })
         if(removeField.new_value !== field.default_value){
-          await this.imageService.delete(field.default_value)
+          await this.imageService.delete(removeField.new_value)
         }
       }
       this.classFieldRepository.delete({
@@ -53,9 +53,8 @@ export class ClassroomFieldService {
     let Inp = null;
     req.fieldsData.forEach( async (field) => {
       let emptyField = 0;
+      Inp = field.value[0].value;
       if (field.type !== 'image') {
-        Inp = field.value[0].value;
-
         if (field.type === 'text') {
           let valid = mustValid(Inp);
           if (valid.length !== 0) {
@@ -84,17 +83,19 @@ export class ClassroomFieldService {
       } else {
         if (files.length !== 0) {
           try {
-            Inp = await this.imageService.save(files, field.value[0].id) ;
+            if(field.value[0].value.includes("blob:http")){
+              Inp = await this.imageService.save(files, field.value[0].id) ;
+            } else {
+              throw new Error()
+            }
           } catch (error) {
             Inp = field.value[0].value
           }
         } else {
           Inp = field.value[0].value
         }
-
-        
       }
-
+      
       emptyField = 0;
       let newField: Partial<ClassroomField> =  new ClassroomField();
       newField.classroom_id = req.classId;

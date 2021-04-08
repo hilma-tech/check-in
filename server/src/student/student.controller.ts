@@ -126,14 +126,12 @@ export class StudentController {
         Classes.push(classroom.name);
         var getGames = await this.gameService.GetGamesForStudent(classroom.id, classroom.name);
         return { ...getGames, premissions: getPermissions }
-      })).then(async (getGames) => {
-        let schoolName = await this.schoolService.getSchoolNameById(getStudentInfo.classroomStudent[0].school_id);
-
+      })).then(async (getGames) => { 
         let StudentInfo = {
           first_name: getStudentInfo.first_name,
           last_name: getStudentInfo.last_name,
           classes: Classes,
-          school: schoolName.name,
+          school: getStudentInfo.school,
           games: getGames
         }
         return StudentInfo

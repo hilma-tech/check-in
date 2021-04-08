@@ -102,13 +102,13 @@ export class ExcelUserRegisterDto {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-/s]+$/)
   firstName: string;
 
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-/s]+$/)
   lastName: string;
 
   @IsDefined()
@@ -181,12 +181,12 @@ export class UserEditDto {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-/s]+$/)
   firstName: string;
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-/s]+$/)
   lastName: string;
   @IsDefined()
   @IsNumber()

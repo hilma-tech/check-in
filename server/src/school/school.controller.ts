@@ -1,7 +1,7 @@
 import { Get, Controller, Query, Post, Body } from '@nestjs/common';
 import { SchoolService } from './school.service';
 import { UseJwtAuth } from '@hilma/auth-nest';
-import { AddSchoolInfoDto, EditSchoolInfoDto, GetSchoolSkip } from './school.dtos';
+import { AddSchoolInfoDto, EditSchoolInfoDto, GetSchoolSkip, SearchValDto } from './school.dtos';
 
 @Controller('api/school')
 export class SchoolController {
@@ -41,8 +41,7 @@ export class SchoolController {
 
   @UseJwtAuth('superAdmin')
   @Get('/SearchSchools')
-  async SearchSchools(@Query() val: any) {
+  async SearchSchools(@Query() val: SearchValDto) {
     return await this.schoolService.searchSchools(val);
-    
   }
 }

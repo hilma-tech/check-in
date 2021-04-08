@@ -71,7 +71,7 @@ class EditStudent extends React.Component {
           })
         } catch (err) {
           this.props.errorMsg.setErrorMsg(
-            "הייתה שגיאה בשרת. לא ניתן לקבל בתי ספר מהשרת."
+            "הייתה שגיאה בשרת. לא ניתן לקבל כיתות מהשרת."
           );
         }
       }
@@ -391,6 +391,7 @@ class EditStudent extends React.Component {
           {this.state.school.length === 0 ? <></> :
             <>
               <label className="labelFields">כיתה:</label>
+              {this.state.allClasses.length === 0 ? <p>אין כיתות לבית ספר זה</p> : <></>}
               {
                 this.state.chosenClasses.map((val, i) => {
                   return (<div key={val.id} className="classSelection">
