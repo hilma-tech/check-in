@@ -58,6 +58,8 @@ class Permissions extends Component {
       this.setState({ Err: '' })
       await axios.post(`/api/permission/setClassPermission`, { startTime: this.state.selectedStartTime, endTime: this.state.selectedEndTime, classId: classId });
       this.props.errorMsg.setErrorMsg('הרשאות נשמרו בהצלחה')
+      this.props.chosenClass.classPermissionsStart = [this.state.selectedStartTime]
+      this.props.chosenClass.classPermissionsEnd = [this.state.selectedEndTime]
     }
 
     catch (err) {
