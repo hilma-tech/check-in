@@ -167,12 +167,12 @@ export class TeacherService extends UserService {
     this.sendEmail(email, "עדכון סיסמא לצ'ק אין", '', html, [
       {
         fileName: 'blueCheckIn.png',
-        path: `http://${env.HOST}/icons/blueCheckIn.png`,
+        path: `${env.HOST}/icons/blueCheckIn.png`,
         cid: 'checkinlogo',
       },
       {
         fileName: 'hilmaIcon.png',
-        path: `http://${env.HOST}/icons/hilmaIcon.png`,
+        path: `${env.HOST}/icons/hilmaIcon.png`,
         cid: 'hilmalogo',
       },
     ]);
@@ -185,7 +185,7 @@ export class TeacherService extends UserService {
     <p style="background-color:#dcdcdc;width:max-content; font-size:17px;">${user.password}</p>
     <h3 style="color:#043163">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h3>
     <p style="font-size:17px">על מנת לסיים את ההרשמה שלכם,</p>
-    <p style="font-size:17px; margin-top:-3px">לחצו על הקישור <a href="http://${env.DOMAIN}/api/teacher/Verify?token=${token}">כאן</a> כדי לאמת את כתובת המייל ומעבר לאתר</p>
+    <p style="font-size:17px; margin-top:-3px">לחצו על הקישור <a href="${env.DOMAIN}/api/teacher/Verify?token=${token}">כאן</a> כדי לאמת את כתובת המייל ומעבר לאתר</p>
    <div style="display:flex;flex-direction:row;align-self:center;style="padding-bottom:10px"">
     <img src="cid:checkinlogo" height="20" style="padding:10px"/>
     <img src="cid:hilmalogo" height="40"/>
@@ -195,12 +195,12 @@ export class TeacherService extends UserService {
     this.sendEmail(email, "ברוכים הבאים לצ'ק אין", '', html, [
       {
         fileName: 'blueCheckIn.png',
-        path: `http://${env.HOST}/icons/blueCheckIn.png`,
+        path: `${env.HOST}/icons/blueCheckIn.png`,
         cid: 'checkinlogo',
       },
       {
         fileName: 'hilmaIcon.png',
-        path: `http://${env.HOST}/icons/hilmaIcon.png`,
+        path: `${env.HOST}/icons/hilmaIcon.png`,
         cid: 'hilmalogo',
       },
     ]);
