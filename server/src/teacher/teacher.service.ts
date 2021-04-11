@@ -30,9 +30,6 @@ export class TeacherService extends UserService {
     @Inject('ClassroomService')
     private readonly classroomService: ClassroomService,
 
-    @Inject('UserService')
-    private readonly userService: UserService,
-
     @Inject('MailService')
     protected readonly mailer: MailerInterface,
   ) {
@@ -59,7 +56,7 @@ export class TeacherService extends UserService {
     let userRole = new Role();
     userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
     user.roles = [userRole];
-    return await this.userService.createUser<Teacher>(user);
+    return await this.createUser<Teacher>(user);
 
   }
 
