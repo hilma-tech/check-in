@@ -3,6 +3,7 @@ import {
   IsBooleanString,
   IsDefined,
   IsEmail,
+  isNumber,
   IsNumber,
   IsNumberString,
   IsString,
@@ -80,4 +81,44 @@ export class TeacherValDto {
   @IsDefined()
   @IsString()
   val: string;
+}
+
+export class TeacherEditClassesDto {
+  @IsDefined()
+  @IsNumber()
+  id: number;
+  @IsDefined()
+  @IsString()
+  name: string;
+}
+
+export class EditTeacherDto {
+  @IsDefined()
+  @IsString()
+  id: string;
+  @IsDefined()
+  @IsString()
+  @IsEmail()
+  username: string;
+  @IsDefined()
+  @IsString()
+  @Length(8, 15)
+  password: string;
+  @IsDefined()
+  @IsString()
+  @Length(1, 30)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
+  firstName: string;
+  @IsDefined()
+  @IsString()
+  @Length(1, 30)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
+  lastName: string;
+  @IsDefined()
+  @ValidateNested({ each: true })
+  @Type(() => TeacherEditClassesDto)
+  classrooms: TeacherEditClassesDto[];
+  @IsDefined()
+  @IsNumber()
+  schoolId: number;
 }

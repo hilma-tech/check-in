@@ -30,6 +30,7 @@ class EditGame extends Component {
       fieldsData: [],
       mess: "",
       ErrorsPerField: [],
+      gameLink: ""
     };
     this.imageUploader = props.filesUploader;
   }
@@ -59,6 +60,7 @@ class EditGame extends Component {
         gameDescription: data.description,
         gameRequirements: data.requirements,
         image: data.image,
+        gameLink: data.video_link
       });
     } catch (error) {
       this.props.errorMsg.setErrorMsg(
@@ -69,7 +71,7 @@ class EditGame extends Component {
   validateGame = () => {
     this.state.ErrorsPerField = [];
     var errors = [];
-    this.state.fieldsData.map((fields, index) => {
+    this.state.fieldsData.map((fields) => {
       if (fields.selection !== "image") {
         fields.value.map((field) => {
           let errMess = fieldInputValidation(field.value);
@@ -173,6 +175,11 @@ class EditGame extends Component {
                 ? this.state.gameRequirements
                 : "אין דרישות משחק"}
             </p>
+            {this.state.gameLink ?
+            <>
+            <h3 className="mobileGameLink">סרטון הסבר למשחק</h3>
+            <a className="mobileGameL" target="_blank" href={this.state.gameLink}>{this.state.gameLink}</a>
+              </> : <></>}
             <h1 className="mobileGameFields">שדות:</h1>
             {this.state.fieldsData.length === 0 ? (
               <p className="noFields">אין שדות למשחק זה</p>

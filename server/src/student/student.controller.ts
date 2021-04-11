@@ -11,6 +11,7 @@ import {
   StudentPassword,
   ExcelUserRegisterDto,
   ValDto,
+  UserEditDto,
 } from './student.dtos';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { GameModule } from 'src/game/game.module';
@@ -93,11 +94,10 @@ export class StudentController {
 
   @UseJwtAuth('superAdmin')
   @Post('/editStudent')
-  async editStudent(@Body() req: any) {
+  async editStudent(@Body() req: UserEditDto) {
     try {
       return await this.studentService.editStudent(req);
     } catch (e) {
-      // console.log('e: ', e);
       return false
     }
   }
@@ -126,14 +126,12 @@ export class StudentController {
         Classes.push(classroom.name);
         var getGames = await this.gameService.GetGamesForStudent(classroom.id, classroom.name);
         return { ...getGames, premissions: getPermissions }
-      })).then(async (getGames) => {
-        let schoolName = await this.schoolService.getSchoolNameById(getStudentInfo.classroomStudent[0].school_id);
-
+      })).then(async (getGames) => { 
         let StudentInfo = {
           first_name: getStudentInfo.first_name,
           last_name: getStudentInfo.last_name,
           classes: Classes,
-          school: schoolName.name,
+          school: getStudentInfo.school,
           games: getGames
         }
         return StudentInfo
@@ -181,7 +179,7 @@ export class StudentController {
 
   @UseJwtAuth('superAdmin')
   @Post('/deleteStudent')
-  async deleteStudent(@Body() val: any) {
-    return await this.studentService.deleteStudent(val.studentId)
+  async deleteStudent(@Body() val: StudentIdDto) {
+    return await this.studentService.deleteStudent(val.id)
   }
 }

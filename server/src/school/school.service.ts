@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { Repository } from 'typeorm';
-import { GetSchoolSkip } from './school.dtos';
+import { EditSchoolInfoDto, GetSchoolSkip, SearchValDto } from './school.dtos';
 import { School } from './school.entity';
 
 @Injectable()
@@ -33,6 +33,23 @@ export class SchoolService {
     school.city = info.schoolCity;
     let res = await this.schoolRepository.save(school);
     await this.classroomService.addClassesWithSchool(info, res)
+    return res;
+  }
+
+  async editSchool(@Body() info: EditSchoolInfoDto) {
+    let school = new School();
+    school.id = info.id
+    school.name = info.schoolName;
+    school.city = info.schoolCity;
+    let res = await this.schoolRepository.save(school);
+    if(info.removedClasses.length !== 0){
+      await this.classroomService.removeClassesFromSchool(info.removedClasses)
+    }
+    if(info.existClasses.length === 0){
+      await this.classroomService.addClassesWithSchool(info, res)
+    } else {
+      await this.classroomService.updateSchoolClasses(info.classes, info.existClasses, info.id)
+    }
     return res;
   }
 
@@ -68,7 +85,7 @@ export class SchoolService {
     })
   }
 
-  async searchSchools(val) {
+  async searchSchools(val: SearchValDto) {
     let schools = await this.schoolRepository.find({
     });
     let Search = schools.map((school) => {

@@ -12,6 +12,7 @@ class ClassGames extends React.Component {
       await this.props.chosenGame.setgameId(
         this.props.games.chosenGameList[this.props.index].id
       );
+      this.props.games.whatData("new")
       this.props.history.push("/teacher/classes/showGame");
     }
   };

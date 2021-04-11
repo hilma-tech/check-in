@@ -1,12 +1,18 @@
-import { createMobXContext } from "@hilma/tools";
-import { makeObservable, observable, action } from "mobx";
+import {
+  createMobXContext
+} from "@hilma/tools";
+import {
+  makeObservable,
+  observable,
+  action
+} from "mobx";
 
 const axios = require("axios").default;
 
 class Schools {
   listDataSchools = [];
   schoolsNames = [];
-  searchedSchools=[];
+  searchedSchools = [];
   haveMoreSchools = true;
   successGettingSchools = true;
   startGetSchools = false;
@@ -23,9 +29,10 @@ class Schools {
       getChosenSchool: action,
       getAllSchoolsNames: action,
       searchSchools: action,
-      searchSchoolsReplace:action,
+      searchSchoolsReplace: action,
       searchedSchools: observable,
       addSchool: action,
+      editSchool: action,
       deleteSchool: action,
     });
   }
@@ -34,10 +41,10 @@ class Schools {
     // console.log('schoolInfo: ', schoolInfo);
     // console.log('this.listDataSchools: ', this.listDataSchools);
     this.listDataSchools = [schoolInfo, ...this.listDataSchools]
-  
+
     // console.log('...this.listDataStudents: ', this.listDataStudents);
     // this.listDataStudents = [...this.listDataStudents]
-  
+
   }
 
   getAllSchoolsNames = async () => {
@@ -54,8 +61,12 @@ class Schools {
   getSchools = async () => {
     try {
       this.startGetSchools = true;
-      const { data } = await axios.get("/api/school/getSchools", {
-        params: { schoolsLength: this.listDataSchools.length },
+      const {
+        data
+      } = await axios.get("/api/school/getSchools", {
+        params: {
+          schoolsLength: this.listDataSchools.length
+        },
       });
       this.listDataSchools = this.listDataSchools.concat(data.schoolsInfo);
       this.haveMoreSchools = data.haveMoreSchools;
@@ -70,8 +81,12 @@ class Schools {
   //gets all the information about a specfic school in superadmin
   getChosenSchool = async (schoolId) => {
     try {
-      const { data } = await axios.get("/api/classroom/getSchoolClasses", {
-        params: { schoolId: schoolId },
+      const {
+        data
+      } = await axios.get("/api/classroom/getSchoolClasses", {
+        params: {
+          schoolId: schoolId
+        },
       });
       this.chosenSchool = this.listDataSchools.filter((school) => {
         return school.id === schoolId;
@@ -80,7 +95,10 @@ class Schools {
         let classInfo = {
           id: classroom.id,
           name: classroom.name,
-          classNameError: { toShow: "none", mess: "" },
+          classNameError: {
+            toShow: "none",
+            mess: ""
+          },
         };
         classInfo.chosenTeachers = classroom.teachers.map((teacher) => {
           return {
@@ -92,39 +110,47 @@ class Schools {
       });
       return true
     } catch (error) {
-      console.log("choose school error: ", error);
       return false
     }
   };
 
   deleteSchool = async () => {
     try {
-        await axios.post("/api/school/deleteSchool", {
-            schoolId: this.chosenSchool.id,
-          });
-        this.listDataSchools = this.listDataSchools.filter((school) => {
-            return school.id !== this.chosenSchool.id
-        })
-        return true
+      await axios.post("/api/school/deleteSchool", {
+        schoolId: this.chosenSchool.id,
+      });
+      this.listDataSchools = this.listDataSchools.filter((school) => {
+        return school.id !== this.chosenSchool.id
+      })
+      return true
     } catch (err) {
-        return false
+      return false
     }
-}
+  }
 
   searchSchools = async (val) => {
-    try{
-    let Schools = await axios.get(`/api/school/searchSchools/?val=${val}`);
-    if (Schools.data[0] != null) {
+    try {
+      let Schools = await axios.get(`/api/school/searchSchools/?val=${val}`);
+      if (Schools.data[0] != null) {
         this.searchedSchools = [...Schools.data]
-    }}
-    catch(err){
-console.log("search school err:", err);
+      }
+    } catch (err) {
+      console.log("search school err:", err);
     }
-}
+  }
 
-searchSchoolsReplace = () => {
+  searchSchoolsReplace = () => {
     this.searchedSchools.replace([])
-}
+  }
+
+  editSchool = (schoolId, schoolName, schoolCity) => {
+    for(let i = 0; i<this.listDataSchools.length; i++){
+      if(this.listDataSchools[i].id === schoolId){
+        this.listDataSchools[i].name = schoolName
+        this.listDataSchools[i].city = schoolCity
+      }
+    }
+  }
 }
 
 const schools = new Schools();

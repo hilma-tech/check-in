@@ -3,6 +3,7 @@ import {
   IsDefined,
   IsNumber,
   IsNumberString,
+  IsOptional,
   IsString,
   Length,
   Matches,
@@ -101,13 +102,13 @@ export class ExcelUserRegisterDto {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-/s]+$/)
   firstName: string;
 
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-/s]+$/)
   lastName: string;
 
   @IsDefined()
@@ -163,4 +164,35 @@ export class SearchClassForStudentDto {
   @IsDefined()
   @IsString()
   value: string;
+}
+
+export class UserEditDto {
+  @IsDefined()
+  @IsString()
+  id: string;
+  @IsDefined()
+  @IsString()
+  @Length(4, 15)
+  @Matches(/^[A-Za-z\u0590-\u05EA0-9?!-_]+$/)
+  username: string;
+  @IsString()
+  @Matches(/^$|[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]+$/)
+  password: string;
+  @IsDefined()
+  @IsString()
+  @Length(1, 30)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-/s]+$/)
+  firstName: string;
+  @IsDefined()
+  @IsString()
+  @Length(1, 30)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-/s]+$/)
+  lastName: string;
+  @IsDefined()
+  @IsNumber()
+  schoolId: number;
+  @IsDefined()
+  @ValidateNested({ each: true })
+  @Type(() => ClassForSaveDto)
+  classrooms: ClassForSaveDto[];
 }

@@ -3,7 +3,7 @@ import { UserService, RequestUser, Role, UseJwtAuth, UseLocalAuth } from '@hilma
 import { Teacher } from './teacher.entity';
 import { TeacherService } from './teacher.service';
 import { Classroom } from 'src/classroom/classroom.entity';
-import { TeacherIdDto, GetTeacherSkip, GetClassSkip, TeacherValDto, TeacherRegisterDto } from './teacher.dtos';
+import { TeacherIdDto, GetTeacherSkip, GetClassSkip, TeacherValDto, TeacherRegisterDto, EditTeacherDto } from './teacher.dtos';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { env } from 'process';
 
@@ -77,22 +77,12 @@ export class TeacherController {
       return await this.teacherService.changeTeacherPassword(newPass)
   }
 
-  // {
-//   id: '2de835a7-3dc6-4e5e-a36f-45892dbbf758',
-//   username: 'batzy@gmail.com',
-//   password: '',
-//   firstName: 'בתצי',
-//   lastName: 'רוזננננ',
-//   classrooms: [
-//     { id: 28, name: "א'1", games: [], students: [], teachers: [Array] }
-//   ],
-//   schoolId: 44
-// }
+  
+  
 
   @UseJwtAuth('superAdmin')
   @Post('/editTeacher')
   async editTeacher(@Body() req: any) {
-    console.log('req: ', req);
     try {
       return await this.teacherService.editTeacher(req);
     } catch (e) {

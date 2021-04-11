@@ -9,6 +9,12 @@ import { schoolsContext } from "../../stores/schools.store.js";
 import { errorMsgContext } from "../../stores/error.store.js";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
+import {
+  nameValidation,
+  classNameValidation,
+} from "../../tools/ValidationFunctions";
+
+const axios = require("axios").default;
 
 class EditSchool extends Component {
   constructor() {
@@ -16,8 +22,12 @@ class EditSchool extends Component {
     this.state = {
       schoolNameError: { toShow: "none", mess: "" },
       schoolName: "",
+      schoolCityError: { toShow: "none", mess: "" },
+      schoolCity: "",
       //List of all the classes in the school. The numTeachers represent the number of teachers in the class.
       classes: [],
+      removedClasses: [],
+      existClasses: []
     };
   }
 
@@ -27,7 +37,9 @@ class EditSchool extends Component {
     } else {
       this.setState({
         schoolName: this.props.schools.chosenSchool.name,
+        schoolCity: this.props.schools.chosenSchool.city,
         classes: this.props.schools.chosenSchool.classrooms,
+        existClasses: this.props.schools.chosenSchool.classrooms,
       });
     }
   }
@@ -54,7 +66,7 @@ class EditSchool extends Component {
       let tempData = [
         ...prevState.classes,
         {
-          id: prevState.classes.length + 1,
+          id: prevState.classes.length !== 0 ? prevState.classes[prevState.classes.length - 1].id + 1 : 1,
           name: '',
           numTeachers: 1,
           chosenTeachers: [],
@@ -83,6 +95,8 @@ class EditSchool extends Component {
   handleChange = (e) => {
     if (e.target.name === 'schoolName') {
       this.setState({ schoolName: e.target.value });
+    } else if (e.target.name === 'schoolCity') {
+      this.setState({ schoolCity: e.target.value });
     } else {
       let [fieldChangeName, classChangeIndex] = e.target.name.split('_')
       let classNameValue = e.target.value;
@@ -113,119 +127,94 @@ class EditSchool extends Component {
   removeClass = (classIndex) => {
     this.setState((prevState) => {
       let tempData = [...prevState.classes]
-      tempData.splice(classIndex, 1);
-      return { classes: tempData }
+      let removedClassroom = tempData.splice(classIndex, 1);
+      prevState.removedClasses.push(removedClassroom[0])
+      let newExistClasses = prevState.existClasses.filter((classroom)=>{
+        return classroom.id !== removedClassroom[0].id
+      })
+      return { classes: tempData, removedClasses: prevState.removedClasses, removedClasses: newExistClasses}
     })
   };
 
-  saveData = (e) => {
+  saveData = async (e) => {
     e.preventDefault();
     let allOk = true;
     /* data validetion  */
-    // ----------school name validetion-------------------
-    if (this.state.schoolName.length === 0) {
+    // ----------school name validation-------------------
+    let nameSchoolMess = nameValidation(this.state.schoolName);
+    if (nameSchoolMess.length !== 0) {
       this.setState((prevState) => {
         prevState.schoolNameError.toShow = "inline-block";
-        prevState.schoolNameError.mess = "** חייב להכניס שם בית ספר **";
+        prevState.schoolNameError.mess = nameSchoolMess;
         return { schoolNameError: prevState.schoolNameError };
       });
       allOk = false;
-    } else if (
-      /[a-z]/.test(this.state.schoolName) ||
-      /[A-Z]/.test(this.state.schoolName) ||
-      /[!@#$%^&*()_+=[\]{};:\\|<>/?~`]/.test(this.state.schoolName)
-    ) {
-      this.setState((prevState) => {
-        prevState.schoolNameError.toShow = "inline-block";
-        prevState.schoolNameError.mess = "** שם בית הספר לא תקין **";
-        return { schoolNameError: prevState.schoolNameError };
-      });
-      allOk = false;
-    } else if (
-      this.state.schoolName.includes('"') ||
-      this.state.schoolName.includes("'") ||
-      this.state.schoolName.includes(".") ||
-      this.state.schoolName.includes(",") ||
-      this.state.schoolName.includes("-")
-    ) {
-      if (
-        !/[\u0590-\u05FF]+["',-]+[\u0590-\u05FF]/.test(this.state.schoolName) ||
-        !/[\u0590-\u05FF]+[.]/.test(this.state.schoolName)
-      ) {
-        this.setState((prevState) => {
-          prevState.schoolNameError.toShow = "inline-block";
-          prevState.schoolNameError.mess = "** שם בית הספר לא תקין **";
-          return { schoolNameError: prevState.schoolNameError };
-        });
-        allOk = false;
-      }
     } else {
       this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+      allOk = true;
     }
 
+    // ----------school city validation-------------------
+    let citySchoolMess = nameValidation(this.state.schoolCity);
+    if (citySchoolMess.length !== 0) {
+      this.setState((prevState) => {
+        prevState.schoolCityError.toShow = "inline-block";
+        prevState.schoolCityError.mess = citySchoolMess;
+        return { schoolCityError: prevState.schoolCityError };
+      });
+      allOk = false;
+    } else {
+      this.setState({ schoolCityError: { toShow: "none", mess: "" } });
+      allOk = true;
+    }
+
+    // ----------classes name validation-------------------
     for (let i = 0; i < this.state.classes.length; i++) {
-      if (this.state.classes[i].name.length === 0) {
+      let nameClassMess = classNameValidation(this.state.classes[i].name);
+      if (nameClassMess.length !== 0) {
         this.setState((prevState) => {
           prevState.classes[i].classNameError.toShow = "inline-block";
-          prevState.classes[i].classNameError.mess =
-            "** חייב להכניס שם של כיתה **";
+          prevState.classes[i].classNameError.mess = nameClassMess;
           return { classes: prevState.classes };
         });
         allOk = false;
-      } else if (this.state.classes[i].name.length > 10) {
-        this.setState((prevState) => {
-          prevState.classes[i].classNameError.toShow = "inline-block";
-          prevState.classes[i].classNameError.mess = "** שם הכיתה ארוך מידי **";
-          return { classes: prevState.classes };
-        });
-        allOk = false;
-      } else if (
-        /[a-z]/.test(this.state.classes[i].name) ||
-        /[A-Z]/.test(this.state.classes[i].name) ||
-        /[!@#$%^&*()_+,=[\]{};:\\|<>/?~`]/.test(this.state.classes[i].name)
-      ) {
-        this.setState((prevState) => {
-          prevState.classes[i].classNameError.toShow = "inline-block";
-          prevState.classes[i].classNameError.mess = "** שם הכיתה לא תקין **";
-          return { classes: prevState.classes };
-        });
-        allOk = false;
-      } else if (
-        this.state.classes[i].name.includes('"') ||
-        this.state.classes[i].name.includes("'") ||
-        this.state.classes[i].name.includes(".") ||
-        this.state.classes[i].name.includes("-")
-      ) {
-        if (
-          !(
-            /[\u0590-\u05FF]+[",-]+[\u0590-\u05FF]/.test(
-              this.state.classes[i].name
-            ) ||
-            /[\u0590-\u05FF]+[']/.test(this.state.classes[i].name) ||
-            /[\u0590-\u05FF]+[.]/.test(this.state.classes[i].name)
-          )
-        ) {
-          this.setState((prevState) => {
-            prevState.classes[i].classNameError.toShow = "inline-block";
-            prevState.classes[i].classNameError.mess = "** שם הכיתה לא תקין **";
-            return { classes: prevState.classes };
-          });
-          allOk = false;
-        }
       } else {
         this.setState((prevState) => {
           prevState.classes[i].classNameError.toShow = "none";
           prevState.classes[i].classNameError.mess = "";
           return { classes: prevState.classes };
         });
+        allOk = true;
       }
     }
 
     //after all the validetion we need to send the data to sql
     if (allOk) {
-      this.props.history.goBack(); // after saving go back
+      // console.log('this.state: ', this.state);
+      try {
+        let { data } = await axios.post("/api/school/editSchool", {
+            id: this.props.schools.chosenSchool.id,
+            schoolName: this.state.schoolName,
+            schoolCity: this.state.schoolCity,
+            classes: this.state.classes,
+            removedClasses: this.state.removedClasses,
+            existClasses: this.state.existClasses
+        });
+        // console.log('data: ', data);
+        if (data) {
+          this.props.schools.editSchool(
+            data.id,
+            data.name,
+            data.city,
+          )
+        this.props.history.goBack(); // after saving go back
+        }
+      } catch (err) {
+        this.props.errorMsg.setErrorMsg('שגיאה בשרת, בית הספר לא נשמר, נסו שוב.');
+      }
     }
-  };
+  }
+
 
   render() {
     return (
@@ -246,7 +235,22 @@ class EditSchool extends Component {
             value={this.state.schoolName} //The input will show schoolName.
             name="schoolName"
             onChange={this.handleChange} //In charge of on the set state of schoolName.
-            readOnly={true}
+          ></input>
+
+          <label for="schoolCity" className="labelFields">
+            עיר:
+          </label>
+          <p
+            className="error"
+            style={{ display: this.state.schoolCityError.toShow }}
+          >
+            {this.state.schoolCityError.mess}
+          </p>
+          <input
+            className="inputFields"
+            defaultValue={this.state.schoolCity} //The input will show schoolCity.
+            name="schoolCity"
+            onBlur={this.handleChange} //In charge of on the set state of schoolCity.
           ></input>
 
           <label className="labelFields" for="schoolClasses">
@@ -285,10 +289,10 @@ class EditSchool extends Component {
             </button>
           <div className="spacerFromSaveButton"></div>
           <div className="saveButtonBackground">
-             <button className="deletButton" onClick={this.deleteSchool}>מחק בית ספר</button>
-           <button className="saveButton" onClick={this.saveData}>
+            <button className="deletButton" onClick={this.deleteSchool}>מחק בית ספר</button>
+            <button className="saveButton" onClick={this.saveData}>
               שמור
-            </button> 
+            </button>
           </div>
         </form>
       </div>

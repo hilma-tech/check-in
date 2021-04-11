@@ -59,3 +59,10 @@ export class PermissionDelete {
 }
 
 
+export class getpermission {
+
+    @IsDefined()
+    @IsNumber()
+    classId: number
+
+}

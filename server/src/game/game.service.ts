@@ -10,10 +10,11 @@ import {
   IdeDto,
   DeleteGameIdDto,
 } from './game.dtos';
-import { FieldService } from 'src/field/field.service';
 import { FilesType, ImageService } from '@hilma/fileshandler-typeorm';
 import { ClassroomFieldService } from 'src/classroom-field/classroom-field.service';
 import { getCGFDto } from 'src/classroom-field/classroom-field.dtos';
+import { FieldService } from 'src/field/field.service';
+import { ValDto } from 'src/student/student.dtos';
 
 @Injectable()
 export class GameService {
@@ -23,7 +24,7 @@ export class GameService {
     private fieldService: FieldService,
     private classroomFieldService: ClassroomFieldService,
     private readonly imageService: ImageService,
-  ) { }
+  ) {}
 
   async addGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
     // if(req.game.image.value){
@@ -81,59 +82,126 @@ export class GameService {
     return { gamesInfo: gamesInfo, haveMoreGames: haveMoreGames };
   }
 
-  async getShowGameInfo(data: getCGFDto) {
+  // [
+  //   Game {
+  //     id: 34,
+  //     game_name: 'image text choice',
+  //     description: null,
+  //     requirements: null,
+  //     video_link: null,
+  //     image: 'https://www.kindpng.com/picc/m/45-455866_hearts-and-stars-png-v-colorful-heart-and.png',
+  //     suspended: <Buffer 00>,
+  //     fields: [ [Field], [Field], [Field] ]
+  //   }
+  // ]
 
+  async getShowGameInfo(data: getCGFDto) {
+    // console.log('data: ', data);
     let temp = await this.gameRepository.find({
       relations: ['fields'],
       where: { id: data.game_id },
     });
-    let classGameFields = await this.classroomFieldService.getClassroomGameFields(data);
-    if (classGameFields.length !== 0) {
-      temp[0].fields = temp[0].fields.map(
-        (field, index) => {
-          field.default_value = classGameFields[index].newValue
-          return field;
-        }
-      )
-    }
-
-    let games: any;
-    games = [...temp];
-    for (let i = 0; i < games.length; i++) {
-      for (let j = 0; j < games[i].fields.length; j++) {
+    console.log('temp: ', temp);
+    if (data.datatype === 'new') {
+      let GameFields = await this.classroomFieldService.getClassroomGameFields(
+        data,
+      );
+      let formattedGameFields = [];
+      for (let i = 0; i < GameFields.length; i++) {
         if (
-          games[i].fields[j].type === 'image' ||
-          games[i].fields[j].type === 'text'
+          GameFields[i].field_id.type === 'image' ||
+          GameFields[i].field_id.type === 'text'
         ) {
-          games[i].fields[j].value = [
-            { id: 0, value: games[i].fields[j].default_value },
-          ];
+          formattedGameFields[i] = {
+            id: GameFields[i].id,
+            value: [{ id: 0, value: GameFields[i].newValue }],
+            order: GameFields[i].field_id.order,
+            selection: GameFields[i].field_id.type,
+            field_name: GameFields[i].field_id.field_name,
+          };
         } else {
-          games[i].fields[j].value = JSON.parse(
-            games[i].fields[j].default_value
+          formattedGameFields[i] = {
+            id: GameFields[i].id,
+            order: GameFields[i].field_id.order,
+            selection: GameFields[i].field_id.type,
+            field_name: GameFields[i].field_id.field_name,
+          };
+          formattedGameFields[i].value = JSON.parse(GameFields[i].newValue).map(
+            (value, index) => {
+              return { id: index, value: value };
+            },
+          );
+        }
+      }
+      let formattedInfo = {
+        fields: formattedGameFields,
+        game_name: temp[0].game_name,
+        gameDescription: temp[0].description,
+        gameRequirements: temp[0].requirements,
+        image: temp[0].image,
+        gameLink: temp[0].video_link
+      };
+      return formattedInfo;
+    } else if (data.datatype === 'old') {
+      let temp = await this.gameRepository.find({
+        relations: ['fields'],
+        where: { id: data.game_id },
+      });
+
+      let formattedGameFields = [];
+      for (let i = 0; i < temp[0].fields.length; i++) {
+        if (
+          temp[0].fields[i].type === 'image' ||
+          temp[0].fields[i].type === 'text'
+        ) {
+          formattedGameFields[i] = {
+            id: temp[0].fields[i].id,
+            value: [{ id: 0, value: temp[0].fields[i].default_value }],
+            order: temp[0].fields[i].order,
+            selection: temp[0].fields[i].type,
+            field_name: temp[0].fields[i].field_name,
+          };
+        } else {
+          formattedGameFields[i] = {
+            id: temp[0].fields[i].id,
+            order: temp[0].fields[i].order,
+            selection: temp[0].fields[i].type,
+            field_name: temp[0].fields[i].field_name,
+          };
+          formattedGameFields[i].value = JSON.parse(
+            temp[0].fields[i].default_value,
           ).map((value, index) => {
             return { id: index, value: value };
           });
         }
-        games[i].fields[j].name = games[i].fields[j].field_name;
-        games[i].fields[j].selection = games[i].fields[j].type;
       }
+      let formattedInfo = {
+        fields: formattedGameFields,
+        game_name: temp[0].game_name,
+        gameDescription: temp[0].description,
+        gameRequirements: temp[0].requirements,
+        image: temp[0].image,
+        gameLink: temp[0].video_link
+      };
+      return formattedInfo;
+    } else {
+      return false;
     }
-
-    return games[0];
   }
 
   async getGameInfo(gameId: IdeDto) {
     let temp = await this.gameRepository.find({
-      where: [{id: Number(gameId.id)}],
-      relations: ["fields"],
-    })
+      where: [{ id: Number(gameId.id) }],
+      relations: ['fields'],
+    });
 
     let games: any;
     games = [...temp];
     for (let i = 0; i < games.length; i++) {
       for (let j = 0; j < games[i].fields.length; j++) {
-        temp[0].fields.sort((a,b)=>{return a.order - b.order})
+        temp[0].fields.sort((a, b) => {
+          return a.order - b.order;
+        });
         if (
           games[i].fields[j].type === 'image' ||
           games[i].fields[j].type === 'text'
@@ -169,6 +237,16 @@ export class GameService {
   }
 
   async deleteGameById(id: DeleteGameIdDto) {
+    let gameInfo = await this.gameRepository
+    .createQueryBuilder('Game')
+    .innerJoinAndSelect('Game.classrooms', 'Classroom')
+    .select('Classroom.id')
+    .addSelect('Game.game_name')
+    .where('Game.id = :id', { id: Number(id.Id) })
+    .getOne();
+    for(let i =0; i< gameInfo.classrooms.length; i++){
+      await this.classroomFieldService.removeGameFieldsFromClass({gameId: id.Id, classId: gameInfo.classrooms[i].id})
+    }
     await this.classroomFieldService.deleteClassField(id.Id)
     await this.gameRepository.delete(id.Id);
   }
@@ -186,8 +264,8 @@ export class GameService {
     let gamesLength = (
       await this.gameRepository.query(
         'select id from game where id not in(select game_id from classroom_game where classroom_id = ' +
-        req.classId +
-        ');',
+          req.classId +
+          ');',
       )
     ).length;
 
@@ -196,10 +274,10 @@ export class GameService {
 
     let allGames = await this.gameRepository.query(
       'select id, game_name, image from game where id not in(select game_id from classroom_game where classroom_id = ' +
-      req.classId +
-      ')  limit 50 offset ' +
-      req.dataLength +
-      ';',
+        req.classId +
+        ')  limit 50 offset ' +
+        req.dataLength +
+        ';',
     );
     return {
       currClassGames: currClassGames,
@@ -217,15 +295,20 @@ export class GameService {
       .addSelect('Game.image')
       .where('Classroom.id = :id', { id: Number(classId) })
       .getMany();
-    return Promise.all(GamesByClassId.map(async (game) => {
-      var fields = await this.classroomFieldService.checkFieldAltValue(game.id, classId)
-      return { ...game, fields: fields }
-    })).then((games) => {
-      return { classId: classId, className: className, classGames: games }
-    })
+    return Promise.all(
+      GamesByClassId.map(async game => {
+        var fields = await this.classroomFieldService.checkFieldAltValue(
+          game.id,
+          classId,
+        );
+        return { ...game, fields: fields };
+      }),
+    ).then(games => {
+      return { classId: classId, className: className, classGames: games };
+    });
   }
 
- async searchGames (val){
+  async searchGames (val: ValDto){
     let gamesInfo = await this.gameRepository.find({
       where: [{ suspended: false }],
       select: ['id', 'game_name', 'image'],
@@ -234,14 +317,14 @@ export class GameService {
       },
     });
 
-    let Search = gamesInfo.map((game) => {
+    let Search = gamesInfo.map(game => {
       if (game.game_name.includes(val.val.toLowerCase())) {
-        return game
+        return game;
       }
-    })
-    var searchresult = Search.filter(function (game) {
+    });
+    var searchresult = Search.filter(function(game) {
       return game != null;
     });
-    return searchresult
+    return searchresult;
   }
 }

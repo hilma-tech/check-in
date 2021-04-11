@@ -3,9 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Role, User, UserConfig, UserService, USER_MODULE_OPTIONS, SALT } from '@hilma/auth-nest';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { getConnection, Repository } from 'typeorm';
+import { Any, getConnection, Repository } from 'typeorm';
 import { Student } from './student.entity';
-import { GetStudentSkip, SearchValDto, UserRegisterDto } from './student.dtos';
+import { GetStudentSkip, SearchValDto, UserEditDto, UserRegisterDto } from './student.dtos';
 import * as bcrypt from 'bcrypt';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { ClassroomService } from 'src/classroom/classroom.service';
@@ -58,11 +58,13 @@ export class StudentService extends UserService {
     if (findUser) {
       let pass = bcrypt.compareSync(password, findUser.password)
 
-      let Class = await this.userRepository.findOne({
-        relations: ['classroomStudent'],
-        where: [{ id: findUser.id }]
+      var Class = await this.userRepository.findOne({
+        relations: ['classroomStudent', 'school'],
+        where: [{ id: findUser.id }],
+        select: ['id', "school", "first_name", "last_name"]
       })
       if (pass) {
+        //returns id, first name, last name, classes, and school info
         return Class
       }
     }
@@ -128,7 +130,7 @@ export class StudentService extends UserService {
     return await this.createUser<Student>(student);
   }
 
-  async editStudent(req: any) {
+  async editStudent(req: UserEditDto) {
     let student = await this.userRepository.findOne({ where: [{ id: req.id }], relations: ["classroomStudent"] })
     let username = req.username;
     let password = bcrypt.hashSync(req.password, SALT);;
