@@ -117,15 +117,15 @@ class SchoolClassData extends React.Component {
             name={"name_" + this.props.classIndex}
             placeholder="הכנס שם כיתה"
             className="editSchoolClassesInput inputFields"
-            readOnly={false}
+            readOnly={true}
           ></input>
-          <img
+          {/* <img
             alt="remove class button"
             className="removeClass"
             onClick={() => this.props.removeClass(this.props.classIndex)}
             src="/icons/delete.svg"
             style= {{height: '20px', marginTop:'15px'}}
-          />
+          /> */}
         </div>
         <Fade in={this.state.showClass}>
           <div
