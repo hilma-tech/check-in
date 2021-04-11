@@ -2,6 +2,8 @@ import React from "react";
 import Select from "react-select";
 import Fade from "@material-ui/core/Fade";
 import SelectStyle from "../../style/superAdmin/select_style";
+import { Dialog } from "@material-ui/core";
+import AddTeacherPopUp from "./AddTeacherPopUp";
 
 class SchoolClassData extends React.Component {
   constructor() {
@@ -134,10 +136,11 @@ class SchoolClassData extends React.Component {
                 : "hideSchoolClassTeacher"
             }
           >
-            {/* <label for="schoolClassTeacher" className="labelFields">
+             {/* <label for="schoolClassTeacher" className="labelFields">
               מורים:
-            </label>
-            <div className="allEditSchoolClassTeacherSelect">
+            </label> */}
+
+           {/* <div className="allEditSchoolClassTeacherSelect">
               {this.returnTeacherSelections()}
             </div>
             <div className="editSchoolClassTeacherButtons">
@@ -153,12 +156,15 @@ class SchoolClassData extends React.Component {
                 </div>
               ) : (
                   <></>
-                )}
+                )} */}
+                {/* <Dialog
+                    open={true}
+                ><AddTeacherPopUp /></Dialog>
               <div className="addSomethingNew">
                 <img alt="add icon" className="addIcon" src="/icons/addicon.svg"></img>
                 <p className="addTitle">הוסף מורה חדש</p>
-              </div>
-            </div> */}
+              </div> */}
+            {/* </div> */}
           </div>
         </Fade>
       </>
