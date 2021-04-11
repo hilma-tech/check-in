@@ -5,6 +5,7 @@ import { Teacher } from 'src/teacher/teacher.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -23,6 +24,7 @@ export class Classroom {
     () => School,
     school => school.classrooms,
   )
+  @JoinColumn({name: 'school_id'})
   school_id: number;
 
   @ManyToMany(
