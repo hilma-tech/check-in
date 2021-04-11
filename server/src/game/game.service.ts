@@ -24,7 +24,7 @@ export class GameService {
     private fieldService: FieldService,
     private classroomFieldService: ClassroomFieldService,
     private readonly imageService: ImageService,
-  ) {}
+  ) { }
 
   async addGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
     // if(req.game.image.value){
@@ -103,7 +103,7 @@ export class GameService {
     if (data.datatype === 'new') {
       let GameFields = await this.classroomFieldService.getClassroomGameFields(
         data,
-        );
+      );
       let formattedGameFields = [];
       for (let i = 0; i < GameFields.length; i++) {
         if (
@@ -242,11 +242,13 @@ export class GameService {
       .addSelect('Game.game_name')
       .where('Game.id = :id', { id: Number(id.Id) })
       .getOne();
-    for (let i = 0; i < gameInfo.classrooms.length; i++) {
-      await this.classroomFieldService.removeGameFieldsFromClass({
-        gameId: id.Id,
-        classId: gameInfo.classrooms[i].id,
-      });
+    if (gameInfo !== undefined) {
+      for (let i = 0; i < gameInfo.classrooms.length; i++) {
+        await this.classroomFieldService.removeGameFieldsFromClass({
+          gameId: id.Id,
+          classId: gameInfo.classrooms[i].id,
+        });
+      }
     }
     await this.classroomFieldService.deleteClassField(id.Id);
     await this.gameRepository.delete(id.Id);
@@ -265,8 +267,8 @@ export class GameService {
     let gamesLength = (
       await this.gameRepository.query(
         'select id from game where id not in(select game_id from classroom_game where classroom_id = ' +
-          req.classId +
-          ');',
+        req.classId +
+        ');',
       )
     ).length;
 
@@ -275,10 +277,10 @@ export class GameService {
 
     let allGames = await this.gameRepository.query(
       'select id, game_name, image from game where id not in(select game_id from classroom_game where classroom_id = ' +
-        req.classId +
-        ')  limit 50 offset ' +
-        req.dataLength +
-        ';',
+      req.classId +
+      ')  limit 50 offset ' +
+      req.dataLength +
+      ';',
     );
     return {
       currClassGames: currClassGames,
