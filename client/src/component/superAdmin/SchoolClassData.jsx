@@ -10,10 +10,15 @@ class SchoolClassData extends React.Component {
     super();
     this.state = {
       showClass: false,
+      showAddTeacher: false
     };
-    // this.teachers = [];
+    this.teachers = [];
     // lists the options given for the teachers to assign to the class
     //Will need to get the list from SQL
+  }
+
+  handleTeacherPopUpState = () => {
+    this.setState((prevState)=>{return {showAddTeacher: !prevState.showAddTeacher}})
   }
 
   // componentDidMount = async () => {
@@ -105,14 +110,14 @@ class SchoolClassData extends React.Component {
         </p>
 
         <div className="TeachersSelect">
-          {/* <img
+          <img
             alt="drop down list button"
             src="/icons/ionic-ios-arrow-down.svg"
             className={
               this.state.showClass ? "showClassButton" : "hideClassButton"
             }
             onClick={this.transitionIcon}
-          ></img> */}
+          ></img>
           <input
             defaultValue={this.props.classData.name}
             onBlur={this.props.handleChange}
@@ -136,9 +141,9 @@ class SchoolClassData extends React.Component {
                 : "hideSchoolClassTeacher"
             }
           >
-             {/* <label for="schoolClassTeacher" className="labelFields">
+             <label for="schoolClassTeacher" className="labelFields">
               מורים:
-            </label> */}
+            </label>
 
            {/* <div className="allEditSchoolClassTeacherSelect">
               {this.returnTeacherSelections()}
@@ -157,13 +162,15 @@ class SchoolClassData extends React.Component {
               ) : (
                   <></>
                 )} */}
-                {/* <Dialog
-                    open={true}
-                ><AddTeacherPopUp /></Dialog>
-              <div className="addSomethingNew">
+                <Dialog
+                maxWidth="90vw"
+                    open={this.state.showAddTeacher}
+                ><AddTeacherPopUp closeFunc={this.handleTeacherPopUpState} />
+                </Dialog>
+              <div className="addSomethingNew" onClick={this.handleTeacherPopUpState}>
                 <img alt="add icon" className="addIcon" src="/icons/addicon.svg"></img>
                 <p className="addTitle">הוסף מורה חדש</p>
-              </div> */}
+              </div>
             {/* </div> */}
           </div>
         </Fade>

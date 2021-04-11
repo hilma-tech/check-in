@@ -18,6 +18,7 @@ import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import { schoolsContext } from "../../stores/schools.store";
 import { teachersContext } from "../../stores/teachers.store";
+import "../../style/superAdmin/add_teacher_pop_up_style.scss"
 const axios = require("axios").default;
 
 class AddTeacherPopUp extends Component {
@@ -147,7 +148,13 @@ class AddTeacherPopUp extends Component {
     render() {
         return (
             <>
-                <div style={{width: "90vw", height: "90vh"}}>
+                <div style={{width: "90vw", height: "90vh", paddingTop: "5vh"}}>
+                <img
+                            onClick={this.props.closeFunc}
+                            alt=""
+                            className="teacherAddCloseIcon"
+                            src="/icons/ionic-ios-close.svg"
+                        />
                     <form className="formData">
                         {/* מורה */}
                         <label className="labelFields">* שם פרטי:</label>
@@ -206,12 +213,9 @@ class AddTeacherPopUp extends Component {
                         />
                     </form>
 
-                    <div className="spacerFromSaveButton"></div>
-                    <div className="saveButtonBackground">
-                        <button className="saveButton" onClick={this.validateInputFields}>
+                        <button className="saveButtonTAddPopUp" onClick={this.validateInputFields}>
                             שמור
                         </button>
-                    </div>
                 </div>
             </>
         );
