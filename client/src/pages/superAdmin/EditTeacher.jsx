@@ -40,7 +40,6 @@ class EditTeacher extends React.Component {
       schoolName: "",
       fieldsData: [],
       email: "",
-      password: "",
       rakaz: "",
       school: "",
       teacherLastNameError: { toShow: "none", mess: "" },
@@ -176,10 +175,10 @@ class EditTeacher extends React.Component {
     this.setState({ email: myprops.value });
   };
 
-  savePassword = (props) => {
-    let myprops = props.target;
-    this.setState({ password: myprops.value });
-  };
+  // savePassword = (props) => {
+  //   let myprops = props.target;
+  //   this.setState({ password: myprops.value });
+  // };
 
   removeClass = (classIndex) => {
     this.setState((prevState) => {
@@ -578,6 +577,7 @@ class EditTeacher extends React.Component {
                       this.setState({
                         showPassChanger: !this.state.showPassChanger,
                         passErr: "",
+                        passDisplay: "",
                       });
                     }}
                   >
