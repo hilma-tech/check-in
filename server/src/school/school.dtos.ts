@@ -2,6 +2,7 @@ import { Type } from 'class-transformer';
 import {
   IsArray,
   IsDefined,
+  IsEmail,
   IsNumber,
   IsNumberString,
   IsOptional,
@@ -42,6 +43,35 @@ export class SearchValDto {
   val: string;
 }
 
+export class ChoosenTeacherDto {
+  @IsOptional()
+  @IsNumber()
+  id: number;
+  @IsOptional()
+  @IsString()
+  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-/s]/)
+  name: string;
+  @IsOptional()
+  @IsString()
+  @Length(1, 30)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
+  first_name: string;
+  @IsOptional()
+  @IsString()
+  @Length(1, 30)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
+  last_name: string;
+  @IsOptional()
+  @IsString()
+  @IsEmail()
+  email: string;
+  @IsOptional()
+  @IsString()
+  @Length(8, 15)
+  @Matches(/^[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]+$/)
+  password: string;
+}
+
 export class ClassInfoDto {
   @IsOptional()
   @IsNumber()
@@ -52,6 +82,8 @@ export class ClassInfoDto {
   name: string;
   @IsOptional()
   classNameError: ErrorDto;
+  @IsOptional()
+  choosenTeacher: ChoosenTeacherDto[];
 }
 
 export class AddSchoolInfoDto {
@@ -75,7 +107,6 @@ export class AddSchoolInfoDto {
   @Type(() => ClassInfoDto)
   classes: ClassInfoDto[];
 }
-
 
 export class EditSchoolInfoDto {
   @IsDefined()
@@ -107,3 +138,4 @@ export class EditSchoolInfoDto {
   @Type(() => ClassInfoDto)
   existClasses: ClassInfoDto[];
 }
+

@@ -93,7 +93,7 @@ class AddSchool extends React.Component {
   addNewTeacherToClass = (classIndex, teacherInfo) => {
     this.setState((prevState) => {
       let tempData = [...prevState.classes];
-      teacherInfo.id = tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] ? 1 : tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] + 1
+      teacherInfo.id = tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] === undefined ? 1 : tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] + 1
       tempData[classIndex].chosenTeachers.push(teacherInfo); //id -1 did not exist and he wont show him
       return { classes: tempData };
     });
@@ -173,25 +173,25 @@ class AddSchool extends React.Component {
     //after all the validation we need to send the data to sql
     if (allOk) {
       try {
-        let { data } = await axios.post("/api/school/addSchool", 
-          this.state
-          // username: this.state.userName,
-          // password: this.state.password,
-          // firstName: this.state.schoolFirstName,
-          // lastName: this.state.schoolLastName,
-          // classrooms: this.state.chosenClasses.filter((classroom)=>{
-            //   return classroom.name !== 'שייך לכיתה'
-            // }),
-            // schoolId: this.state.schoolId
-          );
-        if (data) {
-          this.props.schools.addSchool({
-            city: this.state.schoolCity,
-            name: this.state.schoolName,
-            id: data.id,
-          })
-      this.props.history.goBack(); // after saving go back
-    }
+      //   let { data } = await axios.post("/api/school/addSchool", 
+      //     this.state
+      //     // username: this.state.userName,
+      //     // password: this.state.password,
+      //     // firstName: this.state.schoolFirstName,
+      //     // lastName: this.state.schoolLastName,
+      //     // classrooms: this.state.chosenClasses.filter((classroom)=>{
+      //       //   return classroom.name !== 'שייך לכיתה'
+      //       // }),
+      //       // schoolId: this.state.schoolId
+      //     );
+      //   if (data) {
+      //     this.props.schools.addSchool({
+      //       city: this.state.schoolCity,
+      //       name: this.state.schoolName,
+      //       id: data.id,
+      //     })
+      // this.props.history.goBack(); // after saving go back
+    // }
   } catch (err) {
     console.log('err: ', err);
     this.props.errorMsg.setErrorMsg('שגיאה בשרת, בית הספר לא נשמר, נסו שוב.');

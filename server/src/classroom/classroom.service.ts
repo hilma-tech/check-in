@@ -38,7 +38,7 @@ export class ClassroomService {
       let classroom = new Classroom();
       classroom.name = info.classes[i].name;
       classroom.school_id = res.id;
-      await this.classroomRepository.save(classroom)
+      let classroomInf = await this.classroomRepository.save(classroom)
     }
     return true;
   }

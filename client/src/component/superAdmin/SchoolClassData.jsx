@@ -51,7 +51,6 @@ class SchoolClassData extends React.Component {
   //The length is sent because in the select accessing state doesn't work.
   returnTeacherSelections = () => {
     let teachersSelections = [];
-    console.log('this.props.classData: ', this.props.classData);
     let numTeachers = this.props.classData.chosenTeachers ? this.props.classData.chosenTeachers.length : 0;
     if (numTeachers === 0) {
       return <p>לכיתה זו אין מורים</p>;

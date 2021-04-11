@@ -2,6 +2,7 @@ import { Injectable, Inject, Body, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   MailerInterface,
+  Role,
   SALT,
   User,
   UserConfig,
@@ -12,10 +13,11 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { Teacher } from './teacher.entity';
-import { GetTeacherSkip, TeacherIdDto, GetClassSkip } from './teacher.dtos';
+import { GetTeacherSkip, TeacherIdDto, GetClassSkip, TeacherRegisterDto } from './teacher.dtos';
 import { env } from 'process';
 import * as bcrypt from 'bcrypt';
 import { ClassroomService } from 'src/classroom/classroom.service';
+import { Classroom } from 'src/classroom/classroom.entity';
 
 @Injectable()
 export class TeacherService extends UserService {
@@ -28,10 +30,37 @@ export class TeacherService extends UserService {
     @Inject('ClassroomService')
     private readonly classroomService: ClassroomService,
 
+    @Inject('UserService')
+    private readonly userService: UserService,
+
     @Inject('MailService')
     protected readonly mailer: MailerInterface,
   ) {
     super(config_options, userRepository, jwtService, configService, mailer);
+  }
+
+  async addTeacher(@Body() req: TeacherRegisterDto) {
+    let username = req.email;
+    let password = req.password;
+    let user: Partial<Teacher> = new Teacher({ username, password });
+    user.first_name = req.first_name
+    user.last_name = req.last_name
+    if (req.fields_data !== undefined || req.fields_data.length !== 0) {
+      user.classroomTeacher = req.fields_data.map((classroom) => {
+        if (!this.classroomService.isClassroomInSchool(classroom.classId, req.school_id)) {
+          throw new Error()
+        }
+        let classroomTeacher = new Classroom()
+        classroomTeacher.id = classroom.classId
+        return classroomTeacher
+      })
+    }
+    user.school = req.school_id
+    let userRole = new Role();
+    userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
+    user.roles = [userRole];
+    return await this.userService.createUser<Teacher>(user);
+
   }
 
   async changeTeacherPassword(userInfo) {
