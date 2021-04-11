@@ -244,8 +244,10 @@ export class GameService {
     .addSelect('Game.game_name')
     .where('Game.id = :id', { id: Number(id.Id) })
     .getOne();
-    for(let i =0; i< gameInfo.classrooms.length; i++){
-      await this.classroomFieldService.removeGameFieldsFromClass({gameId: id.Id, classId: gameInfo.classrooms[i].id})
+    if(gameInfo !== undefined){
+      for(let i =0; i< gameInfo.classrooms.length; i++){
+        await this.classroomFieldService.removeGameFieldsFromClass({gameId: id.Id, classId: gameInfo.classrooms[i].id})
+      }
     }
     await this.classroomFieldService.deleteClassField(id.Id)
     await this.gameRepository.delete(id.Id);
