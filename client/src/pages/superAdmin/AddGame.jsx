@@ -398,6 +398,21 @@ class AddGame extends Component {
                 placeholder="הכנס את שם המשחק..."
                 onBlur={this.updateBasicInfo}
               />
+              <label className="labelFields">קישור לסרטון:</label>
+              <p
+                className="error"
+                style={{
+                  display: this.state.gameLinkErrorMessages.toShow,
+                }}
+              >
+                {this.state.gameLinkErrorMessages.mess}
+              </p>
+              <input
+                className="inputLinkField"
+                placeholder="הכנס קישור..."
+                id="gameLink"
+                onBlur={this.updateBasicInfo}>
+              </input>
               <label className="labelFields">תיאור המשחק:</label>
               <p
                 className="error"
@@ -428,21 +443,6 @@ class AddGame extends Component {
                 id="gameRequirements"
                 onBlur={this.updateBasicInfo}
               />
-              <label className="labelFields">קישור לסרטון:</label>
-              <p
-                className="error"
-                style={{
-                  display: this.state.gameLinkErrorMessages.toShow,
-                }}
-              >
-                {this.state.gameLinkErrorMessages.mess}
-              </p>
-              <input
-                className="inputLinkField"
-                placeholder="הכנס קישור..."
-                id="gameLink"
-                onBlur={this.updateBasicInfo}>
-              </input>
               {/* <label className="labelFields">תמונה:</label> */}
               {/* <p
                 className="error"

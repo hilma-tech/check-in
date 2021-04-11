@@ -163,6 +163,11 @@ class EditGame extends Component {
               <h2 className="mobileClassGameTitleBackground"></h2>
               <h1 className="mobileClassGameTitle">{this.state.gameName}</h1>
             </div>
+              {this.state.gameLink ?
+              <>
+              <h3 className="mobileGameLink">סרטון הסבר למשחק</h3>
+              <a className="mobileGameL" target="_blank" href={this.state.gameLink}>{this.state.gameLink}</a>
+                </> : <></>}
             <h3 className="mobileGameDesc">תיאור המשחק</h3>
             <p className="mobileGameDP">
               {this.state.gameDescription
@@ -175,11 +180,6 @@ class EditGame extends Component {
                 ? this.state.gameRequirements
                 : "אין דרישות משחק"}
             </p>
-            {this.state.gameLink ?
-            <>
-            <h3 className="mobileGameLink">סרטון הסבר למשחק</h3>
-            <a className="mobileGameL" target="_blank" href={this.state.gameLink}>{this.state.gameLink}</a>
-              </> : <></>}
             <h1 className="mobileGameFields">שדות:</h1>
             {this.state.fieldsData.length === 0 ? (
               <p className="noFields">אין שדות למשחק זה</p>

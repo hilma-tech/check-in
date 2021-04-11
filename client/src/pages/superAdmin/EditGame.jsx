@@ -250,6 +250,23 @@ class EditGame extends Component {
                 defaultValue={this.state.gameName}
                 readOnly={true}
               />
+              <label className="labelFields">קישור לסרטון:</label>
+              <p
+                className="error"
+                style={{ display: this.state.gameLinkErrorMessages.toShow }}
+              >
+                {this.state.gameLinkErrorMessages.mess}
+              </p>
+              <input
+                className="inputFields"
+                id="gameLink"
+                type="text"
+                placeholder="הכנס קישור..."
+                onBlur={this.updateBasicInfo}
+                onChange={this.validation}
+                defaultValue={this.state.gameLink}
+                readOnly={true}
+              />
               <label className="labelFields">תיאור המשחק:</label>
               <p
                 className="error"
@@ -285,23 +302,6 @@ class EditGame extends Component {
                 readOnly={true}
               />
 
-<label className="labelFields">קישור לסרטון:</label>
-              <p
-                className="error"
-                style={{ display: this.state.gameLinkErrorMessages.toShow }}
-              >
-                {this.state.gameLinkErrorMessages.mess}
-              </p>
-              <input
-                className="inputFields"
-                id="gameLink"
-                type="text"
-                placeholder="הכנס קישור..."
-                onBlur={this.updateBasicInfo}
-                onChange={this.validation}
-                defaultValue={this.state.gameLink}
-                readOnly={true}
-              />
               {/* <label className="labelFields">תמונה:</label> */}
               {/* <div className="borderCameraIcon marginTop"> */}
               {/* <label className="borderCameraIconLabel"> */}

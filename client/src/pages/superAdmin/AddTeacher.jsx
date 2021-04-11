@@ -54,7 +54,6 @@ class AddTeacher extends Component {
         "הייתה שגיאה בשרת. לא ניתן לקבל בתי ספר מהשרת."
       );
     } else {
-      
       let schools = this.props.schools.schoolsNames.map((school) => {
         return { value: school.name, label: school.name };
       });
@@ -84,7 +83,11 @@ class AddTeacher extends Component {
     this.setState((prevState) => {
       let prevSchool = prevState.schoolName;
       prevSchool = props.value;
-      return { schoolName: prevSchool, classOptions: classroomOption, fieldsData:[] };
+      return {
+        schoolName: prevSchool,
+        classOptions: classroomOption,
+        fieldsData: [],
+      };
     });
   };
 
@@ -218,9 +221,9 @@ class AddTeacher extends Component {
   };
 
   saveTeacherInDB = async () => {
-    let classesNotEmp = this.state.fieldsData.filter((classroom)=>{
-      return classroom.classId !== undefined
-    })
+    let classesNotEmp = this.state.fieldsData.filter((classroom) => {
+      return classroom.classId !== undefined;
+    });
     let currTeacherInfo = {
       first_name: this.state.teacherFirstName,
       last_name: this.state.teacherLastName,
@@ -234,11 +237,11 @@ class AddTeacher extends Component {
     };
     try {
       // this.setState({ savingInfo: true });
-      const {data} = await axios.post(
+      const { data } = await axios.post(
         "/api/teacher/register",
         currTeacherInfo
       );
-      if(data){      
+      if (data) {
         this.props.teachers.addTeacher({
           first_name: data.first_name,
           last_name: data.last_name,
@@ -247,15 +250,18 @@ class AddTeacher extends Component {
           schoolName: this.state.schoolName,
           id: data.id,
           classes: classesNotEmp.map((classInfo) => {
-            return classInfo.value
-          })
-        })}
+            return classInfo.value;
+          }),
+        });
+      }
       // this.props.games.addGame(response.data);
       this.props.history.goBack();
     } catch (error) {
       this.setState({ savingInfo: false });
       if (error.status === 500) {
-        this.props.errorMsg.setErrorMsg("קיים כבר משתמש עם האימייל הזה. נסו שוב.");
+        this.props.errorMsg.setErrorMsg(
+          "קיים כבר משתמש עם האימייל הזה. נסו שוב."
+        );
       } else {
         this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסו לבדוק את החיבור");
       }
@@ -282,7 +288,17 @@ class AddTeacher extends Component {
     return options;
   };
 
+  removeClass = (classIndex) => {
+    this.setState((prevState) => {
+      let tempData = [...prevState.fieldsData];
+      tempData.splice(classIndex, 1);
+      return { fieldsData: tempData };
+    });
+  };
+
   render() {
+    console.log("herro", this.state.fieldsData);
+
     return (
       <>
         <div className="pageContainer withMenu">
@@ -348,34 +364,53 @@ class AddTeacher extends Component {
                 defaultValue={{ value: "default", label: "לא" }}
               /> */}
               {/* כיתה */}
-            {this.state.schoolName.length===0 ? <></> :
-              <><label className="labelFields">כיתה:</label>
-              <div>
-                {this.state.fieldsData.map((fieldObj,i) => {
-                  return (
-                    <ClassSelection
-                      key={fieldObj.id}
-                      id={fieldObj.id}
-                      removal={this.triggerRemoval}
-                      saveValue={this.saveChosenClassValue}
-                      options={this.makeClassesOption(i)}
-                      onChange={this.saveChange}
-                    />
-                  );
-                })}
-              </div></>}
+              {this.state.schoolName.length === 0 ? (
+                <></>
+              ) : (
+                <>
+                  <label className="labelFields">כיתות:</label>
+                  <div>
+                    {this.state.fieldsData.map((fieldObj, i) => {
+                      console.log('i: ', i);
+                      return (
+                        
+                        <div className="teacherFlexClass" key={fieldObj.id}>
+                          <ClassSelection
+                            key={fieldObj.id}
+                            id={fieldObj.id}
+                            removal={this.triggerRemoval}
+                            saveValue={this.saveChosenClassValue}
+                            options={this.makeClassesOption(i)}
+                            onChange={this.saveChange}
+                          />
+                          <img
+                            alt="remove class button"
+                            className="removeTeachersClass"
+                            onClick={() => this.removeClass(i)}
+
+                            src="/icons/delete.svg"
+                            style={{ height: "20px", marginTop: "15px" }}
+                          />
+                          </div>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
             </form>
             {/* הוספת כיתה */}
-            { this.state.classOptions.length === this.state.fieldsData.length ? <></> :
-            <div
-              style={{ marginRight: "9vw" }}
-              className="addSomethingNew"
-              onClick={this.addNewFieldData}
-            >
-              <img className="addIcon" src={addicon} alt="addIcon"></img>
-              <p className="addTitle">הוסף כיתה</p>
-            </div>
-  }
+            {this.state.classOptions.length === this.state.fieldsData.length ? (
+              <></>
+            ) : (
+              <div
+                style={{ marginRight: "9vw" }}
+                className="addSomethingNew"
+                onClick={this.addNewFieldData}
+              >
+                <img className="addIcon" src={addicon} alt="addIcon"></img>
+                <p className="addTitle">הוסף כיתה</p>
+              </div>
+            )}
             <form className="formData" style={{ marginTop: "0" }}>
               {/* אימייל */}
               <label className="labelFields">* אימייל:</label>

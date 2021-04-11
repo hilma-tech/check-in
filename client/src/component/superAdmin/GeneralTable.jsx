@@ -82,8 +82,7 @@ class GeneralTable extends React.Component {
           </div>
           :
           <>
-            {this.props.location.pathname.includes("schools") ? <></> :
-              <div className="addingButton" onClick={this.onClickAdd}></div>}
+              <div className="addingButton" onClick={this.onClickAdd}></div>
           </>
 
         }
