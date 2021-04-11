@@ -40,7 +40,7 @@ class AddSchool extends React.Component {
           id: prevState.classes.length + 1,
           name: "",
           // numTeachers: 0,
-          teachers: [],
+          chosenTeachers: [],
           classNameError: { toShow: "none", mess: "" },
         },
       ];
@@ -93,8 +93,8 @@ class AddSchool extends React.Component {
   addNewTeacherToClass = (classIndex, teacherInfo) => {
     this.setState((prevState) => {
       let tempData = [...prevState.classes];
-      teacherInfo.id = tempData[classIndex].teachers[tempData[classIndex].teachers.length - 1] ? 1 : tempData[classIndex].teachers[tempData[classIndex].teachers.length - 1] + 1
-      tempData[classIndex].teachers.push(teacherInfo); //id -1 did not exist and he wont show him
+      teacherInfo.id = tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] ? 1 : tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] + 1
+      tempData[classIndex].chosenTeachers.push(teacherInfo); //id -1 did not exist and he wont show him
       return { classes: tempData };
     });
   };
@@ -103,7 +103,7 @@ class AddSchool extends React.Component {
   removeTeacherFromClass = (classIndex, teacherIndex) => {
     this.setState((prevState) => {
       let tempData = [...prevState.classes];
-      tempData[classIndex].teachers.splice(teacherIndex, 1);
+      tempData[classIndex].chosenTeachers.splice(teacherIndex, 1);
       return { classes: tempData };
     });
   };

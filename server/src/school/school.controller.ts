@@ -22,6 +22,7 @@ export class SchoolController {
   @UseJwtAuth('superAdmin')
   @Post('/addSchool')
   async addSchool(@Body() info: AddSchoolInfoDto) {
+    console.log('info: ', info);
     // console.log('info: ', info.classes[0].classNameError);
 
     return await this.schoolService.addSchool(info);
