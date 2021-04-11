@@ -21,8 +21,8 @@ export function linkValidation(link) {
   if (!link) {
     // console.log("nothing");
     return "";
-    } else if (link === null || link.length === 0) {
-      // console.log("actually none");
+  } else if (link === null || link.length === 0) {
+    // console.log("actually none");
     return "";
   } else if (link.length > 255) {
     // console.log('link.length: ', link.length);
@@ -273,34 +273,17 @@ export function fieldInputValidation(input) {
 
 //Permission Time Validation
 export function PermissionsValidation(per) {
-  if (per === null || per.length === 0) {
-    return "** יש להכניס הרשאה **";
+  if (!per.startTime && !per.endTime || !per.endTime || !per.startTime) {
+    return "** יש להכניס זמני התחלה וסיום **"
+  } else if (per.startTime && per.endTime) {
+    var start = per.startTime.split(":");
+    var end = per.endTime.split(":");
+    if (parseInt(start[0]) > parseInt(end[0])) {
+      return "** על זמן סיום ההרשאה להיות גדול מזמן התחלתה **"
+    } else if (parseInt(start[0]) === parseInt(end[0]) && parseInt(start[1]) > parseInt(end[1])) {
+      return "** על זמן סיום ההרשאה להיות גדול מזמן התחלתה **"
+    }
   } else {
-    let arrErr = per.map((permission) => {
-      if (!permission.startTime && !permission.endTime || !permission.endTime || !permission.startTime) {
-        return "** יש להכניס זמני התחלה וסיום **"
-      } else if (permission.startTime && permission.endTime) {
-        var start = permission.startTime.split(":");
-        var end = permission.endTime.split(":");
-        if (parseInt(start[0]) > parseInt(end[0])) {
-          if (per.length > 1) {
-            return "** על זמן סיום ההרשאות להיות גדול מזמן התחלתן **"
-          } else {
-            return "** על זמן סיום ההרשאה להיות גדול מזמן התחלתה **"
-          }
-        } else if (parseInt(start[0]) === parseInt(end[0]) && parseInt(start[1]) > parseInt(end[1])) {
-          if (per.length > 1) {
-            return "** על זמן סיום ההרשאות להיות גדול מזמן התחלתן **"
-          } else {
-            return "** על זמן סיום ההרשאה להיות גדול מזמן התחלתה **"
-          }
-        }
-      }
-      else {
-        return "";
-      }
-    })
-    return arrErr.filter(err => err !== undefined)
+    return "";
   }
-
 }

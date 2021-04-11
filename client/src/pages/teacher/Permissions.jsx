@@ -10,6 +10,7 @@ import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
 import { chosenClassContext } from "../../stores/chosenClass.store";
 import { errorMsgContext } from "../../stores/error.store";
+import { PermissionsValidation } from "../../tools/ValidationFunctions"
 const axios = require("axios").default;
 
 class Permissions extends Component {
@@ -42,25 +43,30 @@ class Permissions extends Component {
   handleEndTimeChange = (e) => {
     this.setState({ selectedEndTime: e.target.value })
   }
+
+  validatePer = async () => {
+    let validation = PermissionsValidation({ startTime: this.state.selectedStartTime, endTime: this.state.selectedEndTime })
+    await this.setState({ Err: validation })
+    if (!this.state.Err && !validation) {
+      this.sendInfo()
+    }
+  }
+
   sendInfo = async () => {
     let classId = this.props.chosenClass.classId
-    if (!this.state.selectedEndTime || !this.state.selectedStartTime) {
-      this.setState({ Err: '*יש למלא את כל השדות*' })
-    } else {
-      try {
-        this.setState({ Err: '' })
-        await axios.post(`/api/permission/setClassPermission`, { startTime: this.state.selectedStartTime, endTime: this.state.selectedEndTime, classId: classId });
-        this.props.errorMsg.setErrorMsg('הרשאות נשמרו בהצלחה')
-      }
-      catch (err) {
-        this.setState({ Err: '' })
-
-        this.props.errorMsg.setErrorMsg('תקלה בשרת, נסו לשמור שנית')
-
-      }
+    try {
+      this.setState({ Err: '' })
+      await axios.post(`/api/permission/setClassPermission`, { startTime: this.state.selectedStartTime, endTime: this.state.selectedEndTime, classId: classId });
+      this.props.errorMsg.setErrorMsg('הרשאות נשמרו בהצלחה')
     }
 
+    catch (err) {
+      this.setState({ Err: '' })
+      this.props.errorMsg.setErrorMsg('תקלה בשרת, נסו לשמור שנית')
+
+    }
   }
+
   render() {
     return (
       <>
@@ -99,7 +105,7 @@ class Permissions extends Component {
                 />
               </div>
               <h4 className='inputError'>{this.state.Err}</h4>
-              <h3 className='save' onClick={this.sendInfo}>{this.props.chosenClass.classPermissionsStart[0] ? "עדכן" : "שמור"}</h3>
+              <h3 className='save' onClick={this.validatePer}>{this.props.chosenClass.classPermissionsStart[0] ? "עדכן" : "שמור"}</h3>
 
 
             </form>
