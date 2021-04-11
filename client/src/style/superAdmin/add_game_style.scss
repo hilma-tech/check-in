@@ -96,6 +96,16 @@
   margin-top: 0.5vh;
  }
 
+ .removeTeachersClass {
+   margin-right: 2vw;
+   margin-bottom: 2.5vw;
+ }
+
+ .teacherFlexClass {
+   display: flex;
+   flex-direction: row;
+ }
+
 // img {
   //   @include imgCover(false);
   // }
