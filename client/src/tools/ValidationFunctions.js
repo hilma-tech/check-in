@@ -43,10 +43,10 @@ export function nameValidation(name) {
   // console.log("VALIDATING");
   if (name === null || name.length === 0) {
     return "** נא למלא שדה זה **";
-  } else if (name.length > 30) {
-    return "** שדה זה לא יכול להכיל יותר מ-30 תווים **";
   } else if (name.trim().length === 0) {
     return "** נא למלא שדה זה **";
+  } else if (name.length > 30) {
+    return "** שדה זה לא יכול להכיל יותר מ-30 תווים **";
   } else if (/[@#$%^&*()_+=[\]{};:,.\\|<>/~`0-9]/.test(name)) {
     return "** שדה זה לא יכול להכיל תווים מיוחדים **";
   } else if (!/[A-Za-z\u0590-\u05EA"'-]/.test(name)) {
