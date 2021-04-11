@@ -141,7 +141,9 @@ class Permissions extends Component {
 
   selectDay = async (day) => {
     await this.dayPermissions(day)
-    this.setState({ selectedDay: day })
+    this.setState({
+      selectedDay: day, err: ''
+    })
   }
   deleteDay = () => {
     this.setState({
