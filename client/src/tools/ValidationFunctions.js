@@ -1,17 +1,17 @@
 //Check validation for user name
 export function userNameValidation(userName) {
   if (userName === null || userName.length === 0) {
-    return '** חייב להכניס שם משתמש **'
+    return "** חייב להכניס שם משתמש **";
   } else if (userName.length > 15 || userName.length < 4) {
-    return '** שם משתמש צריך להכיל 4-15 תווים **'
+    return "** שם משתמש צריך להכיל 4-15 תווים **";
   } else if (userName.trim().length === 0) {
-    return '** שם משתמש לא תקין **'
-  } else if (!(/[A-Za-z\u0590-\u05EA0-9?!-_]/).test(userName)) {
-    return '** שם משתמש לא תקין **'
-  } else if ((/[@#$%^&*()+=[\]{};:,.\\|<>/~`\s]/).test(userName)) {
-    return '** שם משתמש לא תקין **'
+    return "** שם משתמש לא תקין **";
+  } else if (!/[A-Za-z\u0590-\u05EA0-9?!-_]/.test(userName)) {
+    return "** שם משתמש לא תקין **";
+  } else if (/[@#$%^&*()+=[\]{};:,.\\|<>/~`\s]/.test(userName)) {
+    return "** שם משתמש לא תקין **";
   } else {
-    return ''
+    return "";
   }
 }
 
@@ -21,14 +21,16 @@ export function linkValidation(link) {
   if (!link) {
     // console.log("nothing");
     return "";
-    } else if (link === null || link.length === 0) {
-      // console.log("actually none");
+  } else if (link === null || link.length === 0) {
+    // console.log("actually none");
     return "";
   } else if (link.length > 255) {
     // console.log('link.length: ', link.length);
 
     return "** שדה זה לא יכול להכיל יותר מ-255 תווים **";
-  } else if (!(/^$|(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(link))) {
+  } else if (
+    !/^$|(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi.test(link)
+  ) {
     // console.log("hi");
     return "** שדה זה לא תקין **";
   } else {
@@ -152,20 +154,26 @@ export function teacherPasswordValidation(password) {
 
 //Check validation for password
 export function studentPasswordValidation(password) {
-  if (password === null || password.length === 0 || password.trim().length === 0) {
-    return '** נא להכניס סיסמה **'
+  if (
+    password === null ||
+    password.length === 0 ||
+    password.trim().length === 0
+  ) {
+    return "** נא להכניס סיסמה **";
   } else if (password.length > 15 || password.length < 8) {
-    return '** על הסיסמה להיות בין 8-15 תווים **'
-  } else if (!(/^\S+$/).test(password)) {
-    return '** הסיסמה לא יכולה להכיל רווחים **'
-  } else if (!(/[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/).test(password)) {
-    return '** ניתן להשתמש באותיות באנגלית ובעברית, מספרים ותווים מיוחדים בלבד **'
+    return "** על הסיסמה להיות בין 8-15 תווים **";
+  } else if (!/^\S+$/.test(password)) {
+    return "** הסיסמה לא יכולה להכיל רווחים **";
+  } else if (
+    !/[A-Za-z\u0590-\u05EA0-9!@#$"%^,.&*()_+=[\]{}'-;:\\|<>/?~`]/.test(password)
+  ) {
+    return "** ניתן להשתמש באותיות באנגלית ובעברית, מספרים ותווים מיוחדים בלבד **";
   } else if (/[A-Za-z\u0590-\u05EA]/.test(password) === false) {
     return "** על הסיסמה להכיל לפחות אות אחת  **";
   } else if (/[0-9]/.test(password) === false) {
     return "** על הסיסמה להכיל לפחות מספר אחד  **";
   } else {
-    return ''
+    return "";
   }
 }
 
@@ -177,6 +185,12 @@ export function emailValidation(email) {
     return "** כתובת איימל לא תקינה **";
   } else if (
     !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+      email
+    )
+  ) {
+    return "** כתובת איימל לא תקינה **";
+  } else if (
+    !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
       email
     )
   ) {
@@ -270,37 +284,41 @@ export function fieldInputValidation(input) {
   }
 }
 
-
 //Permission Time Validation
 export function PermissionsValidation(per) {
   if (per === null || per.length === 0) {
     return "** יש להכניס הרשאה **";
   } else {
     let arrErr = per.map((permission) => {
-      if (!permission.startTime && !permission.endTime || !permission.endTime || !permission.startTime) {
-        return "** יש להכניס זמני התחלה וסיום **"
+      if (
+        (!permission.startTime && !permission.endTime) ||
+        !permission.endTime ||
+        !permission.startTime
+      ) {
+        return "** יש להכניס זמני התחלה וסיום **";
       } else if (permission.startTime && permission.endTime) {
         var start = permission.startTime.split(":");
         var end = permission.endTime.split(":");
         if (parseInt(start[0]) > parseInt(end[0])) {
           if (per.length > 1) {
-            return "** על זמן סיום ההרשאות להיות גדול מזמן התחלתן **"
+            return "** על זמן סיום ההרשאות להיות גדול מזמן התחלתן **";
           } else {
-            return "** על זמן סיום ההרשאה להיות גדול מזמן התחלתה **"
+            return "** על זמן סיום ההרשאה להיות גדול מזמן התחלתה **";
           }
-        } else if (parseInt(start[0]) === parseInt(end[0]) && parseInt(start[1]) > parseInt(end[1])) {
+        } else if (
+          parseInt(start[0]) === parseInt(end[0]) &&
+          parseInt(start[1]) > parseInt(end[1])
+        ) {
           if (per.length > 1) {
-            return "** על זמן סיום ההרשאות להיות גדול מזמן התחלתן **"
+            return "** על זמן סיום ההרשאות להיות גדול מזמן התחלתן **";
           } else {
-            return "** על זמן סיום ההרשאה להיות גדול מזמן התחלתה **"
+            return "** על זמן סיום ההרשאה להיות גדול מזמן התחלתה **";
           }
         }
-      }
-      else {
+      } else {
         return "";
       }
-    })
-    return arrErr.filter(err => err !== undefined)
+    });
+    return arrErr.filter((err) => err !== undefined);
   }
-
 }

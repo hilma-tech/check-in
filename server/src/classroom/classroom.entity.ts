@@ -5,6 +5,7 @@ import { Teacher } from 'src/teacher/teacher.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -24,6 +25,7 @@ export class Classroom {
     school => school.classrooms,
     { onDelete: 'CASCADE' }
   )
+  @JoinColumn({name: 'school_id'})
   school_id: number;
 
   @ManyToMany(
