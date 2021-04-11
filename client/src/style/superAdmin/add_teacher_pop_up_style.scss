@@ -1,0 +1,23 @@
+@import "../general_style.scss";
+@import '../fonts/fonts.scss';
+
+.saveButtonTAddPopUp {
+    @include mouse(point);
+    position: fixed;
+    font-weight: bold;
+    top: 85vh;
+    left: 10vw;
+    width: 8vw;
+    height: 5vh;
+    cursor: pointer;
+    @include blue-button-style;
+}
+
+.teacherAddCloseIcon{
+    @include mouse(point);
+    width: 1vw;
+    height: 1vw;
+    position: absolute;
+    top: 5vh;
+    right: 4vw;
+}
