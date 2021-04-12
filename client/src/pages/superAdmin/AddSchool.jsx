@@ -40,7 +40,7 @@ class AddSchool extends React.Component {
           id: prevState.classes.length + 1,
           name: "",
           // numTeachers: 0,
-          // chosenTeachers: [],
+          chosenTeachers: [],
           classNameError: { toShow: "none", mess: "" },
         },
       ];
@@ -89,14 +89,24 @@ class AddSchool extends React.Component {
   //   });
   // };
 
+    //כשמו כן הוא
+  addNewTeacherToClass = (classIndex, teacherInfo) => {
+    this.setState((prevState) => {
+      let tempData = [...prevState.classes];
+      teacherInfo.id = tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] === undefined ? 1 : tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] + 1
+      tempData[classIndex].chosenTeachers.push(teacherInfo); //id -1 did not exist and he wont show him
+      return { classes: tempData };
+    });
+  };
+
   //כשמו כן הוא
-  // removeTeacherFromClass = (classIndex, teacherIndex) => {
-  //   this.setState((prevState) => {
-  //     let tempData = [...prevState.classes];
-  //     tempData[classIndex].chosenTeachers.splice(teacherIndex, 1);
-  //     return { classes: tempData };
-  //   });
-  // };
+  removeTeacherFromClass = (classIndex, teacherIndex) => {
+    this.setState((prevState) => {
+      let tempData = [...prevState.classes];
+      tempData[classIndex].chosenTeachers.splice(teacherIndex, 1);
+      return { classes: tempData };
+    });
+  };
 
   //כשמו כן הוא
   removeClass = (classIndex) => {
@@ -242,9 +252,9 @@ class AddSchool extends React.Component {
                   handleChange={this.handleChange}
                   removeClass={this.removeClass}
                   // canAddExistTeacher={false}
-                  // addTeacherToClass={this.addTeacherToClass}
+                  addTeacherToClass={this.addNewTeacherToClass}
                   // chooseTeacher={this.chooseTeacher}
-                  // removeTeacherFromClass={this.removeTeacherFromClass}
+                  removeTeacherFromClass={this.removeTeacherFromClass}
                 />
               );
             })

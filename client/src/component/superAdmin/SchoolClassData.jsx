@@ -49,46 +49,52 @@ class SchoolClassData extends React.Component {
 
   //Make list of select with the teachers.
   //The length is sent because in the select accessing state doesn't work.
-  // returnTeacherSelections = () => {
-  //   let teachersSelections = [];
-  //   let numTeachers = this.props.classData.chosenTeachers.length;
-  //   if (numTeachers === 0) {
-  //     return <p>לכיתה זו אין מורים</p>;
-  //   }
-  //   for (let i = 0; i < numTeachers; i++) {
-  //     let teacerDefaultValue = this.props.classData.chosenTeachers[i].name;
-  //     let selectOptions = this.makeTeacherOption(i);
-  //     teachersSelections.push(
-  //       <div
-  //         className="TeachersSelect"
-  //         key={this.props.classData.chosenTeachers[i].id}
-  //       >
-  //         <Select
-  //           className="editSchoolClassTeacherSelect"
-  //           styles={SelectStyle()}
-  //           options={selectOptions}
-  //           selectKey={i}
-  //           // defaultValue={{
-  //           //   value: teacerDefaultValue,
-  //           //   label: teacerDefaultValue,
-  //           // }}
-  //           placeholder={teacerDefaultValue}
-  //           onChange={this.props.chooseTeacher}
-  //           isDisabled={true}
-  //         />
-  //         <img
-  //           alt="remove button"
-  //           className="removeTeachersSelectIcon"
-  //           onClick={() =>
-  //             this.props.removeTeacherFromClass(this.props.classIndex, i)
-  //           }
-  //           src="/icons/delete.svg"
-  //         />
-  //       </div>
-  //     );
-  //   }
-  //   return teachersSelections;
-  // };
+  returnTeacherSelections = () => {
+    let teachersSelections = [];
+    let numTeachers = this.props.classData.chosenTeachers ? this.props.classData.chosenTeachers.length : 0;
+    if (numTeachers === 0) {
+      return <p>לכיתה זו אין מורים</p>;
+    }
+    for (let i = 0; i < numTeachers; i++) {
+      let teacerDefaultValue = this.props.classData.chosenTeachers[i].name;
+      teachersSelections.push(
+        <div
+          className="TeachersSelect"
+          key={this.props.classData.chosenTeachers[i].id}
+        >
+          {/* <Select
+            className="editSchoolClassTeacherSelect"
+            styles={SelectStyle()}
+            options={selectOptions}
+            selectKey={i}
+            // defaultValue={{
+            //   value: teacerDefaultValue,
+            //   label: teacerDefaultValue,
+            // }}
+            placeholder={teacerDefaultValue}
+            onChange={this.props.chooseTeacher}
+            isDisabled={true}
+          /> */}
+            <input
+            defaultValue={this.props.classData.chosenTeachers[i].name}
+            onBlur={this.props.handleChange}
+            name="teacher"
+            className="editSchoolClassTeacherSelect inputFields"
+            readOnly={true}
+          ></input>
+          <img
+            alt="remove button"
+            className="removeTeachersSelectIcon"
+            onClick={() =>
+              this.props.removeTeacherFromClass(this.props.classIndex, i)
+            }
+            src="/icons/delete.svg"
+          />
+        </div>
+      );
+    }
+    return teachersSelections;
+  };
 
   //Get the prev state and change the showClass to the opposite value (if it's true it's will be false...).
   //when clicking on the arrow icon the details of the class appear or disappear
@@ -145,10 +151,10 @@ class SchoolClassData extends React.Component {
               מורים:
             </label>
 
-           {/* <div className="allEditSchoolClassTeacherSelect">
+            <div className="allEditSchoolClassTeacherSelect">
               {this.returnTeacherSelections()}
             </div>
-            <div className="editSchoolClassTeacherButtons">
+           {/* <div className="editSchoolClassTeacherButtons">
               {this.props.canAddExistTeacher ? (
                 <div
                   className="editSchoolClassAddExistTeacher addSomethingNew"
@@ -165,7 +171,7 @@ class SchoolClassData extends React.Component {
                 <Dialog
                 maxWidth="90vw"
                     open={this.state.showAddTeacher}
-                ><AddTeacherPopUp closeFunc={this.handleTeacherPopUpState} />
+                ><AddTeacherPopUp closeFunc={this.handleTeacherPopUpState} classIndex={this.props.classIndex} addTeacherToClass={this.props.addTeacherToClass}/>
                 </Dialog>
               <div className="addSomethingNew" onClick={this.handleTeacherPopUpState}>
                 <img alt="add icon" className="addIcon" src="/icons/addicon.svg"></img>

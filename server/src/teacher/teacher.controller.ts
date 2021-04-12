@@ -3,7 +3,7 @@ import { UserService, RequestUser, Role, UseJwtAuth, UseLocalAuth } from '@hilma
 import { Teacher } from './teacher.entity';
 import { TeacherService } from './teacher.service';
 import { Classroom } from 'src/classroom/classroom.entity';
-import { TeacherIdDto, GetTeacherSkip, GetClassSkip, TeacherValDto, TeacherRegisterDto, EditTeacherDto } from './teacher.dtos';
+import { TeacherIdDto, GetTeacherSkip, GetClassSkip, TeacherValDto, TeacherRegisterDto } from './teacher.dtos';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { env } from 'process';
 
@@ -13,7 +13,7 @@ export class TeacherController {
   constructor(
     private readonly userService: UserService,
     private teacherService: TeacherService,
-    private classroomService: ClassroomService,
+    // private classroomService: ClassroomService,
   ) {
     // this.register({username: 'teacher2@gmail.com', password: 'teacher1'})
   }
@@ -47,27 +47,28 @@ export class TeacherController {
   @UseJwtAuth('superAdmin')
   @Post('/register')
   async register(@Body() req: TeacherRegisterDto) {
-    let username = req.email;
-    let password = req.password;
-    let user: Partial<Teacher> = new Teacher({ username, password });
-    user.first_name = req.first_name
-    user.last_name = req.last_name
-    // [ { id: 0, value: "ה'2", classId: 3 } ]
-    if (req.fields_data !== undefined || req.fields_data.length !== 0) {
-      user.classroomTeacher = req.fields_data.map((classroom) => {
-        if (!this.classroomService.isClassroomInSchool(classroom.classId, req.school_id)) {
-          throw new Error()
-        }
-        let classroomTeacher = new Classroom()
-        classroomTeacher.id = classroom.classId
-        return classroomTeacher
-      })
-    }
-    user.school = req.school_id
-    let userRole = new Role();
-    userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
-    user.roles = [userRole];
-    return await this.userService.createUser<Teacher>(user);
+    return await this.teacherService.addTeacher(req)
+    // let username = req.email;
+    // let password = req.password;
+    // let user: Partial<Teacher> = new Teacher({ username, password });
+    // user.first_name = req.first_name
+    // user.last_name = req.last_name
+    // // [ { id: 0, value: "ה'2", classId: 3 } ]
+    // if (req.fields_data !== undefined || req.fields_data.length !== 0) {
+    //   user.classroomTeacher = req.fields_data.map((classroom) => {
+    //     if (!this.classroomService.isClassroomInSchool(classroom.classId, req.school_id)) {
+    //       throw new Error()
+    //     }
+    //     let classroomTeacher = new Classroom()
+    //     classroomTeacher.id = classroom.classId
+    //     return classroomTeacher
+    //   })
+    // }
+    // user.school = req.school_id
+    // let userRole = new Role();
+    // userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
+    // user.roles = [userRole];
+    // return await this.userService.createUser<Teacher>(user);
 
   }
 
@@ -106,7 +107,7 @@ export class TeacherController {
   @Get('/Verify')
   async MakeLogInAvailable(@Query() Token: any, @Res() res: any) {
     await this.teacherService.verifyEmailByToken(Token.token)
-    var redirectTo = `http://${env.HOST}/initialPage`//to be replaced with real domain
+    var redirectTo = `${env.HOST}/initialPage`//to be replaced with real domain
     res.redirect(redirectTo)
   }
 

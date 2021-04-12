@@ -31,7 +31,6 @@ class AddTeacherPopUp extends Component {
         this.state = {
             teacherFirstName: "",
             teacherLastName: "",
-            fieldsData: [],
             email: "",
             password: "",
             rakaz: "false",
@@ -143,6 +142,14 @@ class AddTeacherPopUp extends Component {
 
     saveTeacherInDB = async () => {
         //add in the school page the info and save the teacher after save the school
+        this.props.addTeacherToClass(this.props.classIndex ,{
+            first_name: this.state.teacherFirstName,
+            last_name: this.state.teacherLastName,
+            name: this.state.teacherFirstName + " " + this.state.teacherLastName ,
+            email: this.state.email ,
+            password: this.state.password 
+        })
+        this.props.closeFunc()
     };
 
     render() {

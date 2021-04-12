@@ -89,7 +89,7 @@ export class SchoolService {
     let schools = await this.schoolRepository.find({
     });
     let Search = schools.map((school) => {
-      if (school.name.includes(val.val.toLowerCase())) {
+      if (school.name.includes(val.val.toLowerCase()) || school.city.includes(val.val.toLowerCase())) {
         return school
       }
     })
