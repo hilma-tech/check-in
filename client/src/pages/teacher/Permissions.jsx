@@ -82,7 +82,7 @@ class Permissions extends Component {
 
             <form>
               <h3 className="text">זמן התחלה:</h3>
-              <div style={{ marginRight: '5vw', direction: 'rtl' }}>
+              <div style={{ marginRight: '5vw', direction: 'ltr' }}>
                 < TextField
                   required={true}
                   ampm={false}
@@ -95,7 +95,7 @@ class Permissions extends Component {
               </div>
 
               <h3 className="text">זמן סיום:</h3>
-              <div style={{ marginRight: '5vw', direction: 'rtl' }}>
+              <div style={{ marginRight: '5vw', direction: 'ltr' }}>
                 < TextField
                   required={true}
                   ampm={false}
