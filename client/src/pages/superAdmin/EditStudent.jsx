@@ -425,7 +425,7 @@ class EditStudent extends React.Component {
 
         <div className="spacerFromSaveButton"></div>
         <div className="saveButtonBackground">
-          <button className="deletButton" onClick={() => {
+          <button className="deletButton deletButtonmargin" onClick={() => {
             this.props.errorMsg.setQuestion(
               "האם אתה בטוח שברצונך למחוק תלמיד זה?",
               this.deleteStudent,
