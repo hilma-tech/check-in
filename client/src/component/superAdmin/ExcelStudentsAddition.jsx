@@ -30,7 +30,7 @@ class ExcelStudentsAddition extends React.Component {
         const ws = readedData.Sheets[wsname];
         /* Convert array to json*/
         dataParse = xlsxParser.utils.sheet_to_json(ws);
-        
+
         this.setState({ startSaveStudents: true })
         if (dataParse.length === 0) {
             this.setState({ startSaveStudents: false })
@@ -76,18 +76,15 @@ class ExcelStudentsAddition extends React.Component {
                 if (dataParse[i].classes === undefined) {
                     dataParse[i].userClassrooms = []
                 } else {
-                    if (typeof dataParse[i].classes === "string") {
-                        let studentClasses = dataParse[i].classes.split(",")
-                        studentClasses.forEach((studentClass, index) => {
-                            if (classNameValidation(studentClass.trim()).length !== 0) {
-                                errorsMsg.push(`הכיתה ${studentClass.trim()} בשורה ${i + 2} לא תקינה`)
-                            }
-                            studentClasses[index] = studentClass.trim()
-                        })
-                        dataParse[i].userClassrooms = studentClasses
-                    } else {
-                        errorsMsg.push(`הכיתות של התלמיד בשורה ${i + 2} לא תקינות`)
-                    }
+                    dataParse[i].classes = String(dataParse[i].classes)
+                    let studentClasses = dataParse[i].classes.split(",")
+                    studentClasses.forEach((studentClass, index) => {
+                        if (classNameValidation(studentClass.trim()).length !== 0) {
+                            errorsMsg.push(`הכיתה ${studentClass.trim()} בשורה ${i + 2} לא תקינה`)
+                        }
+                        studentClasses[index] = studentClass.trim()
+                    })
+                    dataParse[i].userClassrooms = studentClasses
                 }
             }
 
