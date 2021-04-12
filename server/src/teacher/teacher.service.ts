@@ -27,13 +27,15 @@ export class TeacherService extends UserService {
     protected readonly userRepository: Repository<Teacher>,
     protected readonly jwtService: JwtService,
     protected readonly configService: ConfigService,
-    @Inject('ClassroomService')
-    private readonly classroomService: ClassroomService,
-
+    
     @Inject('MailService')
     protected readonly mailer: MailerInterface,
-  ) {
-    super(config_options, userRepository, jwtService, configService, mailer);
+    
+    @Inject('ClassroomService')
+    private readonly classroomService: ClassroomService,
+    ) {
+      super(config_options, userRepository, jwtService, configService, mailer);
+      console.log('classroomService: ', this.classroomService);
   }
 
   async addTeacher(@Body() req: TeacherRegisterDto) {
