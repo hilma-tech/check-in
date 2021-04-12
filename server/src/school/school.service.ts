@@ -84,7 +84,11 @@ export class SchoolService {
       where: [{ id: Id }]
     })
   }
-
+  async getSchoolInfoById(Id) {
+    return await this.schoolRepository.findOne({
+      where: [{ id: Id }]
+    })
+  }
   async searchSchools(val: SearchValDto) {
     let schools = await this.schoolRepository.find({
     });
