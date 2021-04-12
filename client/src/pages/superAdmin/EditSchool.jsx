@@ -288,7 +288,7 @@ class EditSchool extends Component {
             הוסף כיתה
             </button>
           <div className="spacerFromSaveButton"></div>
-          <div className="saveButtonBackground">
+          <div className="saveButtonBackground additionPage">
             <button className="deletButton" onClick={this.deleteSchool}>מחק בית ספר</button>
             <button className="saveButton" onClick={this.saveData}>
               שמור
