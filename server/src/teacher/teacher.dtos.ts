@@ -35,12 +35,12 @@ export class TeacherRegisterDto {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[A-Za-z\u0590-\u05EA"'-/s]+$/)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-\s]+$/)
   first_name: string;
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[A-Za-z\u0590-\u05EA"'-/s]+$/)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-\s]+$/)
   last_name: string;
   @IsDefined()
   @IsNumber()
