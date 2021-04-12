@@ -43,7 +43,7 @@ export class SearchValDto {
   val: string;
 }
 
-export class ChoosenTeacherDto {
+export class ChosenTeacherDto {
   @IsOptional()
   @IsNumber()
   id: number;
@@ -83,7 +83,7 @@ export class ClassInfoDto {
   @IsOptional()
   classNameError: ErrorDto;
   @IsOptional()
-  choosenTeacher: ChoosenTeacherDto[];
+  chosenTeachers: ChosenTeacherDto[];
 }
 
 export class AddSchoolInfoDto {

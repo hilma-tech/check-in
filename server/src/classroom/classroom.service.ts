@@ -8,6 +8,7 @@ import { Classroom } from './classroom.entity';
 import { ClassInfoDto, EditSchoolInfoDto } from 'src/school/school.dtos';
 import { School } from 'src/school/school.entity';
 import { Student } from 'src/student/student.entity';
+import { TeacherService } from 'src/teacher/teacher.service';
 
 @Injectable()
 export class ClassroomService {
@@ -15,8 +16,10 @@ export class ClassroomService {
     @InjectRepository(Classroom)
     private classroomRepository: Repository<Classroom>,
     private gameService: GameService,
+    private teacherService: TeacherService,
+    
     protected classroomfieldService: ClassroomFieldService,
-  ) { }
+  ) { console.log('teacherService: ', this.teacherService);}
 
 
   // res:  School { name: 'לחגדכ', city: 'ךצכלכ', id: 42 }
@@ -39,6 +42,20 @@ export class ClassroomService {
       classroom.name = info.classes[i].name;
       classroom.school_id = res.id;
       let classroomInf = await this.classroomRepository.save(classroom)
+      console.log('info.classes[i].chosenTeachers: ', info.classes[i].chosenTeachers);
+      for(let z = 0; z < info.classes[i].chosenTeachers.length; z++){
+        console.log('info.classes[i].chosenTeachers[z]: ', info.classes[i].chosenTeachers[z]);
+        let ans = await this.teacherService.addTeacher({
+          first_name: info.classes[i].chosenTeachers[z].first_name ,
+          last_name: info.classes[i].chosenTeachers[z].last_name ,
+          school_id: res.id ,
+          email: info.classes[i].chosenTeachers[z].email,
+          password: info.classes[i].chosenTeachers[z].password ,
+          rakaz: "false",
+          fields_data: [{id: classroomInf.id, value: classroomInf.name, classId: classroomInf.id}]
+        })
+        console.log('ans: ', ans);
+      }
     }
     return true;
   }

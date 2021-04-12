@@ -13,7 +13,7 @@ export class TeacherController {
   constructor(
     private readonly userService: UserService,
     private teacherService: TeacherService,
-    private classroomService: ClassroomService,
+    // private classroomService: ClassroomService,
   ) {
     // this.register({username: 'teacher2@gmail.com', password: 'teacher1'})
   }

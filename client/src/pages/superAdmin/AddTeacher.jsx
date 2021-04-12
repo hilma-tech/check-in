@@ -263,7 +263,7 @@ class AddTeacher extends Component {
           "קיים כבר משתמש עם האימייל הזה. נסו שוב."
         );
       } else {
-        this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסו לבדוק את החיבור");
+        this.props.errorMsg.setErrorMsg("היתה שגיאה בשרת נסו לבדוק את החיבור");
       }
     }
   };

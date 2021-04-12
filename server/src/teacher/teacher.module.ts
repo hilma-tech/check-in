@@ -10,14 +10,14 @@ import {
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { Teacher } from './teacher.entity';
-import { ClassroomModule } from 'src/classroom/classroom.module';
-import { SchoolService } from 'src/school/school.service';
+// import { ClassroomModule } from 'src/classroom/classroom.module';
 import { SchoolModule } from 'src/school/school.module';
+// import { ClassroomService } from 'src/classroom/classroom.service';
 @Module({
   imports: [
     UserModule,
     RoleModule,
-    ClassroomModule,
+    // ClassroomModule,
     SchoolModule,
     TypeOrmModule.forFeature([Teacher]),
     JwtModule.register({}),
@@ -36,6 +36,10 @@ import { SchoolModule } from 'src/school/school.module';
       provide: "MailService",
       useClass: NodeMailerService
     },
+    // {
+    //   provide: "ClassroomService",
+    //   useValue: ClassroomService
+    // },
   ],
   exports: [TeacherService],
   controllers: [TeacherController],
