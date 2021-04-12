@@ -8,7 +8,7 @@ import { ClassroomService } from 'src/classroom/classroom.service';
 import { ClassroomModule } from 'src/classroom/classroom.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([School]), ClassroomModule],
+  imports: [TypeOrmModule.forFeature([School]), ClassroomModule, UserModule],
   providers: [SchoolService],
   controllers: [SchoolController],
   exports: [SchoolService],

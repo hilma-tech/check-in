@@ -6,7 +6,6 @@ import { Classroom } from './classroom.entity';
 import { ClassroomService } from './classroom.service';
 import { GameModule } from 'src/game/game.module';
 import { ClassroomFieldModule } from 'src/classroom-field/classroom-field.module';
-import { TeacherModule } from 'src/teacher/teacher.module';
 
 @Module({
   imports: [
@@ -14,7 +13,7 @@ import { TeacherModule } from 'src/teacher/teacher.module';
     RoleModule,
     GameModule,
     ClassroomFieldModule,
-    TeacherModule,
+    // TeacherModule,
     TypeOrmModule.forFeature([Classroom]),
   ],
   providers: [ClassroomService],
