@@ -30,7 +30,8 @@ class EditGame extends Component {
       fieldsData: [],
       mess: "",
       ErrorsPerField: [],
-      gameLink: ""
+      gameLink: "",
+      startSaveGame: false
     };
     this.imageUploader = props.filesUploader;
   }
@@ -89,6 +90,7 @@ class EditGame extends Component {
     
 
     if (errors.length === 0) {
+      this.setState({startSaveGame: true})
       this.addGameToDB();
     }
   };
@@ -103,6 +105,7 @@ class EditGame extends Component {
       );
       if(!isAdded){
         this.props.errorMsg.setErrorMsg('תקלה בשרת, משחק לא התווסף')
+        this.setState({startSaveGame: false})
       }
       else{
     await this.props.games.resetGamesStore();
@@ -281,7 +284,9 @@ class EditGame extends Component {
               })
             )}
             <div className="mobileSaveButtonBackground">
-              <button className="mobileSaveButton" onClick={this.validateGame}>
+              <button className="mobileSaveButton"
+              style={this.state.startSaveGame ? { pointerEvents: "none" } : {}}
+              onClick={this.validateGame}>
                 שמור
               </button>
             </div>
