@@ -82,10 +82,10 @@ class Permissions extends Component {
 
             <form>
               <h3 className="text">זמן התחלה:</h3>
-              <div style={{ marginRight: '5vw', direction: 'ltr' }}>
+              <div style={{ marginRight: '5vw', direction: 'rtl' }}>
                 < TextField
                   required={true}
-                  style={{ color: 'paleturquoise', height: '4vh', }}
+                  ampm={false}
                   id="time"
                   type="time"
                   value={this.state.selectedStartTime}
@@ -94,11 +94,11 @@ class Permissions extends Component {
 
               </div>
 
-
               <h3 className="text">זמן סיום:</h3>
               <div style={{ marginRight: '5vw', direction: 'rtl' }}>
                 < TextField
                   required={true}
+                  ampm={false}
                   id="time"
                   type="time"
                   value={this.state.selectedEndTime}
