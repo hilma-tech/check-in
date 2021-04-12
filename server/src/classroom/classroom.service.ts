@@ -17,8 +17,9 @@ export class ClassroomService {
     private classroomRepository: Repository<Classroom>,
     private gameService: GameService,
     private teacherService: TeacherService,
+    
     protected classroomfieldService: ClassroomFieldService,
-  ) { }
+  ) { console.log('teacherService: ', this.teacherService);}
 
 
   // res:  School { name: 'לחגדכ', city: 'ךצכלכ', id: 42 }
