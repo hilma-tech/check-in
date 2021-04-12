@@ -258,7 +258,7 @@ class AddSchool extends React.Component {
           </button>
 
           <div className="spacerFromSaveButton"></div>
-          <div className="saveButtonBackground">
+          <div className="saveButtonBackground additionPage">
             <button className="saveButton" onClick={this.validateData}>
               שמור
             </button>
