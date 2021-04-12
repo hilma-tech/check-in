@@ -30,12 +30,11 @@ export class TeacherService extends UserService {
     
     @Inject('MailService')
     protected readonly mailer: MailerInterface,
-    
+
     @Inject('ClassroomService')
     private readonly classroomService: ClassroomService,
     ) {
       super(config_options, userRepository, jwtService, configService, mailer);
-      console.log('classroomService: ', this.classroomService);
   }
 
   async addTeacher(@Body() req: TeacherRegisterDto) {
