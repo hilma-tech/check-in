@@ -1,3 +1,18 @@
+.save:hover{
+  cursor: pointer;
+}
+.day:hover{
+  cursor: pointer;
+}
+.time:hover{
+  cursor: pointer;
+}
+.ex:hover{
+  cursor: pointer;
+}
+.addTime{
+  cursor: pointer;
+}
 .title {
   color: #043163;
   text-align: right;

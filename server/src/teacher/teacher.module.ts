@@ -11,12 +11,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { Teacher } from './teacher.entity';
 import { ClassroomModule } from 'src/classroom/classroom.module';
-import { ClassroomService } from 'src/classroom/classroom.service';
-
+import { SchoolModule } from 'src/school/school.module';
 @Module({
   imports: [
     UserModule,
     RoleModule,
+    SchoolModule,
     TypeOrmModule.forFeature([Teacher]),
     JwtModule.register({}),
     forwardRef(() => ClassroomModule),

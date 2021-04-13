@@ -1,4 +1,4 @@
-import { Body, Injectable, Req } from '@nestjs/common';
+import { Body, forwardRef, Inject, Injectable, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { ClassroomService } from 'src/classroom/classroom.service';
@@ -11,6 +11,8 @@ export class SchoolService {
   constructor(
     @InjectRepository(School)
     private schoolRepository: Repository<School>,
+
+    @Inject(forwardRef(() => ClassroomService))
     private classroomService: ClassroomService
   ) {
     this.dx()
@@ -86,7 +88,11 @@ export class SchoolService {
       where: [{ id: Id }]
     })
   }
-
+  async getSchoolInfoById(Id) {
+    return await this.schoolRepository.findOne({
+      where: [{ id: Id }]
+    })
+  }
   async searchSchools(val: SearchValDto) {
     let schools = await this.schoolRepository.find({
     });

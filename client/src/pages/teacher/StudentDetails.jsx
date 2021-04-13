@@ -135,6 +135,7 @@ class StudentDetails extends Component {
             <div className="passchange" onClick={() => {
               this.setState({
                 showPassChanger: !this.state.showPassChanger,
+                passDisplay:'',
                 passErr: ''
               });
             }} >
@@ -171,6 +172,7 @@ class StudentDetails extends Component {
                 <div className='passchange' onClick={() => {
                   this.setState({
                     showPassChanger: !this.state.showPassChanger,
+                    passDisplay:'',
                     passErr: ''
                   })
                 }}>

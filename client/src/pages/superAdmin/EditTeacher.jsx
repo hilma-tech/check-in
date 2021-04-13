@@ -597,7 +597,7 @@ class EditTeacher extends React.Component {
             </form>
 
             <div className="spacerFromSaveButton"></div>
-            <div className="saveButtonBackground">
+            <div className="saveButtonBackground deletButtonTeacher">
               <button className="deletButton" onClick={this.deleteTeacher}>
                 מחק מורה
               </button>
