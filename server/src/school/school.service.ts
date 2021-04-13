@@ -2,7 +2,7 @@ import { Body, forwardRef, Inject, Injectable, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { ClassroomService } from 'src/classroom/classroom.service';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { EditSchoolInfoDto, GetSchoolSkip, SearchValDto } from './school.dtos';
 import { School } from './school.entity';
 
@@ -94,15 +94,8 @@ export class SchoolService {
     })
   }
   async searchSchools(val: SearchValDto) {
-    let schools = await this.schoolRepository.find({
-    });
-    let Search = schools.map((school) => {
-      if (school.name.includes(val.val.toLowerCase()) || school.city.includes(val.val.toLowerCase())) {
-        return school
-      }
-    })
-    var searchresult = Search.filter(function (school) {
-      return school != null;
+    let searchresult = await this.schoolRepository.find({
+      where: [{city: Like("%" + val.val.toLowerCase() + "%")}, {name: Like("%" + val.val.toLowerCase() + "%")}]
     });
     return searchresult
   }
