@@ -35,7 +35,7 @@
   height: 10vh;
   text-align: center;
   font-weight: 700;
-  font-size: 6vh;
+  font-size: 10vw;
 }
 
 .officialTitleClassName {
@@ -64,6 +64,7 @@
     /* height: 100vh; */
   }
   .officialTitle {
+    font-size: 6vh;
     text-align: right;
   }
   .officialTitleClassName {
