@@ -7,6 +7,7 @@ import {
   IsNumber,
   IsNumberString,
   IsString,
+  IsUUID,
   Length,
   Matches,
   ValidateNested,
@@ -29,6 +30,7 @@ export class GetClassSkip {
 export class TeacherIdDto {
   @IsDefined()
   @IsString()
+  @IsUUID()
   teacherId: string;
 }
 
@@ -95,6 +97,7 @@ export class TeacherEditClassesDto {
 export class EditTeacherDto {
   @IsDefined()
   @IsString()
+  @IsUUID()
   id: string;
   @IsDefined()
   @IsString()

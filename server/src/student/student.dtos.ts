@@ -5,6 +5,7 @@ import {
   IsNumberString,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
   Matches,
   ValidateNested,
@@ -20,6 +21,7 @@ export class GetStudentSkip {
 export class StudentIdDto {
   @IsDefined()
   @IsString()
+  @IsUUID()
   id: string;
 }
 
@@ -170,6 +172,7 @@ export class SearchClassForStudentDto {
 export class UserEditDto {
   @IsDefined()
   @IsString()
+  @IsUUID()
   id: string;
   @IsDefined()
   @IsString()
