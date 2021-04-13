@@ -231,41 +231,66 @@ class EditStudent extends React.Component {
     //after all the validation we need to send the data to sql
     if (allOk) {
       // console.log('this.state.password: ', this.state.password);
-      try {
-        let { data } = await axios.post("/api/student/editStudent", {
-          id: this.props.students.chosenStudent.id,
-          username: this.state.userName,
-          password: this.state.password,
-          firstName: this.state.studentFirstName,
-          lastName: this.state.studentLastName,
-          classrooms: this.state.chosenClasses.filter((classroom) => {
-            return classroom.name !== 'שייך לכיתה'
-          }),
-          schoolId: this.state.schoolId
-        });
-        let classroomStudent = this.state.chosenClasses.filter((classroom) => {
-          return classroom.name !== 'שייך לכיתה'
-        })
-        if (data) {
-          this.props.students.updateStudent({
-            first_name: this.state.studentFirstName,
-            last_name: this.state.studentLastName,
-            name: this.state.studentFirstName + " " + this.state.studentLastName,
-            username: this.state.userName,
-            schoolName: this.state.school,
-            school: { id: this.state.schoolId, name: this.state.school },
-            id: this.props.students.chosenStudent.id,
-            classroomStudent: classroomStudent,
-            classes: classroomStudent !== undefined ? classroomStudent.map((classInfo) => {
-              return classInfo.name
-            }) : []
+      let isChange = false
+      if (this.state.schoolId !== this.props.students.chosenStudent.school.id ||
+        this.state.studentFirstName !== this.props.students.chosenStudent.first_name ||
+        this.state.studentLastName !== this.props.students.chosenStudent.last_name ||
+        this.state.userName !== this.props.students.chosenStudent.username ||
+        this.state.password.length !== 0) {
+        isChange = true
+      }
+      if (this.state.chosenClasses.length === this.props.students.chosenStudent.classroomStudent.length) {
+        for (let i = 0; i < this.state.chosenClasses.length; i++) {
+          let a = this.props.students.chosenStudent.classroomStudent.filter((classroom) => {
+            return classroom.id !== this.state.chosenClasses[i].id
           })
-          this.props.history.goBack(); // after saving go back
-        } else {
-          this.props.errorMsg.setErrorMsg('שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר.');
+          if (
+            (this.props.students.chosenStudent.classroomStudent.filter((classroom) => {
+              return classroom.id !== this.state.chosenClasses[i].id
+            })).length !== this.state.chosenClasses.length - 1) {
+            isChange = true
+          }
         }
-      } catch (err) {
-        this.props.errorMsg.setErrorMsg('שגיאה בשרת, תלמיד לא נשמר, נסו שוב.');
+      }
+      if (isChange) {
+        try {
+          let { data } = await axios.post("/api/student/editStudent", {
+            id: this.props.students.chosenStudent.id,
+            username: this.state.userName,
+            password: this.state.password,
+            firstName: this.state.studentFirstName,
+            lastName: this.state.studentLastName,
+            classrooms: this.state.chosenClasses.filter((classroom) => {
+              return classroom.name !== 'שייך לכיתה'
+            }),
+            schoolId: this.state.schoolId
+          });
+          let classroomStudent = this.state.chosenClasses.filter((classroom) => {
+            return classroom.name !== 'שייך לכיתה'
+          })
+          if (data) {
+            this.props.students.updateStudent({
+              first_name: this.state.studentFirstName,
+              last_name: this.state.studentLastName,
+              name: this.state.studentFirstName + " " + this.state.studentLastName,
+              username: this.state.userName,
+              schoolName: this.state.school,
+              school: { id: this.state.schoolId, name: this.state.school },
+              id: this.props.students.chosenStudent.id,
+              classroomStudent: classroomStudent,
+              classes: classroomStudent !== undefined ? classroomStudent.map((classInfo) => {
+                return classInfo.name
+              }) : []
+            })
+            this.props.history.goBack(); // after saving go back
+          } else {
+            this.props.errorMsg.setErrorMsg('שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר.');
+          }
+        } catch (err) {
+          this.props.errorMsg.setErrorMsg('שגיאה בשרת, תלמיד לא נשמר, נסו שוב.');
+        }
+      } else {
+        this.props.history.goBack();
       }
     }
   };
