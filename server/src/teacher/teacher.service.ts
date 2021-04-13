@@ -1,4 +1,4 @@
-import { Injectable, Inject, Body, Req } from '@nestjs/common';
+import { Injectable, Inject, Body, Req, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   MailerInterface,
@@ -27,14 +27,16 @@ export class TeacherService extends UserService {
     protected readonly userRepository: Repository<Teacher>,
     protected readonly jwtService: JwtService,
     protected readonly configService: ConfigService,
-    
+
+
     @Inject('MailService')
     protected readonly mailer: MailerInterface,
+    // @Inject('ClassroomService')
+    @Inject(forwardRef(() => ClassroomService))
+    private classroomService: ClassroomService,
 
-    @Inject('ClassroomService')
-    private readonly classroomService: ClassroomService,
-    ) {
-      super(config_options, userRepository, jwtService, configService, mailer);
+  ) {
+    super(config_options, userRepository, jwtService, configService, mailer);
   }
 
   async addTeacher(@Body() req: TeacherRegisterDto) {
@@ -247,7 +249,7 @@ export class TeacherService extends UserService {
         return teacher;
       }
     });
-    var searchresult = Search.filter(function(teacher) {
+    var searchresult = Search.filter(function (teacher) {
       return teacher != null;
     });
     return searchresult;

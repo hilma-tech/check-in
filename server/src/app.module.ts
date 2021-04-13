@@ -31,11 +31,11 @@ import { PermissionModule } from './permission/permission.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../../', 'client/build'),
     }),
+    ClassroomModule,
     TeacherModule,
     SuperAdminModule,
     StudentModule,
     SchoolModule,
-    ClassroomModule,
     RoleModule,
     ClassroomFieldModule,
     PermissionModule,

@@ -33,6 +33,8 @@ export class SchoolService {
     school.city = info.schoolCity;
     let res = await this.schoolRepository.save(school);
     await this.classroomService.addClassesWithSchool(info, res)
+
+
     return res;
   }
 

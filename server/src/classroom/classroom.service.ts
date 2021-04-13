@@ -1,4 +1,4 @@
-import { Body, Injectable } from '@nestjs/common';
+import { Body, forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GameService } from 'src/game/game.service';
 import { ClassroomFieldService } from 'src/classroom-field/classroom-field.service';
@@ -8,7 +8,7 @@ import { Classroom } from './classroom.entity';
 import { ClassInfoDto, EditSchoolInfoDto } from 'src/school/school.dtos';
 import { School } from 'src/school/school.entity';
 import { Student } from 'src/student/student.entity';
-// import { TeacherService } from 'src/teacher/teacher.service';
+import { TeacherService } from 'src/teacher/teacher.service';
 
 @Injectable()
 export class ClassroomService {
@@ -16,8 +16,11 @@ export class ClassroomService {
     @InjectRepository(Classroom)
     private classroomRepository: Repository<Classroom>,
     private gameService: GameService,
-    // private teacherService: TeacherService,
-    
+
+    // @Inject("TeacherService")
+    @Inject(forwardRef(() => TeacherService))
+    private teacherService: TeacherService,
+
     protected classroomfieldService: ClassroomFieldService,
   ) {}
 
@@ -34,7 +37,6 @@ export class ClassroomService {
   //   ]
   // }
 
-
   async addClassesWithSchool(@Body() info: EditSchoolInfoDto, res: School) {
     let i = 0;
     for (i = 0; i < info.classes.length; i++) {
@@ -43,7 +45,7 @@ export class ClassroomService {
       classroom.school_id = res.id;
       let classroomInf = await this.classroomRepository.save(classroom)
       console.log('info.classes[i].chosenTeachers: ', info.classes[i].chosenTeachers);
-      for(let z = 0; z < info.classes[i].chosenTeachers.length; z++){
+      for (let z = 0; z < info.classes[i].chosenTeachers.length; z++) {
         console.log('info.classes[i].chosenTeachers[z]: ', info.classes[i].chosenTeachers[z]);
         // let ans = await this.teacherService.addTeacher({
         //   first_name: info.classes[i].chosenTeachers[z].first_name ,

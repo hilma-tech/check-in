@@ -6,6 +6,7 @@ import { School } from './school.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { ClassroomModule } from 'src/classroom/classroom.module';
+import { TeacherModule } from 'src/teacher/teacher.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([School]), UserModule, ClassroomModule],
