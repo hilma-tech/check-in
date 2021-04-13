@@ -264,7 +264,7 @@ export function fieldInputValidation(input) {
     input.includes(",") ||
     input.includes("-")
   ) {
-    return "** שם זה לא תקין **";
+    return "** שדה זה לא יכול להכיל תווים מיוחדים **";
   } else {
     return "";
   }
