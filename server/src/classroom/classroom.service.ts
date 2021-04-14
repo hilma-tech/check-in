@@ -1,4 +1,4 @@
-import { Body, Injectable } from '@nestjs/common';
+import { Body, forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GameService } from 'src/game/game.service';
 import { ClassroomFieldService } from 'src/classroom-field/classroom-field.service';
@@ -16,10 +16,11 @@ export class ClassroomService {
     @InjectRepository(Classroom)
     private classroomRepository: Repository<Classroom>,
     private gameService: GameService,
+    
     private teacherService: TeacherService,
     
     protected classroomfieldService: ClassroomFieldService,
-  ) { console.log('teacherService: ', this.teacherService);}
+  ) {}
 
 
   // res:  School { name: 'לחגדכ', city: 'ךצכלכ', id: 42 }

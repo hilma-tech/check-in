@@ -1,4 +1,4 @@
-import { Injectable, Inject, Body, Req } from '@nestjs/common';
+import { Injectable, Inject, Body, Req, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   MailerInterface,
@@ -31,7 +31,7 @@ export class TeacherService extends UserService {
     @Inject('MailService')
     protected readonly mailer: MailerInterface,
     
-    @Inject('ClassroomService')
+    @Inject(forwardRef(()=>{ClassroomService}))
     private readonly classroomService: ClassroomService,
     ) {
       super(config_options, userRepository, jwtService, configService, mailer);

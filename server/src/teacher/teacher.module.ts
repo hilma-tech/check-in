@@ -16,7 +16,7 @@ import { ClassroomService } from 'src/classroom/classroom.service';
   imports: [
     UserModule,
     RoleModule,
-    // ClassroomModule,
+    ClassroomModule,
     TypeOrmModule.forFeature([Teacher]),
     JwtModule.register({}),
   ],
