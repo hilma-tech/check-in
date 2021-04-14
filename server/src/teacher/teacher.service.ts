@@ -18,6 +18,9 @@ import { env } from 'process';
 import * as bcrypt from 'bcrypt';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { Classroom } from 'src/classroom/classroom.entity';
+import { parse } from 'path';
+import { School } from 'src/school/school.entity';
+import { SchoolService } from 'src/school/school.service';
 
 @Injectable()
 export class TeacherService extends UserService {
@@ -28,20 +31,21 @@ export class TeacherService extends UserService {
     protected readonly jwtService: JwtService,
     protected readonly configService: ConfigService,
     
+    @Inject(forwardRef(() => ClassroomService))
+    private classroomService: ClassroomService,
+    private readonly schoolService: SchoolService,
     @Inject('MailService')
     protected readonly mailer: MailerInterface,
-    
-    @Inject(forwardRef(()=>{ClassroomService}))
-    private readonly classroomService: ClassroomService,
+  
     ) {
       super(config_options, userRepository, jwtService, configService, mailer);
-      console.log('classroomService: ', this.classroomService);
   }
 
   async addTeacher(@Body() req: TeacherRegisterDto) {
     let username = req.email;
     let password = req.password;
     let user: Partial<Teacher> = new Teacher({ username, password });
+    console.log('user: ', user);
     user.first_name = req.first_name
     user.last_name = req.last_name
     if (req.fields_data !== undefined || req.fields_data.length !== 0) {
@@ -54,12 +58,13 @@ export class TeacherService extends UserService {
         return classroomTeacher
       })
     }
-    user.school = req.school_id
+    let school= await this.schoolService.getSchoolInfoById(req.school_id)
+    user.school = school
     let userRole = new Role();
     userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
     user.roles = [userRole];
+    console.log('user: ', user);
     return await this.createUser<Teacher>(user);
-
   }
 
   async changeTeacherPassword(userInfo) {
@@ -73,8 +78,9 @@ export class TeacherService extends UserService {
   }
 
   async editTeacher(@Body() req: any) {
-    // console.log('req: ', req);
+    if (req.password!==''){
     await this.sendUpdatePasswordEmail(req.username, req.password);
+    }
     let teacher = await this.userRepository.findOne({
       where: [{ id: req.id }],
       relations: ['classroomTeacher'],
@@ -239,16 +245,13 @@ export class TeacherService extends UserService {
       relations: ['school', 'classroomTeacher'],
     });
     let Search = teachers.map(teacher => {
-      let fullname = (
-        teacher.first_name +
-        ' ' +
-        teacher.last_name
-      ).toLowerCase();
-      if (fullname.includes(val.toLowerCase())) {
+      let fullname = (teacher.first_name + ' ' + teacher.last_name).toLowerCase();
+      let classes = teacher.classroomTeacher.map((classroom) => { return classroom.name })
+      if (fullname.includes(val.toLowerCase()) || classes.join(' ').includes(val.toLowerCase())|| teacher.school.name.includes(val.toLowerCase())) {
         return teacher;
       }
     });
-    var searchresult = Search.filter(function(teacher) {
+    var searchresult = Search.filter(function (teacher) {
       return teacher != null;
     });
     return searchresult;

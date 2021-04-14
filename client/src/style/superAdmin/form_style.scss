@@ -3,6 +3,8 @@
 
 .formData {
     @include form-container;
+    margin-bottom: 5vh;
+
 }
 
 .selectStyle{
@@ -11,14 +13,24 @@
 }
 
 .deletButton {
-    @include mouse(point);
-    position: fixed;
-    top: 92vh;
-    left: 15vw;
-    width: 9vw;
+    position: absolute;
+    left: 21vw;
+    width: max-content;
     height: 5vh;
-    font-size: 1vw;
-    @include white-button-style;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.5vw;
+    color: #04313F;
+    background-color: white;
+    border-color: #043163;
+    border-style: solid;
+    border-radius: 0.5vw;
+}
+.deletButtonmargin{
+    right: 76vw;
+}
+.deletButtonTeacher{
+    right: 98vw;
 }
 
 .saveButtonBackground{

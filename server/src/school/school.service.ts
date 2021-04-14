@@ -1,8 +1,8 @@
-import { Body, Injectable, Req } from '@nestjs/common';
+import { Body, forwardRef, Inject, Injectable, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { ClassroomService } from 'src/classroom/classroom.service';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { EditSchoolInfoDto, GetSchoolSkip, SearchValDto } from './school.dtos';
 import { School } from './school.entity';
 
@@ -11,6 +11,8 @@ export class SchoolService {
   constructor(
     @InjectRepository(School)
     private schoolRepository: Repository<School>,
+
+    @Inject(forwardRef(() => ClassroomService))
     private classroomService: ClassroomService
   ) {
     this.dx()
@@ -33,6 +35,8 @@ export class SchoolService {
     school.city = info.schoolCity;
     let res = await this.schoolRepository.save(school);
     await this.classroomService.addClassesWithSchool(info, res)
+
+
     return res;
   }
 
@@ -84,17 +88,14 @@ export class SchoolService {
       where: [{ id: Id }]
     })
   }
-
-  async searchSchools(val: SearchValDto) {
-    let schools = await this.schoolRepository.find({
-    });
-    let Search = schools.map((school) => {
-      if (school.name.includes(val.val.toLowerCase()) || school.city.includes(val.val.toLowerCase())) {
-        return school
-      }
+  async getSchoolInfoById(Id) {
+    return await this.schoolRepository.findOne({
+      where: [{ id: Id }]
     })
-    var searchresult = Search.filter(function (school) {
-      return school != null;
+  }
+  async searchSchools(val: SearchValDto) {
+    let searchresult = await this.schoolRepository.find({
+      where: [{city: Like("%" + val.val.toLowerCase() + "%")}, {name: Like("%" + val.val.toLowerCase() + "%")}]
     });
     return searchresult
   }

@@ -37,7 +37,7 @@ export class Teacher extends User {
     { onDelete: 'CASCADE' }
   )
   @JoinColumn({ referencedColumnName: 'id', name: 'school_id' })
-  school: number;
+  school: School;
 
   @Column({ default: 0, type: "tinyint" })
   emailVerified: number

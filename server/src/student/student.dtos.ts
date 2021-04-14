@@ -5,6 +5,7 @@ import {
   IsNumberString,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
   Matches,
   ValidateNested,
@@ -20,6 +21,7 @@ export class GetStudentSkip {
 export class StudentIdDto {
   @IsDefined()
   @IsString()
+  @IsUUID()
   id: string;
 }
 
@@ -53,6 +55,8 @@ export class ClassForSaveDto {
   id: number;
   @IsDefined()
   @IsString()
+  @Length(1, 30)
+  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-]/)
   name: string;
 }
 
@@ -146,6 +150,7 @@ export class StudentPassword {
 export class ValDto {
   @IsDefined()
   @IsString()
+  @Matches(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
   val: string;
 }
 
@@ -169,6 +174,7 @@ export class SearchClassForStudentDto {
 export class UserEditDto {
   @IsDefined()
   @IsString()
+  @IsUUID()
   id: string;
   @IsDefined()
   @IsString()
