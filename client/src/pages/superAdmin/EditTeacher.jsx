@@ -55,7 +55,7 @@ class EditTeacher extends React.Component {
   }
 
   componentDidMount = async () => {
-    console.log('this.props.teachers.chosenTeacher: ', this.props.teachers.chosenTeacher);
+    // console.log('this.props.teachers.chosenTeacher: ', this.props.teachers.chosenTeacher);
     if (this.props.teachers.chosenTeacher !== null) {
       let fields = this.props.teachers.chosenTeacher.classroomTeacher.map(
         (classroom) => {
@@ -84,7 +84,7 @@ class EditTeacher extends React.Component {
           const { data } = await axios.get("/api/classroom/getSchoolClasses", {
             params: { schoolId: this.props.teachers.chosenTeacher.school.id },
           });
-          console.log('data: ', data);
+          // console.log('data: ', data);
           this.setState({
             allClasses: data,
             userName: this.props.teachers.chosenTeacher.username,
@@ -390,7 +390,7 @@ class EditTeacher extends React.Component {
   };
 
   render() {
-    console.log('this.state.chosenClasses: ', this.state.chosenClasses);
+    // console.log('this.state.chosenClasses: ', this.state.chosenClasses);
     return (
       <>
         <div className="pageContainer withMenu">
@@ -469,7 +469,7 @@ class EditTeacher extends React.Component {
                     <label className="labelFields">כיתות:</label>
                     {this.state.allClasses.length === 0 ? <p>אין כיתות לבית ספר זה</p> : <></>}
                     {this.state.chosenClasses.map((val, i) => {
-                      console.log('val: ', val);
+                      // console.log('val: ', val);
 
                       return (
                         <div key={val.id} className="classSelection">

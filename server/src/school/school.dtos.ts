@@ -12,6 +12,12 @@ import {
   ValidateNested,
 } from 'class-validator';
 
+export class DeleteSchoolDto {
+  @IsDefined()
+  @IsNumber()
+  schoolId: number
+}
+
 export class GetSchoolSkip {
   @IsDefined()
   @IsString()
