@@ -49,7 +49,7 @@ export function nameValidation(name) {
     return "** שדה זה לא יכול להכיל יותר מ-30 תווים **";
   } else if (/[@#$%^&*()_+=[\]{};:,.\\|<>/~`0-9]/.test(name)) {
     return "** שדה זה לא יכול להכיל תווים מיוחדים **";
-  } else if (!/[A-Za-z\u0590-\u05EA"'-]/.test(name)) {
+  } else if (!/[A-Za-z\u0590-\u05EA"'-\.\s]/.test(name)) {
     return "** שדה זה לא יכול להכיל תווים מיוחדים **";
   } else {
     return "";
