@@ -63,7 +63,6 @@ class SignIn extends Component {
             this.props.history.push("/teacher/classes");
           } else {
             this.props.history.push("/superAdmin/games");
-            window.location.pathname = "/superAdmin/games";
           }
         } else {
           if (response.msg.status === 401) {
