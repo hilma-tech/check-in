@@ -94,7 +94,8 @@ export class TeacherController {
 
   @UseJwtAuth('superAdmin')
   @Post('/deleteTeacher')
-  async deleteTeacher(@Body() val: any) {
+  async deleteTeacher(@Body() val: TeacherIdDto) {
+    
     return await this.teacherService.deleteTeacher(val.teacherId)
   }
 
