@@ -19,8 +19,8 @@ export class School {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-]/)
-  @Column({ type: 'varchar', length: 50 })
+  @Matches(/[A-Za-z\u0590-\u05EA"'-]/)
+  @Column({ type: 'varchar', length: 30 })
   city: string;
 
   @OneToMany(

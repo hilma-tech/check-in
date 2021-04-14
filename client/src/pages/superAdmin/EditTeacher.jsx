@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import Select from "react-select";
 import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx";
-import ClassSelection from "../../component/superAdmin/ClassSelection.jsx";
+// import ClassSelection from "../../component/superAdmin/ClassSelection.jsx";
 import "../../style/superAdmin/form_style.scss";
 import "../../style/superAdmin/add_game_style.scss";
 import SelectStyle from "../../style/superAdmin/select_style";
@@ -55,6 +55,7 @@ class EditTeacher extends React.Component {
   }
 
   componentDidMount = async () => {
+    // console.log('this.props.teachers.chosenTeacher: ', this.props.teachers.chosenTeacher);
     if (this.props.teachers.chosenTeacher !== null) {
       let fields = this.props.teachers.chosenTeacher.classroomTeacher.map(
         (classroom) => {
@@ -83,6 +84,7 @@ class EditTeacher extends React.Component {
           const { data } = await axios.get("/api/classroom/getSchoolClasses", {
             params: { schoolId: this.props.teachers.chosenTeacher.school.id },
           });
+          // console.log('data: ', data);
           this.setState({
             allClasses: data,
             userName: this.props.teachers.chosenTeacher.username,
@@ -464,29 +466,31 @@ class EditTeacher extends React.Component {
                   <></>
                 ) : (
                     <>
-                      <label className="labelFields">כיתות:</label>
-                      {this.state.allClasses.length === 0 ? <p>אין כיתות לבית ספר זה</p> : <></>}
-                      {this.state.chosenClasses.map((val, i) => {
-                        return (
-                          <div key={val.id} className="classSelection">
-                            <Select
-                              className="classSelectionInAddTecher"
-                              styles={SelectStyle()}
-                              options={this.makeClassesOption(i)}
-                              onChange={this.chooseClass}
-                              defaultValue={{
-                                value: val.name,
-                                label: val.name,
-                              }}
-                            />
-                            <img
-                              className="removeFieldIcon"
-                              onClick={() => this.removeClass(i)}
-                              src="/icons/delete.svg"
-                            />
-                          </div>
-                        );
-                      })}
+                    <label className="labelFields">כיתות:</label>
+                    {this.state.allClasses.length === 0 ? <p>אין כיתות לבית ספר זה</p> : <></>}
+                    {this.state.chosenClasses.map((val, i) => {
+                      // console.log('val: ', val);
+
+                      return (
+                        <div key={val.id} className="classSelection">
+                          <Select
+                            className="classSelectionInAddTecher"
+                            styles={SelectStyle()}
+                            options={this.makeClassesOption(i)}
+                            onChange={this.chooseClass}
+                            defaultValue={{
+                              value: val.name,
+                              label: val.name,
+                            }}
+                          />
+                          <img
+                            className="removeFieldIcon"
+                            onClick={() => this.removeClass(i)}
+                            src="/icons/delete.svg"
+                          />
+                        </div>
+                      );
+                    })}
 
                       {this.state.allClasses.length ===
                         this.state.chosenClasses.length ? (

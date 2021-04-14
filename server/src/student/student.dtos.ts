@@ -55,6 +55,8 @@ export class ClassForSaveDto {
   id: number;
   @IsDefined()
   @IsString()
+  @Length(1, 30)
+  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-]/)
   name: string;
 }
 

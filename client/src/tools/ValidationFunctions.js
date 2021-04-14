@@ -49,7 +49,7 @@ export function nameValidation(name) {
     return "** שדה זה לא יכול להכיל יותר מ-30 תווים **";
   } else if (/[@#$%^&*()_+=[\]{};:,.\\|<>/~`0-9]/.test(name)) {
     return "** שדה זה לא יכול להכיל תווים מיוחדים **";
-  } else if (!/[A-Za-z\u0590-\u05EA"'-]/.test(name)) {
+  } else if (!/[A-Za-z\u0590-\u05EA"'-\.\s]/.test(name)) {
     return "** שדה זה לא יכול להכיל תווים מיוחדים **";
   } else {
     return "";
@@ -66,7 +66,9 @@ export function schoolNameValidation(name) {
     return "** נא למלא שדה זה **";
   } else if (/[@#$%^&*()_+=[\]{};:\\|<>/~`]/.test(name)) {
     return "** שדה זה לא יכול להכיל תווים מיוחדים **";
-  } else if (!/[A-Za-z\u0590-\u05EA0-9"'-]/.test(name)) {
+  } else if (/[0-9]/.test(name)) {
+    return "** שדה זה לא יכול להכיל מספרים **";
+  }else if (!/[A-Za-z\u0590-\u05EA"'-]/.test(name)) {
     return "** שדה זה לא יכול להכיל תווים מיוחדים **";
   } else {
     return "";
@@ -100,7 +102,7 @@ export function classNameValidation(name) {
   if (name === null || name.length === 0) {
     return "** נא למלא שדה זה **";
   } else if (name.length > 15) {
-    return "** שדה זה לא יכול להכיל יותר מ-10 תווים **";
+    return "** שדה זה לא יכול להכיל יותר מ-15 תווים **";
   } else if (name.trim().length === 0) {
     return "** שם זה לא תקין **";
   } else if (/[!@#$%^&*()_+,=[\]{};:\\|<>/?~`]/.test(name)) {

@@ -12,6 +12,12 @@ import {
   ValidateNested,
 } from 'class-validator';
 
+export class DeleteSchoolDto {
+  @IsDefined()
+  @IsNumber()
+  schoolId: number
+}
+
 export class GetSchoolSkip {
   @IsDefined()
   @IsString()
@@ -78,6 +84,7 @@ export class ClassInfoDto {
   id: number;
   @IsOptional()
   @IsString()
+  @Length(0, 15)
   @Matches(/[A-Za-z\u0590-\u05EA0-9"'-]/)
   name: string;
   @IsOptional()
@@ -94,7 +101,7 @@ export class AddSchoolInfoDto {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-]/)
+  @Matches(/[A-Za-z\u0590-\u05EA"'-]/)
   schoolName: string;
   @IsDefined()
   @IsString()
@@ -115,7 +122,7 @@ export class EditSchoolInfoDto {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-]/)
+  @Matches(/[A-Za-z\u0590-\u05EA"'-]/)
   schoolName: string;
   @IsDefined()
   @IsString()

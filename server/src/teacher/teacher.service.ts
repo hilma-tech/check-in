@@ -45,7 +45,7 @@ export class TeacherService extends UserService {
     let username = req.email;
     let password = req.password;
     let user: Partial<Teacher> = new Teacher({ username, password });
-    console.log('user: ', user);
+    // console.log('user: ', user);
     user.first_name = req.first_name
     user.last_name = req.last_name
     if (req.fields_data !== undefined || req.fields_data.length !== 0) {
@@ -63,7 +63,7 @@ export class TeacherService extends UserService {
     let userRole = new Role();
     userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
     user.roles = [userRole];
-    console.log('user: ', user);
+    // console.log('user: ', user);
     return await this.createUser<Teacher>(user);
   }
 

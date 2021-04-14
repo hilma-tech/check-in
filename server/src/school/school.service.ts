@@ -25,7 +25,7 @@ export class SchoolService {
     
   }
 
-  async deleteSchool(@Body() schoolId: string) {
+  async deleteSchool(@Body() schoolId: number) {
     await this.schoolRepository.delete(schoolId)
   }
 
