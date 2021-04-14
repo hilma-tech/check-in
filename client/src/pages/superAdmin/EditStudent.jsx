@@ -230,7 +230,6 @@ class EditStudent extends React.Component {
 
     //after all the validation we need to send the data to sql
     if (allOk) {
-      // console.log('this.state.password: ', this.state.password);
       let isChange = false
       if (this.state.schoolId !== this.props.students.chosenStudent.school.id ||
         this.state.studentFirstName !== this.props.students.chosenStudent.first_name ||

@@ -370,7 +370,6 @@ class AddTeacher extends Component {
                   <label className="labelFields">כיתות:</label>
                   <div>
                     {this.state.fieldsData.map((fieldObj, i) => {
-                      // console.log('i: ', i);
                       return (
                         
                         <div className="teacherFlexClass" key={fieldObj.id}>

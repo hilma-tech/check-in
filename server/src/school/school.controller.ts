@@ -10,7 +10,6 @@ export class SchoolController {
   @UseJwtAuth('superAdmin')
   @Post('/deleteSchool')
   async deleteSchool(@Body() val: DeleteSchoolDto) {
-    // console.log('val: ', typeof val.schoolId);
     // { schoolId: 53 }
     return await this.schoolService.deleteSchool(val.schoolId)
   }

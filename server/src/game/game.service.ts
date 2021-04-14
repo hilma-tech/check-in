@@ -96,12 +96,10 @@ export class GameService {
   // ]
 
   async getShowGameInfo(data: getCGFDto) {
-    // console.log('data: ', data);
     let temp = await this.gameRepository.find({
       relations: ['fields'],
       where: { id: data.game_id },
     });
-    // console.log('temp: ', temp);
     if (data.datatype === 'new') {
       let GameFields = await this.classroomFieldService.getClassroomGameFields(
         data,

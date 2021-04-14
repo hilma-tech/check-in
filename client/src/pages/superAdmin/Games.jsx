@@ -102,7 +102,6 @@ class Games extends Component {
   };
 
   render() {
-    console.log('here!!!!!!');
     let displayLoading = false;
     return (
       <>
