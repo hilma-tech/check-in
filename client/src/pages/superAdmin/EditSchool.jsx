@@ -79,17 +79,17 @@ class EditSchool extends Component {
 
   //Need to change but update the class name.
   //It's call when the user change the value.
-  chooseTeacher = (e) => {
-    let index = e.name
-    let value = e.value;
-    let selectKey = e.selectKey;
-    let id = e.id;
-    this.setState((prevState) => {
-      let tempData = [...prevState.classes]
-      tempData[index].chosenTeachers[selectKey] = { id: id, name: value }
-      return { classes: tempData }
-    })
-  };
+  // chooseTeacher = (e) => {
+  //   let index = e.name
+  //   let value = e.value;
+  //   let selectKey = e.selectKey;
+  //   let id = e.id;
+  //   this.setState((prevState) => {
+  //     let tempData = [...prevState.classes]
+  //     tempData[index].chosenTeachers[selectKey] = { id: id, name: value }
+  //     return { classes: tempData }
+  //   })
+  // };
 
   //Get the element and set the schoolName by the info that the user type.
   handleChange = (e) => {
@@ -108,20 +108,21 @@ class EditSchool extends Component {
     }
   };
 
-  addTeacherToClass = (classIndex) => {
+  addTeacherToClass = (classIndex, teacherInfo) => {
     this.setState((prevState) => {
-      let tempData = [...prevState.classes]
-      tempData[classIndex].chosenTeachers.push({ id: -1 * tempData[classIndex].chosenTeachers.length, name: 'בחר...' }) //id -1 did not exist and he wont show him
-      return { classes: tempData }
-    })
+      let tempData = [...prevState.classes];
+      teacherInfo.id = tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] === undefined ? 1 : tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] + 1
+      tempData[classIndex].chosenTeachers.push(teacherInfo); //id -1 did not exist and he wont show him
+      return { classes: tempData };
+    });
   };
 
   removeTeacherFromClass = (classIndex, teacherIndex) => {
     this.setState((prevState) => {
-      let tempData = [...prevState.classes]
-      tempData[classIndex].chosenTeachers.splice(teacherIndex, 1)
-      return { classes: tempData }
-    })
+      let tempData = [...prevState.classes];
+      tempData[classIndex].chosenTeachers.splice(teacherIndex, 1);
+      return { classes: tempData };
+    });
   };
 
   removeClass = (classIndex) => {
@@ -132,7 +133,7 @@ class EditSchool extends Component {
       let newExistClasses = prevState.existClasses.filter((classroom)=>{
         return classroom.id !== removedClassroom[0].id
       })
-      return { classes: tempData, removedClasses: prevState.removedClasses, removedClasses: newExistClasses}
+      return { classes: tempData, removedClasses: prevState.removedClasses, existClasses: newExistClasses}
     })
   };
 

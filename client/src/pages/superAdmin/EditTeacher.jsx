@@ -356,8 +356,8 @@ class EditTeacher extends React.Component {
             classes:
               classroomTeacher !== undefined
                 ? classroomTeacher.map((classInfo) => {
-                    return classInfo.name;
-                  })
+                  return classInfo.name;
+                })
                 : [],
           });
           this.props.history.goBack(); // after saving go back
@@ -439,8 +439,8 @@ class EditTeacher extends React.Component {
                 options={this.makeSchoolOption()}
                 styles={SelectStyle()}
                 placeholder={this.state.schoolName}
-                // defaultValue={{ value: "schoolName", label: String(this.state.schoolName) }}
-                // native={true}
+              // defaultValue={{ value: "schoolName", label: String(this.state.schoolName) }}
+              // native={true}
               />
               {/* רכז*/}
               <label className="labelFields">רכז:</label>
@@ -462,50 +462,50 @@ class EditTeacher extends React.Component {
               <div>
                 {this.state.schoolName.length === 0 ? (
                   <></>
-                  ) : (
+                ) : (
                     <>
-                    <label className="labelFields">כיתות:</label>
-                    {this.state.allClasses.length === 0 ? <p>אין כיתות לבית ספר זה</p> : <></>}
-                    {this.state.chosenClasses.map((val, i) => {
-                      return (
-                        <div key={val.id} className="classSelection">
-                          <Select
-                            className="classSelectionInAddTecher"
-                            styles={SelectStyle()}
-                            options={this.makeClassesOption(i)}
-                            onChange={this.chooseClass}
-                            defaultValue={{
-                              value: val.name,
-                              label: val.name,
-                            }}
-                          />
-                          <img
-                            className="removeFieldIcon"
-                            onClick={() => this.removeClass(i)}
-                            src="/icons/delete.svg"
-                          />
-                        </div>
-                      );
-                    })}
+                      <label className="labelFields">כיתות:</label>
+                      {this.state.allClasses.length === 0 ? <p>אין כיתות לבית ספר זה</p> : <></>}
+                      {this.state.chosenClasses.map((val, i) => {
+                        return (
+                          <div key={val.id} className="classSelection">
+                            <Select
+                              className="classSelectionInAddTecher"
+                              styles={SelectStyle()}
+                              options={this.makeClassesOption(i)}
+                              onChange={this.chooseClass}
+                              defaultValue={{
+                                value: val.name,
+                                label: val.name,
+                              }}
+                            />
+                            <img
+                              className="removeFieldIcon"
+                              onClick={() => this.removeClass(i)}
+                              src="/icons/delete.svg"
+                            />
+                          </div>
+                        );
+                      })}
 
-                    {this.state.allClasses.length ===
-                    this.state.chosenClasses.length ? (
-                      <></>
-                    ) : (
-                      <div
-                        className="addSomethingNew"
-                        onClick={this.addClassSelection}
-                      >
-                        <img
-                          className="addIcon"
-                          src={addicon}
-                          alt="add icon"
-                        ></img>
-                        <p className="addTitle">הוסף כיתה</p>
-                      </div>
-                    )}
-                  </>
-                )}
+                      {this.state.allClasses.length ===
+                        this.state.chosenClasses.length ? (
+                          <></>
+                        ) : (
+                          <div
+                            className="addSomethingNew"
+                            onClick={this.addClassSelection}
+                          >
+                            <img
+                              className="addIcon"
+                              src={addicon}
+                              alt="add icon"
+                            ></img>
+                            <p className="addTitle">הוסף כיתה</p>
+                          </div>
+                        )}
+                    </>
+                  )}
               </div>
             </form>
 
@@ -598,7 +598,13 @@ class EditTeacher extends React.Component {
 
             <div className="spacerFromSaveButton"></div>
             <div className="saveButtonBackground deletButtonTeacher">
-              <button className="deletButton" onClick={this.deleteTeacher}>
+              <button className="deletButton" onClick={() => {
+                this.props.errorMsg.setQuestion(
+                  "האם אתה בטוח שברצונך למחוק תלמיד זה?",
+                  this.deleteTeacher,
+                  "מחק"
+                )
+              }}>
                 מחק מורה
               </button>
               <button className="saveButton" onClick={this.validateInputFields}>

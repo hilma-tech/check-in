@@ -41,6 +41,8 @@ export class SchoolService {
   }
 
   async editSchool(@Body() info: EditSchoolInfoDto) {
+    console.log('info: ', info);
+
     let school = new School();
     school.id = info.id
     school.name = info.schoolName;

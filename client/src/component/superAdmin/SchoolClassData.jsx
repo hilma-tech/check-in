@@ -77,7 +77,7 @@ class SchoolClassData extends React.Component {
           /> */}
             <input
             defaultValue={this.props.classData.chosenTeachers[i].name}
-            onBlur={this.props.handleChange}
+            // onBlur={this.props.handleChange}
             name="teacher"
             className="editSchoolClassTeacherSelect inputFields"
             readOnly={true}
