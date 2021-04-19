@@ -182,7 +182,7 @@ class SchoolClassData extends React.Component {
             classIndex={this.props.classIndex} 
             addTeacherToClass={this.props.addExistTeacherToClass}
             existTeachers={this.props.existTeachers}
-            chosenTeachers={this.props.classData.chosenTeachers} />
+            chosenTeachers={this.props.classData.chosenTeachers === undefined ? [] : this.props.classData.chosenTeachers} />
             </Dialog>
           </div>
         </Fade>

@@ -17,12 +17,12 @@ export class SchoolService {
   ) {
     this.dx()
   }
-  
-  async dx(){
-    
-    let a = await this.schoolRepository.find({where: [{id: 8}], relations: ['classrooms']})
+
+  async dx() {
+
+    let a = await this.schoolRepository.find({ where: [{ id: 8 }], relations: ['classrooms'] })
     // console.log(a);
-    
+
   }
 
   async deleteSchool(@Body() schoolId: number) {
@@ -48,14 +48,10 @@ export class SchoolService {
     school.name = info.schoolName;
     school.city = info.schoolCity;
     let res = await this.schoolRepository.save(school);
-    if(info.removedClasses.length !== 0){
+    if (info.removedClasses.length !== 0) {
       await this.classroomService.removeClassesFromSchool(info.removedClasses)
     }
-    // if(info.existClasses.length === 0){
-    //   await this.classroomService.addClassesWithSchool(info, res)
-    // } else {
-      await this.classroomService.updateSchoolClasses(info.classes, info.existClasses, info.id)
-    // }
+    await this.classroomService.updateSchoolClasses(info.classes, info.existClasses, info.id)
     return res;
   }
 
@@ -98,7 +94,7 @@ export class SchoolService {
   }
   async searchSchools(val: SearchValDto) {
     let searchresult = await this.schoolRepository.find({
-      where: [{city: Like("%" + val.val.toLowerCase() + "%")}, {name: Like("%" + val.val.toLowerCase() + "%")}]
+      where: [{ city: Like("%" + val.val.toLowerCase() + "%") }, { name: Like("%" + val.val.toLowerCase() + "%") }]
     });
     return searchresult
   }
