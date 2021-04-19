@@ -55,22 +55,26 @@ export class ChosenTeacherDto {
   id: number;
   @IsOptional()
   @IsString()
-  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-/s]/)
+  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-\s]/)
   name: string;
   @IsOptional()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-\s]+$/)
   first_name: string;
   @IsOptional()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-\s]+$/)
   last_name: string;
   @IsOptional()
   @IsString()
   @IsEmail()
   email: string;
+  @IsOptional()
+  @IsString()
+  @IsEmail()
+  username: string;
   @IsOptional()
   @IsString()
   @Length(8, 15)
@@ -113,6 +117,11 @@ export class AddSchoolInfoDto {
   @ValidateNested({ each: true })
   @Type(() => ClassInfoDto)
   classes: ClassInfoDto[];
+  @IsDefined()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ChosenTeacherDto)
+  existTeachers: ChosenTeacherDto[];
 }
 
 export class EditSchoolInfoDto {

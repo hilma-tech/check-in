@@ -25,6 +25,7 @@ class AddSchool extends React.Component {
       schoolCity: "",
       //List of all the classes in the school.
       classes: [],
+      existTeachers: []
     };
   }
   /*
@@ -41,6 +42,7 @@ class AddSchool extends React.Component {
           name: "",
           // numTeachers: 0,
           chosenTeachers: [],
+          // existChosenTeachers: [],
           classNameError: { toShow: "none", mess: "" },
         },
       ];
@@ -57,7 +59,7 @@ class AddSchool extends React.Component {
   //   let id = e.id;
   //   this.setState((prevState) => {
   //     let tempData = [...prevState.classes];
-  //     tempData[index].chosenTeachers[selectKey] = { id: id, name: value };
+  //     tempData[index].existChosenTeachers[selectKey] = { id: id, name: value };
   //     return { classes: tempData };
   //   });
   // };
@@ -78,24 +80,25 @@ class AddSchool extends React.Component {
   };
 
   //כשמו כן הוא
-  // addTeacherToClass = (classIndex) => {
-  //   this.setState((prevState) => {
-  //     let tempData = [...prevState.classes];
-  //     tempData[classIndex].chosenTeachers.push({
-  //       id: -1 * tempData[classIndex].chosenTeachers.length,
-  //       name: "בחר...",
-  //     }); //id -1 did not exist and he wont show him
-  //     return { classes: tempData };
-  //   });
-  // };
+  addExistTeacherToClass = (classIndex, teacherInfo) => {
+    this.setState((prevState) => {
+      let tempData = [...prevState.classes];
+      tempData[classIndex].chosenTeachers.push(teacherInfo); //id -1 did not exist and he wont show him
+      return { classes: tempData };
+    });
+  };
 
     //כשמו כן הוא
   addNewTeacherToClass = (classIndex, teacherInfo) => {
+    console.log('teacherInfo: ', teacherInfo);
     this.setState((prevState) => {
       let tempData = [...prevState.classes];
-      teacherInfo.id = tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] === undefined ? 1 : tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] + 1
+      teacherInfo.id = prevState.existTeachers[prevState.existTeachers.length - 1] === undefined ? 1 : prevState.existTeachers[prevState.existTeachers.length - 1].id + 1
+      console.log('prevState.existTeachers[prevState.existTeachers.length - 1]: ', prevState.existTeachers[prevState.existTeachers.length - 1]);
+      console.log('teacherInfo.id : ', teacherInfo.id );
       tempData[classIndex].chosenTeachers.push(teacherInfo); //id -1 did not exist and he wont show him
-      return { classes: tempData };
+      prevState.existTeachers.push(teacherInfo)
+      return { classes: tempData, existTeachers: prevState.existTeachers };
     });
   };
 
@@ -107,6 +110,15 @@ class AddSchool extends React.Component {
       return { classes: tempData };
     });
   };
+
+   //כשמו כן הוא
+  //  removeExistTeacherFromClass = (classIndex, teacherIndex) => {
+  //   this.setState((prevState) => {
+  //     let tempData = [...prevState.classes];
+  //     tempData[classIndex].existChosenTeachers.splice(teacherIndex, 1);
+  //     return { classes: tempData };
+  //   });
+  // };
 
   //כשמו כן הוא
   removeClass = (classIndex) => {
@@ -133,7 +145,6 @@ class AddSchool extends React.Component {
       allOk = false;
     } else {
       this.setState({ schoolNameError: { toShow: "none", mess: "" } });
-      allOk = true;
     }
 
     // ----------school city validation-------------------
@@ -147,7 +158,6 @@ class AddSchool extends React.Component {
       allOk = false;
     } else {
       this.setState({ schoolCityError: { toShow: "none", mess: "" } });
-      allOk = true;
     }
 
     // ----------classes name validation-------------------
@@ -161,12 +171,25 @@ class AddSchool extends React.Component {
         });
         allOk = false;
       } else {
-        this.setState((prevState) => {
-          prevState.classes[i].classNameError.toShow = "none";
-          prevState.classes[i].classNameError.mess = "";
-          return { classes: prevState.classes };
-        });
-        allOk = true;
+        for(let z=0; z<i;z++){
+          if(this.state.classes[i].name === this.state.classes[z].name){
+            nameClassMess = "** שם כיתה זה כבר קיים. אנא נסה שם אחר. **"
+          }
+        }
+        if (nameClassMess.length !== 0) {
+          this.setState((prevState) => {
+            prevState.classes[i].classNameError.toShow = "inline-block";
+            prevState.classes[i].classNameError.mess = nameClassMess;
+            return { classes: prevState.classes };
+          });
+          allOk = false;
+        } else{
+          this.setState((prevState) => {
+            prevState.classes[i].classNameError.toShow = "none";
+            prevState.classes[i].classNameError.mess = "";
+            return { classes: prevState.classes };
+          });
+        }
       }
     }
 
@@ -175,14 +198,6 @@ class AddSchool extends React.Component {
       try {
         let { data } = await axios.post("/api/school/addSchool", 
           this.state
-          // username: this.state.userName,
-          // password: this.state.password,
-          // firstName: this.state.schoolFirstName,
-          // lastName: this.state.schoolLastName,
-          // classrooms: this.state.chosenClasses.filter((classroom)=>{
-            //   return classroom.name !== 'שייך לכיתה'
-            // }),
-            // schoolId: this.state.schoolId
           );
         if (data) {
           this.props.schools.addSchool({
@@ -252,9 +267,12 @@ class AddSchool extends React.Component {
                   handleChange={this.handleChange}
                   removeClass={this.removeClass}
                   // canAddExistTeacher={false}
-                  addTeacherToClass={this.addNewTeacherToClass}
-                  // chooseTeacher={this.chooseTeacher}
+                  addNewTeacherToClass={this.addNewTeacherToClass}
                   removeTeacherFromClass={this.removeTeacherFromClass}
+                  addExistTeacherToClass={this.addExistTeacherToClass}
+                  // removeExistTeacherFromClass={this.removeExistTeacherFromClass}
+                  // chooseTeacher={this.chooseTeacher}
+                  existTeachers={this.state.existTeachers}
                 />
               );
             })

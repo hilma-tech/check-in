@@ -23,7 +23,6 @@ export class SchoolController {
   @UseJwtAuth('superAdmin')
   @Post('/addSchool')
   async addSchool(@Body() info: AddSchoolInfoDto) {
-    
     return await this.schoolService.addSchool(info);
   }
 

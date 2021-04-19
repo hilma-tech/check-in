@@ -27,7 +27,8 @@ class EditSchool extends Component {
       //List of all the classes in the school. The numTeachers represent the number of teachers in the class.
       classes: [],
       removedClasses: [],
-      existClasses: []
+      existClasses: [],
+      existTeachers: []
     };
   }
 
@@ -40,6 +41,7 @@ class EditSchool extends Component {
         schoolCity: this.props.schools.chosenSchool.city,
         classes: this.props.schools.chosenSchool.classrooms,
         existClasses: this.props.schools.chosenSchool.classrooms,
+        existTeachers: this.props.schools.chosenSchool.teachers
       });
     }
   }
@@ -70,6 +72,7 @@ class EditSchool extends Component {
           name: '',
           numTeachers: 1,
           chosenTeachers: [],
+          // existChosenTeachers: [],
           classNameError: { toShow: 'none', mess: '' },
         },
       ];
@@ -86,7 +89,7 @@ class EditSchool extends Component {
   //   let id = e.id;
   //   this.setState((prevState) => {
   //     let tempData = [...prevState.classes]
-  //     tempData[index].chosenTeachers[selectKey] = { id: id, name: value }
+  //     tempData[index].existChosenTeachers[selectKey] = { id: id, name: value }
   //     return { classes: tempData }
   //   })
   // };
@@ -108,11 +111,42 @@ class EditSchool extends Component {
     }
   };
 
-  addTeacherToClass = (classIndex, teacherInfo) => {
+  addNewTeacherToClass = async (classIndex, teacherInfo) => {
+    try{
+      let {data} = await axios.post("/api/teacher/register", {
+        first_name: teacherInfo.first_name,
+        last_name: teacherInfo.last_name,
+        school_id: this.props.schools.chosenSchool.id,
+        fields_data: [],
+        email: teacherInfo.email,
+        password: teacherInfo.password,
+        rakaz: "false",
+      })
+      data.name = data.first_name + ' ' + data.last_name
+      this.setState((prevState) => {
+        let tempData = [...prevState.classes];
+        // teacherInfo.id = tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] === undefined ? 1 : tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] + 1
+        tempData[classIndex].chosenTeachers.push(data); //id -1 did not exist and he wont show him
+        prevState.existTeachers.push(data)
+        return { classes: tempData, existTeachers: prevState.existTeachers };
+      });
+    } catch(err){
+      this.setState({ savingInfo: false });
+      if (err.status === 500) {
+        this.props.errorMsg.setErrorMsg(
+          "קיים כבר משתמש עם האימייל הזה. נסו שוב."
+        );
+      } else {
+        this.props.errorMsg.setErrorMsg('שגיאה בשרת, מורה לא נשמר, נסו שוב.');
+      }
+    }
+  };
+
+   //כשמו כן הוא
+   addExistTeacherToClass = (classIndex, teacherInfo) => {
     this.setState((prevState) => {
       let tempData = [...prevState.classes];
-      teacherInfo.id = tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] === undefined ? 1 : tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] + 1
-      tempData[classIndex].chosenTeachers.push(teacherInfo); //id -1 did not exist and he wont show him
+      tempData[classIndex].chosenTeachers.push(teacherInfo);
       return { classes: tempData };
     });
   };
@@ -124,6 +158,14 @@ class EditSchool extends Component {
       return { classes: tempData };
     });
   };
+
+  // removeExistTeacherFromClass = (classIndex, teacherIndex) => {
+  //   this.setState((prevState) => {
+  //     let tempData = [...prevState.classes];
+  //     tempData[classIndex].existChosenTeachers.splice(teacherIndex, 1);
+  //     return { classes: tempData };
+  //   });
+  // };
 
   removeClass = (classIndex) => {
     this.setState((prevState) => {
@@ -152,7 +194,6 @@ class EditSchool extends Component {
       allOk = false;
     } else {
       this.setState({ schoolNameError: { toShow: "none", mess: "" } });
-      allOk = true;
     }
 
     // ----------school city validation-------------------
@@ -166,7 +207,6 @@ class EditSchool extends Component {
       allOk = false;
     } else {
       this.setState({ schoolCityError: { toShow: "none", mess: "" } });
-      allOk = true;
     }
 
     // ----------classes name validation-------------------
@@ -180,12 +220,25 @@ class EditSchool extends Component {
         });
         allOk = false;
       } else {
-        this.setState((prevState) => {
-          prevState.classes[i].classNameError.toShow = "none";
-          prevState.classes[i].classNameError.mess = "";
-          return { classes: prevState.classes };
-        });
-        allOk = true;
+        for(let z=0; z<i;z++){
+          if(this.state.classes[i].name === this.state.classes[z].name){
+            nameClassMess = "** שם כיתה זה כבר קיים. אנא נסה שם אחר. **"
+          }
+        }
+        if (nameClassMess.length !== 0) {
+          this.setState((prevState) => {
+            prevState.classes[i].classNameError.toShow = "inline-block";
+            prevState.classes[i].classNameError.mess = nameClassMess;
+            return { classes: prevState.classes };
+          });
+          allOk = false;
+        } else{
+          this.setState((prevState) => {
+            prevState.classes[i].classNameError.toShow = "none";
+            prevState.classes[i].classNameError.mess = "";
+            return { classes: prevState.classes };
+          });
+        }
       }
     }
 
@@ -266,14 +319,18 @@ class EditSchool extends Component {
                   return (
                     <SchoolClassData
                       key={classData.id}
-                      canAddExistTeacher={true}
                       classData={classData}
                       classIndex={classIndex}
-                      addTeacherToClass={this.addTeacherToClass}
                       handleChange={this.handleChange}
-                      chooseTeacher={this.chooseTeacher}
-                      removeTeacherFromClass={this.removeTeacherFromClass}
                       removeClass={this.removeClass}
+                      // canAddExistTeacher={true}
+                      addNewTeacherToClass={this.addNewTeacherToClass}
+                      removeTeacherFromClass={this.removeTeacherFromClass}
+                      addExistTeacherToClass={this.addExistTeacherToClass}
+                      // removeExistTeacherFromClass={this.removeExistTeacherFromClass}
+                      // chooseTeacher={this.chooseTeacher}
+                      existTeachers={this.state.existTeachers}
+    
                     />
                   );
                 })

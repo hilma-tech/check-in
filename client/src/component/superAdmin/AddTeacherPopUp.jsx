@@ -146,8 +146,9 @@ class AddTeacherPopUp extends Component {
             first_name: this.state.teacherFirstName,
             last_name: this.state.teacherLastName,
             name: this.state.teacherFirstName + " " + this.state.teacherLastName ,
-            email: this.state.email ,
-            password: this.state.password 
+            email: this.state.email,
+            password: this.state.password,
+            username: this.state.email
         })
         this.props.closeFunc()
     };

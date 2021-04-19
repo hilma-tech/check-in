@@ -5,7 +5,7 @@ import { ClassroomFieldService } from 'src/classroom-field/classroom-field.servi
 import { Repository } from 'typeorm';
 import { ClassroomGameDto, RemoveClassroomGameDto } from './classroom.dtos';
 import { Classroom } from './classroom.entity';
-import { ClassInfoDto, EditSchoolInfoDto } from 'src/school/school.dtos';
+import { AddSchoolInfoDto, ClassInfoDto, EditSchoolInfoDto } from 'src/school/school.dtos';
 import { School } from 'src/school/school.entity';
 import { Student } from 'src/student/student.entity';
 import { TeacherService } from 'src/teacher/teacher.service';
@@ -37,23 +37,30 @@ export class ClassroomService {
   //   ]
   // }
 
-  async addClassesWithSchool(@Body() info: EditSchoolInfoDto, res: School) {
-    let i = 0;
-    for (i = 0; i < info.classes.length; i++) {
+  async addClassesWithSchool(@Body() info: AddSchoolInfoDto, res: School) {
+    let savedTeacher = []
+    for(let i = 0; i < info.existTeachers.length; i++){
+      let ans = await this.teacherService.addTeacher({
+        first_name: info.existTeachers[i].first_name ,
+        last_name: info.existTeachers[i].last_name ,
+        school_id: res.id ,
+        email: info.existTeachers[i].email,
+        password: info.existTeachers[i].password ,
+        rakaz: "false",
+        fields_data: []
+      })
+      savedTeacher.push({id: info.existTeachers[i].id, data: ans})
+    }
+    for (let i = 0; i < info.classes.length; i++) {
       let classroom = new Classroom();
       classroom.name = info.classes[i].name;
       classroom.school_id = res.id;
       let classroomInf = await this.classroomRepository.save(classroom)
       for (let z = 0; z < info.classes[i].chosenTeachers.length; z++) {
-        let ans = await this.teacherService.addTeacher({
-          first_name: info.classes[i].chosenTeachers[z].first_name ,
-          last_name: info.classes[i].chosenTeachers[z].last_name ,
-          school_id: res.id ,
-          email: info.classes[i].chosenTeachers[z].email,
-          password: info.classes[i].chosenTeachers[z].password ,
-          rakaz: "false",
-          fields_data: [{id: classroomInf.id, value: classroomInf.name, classId: classroomInf.id}]
-        })
+        let teacher = (savedTeacher.filter((teacherInf)=>{
+          return info.classes[i].chosenTeachers[z].id === teacherInf.id
+        }))[0]
+        this.addTeacherToClassroom(classroomInf.id, teacher.data)
       }
     }
     return true;

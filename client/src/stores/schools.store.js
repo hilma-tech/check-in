@@ -100,6 +100,9 @@ class Schools {
           return {
             id: teacher.id,
             name: teacher.first_name + " " + teacher.last_name,
+            first_name: teacher.first_name, 
+            last_name: teacher.last_name,
+            email: teacher.email
           };
         });
         return classInfo;

@@ -51,11 +51,11 @@ export class SchoolService {
     if(info.removedClasses.length !== 0){
       await this.classroomService.removeClassesFromSchool(info.removedClasses)
     }
-    if(info.existClasses.length === 0){
-      await this.classroomService.addClassesWithSchool(info, res)
-    } else {
+    // if(info.existClasses.length === 0){
+    //   await this.classroomService.addClassesWithSchool(info, res)
+    // } else {
       await this.classroomService.updateSchoolClasses(info.classes, info.existClasses, info.id)
-    }
+    // }
     return res;
   }
 
@@ -66,6 +66,7 @@ export class SchoolService {
     let schools = await this.schoolRepository.find({
       skip: Number(skipON.schoolsLength),
       take: 50,
+      relations: ['teachers']
     });
     return { schoolsInfo: schools, haveMoreSchools: haveMoreSchools };
   }
