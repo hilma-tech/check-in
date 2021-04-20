@@ -1,20 +1,39 @@
-import { Body, Controller, Get, Post, Query, Redirect, Res } from '@nestjs/common';
-import { UserService, RequestUser, Role, UseJwtAuth, UseLocalAuth } from '@hilma/auth-nest';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  Redirect,
+  Res,
+} from '@nestjs/common';
+import {
+  UserService,
+  RequestUser,
+  Role,
+  UseJwtAuth,
+  UseLocalAuth,
+} from '@hilma/auth-nest';
 import { Teacher } from './teacher.entity';
 import { TeacherService } from './teacher.service';
 import { Classroom } from 'src/classroom/classroom.entity';
-import { TeacherIdDto, GetTeacherSkip, GetClassSkip, TeacherValDto, TeacherRegisterDto } from './teacher.dtos';
+import {
+  TeacherIdDto,
+  GetTeacherSkip,
+  GetClassSkip,
+  TeacherValDto,
+  TeacherRegisterDto,
+} from './teacher.dtos';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { env } from 'process';
-
 
 @Controller('api/teacher')
 export class TeacherController {
   constructor(
     private readonly userService: UserService,
     private teacherService: TeacherService,
-    // private classroomService: ClassroomService,
-  ) {
+  ) // private classroomService: ClassroomService,
+  {
     // this.register({username: 'teacher2@gmail.com', password: 'teacher1'})
   }
 
@@ -47,7 +66,7 @@ export class TeacherController {
   @UseJwtAuth('superAdmin')
   @Post('/register')
   async register(@Body() req: TeacherRegisterDto) {
-    return await this.teacherService.addTeacher(req)
+    return await this.teacherService.addTeacher(req);
     // let username = req.email;
     // let password = req.password;
     // let user: Partial<Teacher> = new Teacher({ username, password });
@@ -69,34 +88,32 @@ export class TeacherController {
     // userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
     // user.roles = [userRole];
     // return await this.userService.createUser<Teacher>(user);
-
   }
 
-  @UseJwtAuth('superAdmin')
-  @Post('/changeteacherpass')
-  async changePass(@Body() newPass: any) {
-      return await this.teacherService.changeTeacherPassword(newPass)
-  }
-
-  
-  
+  // @UseJwtAuth('superAdmin')
+  // @Post('/changeteacherpass')
+  // async changePass(@Body() newPass: any) {
+  //   return await this.teacherService.changeTeacherPassword(newPass.username);
+  // }
 
   @UseJwtAuth('superAdmin')
   @Post('/editTeacher')
   async editTeacher(@Body() req: any) {
     try {
+      if (req.password !== 0) {
+        await this.teacherService.changeTeacherPassword(req.username, req.password);
+      }
       return await this.teacherService.editTeacher(req);
     } catch (e) {
       console.log('e: ', e);
-      return false
+      return false;
     }
   }
 
   @UseJwtAuth('superAdmin')
   @Post('/deleteTeacher')
   async deleteTeacher(@Body() val: TeacherIdDto) {
-    
-    return await this.teacherService.deleteTeacher(val.teacherId)
+    return await this.teacherService.deleteTeacher(val.teacherId);
   }
 
   @UseJwtAuth('superAdmin')
@@ -107,14 +124,14 @@ export class TeacherController {
 
   @Get('/Verify')
   async MakeLogInAvailable(@Query() Token: any, @Res() res: any) {
-    await this.teacherService.verifyEmailByToken(Token.token)
-    var redirectTo = `${env.HOST}/initialPage`//to be replaced with real domain
-    res.redirect(redirectTo)
+    await this.teacherService.verifyEmailByToken(Token.token);
+    var redirectTo = `${env.HOST}/initialPage`; //to be replaced with real domain
+    res.redirect(redirectTo);
   }
 
   @UseJwtAuth('superAdmin')
   @Get('/searchTeacherSuperadmin')
   async searchTeacher(@Query() val: TeacherValDto) {
-    return await this.teacherService.searchInTeacher(val.val)
+    return await this.teacherService.searchInTeacher(val.val);
   }
 }

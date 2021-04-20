@@ -318,19 +318,20 @@ class EditTeacher extends React.Component {
     //after all the validation we need to send the data to sql
     if (allOk) {
       try {
-        if (this.state.passDisplay.length !== 0) {
-          await this.updatePass();
-        }
+        // if (this.state.passDisplay.length !== 0) {
+        //   await this.updatePass();
+        // }
         let notEmptyClasses = this.state.chosenClasses.filter((classroom) => {
           return classroom.name !== "שייך לכיתה";
         });
         let onlyRightFields = notEmptyClasses.map((classroom) => {
           return { id: classroom.id, name: classroom.name };
         });
-        // console.log('onlyRightFields: ', onlyRightFields);
-
-        // console.log("this.state.passDisplay: ", this.state.passDisplay);
-
+        // await axios.post("/api/teacher/changeteacherpass", {
+        //   username: this.state.email,
+        //   password: this.state.passDisplay,
+        // });
+        
         let { data } = await axios.post("/api/teacher/editTeacher", {
           id: this.props.teachers.chosenTeacher.id,
           username: this.state.email,
@@ -344,7 +345,7 @@ class EditTeacher extends React.Component {
           return classroom.name !== "שייך לכיתה";
         });
         // console.log('data: ', data);
-
+        
         if (data) {
           this.props.teachers.updateTeacher({
             first_name: this.state.teacherFirstName,
@@ -356,12 +357,13 @@ class EditTeacher extends React.Component {
             id: this.props.teachers.chosenTeacher.id,
             classroomTeacher: classroomTeacher,
             classes:
-              classroomTeacher !== undefined
-                ? classroomTeacher.map((classInfo) => {
-                    return classInfo.name;
-                  })
-                : [],
+            classroomTeacher !== undefined
+            ? classroomTeacher.map((classInfo) => {
+              return classInfo.name;
+            })
+            : [],
           });
+          this.closePassChange();
           this.props.history.goBack(); // after saving go back
         } else {
           this.props.errorMsg.setErrorMsg(

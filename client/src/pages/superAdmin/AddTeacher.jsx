@@ -388,7 +388,7 @@ class AddTeacher extends Component {
                             onClick={() => this.removeClass(i)}
 
                             src="/icons/delete.svg"
-                            style={{ height: "20px", marginTop: "15px" }}
+                            // style={{ height: "20px", marginTop: "15px" }}
                           />
                           </div>
                       );
