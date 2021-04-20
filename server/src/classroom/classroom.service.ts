@@ -5,10 +5,11 @@ import { ClassroomFieldService } from 'src/classroom-field/classroom-field.servi
 import { Repository } from 'typeorm';
 import { ClassroomGameDto, RemoveClassroomGameDto } from './classroom.dtos';
 import { Classroom } from './classroom.entity';
-import { ClassInfoDto, EditSchoolInfoDto } from 'src/school/school.dtos';
+import { AddSchoolInfoDto, ClassInfoDto, EditClassInfoDto, EditSchoolInfoDto } from 'src/school/school.dtos';
 import { School } from 'src/school/school.entity';
 import { Student } from 'src/student/student.entity';
 import { TeacherService } from 'src/teacher/teacher.service';
+import { Teacher } from 'src/teacher/teacher.entity';
 
 @Injectable()
 export class ClassroomService {
@@ -22,7 +23,7 @@ export class ClassroomService {
     private teacherService: TeacherService,
 
     protected classroomfieldService: ClassroomFieldService,
-  ) {}
+  ) { }
 
 
   // res:  School { name: 'לחגדכ', city: 'ךצכלכ', id: 42 }
@@ -37,49 +38,60 @@ export class ClassroomService {
   //   ]
   // }
 
-  async addClassesWithSchool(@Body() info: EditSchoolInfoDto, res: School) {
-    let i = 0;
-    for (i = 0; i < info.classes.length; i++) {
+  async addClassesWithSchool(@Body() info: AddSchoolInfoDto, res: School) {
+    let savedTeacher = []
+    for (let i = 0; i < info.existTeachers.length; i++) {
+      let ans = await this.teacherService.addTeacher({
+        first_name: info.existTeachers[i].first_name,
+        last_name: info.existTeachers[i].last_name,
+        school_id: res.id,
+        email: info.existTeachers[i].email,
+        password: info.existTeachers[i].password,
+        rakaz: "false",
+        fields_data: []
+      })
+      savedTeacher.push({ id: info.existTeachers[i].id, data: ans })
+    }
+    for (let i = 0; i < info.classes.length; i++) {
       let classroom = new Classroom();
       classroom.name = info.classes[i].name;
       classroom.school_id = res.id;
       let classroomInf = await this.classroomRepository.save(classroom)
-      // console.log('info.classes[i].chosenTeachers: ', info.classes[i].chosenTeachers);
       for (let z = 0; z < info.classes[i].chosenTeachers.length; z++) {
-        // console.log('info.classes[i].chosenTeachers[z]: ', info.classes[i].chosenTeachers[z]);
-        let ans = await this.teacherService.addTeacher({
-          first_name: info.classes[i].chosenTeachers[z].first_name ,
-          last_name: info.classes[i].chosenTeachers[z].last_name ,
-          school_id: res.id ,
-          email: info.classes[i].chosenTeachers[z].email,
-          password: info.classes[i].chosenTeachers[z].password ,
-          rakaz: "false",
-          fields_data: [{id: classroomInf.id, value: classroomInf.name, classId: classroomInf.id}]
-        })
-        // console.log('ans: ', ans);
+        let teacher = (savedTeacher.filter((teacherInf) => {
+          return info.classes[i].chosenTeachers[z].id === teacherInf.id
+        }))[0]
+        this.addTeacherToClassroom(classroomInf.id, teacher.data)
       }
     }
     return true;
   }
 
-  async removeClassesFromSchool(classes: ClassInfoDto[]) {
+  async removeClassesFromSchool(classes: EditClassInfoDto[]) {
     for (let i = 0; i < classes.length; i++) {
       await this.classroomRepository.delete({ id: classes[i].id })
     }
     return true;
   }
 
-  async updateSchoolClasses(classes: ClassInfoDto[], existClasses: ClassInfoDto[], schoolId: number) {
+  async updateSchoolClasses(classes: EditClassInfoDto[], existClasses: EditClassInfoDto[], schoolId: number) {
     for (let i = 0; i < classes.length; i++) {
       let ifExist = existClasses.filter((classroom) => { return classroom.id === classes[i].id })
+      let classroom = new Classroom();
+      classroom.name = classes[i].name;
+      classroom.teachers = []
+      for (let z = 0; z < classes[i].chosenTeachers.length; z++) {
+        let teacher = new Teacher();
+        teacher.id = classes[i].chosenTeachers[z].id
+        teacher.last_name = classes[i].chosenTeachers[z].last_name
+        teacher.first_name = classes[i].chosenTeachers[z].first_name
+        teacher.username = classes[i].chosenTeachers[z].username
+        classroom.teachers.push(teacher)
+      }
       if (ifExist.length === 0) {
-        let classroom = new Classroom();
-        classroom.name = classes[i].name;
         classroom.school_id = schoolId;
         await this.classroomRepository.save(classroom)
       } else {
-        let classroom = new Classroom();
-        classroom.name = classes[i].name;
         classroom.id = classes[i].id
         await this.classroomRepository.save(classroom)
       }

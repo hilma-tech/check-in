@@ -1,0 +1,26 @@
+.noTeacherCETPU{
+    color: #043163;
+    margin-right: 7vw;
+    margin-top: 0;
+}
+
+.existTeacherOptionInfo{
+    display: flex;
+    align-items: center;
+    background: rgba(188, 188, 203, 0.2) 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    font-size: 1.5vw;
+    color: #043163;
+    height: 35px;
+    margin-right: 7vw;
+    margin-bottom: 1vh;
+    width: 75vw;
+    .existTeacherOptionName{
+        width: 32vw;
+        padding-right:  1vw;
+        color: #043163;
+    }
+    .existTeacherOptionEmail{
+        color: #043163;
+    }
+}
