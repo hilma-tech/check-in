@@ -64,7 +64,7 @@ export class ClassroomService {
         this.addTeacherToClassroom(classroomInf.id, teacher.data)
       }
     }
-    return true;
+    return savedTeacher;
   }
 
   async removeClassesFromSchool(classes: EditClassInfoDto[]) {

@@ -94,8 +94,6 @@ class AddSchool extends React.Component {
     this.setState((prevState) => {
       let tempData = [...prevState.classes];
       teacherInfo.id = prevState.existTeachers[prevState.existTeachers.length - 1] === undefined ? 1 : prevState.existTeachers[prevState.existTeachers.length - 1].id + 1
-      console.log('prevState.existTeachers[prevState.existTeachers.length - 1]: ', prevState.existTeachers[prevState.existTeachers.length - 1]);
-      console.log('teacherInfo.id : ', teacherInfo.id );
       tempData[classIndex].chosenTeachers.push(teacherInfo); //id -1 did not exist and he wont show him
       prevState.existTeachers.push(teacherInfo)
       return { classes: tempData, existTeachers: prevState.existTeachers };
@@ -197,13 +195,15 @@ class AddSchool extends React.Component {
     if (allOk) {
       try {
         let { data } = await axios.post("/api/school/addSchool", 
-          this.state
-          );
+        this.state
+        );
+        console.log('data: ', data);
         if (data) {
           this.props.schools.addSchool({
             city: this.state.schoolCity,
             name: this.state.schoolName,
             id: data.id,
+            teachers: data.teachers
           })
       this.props.history.goBack(); // after saving go back
     }
