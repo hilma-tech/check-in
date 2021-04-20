@@ -12,6 +12,10 @@
     opacity: 0.5;
     font-size: 5vw;
     margin: 0;
+    padding-left: 0.25vw;
+    text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .blueSideBarUserName {
