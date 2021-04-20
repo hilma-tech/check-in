@@ -1,3 +1,5 @@
+@import "../general_style.scss";
+
 .noTeacherCETPU{
     color: #043163;
     margin-right: 7vw;
@@ -5,6 +7,7 @@
 }
 
 .existTeacherOptionInfo{
+    @include mouse(point);
     display: flex;
     align-items: center;
     background: rgba(188, 188, 203, 0.2) 0% 0% no-repeat padding-box;
