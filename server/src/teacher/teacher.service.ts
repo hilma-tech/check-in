@@ -65,13 +65,13 @@ export class TeacherService extends UserService {
     return await this.createUser<Teacher>(user);
   }
 
-  async changeTeacherPassword(userInfo) {
-    const hash = bcrypt.hashSync(userInfo.password, SALT);
+  async changeTeacherPassword(username, password) {
+    const hash = bcrypt.hashSync(password, SALT);
     return await this.userRepository
       .createQueryBuilder()
       .update(User)
       .set({ password: hash })
-      .where({ username: userInfo.username })
+      .where({ username: username })
       .execute();
   }
 

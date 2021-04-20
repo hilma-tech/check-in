@@ -97,16 +97,22 @@
   margin-top: 0.5vh;
 }
 
-.removeTeachersClass {
-  @include mouse(point);
-  margin-right: 1vw;
-  margin-bottom: 1.75vw;
-}
-
 .teacherFlexClass {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  // height: 4vw
 }
+
+.removeTeachersClass {
+  @include mouse(point);
+  margin-right: 1vw;
+  height: 16px;
+  // margin-top: 0.01vw;
+  // margin-bottom: 0.5;
+}
+
 
 // img {
 //   @include imgCover(false);
