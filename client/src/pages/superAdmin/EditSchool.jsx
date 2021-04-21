@@ -345,7 +345,17 @@ class EditSchool extends Component {
             </button>
           <div className="spacerFromSaveButton"></div>
           <div className="saveButtonBackground additionPage">
-            <button className="deletButton" onClick={this.deleteSchool}>מחק בית ספר</button>
+            <button 
+            className="deletButton" 
+            onClick={(e) => {
+              e.preventDefault()
+              this.props.errorMsg.setQuestion(
+                "האם אתה בטוח שברצונך למחוק בית ספר זה?",
+                ()=>{this.deleteSchool(e)},
+                "מחק"
+              );
+            }}
+            >מחק בית ספר</button>
             <button className="saveButton" onClick={this.saveData}>
               שמור
             </button>

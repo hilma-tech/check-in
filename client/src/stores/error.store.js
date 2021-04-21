@@ -33,7 +33,12 @@ class ErrorMsg {
     this.arrErrorMsg = [];
     this.showMsg = false;
     this.question = false;
-    this.approveFunction = () => { };
+    try {
+      
+      this.approveFunction = () => { };
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   //activates the popup, its an error message

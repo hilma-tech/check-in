@@ -593,7 +593,7 @@ class EditTeacher extends React.Component {
             <div className="saveButtonBackground deletButtonTeacher">
               <button className="deletButton" onClick={() => {
                 this.props.errorMsg.setQuestion(
-                  "האם אתה בטוח שברצונך למחוק תלמיד זה?",
+                  "האם אתה בטוח שברצונך למחוק מורה זה?",
                   this.deleteTeacher,
                   "מחק"
                 )
