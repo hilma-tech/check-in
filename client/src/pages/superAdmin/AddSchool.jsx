@@ -90,7 +90,6 @@ class AddSchool extends React.Component {
 
     //כשמו כן הוא
   addNewTeacherToClass = (classIndex, teacherInfo) => {
-    console.log('teacherInfo: ', teacherInfo);
     this.setState((prevState) => {
       let tempData = [...prevState.classes];
       teacherInfo.id = prevState.existTeachers[prevState.existTeachers.length - 1] === undefined ? 1 : prevState.existTeachers[prevState.existTeachers.length - 1].id + 1
@@ -202,7 +201,6 @@ class AddSchool extends React.Component {
           existTeachers: this.state.existTeachers
         }
         );
-        console.log('data: ', data);
         if (data) {
           this.props.schools.addSchool({
             city: this.state.schoolCity,
@@ -213,7 +211,6 @@ class AddSchool extends React.Component {
       this.props.history.goBack(); // after saving go back
     }
   } catch (err) {
-    console.log('err: ', err);
     this.props.errorMsg.setErrorMsg('שגיאה בשרת, בית הספר לא נשמר, נסו שוב.');
   }};}
 

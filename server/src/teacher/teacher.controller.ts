@@ -105,7 +105,6 @@ export class TeacherController {
       }
       return await this.teacherService.editTeacher(req);
     } catch (e) {
-      console.log('e: ', e);
       return false;
     }
   }
