@@ -195,7 +195,12 @@ class AddSchool extends React.Component {
     if (allOk) {
       try {
         let { data } = await axios.post("/api/school/addSchool", 
-        this.state
+        {
+          schoolName: this.state.schoolName,
+          schoolCity: this.state.schoolCity,
+          classes: this.state.classes,
+          existTeachers: this.state.existTeachers
+        }
         );
         console.log('data: ', data);
         if (data) {

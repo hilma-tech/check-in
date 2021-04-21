@@ -149,10 +149,6 @@ export class EditClassInfoDto {
 
 export class AddSchoolInfoDto {
   @IsDefined()
-  schoolNameError: ErrorDto;
-  @IsDefined()
-  schoolCityError: ErrorDto;
-  @IsDefined()
   @IsString()
   @Length(1, 30)
   @Matches(/[A-Za-z\u0590-\u05EA"'-]/)

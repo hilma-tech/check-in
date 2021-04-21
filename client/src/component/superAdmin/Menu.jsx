@@ -33,14 +33,14 @@ class Menu extends React.Component {
                   <a
                     className="menuBluePages"
                     key={index}
-                    href={"/superAdmin/" + this.state[pageName]}
+                    onClick={()=>{this.props.history.push("/superAdmin/" + this.state[pageName]);}}
                   >
                     {pageName}
                   </a>
                 ) : (
                   <a
                     key={index}
-                    href={"/superAdmin/" + this.state[pageName]}
+                    onClick={()=>{this.props.history.push("/superAdmin/" + this.state[pageName]);}}
                     className="optionBold menuBluePages"
                   >
                     {pageName}
