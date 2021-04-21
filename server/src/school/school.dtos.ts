@@ -124,7 +124,7 @@ export class ClassInfoDto {
   @IsOptional()
   @IsString()
   @Length(0, 15)
-  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-]/)
+  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-\s]/)
   name: string;
   @IsOptional()
   classNameError: ErrorDto;
@@ -139,7 +139,7 @@ export class EditClassInfoDto {
   @IsOptional()
   @IsString()
   @Length(0, 15)
-  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-]/)
+  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-\s]/)
   name: string;
   @IsOptional()
   classNameError: ErrorDto;
@@ -151,12 +151,12 @@ export class AddSchoolInfoDto {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/[A-Za-z\u0590-\u05EA"'-]/)
+  @Matches(/[A-Za-z\u0590-\u05EA"'-\s]/)
   schoolName: string;
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/[A-Za-z\u0590-\u05EA]/)
+  @Matches(/[A-Za-z\u0590-\u05EA\s]/)
   schoolCity: string;
   @IsDefined()
   @IsArray()
@@ -177,12 +177,12 @@ export class EditSchoolInfoDto {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/[A-Za-z\u0590-\u05EA"'-]/)
+  @Matches(/[A-Za-z\u0590-\u05EA"'-\s]/)
   schoolName: string;
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/[A-Za-z\u0590-\u05EA]/)
+  @Matches(/[A-Za-z\u0590-\u05EA\s]/)
   schoolCity: string;
   @IsDefined()
   @IsArray()
