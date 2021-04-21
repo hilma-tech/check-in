@@ -101,33 +101,33 @@ class Permissions extends Component {
       this.props.errorMsg.setErrorMsg('תקלה בשרת, נסו לשמור שנית')
     }
   }
+
+  sendDelete = async (start, end, index, classId, day) => {
+    await axios.post(`/api/permission/deletePermission`, { start_time: start, end_time: end, classroom_id: classId, day: day })
+    if (index !== null) {
+      var arrForChange = this.state.extraTimes
+      arrForChange.splice(index, 1);
+      this.setState({
+        extraTimes: arrForChange,
+      })
+    }
+    else {
+      this.dayPermissions(this.state.selectedDay)
+      if (this.props.chosenClass.classPermissions.length === 0) {
+        this.setState({
+          selectedStartTime: '',
+          selectedEndTime: ''
+        })
+      }
+    }
+  }
   deletePermission = async (start, end, index) => {
     let classId = this.props.chosenClass.classId
     let day = this.state.selectedDay
-    var sendDelete = async () => {
-      await axios.post(`/api/permission/deletePermission`, { start_time: start, end_time: end, classroom_id: classId, day: day })
-      if (index !== null) {
-        var arrForChange = this.state.extraTimes
-        arrForChange.splice(index, 1);
-        this.setState({
-          extraTimes: arrForChange,
-        })
-      }
-      else {
-        this.dayPermissions(this.state.selectedDay)
-        if (this.props.chosenClass.classPermissions.length === 0) {
-          this.setState({
-            selectedStartTime: '',
-            selectedEndTime: ''
-
-          })
-        }
-      }
-    }
     try {
       this.props.errorMsg.setQuestion(
         "האם אתה בטוח שברצונך למחוק הרשאה זו?",
-        () => sendDelete()
+        () => this.sendDelete(start, end, index, classId, day)
         ,
         "מחק"
       )

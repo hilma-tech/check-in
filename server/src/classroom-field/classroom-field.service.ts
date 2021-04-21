@@ -48,7 +48,9 @@ export class ClassroomFieldService {
   }
 
   async addGameFieldsToClass(@UploadedFiles() files: FilesType, @Body() req: ClassroomGameDto) {
+    console.log('req: ', req);
     let Inp = null;
+    
     req.fieldsData.forEach( async (field) => {
       let emptyField = 0;
       Inp = field.value[0].value;
