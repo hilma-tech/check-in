@@ -38,12 +38,12 @@ export class TeacherRegisterDto {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[A-Za-z\u0590-\u05EA"'-/s]+$/)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-\s]+$/)
   first_name: string;
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[A-Za-z\u0590-\u05EA"'-/s]+$/)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-\s]+$/)
   last_name: string;
   @IsDefined()
   @IsNumber()
@@ -92,7 +92,7 @@ export class TeacherEditClassesDto {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-]/)
+  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-\s]/)
   name: string;
 }
 
@@ -112,12 +112,12 @@ export class EditTeacherDto {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-\s]+$/)
   firstName: string;
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[A-Za-z\u0590-\u05EA"'-]+$/)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-\s]+$/)
   lastName: string;
   @IsDefined()
   @ValidateNested({ each: true })

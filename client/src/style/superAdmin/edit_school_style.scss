@@ -57,6 +57,7 @@
 .removeTeachersSelectIcon {
   @include mouse(point);
   height: 30px;
+  padding-top: 5px;
   width: 1.5vw;
   margin: 0.75vw;
 }

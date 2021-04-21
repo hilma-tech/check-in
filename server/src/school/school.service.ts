@@ -34,15 +34,20 @@ export class SchoolService {
     school.name = info.schoolName;
     school.city = info.schoolCity;
     let res = await this.schoolRepository.save(school);
-    await this.classroomService.addClassesWithSchool(info, res)
+    let teachers = await this.classroomService.addClassesWithSchool(info, res)
 
 
-    return res;
+    return {...res, teachers: teachers.map((teacher)=>{
+        return {
+          id: teacher.data.id,
+          first_name: teacher.data.first_name,
+          last_name: teacher.data.last_name,
+          username: teacher.data.username
+        }
+    })};
   }
 
   async editSchool(@Body() info: EditSchoolInfoDto) {
-    console.log('info: ', info);
-
     let school = new School();
     school.id = info.id
     school.name = info.schoolName;
