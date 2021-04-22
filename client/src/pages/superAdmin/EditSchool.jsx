@@ -350,7 +350,7 @@ class EditSchool extends Component {
             onClick={(e) => {
               e.preventDefault()
               this.props.errorMsg.setQuestion(
-                "האם אתה בטוח שברצונך למחוק בית ספר זה?",
+                "האם אתה בטוח שברצונך למחוק בית ספר זה ואת כל המורים ותלמידים השייכים לו?",
                 ()=>{this.deleteSchool(e)},
                 "מחק"
               );

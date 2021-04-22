@@ -41,6 +41,7 @@ export class allPermissions {
   @IsDefined()
   @IsNumber()
   classId: number;
+
   @IsDefined()
   @ValidateNested({ each: true })
   @Type(() => Permission)
@@ -77,3 +78,18 @@ export class getpermission {
   @IsNumber()
   classId: number;
 }
+
+export class DayReqPermissionsDto {
+  @IsDefined()
+  @IsString()
+  @IsNumberString()
+  classId: string;
+
+  @IsDefined()
+  @IsString()
+  @Length(1)
+  @IsEnum(DayEnum)
+  @Matches(/^[\u0590-\u05FF]+$/)
+  day: string;
+}
+
