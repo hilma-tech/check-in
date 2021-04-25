@@ -10,9 +10,9 @@
 
 .inputLinkField {
   @include inputs-style;
-    margin: 1vh;
-    width: 45vw;
-    height: 35px;
+  margin: 1vh;
+  width: 45vw;
+  height: 35px;
 }
 
 .cameraIcon {
@@ -30,7 +30,7 @@
   border-radius: 2vw;
 }
 
-.borderCameraIcon{
+.borderCameraIcon {
   border: 1px solid #043163;
   margin: 0;
   width: 25vw;
@@ -39,7 +39,7 @@
   margin-bottom: 1vh;
 }
 
-.borderCameraIconLabel{
+.borderCameraIconLabel {
   @include mouse(point);
   position: relative;
   display: flex;
@@ -49,7 +49,7 @@
   height: 100%;
 }
 
-.gameField .gameFieldError{
+.gameField .gameFieldError {
   margin-right: 9vw;
 }
 
@@ -57,57 +57,63 @@
   margin-top: 2.5vh;
 }
 
-.passchangeTeacher, .editIcon, .changePasstext{
-  cursor:pointer;
+.passchangeTeacher,
+.editIcon,
+.changePasstext {
+  cursor: pointer;
 }
-.passchangeTeacher{
+.passchangeTeacher {
   display: flex;
   flex-direction: row;
   position: relative;
   width: max-content;
-  height:4vh;
-  background-color: #E7EBEF;
+  height: 4vh;
+  background-color: #e7ebef;
   border: 2px solid #043163;
   border-radius: 1vw;
   margin-top: 3vh;
-  box-shadow: 0px 3px 6px #04316329
+  box-shadow: 0px 3px 6px #04316329;
 }
 
-.passInputTeacher{
+.passInputTeacher {
   text-align: right;
   font-size: 3.5vh;
   margin: 0px;
   padding-top: 0.5vh;
-  color: #043163; 
+  color: #043163;
   padding-bottom: 0.5vh;
-
-      }
-.passInputTeacher::placeholder{
+}
+.passInputTeacher::placeholder {
   font-size: 3.5vh;
   padding-bottom: 0.5vh;
   padding-right: 1vw;
-  }
+}
 
- .teacherDeets {
+.teacherDeets {
   width: 46vw;
   height: max-content;
   border-radius: 1vw;
-  background-color: #E7EBEF;
+  background-color: #e7ebef;
   margin-top: 0.5vh;
- }
+}
 
- .removeTeachersClass {
-   margin-right: 1vw;
-   margin-bottom: 1.75vw;
- }
+.teacherFlexClass {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  // height: 4vw
+}
 
- .teacherFlexClass {
-   display: flex;
-   flex-direction: row;
- }
+.removeTeachersClass {
+  @include mouse(point);
+  margin-right: 1vw;
+  height: 15px;
+  padding-top: 10px;
+  // margin-top: 0.01vw;
+  // margin-bottom: 0.5;
+}
+
 
 // img {
-  //   @include imgCover(false);
-  // }
-  
-  
+//   @include imgCover(false);
+// }

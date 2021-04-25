@@ -27,7 +27,8 @@ class EditSchool extends Component {
       //List of all the classes in the school. The numTeachers represent the number of teachers in the class.
       classes: [],
       removedClasses: [],
-      existClasses: []
+      existClasses: [],
+      existTeachers: []
     };
   }
 
@@ -40,6 +41,7 @@ class EditSchool extends Component {
         schoolCity: this.props.schools.chosenSchool.city,
         classes: this.props.schools.chosenSchool.classrooms,
         existClasses: this.props.schools.chosenSchool.classrooms,
+        existTeachers: this.props.schools.chosenSchool.teachers
       });
     }
   }
@@ -70,6 +72,7 @@ class EditSchool extends Component {
           name: '',
           numTeachers: 1,
           chosenTeachers: [],
+          // existChosenTeachers: [],
           classNameError: { toShow: 'none', mess: '' },
         },
       ];
@@ -79,17 +82,17 @@ class EditSchool extends Component {
 
   //Need to change but update the class name.
   //It's call when the user change the value.
-  chooseTeacher = (e) => {
-    let index = e.name
-    let value = e.value;
-    let selectKey = e.selectKey;
-    let id = e.id;
-    this.setState((prevState) => {
-      let tempData = [...prevState.classes]
-      tempData[index].chosenTeachers[selectKey] = { id: id, name: value }
-      return { classes: tempData }
-    })
-  };
+  // chooseTeacher = (e) => {
+  //   let index = e.name
+  //   let value = e.value;
+  //   let selectKey = e.selectKey;
+  //   let id = e.id;
+  //   this.setState((prevState) => {
+  //     let tempData = [...prevState.classes]
+  //     tempData[index].existChosenTeachers[selectKey] = { id: id, name: value }
+  //     return { classes: tempData }
+  //   })
+  // };
 
   //Get the element and set the schoolName by the info that the user type.
   handleChange = (e) => {
@@ -108,21 +111,61 @@ class EditSchool extends Component {
     }
   };
 
-  addTeacherToClass = (classIndex) => {
+  addNewTeacherToClass = async (classIndex, teacherInfo) => {
+    try{
+      let {data} = await axios.post("/api/teacher/register", {
+        first_name: teacherInfo.first_name,
+        last_name: teacherInfo.last_name,
+        school_id: this.props.schools.chosenSchool.id,
+        fields_data: [],
+        email: teacherInfo.email,
+        password: teacherInfo.password,
+        rakaz: "false",
+      })
+      data.name = data.first_name + ' ' + data.last_name
+      this.setState((prevState) => {
+        let tempData = [...prevState.classes];
+        // teacherInfo.id = tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] === undefined ? 1 : tempData[classIndex].chosenTeachers[tempData[classIndex].chosenTeachers.length - 1] + 1
+        tempData[classIndex].chosenTeachers.push(data); //id -1 did not exist and he wont show him
+        prevState.existTeachers.push(data)
+        return { classes: tempData, existTeachers: prevState.existTeachers };
+      });
+    } catch(err){
+      this.setState({ savingInfo: false });
+      if (err.status === 500) {
+        this.props.errorMsg.setErrorMsg(
+          "קיים כבר משתמש עם האימייל הזה. נסו שוב."
+        );
+      } else {
+        this.props.errorMsg.setErrorMsg('שגיאה בשרת, מורה לא נשמר, נסו שוב.');
+      }
+    }
+  };
+
+   //כשמו כן הוא
+   addExistTeacherToClass = (classIndex, teacherInfo) => {
     this.setState((prevState) => {
-      let tempData = [...prevState.classes]
-      tempData[classIndex].chosenTeachers.push({ id: -1 * tempData[classIndex].chosenTeachers.length, name: 'בחר...' }) //id -1 did not exist and he wont show him
-      return { classes: tempData }
-    })
+      let tempData = [...prevState.classes];
+      tempData[classIndex].chosenTeachers.push(teacherInfo);
+      return { classes: tempData };
+    });
   };
 
   removeTeacherFromClass = (classIndex, teacherIndex) => {
     this.setState((prevState) => {
-      let tempData = [...prevState.classes]
-      tempData[classIndex].chosenTeachers.splice(teacherIndex, 1)
-      return { classes: tempData }
-    })
+      let tempData = [...prevState.classes];
+      tempData[classIndex].chosenTeachers.splice(teacherIndex, 1);
+      return { classes: tempData };
+    });
   };
+
+  // removeExistTeacherFromClass = (classIndex, teacherIndex) => {
+  //   this.setState((prevState) => {
+  //     let tempData = [...prevState.classes];
+  //     tempData[classIndex].existChosenTeachers.splice(teacherIndex, 1);
+  //     return { classes: tempData };
+  //   });
+  // };
 
   removeClass = (classIndex) => {
     this.setState((prevState) => {
@@ -132,7 +175,7 @@ class EditSchool extends Component {
       let newExistClasses = prevState.existClasses.filter((classroom)=>{
         return classroom.id !== removedClassroom[0].id
       })
-      return { classes: tempData, removedClasses: prevState.removedClasses, removedClasses: newExistClasses}
+      return { classes: tempData, removedClasses: prevState.removedClasses, existClasses: newExistClasses}
     })
   };
 
@@ -151,7 +194,6 @@ class EditSchool extends Component {
       allOk = false;
     } else {
       this.setState({ schoolNameError: { toShow: "none", mess: "" } });
-      allOk = true;
     }
 
     // ----------school city validation-------------------
@@ -165,7 +207,6 @@ class EditSchool extends Component {
       allOk = false;
     } else {
       this.setState({ schoolCityError: { toShow: "none", mess: "" } });
-      allOk = true;
     }
 
     // ----------classes name validation-------------------
@@ -179,18 +220,30 @@ class EditSchool extends Component {
         });
         allOk = false;
       } else {
-        this.setState((prevState) => {
-          prevState.classes[i].classNameError.toShow = "none";
-          prevState.classes[i].classNameError.mess = "";
-          return { classes: prevState.classes };
-        });
-        allOk = true;
+        for(let z=0; z<i;z++){
+          if(this.state.classes[i].name === this.state.classes[z].name){
+            nameClassMess = "** שם כיתה זה כבר קיים. אנא נסה שם אחר. **"
+          }
+        }
+        if (nameClassMess.length !== 0) {
+          this.setState((prevState) => {
+            prevState.classes[i].classNameError.toShow = "inline-block";
+            prevState.classes[i].classNameError.mess = nameClassMess;
+            return { classes: prevState.classes };
+          });
+          allOk = false;
+        } else{
+          this.setState((prevState) => {
+            prevState.classes[i].classNameError.toShow = "none";
+            prevState.classes[i].classNameError.mess = "";
+            return { classes: prevState.classes };
+          });
+        }
       }
     }
 
     //after all the validetion we need to send the data to sql
     if (allOk) {
-      // console.log('this.state: ', this.state);
       try {
         let { data } = await axios.post("/api/school/editSchool", {
             id: this.props.schools.chosenSchool.id,
@@ -200,7 +253,6 @@ class EditSchool extends Component {
             removedClasses: this.state.removedClasses,
             existClasses: this.state.existClasses
         });
-        // console.log('data: ', data);
         if (data) {
           this.props.schools.editSchool(
             data.id,
@@ -267,14 +319,18 @@ class EditSchool extends Component {
                   return (
                     <SchoolClassData
                       key={classData.id}
-                      canAddExistTeacher={true}
                       classData={classData}
                       classIndex={classIndex}
-                      addTeacherToClass={this.addTeacherToClass}
                       handleChange={this.handleChange}
-                      chooseTeacher={this.chooseTeacher}
-                      removeTeacherFromClass={this.removeTeacherFromClass}
                       removeClass={this.removeClass}
+                      // canAddExistTeacher={true}
+                      addNewTeacherToClass={this.addNewTeacherToClass}
+                      removeTeacherFromClass={this.removeTeacherFromClass}
+                      addExistTeacherToClass={this.addExistTeacherToClass}
+                      // removeExistTeacherFromClass={this.removeExistTeacherFromClass}
+                      // chooseTeacher={this.chooseTeacher}
+                      existTeachers={this.state.existTeachers}
+    
                     />
                   );
                 })
@@ -289,7 +345,17 @@ class EditSchool extends Component {
             </button>
           <div className="spacerFromSaveButton"></div>
           <div className="saveButtonBackground additionPage">
-            <button className="deletButton" onClick={this.deleteSchool}>מחק בית ספר</button>
+            <button 
+            className="deletButton" 
+            onClick={(e) => {
+              e.preventDefault()
+              this.props.errorMsg.setQuestion(
+                "האם אתה בטוח שברצונך למחוק בית ספר זה ואת כל המורים ותלמידים השייכים לו?",
+                ()=>{this.deleteSchool(e)},
+                "מחק"
+              );
+            }}
+            >מחק בית ספר</button>
             <button className="saveButton" onClick={this.saveData}>
               שמור
             </button>

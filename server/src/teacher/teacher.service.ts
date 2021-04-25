@@ -1,4 +1,4 @@
-import { Injectable, Inject, Body, Req } from '@nestjs/common';
+import { Injectable, Inject, Body, Req, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   MailerInterface,
@@ -30,10 +30,10 @@ export class TeacherService extends UserService {
     protected readonly userRepository: Repository<Teacher>,
     protected readonly jwtService: JwtService,
     protected readonly configService: ConfigService,
-    @Inject('ClassroomService')
-    private readonly classroomService: ClassroomService,
+    
+    @Inject(forwardRef(() => ClassroomService))
+    private classroomService: ClassroomService,
     private readonly schoolService: SchoolService,
-
     @Inject('MailService')
     protected readonly mailer: MailerInterface,
 
@@ -45,7 +45,6 @@ export class TeacherService extends UserService {
     let username = req.email;
     let password = req.password;
     let user: Partial<Teacher> = new Teacher({ username, password });
-    console.log('user: ', user);
     user.first_name = req.first_name
     user.last_name = req.last_name
     if (req.fields_data !== undefined || req.fields_data.length !== 0) {
@@ -63,17 +62,16 @@ export class TeacherService extends UserService {
     let userRole = new Role();
     userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
     user.roles = [userRole];
-    console.log('user: ', user);
     return await this.createUser<Teacher>(user);
   }
 
-  async changeTeacherPassword(userInfo) {
-    const hash = bcrypt.hashSync(userInfo.password, SALT);
+  async changeTeacherPassword(username, password) {
+    const hash = bcrypt.hashSync(password, SALT);
     return await this.userRepository
       .createQueryBuilder()
       .update(User)
       .set({ password: hash })
-      .where({ username: userInfo.username })
+      .where({ username: username })
       .execute();
   }
 
@@ -94,7 +92,6 @@ export class TeacherService extends UserService {
     teacherInfo.first_name = req.firstName;
     teacherInfo.last_name = req.lastName;
     teacherInfo.school = req.schoolId;
-    // console.log('teacher.classroomTeacher: ', teacher.classroomTeacher);
     if (teacher.classroomTeacher.length !== 0) {
       for (let i = 0; i < teacher.classroomTeacher.length; i++) {
         let a = await this.classroomService.deleteTeacherClassroom(
@@ -104,7 +101,6 @@ export class TeacherService extends UserService {
       }
     }
 
-    // console.log('req.classrooms: ', req.classrooms);
     if (req.classrooms.length !== 0) {
       for (let i = 0; i < req.classrooms.length; i++) {
         let a = await this.classroomService.addTeacherToClassroom(
@@ -185,7 +181,6 @@ export class TeacherService extends UserService {
   }
 
   async sendUpdatePasswordEmail(email, password) {
-    // console.log('email, password: ', email, password);
     let html = `<div style= "direction:rtl; background-color:whitesmoke;">
     <h3 style="color:#043163; font-size:17px">שלום לך!</h3>
     <h3 style="color:#043163; font-size:17px">הסיסמה שלך עודכנה.</h3>
@@ -277,7 +272,6 @@ export class TeacherService extends UserService {
         return teacher;
       }
     });
-
     var searchresult = Search.filter(function (teacher) {
       return teacher != null;
     });

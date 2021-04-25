@@ -38,11 +38,7 @@ class Schools {
   }
 
   addSchool = async (schoolInfo) => {
-    // console.log('schoolInfo: ', schoolInfo);
-    // console.log('this.listDataSchools: ', this.listDataSchools);
     this.listDataSchools = [schoolInfo, ...this.listDataSchools]
-
-    // console.log('...this.listDataStudents: ', this.listDataStudents);
     // this.listDataStudents = [...this.listDataStudents]
 
   }
@@ -104,6 +100,9 @@ class Schools {
           return {
             id: teacher.id,
             name: teacher.first_name + " " + teacher.last_name,
+            first_name: teacher.first_name, 
+            last_name: teacher.last_name,
+            email: teacher.email
           };
         });
         return classInfo;

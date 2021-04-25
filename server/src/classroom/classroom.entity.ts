@@ -1,3 +1,4 @@
+import { IsDefined, IsString, Length, Matches } from 'class-validator';
 import { Game } from 'src/game/game.entity';
 import { School } from 'src/school/school.entity';
 import { Student } from 'src/student/student.entity';
@@ -17,21 +18,25 @@ export class Classroom {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @IsDefined()
+  @IsString()
+  @Length(0, 15)
+  @Matches(/[A-Za-z\u0590-\u05EA0-9"'-]/)
+  @Column({ type: 'varchar', length: 15 })
   name: string;
 
   @ManyToOne(
     () => School,
     school => school.classrooms,
-    { onDelete: 'CASCADE' }
+    { onDelete: 'CASCADE' },
   )
-  @JoinColumn({name: 'school_id'})
+  @JoinColumn({ name: 'school_id' })
   school_id: number;
 
   @ManyToMany(
     type => Game,
     game => game.classrooms,
-    { eager: true , onDelete: 'CASCADE'},
+    { eager: true, onDelete: 'CASCADE' },
   )
   @JoinTable({
     name: 'classroom_game',
@@ -49,7 +54,7 @@ export class Classroom {
   @ManyToMany(
     type => Student,
     student => student.classroomStudent,
-    { eager: true , onDelete: 'CASCADE'},
+    { eager: true, onDelete: 'CASCADE' },
   )
   @JoinTable({
     name: 'student_classroom',

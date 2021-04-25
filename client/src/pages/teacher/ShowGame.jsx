@@ -50,7 +50,7 @@ class ShowGame extends Component {
         gameDescription: data.description,
         gameRequirements: data.requirements,
         image: data.image,
-        gameLink: data.video_link
+        gameLink: data.gameLink
       });
     } catch (error) {
       this.props.errorMsg.setErrorMsg(

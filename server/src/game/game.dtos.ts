@@ -36,7 +36,7 @@ export class GameSaveDto {
   @IsDefined()
   @IsString()
   @Length(1, 30)
-  @Matches(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-\.\s]+$/)
   game_name: string;
 
   @IsDefined()
@@ -94,7 +94,7 @@ export class GameSaveReq {
    [
     {
       name: string;
-      selection: string;
+      selection: GameType;
       value: [{ id: number; value: string }];
       order: number;
     },

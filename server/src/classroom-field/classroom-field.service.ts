@@ -20,12 +20,10 @@ export class ClassroomFieldService {
   //! gamefields is an array of classfields(objects)
 
   async getClassroomGameFields(@Body() data: GetClassGameFieldsDto) {
-    // console.log('data: ', data, Number(data.classroom_id));
     let GameFields = await this.classFieldRepository.find({
       where: [{classroom_id: Number(data.classroom_id), game_id: Number(data.game_id)}],
       relations: ["field_id"]
     })
-    console.log('GameFields: ', GameFields);
     return GameFields.map((field)=>{
       return {id: field.id, newValue: field.new_value, field_id: field.field_id}
     })
@@ -50,7 +48,9 @@ export class ClassroomFieldService {
   }
 
   async addGameFieldsToClass(@UploadedFiles() files: FilesType, @Body() req: ClassroomGameDto) {
+    console.log('req: ', req);
     let Inp = null;
+    
     req.fieldsData.forEach( async (field) => {
       let emptyField = 0;
       Inp = field.value[0].value;
@@ -110,7 +110,6 @@ export class ClassroomFieldService {
     let deleteFieldAndGetFieldId = await this.fieldService.getGameFields(req);
     let fieldsForDelete = [];
     deleteFieldAndGetFieldId.map(async fieldId => {
-      console.log('fieldId: ', fieldId);
       fieldsForDelete.push(fieldId.id);
       if(fieldId.type === 'image'){
         await this.imageService.delete(fieldId.default_value)

@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import Select from "react-select";
 import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx";
-import ClassSelection from "../../component/superAdmin/ClassSelection.jsx";
+// import ClassSelection from "../../component/superAdmin/ClassSelection.jsx";
 import "../../style/superAdmin/form_style.scss";
 import "../../style/superAdmin/add_game_style.scss";
 import SelectStyle from "../../style/superAdmin/select_style";
@@ -207,14 +207,12 @@ class EditTeacher extends React.Component {
     }
   };
   updatePass = async () => {
-    // console.log(this.state.passDisplay, "HEWERO");
     try {
       await axios.post("/api/teacher/changeteacherpass", {
         username: this.state.email,
         password: this.state.passDisplay,
       });
       this.closePassChange();
-      // this.props.errorMsg.setErrorMsg(" הסיסמה שונתה בהצלחה! ");
     } catch (err) {
       this.setState({ passDisplay: "" });
       this.props.errorMsg.setErrorMsg("סיסמה לא נשמרה, נסו שנית :(");
@@ -316,19 +314,15 @@ class EditTeacher extends React.Component {
     //after all the validation we need to send the data to sql
     if (allOk) {
       try {
-        if (this.state.passDisplay.length !== 0) {
-          await this.updatePass();
-        }
+        // if (this.state.passDisplay.length !== 0) {
+        //   await this.updatePass();
+        // }
         let notEmptyClasses = this.state.chosenClasses.filter((classroom) => {
           return classroom.name !== "שייך לכיתה";
         });
         let onlyRightFields = notEmptyClasses.map((classroom) => {
           return { id: classroom.id, name: classroom.name };
         });
-        // console.log('onlyRightFields: ', onlyRightFields);
-
-        // console.log("this.state.passDisplay: ", this.state.passDisplay);
-
         let { data } = await axios.post("/api/teacher/editTeacher", {
           id: this.props.teachers.chosenTeacher.id,
           username: this.state.email,
@@ -341,8 +335,6 @@ class EditTeacher extends React.Component {
         let classroomTeacher = this.state.chosenClasses.filter((classroom) => {
           return classroom.name !== "שייך לכיתה";
         });
-        // console.log('data: ', data);
-
         if (data) {
           this.props.teachers.updateTeacher({
             first_name: this.state.teacherFirstName,
@@ -356,10 +348,11 @@ class EditTeacher extends React.Component {
             classes:
               classroomTeacher !== undefined
                 ? classroomTeacher.map((classInfo) => {
-                    return classInfo.name;
-                  })
+                  return classInfo.name;
+                })
                 : [],
           });
+          this.closePassChange();
           this.props.history.goBack(); // after saving go back
         } else {
           this.props.errorMsg.setErrorMsg(
@@ -388,7 +381,6 @@ class EditTeacher extends React.Component {
   };
 
   render() {
-    // console.log('this.state.chosenClasses: ', this.state.chosenClasses);
     return (
       <>
         <div className="pageContainer withMenu">
@@ -439,8 +431,8 @@ class EditTeacher extends React.Component {
                 options={this.makeSchoolOption()}
                 styles={SelectStyle()}
                 placeholder={this.state.schoolName}
-                // defaultValue={{ value: "schoolName", label: String(this.state.schoolName) }}
-                // native={true}
+              // defaultValue={{ value: "schoolName", label: String(this.state.schoolName) }}
+              // native={true}
               />
               {/* רכז*/}
               <label className="labelFields">רכז:</label>
@@ -462,11 +454,12 @@ class EditTeacher extends React.Component {
               <div>
                 {this.state.schoolName.length === 0 ? (
                   <></>
-                  ) : (
+                ) : (
                     <>
                     <label className="labelFields">כיתות:</label>
                     {this.state.allClasses.length === 0 ? <p>אין כיתות לבית ספר זה</p> : <></>}
                     {this.state.chosenClasses.map((val, i) => {
+
                       return (
                         <div key={val.id} className="classSelection">
                           <Select
@@ -488,24 +481,24 @@ class EditTeacher extends React.Component {
                       );
                     })}
 
-                    {this.state.allClasses.length ===
-                    this.state.chosenClasses.length ? (
-                      <></>
-                    ) : (
-                      <div
-                        className="addSomethingNew"
-                        onClick={this.addClassSelection}
-                      >
-                        <img
-                          className="addIcon"
-                          src={addicon}
-                          alt="add icon"
-                        ></img>
-                        <p className="addTitle">הוסף כיתה</p>
-                      </div>
-                    )}
-                  </>
-                )}
+                      {this.state.allClasses.length ===
+                        this.state.chosenClasses.length ? (
+                          <></>
+                        ) : (
+                          <div
+                            className="addSomethingNew"
+                            onClick={this.addClassSelection}
+                          >
+                            <img
+                              className="addIcon"
+                              src={addicon}
+                              alt="add icon"
+                            ></img>
+                            <p className="addTitle">הוסף כיתה</p>
+                          </div>
+                        )}
+                    </>
+                  )}
               </div>
             </form>
 
@@ -598,7 +591,13 @@ class EditTeacher extends React.Component {
 
             <div className="spacerFromSaveButton"></div>
             <div className="saveButtonBackground deletButtonTeacher">
-              <button className="deletButton" onClick={this.deleteTeacher}>
+              <button className="deletButton" onClick={() => {
+                this.props.errorMsg.setQuestion(
+                  "האם אתה בטוח שברצונך למחוק מורה זה?",
+                  this.deleteTeacher,
+                  "מחק"
+                )
+              }}>
                 מחק מורה
               </button>
               <button className="saveButton" onClick={this.validateInputFields}>

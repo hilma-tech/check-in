@@ -13,7 +13,9 @@ import {
   Matches,
   IsNumber,
   IsOptional,
+  IsEnum,
 } from 'class-validator';
+import { GameType } from './game.type.enum';
 
 @Entity()
 export class Field {
@@ -28,10 +30,10 @@ export class Field {
   field_name: string;
 
   @IsDefined()
-  @IsString()
   @Length(1, 30)
+  @IsEnum(GameType)
   @Column({ type: 'varchar', length: 50 })
-  type: string;
+  type: GameType;
 
   @IsOptional()
   @ManyToOne(

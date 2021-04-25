@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { DayReqPermissionsDto } from './permission.dto';
 import { Permission } from './permission.entity';
 
 @Injectable()
@@ -22,7 +23,7 @@ export class PermissionService {
         })
     }
 
-    async getDayClassPermissions(req) {
+    async getDayClassPermissions(req: DayReqPermissionsDto) {
         let Savedpermissions = await this.permissionRepository.find({
             where: [{ classroom_id: req.classId, day: req.day }],
             select: ['start_time', 'end_time', 'day']

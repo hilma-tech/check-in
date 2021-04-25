@@ -297,7 +297,6 @@ class AddTeacher extends Component {
   };
 
   render() {
-    console.log("herro", this.state.fieldsData);
 
     return (
       <>
@@ -371,7 +370,6 @@ class AddTeacher extends Component {
                   <label className="labelFields">כיתות:</label>
                   <div>
                     {this.state.fieldsData.map((fieldObj, i) => {
-                      console.log('i: ', i);
                       return (
                         
                         <div className="teacherFlexClass" key={fieldObj.id}>
@@ -389,7 +387,7 @@ class AddTeacher extends Component {
                             onClick={() => this.removeClass(i)}
 
                             src="/icons/delete.svg"
-                            style={{ height: "20px", marginTop: "15px" }}
+                            // style={{ height: "20px", marginTop: "15px" }}
                           />
                           </div>
                       );

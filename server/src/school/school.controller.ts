@@ -1,7 +1,7 @@
 import { Get, Controller, Query, Post, Body } from '@nestjs/common';
 import { SchoolService } from './school.service';
 import { UseJwtAuth } from '@hilma/auth-nest';
-import { AddSchoolInfoDto, EditSchoolInfoDto, GetSchoolSkip, SearchValDto } from './school.dtos';
+import { AddSchoolInfoDto, DeleteSchoolDto, EditSchoolInfoDto, GetSchoolSkip, SearchValDto } from './school.dtos';
 
 @Controller('api/school')
 export class SchoolController {
@@ -9,7 +9,8 @@ export class SchoolController {
 
   @UseJwtAuth('superAdmin')
   @Post('/deleteSchool')
-  async deleteSchool(@Body() val: any) {
+  async deleteSchool(@Body() val: DeleteSchoolDto) {
+    // { schoolId: 53 }
     return await this.schoolService.deleteSchool(val.schoolId)
   }
 
@@ -22,9 +23,6 @@ export class SchoolController {
   @UseJwtAuth('superAdmin')
   @Post('/addSchool')
   async addSchool(@Body() info: AddSchoolInfoDto) {
-    console.log('info: ', info);
-    // console.log('info: ', info.classes[0].classNameError);
-
     return await this.schoolService.addSchool(info);
   }
 

@@ -1,11 +1,13 @@
 import {
   IsDefined,
+  IsEnum,
   IsNumber,
   IsNumberString,
   IsString,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { GameType } from 'src/field/game.type.enum';
 
 export class ClassroomIdDto {
   @IsDefined()
@@ -64,8 +66,8 @@ export class ClassroomFieldsDataDto {
   @IsString()
   field_name: string;
   @IsDefined()
-  @IsString()
-  type: string;
+  @IsEnum(GameType)
+  type: GameType;
   @IsDefined()
   @IsString()
   default_value: string;
@@ -80,8 +82,8 @@ export class ClassroomFieldsDataDto {
   @IsString()
   name: string;
   @IsDefined()
-  @IsString()
-  selection: string;
+  @IsEnum(GameType)
+  selection: GameType;
   @IsDefined()
   errorMessage: ErrorMessDto;
 }

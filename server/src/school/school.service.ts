@@ -1,8 +1,8 @@
-import { Body, Injectable, Req } from '@nestjs/common';
+import { Body, forwardRef, Inject, Injectable, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { ClassroomService } from 'src/classroom/classroom.service';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { EditSchoolInfoDto, GetSchoolSkip, SearchValDto } from './school.dtos';
 import { School } from './school.entity';
 
@@ -11,19 +11,21 @@ export class SchoolService {
   constructor(
     @InjectRepository(School)
     private schoolRepository: Repository<School>,
+
+    @Inject(forwardRef(() => ClassroomService))
     private classroomService: ClassroomService
   ) {
     this.dx()
   }
-  
-  async dx(){
-    
-    let a = await this.schoolRepository.find({where: [{id: 8}], relations: ['classrooms']})
+
+  async dx() {
+
+    let a = await this.schoolRepository.find({ where: [{ id: 8 }], relations: ['classrooms'] })
     // console.log(a);
-    
+
   }
 
-  async deleteSchool(@Body() schoolId: string) {
+  async deleteSchool(@Body() schoolId: number) {
     await this.schoolRepository.delete(schoolId)
   }
 
@@ -32,8 +34,17 @@ export class SchoolService {
     school.name = info.schoolName;
     school.city = info.schoolCity;
     let res = await this.schoolRepository.save(school);
-    await this.classroomService.addClassesWithSchool(info, res)
-    return res;
+    let teachers = await this.classroomService.addClassesWithSchool(info, res)
+
+
+    return {...res, teachers: teachers.map((teacher)=>{
+        return {
+          id: teacher.data.id,
+          first_name: teacher.data.first_name,
+          last_name: teacher.data.last_name,
+          username: teacher.data.username
+        }
+    })};
   }
 
   async editSchool(@Body() info: EditSchoolInfoDto) {
@@ -42,14 +53,10 @@ export class SchoolService {
     school.name = info.schoolName;
     school.city = info.schoolCity;
     let res = await this.schoolRepository.save(school);
-    if(info.removedClasses.length !== 0){
+    if (info.removedClasses.length !== 0) {
       await this.classroomService.removeClassesFromSchool(info.removedClasses)
     }
-    if(info.existClasses.length === 0){
-      await this.classroomService.addClassesWithSchool(info, res)
-    } else {
-      await this.classroomService.updateSchoolClasses(info.classes, info.existClasses, info.id)
-    }
+    await this.classroomService.updateSchoolClasses(info.classes, info.existClasses, info.id)
     return res;
   }
 
@@ -60,6 +67,7 @@ export class SchoolService {
     let schools = await this.schoolRepository.find({
       skip: Number(skipON.schoolsLength),
       take: 50,
+      relations: ['teachers']
     });
     return { schoolsInfo: schools, haveMoreSchools: haveMoreSchools };
   }
@@ -90,15 +98,8 @@ export class SchoolService {
     })
   }
   async searchSchools(val: SearchValDto) {
-    let schools = await this.schoolRepository.find({
-    });
-    let Search = schools.map((school) => {
-      if (school.name.includes(val.val.toLowerCase()) || school.city.includes(val.val.toLowerCase())) {
-        return school
-      }
-    })
-    var searchresult = Search.filter(function (school) {
-      return school != null;
+    let searchresult = await this.schoolRepository.find({
+      where: [{ city: Like("%" + val.val.toLowerCase() + "%") }, { name: Like("%" + val.val.toLowerCase() + "%") }]
     });
     return searchresult
   }

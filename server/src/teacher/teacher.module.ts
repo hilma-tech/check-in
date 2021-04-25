@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TeacherService } from './teacher.service';
 import { TeacherController } from './teacher.controller';
 import {
@@ -16,10 +16,10 @@ import { SchoolModule } from 'src/school/school.module';
   imports: [
     UserModule,
     RoleModule,
-    ClassroomModule,
     SchoolModule,
     TypeOrmModule.forFeature([Teacher]),
     JwtModule.register({}),
+    forwardRef(() => ClassroomModule),
   ],
   providers: [
     {
@@ -29,7 +29,7 @@ import { SchoolModule } from 'src/school/school.module';
     TeacherService,
     {
       provide: USER_MODULE_OPTIONS,
-      useValue: { emailVerification: true},
+      useValue: { emailVerification: true },
     },
     {
       provide: "MailService",

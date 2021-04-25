@@ -35,7 +35,10 @@
   height: 10vh;
   text-align: center;
   font-weight: 700;
-  font-size: 6vh;
+  font-size: 10vw;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .officialTitleClassName {
@@ -43,7 +46,7 @@
   height: 9vh;
   text-align: center;
   font-weight: 700;
-  font-size: 6vh;
+  font-size: 10vw;
   padding-right: 8px;
 }
 
@@ -64,6 +67,7 @@
     /* height: 100vh; */
   }
   .officialTitle {
+    font-size: 6vh;
     text-align: right;
   }
   .officialTitleClassName {
