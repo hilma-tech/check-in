@@ -49,7 +49,6 @@ export class ClassroomFieldService {
 
   //when the teacher choose a game
   async addGameFieldsToClass(@UploadedFiles() files: FilesType, @Body() req: ClassroomGameDto) {
-    console.log('req: ', req);
     let Inp = null;
     
     req.fieldsData.forEach( async (field) => {
@@ -109,8 +108,6 @@ export class ClassroomFieldService {
 
   //when the super admin edit game and add new fields
   async editGameAddFieldsToClass(@Body() req) {
-    console.log('req: ', req);
-    console.log('field: ', req.field);
       let newField: Partial<ClassroomField> =  new ClassroomField();
       newField.classroom_id = req.classId;
       newField.field_id = req.field//field.id;

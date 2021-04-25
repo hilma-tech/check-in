@@ -40,31 +40,25 @@ export class FieldService {
     });
   }
 
-  async saveFieldAndAddToClasses(@Body() req) {
-      let field = new Field();
-      field.field_name = req.data.name;
-      field.type = req.data.selection;
-      if (
-        req.data.selection === 'image' ||
-        req.data.selection === 'text'
-      ) {
-        field.default_value = req.data.value[0].value;
-      } else {
-        let tempValue = req.data.value.map(valField => {
-          return valField === null ? '' : valField.value;
-        })
-        field.default_value = JSON.stringify(
-          tempValue.filter(valField => {
-            return valField.length !== 0;
-          }),
-        );
-      }
-      field.order = req.data.order;
-      field.game = req.id;
+  async saveOneField(@Body() req) {
+    let field = new Field();
+    field.field_name = req.data.name;
+    field.type = req.data.selection;
+    if (
+      req.data.selection === 'image' ||
+      req.data.selection === 'text'
+    ) {
+      field.default_value = req.data.value[0].value;
+    } else {
+      let tempValue = req.data.value.map(valField => {
+        return valField === null ? '' : valField.value;
+      })
+      field.default_value = JSON.stringify(tempValue);
+    }
+    field.order = req.data.order;
+    field.game = req.id;
 
-      let temp = await this.fieldRepository.save(field);
-      console.log('temp: ', temp);
-      return temp
+    return await this.fieldRepository.save(field);
   }
 
   async deleteField(fields) {
@@ -83,5 +77,25 @@ export class FieldService {
     return fields;
   }
 
-  
+  async editFieldName(field_id, field_name) {
+    await this.fieldRepository.update({ id: field_id }, { field_name })
+  }
+
+  async editFieldValue(@Body() req) {
+    let field = new Field();
+    if (
+      req.selection === 'image' ||
+      req.selection === 'text'
+    ) {
+      field.default_value = req.value[0].value;
+    } else {
+      let tempValue = req.value.map(valField => {
+        return valField === null ? '' : valField.value;
+      })
+      field.default_value = JSON.stringify(tempValue);
+    }
+    field.order = req.order;
+
+    await this.fieldRepository.update({id: req.id}, field);
+  }
 }
