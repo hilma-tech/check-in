@@ -9,6 +9,7 @@ import {
   ClassroomIdDto,
   IdeDto,
   DeleteGameIdDto,
+  GameEditReq,
 } from './game.dtos';
 import { FilesType, ImageService } from '@hilma/fileshandler-typeorm';
 import { ClassroomFieldService } from 'src/classroom-field/classroom-field.service';
@@ -24,7 +25,7 @@ export class GameService {
     private fieldService: FieldService,
     private classroomFieldService: ClassroomFieldService,
     private readonly imageService: ImageService,
-  ) {}
+  ) { }
 
   async addGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
     // if(req.game.image.value){
@@ -43,6 +44,54 @@ export class GameService {
     let game = await this.saveGame(req.game);
     await this.fieldService.saveField({ data: req.field, id: game.id });
     return game;
+  }
+
+  async editGame(@UploadedFiles() files: FilesType, @Body() req: GameEditReq) {
+    // req.field.forEach(async (img, index) => {
+    //   if ('image' === img.selection) {
+    //     let imgPath = await this.imageService.save(files, img.value[0].id);
+    //     req.field[index].value[0].value = imgPath;
+    //   }
+    // });
+
+    let gameInfo = await this.gameRepository
+      .createQueryBuilder('Game')
+      .innerJoinAndSelect('Game.classrooms', 'Classroom')
+      .select('Classroom.id')
+      .addSelect('Game.game_name')
+      .where('Game.id = :id', { id: Number(req.game.id) })
+      .getOne();
+    console.log('gameInfo: ', gameInfo);
+    let res = await this.gameRepository.save(req.game);
+    await this.classroomFieldService.editGameDeleteClassField(req.game.id, req.deletedField)
+    for (let i = 0; i < req.field.length; i++) {
+      let isExist = false
+      for (let z = 0; z < req.existField.length; z++) {
+        if (req.existField[z].id === req.field[i].id) {
+          isExist = true
+        }
+      }
+
+      if (isExist) {
+        //update ALL the fields
+      } else {
+        let data = {
+          name: req.field[i].name,
+          selection: req.field[i].selection,
+          value: req.field[i].value,
+          order: req.field[i].order,
+        }
+        let savedFiield = await this.fieldService.saveFieldAndAddToClasses({ data: data, id: req.game.id });
+        for (let a = 0; a < gameInfo.classrooms.length; a++) {
+          this.classroomFieldService.editGameAddFieldsToClass({
+              classId: gameInfo.classrooms[a].id,
+              field: savedFiield,
+              gameId: req.game.id
+            })
+        }
+      }
+    }
+    return res;
   }
 
   //!IS FOR DANIEL
@@ -236,15 +285,15 @@ export class GameService {
 
   async deleteGameById(id: DeleteGameIdDto) {
     let gameInfo = await this.gameRepository
-    .createQueryBuilder('Game')
-    .innerJoinAndSelect('Game.classrooms', 'Classroom')
-    .select('Classroom.id')
-    .addSelect('Game.game_name')
-    .where('Game.id = :id', { id: Number(id.Id) })
-    .getOne();
-    if(gameInfo !== undefined){
-      for(let i =0; i< gameInfo.classrooms.length; i++){
-        await this.classroomFieldService.removeGameFieldsFromClass({gameId: id.Id, classId: gameInfo.classrooms[i].id})
+      .createQueryBuilder('Game')
+      .innerJoinAndSelect('Game.classrooms', 'Classroom')
+      .select('Classroom.id')
+      .addSelect('Game.game_name')
+      .where('Game.id = :id', { id: Number(id.Id) })
+      .getOne();
+    if (gameInfo !== undefined) {
+      for (let i = 0; i < gameInfo.classrooms.length; i++) {
+        await this.classroomFieldService.removeGameFieldsFromClass({ gameId: id.Id, classId: gameInfo.classrooms[i].id })
       }
     }
     await this.classroomFieldService.deleteClassField(id.Id)
@@ -264,8 +313,8 @@ export class GameService {
     let gamesLength = (
       await this.gameRepository.query(
         'select id from game where id not in(select game_id from classroom_game where classroom_id = ' +
-          req.classId +
-          ');',
+        req.classId +
+        ');',
       )
     ).length;
 
@@ -274,10 +323,10 @@ export class GameService {
 
     let allGames = await this.gameRepository.query(
       'select id, game_name, image from game where id not in(select game_id from classroom_game where classroom_id = ' +
-        req.classId +
-        ')  limit 50 offset ' +
-        req.dataLength +
-        ';',
+      req.classId +
+      ')  limit 50 offset ' +
+      req.dataLength +
+      ';',
     );
     return {
       currClassGames: currClassGames,
@@ -308,7 +357,7 @@ export class GameService {
     });
   }
 
-  async searchGames (val: ValDto){
+  async searchGames(val: ValDto) {
     let gamesInfo = await this.gameRepository.find({
       where: [{ suspended: false }],
       select: ['id', 'game_name', 'image'],
@@ -322,7 +371,7 @@ export class GameService {
         return game;
       }
     });
-    var searchresult = Search.filter(function(game) {
+    var searchresult = Search.filter(function (game) {
       return game != null;
     });
     return searchresult;

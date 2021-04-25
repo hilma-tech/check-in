@@ -1,4 +1,5 @@
 import {
+  IsArray,
   IsBoolean,
   IsDefined,
   IsEnum,
@@ -99,6 +100,96 @@ export class GameSaveReq {
       order: number;
     },
   ];
+}
+
+export class GameEditDto {
+  @IsDefined()
+  @IsNumber()
+  id: number
+
+  @IsDefined()
+  @IsString()
+  @Length(1, 30)
+  @Matches(/^[A-Za-z\u0590-\u05EA"'-\.\s]+$/)
+  game_name: string;
+
+  @IsDefined()
+  @IsString()
+  image: string;
+  
+  @Length(0, 255)
+  @Matches(/^$|^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
+  description: string;
+
+  @Length(0, 255)
+  @Matches(/^$|^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
+  requirements: string;
+
+  @Length(0, 255)
+  @Matches(/^$|(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/)
+  gameLink: string
+
+  @IsDefined()
+  @IsBoolean()
+  suspended: boolean;
+}
+
+export class FieldEditArrDto {
+  @IsDefined()
+  @IsNumber()
+  id: number
+  @IsDefined()
+  @IsString()
+  @Length(1, 30)
+  @Matches(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
+  name: string;
+  @IsDefined()
+  @IsEnum(GameType)
+  selection: GameType;
+  @IsDefined()
+  @ValidateNested({ each: true })
+  @Type(() => FieldValueDto)
+  value: FieldValueDto[];
+  @IsDefined()
+  @IsNumber()
+  order: number;
+}
+
+export class ExistFieldEditArrDto {
+  @IsDefined()
+  @IsNumber()
+  id: number
+  @IsDefined()
+  @IsEnum(GameType)
+  selection: GameType;
+  @IsDefined()
+  @ValidateNested({ each: true })
+  @Type(() => FieldValueDto)
+  value: FieldValueDto[];
+}
+
+export class GameEditReq {
+  @IsDefined()
+  @IsObject()
+  @ValidateNested({ each: true })
+  @Type(() => GameEditDto)
+  game: GameEditDto;
+
+  @IsDefined()
+  @ValidateNested({ each: true })
+  @Type(() => FieldEditArrDto)
+  field: FieldEditArrDto[];
+
+  @IsDefined()
+  @IsArray()
+  // @ValidateNested({ each: true })
+  // @Type(() => Number)
+  deletedField: number[];
+
+  @IsDefined()
+  @ValidateNested({ each: true })
+  @Type(() => ExistFieldEditArrDto)
+  existField: ExistFieldEditArrDto[];
 }
 
 export class GetGameSkip {
