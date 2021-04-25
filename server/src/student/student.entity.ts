@@ -30,7 +30,7 @@ export class Student extends User {
     { onDelete: 'CASCADE' }
   )
   @JoinColumn({ referencedColumnName: 'id', name: 'school_id' })
-  school: number;
+  school: School;
 
   @ManyToMany(
     type => Classroom,
