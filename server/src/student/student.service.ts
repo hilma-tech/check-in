@@ -12,6 +12,7 @@ import { ClassroomService } from 'src/classroom/classroom.service';
 import { FieldService } from 'src/field/field.service';
 import { GameService } from 'src/game/game.service';
 import { School } from 'src/school/school.entity';
+import { SchoolService } from 'src/school/school.service';
 
 @Injectable()
 export class StudentService extends UserService {
@@ -23,6 +24,7 @@ export class StudentService extends UserService {
     protected readonly configService: ConfigService,
     @Inject("ClassroomService")
     private readonly classroomService: ClassroomService,
+    protected readonly schoolService: SchoolService
   ) {
     super(config_options, userRepository, jwtService, configService);
   }
@@ -124,7 +126,7 @@ export class StudentService extends UserService {
       }
     }
 
-    student.school = req.schoolId
+    student.school = await this.schoolService.getSchoolInfoById(req.schoolId)
     let userRole = new Role();
     userRole.id = 4; //you set the role id.
     student.roles = [userRole];
@@ -141,7 +143,7 @@ export class StudentService extends UserService {
     }
     studentInfo.first_name = req.firstName
     studentInfo.last_name = req.lastName
-    studentInfo.school = req.schoolId
+    studentInfo.school = await this.schoolService.getSchoolInfoById(req.schoolId)
     if (student.classroomStudent.length !== 0) {
       for (let i = 0; i < student.classroomStudent.length; i++) {
         let a = await this.classroomService.deleteClassroom(student.classroomStudent[i].id, req.id)
@@ -170,7 +172,7 @@ export class StudentService extends UserService {
     let Search = students.map((student) => {
       let fullname = (student.first_name + ' ' + student.last_name).toLowerCase()
       let classes = student.classroomStudent.map((classroom) => { return classroom.name })
-       if (fullname.includes(val.toLowerCase()) || classes.join(' ').includes(val.toLowerCase())  //student.school.includes(val.toLowerCase())
+      if (fullname.includes(val.toLowerCase()) || classes.join(' ').includes(val.toLowerCase()) || student.school.name.includes(val.toLowerCase())
       ) {
         return student
       }
