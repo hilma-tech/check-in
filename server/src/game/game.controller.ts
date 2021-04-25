@@ -82,11 +82,6 @@ export class GameController {
   @Post('/editGame')
   @UseFilesHandler(100)
   async updateGame(@UploadedFiles() files: FilesType, @Body() req: GameEditReq) {
-    console.log('req: ', req);
-    console.log('files: ', files);
-    req.field.forEach(element => {
-      console.log('element: ', element.value);
-    });
     let emptyField = 0;
     req.field.map(eachField => {
       if (eachField.selection !== 'image') {

@@ -132,7 +132,6 @@ export class StudentService extends UserService {
   }
 
   async editStudent(req: UserEditDto) {
-    console.log('req: ', req);
     let student = await this.userRepository.findOne({ where: [{ id: req.id }], relations: ["classroomStudent"] })
     let username = req.username;
     let password = bcrypt.hashSync(req.password, SALT);;

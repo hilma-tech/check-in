@@ -162,24 +162,18 @@ class EditGame extends Component {
 
   //removes selected field
   triggerRemoval = (fieldId) => {
-    console.log('fieldId: ', fieldId);
     this.setState((prevState) => {
       let oldFieldArray = prevState.fieldsData;
-      console.log('oldFieldArray: ', oldFieldArray);
       let removedField = prevState.existFieldsData.filter((field) => {
         return field.id === fieldId
       })
-      console.log('removedField: ', removedField);
       if (removedField.length !== 0) {
-        console.log('removedField.length : ', removedField.length);
         prevState.deletedFieldsData.push(removedField[0])
         prevState.existFieldsData = prevState.existFieldsData.filter((field) => {
-          console.log('field.id !== fieldId: ', field.id !== fieldId);
           return field.id !== fieldId
         })
       }
       let newArray = oldFieldArray.filter((field) => field.id !== fieldId);
-      console.log('newArray: ', newArray);
       return { fieldsData: newArray, deletedFieldsData: prevState.deletedFieldsData, existFieldsData: prevState.existFieldsData };
     });
   };
@@ -232,7 +226,6 @@ class EditGame extends Component {
     try {
       this.setState({ savingInfo: true });
 
-      console.log('this.imageUploader: ', this.imageUploader);
       const response = await this.imageUploader.post(
         "/api/game/editGame",
         JSON.stringify({
@@ -256,7 +249,6 @@ class EditGame extends Component {
 
   //right before adding the data to DB we validate the information
   saveData = () => {
-    console.log(this.state);
     let allOK = true;
     let fieldOK = true;
     let ValidationFunctions = [
@@ -272,9 +264,7 @@ class EditGame extends Component {
       validationData.errMsg = validationData.func(
         this.state[validationData.name]
       );
-      console.log('validationData.errMsg: ', validationData.errMsg);
       if (validationData.errMsg.length !== 0) {
-        console.log('validationData: ', validationData);
         allOK = false;
         this.setState((prevState) => {
           prevState[validationData.name + "ErrorMessages"].toShow = "block";
@@ -311,11 +301,8 @@ class EditGame extends Component {
     //validates the fields
     fieldOK = this.validateFields();
     //after all the validetion we need to send the data to sql
-    console.log('allOK: ', allOK);
-    console.log('fieldOK: ', fieldOK);
     if (allOK && fieldOK) {
       //sends valid information to the server
-      console.log('need to save');
       this.addGameDb();
     }
   };
