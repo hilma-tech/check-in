@@ -15,7 +15,7 @@ class ArrowNavBar extends Component {
       case "/superAdmin/schoolsEdit":
         return "עריכת בית ספר";
       case "/superAdmin/gamesEdit":
-        return "הצגת משחק";
+        return "עריכת משחק";
       case "/superAdmin/teachersEdit":
         return "עריכת מורה";
       case "/superAdmin/studentsEdit":

@@ -17,11 +17,13 @@ import {
   showGameDto,
   IdeDto,
   DeleteGameIdDto,
+  GameEditReq,
 } from './game.dtos';
 import { UseFilesHandler, FilesType } from '@hilma/fileshandler-typeorm';
 import { UseJwtAuth } from '@hilma/auth-nest';
 import { FieldService } from 'src/field/field.service';
 import { ValDto } from 'src/student/student.dtos';
+import { EditSchoolInfoDto } from 'src/school/school.dtos';
 const { mustValid } = require('../serverTools/ServerValid');
 
 @Controller('api/game')
@@ -74,6 +76,38 @@ export class GameController {
     });
 
     return await this.gameService.addGame(files, req);
+  }
+
+  @UseJwtAuth('superAdmin')
+  @Post('/editGame')
+  @UseFilesHandler(100)
+  async updateGame(@UploadedFiles() files: FilesType, @Body() req: GameEditReq) {
+    console.log('req: ', req);
+    console.log('files: ', files);
+    req.field.forEach(element => {
+      console.log('element: ', element.value);
+    });
+    let emptyField = 0;
+    req.field.map(eachField => {
+      if (eachField.selection !== 'image') {
+        eachField.value.map(singularInp => {
+          let val = singularInp.value;
+          if (mustValid(val).length !== 0) {
+            if (eachField.selection === 'text') {
+              throw new Error();
+            } else {
+              emptyField++;
+            }
+          }
+        });
+      }
+      if (emptyField > 4) {
+        throw new Error();
+      }
+      emptyField = 0;
+    });
+
+    return await this.gameService.editGame(files, req);
   }
 
   @UseJwtAuth('superAdmin')

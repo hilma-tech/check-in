@@ -42,6 +42,7 @@ class Games {
       searchedGames: observable,
       whatData: action,
       datatype: observable,
+      editGame: action
     });
   }
 
@@ -181,6 +182,15 @@ class Games {
 
   searchGamesReplace = () => {
     this.searchedGames.replace([])
+  }
+
+  editGame = (newInfo) => {
+    this.gamesList = this.gamesList.map((game)=>{
+      if (newInfo.id !== game.id){
+        return game;
+      }
+      return newInfo
+    })
   }
 
 }

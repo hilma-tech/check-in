@@ -9,6 +9,7 @@ import {
   ClassroomIdDto,
   IdeDto,
   DeleteGameIdDto,
+  GameEditReq,
 } from './game.dtos';
 import { FilesType, ImageService } from '@hilma/fileshandler-typeorm';
 import { ClassroomFieldService } from 'src/classroom-field/classroom-field.service';
@@ -43,6 +44,54 @@ export class GameService {
     let game = await this.saveGame(req.game);
     await this.fieldService.saveField({ data: req.field, id: game.id });
     return game;
+  }
+
+  async editGame(@UploadedFiles() files: FilesType, @Body() req: GameEditReq) {
+    // req.field.forEach(async (img, index) => {
+    //   if ('image' === img.selection) {
+    //     let imgPath = await this.imageService.save(files, img.value[0].id);
+    //     req.field[index].value[0].value = imgPath;
+    //   }
+    // });
+
+    let gameInfo = await this.gameRepository
+      .createQueryBuilder('Game')
+      .innerJoinAndSelect('Game.classrooms', 'Classroom')
+      .select('Classroom.id')
+      .addSelect('Game.game_name')
+      .where('Game.id = :id', { id: Number(req.game.id) })
+      .getOne();
+    console.log('gameInfo: ', gameInfo);
+    let res = await this.gameRepository.save(req.game);
+    await this.classroomFieldService.editGameDeleteClassField(req.game.id, req.deletedField)
+    for (let i = 0; i < req.field.length; i++) {
+      let isExist = false
+      for (let z = 0; z < req.existField.length; z++) {
+        if (req.existField[z].id === req.field[i].id) {
+          isExist = true
+        }
+      }
+
+      if (isExist) {
+        //update ALL the fields
+      } else {
+        let data = {
+          name: req.field[i].name,
+          selection: req.field[i].selection,
+          value: req.field[i].value,
+          order: req.field[i].order,
+        }
+        let savedFiield = await this.fieldService.saveFieldAndAddToClasses({ data: data, id: req.game.id });
+        for (let a = 0; a < gameInfo.classrooms.length; a++) {
+          this.classroomFieldService.editGameAddFieldsToClass({
+              classId: gameInfo.classrooms[a].id,
+              field: savedFiield,
+              gameId: req.game.id
+            })
+        }
+      }
+    }
+    return res;
   }
 
   //!IS FOR DANIEL
