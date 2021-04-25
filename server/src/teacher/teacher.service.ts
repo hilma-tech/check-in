@@ -11,7 +11,7 @@ import {
 } from '@hilma/auth-nest';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { Teacher } from './teacher.entity';
 import { GetTeacherSkip, TeacherIdDto, GetClassSkip, TeacherRegisterDto } from './teacher.dtos';
 import { env } from 'process';
@@ -261,7 +261,7 @@ export class TeacherService extends UserService {
       },
     ]);
   }
-  async searchInTeacher(val: string) {
+  async searchInTeacher(val) {
     let teachers = await this.userRepository.find({
       relations: ['school', 'classroomTeacher'],
     });

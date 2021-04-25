@@ -1,5 +1,5 @@
 import { UploadedFiles, Body, Injectable, Req } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Game } from './game.entity';
 import {
@@ -24,7 +24,7 @@ export class GameService {
     private fieldService: FieldService,
     private classroomFieldService: ClassroomFieldService,
     private readonly imageService: ImageService,
-  ) {}
+  ) { }
 
   async addGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
     // if(req.game.image.value){
@@ -236,15 +236,15 @@ export class GameService {
 
   async deleteGameById(id: DeleteGameIdDto) {
     let gameInfo = await this.gameRepository
-    .createQueryBuilder('Game')
-    .innerJoinAndSelect('Game.classrooms', 'Classroom')
-    .select('Classroom.id')
-    .addSelect('Game.game_name')
-    .where('Game.id = :id', { id: Number(id.Id) })
-    .getOne();
-    if(gameInfo !== undefined){
-      for(let i =0; i< gameInfo.classrooms.length; i++){
-        await this.classroomFieldService.removeGameFieldsFromClass({gameId: id.Id, classId: gameInfo.classrooms[i].id})
+      .createQueryBuilder('Game')
+      .innerJoinAndSelect('Game.classrooms', 'Classroom')
+      .select('Classroom.id')
+      .addSelect('Game.game_name')
+      .where('Game.id = :id', { id: Number(id.Id) })
+      .getOne();
+    if (gameInfo !== undefined) {
+      for (let i = 0; i < gameInfo.classrooms.length; i++) {
+        await this.classroomFieldService.removeGameFieldsFromClass({ gameId: id.Id, classId: gameInfo.classrooms[i].id })
       }
     }
     await this.classroomFieldService.deleteClassField(id.Id)
@@ -264,8 +264,8 @@ export class GameService {
     let gamesLength = (
       await this.gameRepository.query(
         'select id from game where id not in(select game_id from classroom_game where classroom_id = ' +
-          req.classId +
-          ');',
+        req.classId +
+        ');',
       )
     ).length;
 
@@ -274,10 +274,10 @@ export class GameService {
 
     let allGames = await this.gameRepository.query(
       'select id, game_name, image from game where id not in(select game_id from classroom_game where classroom_id = ' +
-        req.classId +
-        ')  limit 50 offset ' +
-        req.dataLength +
-        ';',
+      req.classId +
+      ')  limit 50 offset ' +
+      req.dataLength +
+      ';',
     );
     return {
       currClassGames: currClassGames,
@@ -308,23 +308,10 @@ export class GameService {
     });
   }
 
-  async searchGames (val: ValDto){
-    let gamesInfo = await this.gameRepository.find({
-      where: [{ suspended: false }],
-      select: ['id', 'game_name', 'image'],
-      order: {
-        id: 'DESC',
-      },
+  async searchGames(val: ValDto) {
+    let searchresult = await this.gameRepository.find({
+      where: [{ game_name: Like("%" + val.val.toLowerCase() + "%") }]
     });
-
-    let Search = gamesInfo.map(game => {
-      if (game.game_name.includes(val.val.toLowerCase())) {
-        return game;
-      }
-    });
-    var searchresult = Search.filter(function(game) {
-      return game != null;
-    });
-    return searchresult;
+    return searchresult
   }
 }

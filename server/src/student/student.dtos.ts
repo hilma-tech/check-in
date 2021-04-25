@@ -150,7 +150,7 @@ export class StudentPassword {
 export class ValDto {
   @IsDefined()
   @IsString()
-  @Matches(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
+  // @Matches(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
   val: string;
 }
 
