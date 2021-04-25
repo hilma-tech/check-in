@@ -36,9 +36,9 @@ export class TeacherService extends UserService {
 
     @Inject('MailService')
     protected readonly mailer: MailerInterface,
-  
-    ) {
-      super(config_options, userRepository, jwtService, configService, mailer);
+
+  ) {
+    super(config_options, userRepository, jwtService, configService, mailer);
   }
 
   async addTeacher(@Body() req: TeacherRegisterDto) {
@@ -58,7 +58,7 @@ export class TeacherService extends UserService {
         return classroomTeacher
       })
     }
-    let school= await this.schoolService.getSchoolInfoById(req.school_id)
+    let school = await this.schoolService.getSchoolInfoById(req.school_id)
     user.school = school
     let userRole = new Role();
     userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
@@ -78,8 +78,8 @@ export class TeacherService extends UserService {
   }
 
   async editTeacher(@Body() req: any) {
-    if (req.password!==''){
-    await this.sendUpdatePasswordEmail(req.username, req.password);
+    if (req.password !== '') {
+      await this.sendUpdatePasswordEmail(req.username, req.password);
     }
     let teacher = await this.userRepository.findOne({
       where: [{ id: req.id }],
@@ -240,6 +240,32 @@ export class TeacherService extends UserService {
     ]);
   }
 
+  async sendUpdateOnGameChangeEmail(email, changes) {
+    let html = `<div style= "direction:rtl; background-color:whitesmoke;">
+    <h3 style="color:#043163; font-size:17px">שלום לך!</h3>
+    <h3 style="color:#043163; font-size:17px">המשחק ${changes.gamename} שהוספת לכיתות ${changes.classes} נערך</h3>
+    <p style="font-size:17px">השינויים שנערכו הם:</p>
+    <p style="background-color:#dcdcdc;width:max-content; font-size:17px;">${changes.changes}</p>
+    <h3 style="color:#043163">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h3>
+   <div style="display:flex;flex-direction:row;align-self:center;style="padding-bottom:10px">
+    <img src="cid:checkinlogo" height="20" style="padding:10px"/>
+    <img src="cid:hilmalogo" height="40"/>
+  </div>
+
+    </div>`;
+    this.sendEmail(email, "משחק שהוספת לכיתה נערך", '', html, [
+      {
+        fileName: 'blueCheckIn.png',
+        path: `${env.HOST}/icons/blueCheckIn.png`,
+        cid: 'checkinlogo',
+      },
+      {
+        fileName: 'hilmaIcon.png',
+        path: `${env.HOST}/icons/hilmaIcon.png`,
+        cid: 'hilmalogo',
+      },
+    ]);
+  }
   async searchInTeacher(val: string) {
     let teachers = await this.userRepository.find({
       relations: ['school', 'classroomTeacher'],
@@ -247,7 +273,7 @@ export class TeacherService extends UserService {
     let Search = teachers.map(teacher => {
       let fullname = (teacher.first_name + ' ' + teacher.last_name).toLowerCase();
       let classes = teacher.classroomTeacher.map((classroom) => { return classroom.name })
-      if (fullname.includes(val.toLowerCase()) || classes.join(' ').includes(val.toLowerCase())|| teacher.school.name.includes(val.toLowerCase())) {
+      if (fullname.includes(val.toLowerCase()) || classes.join(' ').includes(val.toLowerCase()) || teacher.school.name.includes(val.toLowerCase())) {
         return teacher;
       }
     });
