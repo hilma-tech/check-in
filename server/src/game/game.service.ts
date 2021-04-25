@@ -1,5 +1,5 @@
 import { UploadedFiles, Body, Injectable, Req } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Game } from './game.entity';
 import {
@@ -358,22 +358,9 @@ export class GameService {
   }
 
   async searchGames(val: ValDto) {
-    let gamesInfo = await this.gameRepository.find({
-      where: [{ suspended: false }],
-      select: ['id', 'game_name', 'image'],
-      order: {
-        id: 'DESC',
-      },
+    let searchresult = await this.gameRepository.find({
+      where: [{ game_name: Like("%" + val.val.toLowerCase() + "%") }]
     });
-
-    let Search = gamesInfo.map(game => {
-      if (game.game_name.includes(val.val.toLowerCase())) {
-        return game;
-      }
-    });
-    var searchresult = Search.filter(function (game) {
-      return game != null;
-    });
-    return searchresult;
+    return searchresult
   }
 }

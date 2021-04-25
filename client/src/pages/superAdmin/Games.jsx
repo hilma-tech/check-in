@@ -150,21 +150,81 @@ class Games extends Component {
             </form>
           </div>
           {this.props.games.haveMoreGames &&
-          this.props.games.gamesList.length === 0
+            this.props.games.gamesList.length === 0
             ? (displayLoading = true)
             : (displayLoading = false)}
           {this.props.games.haveMoreGames &&
-          this.props.games.gamesList.length === 0 ? (
-            <LoadingPage />
-          ) : (
-            <div>
-              {this.state.searched && this.state.searchVal ? (
-                <div>
-                  {this.props.games.searchedGames.length === 0 ? (
-                    <p>לא נמצאו משחקים בשם זה</p>
-                  ) : (
-                    <div  className="grid">
-                      {this.props.games.searchedGames.map((image, index) => {
+            this.props.games.gamesList.length === 0 ? (
+              <LoadingPage />
+            ) : (
+              <div>
+                {this.state.searched && this.state.searchVal ? (
+                  <div>
+                    {this.props.games.searchedGames.length === 0 ? (
+                      <p>לא נמצאו משחקים בשם זה</p>
+                    ) : (
+                        <div className="grid">
+                          {this.props.games.searchedGames.map((image, index) => {
+                            return (
+                              <div key={image.id}>
+                                <div className="imageContainer item3">
+                                  <Fade
+                                    in={image.showOption}
+                                    timeout={{
+                                      appear: 500,
+                                      enter: 400,
+                                      exit: 100,
+                                    }}
+                                    mountOnEnter
+                                    unmountOnExit
+                                  >
+                                    <PopUp
+                                      onClickEditGame={this.onClickEditGame}
+                                      onClickDeleteGame={this.onClickDeleteGame}
+                                      OnApprove={this.OnApprove}
+                                      gameId={image.id}
+                                    />
+                                  </Fade>
+                                  <div id="holdImg">
+                                    <img
+                                      className="gameImg"
+                                      alt=""
+                                      src="https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg"
+                                    />
+                                  </div>
+                                  <h2 className="gameTitleBackground"></h2>
+                                  <h1 className="gameTitle">{image.game_name}</h1>
+                                  <OutsideClickHandler
+                                    onOutsideClick={() =>
+                                      this.props.games.resetShowOptions()
+                                    }
+                                  >
+                                    <img
+                                      className="optionIcon"
+                                      onClick={() => {
+                                        this.props.games.setShowOption(index);
+                                      }}
+                                      alt=""
+                                      src={optionicon}
+                                    />
+                                  </OutsideClickHandler>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                  </div>
+                ) : (
+                    <div className="grid">
+                      <div onClick={this.onClickAddGame}>
+                        <div className="imageContainer item3 pointyboi">
+                          <img className="addImg" src={addicon} alt="" />
+                          <h2 className="gameTitleBackground"></h2>
+                          <h1 className="gameTitle">הוסף משחק</h1>
+                        </div>
+                      </div>
+                      {this.props.games.gamesList.map((image, index) => {
                         return (
                           <div key={image.id}>
                             <div className="imageContainer item3">
@@ -214,68 +274,8 @@ class Games extends Component {
                       })}
                     </div>
                   )}
-                </div>
-              ) : (
-                <div className="grid">
-                  <div onClick={this.onClickAddGame}>
-                    <div className="imageContainer item3 pointyboi">
-                      <img className="addImg" src={addicon} alt="" />
-                      <h2 className="gameTitleBackground"></h2>
-                      <h1 className="gameTitle">הוסף משחק</h1>
-                    </div>
-                  </div>
-                  {this.props.games.gamesList.map((image, index) => {
-                    return (
-                      <div key={image.id}>
-                        <div className="imageContainer item3">
-                          <Fade
-                            in={image.showOption}
-                            timeout={{
-                              appear: 500,
-                              enter: 400,
-                              exit: 100,
-                            }}
-                            mountOnEnter
-                            unmountOnExit
-                          >
-                            <PopUp
-                              onClickEditGame={this.onClickEditGame}
-                              onClickDeleteGame={this.onClickDeleteGame}
-                              OnApprove={this.OnApprove}
-                              gameId={image.id}
-                            />
-                          </Fade>
-                          <div id="holdImg">
-                            <img
-                              className="gameImg"
-                              alt=""
-                              src="https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg"
-                            />
-                          </div>
-                          <h2 className="gameTitleBackground"></h2>
-                          <h1 className="gameTitle">{image.game_name}</h1>
-                          <OutsideClickHandler
-                            onOutsideClick={() =>
-                              this.props.games.resetShowOptions()
-                            }
-                          >
-                            <img
-                              className="optionIcon"
-                              onClick={() => {
-                                this.props.games.setShowOption(index);
-                              }}
-                              alt=""
-                              src={optionicon}
-                            />
-                          </OutsideClickHandler>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          )}
+              </div>
+            )}
 
           {this.startGetGames ? (
             <img
@@ -283,8 +283,8 @@ class Games extends Component {
               src="/icons/loading.gif"
               alt="loading..."
             ></img>
-          ) : (
-            <button
+          ) : (<div>
+            {this.state.searched && this.state.searchVal ? null : <button
               className="showMoreGamesB"
               onClick={this.getGames}
               style={{
@@ -295,8 +295,8 @@ class Games extends Component {
               }}
             >
               הצג עוד
-            </button>
-          )}
+            </button>}</div>
+            )}
         </div>
       </>
     );

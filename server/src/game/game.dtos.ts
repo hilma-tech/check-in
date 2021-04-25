@@ -95,7 +95,7 @@ export class GameSaveReq {
    [
     {
       name: string;
-      selection: string;
+      selection: GameType;
       value: [{ id: number; value: string }];
       order: number;
     },

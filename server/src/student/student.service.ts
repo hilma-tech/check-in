@@ -11,6 +11,7 @@ import { Classroom } from 'src/classroom/classroom.entity';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { FieldService } from 'src/field/field.service';
 import { GameService } from 'src/game/game.service';
+import { School } from 'src/school/school.entity';
 
 @Injectable()
 export class StudentService extends UserService {
@@ -131,6 +132,7 @@ export class StudentService extends UserService {
   }
 
   async editStudent(req: UserEditDto) {
+    console.log('req: ', req);
     let student = await this.userRepository.findOne({ where: [{ id: req.id }], relations: ["classroomStudent"] })
     let username = req.username;
     let password = bcrypt.hashSync(req.password, SALT);;
@@ -168,7 +170,9 @@ export class StudentService extends UserService {
     let students = await this.userRepository.find({ relations: ['school', 'classroomStudent'] })
     let Search = students.map((student) => {
       let fullname = (student.first_name + ' ' + student.last_name).toLowerCase()
-      if (fullname.includes(val.toLowerCase())) {
+      let classes = student.classroomStudent.map((classroom) => { return classroom.name })
+       if (fullname.includes(val.toLowerCase()) || classes.join(' ').includes(val.toLowerCase())  //student.school.includes(val.toLowerCase())
+      ) {
         return student
       }
     })

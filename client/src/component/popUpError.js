@@ -21,6 +21,9 @@ class PopUpError extends React.Component {
       !this.props.errorMsg.question &&
       window.location.pathname.includes("superAdmin")
     ) {
+      // if (window.location.pathname.includes("/superAdmin/schoolsEdit")) {
+      //   window.location.pathname = "/superAdmin/schoolsEdit";
+      // }
       if (window.location.pathname !== "/superAdmin/games" && window.location.pathname !== "/superAdmin/gamesAdd" && this.props.errorMsg.errorMsg.includes("הייתה שגיאה בשרת")) {
         window.location.pathname = "/superAdmin/games";
       }

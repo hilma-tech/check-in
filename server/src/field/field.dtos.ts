@@ -1,5 +1,6 @@
 import {
   IsDefined,
+  IsEnum,
   IsNumber,
   IsString,
   Length,
@@ -7,6 +8,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { GameType } from './game.type.enum';
 
 export class DataValueDto {
   @IsDefined()
@@ -24,9 +26,9 @@ export class FieldDataDto {
   @Matches(/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/)
   name: string;
   @IsDefined()
-  @IsString()
+  @IsEnum(GameType)
   @Length(1, 30)
-  selection: string;
+  selection: GameType;
   @IsDefined()
   @ValidateNested({ each: true })
   @Type(() => DataValueDto)

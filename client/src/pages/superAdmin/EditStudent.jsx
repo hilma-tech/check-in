@@ -18,7 +18,7 @@ import { schoolsContext } from "../../stores/schools.store";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { studentsContext } from "../../stores/students.store";
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from "@material-ui/icons/Edit";
 
 const axios = require("axios").default;
 
@@ -45,7 +45,7 @@ class EditStudent extends React.Component {
   }
   componentDidMount = async () => {
     if (this.props.students.chosenStudent.classroomStudent === undefined) {
-      this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת, אנא נסו שנית')
+      this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת, אנא נסו שנית");
     } else {
       await this.props.schools.getAllSchoolsNames();
       if (!this.props.schools.successGettingSchools) {
@@ -66,9 +66,9 @@ class EditStudent extends React.Component {
             school: this.props.students.chosenStudent.schoolName,
             chosenClasses: this.props.students.chosenStudent.classroomStudent,
             allSchools: this.props.schools.schoolsNames.map((school) => {
-              return school.name
-            })
-          })
+              return school.name;
+            }),
+          });
         } catch (err) {
           this.props.errorMsg.setErrorMsg(
             "הייתה שגיאה בשרת. לא ניתן לקבל כיתות מהשרת."
@@ -76,8 +76,7 @@ class EditStudent extends React.Component {
         }
       }
     }
-  }
-
+  };
 
   //Return the classes list as list of object for the Select.
   makeClassesOption = (indexSelect) => {
@@ -140,13 +139,18 @@ class EditStudent extends React.Component {
   };
 
   chooseSchool = async (e) => {
-    let chosenScoolId = (this.props.schools.schoolsNames.filter((school) => {
-      return school.name === e.value
-    }))[0]
+    let chosenScoolId = this.props.schools.schoolsNames.filter((school) => {
+      return school.name === e.value;
+    })[0];
     const { data } = await axios.get("/api/classroom/getSchoolClasses", {
       params: { schoolId: chosenScoolId.id },
     });
-    this.setState({ school: e.value, allClasses: data, schoolId: chosenScoolId.id, chosenClasses: [] });
+    this.setState({
+      school: e.value,
+      allClasses: data,
+      schoolId: chosenScoolId.id,
+      chosenClasses: [],
+    });
   };
 
   //saves changes in entered data to the state
@@ -230,24 +234,37 @@ class EditStudent extends React.Component {
 
     //after all the validation we need to send the data to sql
     if (allOk) {
-      let isChange = false
-      if (this.state.schoolId !== this.props.students.chosenStudent.school.id ||
-        this.state.studentFirstName !== this.props.students.chosenStudent.first_name ||
-        this.state.studentLastName !== this.props.students.chosenStudent.last_name ||
+      let isChange = false;
+      if (
+        this.state.schoolId !== this.props.students.chosenStudent.school.id ||
+        this.state.studentFirstName !==
+          this.props.students.chosenStudent.first_name ||
+        this.state.studentLastName !==
+          this.props.students.chosenStudent.last_name ||
         this.state.userName !== this.props.students.chosenStudent.username ||
-        this.state.password.length !== 0) {
-        isChange = true
+        this.state.password.length !== 0
+      ) {
+        isChange = true;
       }
-      if (this.state.chosenClasses.length === this.props.students.chosenStudent.classroomStudent.length) {
+      if (
+        this.state.chosenClasses.length ===
+        this.props.students.chosenStudent.classroomStudent.length
+      ) {
         for (let i = 0; i < this.state.chosenClasses.length; i++) {
-          let a = this.props.students.chosenStudent.classroomStudent.filter((classroom) => {
-            return classroom.id !== this.state.chosenClasses[i].id
-          })
+          let a = this.props.students.chosenStudent.classroomStudent.filter(
+            (classroom) => {
+              return classroom.id !== this.state.chosenClasses[i].id;
+            }
+          );
           if (
-            (this.props.students.chosenStudent.classroomStudent.filter((classroom) => {
-              return classroom.id !== this.state.chosenClasses[i].id
-            })).length !== this.state.chosenClasses.length - 1) {
-            isChange = true
+            this.props.students.chosenStudent.classroomStudent.filter(
+              (classroom) => {
+                return classroom.id !== this.state.chosenClasses[i].id;
+              }
+            ).length !==
+            this.state.chosenClasses.length - 1
+          ) {
+            isChange = true;
           }
         }
       }
@@ -260,33 +277,43 @@ class EditStudent extends React.Component {
             firstName: this.state.studentFirstName,
             lastName: this.state.studentLastName,
             classrooms: this.state.chosenClasses.filter((classroom) => {
-              return classroom.name !== 'שייך לכיתה'
+              return classroom.name !== "שייך לכיתה";
             }),
-            schoolId: this.state.schoolId
+            schoolId: this.state.schoolId,
           });
-          let classroomStudent = this.state.chosenClasses.filter((classroom) => {
-            return classroom.name !== 'שייך לכיתה'
-          })
+          let classroomStudent = this.state.chosenClasses.filter(
+            (classroom) => {
+              return classroom.name !== "שייך לכיתה";
+            }
+          );
           if (data) {
             this.props.students.updateStudent({
               first_name: this.state.studentFirstName,
               last_name: this.state.studentLastName,
-              name: this.state.studentFirstName + " " + this.state.studentLastName,
+              name:
+                this.state.studentFirstName + " " + this.state.studentLastName,
               username: this.state.userName,
               schoolName: this.state.school,
               school: { id: this.state.schoolId, name: this.state.school },
               id: this.props.students.chosenStudent.id,
               classroomStudent: classroomStudent,
-              classes: classroomStudent !== undefined ? classroomStudent.map((classInfo) => {
-                return classInfo.name
-              }) : []
-            })
+              classes:
+                classroomStudent !== undefined
+                  ? classroomStudent.map((classInfo) => {
+                      return classInfo.name;
+                    })
+                  : [],
+            });
             this.props.history.goBack(); // after saving go back
           } else {
-            this.props.errorMsg.setErrorMsg('שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר.');
+            this.props.errorMsg.setErrorMsg(
+              "שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר."
+            );
           }
         } catch (err) {
-          this.props.errorMsg.setErrorMsg('שגיאה בשרת, תלמיד לא נשמר, נסו שוב.');
+          this.props.errorMsg.setErrorMsg(
+            "שגיאה בשרת, תלמיד לא נשמר, נסו שוב."
+          );
         }
       } else {
         this.props.history.goBack();
@@ -295,17 +322,19 @@ class EditStudent extends React.Component {
   };
 
   deleteStudent = () => {
-    let success = this.props.students.deleteStudent()
+    let success = this.props.students.deleteStudent();
     if (success) {
       this.props.history.goBack();
     } else {
-      this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת, לא היה ניתן למחוק את התלמיד.')
+      this.props.errorMsg.setErrorMsg(
+        "הייתה שגיאה בשרת, לא היה ניתן למחוק את התלמיד."
+      );
     }
-  }
+  };
 
   render() {
     return (
-      <div className='withMenu'>
+      <div className="withMenu">
         <ArrowNavBar />
         <form className="formData">
           <label className="labelFields">* שם פרטי:</label>
@@ -354,8 +383,9 @@ class EditStudent extends React.Component {
             name="userName"
           ></input>
 
-          {this.state.showPassChanger ?
-            <><label className="labelFields">* סיסמא:</label>
+          {this.state.showPassChanger ? (
+            <>
+              <label className="labelFields">* סיסמא:</label>
               <p
                 className="error"
                 style={{ display: this.state.passwordError.toShow }}
@@ -370,31 +400,40 @@ class EditStudent extends React.Component {
                 placeholder="הכנס סיסמא"
                 name="password"
               ></input>
-              <div className="passStudentChange" onClick={() => {
+              <div
+                className="passStudentChange"
+                onClick={() => {
+                  this.setState({
+                    showPassChanger: !this.state.showPassChanger,
+                    password: "",
+                  });
+                }}
+              >
+                <h2 className="changePasstext">ביטול</h2>
+              </div>{" "}
+            </>
+          ) : (
+            <div
+              className="passStudentChange"
+              onClick={() => {
                 this.setState({
                   showPassChanger: !this.state.showPassChanger,
-                  password: ""
+                  password: "",
                 });
-              }} >
-                <h2 className="changePasstext" >ביטול</h2>
-              </div> </> :
-            <div className="passStudentChange" onClick={() => {
-              this.setState({
-                showPassChanger: !this.state.showPassChanger,
-                password: ""
-              });
-            }} >
-              <h2 className="changePasstext" >שינוי סיסמא</h2>
-              <div className='editIcon'>
+              }}
+            >
+              <h2 className="changePasstext">שינוי סיסמא</h2>
+              <div className="editIcon">
                 <EditIcon
                   style={{
                     height: "3vh",
                     width: "3vh",
                     color: "#043163",
-                  }} />
+                  }}
+                />
               </div>
             </div>
-          }
+          )}
 
           <label className="labelFields">* בית ספר:</label>
           <p
@@ -412,13 +451,19 @@ class EditStudent extends React.Component {
             placeholder={this.state.school}
           />
 
-          {this.state.school.length === 0 ? <></> :
+          {this.state.school.length === 0 ? (
+            <></>
+          ) : (
             <>
               <label className="labelFields">כיתה:</label>
-              {this.state.allClasses.length === 0 ? <p>אין כיתות לבית ספר זה</p> : <></>}
-              {
-                this.state.chosenClasses.map((val, i) => {
-                  return (<div key={val.id} className="classSelection">
+              {this.state.allClasses.length === 0 ? (
+                <p>אין כיתות לבית ספר זה</p>
+              ) : (
+                <></>
+              )}
+              {this.state.chosenClasses.map((val, i) => {
+                return (
+                  <div key={val.id} className="classSelection">
                     <Select
                       className="classSelectionInAddTecher"
                       styles={SelectStyle()}
@@ -434,28 +479,40 @@ class EditStudent extends React.Component {
                       onClick={() => this.removeClass(i)}
                       src="/icons/delete.svg"
                     />
-                  </div>)
-                })
-              }
+                  </div>
+                );
+              })}
 
-              {this.state.allClasses.length === this.state.chosenClasses.length ? <></> :
-                <div className="addSomethingNew" onClick={this.addClassSelection}>
+              {this.state.allClasses.length ===
+              this.state.chosenClasses.length ? (
+                <></>
+              ) : (
+                <div
+                  className="addSomethingNew"
+                  onClick={this.addClassSelection}
+                >
                   <img className="addIcon" src={addicon} alt="add icon"></img>
                   <p className="addTitle">הוסף כיתה</p>
-                </div>}
+                </div>
+              )}
             </>
-          }
+          )}
         </form>
 
         <div className="spacerFromSaveButton"></div>
         <div className="saveButtonBackground">
-          <button className="deletButton deletButtonmargin" onClick={() => {
-            this.props.errorMsg.setQuestion(
-              "האם אתה בטוח שברצונך למחוק תלמיד זה?",
-              this.deleteStudent,
-              "מחק"
-            )
-          }}>מחק תלמיד</button>
+          <button
+            className="deletButton deletButtonmargin"
+            onClick={() => {
+              this.props.errorMsg.setQuestion(
+                "האם אתה בטוח שברצונך למחוק תלמיד זה?",
+                this.deleteStudent,
+                "מחק"
+              );
+            }}
+          >
+            מחק תלמיד
+          </button>
           <button className="saveButton" onClick={this.saveButton}>
             שמור
           </button>
@@ -471,6 +528,6 @@ const mapContextToProps = {
   errorMsg: errorMsgContext,
 };
 
-export default withContext(mapContextToProps)(observer(withRouter(EditStudent)));
-
-
+export default withContext(mapContextToProps)(
+  observer(withRouter(EditStudent))
+);

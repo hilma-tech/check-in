@@ -67,6 +67,7 @@ class TeachersList extends React.Component {
   searchTeachers = async () => {
     this.props.teachers.searchTeachersReplace()
     this.setState({ searched: true })
+    console.log('this.state.searchVal: ', this.state.searchVal);
     await this.props.teachers.searchTeachers(this.state.searchVal)
   }
   render() {
