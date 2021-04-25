@@ -30,7 +30,7 @@ export class TeacherService extends UserService {
     protected readonly userRepository: Repository<Teacher>,
     protected readonly jwtService: JwtService,
     protected readonly configService: ConfigService,
-    
+
     @Inject(forwardRef(() => ClassroomService))
     private classroomService: ClassroomService,
     private readonly schoolService: SchoolService,
@@ -239,8 +239,8 @@ export class TeacherService extends UserService {
     let html = `<div style= "direction:rtl; background-color:whitesmoke;">
     <h3 style="color:#043163; font-size:17px">שלום לך!</h3>
     <h3 style="color:#043163; font-size:17px">המשחק ${changes.gamename} שהוספת לכיתות ${changes.classes} נערך</h3>
-    <p style="font-size:17px">השינויים שנערכו הם:</p>
-    <p style="background-color:#dcdcdc;width:max-content; font-size:17px;">${changes.changes}</p>
+    <p style="font-size:17px">אנא הכנסו לאתר על מנת לראות את השינויים:</p>
+    <p style="font-size:17px"> <a href="${env.DOMAIN}"/> </p>
     <h3 style="color:#043163">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h3>
    <div style="display:flex;flex-direction:row;align-self:center;style="padding-bottom:10px">
     <img src="cid:checkinlogo" height="20" style="padding:10px"/>
@@ -248,7 +248,7 @@ export class TeacherService extends UserService {
   </div>
 
     </div>`;
-    this.sendEmail(email, "משחק שהוספת לכיתה נערך", '', html, [
+    this.sendEmail(email, "משחק שהוספת לכיתה שלך נערך", '', html, [
       {
         fileName: 'blueCheckIn.png',
         path: `${env.HOST}/icons/blueCheckIn.png`,
