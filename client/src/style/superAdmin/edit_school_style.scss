@@ -37,7 +37,7 @@
 .showClassButton {
   @include mouse(point);
   margin-right: 1vw;
-  margin-top: 3vh;
+  margin-top: 2vh;
   margin-left: 0.5vw;
   width: 1.5vw;
   height: 3.5vh;
@@ -58,8 +58,8 @@
   @include mouse(point);
   height: 30px;
   padding-top: 5px;
-  width: 1.5vw;
-  margin: 0.75vw;
+  width: 1.25vw;
+  margin: 0.5vw;
 }
 
 .removeClass {
