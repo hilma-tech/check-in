@@ -127,7 +127,7 @@ export class GameEditDto {
 
   @Length(0, 255)
   @Matches(/^$|(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/)
-  gameLink: string
+  video_link: string
 
   @IsDefined()
   @IsBoolean()
