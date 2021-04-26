@@ -19,6 +19,11 @@ class SchoolClassData extends React.Component {
     //Will need to get the list from SQL
   }
 
+  componentDidMount() {
+    if (this.props.classDataLength === this.props.classIndex + 1 && this.props.addedClass) {
+      this.setState({ showClass: true })
+    }
+  }
   handleNewTeacherPopUpState = () => {
     this.setState((prevState) => { return { showAddNewTeacher: !prevState.showAddNewTeacher } })
   }
@@ -138,7 +143,7 @@ class SchoolClassData extends React.Component {
             className="removeClass"
             onClick={() => this.props.removeClass(this.props.classIndex)}
             src="/icons/delete.svg"
-            style={{ height: '20px', marginTop: '15px' }}
+            style={{ height: '25px', marginTop: '15px' }}
           />
         </div>
         <Fade in={this.state.showClass}>
@@ -149,24 +154,25 @@ class SchoolClassData extends React.Component {
                 : "hideSchoolClassTeacher"
             }
           >
-            <label for="schoolClassTeacher" className="labelFields">
-              מורים:
+            {this.props.classData.chosenTeachers.length > 0 ? <div>
+              <label for="schoolClassTeacher" className="labelFields">
+                מורים:
             </label>
 
-            <div className="allEditSchoolClassTeacherSelect">
-              {this.returnTeacherSelections()}
-            </div>
+              <div className="allEditSchoolClassTeacherSelect">
+                {this.returnTeacherSelections()}
+              </div></div> : null}
             <div className="editSchoolClassTeacherButtons">
-                <div
-                  className="editSchoolClassAddExistTeacher addSomethingNew"
-                  onClick={this.handleExistTeacherPopUpState}
-                >
-                  <img alt="add icon" className="addIcon" src="/icons/addicon.svg"></img>
-                  <p className="addTitle">הוסף מורה קיים</p>
-                </div>
+              <div
+                className="editSchoolClassAddExistTeacher addSomethingNew"
+                onClick={this.handleExistTeacherPopUpState}
+              >
+                <img alt="add icon" className="addIcon" src="/icons/addicon.svg"></img>
+                <p className="addTitle">הוסף מורה קיים</p>
+              </div>
               <div className="addSomethingNew" onClick={this.handleNewTeacherPopUpState}>
                 <img alt="add icon" className="addIcon" src="/icons/addicon.svg"></img>
-                <p className="addTitle">הוסף מורה חדש</p>
+                <p className="addTitle" style={{ width: 'max-content' }}>צור מורה חדש</p>
               </div>
             </div>
             <Dialog
@@ -178,11 +184,11 @@ class SchoolClassData extends React.Component {
             <Dialog
               maxWidth="90vw"
               open={this.state.showAddExistTeacher}
-            ><ChooseExistTeacherPopUp closeFunc={this.handleExistTeacherPopUpState} 
-            classIndex={this.props.classIndex} 
-            addTeacherToClass={this.props.addExistTeacherToClass}
-            existTeachers={this.props.existTeachers}
-            chosenTeachers={this.props.classData.chosenTeachers === undefined ? [] : this.props.classData.chosenTeachers} />
+            ><ChooseExistTeacherPopUp closeFunc={this.handleExistTeacherPopUpState}
+              classIndex={this.props.classIndex}
+              addTeacherToClass={this.props.addExistTeacherToClass}
+              existTeachers={this.props.existTeachers}
+              chosenTeachers={this.props.classData.chosenTeachers === undefined ? [] : this.props.classData.chosenTeachers} />
             </Dialog>
           </div>
         </Fade>

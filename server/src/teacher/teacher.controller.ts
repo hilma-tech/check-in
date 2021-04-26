@@ -124,7 +124,7 @@ export class TeacherController {
   @Get('/Verify')
   async MakeLogInAvailable(@Query() Token: any, @Res() res: any) {
     await this.teacherService.verifyEmailByToken(Token.token);
-    var redirectTo = `${env.HOST}/initialPage`; //to be replaced with real domain
+    var redirectTo = `${env.HOST}/initialPage`; 
     res.redirect(redirectTo);
   }
 

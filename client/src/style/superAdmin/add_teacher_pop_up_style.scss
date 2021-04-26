@@ -3,11 +3,13 @@
 
 .saveButtonTAddPopUp {
     @include mouse(point);
-    position: fixed;
+    position: absolute;
     font-weight: bold;
-    top: 85vh;
-    left: 10vw;
-    width: 8vw;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    margin-right: 45vw;
+    margin-left: 5vw;
+    width: 16vw;
     height: 5vh;
     cursor: pointer;
     @include blue-button-style;

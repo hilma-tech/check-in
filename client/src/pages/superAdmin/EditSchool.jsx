@@ -24,6 +24,7 @@ class EditSchool extends Component {
       schoolName: "",
       schoolCityError: { toShow: "none", mess: "" },
       schoolCity: "",
+      addedClass:false,
       //List of all the classes in the school. The numTeachers represent the number of teachers in the class.
       classes: [],
       removedClasses: [],
@@ -64,6 +65,7 @@ class EditSchool extends Component {
     */
   addClassToSchool = (e) => {
     e.preventDefault();
+    this.setState({addedClass:true})
     this.setState((prevState) => {
       let tempData = [
         ...prevState.classes,
@@ -320,6 +322,8 @@ class EditSchool extends Component {
                     <SchoolClassData
                       key={classData.id}
                       classData={classData}
+                      classDataLength={this.state.classes.length}
+                      addedClass={this.state.addedClass}
                       classIndex={classIndex}
                       handleChange={this.handleChange}
                       removeClass={this.removeClass}

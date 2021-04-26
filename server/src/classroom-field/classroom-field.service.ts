@@ -47,8 +47,8 @@ export class ClassroomFieldService {
     });
   }
 
+  //when the teacher choose a game
   async addGameFieldsToClass(@UploadedFiles() files: FilesType, @Body() req: ClassroomGameDto) {
-    console.log('req: ', req);
     let Inp = null;
     
     req.fieldsData.forEach( async (field) => {
@@ -106,6 +106,16 @@ export class ClassroomFieldService {
     });
   }
 
+  //when the super admin edit game and add new fields
+  async editGameAddFieldsToClass(@Body() req) {
+      let newField: Partial<ClassroomField> =  new ClassroomField();
+      newField.classroom_id = req.classId;
+      newField.field_id = req.field//field.id;
+      newField.new_value = req.field.default_value;
+      newField.game_id = req.gameId
+      this.classFieldRepository.save(newField);
+  }
+
   async deleteClassField(@Body() req: number) {
     let deleteFieldAndGetFieldId = await this.fieldService.getGameFields(req);
     let fieldsForDelete = [];
@@ -116,6 +126,21 @@ export class ClassroomFieldService {
       }
       // await this.classFieldRepository.delete({ field_id: fieldId.id });
     });
+    if (fieldsForDelete.length > 0) {
+      await this.fieldService.deleteField(fieldsForDelete);
+    }
+  }
+
+  async editGameDeleteClassField(gameID: number, fieldsForDelete: number[]) {
+    let deleteFieldAndGetFieldId = await this.fieldService.getGameFields(gameID);
+
+    fieldsForDelete.forEach((fieldId)=>{
+      deleteFieldAndGetFieldId.map(async field => {
+          if(fieldId === field.id && field.type === 'image'){
+            await this.imageService.delete(field.default_value)
+          }
+      });
+    })
     if (fieldsForDelete.length > 0) {
       await this.fieldService.deleteField(fieldsForDelete);
     }

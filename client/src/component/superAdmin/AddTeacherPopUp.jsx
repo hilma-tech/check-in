@@ -156,7 +156,7 @@ class AddTeacherPopUp extends Component {
     render() {
         return (
             <>
-                <div style={{width: "90vw", height: "90vh", paddingTop: "5vh"}}>
+                <div style={{width: "65vw", height: "65vh", paddingTop: "5vh"}}>
                 <img
                             onClick={this.props.closeFunc}
                             alt=""
@@ -222,7 +222,7 @@ class AddTeacherPopUp extends Component {
                     </form>
 
                         <button className="saveButtonTAddPopUp" onClick={this.validateInputFields}>
-                            שמור
+                          צור מורה ושייך לכיתה
                         </button>
                 </div>
             </>

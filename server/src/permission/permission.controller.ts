@@ -18,12 +18,6 @@ export class PermissionController {
     async setClassPermission(@Body() req: allPermissions) {
         await this.PermissionService.setPermissions(req)
     }
-    
-    // @UseJwtAuth('teacher')
-    // @Get('/getClassPermissions')
-    // async getClassPermissions(@Query() req: any) {
-    //   return  await this.PermissionService.getPermissionByClassId(req.classId)
-    // }
 
     @UseJwtAuth('teacher')
     @Get('/dayPermissions')

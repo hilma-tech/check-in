@@ -38,10 +38,11 @@ class Games {
       deleteGame: action,
       resetGamesStore: action,
       searchGames: action,
-      searchGamesReplace:action,
+      searchGamesReplace: action,
       searchedGames: observable,
       whatData: action,
       datatype: observable,
+      editGame: action
     });
   }
 
@@ -109,15 +110,28 @@ class Games {
   };
 
   //opens or closes a popup in superadmin game page
-  setShowOption = (gameIndex) => {
-    this.gamesList[gameIndex].showOption = !this.gamesList[gameIndex]
-      .showOption;
+  setShowOption = (gameIndex, list) => {
+    if (list === 'searched') {
+      this.searchedGames[gameIndex].showOption = !this.searchedGames[gameIndex]
+        .showOption;
+    }
+    else {
+      this.gamesList[gameIndex].showOption = !this.gamesList[gameIndex]
+        .showOption;
+    }
+
   };
 
   //closes all the popups in superadmin game page
-  resetShowOptions = () => {
-    for (let i = 0; i < this.gamesList.length; i++) {
-      this.gamesList[i].showOption = false;
+  resetShowOptions = (list) => {
+    if (list === 'searched') {
+      for (let i = 0; i < this.searchedGames.length; i++) {
+        this.searchedGames[i].showOption = false;
+      }
+    } else {
+      for (let i = 0; i < this.gamesList.length; i++) {
+        this.gamesList[i].showOption = false;
+      }
     }
   };
 
@@ -181,6 +195,15 @@ class Games {
 
   searchGamesReplace = () => {
     this.searchedGames.replace([])
+  }
+
+  editGame = (newInfo) => {
+    this.gamesList = this.gamesList.map((game) => {
+      if (newInfo.id !== game.id) {
+        return game;
+      }
+      return newInfo
+    })
   }
 
 }

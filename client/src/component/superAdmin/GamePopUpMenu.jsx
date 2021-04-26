@@ -28,7 +28,7 @@ class GamePopUpMenu extends Component {
                 color: "#043163",
               }}
             />
-            <h1 className="popUpOpt">הצגה</h1>
+            <h1 className="popUpOpt">ערוך</h1>
           </div>
           <hr className="divider" />
           <div

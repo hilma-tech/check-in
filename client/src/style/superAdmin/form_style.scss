@@ -68,7 +68,7 @@
     padding-right: 0.5vw;
     padding-top: 1vh;
     margin: 0;
-    width: 11vw;
+    width: max-content;
     margin-bottom: 1vh;
     @include adding-button;
     @include mouse(point);

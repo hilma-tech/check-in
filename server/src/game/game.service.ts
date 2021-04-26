@@ -1,5 +1,5 @@
-import { UploadedFiles, Body, Injectable, Req } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { UploadedFiles, Body, Injectable, Req, Inject, forwardRef } from '@nestjs/common';
+import { Like, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Game } from './game.entity';
 import {
@@ -9,12 +9,14 @@ import {
   ClassroomIdDto,
   IdeDto,
   DeleteGameIdDto,
+  GameEditReq,
 } from './game.dtos';
 import { FilesType, ImageService } from '@hilma/fileshandler-typeorm';
 import { ClassroomFieldService } from 'src/classroom-field/classroom-field.service';
 import { getCGFDto } from 'src/classroom-field/classroom-field.dtos';
 import { FieldService } from 'src/field/field.service';
 import { ValDto } from 'src/student/student.dtos';
+import { TeacherService } from 'src/teacher/teacher.service';
 
 @Injectable()
 export class GameService {
@@ -24,7 +26,9 @@ export class GameService {
     private fieldService: FieldService,
     private classroomFieldService: ClassroomFieldService,
     private readonly imageService: ImageService,
-  ) {}
+    @Inject(forwardRef(() => TeacherService))
+    private readonly teacherService: TeacherService
+  ) { }
 
   async addGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
     // if(req.game.image.value){
@@ -43,6 +47,105 @@ export class GameService {
     let game = await this.saveGame(req.game);
     await this.fieldService.saveField({ data: req.field, id: game.id });
     return game;
+  }
+
+  async editGame(@UploadedFiles() files: FilesType, @Body() req: GameEditReq) {
+    // req.field.forEach(async (img, index) => {
+    //   if ('image' === img.selection) {
+    //     let imgPath = await this.imageService.save(files, img.value[0].id);
+    //     req.field[index].value[0].value = imgPath;
+    //   }
+    // });
+
+    let gameInfo = await this.gameRepository
+      .createQueryBuilder('Game')
+      .innerJoinAndSelect('Game.classrooms', 'Classroom')
+      .select('Classroom.id')
+      .addSelect('Game.game_name')
+      .where('Game.id = :id', { id: Number(req.game.id) })
+      .getOne();
+    // console.log('gameInfo: ', gameInfo);
+    let res = await this.gameRepository.save(req.game);
+    this.teacherService.getTeacherByClassId(gameInfo.classrooms, req.game)
+    await this.classroomFieldService.editGameDeleteClassField(req.game.id, req.deletedField)
+    for (let i = 0; i < req.field.length; i++) {
+      let isExist = -1
+      let isArryFieldChange = false
+      for (let z = 0; z < req.existField.length; z++) {
+        if (req.existField[z].id === req.field[i].id) {
+          isExist = z
+        }
+      }
+      let data = {
+        name: req.field[i].name,
+        selection: req.field[i].selection,
+        value: req.field[i].value,
+        order: req.field[i].order,
+      }
+      if (isExist !== -1) {
+        //update ALL the fields
+        this.fieldService.editFieldName(req.field[i].id, req.field[i].name)
+        if (req.field[i].selection !== req.existField[isExist].selection) {
+          await this.classroomFieldService.editGameDeleteClassField(req.game.id, [req.field[i].id])
+          let savedFiield = await this.fieldService.saveOneField({ data: data, id: req.game.id });
+          if (gameInfo !== undefined) {
+            for (let a = 0; a < gameInfo.classrooms.length; a++) {
+              this.classroomFieldService.editGameAddFieldsToClass({
+                classId: gameInfo.classrooms[a].id,
+                field: savedFiield,
+                gameId: req.game.id
+              })
+            }
+          }
+        } else {
+          if (req.field[i].selection === "image" && req.field[i].value[0].value !== req.existField[isExist].value[0].value) {// !== req.existField[isExist].value[0].value) {
+            //delete exist img
+            this.imageService.delete(req.existField[isExist].value[0].value)
+            //save the new image
+            let imgPath = await this.imageService.save(files, req.field[i].value[0].id);
+            req.field[i].value[0].value = imgPath;
+          }
+          if (req.field[i].selection === "choice" || req.field[i].selection === "multi-choice") {
+            let emptExistFields = 0
+            let emptFields = 0
+            for (let z = 0; z < 6; z++) { //there are maximum 6 fields
+              if (req.existField[isExist].value[z].value.length === 0) {
+                emptExistFields++
+              }
+              if (req.field[i].value[z].value.length === 0) {
+                emptFields++
+              }
+            }
+            if (emptExistFields !== emptFields) {
+              await this.classroomFieldService.editGameDeleteClassField(req.game.id, [req.field[i].id])
+              let savedFiield = await this.fieldService.saveOneField({ data: data, id: req.game.id });
+              if (gameInfo !== undefined) {
+                for (let a = 0; a < gameInfo.classrooms.length; a++) {
+                  this.classroomFieldService.editGameAddFieldsToClass({
+                    classId: gameInfo.classrooms[a].id,
+                    field: savedFiield,
+                    gameId: req.game.id
+                  })
+                }
+              }
+            }
+          }
+          this.fieldService.editFieldValue(req.field[i])
+        }
+      } else {
+        let savedFiield = await this.fieldService.saveOneField({ data: data, id: req.game.id });
+        if (gameInfo !== undefined) {
+          for (let a = 0; a < gameInfo.classrooms.length; a++) {
+            this.classroomFieldService.editGameAddFieldsToClass({
+              classId: gameInfo.classrooms[a].id,
+              field: savedFiield,
+              gameId: req.game.id
+            })
+          }
+        }
+      }
+    }
+    return res;
   }
 
   //!IS FOR DANIEL
@@ -236,15 +339,15 @@ export class GameService {
 
   async deleteGameById(id: DeleteGameIdDto) {
     let gameInfo = await this.gameRepository
-    .createQueryBuilder('Game')
-    .innerJoinAndSelect('Game.classrooms', 'Classroom')
-    .select('Classroom.id')
-    .addSelect('Game.game_name')
-    .where('Game.id = :id', { id: Number(id.Id) })
-    .getOne();
-    if(gameInfo !== undefined){
-      for(let i =0; i< gameInfo.classrooms.length; i++){
-        await this.classroomFieldService.removeGameFieldsFromClass({gameId: id.Id, classId: gameInfo.classrooms[i].id})
+      .createQueryBuilder('Game')
+      .innerJoinAndSelect('Game.classrooms', 'Classroom')
+      .select('Classroom.id')
+      .addSelect('Game.game_name')
+      .where('Game.id = :id', { id: Number(id.Id) })
+      .getOne();
+    if (gameInfo !== undefined) {
+      for (let i = 0; i < gameInfo.classrooms.length; i++) {
+        await this.classroomFieldService.removeGameFieldsFromClass({ gameId: id.Id, classId: gameInfo.classrooms[i].id })
       }
     }
     await this.classroomFieldService.deleteClassField(id.Id)
@@ -264,8 +367,8 @@ export class GameService {
     let gamesLength = (
       await this.gameRepository.query(
         'select id from game where id not in(select game_id from classroom_game where classroom_id = ' +
-          req.classId +
-          ');',
+        req.classId +
+        ');',
       )
     ).length;
 
@@ -274,10 +377,10 @@ export class GameService {
 
     let allGames = await this.gameRepository.query(
       'select id, game_name, image from game where id not in(select game_id from classroom_game where classroom_id = ' +
-        req.classId +
-        ')  limit 50 offset ' +
-        req.dataLength +
-        ';',
+      req.classId +
+      ')  limit 50 offset ' +
+      req.dataLength +
+      ';',
     );
     return {
       currClassGames: currClassGames,
@@ -308,23 +411,10 @@ export class GameService {
     });
   }
 
-  async searchGames (val: ValDto){
-    let gamesInfo = await this.gameRepository.find({
-      where: [{ suspended: false }],
-      select: ['id', 'game_name', 'image'],
-      order: {
-        id: 'DESC',
-      },
+  async searchGames(val: ValDto) {
+    let searchresult = await this.gameRepository.find({
+      where: [{ game_name: Like("%" + val.val.toLowerCase() + "%") }]
     });
-
-    let Search = gamesInfo.map(game => {
-      if (game.game_name.includes(val.val.toLowerCase())) {
-        return game;
-      }
-    });
-    var searchresult = Search.filter(function(game) {
-      return game != null;
-    });
-    return searchresult;
+    return searchresult
   }
 }
