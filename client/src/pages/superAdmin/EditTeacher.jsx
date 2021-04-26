@@ -314,9 +314,6 @@ class EditTeacher extends React.Component {
     //after all the validation we need to send the data to sql
     if (allOk) {
       try {
-        // if (this.state.passDisplay.length !== 0) {
-        //   await this.updatePass();
-        // }
         let notEmptyClasses = this.state.chosenClasses.filter((classroom) => {
           return classroom.name !== "שייך לכיתה";
         });
