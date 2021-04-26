@@ -82,12 +82,14 @@ export class GameService {
         if (req.field[i].selection !== req.existField[isExist].selection) {
           await this.classroomFieldService.editGameDeleteClassField(req.game.id, [req.field[i].id])
           let savedFiield = await this.fieldService.saveOneField({ data: data, id: req.game.id });
-          for (let a = 0; a < gameInfo.classrooms.length; a++) {
-            this.classroomFieldService.editGameAddFieldsToClass({
-              classId: gameInfo.classrooms[a].id,
-              field: savedFiield,
-              gameId: req.game.id
-            })
+          if(gameInfo !== undefined){
+            for (let a = 0; a < gameInfo.classrooms.length; a++) {
+              this.classroomFieldService.editGameAddFieldsToClass({
+                classId: gameInfo.classrooms[a].id,
+                field: savedFiield,
+                gameId: req.game.id
+              })
+            }
           }
         } else {
           if (req.field[i].selection === "image" && req.field[i].value[0].value.includes("blob:http") ){// !== req.existField[isExist].value[0].value) {
