@@ -322,9 +322,6 @@ export class TeacherService extends UserService {
     ]);
   }
   async getTeacherByClassId(classIds, GameInfo) {
-    console.log('classIds: ', classIds);
-
-
     let getTeacherEmailsPerClass = await Promise.all(classIds.map(async (classroom) => {
       let getTeachers = await this.userRepository
         .createQueryBuilder('Teacher')
