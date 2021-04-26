@@ -144,16 +144,12 @@ export class StudentService extends UserService {
     studentInfo.first_name = req.firstName
     studentInfo.last_name = req.lastName
     studentInfo.school = await this.schoolService.getSchoolInfoById(req.schoolId)
-    if (student.classroomStudent.length !== 0) {
-      for (let i = 0; i < student.classroomStudent.length; i++) {
-        let a = await this.classroomService.deleteClassroom(student.classroomStudent[i].id, req.id)
-      }
+    for (let i = 0; i < student.classroomStudent.length; i++) {
+      let a = await this.classroomService.deleteClassroom(student.classroomStudent[i].id, req.id)
     }
 
-    if (req.classrooms.length !== 0) {
-      for (let i = 0; i < req.classrooms.length; i++) {
-        let a = await this.classroomService.addStudentToClassroom(req.classrooms[i].id, student)
-      }
+    for (let i = 0; i < req.classrooms.length; i++) {
+      let a = await this.classroomService.addStudentToClassroom(req.classrooms[i].id, student)
     }
 
     return await this.userRepository.update({ id: req.id }, studentInfo);
