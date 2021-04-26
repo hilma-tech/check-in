@@ -165,9 +165,9 @@ class Games extends Component {
                     ) : (
                         <div className="grid">
                           {this.props.games.searchedGames.map((image, index) => {
-                            console.log('image: ', image);
+                            
                             return (
-                              <div key={image.id} onClick={()=>{console.log('fun stuff');}}>
+                              <div key={image.id} onClick={()=>{}}>
                                 <div className="imageContainer item3">
                                   <Fade
                                     in={image.showOption}
