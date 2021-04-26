@@ -22,7 +22,7 @@ export class Classroom {
   @IsString()
   @Length(0, 15)
   @Matches(/[A-Za-z\u0590-\u05EA0-9"'-]/)
-  @Column({ type: 'varchar', length: 15 })
+  @Column({ type: 'varchar', length: 4 })
   name: string;
 
   @ManyToOne(
