@@ -33,6 +33,7 @@ export class TeacherService extends UserService {
 
     @Inject(forwardRef(() => ClassroomService))
     private classroomService: ClassroomService,
+    @Inject(forwardRef(() => SchoolService))
     private readonly schoolService: SchoolService,
     @Inject('MailService')
     protected readonly mailer: MailerInterface,
@@ -184,18 +185,20 @@ export class TeacherService extends UserService {
   }
 
   async sendUpdatePasswordEmail(email, password) {
-    let html = `<div style= "direction:rtl; background-color:whitesmoke;">
-    <h3 style="color:#043163; font-size:17px">שלום לך!</h3>
-    <h3 style="color:#043163; font-size:17px">הסיסמה שלך עודכנה.</h3>
-    <p style="font-size:17px">הסיסמה החדשה שלכם לאתר היא:</p>
-    <p style="background-color:#dcdcdc;width:max-content; font-size:17px;">${password}</p>
-    <h3 style="color:#043163">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h3>
-   <div style="display:flex;flex-direction:row;align-self:center;style="padding-bottom:10px"">
-    <img src="cid:checkinlogo" height="20" style="padding:10px"/>
-    <img src="cid:hilmalogo" height="40"/>
+    let html =
+      `<div style= "direction:rtl; background-color:whitesmoke;">
+  <div style="padding:10px;" >
+  <h3 style="color:#043163; font-size:17px">שלום לך!</h3>
+  <h3 style="color:#043163; font-size:17px">הסיסמה שלך עודכנה.</h3>
+  <p style="font-size:17px">הסיסמה החדשה שלך לאתר היא:</p>
+  <p style="background-color:#dcdcdc;width:max-content; font-size:17px;">${password}</p>
+  <h3 style="color:#043163">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h3>
+  <div style="display:flex;flex-direction:row;align-self:center;style="padding-bottom:10px"">
+  <img src="cid:checkinlogo" height="20" style="padding:10px"/>
+  <img src="cid:hilmalogo" height="40"/>
   </div>
-
-    </div>`;
+  </div>
+  </div>`
     this.sendEmail(email, "עדכון סיסמא לצ'ק אין", '', html, [
       {
         fileName: 'blueCheckIn.png',
@@ -219,6 +222,7 @@ export class TeacherService extends UserService {
       .execute();
 
     let html = `<div style= "direction:rtl; background-color:whitesmoke;">
+    <div style="padding:10px;" >
         <h3 style="color:#043163; font-size:17px">ברוכים השבים לצ'ק אין!</h3>
         <p style="font-size:17px">כתובת המייל שלכם שונתה</p>
         <p style="font-size:17px; margin-top:-3px">לחצו על הקישור <a href="${env.DOMAIN}/api/teacher/Verify?token=${newToken}">כאן</a> על מנת לאמת את כתובת המייל החדשה ומעבר לאתר</p>
@@ -228,6 +232,7 @@ export class TeacherService extends UserService {
         <img src="cid:checkinlogo" height="20" style="padding:10px"/>
         <img src="cid:hilmalogo" height="40"/>
       </div>
+      <div/>
         </div>`;
     this.sendEmail(val.username, "כתובת המייל שלכם שונתה עבור אתר צ'ק אין", '', html, [
       {
@@ -244,8 +249,9 @@ export class TeacherService extends UserService {
   }
 
 
-async sendVerificationEmail(email, token, user) {
-  let html = `<div style= "direction:rtl; background-color:whitesmoke;">
+  async sendVerificationEmail(email, token, user) {
+    let html = `<div style= "direction:rtl; background-color:whitesmoke;">
+    <div style="padding:10px;" >
     <h3 style="color:#043163; font-size:17px">ברוכים הבאים לצ'ק אין!</h3>
     <p style="font-size:17px">הסיסמה שלכם לאתר היא:</p>
     <p style="background-color:#dcdcdc;width:max-content; font-size:17px;">${user.password}</p>
@@ -256,62 +262,78 @@ async sendVerificationEmail(email, token, user) {
     <img src="cid:checkinlogo" height="20" style="padding:10px"/>
     <img src="cid:hilmalogo" height="40"/>
   </div>
-
+<div/>
     </div>`;
-  this.sendEmail(email, "ברוכים הבאים לצ'ק אין", '', html, [
-    {
-      fileName: 'blueCheckIn.png',
-      path: `${env.HOST}/icons/blueCheckIn.png`,
-      cid: 'checkinlogo',
-    },
-    {
-      fileName: 'hilmaIcon.png',
-      path: `${env.HOST}/icons/hilmaIcon.png`,
-      cid: 'hilmalogo',
-    },
-  ]);
-}
+    this.sendEmail(email, "ברוכים הבאים לצ'ק אין", '', html, [
+      {
+        fileName: 'blueCheckIn.png',
+        path: `${env.HOST}/icons/blueCheckIn.png`,
+        cid: 'checkinlogo',
+      },
+      {
+        fileName: 'hilmaIcon.png',
+        path: `${env.HOST}/icons/hilmaIcon.png`,
+        cid: 'hilmalogo',
+      },
+    ]);
+  }
 
-async sendUpdateOnGameChangeEmail(email, changes) {
-  let html = `<div style= "direction:rtl; background-color:whitesmoke;">
-    <h3 style="color:#043163; font-size:17px">שלום לך!</h3>
-    <h3 style="color:#043163; font-size:17px">המשחק ${changes.gamename} שהוספת לכיתות ${changes.classes} נערך</h3>
-    <p style="font-size:17px">אנא הכנסו לאתר על מנת לראות את השינויים:</p>
-    <p style="font-size:17px"> <a href="${env.DOMAIN}"/> </p>
-    <h3 style="color:#043163">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h3>
-   <div style="display:flex;flex-direction:row;align-self:center;style="padding-bottom:10px">
-    <img src="cid:checkinlogo" height="20" style="padding:10px"/>
-    <img src="cid:hilmalogo" height="40"/>
-  </div>
+  async searchInTeacher(val) {
+    let teachers = await this.userRepository.find({
+      relations: ['school', 'classroomTeacher'],
+    });
+    let Search = teachers.map(teacher => {
+      let fullname = (teacher.first_name + ' ' + teacher.last_name).toLowerCase();
+      let classes = teacher.classroomTeacher.map((classroom) => { return classroom.name })
+      if (fullname.includes(val.toLowerCase()) || classes.join(' ').includes(val.toLowerCase()) || teacher.school.name.includes(val.toLowerCase())) {
+        return teacher;
+      }
+    });
+    var searchresult = Search.filter(function (teacher) {
+      return teacher != null;
+    });
+    return searchresult;
+  }
 
-    </div>`;
-  this.sendEmail(email, "משחק שהוספת לכיתה שלך נערך", '', html, [
-    {
-      fileName: 'blueCheckIn.png',
-      path: `${env.HOST}/icons/blueCheckIn.png`,
-      cid: 'checkinlogo',
-    },
-    {
-      fileName: 'hilmaIcon.png',
-      path: `${env.HOST}/icons/hilmaIcon.png`,
-      cid: 'hilmalogo',
-    },
-  ]);
-}
-async searchInTeacher(val) {
-  let teachers = await this.userRepository.find({
-    relations: ['school', 'classroomTeacher'],
-  });
-  let Search = teachers.map(teacher => {
-    let fullname = (teacher.first_name + ' ' + teacher.last_name).toLowerCase();
-    let classes = teacher.classroomTeacher.map((classroom) => { return classroom.name })
-    if (fullname.includes(val.toLowerCase()) || classes.join(' ').includes(val.toLowerCase()) || teacher.school.name.includes(val.toLowerCase())) {
-      return teacher;
-    }
-  });
-  var searchresult = Search.filter(function (teacher) {
-    return teacher != null;
-  });
-  return searchresult;
-}
+
+  async sendUpdateOnGameChangeEmail(email, gamename) {
+    let html =
+      ` <div style="direction: rtl; background-color: whitesmoke;">
+    <div style="padding: 10px;">
+    <h3 style="color: #043163; font-size: 17px;">שלום לך!</h3>
+    <h3 style="color: #043163; font-size: 17px;">המשחק ${gamename} נערך</h3>
+    <p style="font-size: 17px;">אנא הכנס לאתר על מנת לראות את השינויים:</p>
+    <p style="font-size: 17px;">${env.HOST}</p>
+    <h3 style="color: #043163;">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h3>
+    <div style="display: flex; flex-direction: row; align-self: center;"><img style="padding: 10px;" src="cid:checkinlogo" height="20" /> <img src="cid:hilmalogo" height="40" /></div>
+    </div>
+    </div>`
+    this.sendEmail(email, "משחק שהוספת לכיתה שלך נערך", '', html, [
+      {
+        fileName: 'blueCheckIn.png',
+        path: `${env.HOST}/icons/blueCheckIn.png`,
+        cid: 'checkinlogo',
+      },
+      {
+        fileName: 'hilmaIcon.png',
+        path: `${env.HOST}/icons/hilmaIcon.png`,
+        cid: 'hilmalogo',
+      },
+    ]);
+  }
+  async getTeacherByClassId(classId, GameInfo) {
+    console.log('classId: ', classId);
+    let getTeachers = await this.userRepository
+    .createQueryBuilder('Teacher')
+    .innerJoinAndSelect('Teacher.classroomTeacher', 'Classroom')
+    .select('Teacher.id')
+    .addSelect('Teacher.username')
+    .groupBy('Teacher.id')
+    .where('Classroom.id = :id', { id: Number(classId.id) })
+    .execute()
+    getTeachers.map((teacher) => {
+      this.sendUpdateOnGameChangeEmail(teacher.Teacher_username, GameInfo.game_name)
+    })
+
+  }
 }

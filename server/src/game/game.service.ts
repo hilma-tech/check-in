@@ -1,4 +1,4 @@
-import { UploadedFiles, Body, Injectable, Req } from '@nestjs/common';
+import { UploadedFiles, Body, Injectable, Req, Inject, forwardRef } from '@nestjs/common';
 import { Like, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Game } from './game.entity';
@@ -16,6 +16,7 @@ import { ClassroomFieldService } from 'src/classroom-field/classroom-field.servi
 import { getCGFDto } from 'src/classroom-field/classroom-field.dtos';
 import { FieldService } from 'src/field/field.service';
 import { ValDto } from 'src/student/student.dtos';
+import { TeacherService } from 'src/teacher/teacher.service';
 
 @Injectable()
 export class GameService {
@@ -25,6 +26,8 @@ export class GameService {
     private fieldService: FieldService,
     private classroomFieldService: ClassroomFieldService,
     private readonly imageService: ImageService,
+    @Inject(forwardRef(() => TeacherService))
+    private readonly teacherService: TeacherService
   ) { }
 
   async addGame(@UploadedFiles() files: FilesType, @Body() req: GameSaveReq) {
@@ -61,7 +64,11 @@ export class GameService {
       .addSelect('Game.game_name')
       .where('Game.id = :id', { id: Number(req.game.id) })
       .getOne();
+    // console.log('gameInfo: ', gameInfo);
     let res = await this.gameRepository.save(req.game);
+    gameInfo.classrooms.map((classroom) => {
+      this.teacherService.getTeacherByClassId(classroom, req.game)
+    })
     await this.classroomFieldService.editGameDeleteClassField(req.game.id, req.deletedField)
     for (let i = 0; i < req.field.length; i++) {
       let isExist = -1
@@ -90,7 +97,7 @@ export class GameService {
             })
           }
         } else {
-          if (req.field[i].selection === "image" && req.field[i].value[0].value.includes("blob:http") ){// !== req.existField[isExist].value[0].value) {
+          if (req.field[i].selection === "image" && req.field[i].value[0].value.includes("blob:http")) {// !== req.existField[isExist].value[0].value) {
             //delete exist img
             this.imageService.delete(req.existField[isExist].value[0].value)
             //save the new image

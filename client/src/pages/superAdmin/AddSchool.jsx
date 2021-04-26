@@ -23,6 +23,7 @@ class AddSchool extends React.Component {
       schoolCityError: {toShow: "none", mess: ""},
       schoolName: "",
       schoolCity: "",
+      addedClass:false,
       //List of all the classes in the school.
       classes: [],
       existTeachers: []
@@ -34,6 +35,7 @@ class AddSchool extends React.Component {
     */
   addClassToSchool = (e) => {
     e.preventDefault();
+    this.setState({addedClass:true})
     this.setState((prevState) => {
       let tempData = [
         ...prevState.classes,
@@ -267,6 +269,7 @@ class AddSchool extends React.Component {
                   key={classData.id}
                   classData={classData}
                   classIndex={classIndex}
+                  addedClass={this.state.addedClass}
                   classDataLength={this.state.classes.length}
                   handleChange={this.handleChange}
                   removeClass={this.removeClass}

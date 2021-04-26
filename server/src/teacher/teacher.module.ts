@@ -12,14 +12,16 @@ import { JwtModule } from '@nestjs/jwt';
 import { Teacher } from './teacher.entity';
 import { ClassroomModule } from 'src/classroom/classroom.module';
 import { SchoolModule } from 'src/school/school.module';
+import { GameModule } from 'src/game/game.module';
 @Module({
   imports: [
     UserModule,
     RoleModule,
-    SchoolModule,
+    forwardRef(() => SchoolModule),
     TypeOrmModule.forFeature([Teacher]),
     JwtModule.register({}),
     forwardRef(() => ClassroomModule),
+    forwardRef(() => GameModule)
   ],
   providers: [
     {
