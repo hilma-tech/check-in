@@ -211,7 +211,7 @@ class EditGame extends Component {
       image: this.state.image,
       description: this.state.gameDescription,
       requirements: this.state.gameRequirements,
-      gameLink: this.state.gameLink,
+      video_link: this.state.gameLink,
       suspended: false,
     };
     const fieldData = this.setUpValues();
