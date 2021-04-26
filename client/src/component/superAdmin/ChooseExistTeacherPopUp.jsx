@@ -36,7 +36,7 @@ class ChooseExistTeacherPopUp extends Component {
     render() {
         return (
             <>
-                <div style={{ width: "90vw", height: "90vh", paddingTop: "8vh" }}>
+                <div style={{width: "65vw", height: "65vh", paddingTop: "5vh"}}>
                     <img
                         onClick={this.props.closeFunc}
                         alt=""
