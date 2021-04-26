@@ -66,9 +66,7 @@ export class GameService {
       .getOne();
     // console.log('gameInfo: ', gameInfo);
     let res = await this.gameRepository.save(req.game);
-    gameInfo.classrooms.map((classroom) => {
-      this.teacherService.getTeacherByClassId(classroom, req.game)
-    })
+    this.teacherService.getTeacherByClassId(gameInfo.classrooms, req.game)
     await this.classroomFieldService.editGameDeleteClassField(req.game.id, req.deletedField)
     for (let i = 0; i < req.field.length; i++) {
       let isExist = -1
@@ -89,7 +87,7 @@ export class GameService {
         if (req.field[i].selection !== req.existField[isExist].selection) {
           await this.classroomFieldService.editGameDeleteClassField(req.game.id, [req.field[i].id])
           let savedFiield = await this.fieldService.saveOneField({ data: data, id: req.game.id });
-          if(gameInfo !== undefined){
+          if (gameInfo !== undefined) {
             for (let a = 0; a < gameInfo.classrooms.length; a++) {
               this.classroomFieldService.editGameAddFieldsToClass({
                 classId: gameInfo.classrooms[a].id,
