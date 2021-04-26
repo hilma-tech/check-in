@@ -100,8 +100,8 @@ export class TeacherController {
   @Post('/editTeacher')
   async editTeacher(@Body() req: any) {
     try {
-      if (req.password !== 0) {
-        await this.teacherService.changeTeacherPassword(req.username, req.password);
+      if (req.password.length !== 0) {
+        return await this.teacherService.changeTeacherPassword(req.username, req.password);
       }
       return await this.teacherService.editTeacher(req);
     } catch (e) {
