@@ -16,15 +16,13 @@ export class ClassroomService {
   constructor(
     @InjectRepository(Classroom)
     private classroomRepository: Repository<Classroom>,
+    @Inject(forwardRef(() => GameService))
     private gameService: GameService,
-
-    // @Inject("TeacherService")
     @Inject(forwardRef(() => TeacherService))
     private teacherService: TeacherService,
 
     protected classroomfieldService: ClassroomFieldService,
   ) { }
-
 
   // res:  School { name: 'לחגדכ', city: 'ךצכלכ', id: 42 }
   // info:  {
@@ -172,4 +170,6 @@ export class ClassroomService {
     classroomInfo.teachers.push(teacher)
     return await this.classroomRepository.save(classroomInfo)
   }
+
+
 }

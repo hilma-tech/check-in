@@ -13,9 +13,8 @@ import { TeacherService } from 'src/teacher/teacher.service';
   imports: [
     UserModule,
     RoleModule,
-    GameModule,
+    forwardRef(() => GameModule),
     ClassroomFieldModule,
-    // TeacherModule,
     TypeOrmModule.forFeature([Classroom]),
     forwardRef(() => TeacherModule),
   ],
