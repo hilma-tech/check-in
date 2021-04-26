@@ -72,6 +72,7 @@ export class GameService {
     await this.classroomFieldService.editGameDeleteClassField(req.game.id, req.deletedField)
     for (let i = 0; i < req.field.length; i++) {
       let isExist = -1
+      let isArryFieldChange = false
       for (let z = 0; z < req.existField.length; z++) {
         if (req.existField[z].id === req.field[i].id) {
           isExist = z
@@ -89,7 +90,7 @@ export class GameService {
         if (req.field[i].selection !== req.existField[isExist].selection) {
           await this.classroomFieldService.editGameDeleteClassField(req.game.id, [req.field[i].id])
           let savedFiield = await this.fieldService.saveOneField({ data: data, id: req.game.id });
-          if(gameInfo !== undefined){
+          if (gameInfo !== undefined) {
             for (let a = 0; a < gameInfo.classrooms.length; a++) {
               this.classroomFieldService.editGameAddFieldsToClass({
                 classId: gameInfo.classrooms[a].id,
@@ -99,23 +100,50 @@ export class GameService {
             }
           }
         } else {
-          if (req.field[i].selection === "image" && req.field[i].value[0].value.includes("blob:http")) {// !== req.existField[isExist].value[0].value) {
+          if (req.field[i].selection === "image" && req.field[i].value[0].value !== req.existField[isExist].value[0].value) {// !== req.existField[isExist].value[0].value) {
             //delete exist img
             this.imageService.delete(req.existField[isExist].value[0].value)
             //save the new image
             let imgPath = await this.imageService.save(files, req.field[i].value[0].id);
             req.field[i].value[0].value = imgPath;
           }
+          if (req.field[i].selection === "choice" || req.field[i].selection === "multi-choice") {
+            let emptExistFields = 0
+            let emptFields = 0
+            for (let z = 0; z < 6; z++) { //there are maximum 6 fields
+              if (req.existField[isExist].value[z].value.length === 0) {
+                emptExistFields++
+              }
+              if (req.field[i].value[z].value.length === 0) {
+                emptFields++
+              }
+            }
+            if (emptExistFields !== emptFields) {
+              await this.classroomFieldService.editGameDeleteClassField(req.game.id, [req.field[i].id])
+              let savedFiield = await this.fieldService.saveOneField({ data: data, id: req.game.id });
+              if (gameInfo !== undefined) {
+                for (let a = 0; a < gameInfo.classrooms.length; a++) {
+                  this.classroomFieldService.editGameAddFieldsToClass({
+                    classId: gameInfo.classrooms[a].id,
+                    field: savedFiield,
+                    gameId: req.game.id
+                  })
+                }
+              }
+            }
+          }
           this.fieldService.editFieldValue(req.field[i])
         }
       } else {
         let savedFiield = await this.fieldService.saveOneField({ data: data, id: req.game.id });
-        for (let a = 0; a < gameInfo.classrooms.length; a++) {
-          this.classroomFieldService.editGameAddFieldsToClass({
-            classId: gameInfo.classrooms[a].id,
-            field: savedFiield,
-            gameId: req.game.id
-          })
+        if (gameInfo !== undefined) {
+          for (let a = 0; a < gameInfo.classrooms.length; a++) {
+            this.classroomFieldService.editGameAddFieldsToClass({
+              classId: gameInfo.classrooms[a].id,
+              field: savedFiield,
+              gameId: req.game.id
+            })
+          }
         }
       }
     }
