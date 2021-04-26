@@ -66,9 +66,7 @@ export class GameService {
       .getOne();
     // console.log('gameInfo: ', gameInfo);
     let res = await this.gameRepository.save(req.game);
-    gameInfo.classrooms.map((classroom) => {
-      this.teacherService.getTeacherByClassId(classroom, req.game)
-    })
+    this.teacherService.getTeacherByClassId(gameInfo.classrooms, req.game)
     await this.classroomFieldService.editGameDeleteClassField(req.game.id, req.deletedField)
     for (let i = 0; i < req.field.length; i++) {
       let isExist = -1

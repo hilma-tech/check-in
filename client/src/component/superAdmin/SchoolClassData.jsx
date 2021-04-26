@@ -20,7 +20,7 @@ class SchoolClassData extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.classDataLength === this.props.classIndex + 1 && this.props.addedClass || this.props.classData.chosenTeachers.length > 0) {
+    if (this.props.classDataLength === this.props.classIndex + 1 && this.props.addedClass) {
       this.setState({ showClass: true })
     }
   }

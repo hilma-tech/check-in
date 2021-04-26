@@ -11,7 +11,7 @@ import {
 } from '@hilma/auth-nest';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { Like, Repository } from 'typeorm';
+import { Like, Repository, Unique } from 'typeorm';
 import { Teacher } from './teacher.entity';
 import { GetTeacherSkip, TeacherIdDto, GetClassSkip, TeacherRegisterDto } from './teacher.dtos';
 import { env } from 'process';
@@ -321,19 +321,35 @@ export class TeacherService extends UserService {
       },
     ]);
   }
-  async getTeacherByClassId(classId, GameInfo) {
-    console.log('classId: ', classId);
-    let getTeachers = await this.userRepository
-    .createQueryBuilder('Teacher')
-    .innerJoinAndSelect('Teacher.classroomTeacher', 'Classroom')
-    .select('Teacher.id')
-    .addSelect('Teacher.username')
-    .groupBy('Teacher.id')
-    .where('Classroom.id = :id', { id: Number(classId.id) })
-    .execute()
-    getTeachers.map((teacher) => {
-      this.sendUpdateOnGameChangeEmail(teacher.Teacher_username, GameInfo.game_name)
+  async getTeacherByClassId(classIds, GameInfo) {
+    let getTeacherEmailsPerClass = await Promise.all(classIds.map(async (classroom) => {
+      let getTeachers = await this.userRepository
+        .createQueryBuilder('Teacher')
+        .innerJoinAndSelect('Teacher.classroomTeacher', 'Classroom')
+        .select('Teacher.id')
+        .addSelect('Teacher.username')
+        .groupBy('Teacher.id')
+        .where('Classroom.id = :id', { id: Number(classroom.id) })
+        .execute()
+
+      var TeacherEmails = getTeachers.map((teacherInfo) => {
+        return teacherInfo.Teacher_username
+      })
+      return TeacherEmails
+    })).then((email) => { return email })
+
+    var flatten = (arr) => {
+      return arr.reduce(function (flat, toFlatten) {
+        return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
+      }, []);
+    }
+    var TeachersEmails = flatten(getTeacherEmailsPerClass)
+    var uniqueTeacherEmail = [...new Set(await TeachersEmails)];
+    uniqueTeacherEmail.map((email) => {
+      this.sendUpdateOnGameChangeEmail(email, GameInfo.game_name)
     })
+
+
 
   }
 }

@@ -165,8 +165,9 @@ class Games extends Component {
                     ) : (
                         <div className="grid">
                           {this.props.games.searchedGames.map((image, index) => {
+                            
                             return (
-                              <div key={image.id}>
+                              <div key={image.id} onClick={()=>{}}>
                                 <div className="imageContainer item3">
                                   <Fade
                                     in={image.showOption}
@@ -196,13 +197,13 @@ class Games extends Component {
                                   <h1 className="gameTitle">{image.game_name}</h1>
                                   <OutsideClickHandler
                                     onOutsideClick={() =>
-                                      this.props.games.resetShowOptions()
+                                      this.props.games.resetShowOptions('searched')
                                     }
                                   >
                                     <img
                                       className="optionIcon"
                                       onClick={() => {
-                                        this.props.games.setShowOption(index);
+                                        this.props.games.setShowOption(index,'searched');
                                       }}
                                       alt=""
                                       src={optionicon}
@@ -256,13 +257,13 @@ class Games extends Component {
                               <h1 className="gameTitle">{image.game_name}</h1>
                               <OutsideClickHandler
                                 onOutsideClick={() =>
-                                  this.props.games.resetShowOptions()
+                                  this.props.games.resetShowOptions('')
                                 }
                               >
                                 <img
                                   className="optionIcon"
                                   onClick={() => {
-                                    this.props.games.setShowOption(index);
+                                    this.props.games.setShowOption(index,'');
                                   }}
                                   alt=""
                                   src={optionicon}
