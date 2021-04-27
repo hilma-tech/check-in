@@ -119,7 +119,7 @@ class EditTeacher extends React.Component {
 
   saveTeacherName = (props) => {
     let myprops = props.target;
-    this.setState({ teacherName: myprops.value });
+    this.setState({ teacherFirstName: myprops.value });
   };
 
   saveLastName = (props) => {

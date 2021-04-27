@@ -25,7 +25,7 @@ class Permissions extends Component {
       extraTimes: [],
       savedPermissions: [],
       err: '',
-
+      disableButtons: false
     }
   }
 
@@ -87,7 +87,8 @@ class Permissions extends Component {
     var arr = [...this.state.extraTimes, { startTime: this.state.selectedStartTime, endTime: this.state.selectedEndTime }]
     let Errors = PermissionsValidation(arr)
     await this.setState({ err: Errors[0] })
-    if (!this.state.err) {
+    if (!this.state.err && !this.state.disableButtons) {
+      await this.setState({ disableButtons: true })
       this.sendInfo(arr)
     }
   }
@@ -96,6 +97,7 @@ class Permissions extends Component {
     try {
       await axios.post(`/api/permission/setClassPermission`, { permissions: arr, classId: classId, day: this.state.selectedDay });
       this.props.errorMsg.setErrorMsg('הרשאות נשמרו בהצלחה')
+      await this.setState({ disableButtons: false })
     }
     catch (err) {
       this.props.errorMsg.setErrorMsg('תקלה בשרת, נסו לשמור שנית')
@@ -103,21 +105,27 @@ class Permissions extends Component {
   }
 
   sendDelete = async (start, end, index, classId, day) => {
-    await axios.post(`/api/permission/deletePermission`, { start_time: start, end_time: end, classroom_id: classId, day: day })
-    if (index !== null) {
-      var arrForChange = this.state.extraTimes
-      arrForChange.splice(index, 1);
-      this.setState({
-        extraTimes: arrForChange,
-      })
-    }
-    else {
-      this.dayPermissions(this.state.selectedDay)
-      if (this.props.chosenClass.classPermissions.length === 0) {
+    if (!this.state.disableButtons) {
+      await this.setState({ disableButtons: true })
+      await axios.post(`/api/permission/deletePermission`, { start_time: start, end_time: end, classroom_id: classId, day: day })
+      if (index !== null) {
+        var arrForChange = this.state.extraTimes
+        arrForChange.splice(index, 1);
         this.setState({
-          selectedStartTime: '',
-          selectedEndTime: ''
+          extraTimes: arrForChange,
         })
+        await this.setState({ disableButtons: false })
+
+      }
+      else {
+        this.dayPermissions(this.state.selectedDay)
+        if (this.props.chosenClass.classPermissions.length === 0) {
+          this.setState({
+            selectedStartTime: '',
+            selectedEndTime: ''
+          })
+        }
+        await this.setState({ disableButtons: false })
       }
     }
   }
@@ -282,7 +290,6 @@ class Permissions extends Component {
                   </div>
                   <h4 className='inputError'>{this.state.err}</h4>
                   <h3 className='save' onClick={this.validatePer}>{this.state.savedPermissions.length > 0 ? 'עדכן' : 'שמור'}</h3>
-
                 </div>
                 : <></>}
             </form>

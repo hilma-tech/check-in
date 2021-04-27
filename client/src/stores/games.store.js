@@ -53,6 +53,9 @@ class Games {
     this.haveMoreGames = true;
     this.successGettingGames = true;
     this.startGetGames = false;
+    this.datatype = '';
+    this.searchedGames = [];
+    this.imageUploader = new FilesUploader();
   };
 
   //gets batches of 50 games from DB, as long as they aren't suspended
@@ -114,8 +117,7 @@ class Games {
     if (list === 'searched') {
       this.searchedGames[gameIndex].showOption = !this.searchedGames[gameIndex]
         .showOption;
-    }
-    else {
+    } else {
       this.gamesList[gameIndex].showOption = !this.gamesList[gameIndex]
         .showOption;
     }

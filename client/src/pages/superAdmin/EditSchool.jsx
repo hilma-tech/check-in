@@ -173,10 +173,12 @@ class EditSchool extends Component {
     this.setState((prevState) => {
       let tempData = [...prevState.classes]
       let removedClassroom = tempData.splice(classIndex, 1);
-      prevState.removedClasses.push(removedClassroom[0])
       let newExistClasses = prevState.existClasses.filter((classroom)=>{
         return classroom.id !== removedClassroom[0].id
       })
+      if(newExistClasses.length !== prevState.existClasses.length){
+        prevState.removedClasses.push(removedClassroom[0])
+      }
       return { classes: tempData, removedClasses: prevState.removedClasses, existClasses: newExistClasses}
     })
   };

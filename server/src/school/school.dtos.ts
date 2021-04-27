@@ -123,7 +123,7 @@ export class ClassInfoDto {
   id: number;
   @IsOptional()
   @IsString()
-  @Length(0, 15)
+  @Length(0, 4)
   @Matches(/[A-Za-z\u0590-\u05EA0-9"'-\s]/)
   name: string;
   @IsOptional()
@@ -138,7 +138,7 @@ export class EditClassInfoDto {
   id: number;
   @IsOptional()
   @IsString()
-  @Length(0, 15)
+  @Length(0, 4)
   @Matches(/[A-Za-z\u0590-\u05EA0-9"'-\s]/)
   name: string;
   @IsOptional()
