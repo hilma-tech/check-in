@@ -50,7 +50,7 @@ class BlueSideBar extends React.Component {
               onClick={async () => {
                 await this.props.logout();
                 await this.props.name.resetUser();
-                this.props.history.push("/signin");
+                this.props.history.push("/");
               }}
             >
               <img src="/icons/login.svg" alt="logout" />
@@ -113,7 +113,7 @@ class BlueSideBar extends React.Component {
               onClick={async () => {
                 await this.props.logout();
                 await this.props.name.resetUser();
-                this.props.history.push("/signin");
+                this.props.history.push("/");
               }}
             >
               <img src="/icons/login.svg" alt="logout" />

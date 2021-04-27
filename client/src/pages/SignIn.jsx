@@ -29,7 +29,7 @@ class SignIn extends Component {
 
   componentDidMount = async () => {
     //! gives the type picked in the initial page
-    if (!this.props.location.state) {
+    if (!this.props.location.state.data) {
       this.props.history.push("/");
     }
     //
@@ -49,6 +49,7 @@ class SignIn extends Component {
 
   teacherForgotPass = async () => {
      await axios.post("/api/teacher/sendNewPassEmail",{email:this.state.username});
+     this.props.errorMsg.setErrorMsg('נשלח לך אימייל לשינוי הסיסמה')
   }
 
   login = async () => {
@@ -102,7 +103,6 @@ class SignIn extends Component {
   };
 
   render() {
-    console.log("type: ", this.props.location.state.data);
     return (
       <div className="background">
         <img

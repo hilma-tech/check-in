@@ -36,7 +36,7 @@ function App() {
         window.location.pathname !== "/"
       )
     ) {
-      window.location.pathname = "/signin";
+      window.location.pathname = "/";
     }
   }, [isAuthenticated]);
 
@@ -66,15 +66,15 @@ function App() {
           <PrivateRoute
             path="/superAdmin"
             componentName="SuperAdminRoute"
-            redirectPath="/signin"
-            redirectComponent={SignIn}
+            redirectPath="/"
+            redirectComponent={InitialPage}
             component={SuperAdminRoute}
           />
           <PrivateRoute
             path="/teacher"
             componentName="TeacherRoute"
-            redirectPath="/signin"
-            redirectComponent={SignIn}
+            redirectPath="/"
+            redirectComponent={InitialPage}
             component={TeacherRoute}
           />
           {/* <Route path="/draft" exact>
