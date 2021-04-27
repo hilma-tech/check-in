@@ -24,6 +24,7 @@ import { schoolsProvider } from "./stores/schools.store";
 import { chosenClassProvider } from "./stores/chosenClass.store";
 import IconsPage from "./pages/IconsPage";
 import InitialPage from "./pages/InitialPage";
+import ChangePass from "./pages/changePass";
 
 function App() {
   let isAuthenticated = useIsAuthenticated();
@@ -55,6 +56,12 @@ function App() {
           </Route> */}
           <Route path="/signin" exact>
             <SignIn />
+          </Route>
+          <Route path="/changePass" exact>
+            <ChangePass />
+          </Route>
+          <Route path="/changePass/:token" exact>
+            <ChangePass/>
           </Route>
           <PrivateRoute
             path="/superAdmin"

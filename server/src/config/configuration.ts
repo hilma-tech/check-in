@@ -5,6 +5,19 @@ export default () => ({
     ttl: { 'SuperAdmin': 2592000000, 'Teacher': 2592000000 },
     secretOrKey: 'hi@$#$T46btrtges',
     accessToken_cookie: 'klool',
+    reset_password_email: {
+			welcome_to: `<div><h1>"צ'ק אין"</h1></div>`,
+			changePath: `/teacher/changePass`,
+			html: `<div style= "direction:rtl"><h1>ברוכים הבאים לצ'ק אין!</h1>
+      <p >נשאר רק עוד צעד קטן כדי לסיים את ההרשמה שלכם!</p>
+      <p>לחצו על הקישור <a href="http://localhost:${env.PORT}/api/teacher/changePassword?token={{token}}">כאן</a> כדי לאמת את כתובת המייל</p>
+      {{{placeForLogo}}}
+      </div>`,
+			text: `<h1>"ברוכים הבאים לצ'ק אין"</h1>`,
+			// logoDiv: string,
+			// logoPath: string,
+			subject: `שינוי סיסמא`
+		},
     verification_email: {
       welcome_to:`<div><h1>"צ'ק אין"</h1></div>` ,
       verifyPath: '/teacher/verify',

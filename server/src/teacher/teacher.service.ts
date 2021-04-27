@@ -13,7 +13,12 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Like, Repository, Unique } from 'typeorm';
 import { Teacher } from './teacher.entity';
-import { GetTeacherSkip, TeacherIdDto, GetClassSkip, TeacherRegisterDto } from './teacher.dtos';
+import {
+  GetTeacherSkip,
+  TeacherIdDto,
+  GetClassSkip,
+  TeacherRegisterDto,
+} from './teacher.dtos';
 import { env } from 'process';
 import * as bcrypt from 'bcrypt';
 import { ClassroomService } from 'src/classroom/classroom.service';
@@ -37,7 +42,6 @@ export class TeacherService extends UserService {
     private readonly schoolService: SchoolService,
     @Inject('MailService')
     protected readonly mailer: MailerInterface,
-
   ) {
     super(config_options, userRepository, jwtService, configService, mailer);
   }
@@ -46,22 +50,27 @@ export class TeacherService extends UserService {
     let username = req.email;
     let password = req.password;
     let user: Partial<Teacher> = new Teacher({ username, password });
-    user.first_name = req.first_name
-    user.last_name = req.last_name
+    user.first_name = req.first_name;
+    user.last_name = req.last_name;
     if (req.fields_data !== undefined || req.fields_data.length !== 0) {
-      user.classroomTeacher = req.fields_data.map((classroom) => {
-        if (!this.classroomService.isClassroomInSchool(classroom.classId, req.school_id)) {
-          throw new Error()
+      user.classroomTeacher = req.fields_data.map(classroom => {
+        if (
+          !this.classroomService.isClassroomInSchool(
+            classroom.classId,
+            req.school_id,
+          )
+        ) {
+          throw new Error();
         }
-        let classroomTeacher = new Classroom()
-        classroomTeacher.id = classroom.classId
-        return classroomTeacher
-      })
+        let classroomTeacher = new Classroom();
+        classroomTeacher.id = classroom.classId;
+        return classroomTeacher;
+      });
     }
-    let school = await this.schoolService.getSchoolInfoById(req.school_id)
-    user.school = school
+    let school = await this.schoolService.getSchoolInfoById(req.school_id);
+    user.school = school;
     let userRole = new Role();
-    userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
+    userRole.id = req.rakaz === 'true' ? 2 : 3; //you set the role id.
     user.roles = [userRole];
     return await this.createUser<Teacher>(user);
   }
@@ -85,7 +94,7 @@ export class TeacherService extends UserService {
       relations: ['classroomTeacher'],
     });
     if (teacher.username !== req.username) {
-      this.EditTeacherEmail(req)
+      this.EditTeacherEmail(req);
     }
     let username = req.username;
     let password = bcrypt.hashSync(req.password, SALT);
@@ -185,8 +194,7 @@ export class TeacherService extends UserService {
   }
 
   async sendUpdatePasswordEmail(email, password) {
-    let html =
-      `<div style= "direction:rtl; background-color:whitesmoke;">
+    let html = `<div style= "direction:rtl; background-color:whitesmoke;">
   <div style="padding:10px;" >
   <h3 style="color:#043163; font-size:17px">שלום לך!</h3>
   <h3 style="color:#043163; font-size:17px">הסיסמה שלך עודכנה.</h3>
@@ -198,7 +206,7 @@ export class TeacherService extends UserService {
   <img src="cid:hilmalogo" height="40"/>
   </div>
   </div>
-  </div>`
+  </div>`;
     this.sendEmail(email, "עדכון סיסמא לצ'ק אין", '', html, [
       {
         fileName: 'blueCheckIn.png',
@@ -214,8 +222,9 @@ export class TeacherService extends UserService {
   }
 
   async EditTeacherEmail(val) {
-    let newToken = this.generateVerificationToken()
-    await this.userRepository.createQueryBuilder()
+    let newToken = this.generateVerificationToken();
+    await this.userRepository
+      .createQueryBuilder()
       .update(Teacher)
       .set({ verificationToken: newToken, emailVerified: 0 })
       .where({ id: val.id })
@@ -234,20 +243,25 @@ export class TeacherService extends UserService {
       </div>
       <div/>
         </div>`;
-    this.sendEmail(val.username, "כתובת המייל שלכם שונתה עבור אתר צ'ק אין", '', html, [
-      {
-        fileName: 'blueCheckIn.png',
-        path: `${env.HOST}/icons/blueCheckIn.png`,
-        cid: 'checkinlogo',
-      },
-      {
-        fileName: 'hilmaIcon.png',
-        path: `${env.HOST}/icons/hilmaIcon.png`,
-        cid: 'hilmalogo',
-      },
-    ]);
+    this.sendEmail(
+      val.username,
+      "כתובת המייל שלכם שונתה עבור אתר צ'ק אין",
+      '',
+      html,
+      [
+        {
+          fileName: 'blueCheckIn.png',
+          path: `${env.HOST}/icons/blueCheckIn.png`,
+          cid: 'checkinlogo',
+        },
+        {
+          fileName: 'hilmaIcon.png',
+          path: `${env.HOST}/icons/hilmaIcon.png`,
+          cid: 'hilmalogo',
+        },
+      ],
+    );
   }
-
 
   async sendVerificationEmail(email, token, user) {
     let html = `<div style= "direction:rtl; background-color:whitesmoke;">
@@ -283,22 +297,30 @@ export class TeacherService extends UserService {
       relations: ['school', 'classroomTeacher'],
     });
     let Search = teachers.map(teacher => {
-      let fullname = (teacher.first_name + ' ' + teacher.last_name).toLowerCase();
-      let classes = teacher.classroomTeacher.map((classroom) => { return classroom.name })
-      if (fullname.includes(val.toLowerCase()) || classes.join(' ').includes(val.toLowerCase()) || teacher.school.name.includes(val.toLowerCase())) {
+      let fullname = (
+        teacher.first_name +
+        ' ' +
+        teacher.last_name
+      ).toLowerCase();
+      let classes = teacher.classroomTeacher.map(classroom => {
+        return classroom.name;
+      });
+      if (
+        fullname.includes(val.toLowerCase()) ||
+        classes.join(' ').includes(val.toLowerCase()) ||
+        teacher.school.name.includes(val.toLowerCase())
+      ) {
         return teacher;
       }
     });
-    var searchresult = Search.filter(function (teacher) {
+    var searchresult = Search.filter(function(teacher) {
       return teacher != null;
     });
     return searchresult;
   }
 
-
   async sendUpdateOnGameChangeEmail(email, gamename) {
-    let html =
-      ` <div style="direction: rtl; background-color: whitesmoke;">
+    let html = ` <div style="direction: rtl; background-color: whitesmoke;">
     <div style="padding: 10px;">
     <h3 style="color: #043163; font-size: 17px;">שלום לך!</h3>
     <h3 style="color: #043163; font-size: 17px;">המשחק ${gamename} נערך</h3>
@@ -307,8 +329,8 @@ export class TeacherService extends UserService {
     <h3 style="color: #043163;">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h3>
     <div style="display: flex; flex-direction: row; align-self: center;"><img style="padding: 10px;" src="cid:checkinlogo" height="20" /> <img src="cid:hilmalogo" height="40" /></div>
     </div>
-    </div>`
-    this.sendEmail(email, "משחק שהוספת לכיתה שלך נערך", '', html, [
+    </div>`;
+    this.sendEmail(email, 'משחק שהוספת לכיתה שלך נערך', '', html, [
       {
         fileName: 'blueCheckIn.png',
         path: `${env.HOST}/icons/blueCheckIn.png`,
@@ -322,34 +344,44 @@ export class TeacherService extends UserService {
     ]);
   }
   async getTeacherByClassId(classIds, GameInfo) {
-    let getTeacherEmailsPerClass = await Promise.all(classIds.map(async (classroom) => {
-      let getTeachers = await this.userRepository
-        .createQueryBuilder('Teacher')
-        .innerJoinAndSelect('Teacher.classroomTeacher', 'Classroom')
-        .select('Teacher.id')
-        .addSelect('Teacher.username')
-        .groupBy('Teacher.id')
-        .where('Classroom.id = :id', { id: Number(classroom.id) })
-        .execute()
+    let getTeacherEmailsPerClass = await Promise.all(
+      classIds.map(async classroom => {
+        let getTeachers = await this.userRepository
+          .createQueryBuilder('Teacher')
+          .innerJoinAndSelect('Teacher.classroomTeacher', 'Classroom')
+          .select('Teacher.id')
+          .addSelect('Teacher.username')
+          .groupBy('Teacher.id')
+          .where('Classroom.id = :id', { id: Number(classroom.id) })
+          .execute();
 
-      var TeacherEmails = getTeachers.map((teacherInfo) => {
-        return teacherInfo.Teacher_username
-      })
-      return TeacherEmails
-    })).then((email) => { return email })
+        var TeacherEmails = getTeachers.map(teacherInfo => {
+          return teacherInfo.Teacher_username;
+        });
+        return TeacherEmails;
+      }),
+    ).then(email => {
+      return email;
+    });
 
-    var flatten = (arr) => {
-      return arr.reduce(function (flat, toFlatten) {
-        return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
+    var flatten = arr => {
+      return arr.reduce(function(flat, toFlatten) {
+        return flat.concat(
+          Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten,
+        );
       }, []);
-    }
-    var TeachersEmails = flatten(getTeacherEmailsPerClass)
+    };
+    var TeachersEmails = flatten(getTeacherEmailsPerClass);
     var uniqueTeacherEmail = [...new Set(await TeachersEmails)];
-    uniqueTeacherEmail.map((email) => {
-      this.sendUpdateOnGameChangeEmail(email, GameInfo.game_name)
-    })
-
-
-
+    uniqueTeacherEmail.map(email => {
+      this.sendUpdateOnGameChangeEmail(email, GameInfo.game_name);
+    });
+  }
+  async findEmailByToken(token) {
+    let getEmail = await this.userRepository.findOne({
+      where: [{ verificationToken: token }],
+      select:['username']
+    });
+    return getEmail.username;
   }
 }
