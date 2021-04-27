@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
 import { AuthContext, IsAuthenticatedContext } from "@hilma/auth";
 import { observer } from "mobx-react";
+import { gamesContext } from "../stores/games.store";
 
 class InitialPage extends Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class InitialPage extends Component {
   }
 
   componentDidMount = async () => {
+    await this.props.games.resetGamesStore();
     let isAuthed = this.props.isAuthenticated;
     if (isAuthed === true) {
       let kl = atob(this.props.AuthContext.kls.kl);
@@ -27,24 +29,24 @@ class InitialPage extends Component {
   }
 
   goToLogin = (type) => {
-      this.props.match.type = type
-      this.props.history.push({
-        pathname: '/signin',
-        state: { data: type }
-      });
-};
+    this.props.match.type = type
+    this.props.history.push({
+      pathname: '/signin',
+      state: { data: type }
+    });
+  };
 
   render() {
     return (
-        <div className="background">
+      <div className="background">
         <div className="centeredPage">
           <img className="webName initial" src="/icons/blueCheckIn.svg"></img>
-          <button className="goButton teacherGo" onClick={()=>{this.goToLogin("teacher")}}>
-              התחבר כמורה
+          <button className="goButton teacherGo" onClick={() => { this.goToLogin("teacher") }}>
+            התחבר כמורה
           </button>
-            <br />
-            <button className="goButton superAGo" onClick={()=>{this.goToLogin("super-admin")}}>
-              התחבר כמנהל מערכת
+          <br />
+          <button className="goButton superAGo" onClick={() => { this.goToLogin("super-admin") }}>
+            התחבר כמנהל מערכת
           </button>
           <img alt="hilma logo " className="initialHilma hilmalogo" src={hilmaicon} />
         </div>
@@ -54,8 +56,9 @@ class InitialPage extends Component {
 }
 
 const mapContextToProps = {
-    AuthContext: AuthContext,
-    isAuthenticated: IsAuthenticatedContext,
-  };
+  games: gamesContext,
+  AuthContext: AuthContext,
+  isAuthenticated: IsAuthenticatedContext,
+};
 
 export default withContext(mapContextToProps)(withRouter(observer(InitialPage)));
