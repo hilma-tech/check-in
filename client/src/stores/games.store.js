@@ -157,13 +157,14 @@ class Games {
   //adds relation class-game to the database
   addGameToClass = async (index, classId, fieldsData) => {
     try {
-      await this.imageUploader.post("/api/classroom/addGameRelation", JSON.stringify({
+      const classFields = await this.imageUploader.post("/api/classroom/addGameRelation", JSON.stringify({
         gameId: this.gamesList[index].id,
         classId: classId,
         fieldsData: fieldsData
       }));
-      return true
-    } catch (err) {
+      return classFields
+    }
+    catch (err) {
       return false
     }
   };

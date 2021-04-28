@@ -13,14 +13,20 @@ export class ClassroomController {
   constructor(
     private classroomService: ClassroomService,
     private classroomFieldService: ClassroomFieldService,
-  ) {}
+  ) { }
 
   @UseJwtAuth('teacher')
   @Post('/addGameRelation')
   @UseFilesHandler(100)
   async addGameRelation(@UploadedFiles() files: FilesType, @Body() req: ClassroomGameDto) {
-    await this.classroomFieldService.addGameFieldsToClass(files, req);
-    return await this.classroomService.addGameRelation(req);
+    try {
+      await this.classroomFieldService.addGameFieldsToClass(files, req);
+      await this.classroomService.addGameRelation(req);
+      return 'game saved'
+    }
+    catch (err) {
+       return err
+    }
   }
 
   @UseJwtAuth('teacher')
