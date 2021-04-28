@@ -6,8 +6,7 @@ import {
   observable,
   action
 } from "mobx";
-
-const axios = require("axios").default;
+import { Axios, EmptMsg, HideStyle } from "../tools/GlobalVarbs";
 
 class Schools {
   listDataSchools = [];
@@ -45,7 +44,7 @@ class Schools {
 
   getAllSchoolsNames = async () => {
     try {
-      const { data } = await axios.get("/api/school/getSchoolsNames");
+      const { data } = await Axios.get("/api/school/getSchoolsNames");
       this.schoolsNames = data
       this.successGettingSchools = true;
     } catch (error) {
@@ -59,7 +58,7 @@ class Schools {
       this.startGetSchools = true;
       const {
         data
-      } = await axios.get("/api/school/getSchools", {
+      } = await Axios.get("/api/school/getSchools", {
         params: {
           schoolsLength: this.listDataSchools.length
         },
@@ -79,7 +78,7 @@ class Schools {
     try {
       const {
         data
-      } = await axios.get("/api/classroom/getSchoolClasses", {
+      } = await Axios.get("/api/classroom/getSchoolClasses", {
         params: {
           schoolId: schoolId
         },
@@ -92,8 +91,8 @@ class Schools {
           id: classroom.id,
           name: classroom.name,
           classNameError: {
-            toShow: "none",
-            mess: ""
+            toShow: HideStyle,
+            mess: EmptMsg
           },
         };
         classInfo.chosenTeachers = classroom.teachers.map((teacher) => {
@@ -115,7 +114,7 @@ class Schools {
 
   deleteSchool = async () => {
     try {
-      await axios.post("/api/school/deleteSchool", {
+      await Axios.post("/api/school/deleteSchool", {
         schoolId: this.chosenSchool.id,
       });
       this.listDataSchools = this.listDataSchools.filter((school) => {
@@ -129,7 +128,7 @@ class Schools {
 
   searchSchools = async (val) => {
     try {
-      let Schools = await axios.get(`/api/school/searchSchools/?val=${val}`);
+      let Schools = await Axios.get(`/api/school/searchSchools/?val=${val}`);
       if (Schools.data[0] != null) {
         this.searchedSchools = [...Schools.data]
       }

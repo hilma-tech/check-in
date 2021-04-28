@@ -13,6 +13,7 @@ import { userNameContext } from "../../stores/userName.store";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { gamesContext } from "../../stores/games.store";
 import { LogoutContext } from "@hilma/auth";
+import { GetInfoErrorMsg, HideStyle, ShowStyle, TeacherDeletedMsg } from "../../tools/GlobalVarbs";
 
 class Classes extends Component {
   constructor() {
@@ -57,12 +58,12 @@ class Classes extends Component {
       if(!this.props.name.successGettingClasses){
         if(this.props.name.needToLogOut){
           this.props.errorMsg.setErrorMsg(
-            "המורה נמחק נסה להתחבר עם משתמש אחר"
+            TeacherDeletedMsg
           );
           await this.props.logout();
         } else {
           this.props.errorMsg.setErrorMsg(
-            "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
+            GetInfoErrorMsg
           );
         }
       }
@@ -125,8 +126,8 @@ class Classes extends Component {
               style={{
                 marginTop: "1vh",
                 display: this.props.name.haveMoreClasses
-                  ? "inline-block"
-                  : "none",
+                  ? ShowStyle
+                  : HideStyle,
               }}
             >
               הצג עוד

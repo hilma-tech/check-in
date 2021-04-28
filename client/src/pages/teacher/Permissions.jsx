@@ -13,7 +13,7 @@ import { errorMsgContext } from "../../stores/error.store";
 import addicon from "../../img/addicon.svg";
 import deleteicon from "../../img/delete.svg";
 import { PermissionsValidation } from "../../tools/ValidationFunctions";
-const axios = require("axios").default;
+import { Axios, Delete, OnUnauthorizedError, TeacherDeletedMsg } from "../../tools/GlobalVarbs";
 
 class Permissions extends Component {
   constructor() {
@@ -95,7 +95,7 @@ class Permissions extends Component {
   sendInfo = async (arr) => {
     let classId = this.props.chosenClass.classId
     try {
-      await axios.post(`/api/permission/setClassPermission`, { permissions: arr, classId: classId, day: this.state.selectedDay });
+      await Axios.post(`/api/permission/setClassPermission`, { permissions: arr, classId: classId, day: this.state.selectedDay });
       this.props.errorMsg.setErrorMsg('הרשאות נשמרו בהצלחה')
       await this.setState({ disableButtons: false })
     }
@@ -107,7 +107,7 @@ class Permissions extends Component {
   sendDelete = async (start, end, index, classId, day) => {
     if (!this.state.disableButtons) {
       await this.setState({ disableButtons: true })
-      await axios.post(`/api/permission/deletePermission`, { start_time: start, end_time: end, classroom_id: classId, day: day })
+      await Axios.post(`/api/permission/deletePermission`, { start_time: start, end_time: end, classroom_id: classId, day: day })
       if (index !== null) {
         var arrForChange = this.state.extraTimes
         arrForChange.splice(index, 1);
@@ -137,13 +137,13 @@ class Permissions extends Component {
         "האם אתה בטוח שברצונך למחוק הרשאה זו?",
         () => this.sendDelete(start, end, index, classId, day)
         ,
-        "מחק"
+        Delete
       )
     }
     catch (err) {
-      if(err.status === 401){
+      if(err.status === OnUnauthorizedError){
         this.props.errorMsg.setErrorMsg(
-          "המורה נמחק נסה להתחבר עם משתמש אחר"
+          TeacherDeletedMsg
         );
       } else {
         this.props.errorMsg.setErrorMsg('תקלה בשרת, נסו לשמור שנית')

@@ -21,17 +21,18 @@ import { errorMsgContext } from "../../stores/error.store";
 import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import { gamesContext } from "../../stores/games.store";
+import { EmptMsg, ExistErrorStatus, HideStyle } from "../../tools/GlobalVarbs";
 
 class AddGame extends Component {
   constructor(props) {
     super();
     this.state = {
       newKey: 1,
-      gameNameErrorMessages: { toShow: "none", mess: "" },
-      gameDescriptionErrorMessages: { toShow: "none", mess: "" },
-      gameRequirementsErrorMessages: { toShow: "none", mess: "" },
-      gameLinkErrorMessages: { toShow: "none", mess: "" },
-      imageErrorMessages: { toShow: "none", mess: "" },
+      gameNameErrorMessages: { toShow: HideStyle, mess: EmptMsg },
+      gameDescriptionErrorMessages: { toShow: HideStyle, mess: EmptMsg },
+      gameRequirementsErrorMessages: { toShow: HideStyle, mess: EmptMsg},
+      gameLinkErrorMessages: { toShow: HideStyle, mess: EmptMsg },
+      imageErrorMessages: { toShow: HideStyle, mess: EmptMsg },
       fieldsData: [],
       gameName: "",
       gameDescription: "",
@@ -135,7 +136,7 @@ class AddGame extends Component {
         selection: "text",
         value: [{ id: 0, value: "" }],
         order: this.state.newKey,
-        errorMessage: { toShow: "none", mess: "" },
+        errorMessage: { toShow: HideStyle, mess: EmptMsg },
       });
       return { fieldsData: tempFieldsData };
     });
@@ -207,10 +208,10 @@ class AddGame extends Component {
       this.props.history.goBack(); // after saving go back
     } catch (error) {
       this.setState({ savingInfo: false });
-      if (error.status === 500) {
+      if (error.status === ExistErrorStatus) {
         this.props.errorMsg.setErrorMsg("קיים כבר משחק בשם זה. נסו שם אחר.");
       } else {
-        this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסו לבדוק את החיבור");
+        this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת המשחק לא נשמר");
       }
     }
   };
@@ -220,10 +221,10 @@ class AddGame extends Component {
     let allOK = true;
     let fieldOK = true;
     let ValidationFunctions = [
-      { name: "gameName", func: nameValidation, errMsg: "" },
-      { name: "gameDescription", func: descriptionValidation, errMsg: "" },
-      { name: "gameRequirements", func: requirementValidation, errMsg: "" },
-      { name: "gameLink", func: linkValidation, errMsg: "" },
+      { name: "gameName", func: nameValidation, errMsg: EmptMsg },
+      { name: "gameDescription", func: descriptionValidation, errMsg: EmptMsg },
+      { name: "gameRequirements", func: requirementValidation, errMsg: EmptMsg },
+      { name: "gameLink", func: linkValidation, errMsg: EmptMsg },
 
     ];
 
@@ -245,8 +246,8 @@ class AddGame extends Component {
       } else {
         this.setState((prevState) => {
           prevState[validationData.name + "ErrorMessages"] = {
-            toShow: "none",
-            mess: "",
+            toShow: HideStyle,
+            mess: EmptMsg,
           };
           return {
             errorMessages: prevState[validationData.name + "ErrorMessages"],
@@ -263,7 +264,7 @@ class AddGame extends Component {
         },
       });
     } else {
-      this.setState({ imageErrorMessages: { toShow: "none", mess: "" } });
+      this.setState({ imageErrorMessages: { toShow: HideStyle, mess: EmptMsg } });
     }
 
     //validates the fields
@@ -280,7 +281,7 @@ class AddGame extends Component {
     let isOk = true;
     let countFullFields = 0;
     let fieldEmpt = 0;
-    let firstErrMsg = "";
+    let firstErrMsg = EmptMsg;
     this.state.fieldsData.map((fields, index) => {
       if (fields.selection !== "image") {
         let errMess = fieldNameValidation(fields.name);
@@ -313,8 +314,8 @@ class AddGame extends Component {
             } else {
               countFullFields++;
               this.setState((prevState) => {
-                prevState.fieldsData[index].errorMessage.toShow = "none";
-                prevState.fieldsData[index].errorMessage.mess = "";
+                prevState.fieldsData[index].errorMessage.toShow = HideStyle;
+                prevState.fieldsData[index].errorMessage.mess = EmptMsg;
                 return { fieldsData: prevState.fieldsData };
               });
             }
@@ -326,8 +327,8 @@ class AddGame extends Component {
             if (countFullFields >= 2 && fieldEmpt === 0) {
               isOk = true;
               this.setState((prevState) => {
-                prevState.fieldsData[index].errorMessage.toShow = "none";
-                prevState.fieldsData[index].errorMessage.mess = "";
+                prevState.fieldsData[index].errorMessage.toShow = HideStyle;
+                prevState.fieldsData[index].errorMessage.mess = EmptMsg;
                 return { fieldsData: prevState.fieldsData };
               });
             } else if (fieldEmpt === 0) {
@@ -366,8 +367,8 @@ class AddGame extends Component {
             isOk = false;
           } else {
             this.setState((prevState) => {
-              prevState.fieldsData[index].errorMessage.toShow = "none";
-              prevState.fieldsData[index].errorMessage.mess = "";
+              prevState.fieldsData[index].errorMessage.toShow = HideStyle;
+              prevState.fieldsData[index].errorMessage.mess = EmptMsg;
               return { fieldsData: prevState.fieldsData };
             });
           }
@@ -501,7 +502,7 @@ class AddGame extends Component {
               <button
                 className="saveButton"
                 onClick={this.validateData}
-                style={this.state.savingInfo ? { pointerEvents: "none" } : {}}
+                style={this.state.savingInfo ? { pointerEvents: HideStyle } : {}}
               >
                 שמור
               </button>

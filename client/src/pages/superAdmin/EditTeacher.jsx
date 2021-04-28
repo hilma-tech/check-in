@@ -20,7 +20,7 @@ import {
   teacherPasswordValidation,
 } from "../../tools/ValidationFunctions.js";
 import { schoolsContext } from "../../stores/schools.store.js";
-const axios = require("axios").default;
+import { Axios, Delete, EmptMsg, HideStyle, ShowStyle } from "../../tools/GlobalVarbs.js";
 
 class EditTeacher extends React.Component {
   constructor() {
@@ -42,12 +42,12 @@ class EditTeacher extends React.Component {
       email: "",
       rakaz: "",
       school: "",
-      teacherLastNameError: { toShow: "none", mess: "" },
-      teacherNameError: { toShow: "none", mess: "" },
-      schoolNameError: { toShow: "none", mess: "" },
-      emailNameError: { toShow: "none", mess: "" },
-      passwordNameError: { toShow: "none", mess: "" },
-      passwordError: "",
+      teacherLastNameError: { toShow: HideStyle, mess: EmptMsg },
+      teacherNameError: { toShow: HideStyle, mess: EmptMsg },
+      schoolNameError: { toShow: HideStyle, mess: EmptMsg },
+      emailNameError: { toShow: HideStyle, mess: EmptMsg },
+      passwordNameError: { toShow: HideStyle, mess: EmptMsg },
+      passwordError: EmptMsg,
       allSchools: [],
       allClasses: [],
       chosenClasses: [],
@@ -80,7 +80,7 @@ class EditTeacher extends React.Component {
         );
       } else {
         try {
-          const { data } = await axios.get("/api/classroom/getSchoolClasses", {
+          const { data } = await Axios.get("/api/classroom/getSchoolClasses", {
             params: { schoolId: this.props.teachers.chosenTeacher.school.id },
           });
           this.setState({
@@ -151,7 +151,7 @@ class EditTeacher extends React.Component {
     let chosenSchoolId = this.props.schools.schoolsNames.filter((school) => {
       return school.name === e.value;
     })[0];
-    const { data } = await axios.get("/api/classroom/getSchoolClasses", {
+    const { data } = await Axios.get("/api/classroom/getSchoolClasses", {
       params: { schoolId: chosenSchoolId.id },
     });
     this.setState({
@@ -208,7 +208,7 @@ class EditTeacher extends React.Component {
   };
   updatePass = async () => {
     try {
-      await axios.post("/api/teacher/changeteacherpass", {
+      await Axios.post("/api/teacher/changeteacherpass", {
         username: this.state.email,
         password: this.state.passDisplay,
       });
@@ -251,52 +251,52 @@ class EditTeacher extends React.Component {
     let nameTeacherMess = nameValidation(this.state.teacherFirstName);
     if (nameTeacherMess.length !== 0) {
       this.setState((prevState) => {
-        prevState.teacherNameError.toShow = "inline-block";
+        prevState.teacherNameError.toShow = ShowStyle;
         prevState.teacherNameError.mess = nameTeacherMess;
         return { teacherNameError: prevState.teacherNameError };
       });
       allOk = false;
     } else {
-      this.setState({ teacherNameError: { toShow: "none", mess: "" } });
+      this.setState({ teacherNameError: { toShow: HideStyle, mess: EmptMsg } });
       allOk = true;
     }
     // ----------teacher last name validation-------------------
     let lastNameTeacherMess = nameValidation(this.state.lastName);
     if (lastNameTeacherMess.length !== 0) {
       this.setState((prevState) => {
-        prevState.teacherLastNameError.toShow = "inline-block";
+        prevState.teacherLastNameError.toShow = ShowStyle;
         prevState.teacherLastNameError.mess = lastNameTeacherMess;
         return { teacherLastNameError: prevState.teacherLastNameError };
       });
       allOk = false;
     } else {
-      this.setState({ teacherLastNameError: { toShow: "none", mess: "" } });
+      this.setState({ teacherLastNameError: { toShow: HideStyle, mess: EmptMsg } });
       allOk = true;
     }
     // ----------school name validation-------------------
     let nameSchoolMess = mustInputValidation(this.state.schoolName);
     if (this.state.schoolName.length !== 0) {
       this.setState((prevState) => {
-        prevState.schoolNameError.toShow = "inline-block";
+        prevState.schoolNameError.toShow = ShowStyle;
         prevState.schoolNameError.mess = nameSchoolMess;
         return { schoolNameError: prevState.schoolNameError };
       });
       allOk = false;
     } else {
-      this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+      this.setState({ schoolNameError: { toShow: HideStyle, mess: EmptMsg } });
       allOk = true;
     }
     //------------email validation---------------
     let emailMess = emailValidation(this.state.email);
     if (emailMess.length !== 0) {
       this.setState((prevState) => {
-        prevState.emailNameError.toShow = "inline-block";
+        prevState.emailNameError.toShow = ShowStyle;
         prevState.emailNameError.mess = emailMess;
         return { emailNameError: prevState.emailNameError };
       });
       allOk = false;
     } else {
-      this.setState({ emailNameError: { toShow: "none", mess: "" } });
+      this.setState({ emailNameError: { toShow: HideStyle, mess: EmptMsg } });
       allOk = true;
     }
     // ----------password validation-------------------
@@ -308,7 +308,7 @@ class EditTeacher extends React.Component {
         });
         allOk = false;
       } else {
-        this.setState({ passErr: "" });
+        this.setState({ passErr: EmptMsg });
       }
     }
     //after all the validation we need to send the data to sql
@@ -320,7 +320,7 @@ class EditTeacher extends React.Component {
         let onlyRightFields = notEmptyClasses.map((classroom) => {
           return { id: classroom.id, name: classroom.name };
         });
-        let { data } = await axios.post("/api/teacher/editTeacher", {
+        let { data } = await Axios.post("/api/teacher/editTeacher", {
           id: this.props.teachers.chosenTeacher.id,
           username: this.state.email,
           password: this.state.passDisplay,
@@ -538,7 +538,7 @@ class EditTeacher extends React.Component {
               </div>
               <div
                 style={{
-                  display: this.state.showPassChanger ? "block" : "none",
+                  display: this.state.showPassChanger ? "block" : HideStyle,
                 }}
               >
                 <h4 className="inputError">{this.state.passErr}</h4>
@@ -546,7 +546,7 @@ class EditTeacher extends React.Component {
                   <div className="teacherDeets" style={{ marginTop: "2.5vh" }}>
                     <input
                       style={{
-                        border: "none",
+                        border: HideStyle,
                         backgroundColor: "rgba(188, 188, 203, 0)",
                         fontWeight: "600",
                         width: "90%",
@@ -592,7 +592,7 @@ class EditTeacher extends React.Component {
                 this.props.errorMsg.setQuestion(
                   "האם אתה בטוח שברצונך למחוק מורה זה?",
                   this.deleteTeacher,
-                  "מחק"
+                  Delete
                 )
               }}>
                 מחק מורה

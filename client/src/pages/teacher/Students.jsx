@@ -11,6 +11,7 @@ import { chosenClassContext } from "../../stores/chosenClass.store";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SearchIcon from '@material-ui/icons/Search';
 import { LogoutContext } from "@hilma/auth";
+import { HideStyle, ShowStyle, TeacherDeletedMsg } from "../../tools/GlobalVarbs.js";
 
 let delayTime = null
 
@@ -32,7 +33,7 @@ class Students extends Component {
     this.props.chosenClass.callStudents(this.props.chosenClass.classId);
     if(this.props.chosenClass.needToLogOut){
       this.props.errorMsg.setErrorMsg(
-        "המורה נמחק נסה להתחבר עם משתמש אחר"
+        TeacherDeletedMsg
       );
       await this.props.logout();
     }
@@ -83,7 +84,7 @@ class Students extends Component {
               </div>
               <input
                 style={{
-                  border: "none",
+                  border: HideStyle,
                   backgroundColor: 'rgba(188, 188, 203, 0)',
                   fontWeight: '400',
                   width: '80%',
@@ -169,8 +170,8 @@ class Students extends Component {
                   style={{
                     marginTop: "2vh",
                     display: this.props.chosenClass.haveMoreStudents && !this.state.searched && !this.state.searching
-                      ? "inline-block"
-                      : "none",
+                      ? ShowStyle
+                      : HideStyle,
                   }}
                 >
                   הצג עוד

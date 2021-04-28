@@ -5,6 +5,7 @@ import { ClassroomService } from 'src/classroom/classroom.service';
 import { Like, Repository } from 'typeorm';
 import { EditSchoolInfoDto, GetSchoolSkip, SearchValDto } from './school.dtos';
 import { School } from './school.entity';
+const { GetInfoLength } = require('../serverTools/GlobalVarbs');
 
 @Injectable()
 export class SchoolService {
@@ -63,10 +64,10 @@ export class SchoolService {
   async getSchools(@Req() skipON: GetSchoolSkip) {
     let numSchools = await this.schoolRepository.count();
     let haveMoreSchools =
-      numSchools > Number(skipON.schoolsLength) + 50 ? true : false;
+      numSchools > Number(skipON.schoolsLength) + GetInfoLength ? true : false;
     let schools = await this.schoolRepository.find({
       skip: Number(skipON.schoolsLength),
-      take: 50,
+      take: GetInfoLength,
       relations: ['teachers']
     });
     return { schoolsInfo: schools, haveMoreSchools: haveMoreSchools };

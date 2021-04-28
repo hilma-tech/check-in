@@ -1,7 +1,6 @@
 import React from "react";
 import { Component } from "react";
 import "../style/sign_in.scss";
-
 import hilmaicon from "../img/hilmaIcon.svg";
 import { withRouter } from "react-router-dom";
 

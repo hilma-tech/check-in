@@ -14,6 +14,7 @@ import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { chosenClassContext } from "../../stores/chosenClass.store.js";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { GetInfoErrorMsg, HideStyle, ShowStyle, TeacherDeletedMsg } from "../../tools/GlobalVarbs.js";
 
 class Games extends React.Component {
   constructor() {
@@ -41,12 +42,12 @@ class Games extends React.Component {
     if (!this.props.games.successGettingGames) {
       if(this.props.games.needToLogOut){
         this.props.errorMsg.setErrorMsg(
-          "המורה נמחק נסה להתחבר עם משתמש אחר"
+          TeacherDeletedMsg
         );
         await this.props.logout();
       } else {
         this.props.errorMsg.setErrorMsg(
-          "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
+          GetInfoErrorMsg
         );
       }
     }
@@ -181,8 +182,8 @@ class Games extends React.Component {
                   style={{
                     marginTop: "1vh",
                     display: this.props.games.haveMoreGames
-                      ? "inline-block"
-                      : "none",
+                      ? ShowStyle
+                      : HideStyle,
                   }}
                 >
                   הצג עוד

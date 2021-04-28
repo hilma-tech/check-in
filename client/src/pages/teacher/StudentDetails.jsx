@@ -12,6 +12,7 @@ import { studentPasswordValidation } from "../../tools/ValidationFunctions";
 import axios from "axios";
 import PopUpError from "../../component/popUpError";
 import { errorMsgContext } from "../../stores/error.store";
+import { HideStyle, OnUnauthorizedError, ShowStyle, TeacherDeletedMsg } from "../../tools/GlobalVarbs";
 
 class StudentDetails extends Component {
   constructor() {
@@ -57,9 +58,9 @@ class StudentDetails extends Component {
         this.setState({ passDisplay: '' })
         this.props.errorMsg.setErrorMsg(" הסיסמה שונתה בהצלחה! ");
       } catch (err) {
-        if(err.status === 401){
+        if(err.status === OnUnauthorizedError){
           this.props.errorMsg.setErrorMsg(
-            "המורה נמחק נסה להתחבר עם משתמש אחר"
+            TeacherDeletedMsg
           );
         } else {
           this.props.errorMsg.setErrorMsg("סיסמה לא נשמרה, נסו שנית :(")
@@ -120,13 +121,13 @@ class StudentDetails extends Component {
               <div className="studentDeets">
                 <h1 className="detail">
                   {this.state.classrooms.length === 0 ? (
-                    <p style={{ display: "inline-block", margin: "0" }}>
+                    <p style={{ display: ShowStyle, margin: "0" }}>
                       לתלמיד/ה זה/זו אין עוד כיתות
                     </p>
                   ) : (
                       this.state.classrooms.map((classroom, ind) => {
                         return (
-                          <p style={{ display: "inline-block", margin: "0" }} key={ind}>
+                          <p style={{ display: ShowStyle, margin: "0" }} key={ind}>
                             {classroom.name}
                             {ind < this.state.classrooms.length - 1
                               ? "\u00A0"
@@ -155,13 +156,13 @@ class StudentDetails extends Component {
                   }} />
               </div>
             </div>
-            <div style={{ display: this.state.showPassChanger ? "block" : "none" }}>
+            <div style={{ display: this.state.showPassChanger ? "block" : HideStyle }}>
               <h4 className='inputError'>{this.state.passErr}</h4>
               <div style={this.state.passErr ? { marginTop: '5vh' } : {}}>
                 <div className="studentDeets box" style={{ marginTop: '2.5vh'}} >
                   <input
                     style={{
-                      border: "none",
+                      border: HideStyle,
                       backgroundColor: 'rgba(188, 188, 203, 0)',
                       fontWeight: '600',
                       width: '90%',

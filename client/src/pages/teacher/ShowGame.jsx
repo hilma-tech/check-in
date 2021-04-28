@@ -11,8 +11,8 @@ import { errorMsgContext } from "../../stores/error.store";
 import { chosenGameEditContext } from "../../stores/chosenGameEdit.store";
 import { chosenClassContext } from "../../stores/chosenClass.store";
 import { gamesContext } from "../../stores/games.store";
+import { Axios, GetInfoErrorMsg, OnUnauthorizedError, TeacherDeletedMsg } from "../../tools/GlobalVarbs";
 
-const axios = require("axios").default;
 //shows game whilst you are unable to add it to a class or after being added
 class ShowGame extends Component {
   constructor() {
@@ -37,7 +37,7 @@ class ShowGame extends Component {
 
   getGameInfo = async () => {
     try {
-      const { data } = await axios.get("/api/game/getShowGameInfo", {
+      const { data } = await Axios.get("/api/game/getShowGameInfo", {
         params: { game_id: this.props.chosenGame.gameId,
           classroom_id: this.props.chosenClass.classId, datatype: this.props.games.datatype },
         });
@@ -53,13 +53,13 @@ class ShowGame extends Component {
         gameLink: data.gameLink
       });
     } catch (error) {
-      if(error.status === 401){
+      if(error.status === OnUnauthorizedError){
         this.props.errorMsg.setErrorMsg(
-          "המורה נמחק נסה להתחבר עם משתמש אחר"
+          TeacherDeletedMsg
         );
       } else {
         this.props.errorMsg.setErrorMsg(
-          "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
+          GetInfoErrorMsg
         );
       }
     }

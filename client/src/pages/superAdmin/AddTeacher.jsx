@@ -19,7 +19,7 @@ import { withContext } from "@hilma/tools";
 import { schoolsContext } from "../../stores/schools.store";
 import data from "@iconify/icons-ion/ios-arrow-back";
 import { teachersContext } from "../../stores/teachers.store";
-const axios = require("axios").default;
+import { Axios, EmptMsg, ExistErrorStatus, HideStyle, ShowStyle } from "../../tools/GlobalVarbs";
 
 class AddTeacher extends Component {
   constructor() {
@@ -38,12 +38,12 @@ class AddTeacher extends Component {
       email: "",
       password: "",
       rakaz: "false",
-      teacherFirstNameError: { toShow: "none", mess: "" },
-      teacherLastNameError: { toShow: "none", mess: "" },
-      schoolNameError: { toShow: "none", mess: "" },
-      emailNameError: { toShow: "none", mess: "" },
-      passwordNameError: { toShow: "none", mess: "" },
-      rakazError: { toShow: "none", mess: "" },
+      teacherFirstNameError: { toShow: HideStyle, mess: EmptMsg },
+      teacherLastNameError: { toShow: HideStyle, mess: EmptMsg },
+      schoolNameError: { toShow: HideStyle, mess: EmptMsg },
+      emailNameError: { toShow: HideStyle, mess: EmptMsg },
+      passwordNameError: { toShow: HideStyle, mess: EmptMsg },
+      rakazError: { toShow: HideStyle, mess: EmptMsg },
     };
   }
 
@@ -74,7 +74,7 @@ class AddTeacher extends Component {
     let chosenScoolId = this.props.schools.schoolsNames.filter((school) => {
       return school.name === props.value;
     })[0];
-    const { data } = await axios.get("/api/classroom/getSchoolClasses", {
+    const { data } = await Axios.get("/api/classroom/getSchoolClasses", {
       params: { schoolId: chosenScoolId.id },
     });
     let classroomOption = data.map((classroom) => {
@@ -145,73 +145,73 @@ class AddTeacher extends Component {
     let firstNameTeacherMess = nameValidation(this.state.teacherFirstName);
     if (firstNameTeacherMess.length !== 0) {
       this.setState((prevState) => {
-        prevState.teacherFirstNameError.toShow = "inline-block";
+        prevState.teacherFirstNameError.toShow = ShowStyle;
         prevState.teacherFirstNameError.mess = firstNameTeacherMess;
         return { teacherFirstNameError: prevState.teacherFirstNameError };
       });
       allOk = false;
     } else {
-      this.setState({ teacherFirstNameError: { toShow: "none", mess: "" } });
+      this.setState({ teacherFirstNameError: { toShow: HideStyle, mess: EmptMsg } });
     }
 
     let lastNameTeacherMess = nameValidation(this.state.teacherLastName);
     if (lastNameTeacherMess.length !== 0) {
       this.setState((prevState) => {
-        prevState.teacherLastNameError.toShow = "inline-block";
+        prevState.teacherLastNameError.toShow = ShowStyle;
         prevState.teacherLastNameError.mess = lastNameTeacherMess;
         return { teacherLastNameError: prevState.teacherLastNameError };
       });
       allOk = false;
     } else {
-      this.setState({ teacherLastNameError: { toShow: "none", mess: "" } });
+      this.setState({ teacherLastNameError: { toShow: HideStyle, mess: EmptMsg } });
     }
     // ----------school name validetion-------------------
     let nameSchoolMess = mustInputValidation(this.state.schoolName);
     if (nameSchoolMess.length !== 0) {
       this.setState((prevState) => {
-        prevState.schoolNameError.toShow = "inline-block";
+        prevState.schoolNameError.toShow = ShowStyle;
         prevState.schoolNameError.mess = "** חייב להכניס שדה זה **";
         return { schoolNameError: prevState.schoolNameError };
       });
       allOk = false;
     } else {
-      this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+      this.setState({ schoolNameError: { toShow: HideStyle, mess: EmptMsg } });
     }
     // ----------rakaz validation-------------------
     let rakazMess = mustInputValidation(this.state.rakaz);
     if (rakazMess.length !== 0) {
       this.setState((prevState) => {
-        prevState.rakazError.toShow = "inline-block";
+        prevState.rakazError.toShow = ShowStyle;
         prevState.rakazError.mess = rakazMess;
         return { rakazError: prevState.rakazError };
       });
       allOk = false;
     } else {
-      this.setState({ rakazError: { toShow: "none", mess: "" } });
+      this.setState({ rakazError: { toShow: HideStyle, mess: EmptMsg } });
     }
     //------------email validation---------------
     let emailMess = emailValidation(this.state.email);
     if (emailMess.length !== 0) {
       this.setState((prevState) => {
-        prevState.emailNameError.toShow = "inline-block";
+        prevState.emailNameError.toShow = ShowStyle;
         prevState.emailNameError.mess = emailMess;
         return { emailNameError: prevState.emailNameError };
       });
       allOk = false;
     } else {
-      this.setState({ emailNameError: { toShow: "none", mess: "" } });
+      this.setState({ emailNameError: { toShow: HideStyle, mess: EmptMsg } });
     }
     // ----------password validation-------------------
     let passwordMess = teacherPasswordValidation(this.state.password);
     if (passwordMess.length !== 0) {
       this.setState((prevState) => {
-        prevState.passwordNameError.toShow = "inline-block";
+        prevState.passwordNameError.toShow = ShowStyle;
         prevState.passwordNameError.mess = passwordMess;
         return { passwordNameError: prevState.passwordNameError };
       });
       allOk = false;
     } else {
-      this.setState({ passwordNameError: { toShow: "none", mess: "" } });
+      this.setState({ passwordNameError: { toShow: HideStyle, mess: EmptMsg } });
     }
 
     //after all the validetion we need to send the data to sql
@@ -237,7 +237,7 @@ class AddTeacher extends Component {
     };
     try {
       // this.setState({ savingInfo: true });
-      const { data } = await axios.post(
+      const { data } = await Axios.post(
         "/api/teacher/register",
         currTeacherInfo
       );
@@ -258,12 +258,12 @@ class AddTeacher extends Component {
       this.props.history.goBack();
     } catch (error) {
       this.setState({ savingInfo: false });
-      if (error.status === 500) {
+      if (error.status === ExistErrorStatus) {
         this.props.errorMsg.setErrorMsg(
           "קיים כבר משתמש עם האימייל הזה. נסו שוב."
         );
       } else {
-        this.props.errorMsg.setErrorMsg("היתה שגיאה בשרת נסו לבדוק את החיבור");
+        this.props.errorMsg.setErrorMsg("היתה שגיאה בשרת המורה לא נשמר");
       }
     }
   };

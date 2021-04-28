@@ -1,6 +1,6 @@
 import { createMobXContext } from "@hilma/tools";
 import { makeObservable, observable, action } from "mobx";
-const axios = require("axios").default;
+import { Axios, OnUnauthorizedError } from "../tools/GlobalVarbs";
 
 class UserName {
   firstName = "";
@@ -30,7 +30,7 @@ class UserName {
     try {
       this.startGetClasses = true;
       this.successGettingClasses = true;
-      let { data } = await axios.get("/api/teacher/getTeacherClasses", {
+      let { data } = await Axios.get("/api/teacher/getTeacherClasses", {
         params: { classesLength: this.teacherClasses.length },
       });
       this.firstName = data.firstName;
@@ -39,7 +39,7 @@ class UserName {
       this.haveMoreClasses = data.haveMoreClasses;
       this.startGetClasses = false;
     } catch (err) {
-      if(err.response.status === 401){
+      if(err.response.status === OnUnauthorizedError){
         this.needToLogOut = true
       }
       this.startGetClasses = false;
@@ -52,7 +52,7 @@ class UserName {
     try {
       this.startGetClasses = true;
       this.successGettingClasses = true;
-      let { data } = await axios.get("/api/teacher/getTeacherClasses", {
+      let { data } = await Axios.get("/api/teacher/getTeacherClasses", {
         params: { classesLength: this.teacherClasses.length },
       });
       this.teacherClasses = this.teacherClasses.concat(data.currTeacherClasses);

@@ -1,6 +1,15 @@
-import { createMobXContext } from "@hilma/tools";
-import { makeObservable, observable, action, override } from "mobx";
-const axios = require("axios").default;
+import {
+  createMobXContext
+} from "@hilma/tools";
+import {
+  makeObservable,
+  observable,
+  action,
+  override
+} from "mobx";
+import {
+  Axios
+} from "../tools/GlobalVarbs";
 
 class Teachers {
   listDataTeachers = [];
@@ -33,8 +42,12 @@ class Teachers {
   getTeachers = async () => {
     try {
       this.startGetTeachers = true;
-      const { data } = await axios.get("/api/teacher/getTeachers", {
-        params: { teachersLength: this.listDataTeachers.length },
+      const {
+        data
+      } = await Axios.get("/api/teacher/getTeachers", {
+        params: {
+          teachersLength: this.listDataTeachers.length
+        },
       });
       this.listDataTeachers = this.listDataTeachers.concat(
         data.teachersInfo.map((teacher) => {
@@ -56,7 +69,7 @@ class Teachers {
   };
 
   searchTeachers = async (val) => {
-    let Teachers = await axios.get(
+    let Teachers = await Axios.get(
       `/api/teacher/searchTeacherSuperadmin/?val=${val}`
     );
     if (Teachers.data[0] != null) {
@@ -74,18 +87,18 @@ class Teachers {
 
   updateTeacher = (newTeacherInfo) => {
     let teacherId = this.chosenTeacher.id
-    this.listDataTeachers = this.listDataTeachers.map((teacher)=>{
-        if(teacher.id === teacherId){
-            return newTeacherInfo
-        } else {
-            return teacher
-        }
+    this.listDataTeachers = this.listDataTeachers.map((teacher) => {
+      if (teacher.id === teacherId) {
+        return newTeacherInfo
+      } else {
+        return teacher
+      }
     })
-}
+  }
 
   deleteTeacher = async () => {
     try {
-      await axios.post("/api/teacher/deleteTeacher", {
+      await Axios.post("/api/teacher/deleteTeacher", {
         teacherId: this.chosenTeacher.id,
       });
       this.listDataTeachers = this.listDataTeachers.filter((teacher) => {
@@ -104,8 +117,12 @@ class Teachers {
   //gets all info about a specific teacher for superadmin
   getChosenTeacher = async (teacherId) => {
     try {
-      const { data } = await axios.get("/api/teacher/getTeacherInfo", {
-        params: { teacherId: teacherId },
+      const {
+        data
+      } = await Axios.get("/api/teacher/getTeacherInfo", {
+        params: {
+          teacherId: teacherId
+        },
       });
       this.chosenTeacher = data;
     } catch (error) {

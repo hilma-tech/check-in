@@ -3,24 +3,6 @@ import Slide from "@material-ui/core/Slide";
 import WhiteBar from "../../component/superAdmin/GameNavBar.jsx";
 import "../../style/superAdmin/games_style.scss";
 
-const images = [
-  {
-    name: "Gorilla",
-    url:
-      "https://c402277.ssl.cf1.rackcdn.com/photos/18330/images/hero_small/Mountain_Gorilla_Silverback_WW22557.jpg?1576515753",
-  },
-  {
-    name: "Orangutan",
-    url:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Orang_Utan%2C_Semenggok_Forest_Reserve%2C_Sarawak%2C_Borneo%2C_Malaysia.JPG/1200px-Orang_Utan%2C_Semenggok_Forest_Reserve%2C_Sarawak%2C_Borneo%2C_Malaysia.JPG",
-  },
-  {
-    name: "Baboon",
-    url:
-      "https://upload.wikimedia.org/wikipedia/commons/3/35/Olive_baboon_Ngorongoro.jpg",
-  },
-];
-
 //! not in use
 class SuspendedGames extends Component {
   constructor() {

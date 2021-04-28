@@ -14,6 +14,7 @@ import {
 } from "../tools/ValidationFunctions";
 import PopUpError from "../component/popUpError";
 import axios from "axios";
+import { EmptMsg, HideStyle } from "../tools/GlobalVarbs";
 
 class SignIn extends Component {
   constructor(props) {
@@ -24,8 +25,8 @@ class SignIn extends Component {
       newPassword: "",
       goback: false,
       errorMessages: [
-        { toShow: "none", mess: "" },
-        { toShow: "none", mess: "" },
+        { toShow: HideStyle, mess: EmptMsg },
+        { toShow: HideStyle, mess: EmptMsg },
       ],
     };
   }

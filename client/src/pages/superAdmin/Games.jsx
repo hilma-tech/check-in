@@ -14,7 +14,7 @@ import { withContext } from "@hilma/tools";
 import LoadingPage from "../../component/superAdmin/LoadingGamePage.jsx";
 import { IsAuthenticatedContext } from "@hilma/auth";
 import OutsideClickHandler from "react-outside-click-handler";
-import { Slide } from "@material-ui/core";
+import { Delete, HideStyle, ShowStyle } from "../../tools/GlobalVarbs";
 
 let delayTime = null;
 
@@ -66,7 +66,7 @@ class Games extends Component {
     this.props.errorMsg.setQuestion(
       "האם אתה בטוח שברצונך למחוק משחק זה?",
       () => this.OnApprove(gameId),
-      "מחק"
+      Delete
     );
     this.props.errorMsg.question = true;
   };
@@ -291,8 +291,8 @@ class Games extends Component {
               style={{
                 display:
                   this.props.games.haveMoreGames && !displayLoading
-                    ? "inline-block"
-                    : "none",
+                    ? ShowStyle
+                    : HideStyle,
               }}
             >
               הצג עוד
