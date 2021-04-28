@@ -9,6 +9,7 @@ import StudentDetails from "../../pages/teacher/StudentDetails.jsx";
 import Permissions from "../../pages/teacher/Permissions.jsx";
 import ShowGame from "../../pages/teacher/ShowGame.jsx";
 import ErrorPage from "../../pages/404Page.jsx";
+import InitialPage from "../../pages/InitialPage.jsx";
 
 class SmallNavRouter extends Component {
   render() {
@@ -19,16 +20,16 @@ class SmallNavRouter extends Component {
           exact
           componentName="SmallTeacherRoute"
           component={Games}
-          redirectPath="/signin"
-          redirectComponent={SignIn}
+          redirectPath="/"
+          redirectComponent={InitialPage}
         />
         <PrivateRoute
           path={"/teacher/classes/students"}
           exact
           componentName="TeacherStudentsList"
           component={Students}
-          redirectComponent={SignIn}
-          redirectPath="/signin"
+          redirectComponent={InitialPage}
+          redirectPath="/"
         /> 
         <Route
           path="/teacher/classes/permissions"
@@ -41,8 +42,8 @@ class SmallNavRouter extends Component {
           exact
           componentName="TeacherStudentInfo"
           component={StudentDetails}
-          redirectComponent={SignIn}
-          redirectPath="/signin"
+          redirectComponent={InitialPage}
+          redirectPath="/"
         />
       
         <PrivateRoute

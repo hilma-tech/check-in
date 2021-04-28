@@ -32,9 +32,8 @@ import { UserExist } from 'src/user-exist/user-exist.decorator';
 export class TeacherController {
   constructor(
     private readonly userService: UserService,
-    private teacherService: TeacherService,
-  ) // private classroomService: ClassroomService,
-  {
+    private teacherService: TeacherService, // private classroomService: ClassroomService,
+  ) {
     // this.register({username: 'teacher2@gmail.com', password: 'teacher1'})
   }
 
@@ -131,7 +130,7 @@ export class TeacherController {
   @Get('/Verify')
   async MakeLogInAvailable(@Query() Token: any, @Res() res: any) {
     await this.teacherService.verifyEmailByToken(Token.token);
-    var redirectTo = `${env.HOST}/initialPage`; 
+    var redirectTo = `${env.HOST}/initialPage`;
     res.redirect(redirectTo);
   }
 
@@ -140,5 +139,21 @@ export class TeacherController {
   @Get('/searchTeacherSuperadmin')
   async searchTeacher(@Query() val: TeacherValDto) {
     return await this.teacherService.searchInTeacher(val.val);
+  }
+  @Post('/sendNewPassEmail')
+  async sendNewPassEmail(@Body() email: any) {
+    this.teacherService.sendChangePasswordEmail(email.email);
+  }
+
+  @Get('/changePassword')
+  async changePassword(@Query() Token: any, @Res() res: any) {
+    var redirectTo = `${env.HOST}/changePass/${Token.token}`;
+    res.redirect(redirectTo);
+  }
+
+  @Post('/SaveNewPassword')
+  async SaveNewPassword(@Body() Info: any) {
+    let email = await this.teacherService.findEmailByToken(Info.token);
+    await this.teacherService.changePasswordWithToken(Info.token,email,Info.password);
   }
 }

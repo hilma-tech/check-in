@@ -12,6 +12,7 @@ import {
   passwordValidation,
   emailValidation,
 } from "../tools/ValidationFunctions";
+import axios from "axios";
 
 class SignIn extends Component {
   constructor(props) {
@@ -28,15 +29,15 @@ class SignIn extends Component {
 
   componentDidMount = async () => {
     //! gives the type picked in the initial page
-    if (!this.props.location.state) {
-      this.props.history.push("/")
+    if (!this.props.location.state.data) {
+      this.props.history.push("/");
     }
-    // 
+    //
   };
 
   moveToInitialPage = async () => {
     this.props.history.goBack();
-  }
+  };
 
   updateUser = (props) => {
     this.setState({ username: props.target.value });
@@ -46,6 +47,11 @@ class SignIn extends Component {
     this.setState({ password: props.target.value });
   };
 
+  teacherForgotPass = async () => {
+     await axios.post("/api/teacher/sendNewPassEmail",{email:this.state.username});
+     this.props.errorMsg.setErrorMsg('נשלח לך אימייל לשינוי הסיסמה')
+  }
+
   login = async () => {
     let username = this.state.username;
     let password = this.state.password;
@@ -54,10 +60,13 @@ class SignIn extends Component {
         emailValidation(username).length === 0 &&
         passwordValidation(password).length === 0
       ) {
-        const response = await this.props.LoginContext(`/api/${this.props.location.state.data}/login`, {
-          username,
-          password,
-        });
+        const response = await this.props.LoginContext(
+          `/api/${this.props.location.state.data}/login`,
+          {
+            username,
+            password,
+          }
+        );
         if (response.success) {
           if (response.user.type === "Teacher") {
             this.props.history.push("/teacher/classes");
@@ -97,11 +106,11 @@ class SignIn extends Component {
     return (
       <div className="background">
         <img
-            alt="small back arrow"
-            className="signInBackArrow"
-            src="/icons/awesome-arrow-right.svg"
-            onClick={this.moveToInitialPage}
-          />
+          alt="small back arrow"
+          className="signInBackArrow"
+          src="/icons/awesome-arrow-right.svg"
+          onClick={this.moveToInitialPage}
+        />
         <div className="centeredPage">
           <img className="webName" src="/icons/blueCheckIn.svg"></img>
           <p
@@ -132,7 +141,12 @@ class SignIn extends Component {
           <button className="signInButton" onClick={this.login}>
             כניסה
           </button>
-          {/* <h3 className="forgot">שכחת סיסמא?</h3> */}
+          {this.props.location.state.data === "teacher" ? (
+            <h3 className="forgot" onClick={this.teacherForgotPass}>שכחתם את הסיסמא? לחצו כאן</h3>
+          ) : (
+            <></>
+          )}
+
           <img alt="hilma logo" className="hilmalogo" src={hilmaicon} />
         </div>
       </div>

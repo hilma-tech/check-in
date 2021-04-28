@@ -24,6 +24,7 @@ import { schoolsProvider } from "./stores/schools.store";
 import { chosenClassProvider } from "./stores/chosenClass.store";
 import IconsPage from "./pages/IconsPage";
 import InitialPage from "./pages/InitialPage";
+import ChangePass from "./pages/changePass";
 
 function App() {
   let isAuthenticated = useIsAuthenticated();
@@ -35,7 +36,7 @@ function App() {
         window.location.pathname !== "/"
       )
     ) {
-      window.location.pathname = "/signin";
+      window.location.pathname = "/";
     }
   }, [isAuthenticated]);
 
@@ -56,18 +57,24 @@ function App() {
           <Route path="/signin" exact>
             <SignIn />
           </Route>
+          <Route path="/changePass" exact>
+            <ChangePass />
+          </Route>
+          <Route path="/changePass/:token" exact>
+            <ChangePass/>
+          </Route>
           <PrivateRoute
             path="/superAdmin"
             componentName="SuperAdminRoute"
-            redirectPath="/signin"
-            redirectComponent={SignIn}
+            redirectPath="/"
+            redirectComponent={InitialPage}
             component={SuperAdminRoute}
           />
           <PrivateRoute
             path="/teacher"
             componentName="TeacherRoute"
-            redirectPath="/signin"
-            redirectComponent={SignIn}
+            redirectPath="/"
+            redirectComponent={InitialPage}
             component={TeacherRoute}
           />
           {/* <Route path="/draft" exact>
