@@ -151,8 +151,8 @@ class Games {
       });
       runInAction(() => {
         this.gamesList = [...this.gamesList, this.chosenGameList[index]];
+        this.chosenGameList.splice(index, 1);
       });
-      this.chosenGameList.splice(index, 1);
       return true
     } catch (err) {
       return false
@@ -167,6 +167,7 @@ class Games {
         classId: classId,
         fieldsData: fieldsData
       }));
+      
       return true
     } catch (err) {
       return false
