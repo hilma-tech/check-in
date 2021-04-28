@@ -5,6 +5,7 @@ import LoadingTable from "./LoadingTable.jsx";
 import Tooltip from '@material-ui/core/Tooltip';
 import { Slide } from "@material-ui/core";
 import AddStudentPopUp from "./AddStudentPopUp.jsx";
+import { HideStyle, ShowStyle } from "../../tools/GlobalVarbs.js";
 
 class GeneralTable extends React.Component {
   constructor() {
@@ -66,7 +67,7 @@ class GeneralTable extends React.Component {
                     onClick={this.props.loadMore}
                     style={{
                       marginTop: "1vh",
-                      display: this.props.haveMoreData && !this.props.search ? "inline-block" : "none",
+                      display: this.props.haveMoreData && !this.props.search ? ShowStyle : HideStyle,
                     }}
                   >
                     הצג עוד

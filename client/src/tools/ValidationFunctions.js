@@ -1,3 +1,5 @@
+import { EmptMsg } from "./GlobalVarbs";
+
 //Check validation for user name
 export function userNameValidation(userName) {
   if (userName === null || userName.length === 0) {
@@ -11,16 +13,16 @@ export function userNameValidation(userName) {
   } else if (/[@#$%^&*()+=[\]{};:,.\\|<>/~`\s]/.test(userName)) {
     return "** שם משתמש לא תקין **";
   } else {
-    return "";
+    return EmptMsg;
   }
 }
 
 //check loom link
 export function linkValidation(link) {
   if (!link) {
-    return "";
+    return EmptMsg;
   } else if (link === null || link.length === 0) {
-    return "";
+    return EmptMsg;
   } else if (link.length > 255) {
     return "** שדה זה לא יכול להכיל יותר מ-255 תווים **";
   } else if (
@@ -28,7 +30,7 @@ export function linkValidation(link) {
   ) {
     return "** שדה זה לא תקין **";
   } else {
-    return "";
+    return EmptMsg;
   }
 }
 
@@ -45,7 +47,7 @@ export function nameValidation(name) {
   } else if (!/[A-Za-z\u0590-\u05EA"'-\.\s]/.test(name)) {
     return "** שדה זה לא יכול להכיל תווים מיוחדים **";
   } else {
-    return "";
+    return EmptMsg;
   }
 }
 
@@ -64,7 +66,7 @@ export function schoolNameValidation(name) {
   }else if (!/[A-Za-z\u0590-\u05EA"'-]/.test(name)) {
     return "** שדה זה לא יכול להכיל תווים מיוחדים **";
   } else {
-    return "";
+    return EmptMsg;
   }
 }
 
@@ -86,7 +88,7 @@ export function fieldNameValidation(name) {
   ) {
     return "** שם זה לא תקין **";
   } else {
-    return "";
+    return EmptMsg;
   }
 }
 
@@ -103,7 +105,7 @@ export function classNameValidation(name) {
   } else if (!/[A-Za-z\u0590-\u05EA0-9"'-]/.test(name)) {
     return "** שדה זה לא יכול להכיל תווים מיוחדים **";
   } else {
-    return "";
+    return EmptMsg;
   }
 }
 
@@ -120,7 +122,7 @@ export function passwordValidation(password) {
   } else if (!/[A-Za-z\u0590-\u05EA0-9]/.test(password)) {
     return "** סיסמא לא תקינה **";
   } else {
-    return "";
+    return EmptMsg;
   }
 }
 
@@ -143,7 +145,7 @@ export function teacherPasswordValidation(password) {
   } else if (/[0-9]/.test(password) === false) {
     return "** על הסיסמא להכיל לפחות מספר אחד  **";
   } else {
-    return "";
+    return EmptMsg;
   }
 }
 
@@ -168,7 +170,7 @@ export function studentPasswordValidation(password) {
   } else if (/[0-9]/.test(password) === false) {
     return "** על הסיסמה להכיל לפחות מספר אחד  **";
   } else {
-    return "";
+    return EmptMsg;
   }
 }
 
@@ -191,7 +193,7 @@ export function emailValidation(email) {
   ) {
     return "** כתובת איימל לא תקינה **";
   } else {
-    return "";
+    return EmptMsg;
   }
 }
 
@@ -205,14 +207,14 @@ export function mustInputValidation(input) {
   } else if (input.length > 30) {
     return "** שדה זה לא יכול להכיל יותר מ-30 תווים **";
   } else {
-    return "";
+    return EmptMsg;
   }
 }
 
 //validation for description field in game
 export function descriptionValidation(desc) {
   if (desc === null || desc.length === 0) {
-    return "";
+    return EmptMsg;
   } else if (desc.length > 255) {
     return "** שדה זה לא יכול להכיל יותר מ-255 תווים **";
   } else if (!/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/.test(desc)) {
@@ -229,14 +231,14 @@ export function descriptionValidation(desc) {
   ) {
     return "** שם זה לא תקין **";
   } else {
-    return "";
+    return EmptMsg;
   }
 }
 
 //validation for requirement field in game
 export function requirementValidation(reqs) {
   if (reqs === null || reqs.length === 0) {
-    return "";
+    return EmptMsg;
   } else if (reqs.length > 255) {
     return "** שדה זה לא יכול להכיל יותר מ-255 תווים **";
   } else if (!/^[\u0590-\u05FFa-zA-Z0-9\.\s]+$/.test(reqs)) {
@@ -253,7 +255,7 @@ export function requirementValidation(reqs) {
   ) {
     return "** שם זה לא תקין **";
   } else {
-    return "";
+    return EmptMsg;
   }
 }
 
@@ -275,7 +277,7 @@ export function fieldInputValidation(input) {
   ) {
     return "** שם זה לא תקין **";
   } else {
-    return "";
+    return EmptMsg;
   }
 }
 
@@ -311,7 +313,7 @@ export function PermissionsValidation(per) {
           }
         }
       } else {
-        return "";
+        return EmptMsg;
       }
     });
     return arrErr.filter((err) => err !== undefined);

@@ -10,6 +10,8 @@ import { observer } from "mobx-react";
 import { chosenClassContext } from "../../stores/chosenClass.store";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SearchIcon from '@material-ui/icons/Search';
+import { LogoutContext } from "@hilma/auth";
+import { HideStyle, ShowStyle, TeacherDeletedMsg } from "../../tools/GlobalVarbs.js";
 
 let delayTime = null
 
@@ -23,12 +25,18 @@ class Students extends Component {
     }
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     if (this.props.chosenClass.classId === 0) {
       this.props.history.push("/teacher/classes");
       return;
     }
     this.props.chosenClass.callStudents(this.props.chosenClass.classId);
+    if(this.props.chosenClass.needToLogOut){
+      this.props.errorMsg.setErrorMsg(
+        TeacherDeletedMsg
+      );
+      await this.props.logout();
+    }
   };
 
   // allows to move to student details page
@@ -76,7 +84,7 @@ class Students extends Component {
               </div>
               <input
                 style={{
-                  border: "none",
+                  border: HideStyle,
                   backgroundColor: 'rgba(188, 188, 203, 0)',
                   fontWeight: '400',
                   width: '80%',
@@ -162,8 +170,8 @@ class Students extends Component {
                   style={{
                     marginTop: "2vh",
                     display: this.props.chosenClass.haveMoreStudents && !this.state.searched && !this.state.searching
-                      ? "inline-block"
-                      : "none",
+                      ? ShowStyle
+                      : HideStyle,
                   }}
                 >
                   הצג עוד
@@ -177,6 +185,7 @@ class Students extends Component {
   }
 }
 const mapContextToProps = {
+  logout: LogoutContext,
   chosenClass: chosenClassContext,
 };
 

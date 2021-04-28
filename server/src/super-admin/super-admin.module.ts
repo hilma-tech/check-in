@@ -1,5 +1,6 @@
 import {
   RoleModule,
+  User,
   UserModule,
   USER_MODULE_OPTIONS
 } from '@hilma/auth-nest';
@@ -14,7 +15,7 @@ import { JwtModule } from '@nestjs/jwt';
   imports: [
     UserModule,
     RoleModule,
-    TypeOrmModule.forFeature([SuperAdmin]),
+    TypeOrmModule.forFeature([SuperAdmin, User]),
     JwtModule.register({}),
   ],
   providers: [

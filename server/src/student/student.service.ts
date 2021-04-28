@@ -9,10 +9,8 @@ import { GetStudentSkip, SearchValDto, UserEditDto, UserRegisterDto } from './st
 import * as bcrypt from 'bcrypt';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { ClassroomService } from 'src/classroom/classroom.service';
-import { FieldService } from 'src/field/field.service';
-import { GameService } from 'src/game/game.service';
-import { School } from 'src/school/school.entity';
 import { SchoolService } from 'src/school/school.service';
+const { GetInfoLength } = require('../serverTools/GlobalVarbs');
 
 @Injectable()
 export class StudentService extends UserService {
@@ -32,11 +30,11 @@ export class StudentService extends UserService {
   async getStudents(@Req() skipON: GetStudentSkip) {
     let numStudents = await this.userRepository.count();
     let haveMoreStudents =
-      numStudents > Number(skipON.studentsLength) + 50 ? true : false;
+      numStudents > Number(skipON.studentsLength) + GetInfoLength ? true : false;
     let students = await this.userRepository.find({
       relations: ['school', 'classroomStudent'],
       skip: Number(skipON.studentsLength),
-      take: 50,
+      take: GetInfoLength,
       order: { created: "DESC" }
     });
     return { studentsInfo: students, haveMoreStudents: haveMoreStudents };

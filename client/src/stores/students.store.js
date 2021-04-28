@@ -6,8 +6,7 @@ import {
     observable,
     action
 } from 'mobx'
-
-const axios = require("axios").default;
+import {Axios} from "../tools/GlobalVarbs"
 
 class Students {
     listDataStudents = []
@@ -41,7 +40,7 @@ class Students {
             this.startGetStudents = true;
             const {
                 data
-            } = await axios.get("/api/student/getStudents", {
+            } = await Axios.get("/api/student/getStudents", {
                 params: {
                     studentsLength: this.listDataStudents.length
                 }
@@ -73,7 +72,7 @@ class Students {
     }
 
     searchStudents = async (val) => {
-        let Students = await axios.get(`/api/student/searchStudentSuperadmin/?val=${val}`);
+        let Students = await Axios.get(`/api/student/searchStudentSuperadmin/?val=${val}`);
         if (Students.data[0] != null) {
             let newStudentsSearch = Students.data.map((student) => {
                 student.name = student.first_name + " " + student.last_name;
@@ -99,7 +98,7 @@ class Students {
 
     deleteStudent = async () => {
         try {
-            await axios.post("/api/student/deleteStudent", {
+            await Axios.post("/api/student/deleteStudent", {
                 id: this.chosenStudent.id,
               });
             this.listDataStudents = this.listDataStudents.filter((student) => {

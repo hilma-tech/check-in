@@ -13,6 +13,7 @@ import {
   emailValidation,
 } from "../tools/ValidationFunctions";
 import axios from "axios";
+import { EmptMsg, HideStyle, OnUnauthorizedError } from "../tools/GlobalVarbs";
 
 class SignIn extends Component {
   constructor(props) {
@@ -21,8 +22,8 @@ class SignIn extends Component {
       username: "",
       password: "",
       errorMessages: [
-        { toShow: "none", mess: "" },
-        { toShow: "none", mess: "" },
+        { toShow: HideStyle, mess: EmptMsg },
+        { toShow: HideStyle, mess: EmptMsg },
       ],
     };
   }
@@ -74,7 +75,7 @@ class SignIn extends Component {
             this.props.history.push("/superAdmin/games");
           }
         } else {
-          if (response.msg.status === 401) {
+          if (response.msg.status === OnUnauthorizedError) {
             if (response.msg.data.key === "EmailNotVerified") {
               this.props.errorMsg.setErrorMsg("יש לאמת את כתובת האימייל");
             } else {
@@ -90,11 +91,11 @@ class SignIn extends Component {
         if (username.length === 0 || password.length === 0) {
           this.props.errorMsg.setErrorMsg("נא למלא את כל השדות.");
         } else {
-          throw { status: 401 };
+          throw { status: OnUnauthorizedError };
         }
       }
     } catch (error) {
-      if (error.status === 401) {
+      if (error.status === OnUnauthorizedError) {
         this.props.errorMsg.setErrorMsg("שם המשתמש והסיסמא אינם תואמים.");
       } else {
         this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת. לא ניתן להתחבר.");

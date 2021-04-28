@@ -10,7 +10,7 @@ import {
   action,
   runInAction
 } from "mobx";
-const axios = require("axios").default;
+import { Axios, OnUnauthorizedError } from "../tools/GlobalVarbs";
 
 class Games {
   datatype = '';
@@ -20,6 +20,7 @@ class Games {
   successGettingGames = true;
   startGetGames = false;
   searchedGames = [];
+  needToLogOut = false;
   imageUploader = new FilesUploader();
   constructor() {
     makeObservable(this, {
@@ -29,6 +30,9 @@ class Games {
       gamesList: observable,
       haveMoreGames: observable,
       startGetGames: observable,
+      needToLogOut: observable,
+      searchedGames: observable,
+      datatype: observable,
       getGames: action,
       resetShowOptions: action,
       setShowOption: action,
@@ -39,9 +43,7 @@ class Games {
       resetGamesStore: action,
       searchGames: action,
       searchGamesReplace: action,
-      searchedGames: observable,
       whatData: action,
-      datatype: observable,
       editGame: action
     });
   }
@@ -64,7 +66,7 @@ class Games {
       this.startGetGames = true;
       const {
         data
-      } = await axios.get("/api/game/getGames", {
+      } = await Axios.get("/api/game/getGames", {
         params: {
           gamesLength: this.gamesList.length
         },
@@ -88,7 +90,7 @@ class Games {
       this.startGetGames = true;
       const {
         data
-      } = await axios.get("/api/game/getClassroomGames", {
+      } = await Axios.get("/api/game/getClassroomGames", {
         params: {
           classId: classId,
           dataLength: this.gamesList.length
@@ -102,6 +104,9 @@ class Games {
         this.startGetGames = false;
       });
     } catch (error) {
+      if(error.response.status === OnUnauthorizedError){
+        this.needToLogOut = true
+      }
       this.successGettingGames = false;
       this.startGetGames = false;
     }
@@ -140,7 +145,7 @@ class Games {
   //removes relation class-game from the database
   removeGameFromClass = async (index, classId, gameId) => {
     try {
-      await axios.post("/api/classroom/removeGameRelation", {
+      await Axios.post("/api/classroom/removeGameRelation", {
         gameId: gameId,
         classId: classId,
       });
@@ -176,7 +181,7 @@ class Games {
   //deletes game entirely from DB
   deleteGame = async (Id) => {
     try {
-      await axios.post("/api/game/deleteGameById", {
+      await Axios.post("/api/game/deleteGameById", {
         Id
       });
       return true
@@ -187,7 +192,7 @@ class Games {
 
   searchGames = async (val) => {
     try {
-      let Games = await axios.get(`/api/game/searchGames/?val=${val}`);
+      let Games = await Axios.get(`/api/game/searchGames/?val=${val}`);
       if (Games.data[0] != null) {
         this.searchedGames = [...Games.data]
       }

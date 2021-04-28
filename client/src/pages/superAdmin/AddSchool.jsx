@@ -12,15 +12,14 @@ import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { schoolsContext } from "../../stores/schools.store.js";
 import { errorMsgContext } from "../../stores/error.store.js";
-const axios = require("axios").default;
-
+import { Axios, EmptMsg, HideStyle, ShowStyle } from "../../tools/GlobalVarbs.js";
 
 class AddSchool extends React.Component {
   constructor() {
     super();
     this.state = {
-      schoolNameError: { toShow: "none", mess: "" },
-      schoolCityError: {toShow: "none", mess: ""},
+      schoolNameError: { toShow: HideStyle, mess: EmptMsg },
+      schoolCityError: {toShow: HideStyle, mess: EmptMsg},
       schoolName: "",
       schoolCity: "",
       addedClass:false,
@@ -45,7 +44,7 @@ class AddSchool extends React.Component {
           // numTeachers: 0,
           chosenTeachers: [],
           // existChosenTeachers: [],
-          classNameError: { toShow: "none", mess: "" },
+          classNameError: { toShow: HideStyle, mess: EmptMsg },
         },
       ];
       return { classes: tempData };
@@ -137,26 +136,26 @@ class AddSchool extends React.Component {
     let nameSchoolMess = schoolNameValidation(this.state.schoolName);
     if (nameSchoolMess.length !== 0) {
       this.setState((prevState) => {
-        prevState.schoolNameError.toShow = "inline-block";
+        prevState.schoolNameError.toShow = ShowStyle;
         prevState.schoolNameError.mess = nameSchoolMess;
         return { schoolNameError: prevState.schoolNameError };
       });
       allOk = false;
     } else {
-      this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+      this.setState({ schoolNameError: { toShow: HideStyle, mess: EmptMsg } });
     }
 
     // ----------school city validation-------------------
     let citySchoolMess = nameValidation(this.state.schoolCity);
     if (citySchoolMess.length !== 0) {
       this.setState((prevState) => {
-        prevState.schoolCityError.toShow = "inline-block";
+        prevState.schoolCityError.toShow = ShowStyle;
         prevState.schoolCityError.mess = citySchoolMess;
         return { schoolCityError: prevState.schoolCityError };
       });
       allOk = false;
     } else {
-      this.setState({ schoolCityError: { toShow: "none", mess: "" } });
+      this.setState({ schoolCityError: { toShow: HideStyle, mess: EmptMsg } });
     }
 
     // ----------classes name validation-------------------
@@ -164,7 +163,7 @@ class AddSchool extends React.Component {
       let nameClassMess = classNameValidation(this.state.classes[i].name);
       if (nameClassMess.length !== 0) {
         this.setState((prevState) => {
-          prevState.classes[i].classNameError.toShow = "inline-block";
+          prevState.classes[i].classNameError.toShow = ShowStyle;
           prevState.classes[i].classNameError.mess = nameClassMess;
           return { classes: prevState.classes };
         });
@@ -177,15 +176,15 @@ class AddSchool extends React.Component {
         }
         if (nameClassMess.length !== 0) {
           this.setState((prevState) => {
-            prevState.classes[i].classNameError.toShow = "inline-block";
+            prevState.classes[i].classNameError.toShow = ShowStyle;
             prevState.classes[i].classNameError.mess = nameClassMess;
             return { classes: prevState.classes };
           });
           allOk = false;
         } else{
           this.setState((prevState) => {
-            prevState.classes[i].classNameError.toShow = "none";
-            prevState.classes[i].classNameError.mess = "";
+            prevState.classes[i].classNameError.toShow = HideStyle;
+            prevState.classes[i].classNameError.mess = EmptMsg;
             return { classes: prevState.classes };
           });
         }
@@ -195,7 +194,7 @@ class AddSchool extends React.Component {
     //after all the validation we need to send the data to sql
     if (allOk) {
       try {
-        let { data } = await axios.post("/api/school/addSchool", 
+        let { data } = await Axios.post("/api/school/addSchool", 
         {
           schoolName: this.state.schoolName,
           schoolCity: this.state.schoolCity,

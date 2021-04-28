@@ -1,6 +1,6 @@
 import { createMobXContext } from "@hilma/tools";
 import { makeObservable, observable, action } from "mobx";
-const axios = require("axios").default;
+import { Axios, OnUnauthorizedError } from "../tools/GlobalVarbs";
 
 class ChosenClass {
   classId = 0;
@@ -15,29 +15,31 @@ class ChosenClass {
   startGetInfo = false;
   classPermissionsStart = []
   classPermissionsEnd = []
+  needToLogOut = false;
+
   constructor() {
     makeObservable(this, {
       classId: observable,
       classroomName: observable,
-      setClassId: action,
       students: observable,
       searchedStudents: observable,
-      callStudents: action,
       currStudentIndex: observable,
-      setCurrStudentClasses: action,
-      getCurrStudent: action,
       studentClassrooms: observable,
       successGetInfo: observable,
       haveMoreStudents: observable,
       startGetInfo: observable,
-      resetChosenClass: action,
-      getClassPermissions: action,
       classPermissions: observable,
       classPermissionsStart: observable,
       classPermissionsEnd: observable,
+      needToLogOut: observable,
+      setClassId: action,
+      callStudents: action,
+      setCurrStudentClasses: action,
+      getCurrStudent: action,
+      resetChosenClass: action,
+      getClassPermissions: action,
     });
   }
-
 
   //gets the classrooms the student belongs to (besides the current class)
   setCurrStudentClasses = async (studentId) => {
@@ -47,7 +49,7 @@ class ChosenClass {
           this.currStudentIndex = i;
         }
       }
-      let { data } = await axios.get("/api/student/getStudentsClassrooms", {
+      let { data } = await Axios.get("/api/student/getStudentsClassrooms", {
         params: { id: studentId },
       });
       this.studentClassrooms = data
@@ -62,7 +64,7 @@ class ChosenClass {
   };
 
   searchStudentsInClass = async (val, classId) => {
-    let Students = await axios.get(`/api/student/searchStudentInTeacher`, {
+    let Students = await Axios.get(`/api/student/searchStudentInTeacher`, {
       params: { classId: classId, value: val },
     });
     this.searchedStudents = [...Students.data]
@@ -76,13 +78,16 @@ class ChosenClass {
   callStudents = async (classnum) => {
     try {
       this.startGetInfo = true;
-      let { data } = await axios.get("/api/student/getClassStudents", {
+      let { data } = await Axios.get("/api/student/getClassStudents", {
         params: { classId: classnum, dataLength: this.students.length },
       });
       this.students = this.students.concat(data.students);
       this.haveMoreStudents = data.haveMoreStudents;
       this.startGetInfo = false;
     } catch (err) {
+      if(err.response.status === OnUnauthorizedError){
+        this.needToLogOut = true
+      }
       this.successGetInfo = false;
       this.startGetInfo = false;
     }
@@ -106,7 +111,7 @@ class ChosenClass {
   getClassPermissions = async (day) => {
     this.classPermissions = []
     let classroom = this.classId
-    let { data } = await axios.get("/api/permission/dayPermissions", {
+    let { data } = await Axios.get("/api/permission/dayPermissions", {
       params: { classId: classroom, day: day },
     });
     if (data.length > 0) {

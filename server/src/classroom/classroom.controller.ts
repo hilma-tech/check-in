@@ -7,6 +7,7 @@ import {
 import { SchoolIdDto } from 'src/school/school.dtos';
 import { ClassroomFieldService } from 'src/classroom-field/classroom-field.service';
 import { FilesType, UseFilesHandler } from '@hilma/fileshandler-typeorm';
+import { UserExist } from 'src/user-exist/user-exist.decorator';
 
 @Controller('api/classroom')
 export class ClassroomController {
@@ -15,6 +16,7 @@ export class ClassroomController {
     private classroomFieldService: ClassroomFieldService,
   ) { }
 
+  @UserExist()
   @UseJwtAuth('teacher')
   @Post('/addGameRelation')
   @UseFilesHandler(100)
@@ -29,6 +31,7 @@ export class ClassroomController {
     }
   }
 
+  @UserExist()
   @UseJwtAuth('teacher')
   @Post('/removeGameRelation')
   async removeGameRelation(@Body() req: RemoveClassroomGameDto) {
@@ -36,6 +39,7 @@ export class ClassroomController {
     return await this.classroomService.removeGameRelation(req);
   }
 
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Get('/getSchoolClasses')
   async getSchoolClasses(@Query() req: SchoolIdDto) {

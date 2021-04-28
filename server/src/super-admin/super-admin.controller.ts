@@ -1,5 +1,6 @@
 import { UserService, RequestUser, Role, UseJwtAuth, UseLocalAuth } from '@hilma/auth-nest';
 import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { UserExist } from 'src/user-exist/user-exist.decorator';
 import { SuperAdmin } from './super-admin.entity';
 import { SuperAdminService } from './super-admin.service'
 
@@ -10,6 +11,7 @@ export class SuperAdminController {
     // this.register({username: 'shirush@gmail.com', password: 'shiraa123'})
   }
 
+  @UserExist()
   @UseJwtAuth('teacher', 'superAdmin')
   @Get('/getUserType')
   getUserType(@RequestUser() userInfo) {

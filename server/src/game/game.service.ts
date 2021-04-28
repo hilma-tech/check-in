@@ -17,6 +17,7 @@ import { getCGFDto } from 'src/classroom-field/classroom-field.dtos';
 import { FieldService } from 'src/field/field.service';
 import { ValDto } from 'src/student/student.dtos';
 import { TeacherService } from 'src/teacher/teacher.service';
+const { GetInfoLength, MaxFields } = require('../serverTools/GlobalVarbs');
 
 @Injectable()
 export class GameService {
@@ -108,7 +109,7 @@ export class GameService {
           if (req.field[i].selection === "choice" || req.field[i].selection === "multi-choice") {
             let emptExistFields = 0
             let emptFields = 0
-            for (let z = 0; z < 6; z++) { //there are maximum 6 fields
+            for (let z = 0; z < MaxFields; z++) {
               if (req.existField[isExist].value[z].value.length === 0) {
                 emptExistFields++
               }
@@ -172,11 +173,11 @@ export class GameService {
   async getGames(@Req() skipON: GetGameSkip) {
     let numGames = await this.gameRepository.count();
     let haveMoreGames =
-      numGames > Number(skipON.gamesLength) + 50 ? true : false;
+      numGames > Number(skipON.gamesLength) + GetInfoLength ? true : false;
     let gamesInfo = await this.gameRepository.find({
       where: [{ suspended: false }],
       skip: Number(skipON.gamesLength),
-      take: 50,
+      take: GetInfoLength,
       select: ['id', 'game_name', 'image'],
       order: {
         id: 'DESC',

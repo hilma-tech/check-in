@@ -6,6 +6,7 @@ import { FileInput, withFiles } from "@hilma/fileshandler-client";
 import "../../style/superAdmin/game_field_selection_style.scss";
 import { withContext } from "@hilma/tools";
 import { errorMsgContext } from "../../stores/error.store";
+import { HideStyle } from "../../tools/GlobalVarbs";
 
 class GameFieldSelection extends Component {
   constructor(props) {
@@ -147,7 +148,7 @@ class GameFieldSelection extends Component {
     let errorMess =
       this.props.errorMessage !== undefined
         ? this.props.errorMessage
-        : { toShow: "none", mess: "" };
+        : { toShow: HideStyle, mess: "" };
     return (
       <div>
         <p

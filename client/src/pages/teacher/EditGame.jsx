@@ -16,8 +16,7 @@ import {
   fieldInputValidation,
   fieldNameValidation,
 } from "../../tools/ValidationFunctions";
-
-const axios = require("axios").default;
+import { Axios, GetInfoErrorMsg, HideStyle, OnUnauthorizedError, TeacherDeletedMsg } from "../../tools/GlobalVarbs";
 
 class EditGame extends Component {
   constructor(props) {
@@ -45,7 +44,7 @@ class EditGame extends Component {
 
   getGameInfo = async () => {
     try {
-      const { data } = await axios.get("/api/game/getGameInfo", {
+      const { data } = await Axios.get("/api/game/getGameInfo", {
         params: { id: this.props.chosenGame.gameId },
       });
       if (data.game_name === null || data.game_name === undefined) {
@@ -63,9 +62,15 @@ class EditGame extends Component {
         gameLink: data.video_link
       });
     } catch (error) {
-      this.props.errorMsg.setErrorMsg(
-        "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
-      );
+      if(error.status === OnUnauthorizedError){
+        this.props.errorMsg.setErrorMsg(
+          TeacherDeletedMsg
+        );
+      } else {
+        this.props.errorMsg.setErrorMsg(
+          GetInfoErrorMsg
+        );
+      }
     }
   };
   validateGame = () => {
@@ -200,6 +205,11 @@ class EditGame extends Component {
                       <h2 className="mobileFieldName" key={i + 1}>
                         {field.field_name}
                       </h2>
+                    <div
+                      style={Errs[0] ? { display: "block" } : { display: HideStyle }}
+                    >
+                      <p className="error">{Errs}</p>
+                    </div>
 
                       <div
                         style={Errs[0] ? { display: "block" } : { display: "none" }}

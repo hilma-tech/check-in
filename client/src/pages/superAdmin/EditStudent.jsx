@@ -19,22 +19,21 @@ import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { studentsContext } from "../../stores/students.store";
 import EditIcon from "@material-ui/icons/Edit";
-
-const axios = require("axios").default;
+import { Axios, Delete, EmptMsg, HideStyle } from "../../tools/GlobalVarbs";
 
 class EditStudent extends React.Component {
   constructor() {
     super();
     this.state = {
-      studentFirstNameError: { toShow: "none", mess: "" },
+      studentFirstNameError: { toShow: HideStyle, mess: EmptMsg },
       studentFirstName: "",
-      studentLastNameError: { toShow: "none", mess: "" },
+      studentLastNameError: { toShow: HideStyle, mess: EmptMsg },
       studentLastName: "",
-      userNameError: { toShow: "none", mess: "" },
+      userNameError: { toShow: HideStyle, mess: EmptMsg },
       userName: "",
-      passwordError: { toShow: "none", mess: "" },
+      passwordError: { toShow: HideStyle, mess: EmptMsg },
       password: "",
-      schoolNameError: { toShow: "none", mess: "" },
+      schoolNameError: { toShow: HideStyle, mess: EmptMsg },
       school: "",
       schoolId: 0,
       chosenClasses: [],
@@ -54,7 +53,7 @@ class EditStudent extends React.Component {
         );
       } else {
         try {
-          const { data } = await axios.get("/api/classroom/getSchoolClasses", {
+          const { data } = await Axios.get("/api/classroom/getSchoolClasses", {
             params: { schoolId: this.props.students.chosenStudent.school.id },
           });
           this.setState({
@@ -142,7 +141,7 @@ class EditStudent extends React.Component {
     let chosenScoolId = this.props.schools.schoolsNames.filter((school) => {
       return school.name === e.value;
     })[0];
-    const { data } = await axios.get("/api/classroom/getSchoolClasses", {
+    const { data } = await Axios.get("/api/classroom/getSchoolClasses", {
       params: { schoolId: chosenScoolId.id },
     });
     this.setState({
@@ -177,7 +176,7 @@ class EditStudent extends React.Component {
       });
       allOk = false;
     } else {
-      this.setState({ studentFirstNameError: { toShow: "none", mess: "" } });
+      this.setState({ studentFirstNameError: { toShow: HideStyle, mess: EmptMsg } });
     }
     let studentLastNameErrorMess = nameValidation(this.state.studentLastName);
     if (studentLastNameErrorMess.length !== 0) {
@@ -188,7 +187,7 @@ class EditStudent extends React.Component {
       });
       allOk = false;
     } else {
-      this.setState({ studentLastNameError: { toShow: "none", mess: "" } });
+      this.setState({ studentLastNameError: { toShow: HideStyle, mess: EmptMsg } });
     }
 
     // ----------user name validation-------------------
@@ -201,7 +200,7 @@ class EditStudent extends React.Component {
       });
       allOk = false;
     } else {
-      this.setState({ userNameError: { toShow: "none", mess: "" } });
+      this.setState({ userNameError: { toShow: HideStyle, mess: EmptMsg } });
     }
 
     // ---------------password validation-------------------
@@ -215,7 +214,7 @@ class EditStudent extends React.Component {
         });
         allOk = false;
       } else {
-        this.setState({ passwordError: { toShow: "none", mess: "" } });
+        this.setState({ passwordError: { toShow: HideStyle, mess: EmptMsg } });
       }
     }
 
@@ -229,7 +228,7 @@ class EditStudent extends React.Component {
       });
       allOk = false;
     } else {
-      this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+      this.setState({ schoolNameError: { toShow: HideStyle, mess: EmptMsg } });
     }
 
     //after all the validation we need to send the data to sql
@@ -265,7 +264,7 @@ class EditStudent extends React.Component {
       }
       if (isChange) {
         try {
-          let { data } = await axios.post("/api/student/editStudent", {
+          let { data } = await Axios.post("/api/student/editStudent", {
             id: this.props.students.chosenStudent.id,
             username: this.state.userName,
             password: this.state.password,
@@ -502,7 +501,7 @@ class EditStudent extends React.Component {
               this.props.errorMsg.setQuestion(
                 "האם אתה בטוח שברצונך למחוק תלמיד זה?",
                 this.deleteStudent,
-                "מחק"
+                Delete
               );
             }}
           >
