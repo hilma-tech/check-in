@@ -15,26 +15,28 @@ class ChosenClass {
   startGetInfo = false;
   classPermissionsStart = []
   classPermissionsEnd = []
+  needToLogOut = false;
   constructor() {
     makeObservable(this, {
       classId: observable,
       classroomName: observable,
-      setClassId: action,
       students: observable,
       searchedStudents: observable,
-      callStudents: action,
       currStudentIndex: observable,
-      setCurrStudentClasses: action,
-      getCurrStudent: action,
       studentClassrooms: observable,
       successGetInfo: observable,
       haveMoreStudents: observable,
       startGetInfo: observable,
-      resetChosenClass: action,
-      getClassPermissions: action,
       classPermissions: observable,
       classPermissionsStart: observable,
       classPermissionsEnd: observable,
+      needToLogOut: observable,
+      setClassId: action,
+      callStudents: action,
+      setCurrStudentClasses: action,
+      getCurrStudent: action,
+      resetChosenClass: action,
+      getClassPermissions: action,
     });
   }
 
@@ -83,6 +85,9 @@ class ChosenClass {
       this.haveMoreStudents = data.haveMoreStudents;
       this.startGetInfo = false;
     } catch (err) {
+      if(err.response.status === 401){
+        this.needToLogOut = true
+      }
       this.successGetInfo = false;
       this.startGetInfo = false;
     }

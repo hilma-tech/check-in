@@ -53,9 +53,15 @@ class ShowGame extends Component {
         gameLink: data.gameLink
       });
     } catch (error) {
-      this.props.errorMsg.setErrorMsg(
-        "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
-      );
+      if(error.status === 401){
+        this.props.errorMsg.setErrorMsg(
+          "המורה נמחק נסה להתחבר עם משתמש אחר"
+        );
+      } else {
+        this.props.errorMsg.setErrorMsg(
+          "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
+        );
+      }
     }
   };
 

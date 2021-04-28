@@ -10,6 +10,7 @@ import { observer } from "mobx-react";
 import { chosenClassContext } from "../../stores/chosenClass.store";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SearchIcon from '@material-ui/icons/Search';
+import { LogoutContext } from "@hilma/auth";
 
 let delayTime = null
 
@@ -23,12 +24,18 @@ class Students extends Component {
     }
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     if (this.props.chosenClass.classId === 0) {
       this.props.history.push("/teacher/classes");
       return;
     }
     this.props.chosenClass.callStudents(this.props.chosenClass.classId);
+    if(this.props.chosenClass.needToLogOut){
+      this.props.errorMsg.setErrorMsg(
+        "המורה נמחק נסה להתחבר עם משתמש אחר"
+      );
+      await this.props.logout();
+    }
   };
 
   // allows to move to student details page
@@ -177,6 +184,7 @@ class Students extends Component {
   }
 }
 const mapContextToProps = {
+  logout: LogoutContext,
   chosenClass: chosenClassContext,
 };
 

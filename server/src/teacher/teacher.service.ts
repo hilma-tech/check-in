@@ -348,8 +348,5 @@ export class TeacherService extends UserService {
     uniqueTeacherEmail.map((email) => {
       this.sendUpdateOnGameChangeEmail(email, GameInfo.game_name)
     })
-
-
-
   }
 }

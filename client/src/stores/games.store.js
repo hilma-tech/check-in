@@ -20,6 +20,7 @@ class Games {
   successGettingGames = true;
   startGetGames = false;
   searchedGames = [];
+  needToLogOut = false;
   imageUploader = new FilesUploader();
   constructor() {
     makeObservable(this, {
@@ -29,6 +30,9 @@ class Games {
       gamesList: observable,
       haveMoreGames: observable,
       startGetGames: observable,
+      needToLogOut: observable,
+      searchedGames: observable,
+      datatype: observable,
       getGames: action,
       resetShowOptions: action,
       setShowOption: action,
@@ -39,9 +43,7 @@ class Games {
       resetGamesStore: action,
       searchGames: action,
       searchGamesReplace: action,
-      searchedGames: observable,
       whatData: action,
-      datatype: observable,
       editGame: action
     });
   }
@@ -102,6 +104,9 @@ class Games {
         this.startGetGames = false;
       });
     } catch (error) {
+      if(error.response.status === 401){
+        this.needToLogOut = true
+      }
       this.successGettingGames = false;
       this.startGetGames = false;
     }

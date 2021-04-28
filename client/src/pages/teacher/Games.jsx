@@ -8,7 +8,7 @@ import ArrowBar from "../../component/teacher/ArrowBar.jsx";
 import { errorMsgContext } from "../../stores/error.store.js";
 import { gamesContext } from "../../stores/games.store.js";
 import { chosenGameEditContext } from "../../stores/chosenGameEdit.store.js";
-import { IsAuthenticatedContext } from "@hilma/auth";
+import { IsAuthenticatedContext, LogoutContext } from "@hilma/auth";
 import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
@@ -39,9 +39,16 @@ class Games extends React.Component {
   getClassGames = async () => {
     await this.props.games.getClassroomGames(this.props.chosenClass.classId);
     if (!this.props.games.successGettingGames) {
-      this.props.errorMsg.setErrorMsg(
-        "הייתה שגיאה בשרת. לא ניתן לקבל משחקים מהשרת."
-      );
+      if(this.props.games.needToLogOut){
+        this.props.errorMsg.setErrorMsg(
+          "המורה נמחק נסה להתחבר עם משתמש אחר"
+        );
+        await this.props.logout();
+      } else {
+        this.props.errorMsg.setErrorMsg(
+          "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
+        );
+      }
     }
   };
 
@@ -194,6 +201,7 @@ const mapContextToProps = {
   chosenGame: chosenGameEditContext,
   isAuthenticated: IsAuthenticatedContext,
   chosenClass: chosenClassContext,
+  logout: LogoutContext,
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(Games)));

@@ -9,6 +9,7 @@ class UserName {
   haveMoreClasses = true;
   successGettingClasses = true;
   startGetClasses = false;
+  needToLogOut = false;
   constructor() {
     makeObservable(this, {
       firstName: observable,
@@ -17,6 +18,7 @@ class UserName {
       haveMoreClasses: observable,
       successGettingClasses: observable,
       startGetClasses: observable,
+      needToLogOut: observable,
       getTeacherInfo: action,
       getMoreClasses: action,
       resetUser: action,
@@ -37,6 +39,9 @@ class UserName {
       this.haveMoreClasses = data.haveMoreClasses;
       this.startGetClasses = false;
     } catch (err) {
+      if(err.response.status === 401){
+        this.needToLogOut = true
+      }
       this.startGetClasses = false;
       this.successGettingClasses = false;
     }

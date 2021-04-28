@@ -3,6 +3,7 @@ import { StudentService } from './student.service';
 import { StudentController } from './student.controller';
 import {
   RoleModule,
+  User,
   UserModule,
   USER_MODULE_OPTIONS,
 } from '@hilma/auth-nest';
@@ -24,7 +25,7 @@ import { PermissionModule } from 'src/permission/permission.module';
     PermissionModule,
     ClassroomModule,
     FieldModule,
-    TypeOrmModule.forFeature([Student]),
+    TypeOrmModule.forFeature([Student, User]),
     JwtModule.register({}),
   ],
   providers: [

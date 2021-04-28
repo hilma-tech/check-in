@@ -89,5 +89,5 @@ export default provide(
   [teachersProvider, {}],
   [schoolsProvider, {}],
   [chosenClassProvider, {}],
-  [AuthProvider, { accessTokenCookie: "klool" }]
+  [AuthProvider, { accessTokenCookie: "klool", logoutOnUnauthorized: true }]
 )(App);

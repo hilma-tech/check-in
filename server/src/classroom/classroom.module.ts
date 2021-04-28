@@ -1,6 +1,6 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RoleModule, UserModule } from '@hilma/auth-nest';
+import { RoleModule, User, UserModule } from '@hilma/auth-nest';
 import { ClassroomController } from './classroom.controller';
 import { Classroom } from './classroom.entity';
 import { ClassroomService } from './classroom.service';
@@ -15,7 +15,7 @@ import { TeacherService } from 'src/teacher/teacher.service';
     RoleModule,
     forwardRef(() => GameModule),
     ClassroomFieldModule,
-    TypeOrmModule.forFeature([Classroom]),
+    TypeOrmModule.forFeature([Classroom, User]),
     forwardRef(() => TeacherModule),
   ],
   providers: [ClassroomService,

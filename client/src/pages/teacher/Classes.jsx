@@ -12,6 +12,7 @@ import { errorMsgContext } from "../../stores/error.store";
 import { userNameContext } from "../../stores/userName.store";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { gamesContext } from "../../stores/games.store";
+import { LogoutContext } from "@hilma/auth";
 
 class Classes extends Component {
   constructor() {
@@ -54,9 +55,16 @@ class Classes extends Component {
     ) {
       await this.props.name.getTeacherInfo();
       if(!this.props.name.successGettingClasses){
-        this.props.errorMsg.setErrorMsg(
-          "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
-        );
+        if(this.props.name.needToLogOut){
+          this.props.errorMsg.setErrorMsg(
+            "המורה נמחק נסה להתחבר עם משתמש אחר"
+          );
+          await this.props.logout();
+        } else {
+          this.props.errorMsg.setErrorMsg(
+            "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
+          );
+        }
       }
     }
   };
@@ -131,6 +139,7 @@ class Classes extends Component {
 }
 
 const mapContextToProps = {
+  logout: LogoutContext,
   chosenClass: chosenClassContext,
   errorMsg: errorMsgContext,
   name: userNameContext,

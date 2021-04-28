@@ -141,7 +141,13 @@ class Permissions extends Component {
       )
     }
     catch (err) {
-      this.props.errorMsg.setErrorMsg('תקלה בשרת, נסו לשמור שנית')
+      if(err.status === 401){
+        this.props.errorMsg.setErrorMsg(
+          "המורה נמחק נסה להתחבר עם משתמש אחר"
+        );
+      } else {
+        this.props.errorMsg.setErrorMsg('תקלה בשרת, נסו לשמור שנית')
+      }
     }
   }
 

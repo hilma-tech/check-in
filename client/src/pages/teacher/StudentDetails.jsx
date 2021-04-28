@@ -57,7 +57,13 @@ class StudentDetails extends Component {
         this.setState({ passDisplay: '' })
         this.props.errorMsg.setErrorMsg(" הסיסמה שונתה בהצלחה! ");
       } catch (err) {
-        this.props.errorMsg.setErrorMsg("סיסמה לא נשמרה, נסו שנית :(")
+        if(err.status === 401){
+          this.props.errorMsg.setErrorMsg(
+            "המורה נמחק נסה להתחבר עם משתמש אחר"
+          );
+        } else {
+          this.props.errorMsg.setErrorMsg("סיסמה לא נשמרה, נסו שנית :(")
+        }
       }
     }
   }
