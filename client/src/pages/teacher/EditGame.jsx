@@ -90,8 +90,8 @@ class EditGame extends Component {
       }
     });
     this.setState({ ErrorsPerField: errors });
-    
-    
+
+
 
     if (errors.length === 0) {
       this.addGameToDB();
@@ -101,17 +101,21 @@ class EditGame extends Component {
   //adds relation between the current class and the selected game
   //then moves the user back to the game page
   addGameToDB = async () => {
-    let isAdded= await this.props.games.addGameToClass(
+    let isAdded = await this.props.games.addGameToClass(
       this.props.chosenGame.index,
       this.props.chosenClass.classId,
       this.state.fieldsData
-      );
-      if(!isAdded){
-        this.props.errorMsg.setErrorMsg('תקלה בשרת, משחק לא התווסף')
-      }
-      else{
-    await this.props.games.resetGamesStore();
-    this.props.history.push("/teacher/classes/games");}
+    );
+    if (!isAdded) {
+      this.props.errorMsg.setErrorMsg('תקלה בשרת, משחק לא התווסף')
+    } else if (isAdded.data === "game saved") {
+      this.props.errorMsg.setErrorMsg('משחק התווסף בהצלחה!')
+      this.props.history.push("/teacher/classes/games")
+    } else {
+      this.props.errorMsg.setErrorMsg('משחק לא התווסף עקב עריכת המשחק על ידי משתמש אחר')
+      this.props.history.push("/teacher/classes/")
+    }
+    
   };
 
   sendImageFieldValue = (value) => {
@@ -168,11 +172,11 @@ class EditGame extends Component {
               <h2 className="mobileClassGameTitleBackground"></h2>
               <h1 className="mobileClassGameTitle">{this.state.gameName}</h1>
             </div>
-              {this.state.gameLink ?
+            {this.state.gameLink ?
               <>
-              <h3 className="mobileGameLink">סרטון הסבר למשחק</h3>
-              <a className="mobileGameL" target="_blank" href={this.state.gameLink}>{this.state.gameLink}</a>
-                </> : <></>}
+                <h3 className="mobileGameLink">סרטון הסבר למשחק</h3>
+                <a className="mobileGameL" target="_blank" href={this.state.gameLink}>{this.state.gameLink}</a>
+              </> : <></>}
             <h3 className="mobileGameDesc">תיאור המשחק</h3>
             <p className="mobileGameDP">
               {this.state.gameDescription
@@ -189,102 +193,107 @@ class EditGame extends Component {
             {this.state.fieldsData.length === 0 ? (
               <p className="noFields">אין שדות למשחק זה</p>
             ) : (
-              this.state.fieldsData.map((field, i) => {
-               let Errs = this.state.ErrorsPerField.filter(err => err.fieldId===field.id);
-               if (Errs.length>0){
-                 Errs= Errs[0].err
-               }
-                
+                this.state.fieldsData.map((field, i) => {
+                  let Errs = this.state.ErrorsPerField.filter(err => err.fieldId === field.id);
+                  if (Errs.length > 0) {
+                    Errs = Errs[0].err
+                  }
 
-                return (
-                  <>
-                    <h2 className="mobileFieldName" key={i + 1}>
-                      {field.field_name}
-                    </h2>
 
+                  return (
+                    <>
+                      <h2 className="mobileFieldName" key={i + 1}>
+                        {field.field_name}
+                      </h2>
                     <div
                       style={Errs[0] ? { display: "block" } : { display: HideStyle }}
                     >
                       <p className="error">{Errs}</p>
                     </div>
 
-                    {field.selection !== "image" ? (
-                      field.selection === "text" ? (
-                        <input
-                          key={i}
-                          defaultValue={field.value[0].value}
-                          className="mobileChangingInput"
-                          onBlur={(value) => {
-                            this.saveFieldValue(
-                              value.target.value,
-                              i,
-                              0,
-                              null,
-                              null
-                            );
-                          }}
-                        />
-                      ) : (
-                        <div className="mobileChangingInputGrid">
-                          {field.value.map((value, index) => {
-                            if (value.value.length !== 0) {
-                              return (
-                                <input
-                                  key={i}
-                                  onBlur={(value) => {
-                                    this.saveFieldValue(
-                                      value.target.value,
-                                      i,
-                                      index,
-                                      null,
-                                      null
-                                    );
-                                  }}
-                                  defaultValue={value.value}
-                                  className="mobileChangingInputChoice"
-                                />
-                              );
-                            } else {
-                              return <></>;
-                            }
-                          })}
-                        </div>
-                      )
-                    ) : (
-                      <div key={i + 3} className="mobileBorderCameraIcon">
-                        <label key={i} className="mobileTeacherBorder">
-                          <FileInput
-                            onError={() => {
-                              this.props.errorMsg.setErrorMsg(
-                                "הייתה שגיאה בהעלאת התמונה. התמונה חייבת להיות באחד מן הפורמטים הבאים: jpg/jpeg/png"
-                              );
-                            }}
-                            id="image"
-                            className="hiddenInput"
-                            type="image"
-                            filesUploader={this.props.games.imageUploader}
-                            onChange={(value) => {
-                              this.saveFieldValue(
-                                value.value,
-                                i,
-                                null,
-                                value.link,
-                                value.id
-                              );
-                            }}
-                          />
-                          <img
-                            alt="photograph icon"
-                            className="mobileTeacherImg"
-                            src={field.value[0].value}
-                          />
-                        </label>
+                      <div
+                        style={Errs[0] ? { display: "block" } : { display: "none" }}
+                      >
+                        <p className="error">{Errs}</p>
                       </div>
-                    )}
-                  </>
-                );
-              })
-            )}
+
+                      {field.selection !== "image" ? (
+                        field.selection === "text" ? (
+                          <input
+                            key={i}
+                            defaultValue={field.value[0].value}
+                            className="mobileChangingInput"
+                            onBlur={(value) => {
+                              this.saveFieldValue(
+                                value.target.value,
+                                i,
+                                0,
+                                null,
+                                null
+                              );
+                            }}
+                          />
+                        ) : (
+                            <div className="mobileChangingInputGrid">
+                              {field.value.map((value, index) => {
+                                if (value.value.length !== 0) {
+                                  return (
+                                    <input
+                                      key={i}
+                                      onBlur={(value) => {
+                                        this.saveFieldValue(
+                                          value.target.value,
+                                          i,
+                                          index,
+                                          null,
+                                          null
+                                        );
+                                      }}
+                                      defaultValue={value.value}
+                                      className="mobileChangingInputChoice"
+                                    />
+                                  );
+                                } else {
+                                  return <></>;
+                                }
+                              })}
+                            </div>
+                          )
+                      ) : (
+                          <div key={i + 3} className="mobileBorderCameraIcon">
+                            <label key={i} className="mobileTeacherBorder">
+                              <FileInput
+                                onError={() => {
+                                  this.props.errorMsg.setErrorMsg(
+                                    "הייתה שגיאה בהעלאת התמונה. התמונה חייבת להיות באחד מן הפורמטים הבאים: jpg/jpeg/png"
+                                  );
+                                }}
+                                id="image"
+                                className="hiddenInput"
+                                type="image"
+                                filesUploader={this.props.games.imageUploader}
+                                onChange={(value) => {
+                                  this.saveFieldValue(
+                                    value.value,
+                                    i,
+                                    null,
+                                    value.link,
+                                    value.id
+                                  );
+                                }}
+                              />
+                              <img
+                                alt="photograph icon"
+                                className="mobileTeacherImg"
+                                src={field.value[0].value}
+                              />
+                            </label>
+                          </div>
+                        )}
+                    </>
+                  );
+                })
+              )}
             <div className="mobileSaveButtonBackground">
               <button className="mobileSaveButton" onClick={this.validateGame}>
                 שמור

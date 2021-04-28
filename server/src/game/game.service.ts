@@ -65,9 +65,9 @@ export class GameService {
       .addSelect('Game.game_name')
       .where('Game.id = :id', { id: Number(req.game.id) })
       .getOne();
-    // console.log('gameInfo: ', gameInfo);
+    // console.log('gameInfo: ', gameInfo.classrooms);
     let res = await this.gameRepository.save(req.game);
-    this.teacherService.getTeacherByClassId(gameInfo.classrooms, req.game)
+    // this.teacherService.getTeacherByClassId(gameInfo.classrooms, req.game)
     await this.classroomFieldService.editGameDeleteClassField(req.game.id, req.deletedField)
     for (let i = 0; i < req.field.length; i++) {
       let isExist = -1
