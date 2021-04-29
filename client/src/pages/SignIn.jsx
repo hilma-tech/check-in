@@ -48,15 +48,15 @@ class SignIn extends Component {
   };
 
   //!
-  teacherForgotPass = async () => {
-    try {
-      await axios.post("/api/teacher/sendNewPassEmail",{email:this.state.username});
-    } catch (error) {
-      console.log("error: ",error);
-      this.props.errorMsg.setErrorMsg('מייל לא תקין')
-    }
-     this.props.errorMsg.setErrorMsg('נשלח לך אימייל לשינוי הסיסמה')
-  }
+  // teacherForgotPass = async () => {
+  //   try {
+  //     await axios.post("/api/teacher/sendNewPassEmail",{email:this.state.username});
+  //   } catch (error) {
+  //     console.log("error: ",error);
+  //     this.props.errorMsg.setErrorMsg('מייל לא תקין')
+  //   }
+  //    this.props.errorMsg.setErrorMsg('נשלח לך אימייל לשינוי הסיסמה')
+  // }
 
 moveToForgotPage = async () => {
   this.props.history.push("/makeNewPassword");

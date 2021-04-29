@@ -9,16 +9,15 @@ import { observer } from "mobx-react";
 import { gamesContext } from "../stores/games.store";
 import axios from "axios";
 import { errorMsgContext } from "../stores/error.store";
+import { emailValidation } from "../tools/ValidationFunctions";
 
 class MakeNewPassword extends Component {
   constructor() {
     super();
     this.state = {
-        email: "",
-        errorMessages: [
-          { toShow: "none", mess: "" },
-        ],
-      };
+      email: "",
+      errorMessages: [{ toShow: "none", mess: "" }],
+    };
   }
 
   componentDidMount = async () => {
@@ -43,15 +42,38 @@ class MakeNewPassword extends Component {
     });
   };
 
-  teacherForgotPass = async () => {
+  sendTeacherEmail = async () => {
     try {
-      await axios.post("/api/teacher/sendNewPassEmail",{email:this.state.email});
+      let valid = await axios.post("/api/teacher/sendNewPassEmail", {
+        email: this.state.email,
+      });
+      console.log("valid: ", valid, valid.data);
+      if (valid.data === true) {
+        console.log("worked!");
+        this.props.errorMsg.setErrorMsg("נשלח לך אימייל לשינוי הסיסמה");
+      } else {
+        this.props.errorMsg.setErrorMsg("מייל זה לא נמצא במערכת");
+      }
     } catch (error) {
-      console.log("error: ",error);
-      this.props.errorMsg.setErrorMsg('מייל לא תקין')
+      console.log("error: ", error);
+      this.props.errorMsg.setErrorMsg("מייל לא תקין");
     }
-     this.props.errorMsg.setErrorMsg('נשלח לך אימייל לשינוי הסיסמה')
-  }
+  };
+
+  teacherForgotPass = async () => {
+    if (this.state.email) {
+      let emailMess = emailValidation(this.state.email);
+      // console.log('emailMess: ', emailMess, "hi", emailMess.replace(/\*+/g, ''));
+      emailMess = emailMess.replace(/\*+/g, "");
+      if (emailMess.length !== 0) {
+        this.props.errorMsg.setErrorMsg(`${emailMess}`);
+      } else {
+        this.sendTeacherEmail();
+      }
+    } else {
+      this.props.errorMsg.setErrorMsg("אנא הכניסו כתובת מייל");
+    }
+  };
 
   updateEmail = (props) => {
     this.setState({ email: props.target.value });
@@ -67,7 +89,7 @@ class MakeNewPassword extends Component {
           onClick={this.goToLogin}
         />
         <div className="centeredPage">
-            <h1 className="smallerFont">הכניסו כתובת מייל ולחצו על הכפתור</h1>
+          <h1 className="smallerFont">הכניסו כתובת מייל ולחצו על הכפתור</h1>
           <p
             className="error"
             style={{ display: this.state.errorMessages[0].toShow }}
@@ -93,7 +115,7 @@ class MakeNewPassword extends Component {
 }
 
 const mapContextToProps = {
-    errorMsg: errorMsgContext,
+  errorMsg: errorMsgContext,
   games: gamesContext,
   AuthContext: AuthContext,
   isAuthenticated: IsAuthenticatedContext,

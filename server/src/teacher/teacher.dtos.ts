@@ -13,6 +13,13 @@ import {
   ValidateNested,
 } from 'class-validator';
 
+export class EmailDto {
+  @IsDefined()
+  @IsString()
+  @IsEmail()
+  email: string
+}
+
 export class GetTeacherSkip {
   @IsDefined()
   @IsString()
@@ -77,6 +84,16 @@ export class TeacherFieldsDataDto {
   @IsDefined()
   @IsNumber()
   classId: number;
+}
+
+export class PassAndTokenDto {
+  @IsDefined()
+  @IsString()
+  @Length(8, 15)
+  password: string
+  @IsDefined()
+  @IsString()
+  token: string
 }
 
 export class TeacherValDto {

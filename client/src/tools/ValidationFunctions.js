@@ -177,19 +177,19 @@ export function emailValidation(email) {
   if (email === null || email.length === 0) {
     return "** נא למלא שדה זה **";
   } else if (email.trim().length === 0) {
-    return "** כתובת איימל לא תקינה **";
+    return "** כתובת מייל לא תקינה **";
   } else if (
     !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
       email
     )
   ) {
-    return "** כתובת איימל לא תקינה **";
+    return "** כתובת מייל לא תקינה **";
   } else if (
     !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
       email
     )
   ) {
-    return "** כתובת איימל לא תקינה **";
+    return "** כתובת מייל לא תקינה **";
   } else {
     return "";
   }
@@ -204,6 +204,19 @@ export function mustInputValidation(input) {
     return "** נא למלא שדה זה **";
   } else if (input.length > 30) {
     return "** שדה זה לא יכול להכיל יותר מ-30 תווים **";
+  } else {
+    return "";
+  }
+}
+
+export function stringValidation(input) {
+  if(typeof input !== "string"){
+    return "**string**";
+  } else
+  if (input === null || input.length === 0) {
+    return "** נא למלא שדה זה **";
+  } else if (input.trim().length === 0) {
+    return "** נא למלא שדה זה **";
   } else {
     return "";
   }
