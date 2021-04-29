@@ -45,6 +45,18 @@ export class TeacherService extends UserService {
     super(config_options, userRepository, jwtService, configService, mailer);
   }
 
+  async checkIfEmailIsValidTeacher(@Body() email: string) {
+    let validateEmail = await this.userRepository.findOne({
+      where: [{ username: email }],
+    });
+    // console.log('validateEmail: ', validateEmail);
+    if (validateEmail === undefined || !validateEmail) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   async addTeacher(@Body() req: TeacherRegisterDto) {
     let username = req.email;
     let password = req.password;
@@ -379,7 +391,7 @@ export class TeacherService extends UserService {
   async findEmailByToken(token) {
     let getEmail = await this.userRepository.findOne({
       where: [{ verificationToken: token }],
-      select:['username']
+      select: ['username'],
     });
     return getEmail.username;
   }

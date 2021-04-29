@@ -23,6 +23,8 @@ import {
   GetClassSkip,
   TeacherValDto,
   TeacherRegisterDto,
+  EmailDto,
+  PassAndTokenDto,
 } from './teacher.dtos';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { env } from 'process';
@@ -105,7 +107,10 @@ export class TeacherController {
   async editTeacher(@Body() req: any) {
     try {
       if (req.password.length !== 0) {
-        return await this.teacherService.changeTeacherPassword(req.username, req.password);
+        return await this.teacherService.changeTeacherPassword(
+          req.username,
+          req.password,
+        );
       }
       return await this.teacherService.editTeacher(req);
     } catch (e) {
@@ -141,8 +146,16 @@ export class TeacherController {
     return await this.teacherService.searchInTeacher(val.val);
   }
   @Post('/sendNewPassEmail')
-  async sendNewPassEmail(@Body() email: any) {
-    this.teacherService.sendChangePasswordEmail(email.email);
+  async sendNewPassEmail(@Body() email: EmailDto) {
+    let validation = await this.teacherService.checkIfEmailIsValidTeacher(
+      email.email,
+    );
+    if (validation === true) {
+      await this.teacherService.sendChangePasswordEmail(email.email);
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @Get('/changePassword')
@@ -152,8 +165,13 @@ export class TeacherController {
   }
 
   @Post('/SaveNewPassword')
-  async SaveNewPassword(@Body() Info: any) {
+  async SaveNewPassword(@Body() Info: PassAndTokenDto) {
+    // console.log('Info: ', Info);
     let email = await this.teacherService.findEmailByToken(Info.token);
-    await this.teacherService.changePasswordWithToken(Info.token,email,Info.password);
+    await this.teacherService.changePasswordWithToken(
+      Info.token,
+      email,
+      Info.password,
+    );
   }
 }

@@ -48,10 +48,20 @@ class SignIn extends Component {
     this.setState({ password: props.target.value });
   };
 
-  teacherForgotPass = async () => {
-     await axios.post("/api/teacher/sendNewPassEmail",{email:this.state.username});
-     this.props.errorMsg.setErrorMsg('נשלח לך אימייל לשינוי הסיסמה')
-  }
+  //!
+  // teacherForgotPass = async () => {
+  //   try {
+  //     await axios.post("/api/teacher/sendNewPassEmail",{email:this.state.username});
+  //   } catch (error) {
+  //     console.log("error: ",error);
+  //     this.props.errorMsg.setErrorMsg('מייל לא תקין')
+  //   }
+  //    this.props.errorMsg.setErrorMsg('נשלח לך אימייל לשינוי הסיסמה')
+  // }
+
+moveToForgotPage = async () => {
+  this.props.history.push("/makeNewPassword");
+}
 
   login = async () => {
     let username = this.state.username;
@@ -143,7 +153,7 @@ class SignIn extends Component {
             כניסה
           </button>
           {this.props.location.state.data === "teacher" ? (
-            <h3 className="forgot" onClick={this.teacherForgotPass}>שכחתם את הסיסמא? לחצו כאן</h3>
+            <h3 className="forgot" onClick={()=>{this.moveToForgotPage()}}>שכחתם את הסיסמא? לחצו כאן</h3>
           ) : (
             <></>
           )}
