@@ -20,10 +20,12 @@ import {
   GameEditReq,
 } from './game.dtos';
 import { UseFilesHandler, FilesType } from '@hilma/fileshandler-typeorm';
-import { UseJwtAuth } from '@hilma/auth-nest';
+import { RequestUser, UseJwtAuth } from '@hilma/auth-nest';
 import { FieldService } from 'src/field/field.service';
 import { ValDto } from 'src/student/student.dtos';
 import { EditSchoolInfoDto } from 'src/school/school.dtos';
+import { TeacherService } from 'src/teacher/teacher.service';
+import { UserExist } from 'src/user-exist/user-exist.decorator';
 const { mustValid } = require('../serverTools/ServerValid');
 
 @Controller('api/game')
@@ -31,6 +33,7 @@ export class GameController {
   constructor(
     private gameService: GameService,
     private fieldService: FieldService,
+    private teacherService: TeacherService,
   ) {}
 
   //! IS FOR DANIEL
@@ -39,18 +42,21 @@ export class GameController {
     return await this.gameService.returnGames(req.skipON, req.numOfGames);
   }
 
+  @UserExist()
   @UseJwtAuth('superAdmin', 'teacher')
   @Get('/getGameInfo')
   async getGameInfo(@Query() ide: IdeDto) {
     return await this.gameService.getGameInfo(ide);
   }
 
+  @UserExist()
   @UseJwtAuth('teacher')
   @Get('/getShowGameInfo')
   async getShowGameInfo(@Query() data: showGameDto) {
     return await this.gameService.getShowGameInfo(data);
   }
 
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Post('/addGame')
   @UseFilesHandler(100)
@@ -78,6 +84,7 @@ export class GameController {
     return await this.gameService.addGame(files, req);
   }
 
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Post('/editGame')
   @UseFilesHandler(100)
@@ -105,23 +112,27 @@ export class GameController {
     return await this.gameService.editGame(files, req);
   }
 
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Get('/getGames')
   getGames(@Query() skipON: GetGameSkip) {
     return this.gameService.getGames(skipON);
   }
 
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Post('/deleteGameById')
   deleteGame(@Body() req: DeleteGameIdDto) {
     return this.gameService.deleteGameById(req);
   }
 
+  @UserExist()
   @UseJwtAuth('teacher')
   @Get('/getClassroomGames')
   async getClassroomGames(@Query() req: ClassroomIdDto) {
     return await this.gameService.getClassroomGames(req);
   }
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Get('/SearchGames')
   async SearchGames(@Query() val: ValDto) {

@@ -2,6 +2,7 @@ import { FileInput, withFiles } from '@hilma/fileshandler-client';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import "../../style/superAdmin/add_student_pop_up_style.scss"
+import { HideStyle } from '../../tools/GlobalVarbs';
 import ExcelStudentsAddition from './ExcelStudentsAddition';
 
 class AddStudentPopUp extends React.Component {
@@ -25,7 +26,7 @@ class AddStudentPopUp extends React.Component {
     render() {
         return (<>
             <ExcelStudentsAddition toShow={this.state.showExcelPopUp} handleState={this.changeStateExcelPopUp} />
-            <div className="addStudentPopUpFlex" style={{display: !this.state.showExcelPopUp ? "" : "none"}}>
+            <div className="addStudentPopUpFlex" style={{display: !this.state.showExcelPopUp ? "" : HideStyle}}>
                 <p onClick={this.changeStateExcelPopUp}>העלאת קובץ</p>
                 <p onClick={this.onClickAdd}>הוספה ידנית</p>
             </div>

@@ -19,7 +19,7 @@ import { withContext } from "@hilma/tools";
 import { schoolsContext } from "../../stores/schools.store";
 import { teachersContext } from "../../stores/teachers.store";
 import "../../style/superAdmin/add_teacher_pop_up_style.scss"
-const axios = require("axios").default;
+import { EmptMsg, HideStyle, ShowStyle } from "../../tools/GlobalVarbs";
 
 class AddTeacherPopUp extends Component {
     constructor() {
@@ -34,11 +34,11 @@ class AddTeacherPopUp extends Component {
             email: "",
             password: "",
             rakaz: "false",
-            teacherFirstNameError: { toShow: "none", mess: "" },
-            teacherLastNameError: { toShow: "none", mess: "" },
-            emailNameError: { toShow: "none", mess: "" },
-            passwordNameError: { toShow: "none", mess: "" },
-            rakazError: { toShow: "none", mess: "" },
+            teacherFirstNameError: { toShow: HideStyle, mess: EmptMsg },
+            teacherLastNameError: { toShow: HideStyle, mess: EmptMsg },
+            emailNameError: { toShow: HideStyle, mess: EmptMsg },
+            passwordNameError: { toShow: HideStyle, mess: EmptMsg },
+            rakazError: { toShow: HideStyle, mess: EmptMsg },
         };
     }
 
@@ -77,61 +77,61 @@ class AddTeacherPopUp extends Component {
         let firstNameTeacherMess = nameValidation(this.state.teacherFirstName);
         if (firstNameTeacherMess.length !== 0) {
             this.setState((prevState) => {
-                prevState.teacherFirstNameError.toShow = "inline-block";
+                prevState.teacherFirstNameError.toShow = ShowStyle;
                 prevState.teacherFirstNameError.mess = firstNameTeacherMess;
                 return { teacherFirstNameError: prevState.teacherFirstNameError };
             });
             allOk = false;
         } else {
-            this.setState({ teacherFirstNameError: { toShow: "none", mess: "" } });
+            this.setState({ teacherFirstNameError: { toShow: HideStyle, mess: EmptMsg } });
         }
 
         let lastNameTeacherMess = nameValidation(this.state.teacherLastName);
         if (lastNameTeacherMess.length !== 0) {
             this.setState((prevState) => {
-                prevState.teacherLastNameError.toShow = "inline-block";
+                prevState.teacherLastNameError.toShow = ShowStyle;
                 prevState.teacherLastNameError.mess = lastNameTeacherMess;
                 return { teacherLastNameError: prevState.teacherLastNameError };
             });
             allOk = false;
         } else {
-            this.setState({ teacherLastNameError: { toShow: "none", mess: "" } });
+            this.setState({ teacherLastNameError: { toShow: HideStyle, mess: EmptMsg } });
         }
         // ----------rakaz validation-------------------
         let rakazMess = mustInputValidation(this.state.rakaz);
         if (rakazMess.length !== 0) {
             this.setState((prevState) => {
-                prevState.rakazError.toShow = "inline-block";
+                prevState.rakazError.toShow = ShowStyle;
                 prevState.rakazError.mess = rakazMess;
                 return { rakazError: prevState.rakazError };
             });
             allOk = false;
         } else {
-            this.setState({ rakazError: { toShow: "none", mess: "" } });
+            this.setState({ rakazError: { toShow: HideStyle, mess: EmptMsg } });
         }
         //------------email validation---------------
         let emailMess = emailValidation(this.state.email);
         if (emailMess.length !== 0) {
             this.setState((prevState) => {
-                prevState.emailNameError.toShow = "inline-block";
+                prevState.emailNameError.toShow = ShowStyle;
                 prevState.emailNameError.mess = emailMess;
                 return { emailNameError: prevState.emailNameError };
             });
             allOk = false;
         } else {
-            this.setState({ emailNameError: { toShow: "none", mess: "" } });
+            this.setState({ emailNameError: { toShow: HideStyle, mess: EmptMsg } });
         }
         // ----------password validation-------------------
         let passwordMess = teacherPasswordValidation(this.state.password);
         if (passwordMess.length !== 0) {
             this.setState((prevState) => {
-                prevState.passwordNameError.toShow = "inline-block";
+                prevState.passwordNameError.toShow = ShowStyle;
                 prevState.passwordNameError.mess = passwordMess;
                 return { passwordNameError: prevState.passwordNameError };
             });
             allOk = false;
         } else {
-            this.setState({ passwordNameError: { toShow: "none", mess: "" } });
+            this.setState({ passwordNameError: { toShow: HideStyle, mess: EmptMsg } });
         }
 
         //after all the validetion we need to send the data to sql

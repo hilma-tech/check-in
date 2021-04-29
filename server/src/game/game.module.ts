@@ -4,7 +4,7 @@ import { GameController } from './game.controller';
 import { GameService } from './game.service';
 import { Game } from './game.entity';
 import { FieldModule } from 'src/field/field.module';
-import { UserModule } from '@hilma/auth-nest';
+import { RoleModule, User, UserModule } from '@hilma/auth-nest';
 import { ClassroomFieldModule } from "src/classroom-field/classroom-field.module";
 import { PermissionModule } from 'src/permission/permission.module';
 import { TeacherModule } from 'src/teacher/teacher.module';
@@ -14,7 +14,7 @@ import { TeacherModule } from 'src/teacher/teacher.module';
     UserModule,
     ClassroomFieldModule,
     forwardRef(() => TeacherModule),
-    TypeOrmModule.forFeature([Game]),
+    TypeOrmModule.forFeature([Game, User]),
   ],
   controllers: [GameController],
   providers: [GameService],

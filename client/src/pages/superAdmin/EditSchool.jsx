@@ -13,16 +13,15 @@ import {
   nameValidation,
   classNameValidation,
 } from "../../tools/ValidationFunctions";
-
-const axios = require("axios").default;
+import { Axios, Delete, EmptMsg, ExistErrorStatus, HideStyle, ShowStyle } from "../../tools/GlobalVarbs.js";
 
 class EditSchool extends Component {
   constructor() {
     super();
     this.state = {
-      schoolNameError: { toShow: "none", mess: "" },
+      schoolNameError: { toShow: HideStyle, mess: EmptMsg },
       schoolName: "",
-      schoolCityError: { toShow: "none", mess: "" },
+      schoolCityError: { toShow: HideStyle, mess: EmptMsg },
       schoolCity: "",
       addedClass:false,
       //List of all the classes in the school. The numTeachers represent the number of teachers in the class.
@@ -115,7 +114,7 @@ class EditSchool extends Component {
 
   addNewTeacherToClass = async (classIndex, teacherInfo) => {
     try{
-      let {data} = await axios.post("/api/teacher/register", {
+      let {data} = await Axios.post("/api/teacher/register", {
         first_name: teacherInfo.first_name,
         last_name: teacherInfo.last_name,
         school_id: this.props.schools.chosenSchool.id,
@@ -134,7 +133,7 @@ class EditSchool extends Component {
       });
     } catch(err){
       this.setState({ savingInfo: false });
-      if (err.status === 500) {
+      if (err.status === ExistErrorStatus) {
         this.props.errorMsg.setErrorMsg(
           "קיים כבר משתמש עם האימייל הזה. נסו שוב."
         );
@@ -191,26 +190,26 @@ class EditSchool extends Component {
     let nameSchoolMess = nameValidation(this.state.schoolName);
     if (nameSchoolMess.length !== 0) {
       this.setState((prevState) => {
-        prevState.schoolNameError.toShow = "inline-block";
+        prevState.schoolNameError.toShow = ShowStyle;
         prevState.schoolNameError.mess = nameSchoolMess;
         return { schoolNameError: prevState.schoolNameError };
       });
       allOk = false;
     } else {
-      this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+      this.setState({ schoolNameError: { toShow: HideStyle, mess: EmptMsg } });
     }
 
     // ----------school city validation-------------------
     let citySchoolMess = nameValidation(this.state.schoolCity);
     if (citySchoolMess.length !== 0) {
       this.setState((prevState) => {
-        prevState.schoolCityError.toShow = "inline-block";
+        prevState.schoolCityError.toShow = ShowStyle;
         prevState.schoolCityError.mess = citySchoolMess;
         return { schoolCityError: prevState.schoolCityError };
       });
       allOk = false;
     } else {
-      this.setState({ schoolCityError: { toShow: "none", mess: "" } });
+      this.setState({ schoolCityError: { toShow: HideStyle, mess: EmptMsg } });
     }
 
     // ----------classes name validation-------------------
@@ -218,7 +217,7 @@ class EditSchool extends Component {
       let nameClassMess = classNameValidation(this.state.classes[i].name);
       if (nameClassMess.length !== 0) {
         this.setState((prevState) => {
-          prevState.classes[i].classNameError.toShow = "inline-block";
+          prevState.classes[i].classNameError.toShow = ShowStyle;
           prevState.classes[i].classNameError.mess = nameClassMess;
           return { classes: prevState.classes };
         });
@@ -231,15 +230,15 @@ class EditSchool extends Component {
         }
         if (nameClassMess.length !== 0) {
           this.setState((prevState) => {
-            prevState.classes[i].classNameError.toShow = "inline-block";
+            prevState.classes[i].classNameError.toShow = ShowStyle;
             prevState.classes[i].classNameError.mess = nameClassMess;
             return { classes: prevState.classes };
           });
           allOk = false;
         } else{
           this.setState((prevState) => {
-            prevState.classes[i].classNameError.toShow = "none";
-            prevState.classes[i].classNameError.mess = "";
+            prevState.classes[i].classNameError.toShow = HideStyle;
+            prevState.classes[i].classNameError.mess = EmptMsg;
             return { classes: prevState.classes };
           });
         }
@@ -249,7 +248,7 @@ class EditSchool extends Component {
     //after all the validetion we need to send the data to sql
     if (allOk) {
       try {
-        let { data } = await axios.post("/api/school/editSchool", {
+        let { data } = await Axios.post("/api/school/editSchool", {
             id: this.props.schools.chosenSchool.id,
             schoolName: this.state.schoolName,
             schoolCity: this.state.schoolCity,
@@ -358,7 +357,7 @@ class EditSchool extends Component {
               this.props.errorMsg.setQuestion(
                 "האם אתה בטוח שברצונך למחוק בית ספר זה ואת כל המורים ותלמידים השייכים לו?",
                 ()=>{this.deleteSchool(e)},
-                "מחק"
+                Delete
               );
             }}
             >מחק בית ספר</button>

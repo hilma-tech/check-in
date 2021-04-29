@@ -18,22 +18,21 @@ import { schoolsContext } from "../../stores/schools.store";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { studentsContext } from "../../stores/students.store";
-
-const axios = require("axios").default;
+import { Axios, EmptMsg, HideStyle } from "../../tools/GlobalVarbs";
 
 class AddStudent extends React.Component {
   constructor() {
     super();
     this.state = {
-      studentFirstNameError: { toShow: "none", mess: "" },
+      studentFirstNameError: { toShow: HideStyle, mess: EmptMsg },
       studentFirstName: "",
-      studentLastNameError: { toShow: "none", mess: "" },
+      studentLastNameError: { toShow: HideStyle, mess: EmptMsg },
       studentLastName: "",
-      userNameError: { toShow: "none", mess: "" },
+      userNameError: { toShow: HideStyle, mess: EmptMsg },
       userName: "",
-      passwordError: { toShow: "none", mess: "" },
+      passwordError: { toShow: HideStyle, mess: EmptMsg },
       password: "",
-      schoolNameError: { toShow: "none", mess: "" },
+      schoolNameError: { toShow: HideStyle, mess: EmptMsg },
       school: "",
       schoolId: 0,
       chosenClasses: [],
@@ -119,7 +118,7 @@ class AddStudent extends React.Component {
     let chosenScoolId = (this.props.schools.schoolsNames.filter((school) => {
       return school.name === e.value
     }))[0]
-    const { data } = await axios.get("/api/classroom/getSchoolClasses", {
+    const { data } = await Axios.get("/api/classroom/getSchoolClasses", {
       params: { schoolId: chosenScoolId.id },
     });
     this.setState({ school: e.value, allClasses: data, schoolId: chosenScoolId.id, chosenClasses: [] });
@@ -149,7 +148,7 @@ class AddStudent extends React.Component {
       });
       allOk = false;
     } else {
-      this.setState({ studentFirstNameError: { toShow: "none", mess: "" } });
+      this.setState({ studentFirstNameError: { toShow: HideStyle, mess: EmptMsg } });
     }
     let studentLastNameErrorMess = nameValidation(this.state.studentLastName);
     if (studentLastNameErrorMess.length !== 0) {
@@ -160,7 +159,7 @@ class AddStudent extends React.Component {
       });
       allOk = false;
     } else {
-      this.setState({ studentLastNameError: { toShow: "none", mess: "" } });
+      this.setState({ studentLastNameError: { toShow: HideStyle, mess: EmptMsg } });
     }
 
     // ----------user name validation-------------------
@@ -173,7 +172,7 @@ class AddStudent extends React.Component {
       });
       allOk = false;
     } else {
-      this.setState({ userNameError: { toShow: "none", mess: "" } });
+      this.setState({ userNameError: { toShow: HideStyle, mess: EmptMsg } });
     }
 
     // ---------------password validation-------------------
@@ -186,7 +185,7 @@ class AddStudent extends React.Component {
       });
       allOk = false;
     } else {
-      this.setState({ passwordError: { toShow: "none", mess: "" } });
+      this.setState({ passwordError: { toShow: HideStyle, mess: EmptMsg } });
     }
 
     // ---------------school name validation-------------------
@@ -199,13 +198,13 @@ class AddStudent extends React.Component {
       });
       allOk = false;
     } else {
-      this.setState({ schoolNameError: { toShow: "none", mess: "" } });
+      this.setState({ schoolNameError: { toShow: HideStyle, mess: EmptMsg } });
     }
 
     //after all the validation we need to send the data to sql
     if (allOk) {
       try {
-        let { data } = await axios.post("/api/student/register", {
+        let { data } = await Axios.post("/api/student/register", {
           username: this.state.userName,
           password: this.state.password,
           firstName: this.state.studentFirstName,

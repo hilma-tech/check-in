@@ -1,6 +1,6 @@
 import { createMobXContext } from "@hilma/tools";
 import { makeObservable, observable, action } from "mobx";
-const axios = require("axios").default;
+import { Axios, OnUnauthorizedError } from "../tools/GlobalVarbs";
 
 class UserName {
   firstName = "";
@@ -9,6 +9,7 @@ class UserName {
   haveMoreClasses = true;
   successGettingClasses = true;
   startGetClasses = false;
+  needToLogOut = false;
   constructor() {
     makeObservable(this, {
       firstName: observable,
@@ -17,6 +18,7 @@ class UserName {
       haveMoreClasses: observable,
       successGettingClasses: observable,
       startGetClasses: observable,
+      needToLogOut: observable,
       getTeacherInfo: action,
       getMoreClasses: action,
       resetUser: action,
@@ -28,7 +30,7 @@ class UserName {
     try {
       this.startGetClasses = true;
       this.successGettingClasses = true;
-      let { data } = await axios.get("/api/teacher/getTeacherClasses", {
+      let { data } = await Axios.get("/api/teacher/getTeacherClasses", {
         params: { classesLength: this.teacherClasses.length },
       });
       this.firstName = data.firstName;
@@ -37,6 +39,9 @@ class UserName {
       this.haveMoreClasses = data.haveMoreClasses;
       this.startGetClasses = false;
     } catch (err) {
+      if(err.response.status === OnUnauthorizedError){
+        this.needToLogOut = true
+      }
       this.startGetClasses = false;
       this.successGettingClasses = false;
     }
@@ -47,7 +52,7 @@ class UserName {
     try {
       this.startGetClasses = true;
       this.successGettingClasses = true;
-      let { data } = await axios.get("/api/teacher/getTeacherClasses", {
+      let { data } = await Axios.get("/api/teacher/getTeacherClasses", {
         params: { classesLength: this.teacherClasses.length },
       });
       this.teacherClasses = this.teacherClasses.concat(data.currTeacherClasses);

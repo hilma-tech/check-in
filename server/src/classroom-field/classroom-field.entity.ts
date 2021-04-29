@@ -4,21 +4,23 @@ import { Game } from 'src/game/game.entity';
 import {
   Column,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm';
 
 @Entity()
+@Unique(["classroom_id","field_id"])
 export class ClassroomField {
   @PrimaryGeneratedColumn()
   id: number;
-
   @ManyToOne(
     type => Game,
     game => game.id,
     { onDelete: 'CASCADE' }
-  )
+    )
   @JoinColumn({ referencedColumnName: 'id', name: 'game_id' })
   game_id: number;
 
@@ -38,6 +40,6 @@ export class ClassroomField {
     field => field.id,
     { onDelete: 'CASCADE' }
   )
-  @JoinColumn({ name: 'field_id', referencedColumnName: 'id' })
+  @JoinColumn({ referencedColumnName: 'id',name: 'field_id' })
   field_id?: Field;
 }

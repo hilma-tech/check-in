@@ -20,6 +20,7 @@ import { Classroom } from 'src/classroom/classroom.entity';
 import { SchoolService } from 'src/school/school.service';
 import { FieldService } from 'src/field/field.service';
 import { PermissionService } from 'src/permission/permission.service';
+import { UserExist } from 'src/user-exist/user-exist.decorator';
 
 @Controller('api/student')
 export class StudentController {
@@ -35,6 +36,7 @@ export class StudentController {
     // this.register({username: 'student2@gmail.com', password: 'student11', name: 'בת-ציון רוז'})
   }
 
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Post('/register')
   async register(@Body() req: UserRegisterDto) {
@@ -45,6 +47,7 @@ export class StudentController {
     }
   }
 
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Post('/multiRegister')
   async multiRegister(@Body() req: ExcelUserRegisterDto[]) {
@@ -92,6 +95,7 @@ export class StudentController {
     }
   }
 
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Post('/editStudent')
   async editStudent(@Body() req: UserEditDto) {
@@ -102,12 +106,14 @@ export class StudentController {
     }
   }
 
+  @UserExist()
   @UseJwtAuth('teacher', 'superAdmin')
   @Get('/getStudents')
   getStudents(@Query() skipON: GetStudentSkip) {
     return this.studentService.getStudents(skipON);
   }
 
+  @UserExist()
   @UseJwtAuth('teacher')
   @Get('/getStudentsClassrooms')
   getStudentsClassrooms(@Query() req: StudentIdDto) {
@@ -141,6 +147,7 @@ export class StudentController {
     }
   }
 
+  @UserExist()
   @UseJwtAuth('teacher')
   @Get('/getClassStudents')
   async getClassStudents(@Query() data: ClassroomIdDto) {
@@ -150,6 +157,7 @@ export class StudentController {
     );
   }
 
+  @UserExist()
   @UseJwtAuth('teacher')
   @Post('/changestudentpass')
   async changePass(@Body() newPass: any) {
@@ -164,18 +172,21 @@ export class StudentController {
 
   }
 
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Get('/searchStudentSuperadmin')
   async searchStudent(@Query() val: ValDto) {
     return await this.studentService.searchInStudent(val.val)
   }
 
+  @UserExist()
   @UseJwtAuth('teacher')
   @Get('/searchStudentInTeacher')
   async searchStudentInChosenClass(@Query() info: any) {
     return await this.studentService.searchStudents(info.value, info.classId)
   }
 
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Post('/deleteStudent')
   async deleteStudent(@Body() val: StudentIdDto) {

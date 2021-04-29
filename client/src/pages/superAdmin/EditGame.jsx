@@ -20,18 +20,17 @@ import {
 } from "../../tools/ValidationFunctions";
 import { withFiles } from "@hilma/fileshandler-client";
 import { gamesContext } from "../../stores/games.store.js";
-
-const axios = require("axios").default;
+import { Axios, EmptMsg, ExistErrorStatus, GetInfoErrorMsg, HideStyle } from "../../tools/GlobalVarbs.js";
 
 class EditGame extends Component {
   constructor(props) {
     super();
     this.state = {
       newKey: 3,
-      gameNameErrorMessages: { toShow: "none", mess: "" },
-      gameDescriptionErrorMessages: { toShow: "none", mess: "" },
-      gameRequirementsErrorMessages: { toShow: "none", mess: "" },
-      gameLinkErrorMessages: { toShow: "none", mess: "" },
+      gameNameErrorMessages: { toShow: HideStyle, mess: EmptMsg },
+      gameDescriptionErrorMessages: { toShow: HideStyle, mess: EmptMsg },
+      gameRequirementsErrorMessages: { toShow: HideStyle, mess: EmptMsg },
+      gameLinkErrorMessages: { toShow: HideStyle, mess: EmptMsg },
       fieldsData: [],
       image: "https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg",
       gameName: "",
@@ -46,7 +45,7 @@ class EditGame extends Component {
   componentDidMount = async () => {
     try {
       // this.infoNotReady = true;
-      const { data } = await axios.get("/api/game/getGameInfo", {
+      const { data } = await Axios.get("/api/game/getGameInfo", {
         params: { id: this.props.chosenGameEditContext.gameId },
       });
       this.infoNotReady = false;
@@ -56,7 +55,7 @@ class EditGame extends Component {
       let fields = data.fields
       this.setState({
         fieldsData: fields.map((field) => {
-          return { ...field, errorMessage: { toShow: "none", mess: "" } }
+          return { ...field, errorMessage: { toShow: HideStyle, mess:EmptMsg } }
         }),
         gameName: data.game_name,
         gameDescription: data.description,
@@ -68,7 +67,7 @@ class EditGame extends Component {
       });
     } catch (error) {
       this.props.errorMsg.setErrorMsg(
-        "הייתה שגיאה בשרת. לא ניתן לקבל מידע מהשרת."
+        GetInfoErrorMsg
       );
     }
   };
@@ -148,7 +147,7 @@ class EditGame extends Component {
         selection: "text",
         value: [{ id: 0, value: "" }],
         order: this.state.newKey,
-        errorMessage: { toShow: "none", mess: "" },
+        errorMessage: { toShow: HideStyle, mess: EmptMsg },
       });
       return { fieldsData: tempFieldsData };
     });
@@ -246,10 +245,10 @@ class EditGame extends Component {
         this.props.history.goBack(); // after saving go back
       } catch (error) {
         this.setState({ savingInfo: false });
-        if (error.status === 500) {
+        if (error.status === ExistErrorStatus) {
           this.props.errorMsg.setErrorMsg("קיים כבר משחק בשם זה. נסו שם אחר.");
         } else {
-          this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת נסו לבדוק את החיבור");
+          this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת המשחק לא נשמר");
         }
       }
     };
@@ -259,10 +258,10 @@ class EditGame extends Component {
       let allOK = true;
       let fieldOK = true;
       let ValidationFunctions = [
-        { name: "gameName", func: nameValidation, errMsg: "" },
-        { name: "gameDescription", func: descriptionValidation, errMsg: "" },
-      { name: "gameRequirements", func: requirementValidation, errMsg: "" },
-      { name: "gameLink", func: linkValidation, errMsg: "" },
+        { name: "gameName", func: nameValidation, errMsg: EmptMsg },
+        { name: "gameDescription", func: descriptionValidation, errMsg: EmptMsg },
+      { name: "gameRequirements", func: requirementValidation, errMsg: EmptMsg },
+      { name: "gameLink", func: linkValidation, errMsg: EmptMsg },
       
     ];
     
@@ -284,8 +283,8 @@ class EditGame extends Component {
         } else {
           this.setState((prevState) => {
             prevState[validationData.name + "ErrorMessages"] = {
-              toShow: "none",
-              mess: "",
+              toShow: HideStyle,
+              mess: EmptMsg,
             };
             return {
               errorMessages: prevState[validationData.name + "ErrorMessages"],
@@ -302,7 +301,7 @@ class EditGame extends Component {
             //     },
             //   });
             // } else {
-              //   this.setState({ imageErrorMessages: { toShow: "none", mess: "" } });
+              //   this.setState({ imageErrorMessages: { toShow: HideStyle, mess: "" } });
               // }
               
               //validates the fields
@@ -319,7 +318,7 @@ class EditGame extends Component {
               let isOk = true;
               let countFullFields = 0;
               let fieldEmpt = 0;
-              let firstErrMsg = "";
+              let firstErrMsg = EmptMsg;
               this.state.fieldsData.map((fields, index) => {
                 if (fields.selection !== "image") {
                   let errMess = fieldNameValidation(fields.name);
@@ -352,8 +351,8 @@ class EditGame extends Component {
               } else {
                 countFullFields++;
                 this.setState((prevState) => {
-                  prevState.fieldsData[index].errorMessage.toShow = "none";
-                  prevState.fieldsData[index].errorMessage.mess = "";
+                  prevState.fieldsData[index].errorMessage.toShow = HideStyle;
+                  prevState.fieldsData[index].errorMessage.mess = EmptMsg;
                 return { fieldsData: prevState.fieldsData };
               });
             }
@@ -365,8 +364,8 @@ class EditGame extends Component {
               if (countFullFields >= 2 && fieldEmpt === 0) {
                 isOk = true;
                 this.setState((prevState) => {
-                  prevState.fieldsData[index].errorMessage.toShow = "none";
-                  prevState.fieldsData[index].errorMessage.mess = "";
+                  prevState.fieldsData[index].errorMessage.toShow = HideStyle;
+                  prevState.fieldsData[index].errorMessage.mess = EmptMsg;
                   return { fieldsData: prevState.fieldsData };
                 });
               } else if (fieldEmpt === 0) {
@@ -405,8 +404,8 @@ class EditGame extends Component {
             isOk = false;
           } else {
             this.setState((prevState) => {
-              prevState.fieldsData[index].errorMessage.toShow = "none";
-              prevState.fieldsData[index].errorMessage.mess = "";
+              prevState.fieldsData[index].errorMessage.toShow = HideStyle;
+              prevState.fieldsData[index].errorMessage.mess = EmptMsg;
               return { fieldsData: prevState.fieldsData };
             });
           }

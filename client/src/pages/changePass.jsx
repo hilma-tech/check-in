@@ -16,6 +16,7 @@ import {
 } from "../tools/ValidationFunctions";
 import PopUpError from "../component/popUpError";
 import axios from "axios";
+import { EmptMsg, HideStyle } from "../tools/GlobalVarbs";
 
 class ChangePass extends Component {
   constructor(props) {
@@ -25,8 +26,8 @@ class ChangePass extends Component {
       newPassword: "",
       goback: false,
       errorMessages: [
-        { toShow: "none", mess: "" },
-        { toShow: "none", mess: "" },
+        { toShow: HideStyle, mess: EmptMsg },
+        { toShow: HideStyle, mess: EmptMsg },
       ],
     };
   }

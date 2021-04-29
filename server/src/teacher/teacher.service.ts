@@ -23,9 +23,8 @@ import { env } from 'process';
 import * as bcrypt from 'bcrypt';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { Classroom } from 'src/classroom/classroom.entity';
-import { parse } from 'path';
-import { School } from 'src/school/school.entity';
 import { SchoolService } from 'src/school/school.service';
+const { GetInfoLength } = require('../serverTools/GlobalVarbs');
 
 @Injectable()
 export class TeacherService extends UserService {
@@ -151,7 +150,7 @@ export class TeacherService extends UserService {
       return { id: teacherClass.id, name: teacherClass.name };
     });
     let haveMoreClasses =
-      currTeacherClasses.length > Number(skipON.classesLength) + 50
+      currTeacherClasses.length > Number(skipON.classesLength) + GetInfoLength
         ? true
         : false;
 
@@ -159,7 +158,7 @@ export class TeacherService extends UserService {
       return {
         currTeacherClasses: currTeacherClasses.slice(
           Number(skipON.classesLength),
-          Number(skipON.classesLength) + 50,
+          Number(skipON.classesLength) + GetInfoLength,
         ),
         haveMoreClasses: haveMoreClasses,
         firstName: currTeacher.first_name,
@@ -169,7 +168,7 @@ export class TeacherService extends UserService {
       return {
         currTeacherClasses: currTeacherClasses.slice(
           Number(skipON.classesLength),
-          Number(skipON.classesLength) + 50,
+          Number(skipON.classesLength) + GetInfoLength,
         ),
         haveMoreClasses: haveMoreClasses,
       };
@@ -179,10 +178,10 @@ export class TeacherService extends UserService {
   async getTeacher(@Req() skipON: GetTeacherSkip) {
     let numTeachers = await this.userRepository.count();
     let haveMoreTeachers =
-      numTeachers > Number(skipON.teachersLength) + 50 ? true : false;
+      numTeachers > Number(skipON.teachersLength) + GetInfoLength ? true : false;
     let teachers = await this.userRepository.find({
       skip: Number(skipON.teachersLength),
-      take: 50,
+      take: GetInfoLength,
       relations: ['school', 'classroomTeacher'],
       order: { created: 'DESC' },
     });

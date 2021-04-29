@@ -8,9 +8,9 @@ import { studentsContext } from '../../stores/students.store';
 import "../../style/superAdmin/excel_students_addition_style.scss"
 import { classNameValidation, nameValidation, schoolNameValidation, studentPasswordValidation, userNameValidation } from '../../tools/ValidationFunctions';
 import { CircularProgress, Dialog } from '@material-ui/core';
+import { Axios, HideStyle } from '../../tools/GlobalVarbs';
 
 var xlsxParser = require('xlsx');
-const axios = require("axios").default;
 
 class ExcelStudentsAddition extends React.Component {
     constructor(props) {
@@ -102,7 +102,7 @@ class ExcelStudentsAddition extends React.Component {
 
             if (errorsMsg.length === 0) {
                 try {
-                    let { data } = await axios.post("/api/student/multiRegister", dataParse);
+                    let { data } = await Axios.post("/api/student/multiRegister", dataParse);
                     if (data.success) {
                         this.props.students.addMultiStudents(data.students)
                         this.setState({ startSaveStudents: false })
@@ -150,7 +150,7 @@ class ExcelStudentsAddition extends React.Component {
     render() {
         return (
             <>
-                <div className="excelStudentAddBackground" style={{ display: this.props.toShow ? "" : "none" }}>
+                <div className="excelStudentAddBackground" style={{ display: this.props.toShow ? "" : HideStyle }}>
                     <div className="excelStudentAdd">
                         <img
                             onClick={this.props.handleState}

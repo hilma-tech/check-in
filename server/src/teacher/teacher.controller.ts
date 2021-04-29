@@ -28,6 +28,7 @@ import {
 } from './teacher.dtos';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { env } from 'process';
+import { UserExist } from 'src/user-exist/user-exist.decorator';
 
 @Controller('api/teacher')
 export class TeacherController {
@@ -38,6 +39,7 @@ export class TeacherController {
     // this.register({username: 'teacher2@gmail.com', password: 'teacher1'})
   }
 
+  @UserExist()
   @UseJwtAuth('teacher')
   @Get('/getTeacherClasses')
   async getTeacherClasses(
@@ -47,6 +49,7 @@ export class TeacherController {
     return await this.teacherService.getTeacherClasses(userinfo.id, skipOn);
   }
 
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Get('/getTeacherInfo')
   getTeacherInfo(@Query() req: TeacherIdDto) {
@@ -58,12 +61,13 @@ export class TeacherController {
     let body = this.userService.login(userInfo, res);
     res.send(body);
   }
-  // @UseJwtAuth('superAdmin')
+  // @UserExist()@UseJwtAuth('superAdmin')
   // @Post('/addTeacher')
   // addTeacher(@Body() req: any) {
   //   return this.teacherService.addTeacherInfo(req)
   // }
 
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Post('/register')
   async register(@Body() req: TeacherRegisterDto) {
@@ -91,12 +95,13 @@ export class TeacherController {
     // return await this.userService.createUser<Teacher>(user);
   }
 
-  // @UseJwtAuth('superAdmin')
+  // @UserExist()@UseJwtAuth('superAdmin')
   // @Post('/changeteacherpass')
   // async changePass(@Body() newPass: any) {
   //   return await this.teacherService.changeTeacherPassword(newPass.username);
   // }
 
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Post('/editTeacher')
   async editTeacher(@Body() req: any) {
@@ -113,12 +118,14 @@ export class TeacherController {
     }
   }
 
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Post('/deleteTeacher')
   async deleteTeacher(@Body() val: TeacherIdDto) {
     return await this.teacherService.deleteTeacher(val.teacherId);
   }
 
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Get('/getTeachers')
   getTeachers(@Query() skipON: GetTeacherSkip) {
@@ -132,6 +139,7 @@ export class TeacherController {
     res.redirect(redirectTo);
   }
 
+  @UserExist()
   @UseJwtAuth('superAdmin')
   @Get('/searchTeacherSuperadmin')
   async searchTeacher(@Query() val: TeacherValDto) {
