@@ -92,7 +92,7 @@ export class StudentService extends UserService {
       .addSelect('Student.username')
       .groupBy('Student.id')
       .where('Classroom.id = :id', { id: classId })
-      .take(50)
+      .take(GetInfoLength)
       .skip(studentLength)
       .getManyAndCount();
 
