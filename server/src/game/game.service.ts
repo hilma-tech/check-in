@@ -87,6 +87,11 @@ export class GameService {
         //update ALL the fields
         this.fieldService.editFieldName(req.field[i].id, req.field[i].name)
         if (req.field[i].selection !== req.existField[isExist].selection) {
+          if (req.field[i].selection === "image") {
+            //save the new image
+            let imgPath = await this.imageService.save(files, req.field[i].value[0].id);
+            req.field[i].value[0].value = imgPath;
+          }
           await this.classroomFieldService.editGameDeleteClassField(req.game.id, [req.field[i].id])
           let savedFiield = await this.fieldService.saveOneField({ data: data, id: req.game.id });
           if (gameInfo !== undefined) {
@@ -134,6 +139,11 @@ export class GameService {
           this.fieldService.editFieldValue(req.field[i])
         }
       } else {
+        if (req.field[i].selection === "image") {
+          //save the new image
+          let imgPath = await this.imageService.save(files, req.field[i].value[0].id);
+          req.field[i].value[0].value = imgPath;
+        }
         let savedFiield = await this.fieldService.saveOneField({ data: data, id: req.game.id });
         if (gameInfo !== undefined) {
           for (let a = 0; a < gameInfo.classrooms.length; a++) {

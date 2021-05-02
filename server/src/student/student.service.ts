@@ -92,13 +92,13 @@ export class StudentService extends UserService {
       .addSelect('Student.username')
       .groupBy('Student.id')
       .where('Classroom.id = :id', { id: classId })
-      .take(50)
+      .take(GetInfoLength)
       .skip(studentLength)
       .getManyAndCount();
 
     return {
       students: students[0],
-      haveMoreStudents: students[1] > studentLength + 50 ? true : false,
+      haveMoreStudents: students[1] > studentLength + GetInfoLength ? true : false,
     };
   }
 
