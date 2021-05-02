@@ -175,6 +175,7 @@
     }
     
     .forgot {
+      @include mouse(point);
      text-decoration: underline;
       color: #043163;
       margin: 0vh;
