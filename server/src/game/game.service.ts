@@ -66,12 +66,11 @@ export class GameService {
       .where('Game.id = :id', { id: Number(req.game.id) })
       .getOne();
     // console.log('gameInfo: ', gameInfo.classrooms);
-    let res = await this.gameRepository.save(req.game);
+    let res = await this.gameRepository.update({id: req.game.id},req.game);
     // this.teacherService.getTeacherByClassId(gameInfo.classrooms, req.game)
     await this.classroomFieldService.editGameDeleteClassField(req.game.id, req.deletedField)
     for (let i = 0; i < req.field.length; i++) {
       let isExist = -1
-      let isArryFieldChange = false
       for (let z = 0; z < req.existField.length; z++) {
         if (req.existField[z].id === req.field[i].id) {
           isExist = z
@@ -115,10 +114,10 @@ export class GameService {
             let emptExistFields = 0
             let emptFields = 0
             for (let z = 0; z < MaxFields; z++) {
-              if (req.existField[isExist].value[z].value.length === 0) {
+              if (req.existField[isExist].value[z] !== undefined && req.existField[isExist].value[z].value.length === 0) {
                 emptExistFields++
               }
-              if (req.field[i].value[z].value.length === 0) {
+              if (req.field[i].value[z] !== undefined && req.field[i].value[z].value.length === 0) {
                 emptFields++
               }
             }
