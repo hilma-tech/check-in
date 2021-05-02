@@ -145,16 +145,20 @@ export class TeacherController {
   async searchTeacher(@Query() val: TeacherValDto) {
     return await this.teacherService.searchInTeacher(val.val);
   }
+
   @Post('/sendNewPassEmail')
   async sendNewPassEmail(@Body() email: EmailDto) {
     let validation = await this.teacherService.checkIfEmailIsValidTeacher(
       email.email,
     );
-    if (validation === true) {
-      await this.teacherService.sendChangePasswordEmail(email.email);
-      return true;
+    if (validation.validateEmail === true) {
+      if(validation.verifiedEmail){
+        await this.teacherService.sendChangePasswordEmail(email.email);
+        return {validateEmail: true, verifiedEmail: true};
+      }
+      return {validateEmail: true, verifiedEmail: false};
     } else {
-      return false;
+      return {validateEmail: false};
     }
   }
 
