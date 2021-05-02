@@ -98,7 +98,7 @@ export class StudentService extends UserService {
 
     return {
       students: students[0],
-      haveMoreStudents: students[1] > studentLength + 50 ? true : false,
+      haveMoreStudents: students[1] > studentLength + GetInfoLength ? true : false,
     };
   }
 
