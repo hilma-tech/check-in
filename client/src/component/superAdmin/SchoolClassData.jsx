@@ -163,13 +163,14 @@ class SchoolClassData extends React.Component {
                 {this.returnTeacherSelections()}
               </div></div> : null}
             <div className="editSchoolClassTeacherButtons">
+            {this.props.classData.chosenTeachers.length === 0 ?  <></> : 
               <div
                 className="editSchoolClassAddExistTeacher addSomethingNew"
                 onClick={this.handleExistTeacherPopUpState}
-              >
+              > 
                 <img alt="add icon" className="addIcon" src="/icons/addicon.svg"></img>
                 <p className="addTitle">הוסף מורה קיים</p>
-              </div>
+              </div>}
               <div className="addSomethingNew" onClick={this.handleNewTeacherPopUpState}>
                 <img alt="add icon" className="addIcon" src="/icons/addicon.svg"></img>
                 <p className="addTitle" style={{ width: 'max-content' }}>צור מורה חדש</p>

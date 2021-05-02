@@ -132,6 +132,13 @@ export class TeacherController {
     return this.teacherService.getTeacher(skipON);
   }
 
+  @UserExist()
+  @UseJwtAuth('superAdmin')
+  @Post('/isTeacherExist')
+  isTeacherExist(@Body() username) {
+    return this.teacherService.isTeacherExist(username.email);
+  }
+
   @Get('/Verify')
   async MakeLogInAvailable(@Query() Token: any, @Res() res: any) {
     await this.teacherService.verifyEmailByToken(Token.token);

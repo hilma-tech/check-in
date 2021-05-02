@@ -401,4 +401,8 @@ export class TeacherService extends UserService {
     });
     return getEmail.username;
   }
+
+  async isTeacherExist(username){
+    return await this.userRepository.findOne({username: username}) === undefined ? false : true
+  }
 }
