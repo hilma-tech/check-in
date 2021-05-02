@@ -67,7 +67,6 @@ export class GameService {
       .getOne();
     // console.log('gameInfo: ', gameInfo.classrooms);
     let res = await this.gameRepository.update({id: req.game.id},req.game);
-    // this.teacherService.getTeacherByClassId(gameInfo.classrooms, req.game)
     await this.classroomFieldService.editGameDeleteClassField(req.game.id, req.deletedField)
     for (let i = 0; i < req.field.length; i++) {
       let isExist = -1
@@ -155,9 +154,10 @@ export class GameService {
         }
       }
     }
+    this.teacherService.getTeacherByClassId(gameInfo.classrooms, req.game)
     return res;
   }
-
+  
   //!IS FOR DANIEL
   async returnGames(skip: number, amount: number) {
     return await this.gameRepository.find({
