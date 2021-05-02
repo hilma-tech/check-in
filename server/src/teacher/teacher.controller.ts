@@ -107,7 +107,7 @@ export class TeacherController {
   async editTeacher(@Body() req: any) {
     try {
       if (req.password.length !== 0) {
-        return await this.teacherService.changeTeacherPassword(
+        await this.teacherService.changeTeacherPassword(
           req.username,
           req.password,
         );
