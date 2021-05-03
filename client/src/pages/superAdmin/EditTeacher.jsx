@@ -385,7 +385,7 @@ class EditTeacher extends React.Component {
           <div>
             <form className="formData">
               {/* מורה */}
-              <label className="labelFields">שם פרטי:</label>
+              <label className="labelFields">* שם פרטי:</label>
               <p
                 className="error"
                 style={{ display: this.state.teacherNameError.toShow }}
@@ -399,7 +399,7 @@ class EditTeacher extends React.Component {
                 onBlur={this.saveTeacherName}
                 defaultValue={this.state.teacherFirstName}
               />
-              <label className="labelFields">שם משפחה:</label>
+              <label className="labelFields">* שם משפחה:</label>
               <p
                 className="error"
                 style={{ display: this.state.teacherLastNameError.toShow }}
@@ -415,7 +415,7 @@ class EditTeacher extends React.Component {
               />
 
               {/* בית ספר */}
-              <label className="labelFields">בית ספר:</label>
+              <label className="labelFields">* בית ספר:</label>
               <p
                 className="error"
                 style={{ display: this.state.schoolNameError.toShow }}
@@ -501,7 +501,7 @@ class EditTeacher extends React.Component {
 
             <form className="formData" style={{ marginTop: "0" }}>
               {/* אימייל */}
-              <label className="labelFields">אימייל:</label>
+              <label className="labelFields">* אימייל:</label>
               <p
                 className="error"
                 style={{ display: this.state.emailNameError.toShow }}

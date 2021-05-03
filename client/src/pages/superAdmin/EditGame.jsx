@@ -466,7 +466,7 @@ class EditGame extends Component {
             <form className="formData">
               <label className="labelFields">מספר זיהוי:</label>
               <p className="inputFields editGameId">{this.state.gameId}</p>
-              <label className="labelFields">שם המשחק:</label>
+              <label className="labelFields">* שם המשחק:</label>
               <p
                 className="error"
                 style={{ display: this.state.gameNameErrorMessages.toShow }}

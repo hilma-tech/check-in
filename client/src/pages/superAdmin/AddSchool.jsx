@@ -94,7 +94,7 @@ class AddSchool extends React.Component {
     try{
       let {data} = await Axios.post("/api/teacher/isTeacherExist", {email: teacherInfo.email});
       if(data){
-        this.props.errorMsg.setErrorMsg('שם משתמש זה כבר קיים, אנא נסה שם משתמש אחר.');
+        return "** כתובת אימל כבר קיימת, אנא נסה כתובת אחרת **"
       } else {
         this.setState((prevState) => {
           let tempData = [...prevState.classes];
@@ -103,9 +103,11 @@ class AddSchool extends React.Component {
           prevState.existTeachers.push(teacherInfo)
           return { classes: tempData, existTeachers: prevState.existTeachers };
         });
+        return ""
       }
     } catch(err){
       this.props.errorMsg.setErrorMsg('שגיאה בשרת, מורה לא נשמר.');
+      return ""
     }
   };
 
@@ -231,7 +233,7 @@ class AddSchool extends React.Component {
         <ArrowNavBar />
         <form className="formData">
           <label for="schoolName" className="labelFields">
-            שם בית ספר:
+            * שם בית ספר:
           </label>
           <p
             className="error"
@@ -247,7 +249,7 @@ class AddSchool extends React.Component {
             onBlur={this.handleChange} //In charge of on the set state of schoolName.
           ></input>
           <label for="schoolCity" className="labelFields">
-            עיר:
+            * עיר:
           </label>
           <p
             className="error"

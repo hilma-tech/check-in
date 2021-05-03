@@ -142,7 +142,7 @@ class AddTeacherPopUp extends Component {
 
     saveTeacherInDB = async () => {
         //add in the school page the info and save the teacher after save the school
-        this.props.addTeacherToClass(this.props.classIndex ,{
+        let teacherSaved = await this.props.addTeacherToClass(this.props.classIndex ,{
             first_name: this.state.teacherFirstName,
             last_name: this.state.teacherLastName,
             name: this.state.teacherFirstName + " " + this.state.teacherLastName ,
@@ -150,7 +150,11 @@ class AddTeacherPopUp extends Component {
             password: this.state.password,
             username: this.state.email
         })
-        this.props.closeFunc()
+        if(teacherSaved.length === 0){
+            this.props.closeFunc()
+        } else {
+            this.setState({ emailNameError: { toShow: ShowStyle, mess: teacherSaved } });
+        }
     };
 
     render() {

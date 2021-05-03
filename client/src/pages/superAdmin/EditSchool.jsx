@@ -131,14 +131,14 @@ class EditSchool extends Component {
         prevState.existTeachers.push(data)
         return { classes: tempData, existTeachers: prevState.existTeachers };
       });
+      return ""
     } catch(err){
       this.setState({ savingInfo: false });
       if (err.status === ExistErrorStatus) {
-        this.props.errorMsg.setErrorMsg(
-          "קיים כבר משתמש עם האימייל הזה. נסו שוב."
-        );
+        return "** כתובת אימל כבר קיימת, אנא נסה כתובת אחרת **"
       } else {
         this.props.errorMsg.setErrorMsg('שגיאה בשרת, מורה לא נשמר, נסו שוב.');
+        return ""
       }
     }
   };
@@ -277,7 +277,7 @@ class EditSchool extends Component {
         <WhiteBar />
         <form className="formData">
           <label for="schoolName" className="labelFields">
-            שם בית ספר:
+            * שם בית ספר:
           </label>
           <p
             class="error"
@@ -293,7 +293,7 @@ class EditSchool extends Component {
           ></input>
 
           <label for="schoolCity" className="labelFields">
-            עיר:
+            * עיר:
           </label>
           <p
             className="error"

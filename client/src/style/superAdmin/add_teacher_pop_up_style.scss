@@ -3,10 +3,8 @@
 
 .saveButtonTAddPopUp {
     @include mouse(point);
-    position: absolute;
     font-weight: bold;
     margin-top: 2vh;
-    margin-bottom: 5vh;
     margin-right: 45vw;
     margin-left: 5vw;
     width: 16vw;

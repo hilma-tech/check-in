@@ -178,6 +178,7 @@ class SchoolClassData extends React.Component {
             </div>
             <Dialog
               maxWidth="90vw"
+              PaperProps= {{style: {paddingBottom: "2vh"}}}
               open={this.state.showAddNewTeacher}
             ><AddTeacherPopUp closeFunc={this.handleNewTeacherPopUpState} classIndex={this.props.classIndex} addTeacherToClass={this.props.addNewTeacherToClass} />
             </Dialog>
