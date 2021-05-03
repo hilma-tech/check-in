@@ -6,6 +6,7 @@ import { Like, Repository } from 'typeorm';
 import { EditSchoolInfoDto, GetSchoolSkip, SearchValDto } from './school.dtos';
 import { School } from './school.entity';
 const { GetInfoLength } = require('../serverTools/GlobalVarbs');
+const { fixString } = require('../serverTools/HelpFunc');
 
 @Injectable()
 export class SchoolService {
@@ -100,7 +101,7 @@ export class SchoolService {
   }
   async searchSchools(val: SearchValDto) {
     let searchresult = await this.schoolRepository.find({
-      where: [{ city: Like("%" + val.val.toLowerCase() + "%") }, { name: Like("%" + val.val.toLowerCase() + "%") }]
+      where: [{ city: Like("%" + fixString(val.val.toLowerCase()) + "%") }, { name: Like("%" + fixString(val.val.toLowerCase()) + "%") }]
     });
     return searchresult
   }

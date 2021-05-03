@@ -18,6 +18,7 @@ import { FieldService } from 'src/field/field.service';
 import { ValDto } from 'src/student/student.dtos';
 import { TeacherService } from 'src/teacher/teacher.service';
 const { GetInfoLength, MaxFields } = require('../serverTools/GlobalVarbs');
+const { fixString } = require('../serverTools/HelpFunc');
 
 @Injectable()
 export class GameService {
@@ -417,7 +418,7 @@ export class GameService {
 
   async searchGames(val: ValDto) {
     let searchresult = await this.gameRepository.find({
-      where: [{ game_name: Like("%" + val.val.toLowerCase() + "%") }]
+      where: [{ game_name: Like("%" + fixString(val.val.toLowerCase()) + "%") }]
     });
     return searchresult
   }

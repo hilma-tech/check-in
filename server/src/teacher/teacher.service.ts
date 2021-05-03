@@ -25,6 +25,7 @@ import { ClassroomService } from 'src/classroom/classroom.service';
 import { Classroom } from 'src/classroom/classroom.entity';
 import { SchoolService } from 'src/school/school.service';
 const { GetInfoLength } = require('../serverTools/GlobalVarbs');
+const { fixString } = require('../serverTools/HelpFunc');
 
 @Injectable()
 export class TeacherService extends UserService {
@@ -323,9 +324,9 @@ export class TeacherService extends UserService {
         return classroom.name;
       });
       if (
-        fullname.includes(val.toLowerCase()) ||
-        classes.join(' ').includes(val.toLowerCase()) ||
-        teacher.school.name.includes(val.toLowerCase())
+        fullname.includes(fixString(val.toLowerCase())) ||
+        classes.join(' ').includes(fixString(val.toLowerCase())) ||
+        teacher.school.name.includes(fixString(val.toLowerCase()))
       ) {
         return teacher;
       }

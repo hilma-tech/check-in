@@ -11,6 +11,7 @@ import { Classroom } from 'src/classroom/classroom.entity';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { SchoolService } from 'src/school/school.service';
 const { GetInfoLength } = require('../serverTools/GlobalVarbs');
+const { fixString } = require('../serverTools/HelpFunc');
 
 @Injectable()
 export class StudentService extends UserService {
@@ -166,7 +167,7 @@ export class StudentService extends UserService {
     let Search = students.map((student) => {
       let fullname = (student.first_name + ' ' + student.last_name).toLowerCase()
       let classes = student.classroomStudent.map((classroom) => { return classroom.name })
-      if (fullname.includes(val.toLowerCase()) || classes.join(' ').includes(val.toLowerCase()) || student.school.name.includes(val.toLowerCase())
+      if (fullname.includes(fixString(val.toLowerCase())) || classes.join(' ').includes(fixString(val.toLowerCase())) || student.school.name.includes(fixString(val.toLowerCase()))
       ) {
         return student
       }
@@ -193,7 +194,7 @@ export class StudentService extends UserService {
     let Search = Searchstudents.map((student) => {
       let fullname = (student.Student_first_name + ' ' + student.Student_last_name).toLowerCase()
 
-      if (fullname.includes(val.toLowerCase())) {
+      if (fullname.includes(fixString(val.toLowerCase()))) {
         return student
       }
     })
