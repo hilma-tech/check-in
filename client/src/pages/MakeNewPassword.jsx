@@ -48,9 +48,12 @@ class MakeNewPassword extends Component {
         email: this.state.email,
       });
       console.log("valid: ", valid, valid.data);
-      if (valid.data === true) {
+      if (valid.data.validateEmail === true) {
         console.log("worked!");
-        this.props.errorMsg.setErrorMsg("נשלח לך אימייל לשינוי הסיסמה");
+        if(valid.data.verifiedEmail){
+          this.props.errorMsg.setErrorMsg("נשלח לך אימייל לשינוי הסיסמה");
+        }
+        this.props.errorMsg.setErrorMsg("עליך לאמת את האיימל לפני שינוי הסיסמה");
       } else {
         this.props.errorMsg.setErrorMsg("מייל זה לא נמצא במערכת");
       }

@@ -13,7 +13,7 @@ import { errorMsgContext } from "../../stores/error.store";
 import addicon from "../../img/addicon.svg";
 import deleteicon from "../../img/delete.svg";
 import { PermissionsValidation } from "../../tools/ValidationFunctions";
-import { Axios, Delete, OnUnauthorizedError, TeacherDeletedMsg } from "../../tools/GlobalVarbs";
+import { Axios, Delete, HideStyle, OnUnauthorizedError, TeacherDeletedMsg } from "../../tools/GlobalVarbs";
 
 class Permissions extends Component {
   constructor() {
@@ -25,7 +25,8 @@ class Permissions extends Component {
       extraTimes: [],
       savedPermissions: [],
       err: '',
-      disableButtons: false
+      disableButtons: false,
+
     }
   }
 
@@ -295,7 +296,7 @@ class Permissions extends Component {
                     <p className="addtimetext">הוסף שעה ביום זה</p>
                   </div>
                   <h4 className='inputError'>{this.state.err}</h4>
-                  <h3 className='save' onClick={this.validatePer}>{this.state.savedPermissions.length > 0 ? 'עדכן' : 'שמור'}</h3>
+                  <h3 className='save' style={{ pointerEvents: this.state.disableButtons ?  HideStyle : ""}} onClick={this.validatePer}>{this.state.savedPermissions.length > 0 ? 'עדכן' : 'שמור'}</h3>
                 </div>
                 : <></>}
             </form>

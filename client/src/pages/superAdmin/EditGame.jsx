@@ -37,6 +37,7 @@ class EditGame extends Component {
       gameId: 0,
       existFieldsData: [],
       deletedFieldsData: [],
+      originalGameInfo: {}
     };
     this.imageUploader = props.filesUploader;
     this.infoNotReady = true;
@@ -56,7 +57,7 @@ class EditGame extends Component {
       let fields = data.fields
       this.setState({
         fieldsData: fields.map((field) => {
-          return { ...field, errorMessage: { toShow: HideStyle, mess:EmptMsg } }
+          return { ...field, errorMessage: { toShow: HideStyle, mess: EmptMsg } }
         }),
         gameName: data.game_name,
         gameDescription: data.description,
@@ -64,7 +65,14 @@ class EditGame extends Component {
         gameLink: data.video_link,
         gameId: data.id,
         existFieldsData: fields,
-        newKey: data.fields.length === 0 ? 1 : data.fields[data.fields.length - 1].id + 1
+        newKey: data.fields.length === 0 ? 1 : data.fields[data.fields.length - 1].id + 1,
+        originalGameInfo: {
+          gameName: data.game_name,
+          gameDescription: data.description,
+          gameRequirements: data.requirements,
+          gameLink: data.video_link,
+          fields: fields,
+        }
       });
     } catch (error) {
       this.props.errorMsg.setErrorMsg(
@@ -96,7 +104,6 @@ class EditGame extends Component {
     //only relevant to choice/multi-choice
     if (inputId) {
       this.setState((prevState) => {
-        console.log('prevState.existFieldsData: ', prevState.existFieldsData);
         if (prevState.fieldsData[fieldI].value.length < inputId) {
           for (
             let i = prevState.fieldsData[fieldI].value.length;
@@ -215,13 +222,13 @@ class EditGame extends Component {
     };
     const fieldData = this.setUpValues();
     const deletedFieldsData = this.state.deletedFieldsData.map((field) => field.id)
-    const existFieldsData = this.state.existFieldsData.map((existField)=> {
+    const existFieldsData = this.state.existFieldsData.map((existField) => {
       let existValue = []
-      if(existField.selection === "image" || existField.selection === "text"){
-        existValue.push({id: 0, value: existField.default_value})
+      if (existField.selection === "image" || existField.selection === "text") {
+        existValue.push({ id: 0, value: existField.default_value })
       } else {
-        existValue = JSON.parse(existField.default_value).map((value, i)=>{
-          return {id: i, value: value}
+        existValue = JSON.parse(existField.default_value).map((value, i) => {
+          return { id: i, value: value }
         })
       }
       return {
@@ -231,98 +238,125 @@ class EditGame extends Component {
       }
     })
     try {
-      this.setState({ savingInfo: true });
-      
-      const response = await this.imageUploader.post(
-        "/api/game/editGame",
-        JSON.stringify({
-          game: currGameInfo,
-          field: fieldData,
-          deletedField: deletedFieldsData,
-          existField: existFieldsData
-        })
+      let isChange = false
+      if (this.state.gameName === this.state.originalGameInfo.gameName &&
+        this.state.gameLink === this.state.originalGameInfo.gameLink &&
+        this.state.gameDescription === this.state.originalGameInfo.gameDescription &&
+        this.state.gameRequirements === this.state.originalGameInfo.gameRequirements &&
+        this.state.fieldsData.length === this.state.originalGameInfo.fields.length) {
+        for (let i = 0; i < this.state.fieldsData.length; i++) {
+          if (this.state.fieldsData[i].id !== this.state.originalGameInfo.fields[i].id) {
+            isChange = true
+          } else if(this.state.fieldsData[i].selection !== this.state.originalGameInfo.fields[i].selection){
+            isChange = true
+          } else if(this.state.fieldsData[i].value.length !== this.state.originalGameInfo.fields[i].value.length){
+            isChange = true
+          } else {
+            for(let z = 0; z < this.state.fieldsData[i].value.length; z++){
+              if (this.state.fieldsData[i].value[z].value !== this.state.originalGameInfo.fields[i].value[z].value){
+                isChange = true
+              }
+            }
+          }
+        }
+      } else {
+        isChange = true
+      }
+
+      if (isChange) {
+        this.setState({ savingInfo: true });
+
+        const response = await this.imageUploader.post(
+          "/api/game/editGame",
+          JSON.stringify({
+            game: currGameInfo,
+            field: fieldData,
+            deletedField: deletedFieldsData,
+            existField: existFieldsData
+          })
         );
         this.props.games.editGame(response.data);
-        this.props.history.goBack(); // after saving go back
-      } catch (error) {
-        this.setState({ savingInfo: false });
-        if (error.status === ExistErrorStatus) {
-          this.props.errorMsg.setErrorMsg("קיים כבר משחק בשם זה. נסו שם אחר.");
-        } else {
-          this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת המשחק לא נשמר");
-        }
       }
-    };
-    
-    //right before adding the data to DB we validate the information
-    saveData = () => {
-      let allOK = true;
-      let fieldOK = true;
-      let ValidationFunctions = [
-        { name: "gameName", func: nameValidation, errMsg: EmptMsg },
-        { name: "gameDescription", func: descriptionValidation, errMsg: EmptMsg },
+      this.props.history.goBack(); // after saving go back
+    } catch (error) {
+      this.setState({ savingInfo: false });
+      if (error.status === ExistErrorStatus) {
+        this.props.errorMsg.setErrorMsg("קיים כבר משחק בשם זה. נסו שם אחר.");
+      } else {
+        this.props.errorMsg.setErrorMsg("הייתה שגיאה בשרת המשחק לא נשמר");
+      }
+    }
+  };
+
+  //right before adding the data to DB we validate the information
+  saveData = () => {
+    let allOK = true;
+    let fieldOK = true;
+    let ValidationFunctions = [
+      { name: "gameName", func: nameValidation, errMsg: EmptMsg },
+      { name: "gameDescription", func: descriptionValidation, errMsg: EmptMsg },
       { name: "gameRequirements", func: requirementValidation, errMsg: EmptMsg },
       { name: "gameLink", func: linkValidation, errMsg: EmptMsg },
-      
+
     ];
-    
+
     //validates the basic information
     ValidationFunctions.forEach((validationData) => {
       validationData.errMsg = validationData.func(
         this.state[validationData.name]
-        );
-        if (validationData.errMsg.length !== 0) {
-          allOK = false;
-          this.setState((prevState) => {
-            prevState[validationData.name + "ErrorMessages"].toShow = "block";
-            prevState[validationData.name + "ErrorMessages"].mess =
+      );
+      if (validationData.errMsg.length !== 0) {
+        allOK = false;
+        this.setState((prevState) => {
+          prevState[validationData.name + "ErrorMessages"].toShow = "block";
+          prevState[validationData.name + "ErrorMessages"].mess =
             validationData.errMsg;
-            return {
-              errorMessages: prevState[validationData.name + "ErrorMessages"],
-            };
-          });
-        } else {
-          this.setState((prevState) => {
-            prevState[validationData.name + "ErrorMessages"] = {
-              toShow: HideStyle,
-              mess: EmptMsg,
-            };
-            return {
-              errorMessages: prevState[validationData.name + "ErrorMessages"],
-            };
-          });
-        }
-      });
-      // if (!this.state.image.value) {
-        //   allOK = false;
-        //   this.setState({
-          //     imageErrorMessages: {
-            //       toShow: "block",
-            //       mess: "** חייב להכניס שדה זה **",
-            //     },
-            //   });
-            // } else {
-              //   this.setState({ imageErrorMessages: { toShow: HideStyle, mess: "" } });
-              // }
-              
-              //validates the fields
-              fieldOK = this.validateFields();
-              //after all the validetion we need to send the data to sql
-              if (allOK && fieldOK) {
-                //sends valid information to the server
-                this.addGameDb();
-              }
-            };
-            
-            //right before adding the data to DB we validate the field info
-            validateFields = () => {
-              let isOk = true;
-              let countFullFields = 0;
-              let fieldEmpt = 0;
-              let firstErrMsg = EmptMsg;
-              this.state.fieldsData.map((fields, index) => {
-                if (fields.selection !== "image") {
-                  let errMess = fieldNameValidation(fields.name);
+          return {
+            errorMessages: prevState[validationData.name + "ErrorMessages"],
+          };
+        });
+      } else {
+        this.setState((prevState) => {
+          prevState[validationData.name + "ErrorMessages"] = {
+            toShow: HideStyle,
+            mess: EmptMsg,
+          };
+          return {
+            errorMessages: prevState[validationData.name + "ErrorMessages"],
+          };
+        });
+      }
+    });
+    // if (!this.state.image.value) {
+    //   allOK = false;
+    //   this.setState({
+    //     imageErrorMessages: {
+    //       toShow: "block",
+    //       mess: "** חייב להכניס שדה זה **",
+    //     },
+    //   });
+    // } else {
+    //   this.setState({ imageErrorMessages: { toShow: HideStyle, mess: "" } });
+    // }
+
+    //validates the fields
+    fieldOK = this.validateFields();
+    //after all the validetion we need to send the data to sql
+    if (allOK && fieldOK) {
+      //sends valid information to the server
+      this.addGameDb();
+    }
+  };
+
+  //right before adding the data to DB we validate the field info
+  validateFields = () => {
+    let isOk = true;
+    let countFullFields = 0;
+    let fieldEmpt = 0;
+    let firstErrMsg = EmptMsg;
+    this.state.fieldsData.map((fields, index) => {
+      if (fields.selection !== "image") {
+        let errMess = fieldNameValidation(fields.name);
         if (errMess.length !== 0) {
           this.setState((prevState) => {
             prevState.fieldsData[index].errorMessage.toShow = "block";
@@ -337,23 +371,23 @@ class EditGame extends Component {
               if (
                 errMess === "** שדה זה לא יכול להכיל תווים מיוחדים **" ||
                 errMess === "** שדה זה לא יכול להכיל יותר מ-100 תווים **"
-                ) {
-                  fieldEmpt++;
-                  if (firstErrMsg.length === 0) {
-                    firstErrMsg = errMess;
-                  }
+              ) {
+                fieldEmpt++;
+                if (firstErrMsg.length === 0) {
+                  firstErrMsg = errMess;
                 }
-                this.setState((prevState) => {
-                  prevState.fieldsData[index].errorMessage.toShow = "block";
-                  prevState.fieldsData[index].errorMessage.mess = errMess;
-                  return { fieldsData: prevState.fieldsData };
-                });
-                isOk = false;
-              } else {
-                countFullFields++;
-                this.setState((prevState) => {
-                  prevState.fieldsData[index].errorMessage.toShow = HideStyle;
-                  prevState.fieldsData[index].errorMessage.mess = EmptMsg;
+              }
+              this.setState((prevState) => {
+                prevState.fieldsData[index].errorMessage.toShow = "block";
+                prevState.fieldsData[index].errorMessage.mess = errMess;
+                return { fieldsData: prevState.fieldsData };
+              });
+              isOk = false;
+            } else {
+              countFullFields++;
+              this.setState((prevState) => {
+                prevState.fieldsData[index].errorMessage.toShow = HideStyle;
+                prevState.fieldsData[index].errorMessage.mess = EmptMsg;
                 return { fieldsData: prevState.fieldsData };
               });
             }
@@ -361,30 +395,30 @@ class EditGame extends Component {
           if (
             fields.selection === "choice" ||
             fields.selection === "multi-choice"
-            ) {
-              if (countFullFields >= 2 && fieldEmpt === 0) {
-                isOk = true;
-                this.setState((prevState) => {
-                  prevState.fieldsData[index].errorMessage.toShow = HideStyle;
-                  prevState.fieldsData[index].errorMessage.mess = EmptMsg;
-                  return { fieldsData: prevState.fieldsData };
-                });
-              } else if (fieldEmpt === 0) {
-                this.setState((prevState) => {
-                  prevState.fieldsData[index].errorMessage.toShow = "block";
-                  prevState.fieldsData[index].errorMessage.mess =
+          ) {
+            if (countFullFields >= 2 && fieldEmpt === 0) {
+              isOk = true;
+              this.setState((prevState) => {
+                prevState.fieldsData[index].errorMessage.toShow = HideStyle;
+                prevState.fieldsData[index].errorMessage.mess = EmptMsg;
+                return { fieldsData: prevState.fieldsData };
+              });
+            } else if (fieldEmpt === 0) {
+              this.setState((prevState) => {
+                prevState.fieldsData[index].errorMessage.toShow = "block";
+                prevState.fieldsData[index].errorMessage.mess =
                   "** נא למלא לפחות 2 שדות **";
-                  return { fieldsData: prevState.fieldsData };
-                });
-              } else if (firstErrMsg.length !== 0) {
-                this.setState((prevState) => {
-                  prevState.fieldsData[index].errorMessage.toShow = "block";
-                  prevState.fieldsData[index].errorMessage.mess = firstErrMsg;
-                  return { fieldsData: prevState.fieldsData };
-                });
-              }
+                return { fieldsData: prevState.fieldsData };
+              });
+            } else if (firstErrMsg.length !== 0) {
+              this.setState((prevState) => {
+                prevState.fieldsData[index].errorMessage.toShow = "block";
+                prevState.fieldsData[index].errorMessage.mess = firstErrMsg;
+                return { fieldsData: prevState.fieldsData };
+              });
             }
           }
+        }
       } else {
         let errMess = fieldNameValidation(fields.name);
         if (errMess.length !== 0) {
@@ -399,7 +433,7 @@ class EditGame extends Component {
             this.setState((prevState) => {
               prevState.fieldsData[index].errorMessage.toShow = "block";
               prevState.fieldsData[index].errorMessage.mess =
-              "** חייב להכניס שדה זה **";
+                "** חייב להכניס שדה זה **";
               return { fieldsData: prevState.fieldsData };
             });
             isOk = false;
@@ -415,8 +449,8 @@ class EditGame extends Component {
     });
     return isOk;
   };
-  
-  
+
+
   render() {
     return (
       <>

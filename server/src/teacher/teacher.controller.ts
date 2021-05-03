@@ -108,7 +108,7 @@ export class TeacherController {
     console.log('req: ', req);
     try {
       if (req.password.length !== 0) {
-        return await this.teacherService.changeTeacherPassword(
+        await this.teacherService.changeTeacherPassword(
           req.username,
           req.password,
         );
@@ -133,6 +133,13 @@ export class TeacherController {
     return this.teacherService.getTeacher(skipON);
   }
 
+  @UserExist()
+  @UseJwtAuth('superAdmin')
+  @Post('/isTeacherExist')
+  isTeacherExist(@Body() username) {
+    return this.teacherService.isTeacherExist(username.email);
+  }
+
   @Get('/Verify')
   async MakeLogInAvailable(@Query() Token: any, @Res() res: any) {
     await this.teacherService.verifyEmailByToken(Token.token);
@@ -146,16 +153,20 @@ export class TeacherController {
   async searchTeacher(@Query() val: TeacherValDto) {
     return await this.teacherService.searchInTeacher(val.val);
   }
+
   @Post('/sendNewPassEmail')
   async sendNewPassEmail(@Body() email: EmailDto) {
     let validation = await this.teacherService.checkIfEmailIsValidTeacher(
       email.email,
     );
-    if (validation === true) {
-      await this.teacherService.sendChangePasswordEmail(email.email);
-      return true;
+    if (validation.validateEmail === true) {
+      if(validation.verifiedEmail){
+        await this.teacherService.sendChangePasswordEmail(email.email);
+        return {validateEmail: true, verifiedEmail: true};
+      }
+      return {validateEmail: true, verifiedEmail: false};
     } else {
-      return false;
+      return {validateEmail: false};
     }
   }
 

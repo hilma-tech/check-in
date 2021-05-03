@@ -47,13 +47,19 @@ export class TeacherService extends UserService {
 
   async checkIfEmailIsValidTeacher(@Body() email: string) {
     let validateEmail = await this.userRepository.findOne({
-      where: [{ username: email }],
+      where: [{ username: email}],
     });
     // console.log('validateEmail: ', validateEmail);
     if (validateEmail === undefined || !validateEmail) {
-      return false;
+      return {validateEmail: false};
     } else {
-      return true;
+      let verifiedEmail = await this.userRepository.findOne({
+        where: [{ emailVerified: true }],
+      });
+      if (verifiedEmail === undefined || !verifiedEmail) {
+        return {validateEmail: true, verifiedEmail: false};
+      } 
+      return {validateEmail: true, verifiedEmail: true};
     }
   }
 
@@ -394,5 +400,9 @@ export class TeacherService extends UserService {
       select: ['username'],
     });
     return getEmail.username;
+  }
+
+  async isTeacherExist(username){
+    return await this.userRepository.findOne({username: username}) === undefined ? false : true
   }
 }

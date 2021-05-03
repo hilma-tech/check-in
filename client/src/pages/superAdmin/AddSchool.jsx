@@ -90,14 +90,23 @@ class AddSchool extends React.Component {
   };
 
     //כשמו כן הוא
-  addNewTeacherToClass = (classIndex, teacherInfo) => {
-    this.setState((prevState) => {
-      let tempData = [...prevState.classes];
-      teacherInfo.id = prevState.existTeachers[prevState.existTeachers.length - 1] === undefined ? 1 : prevState.existTeachers[prevState.existTeachers.length - 1].id + 1
-      tempData[classIndex].chosenTeachers.push(teacherInfo); //id -1 did not exist and he wont show him
-      prevState.existTeachers.push(teacherInfo)
-      return { classes: tempData, existTeachers: prevState.existTeachers };
-    });
+  addNewTeacherToClass = async (classIndex, teacherInfo) => {
+    try{
+      let {data} = await Axios.post("/api/teacher/isTeacherExist", {email: teacherInfo.email});
+      if(data){
+        this.props.errorMsg.setErrorMsg('שם משתמש זה כבר קיים, אנא נסה שם משתמש אחר.');
+      } else {
+        this.setState((prevState) => {
+          let tempData = [...prevState.classes];
+          teacherInfo.id = prevState.existTeachers[prevState.existTeachers.length - 1] === undefined ? 1 : prevState.existTeachers[prevState.existTeachers.length - 1].id + 1
+          tempData[classIndex].chosenTeachers.push(teacherInfo); //id -1 did not exist and he wont show him
+          prevState.existTeachers.push(teacherInfo)
+          return { classes: tempData, existTeachers: prevState.existTeachers };
+        });
+      }
+    } catch(err){
+      this.props.errorMsg.setErrorMsg('שגיאה בשרת, מורה לא נשמר.');
+    }
   };
 
   //כשמו כן הוא
