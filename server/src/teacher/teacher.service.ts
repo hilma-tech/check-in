@@ -50,7 +50,6 @@ export class TeacherService extends UserService {
     let validateEmail = await this.userRepository.findOne({
       where: [{ username: email}],
     });
-    // console.log('validateEmail: ', validateEmail);
     if (validateEmail === undefined || !validateEmail) {
       return {validateEmail: false};
     } else {

@@ -105,7 +105,6 @@ export class TeacherController {
   @UseJwtAuth('superAdmin')
   @Post('/editTeacher')
   async editTeacher(@Body() req: any) {
-    console.log('req: ', req);
     try {
       if (req.password.length !== 0) {
         await this.teacherService.changeTeacherPassword(
@@ -178,7 +177,6 @@ export class TeacherController {
 
   @Post('/SaveNewPassword')
   async SaveNewPassword(@Body() Info: PassAndTokenDto) {
-    // console.log('Info: ', Info);
     let email = await this.teacherService.findEmailByToken(Info.token);
     await this.teacherService.changePasswordWithToken(
       Info.token,

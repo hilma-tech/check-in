@@ -16,16 +16,7 @@ export class SchoolService {
 
     @Inject(forwardRef(() => ClassroomService))
     private classroomService: ClassroomService
-  ) {
-    this.dx()
-  }
-
-  async dx() {
-
-    let a = await this.schoolRepository.find({ where: [{ id: 8 }], relations: ['classrooms'] })
-    // console.log(a);
-
-  }
+  ) {}
 
   async deleteSchool(@Body() schoolId: number) {
     await this.schoolRepository.delete(schoolId)

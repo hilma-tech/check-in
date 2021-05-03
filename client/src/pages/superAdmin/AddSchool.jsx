@@ -274,7 +274,6 @@ class AddSchool extends React.Component {
           {
             //Passes on all the classes in the list and make them the class component with the name and the teacher's selects.
             this.state.classes.map((classData, classIndex) => {
-              console.log('classIndex: ', classIndex);
               //The component get the class data as props.classData.
               return (
                 <SchoolClassData

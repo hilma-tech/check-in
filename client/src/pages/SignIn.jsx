@@ -29,7 +29,6 @@ class SignIn extends Component {
   }
 
   componentDidMount = async () => {
-    console.log(this.props.history, "ruth");
     //! gives the type picked in the initial page
     if (!this.props.location.state.data) {
       this.props.history.push("/");
@@ -54,7 +53,6 @@ class SignIn extends Component {
   //   try {
   //     await axios.post("/api/teacher/sendNewPassEmail",{email:this.state.username});
   //   } catch (error) {
-  //     console.log("error: ",error);
   //     this.props.errorMsg.setErrorMsg('מייל לא תקין')
   //   }
   //    this.props.errorMsg.setErrorMsg('נשלח לך אימייל לשינוי הסיסמה')

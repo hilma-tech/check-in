@@ -47,9 +47,7 @@ class MakeNewPassword extends Component {
       let valid = await axios.post("/api/teacher/sendNewPassEmail", {
         email: this.state.email,
       });
-      console.log("valid: ", valid, valid.data);
       if (valid.data.validateEmail === true) {
-        console.log("worked!");
         if(valid.data.verifiedEmail){
           this.props.errorMsg.setErrorMsg("נשלח לך אימייל לשינוי הסיסמה");
         }
@@ -58,7 +56,6 @@ class MakeNewPassword extends Component {
         this.props.errorMsg.setErrorMsg("מייל זה לא נמצא במערכת");
       }
     } catch (error) {
-      console.log("error: ", error);
       this.props.errorMsg.setErrorMsg("מייל לא תקין");
     }
   };
@@ -66,7 +63,6 @@ class MakeNewPassword extends Component {
   teacherForgotPass = async () => {
     if (this.state.email) {
       let emailMess = emailValidation(this.state.email);
-      // console.log('emailMess: ', emailMess, "hi", emailMess.replace(/\*+/g, ''));
       emailMess = emailMess.replace(/\*+/g, "");
       if (emailMess.length !== 0) {
         this.props.errorMsg.setErrorMsg(`${emailMess}`);

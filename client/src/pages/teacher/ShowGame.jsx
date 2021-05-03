@@ -47,7 +47,6 @@ class ShowGame extends Component {
         if (data.game_name === null || data.game_name === undefined) {
           this.props.history.push("/teacher/classes/games");
         }
-        // console.log(data, "dataA");
       this.setState({
         fieldsData: data.fields,
         gameName: data.game_name,

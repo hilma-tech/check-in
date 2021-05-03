@@ -50,7 +50,6 @@ class EditGame extends Component {
       const { data } = await Axios.get("/api/game/getGameInfo", {
         params: { id: this.props.chosenGameEditContext.gameId },
       });
-      // console.log('dataBOI : ', data );
       this.infoNotReady = false;
       if (data.game_name === null || data.game_name === undefined) {
         this.props.history.push("/superAdmin/games");

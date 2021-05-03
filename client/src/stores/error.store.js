@@ -34,7 +34,6 @@ class ErrorMsg {
     this.showMsg = false;
     this.question = false;
     try {
-      
       this.approveFunction = () => { };
     } catch (error) {
       console.log(error);

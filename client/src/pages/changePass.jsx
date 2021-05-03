@@ -56,7 +56,6 @@ class ChangePass extends Component {
       this.props.errorMsg.setErrorMsg(`${tokenErr}`);
       return false
     } else {
-      console.log("all good");
       return true
     }
   };
