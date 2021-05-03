@@ -51,13 +51,6 @@ export class GameService {
   }
 
   async editGame(@UploadedFiles() files: FilesType, @Body() req: GameEditReq) {
-    // req.field.forEach(async (img, index) => {
-    //   if ('image' === img.selection) {
-    //     let imgPath = await this.imageService.save(files, img.value[0].id);
-    //     req.field[index].value[0].value = imgPath;
-    //   }
-    // });
-
     let gameInfo = await this.gameRepository
       .createQueryBuilder('Game')
       .innerJoinAndSelect('Game.classrooms', 'Classroom')
@@ -65,7 +58,6 @@ export class GameService {
       .addSelect('Game.game_name')
       .where('Game.id = :id', { id: Number(req.game.id) })
       .getOne();
-    // console.log('gameInfo: ', gameInfo.classrooms);
     let res = await this.gameRepository.update({id: req.game.id},req.game);
     await this.classroomFieldService.editGameDeleteClassField(req.game.id, req.deletedField)
     for (let i = 0; i < req.field.length; i++) {

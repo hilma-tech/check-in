@@ -244,16 +244,17 @@ class EditGame extends Component {
         this.state.gameDescription === this.state.originalGameInfo.gameDescription &&
         this.state.gameRequirements === this.state.originalGameInfo.gameRequirements &&
         this.state.fieldsData.length === this.state.originalGameInfo.fields.length) {
-        for (let i = 0; i < this.state.fieldsData.length; i++) {
-          if (this.state.fieldsData[i].id !== this.state.originalGameInfo.fields[i].id) {
-            isChange = true
-          } else if(this.state.fieldsData[i].selection !== this.state.originalGameInfo.fields[i].selection){
+          for (let i = 0; i < this.state.fieldsData.length; i++) {
+            if (this.state.fieldsData[i].id !== this.state.originalGameInfo.fields[i].id) {
+              isChange = true
+            } else if(this.state.fieldsData[i].selection !== this.state.originalGameInfo.fields[i].selection){
             isChange = true
           } else if(this.state.fieldsData[i].value.length !== this.state.originalGameInfo.fields[i].value.length){
             isChange = true
           } else {
+            let default_value = JSON.parse(this.state.originalGameInfo.fields[i].default_value)
             for(let z = 0; z < this.state.fieldsData[i].value.length; z++){
-              if (this.state.fieldsData[i].value[z].value !== this.state.originalGameInfo.fields[i].value[z].value){
+              if (this.state.fieldsData[i].value[z].value !== default_value[z]){
                 isChange = true
               }
             }
