@@ -13,7 +13,8 @@ import { errorMsgContext } from "../../stores/error.store";
 import addicon from "../../img/addicon.svg";
 import deleteicon from "../../img/delete.svg";
 import { PermissionsValidation } from "../../tools/ValidationFunctions";
-import { Axios, Delete, HideStyle, OnUnauthorizedError, TeacherDeletedMsg } from "../../tools/GlobalVarbs";
+import { Axios, Delete, GetInfoErrorMsg, HideStyle, OnUnauthorizedError, TeacherDeletedMsg } from "../../tools/GlobalVarbs";
+import { userNameContext } from "../../stores/userName.store";
 
 class Permissions extends Component {
   constructor() {
@@ -30,10 +31,33 @@ class Permissions extends Component {
     }
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     if (this.props.chosenClass.classId === 0) {
-      this.props.history.push("/teacher/classes");
-      return;
+      if(this.props.location.state === undefined){
+        this.props.history.push("/teacher/classes");
+        return;
+      }
+      
+      await this.props.name.getTeacherInfo();
+      if (!this.props.name.successGettingClasses) {
+        if (this.props.name.needToLogOut) {
+          this.props.errorMsg.setErrorMsg(
+            TeacherDeletedMsg
+          );
+          await this.props.logout();
+        } else {
+          this.props.errorMsg.setErrorMsg(
+            GetInfoErrorMsg
+          );
+        }
+      }
+
+      let className = await this.props.name.getClassById(this.props.location.state.data)
+      if(className.length === 0){
+        this.props.history.push("/teacher/classes");
+        return;
+      }
+      this.props.chosenClass.setClassId(this.props.location.state.data, className);
     }
   };
   handleStartTimeChange = (e) => {
@@ -310,6 +334,7 @@ class Permissions extends Component {
 const mapContextToProps = {
   chosenClass: chosenClassContext,
   errorMsg: errorMsgContext,
+  name: userNameContext,
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(Permissions)));

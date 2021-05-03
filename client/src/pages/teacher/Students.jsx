@@ -11,7 +11,8 @@ import { chosenClassContext } from "../../stores/chosenClass.store";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SearchIcon from '@material-ui/icons/Search';
 import { LogoutContext } from "@hilma/auth";
-import { HideStyle, ShowStyle, TeacherDeletedMsg } from "../../tools/GlobalVarbs.js";
+import { GetInfoErrorMsg, HideStyle, ShowStyle, TeacherDeletedMsg } from "../../tools/GlobalVarbs.js";
+import { userNameContext } from "../../stores/userName.store.js";
 
 let delayTime = null
 
@@ -27,8 +28,31 @@ class Students extends Component {
 
   componentDidMount = async () => {
     if (this.props.chosenClass.classId === 0) {
-      this.props.history.push("/teacher/classes");
-      return;
+      if(this.props.location.state === undefined){
+        this.props.history.push("/teacher/classes");
+        return;
+      }
+      
+      await this.props.name.getTeacherInfo();
+      if (!this.props.name.successGettingClasses) {
+        if (this.props.name.needToLogOut) {
+          this.props.errorMsg.setErrorMsg(
+            TeacherDeletedMsg
+          );
+          await this.props.logout();
+        } else {
+          this.props.errorMsg.setErrorMsg(
+            GetInfoErrorMsg
+          );
+        }
+      }
+
+      let className = await this.props.name.getClassById(this.props.location.state.data)
+      if(className.length === 0){
+        this.props.history.push("/teacher/classes");
+        return;
+      }
+      this.props.chosenClass.setClassId(this.props.location.state.data, className);
     }
     this.props.chosenClass.callStudents(this.props.chosenClass.classId);
     if(this.props.chosenClass.needToLogOut){
@@ -42,7 +66,10 @@ class Students extends Component {
   // allows to move to student details page
   moveToStudent = async (id) => {
     await this.props.chosenClass.setCurrStudentClasses(id);
-    this.props.history.push(this.props.location.pathname + "/studentInfo");
+    this.props.history.push({
+      pathname: this.props.location.pathname + "/studentInfo",
+      state: { data: this.props.chosenClass.classId }
+    });
   };
 
   handleChange = async (e) => {
@@ -187,6 +214,7 @@ class Students extends Component {
 const mapContextToProps = {
   logout: LogoutContext,
   chosenClass: chosenClassContext,
+  name: userNameContext,
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(Students)));

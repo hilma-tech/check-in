@@ -1,5 +1,8 @@
+import { withContext } from "@hilma/tools";
+import { observer } from "mobx-react";
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { chosenClassContext } from "../../stores/chosenClass.store";
 import "../../style/teacher/arrow_bar_style.scss";
 
 class ArrowBar extends React.Component {
@@ -22,7 +25,10 @@ class ArrowBar extends React.Component {
 
   //moves user to games page
   backToGames = () => {
-    this.props.history.push("/teacher/classes/games");
+    this.props.history.push({
+      pathname: "/teacher/classes/games",
+      state: { data: this.props.chosenClass.classId }
+    });
   };
 
   render() {
@@ -108,4 +114,9 @@ class ArrowBar extends React.Component {
   }
 }
 
-export default withRouter(ArrowBar);
+
+const mapContextToProps = {
+  chosenClass: chosenClassContext,
+};
+
+export default withContext(mapContextToProps)(withRouter(observer(ArrowBar)));

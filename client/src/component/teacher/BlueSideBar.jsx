@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import { LogoutContext } from "@hilma/auth";
 import { withContext } from "@hilma/tools";
 import { userNameContext } from "../../stores/userName.store";
+import { chosenClassContext } from "../../stores/chosenClass.store";
 
 //gives teacher the ability to switch between pages
 //is a pop up in mobile, sidebar in web
@@ -80,7 +81,10 @@ class BlueSideBar extends React.Component {
                   <p
                     className="sideBarClassOption"
                     onClick={() => {
-                      this.props.history.push("/teacher/classes/games");
+                      this.props.history.push({
+                        pathname: "/teacher/classes/games",
+                        state: { data: this.props.chosenClass.classId }
+                      });
                     }}
                   >
                     משחקים
@@ -88,7 +92,10 @@ class BlueSideBar extends React.Component {
                   <p
                     className="sideBarClassOption"
                     onClick={() => {
-                      this.props.history.push("/teacher/classes/students");
+                      this.props.history.push({
+                        pathname: "/teacher/classes/students",
+                        state: { data: this.props.chosenClass.classId }
+                      });
                     }}
                   >
                     תלמידים
@@ -96,7 +103,10 @@ class BlueSideBar extends React.Component {
                   <p
                     className="sideBarClassOption"
                     onClick={() => {
-                      this.props.history.push("/teacher/classes/permissions");
+                      this.props.history.push({
+                        pathname: "/teacher/classes/permissions",
+                        state: { data: this.props.chosenClass.classId }
+                      });
                     }}
                   >
                     הרשאות
@@ -129,6 +139,7 @@ class BlueSideBar extends React.Component {
 const mapContextToProps = {
   logout: LogoutContext,
   name: userNameContext,
+  chosenClass: chosenClassContext,
 };
 
 export default withRouter(withContext(mapContextToProps)(BlueSideBar));

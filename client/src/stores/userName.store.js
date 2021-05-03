@@ -22,6 +22,7 @@ class UserName {
       getTeacherInfo: action,
       getMoreClasses: action,
       resetUser: action,
+      getClassById: action,
     });
   }
 
@@ -73,6 +74,19 @@ class UserName {
     this.successGettingClasses = true;
     this.startGetClasses = false;
   };
+
+  getClassById = (classId) => {
+    let chooseClass = []
+    chooseClass = this.teacherClasses.filter((classroom)=> classroom.id === classId)
+    while(chooseClass.length === 0 && this.haveMoreClasses){
+      this.getMoreClasses()
+      chooseClass = this.teacherClasses.filter((classroom)=> classroom.id === classId)
+    }
+    if(chooseClass.length !== 0){
+      return chooseClass[0].name
+    }
+    return ""
+  }
 }
 
 const userName = new UserName();

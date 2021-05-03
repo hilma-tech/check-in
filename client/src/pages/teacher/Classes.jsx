@@ -55,8 +55,8 @@ class Classes extends Component {
       this.props.name.teacherClasses.length === 0
     ) {
       await this.props.name.getTeacherInfo();
-      if(!this.props.name.successGettingClasses){
-        if(this.props.name.needToLogOut){
+      if (!this.props.name.successGettingClasses) {
+        if (this.props.name.needToLogOut) {
           this.props.errorMsg.setErrorMsg(
             TeacherDeletedMsg
           );
@@ -73,7 +73,10 @@ class Classes extends Component {
   //alows teacher to move to slected class
   moveToClass = (classId, classroomName) => {
     this.props.chosenClass.setClassId(classId, classroomName);
-    this.props.history.push("/teacher/classes/games");
+    this.props.history.push({
+      pathname: "/teacher/classes/games",
+      state: { data: classId }
+    });
   };
 
   render() {
@@ -118,21 +121,21 @@ class Classes extends Component {
           </div>
           {this.props.name.startGetClasses ? (
             <CircularProgress size="1.5rem" />
-          ) : 
-          !this.props.name.successGettingClasses ? <></> :(
-            <button
-              className="showMoreGamesB"
-              onClick={this.props.name.getMoreClasses}
-              style={{
-                marginTop: "1vh",
-                display: this.props.name.haveMoreClasses
-                  ? ShowStyle
-                  : HideStyle,
-              }}
-            >
-              הצג עוד
-            </button>
-          )}
+          ) :
+            !this.props.name.successGettingClasses ? <></> : (
+              <button
+                className="showMoreGamesB"
+                onClick={this.props.name.getMoreClasses}
+                style={{
+                  marginTop: "1vh",
+                  display: this.props.name.haveMoreClasses
+                    ? ShowStyle
+                    : HideStyle,
+                }}
+              >
+                הצג עוד
+              </button>
+            )}
         </div>
       </>
     );

@@ -30,7 +30,10 @@ class StudentDetails extends Component {
 
   componentDidMount() {
     if (this.props.chosenClass.classId === 0) {
-      this.props.history.push("/teacher/classes");
+      this.props.history.push({
+        pathname: "/teacher/classes/students",
+        state: { data: this.props.location.state.data }
+      });
     } else {
       let studentInfo = this.props.chosenClass.getCurrStudent();
       let classrooms = this.props.chosenClass.studentClassrooms;

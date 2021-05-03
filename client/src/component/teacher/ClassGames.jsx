@@ -2,6 +2,7 @@ import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { chosenClassContext } from "../../stores/chosenClass.store";
 import { chosenGameEditContext } from "../../stores/chosenGameEdit.store";
 import { gamesContext } from "../../stores/games.store";
 
@@ -13,7 +14,10 @@ class ClassGames extends React.Component {
         this.props.games.chosenGameList[this.props.index].id
       );
       this.props.games.whatData("new")
-      this.props.history.push("/teacher/classes/showGame");
+      this.props.history.push({
+        pathname: "/teacher/classes/showGame",
+        state: { data: this.props.chosenClass.classId }
+      });
     }
   };
 
@@ -56,6 +60,7 @@ class ClassGames extends React.Component {
 const mapContextToProps = {
   games: gamesContext,
   chosenGame: chosenGameEditContext,
+  chosenClass: chosenClassContext,
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(ClassGames)));

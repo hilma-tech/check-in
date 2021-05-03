@@ -36,7 +36,10 @@ class EditGame extends Component {
   //gets information needed to display the selected game's info
   componentDidMount() {
     if (this.props.chosenClass.classId === 0) {
-      this.props.history.push("/teacher/classes");
+      this.props.history.push({
+        pathname: "/teacher/classes/games",
+        state: { data: this.props.location.state.data }
+      });
       return;
     }
     this.getGameInfo();

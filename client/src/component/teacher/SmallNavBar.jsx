@@ -1,5 +1,7 @@
+import { withContext } from "@hilma/tools";
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import { chosenClassContext } from "../../stores/chosenClass.store";
 import "../../style/teacher/small_nav_bar.css";
 
 //component for mobile
@@ -22,7 +24,10 @@ class SmallNavBar extends Component {
     } else {
       newPath[newPath.length - 1] = "permissions";
     }
-    this.props.history.push(newPath.join("/"));
+    this.props.history.push({
+      pathname: newPath.join("/"),
+      state: { data: this.props.chosenClass.classId }
+    });
   };
 
   //determines the css depending on the current location
@@ -73,4 +78,9 @@ class SmallNavBar extends Component {
     );
   }
 }
-export default withRouter(SmallNavBar);
+
+const mapContextToProps = {
+  chosenClass: chosenClassContext,
+};
+
+export default withRouter(withContext(mapContextToProps)(SmallNavBar));

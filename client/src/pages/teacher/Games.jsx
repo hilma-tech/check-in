@@ -15,6 +15,7 @@ import { observer } from "mobx-react";
 import { chosenClassContext } from "../../stores/chosenClass.store.js";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { GetInfoErrorMsg, HideStyle, ShowStyle, TeacherDeletedMsg } from "../../tools/GlobalVarbs.js";
+import { userNameContext } from "../../stores/userName.store.js";
 
 class Games extends React.Component {
   constructor() {
@@ -29,10 +30,33 @@ class Games extends React.Component {
   }
 
   //retrieves the games to be shown for this class
-  componentDidMount() {
+  async componentDidMount() {
     if (this.props.chosenClass.classId === 0) {
-      this.props.history.push("/teacher/classes");
-      return;
+      if(this.props.location.state === undefined){
+        this.props.history.push("/teacher/classes");
+        return;
+      }
+      
+      await this.props.name.getTeacherInfo();
+      if (!this.props.name.successGettingClasses) {
+        if (this.props.name.needToLogOut) {
+          this.props.errorMsg.setErrorMsg(
+            TeacherDeletedMsg
+          );
+          await this.props.logout();
+        } else {
+          this.props.errorMsg.setErrorMsg(
+            GetInfoErrorMsg
+          );
+        }
+      }
+
+      let className = await this.props.name.getClassById(this.props.location.state.data)
+      if(className.length === 0){
+        this.props.history.push("/teacher/classes");
+        return;
+      }
+      this.props.chosenClass.setClassId(this.props.location.state.data, className);
     }
     this.getClassGames();
   }
@@ -66,7 +90,10 @@ class Games extends React.Component {
       );
       this.props.games.whatData("old")
       this.props.errorMsg.setErrorMsg("לכל כיתה יכול להיות עד שישה משחקים.");
-      this.props.history.push("/teacher/classes/showGame");
+      this.props.history.push({
+        pathname: "/teacher/classes/showGame",
+        state: { data: this.props.chosenClass.classId }
+      });
     }
   };
 
@@ -87,9 +114,10 @@ class Games extends React.Component {
      this.props.games.gamesList[index].id,
      index
      );
-    ;
-      this.props.history.push("/teacher/classes/editGame");
-    
+    this.props.history.push({
+      pathname: "/teacher/classes/editGame",
+      state: { data: this.props.chosenClass.classId }
+    });
   };
 
   //allows the user to remove game from the current classroom
@@ -203,6 +231,7 @@ const mapContextToProps = {
   isAuthenticated: IsAuthenticatedContext,
   chosenClass: chosenClassContext,
   logout: LogoutContext,
+  name: userNameContext,
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(Games)));
