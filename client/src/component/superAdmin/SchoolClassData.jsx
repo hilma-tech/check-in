@@ -163,7 +163,7 @@ class SchoolClassData extends React.Component {
                 {this.returnTeacherSelections()}
               </div></div> : null}
             <div className="editSchoolClassTeacherButtons">
-            {this.props.classData.chosenTeachers.length === 0 ?  <></> : 
+            {this.props.existTeachers.length === 0 || this.props.classData.chosenTeachers.length === this.props.existTeachers.length ?  <></> : 
               <div
                 className="editSchoolClassAddExistTeacher addSomethingNew"
                 onClick={this.handleExistTeacherPopUpState}
