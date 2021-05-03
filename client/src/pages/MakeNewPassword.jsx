@@ -1,6 +1,6 @@
 import React from "react";
 import { Component } from "react";
-import "../style/sign_in.scss";
+import "../style/new_password.scss";
 import hilmaicon from "../img/hilmaIcon.svg";
 import { withRouter } from "react-router-dom";
 import { withContext } from "@hilma/tools";
@@ -89,7 +89,7 @@ class MakeNewPassword extends Component {
           onClick={this.goToLogin}
         />
         <div className="centeredPage">
-          <h1 className="smallerFont">הכניסו כתובת מייל ולחצו על הכפתור</h1>
+          <h1 className="smallerFont">הכניסו כתובת אימייל</h1>
           <p
             className="error"
             style={{ display: this.state.errorMessages[0].toShow }}

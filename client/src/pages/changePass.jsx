@@ -76,7 +76,7 @@ class ChangePass extends Component {
   };
 
   goback = () => {
-    this.props.history.push("/");
+    this.props.history.replace("/");
   };
   render() {
     return (

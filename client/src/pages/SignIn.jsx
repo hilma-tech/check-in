@@ -29,6 +29,7 @@ class SignIn extends Component {
   }
 
   componentDidMount = async () => {
+    console.log(this.props.history, "ruth");
     //! gives the type picked in the initial page
     if (!this.props.location.state.data) {
       this.props.history.push("/");

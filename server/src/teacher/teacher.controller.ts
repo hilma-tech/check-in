@@ -105,6 +105,7 @@ export class TeacherController {
   @UseJwtAuth('superAdmin')
   @Post('/editTeacher')
   async editTeacher(@Body() req: any) {
+    console.log('req: ', req);
     try {
       if (req.password.length !== 0) {
         return await this.teacherService.changeTeacherPassword(
