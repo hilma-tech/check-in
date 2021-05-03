@@ -146,7 +146,9 @@ export class GameService {
         }
       }
     }
-    this.teacherService.getTeacherByClassId(gameInfo.classrooms, req.game)
+    if(gameInfo !== undefined){
+      this.teacherService.getTeacherByClassId(gameInfo.classrooms, req.game)
+    }
     return res;
   }
   
