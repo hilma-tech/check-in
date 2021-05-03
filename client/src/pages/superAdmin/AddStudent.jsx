@@ -19,6 +19,7 @@ import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { studentsContext } from "../../stores/students.store";
 import { Axios, EmptMsg, HideStyle } from "../../tools/GlobalVarbs";
+import { fadeMsgContext } from "../../stores/fadeMsg.store";
 
 class AddStudent extends React.Component {
   constructor() {
@@ -229,6 +230,7 @@ class AddStudent extends React.Component {
             }) : []
           })
           this.props.history.goBack(); // after saving go back
+          this.props.fadeMsg.setFadeMsg("תלמיד נשמר בהצלחה")
         } else {
           this.props.errorMsg.setErrorMsg('שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר.');
         }
@@ -371,6 +373,7 @@ const mapContextToProps = {
   schools: schoolsContext,
   students: studentsContext,
   errorMsg: errorMsgContext,
+  fadeMsg: fadeMsgContext,
 };
 
 export default withContext(mapContextToProps)(observer(withRouter(AddStudent)));

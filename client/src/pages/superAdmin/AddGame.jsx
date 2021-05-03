@@ -22,6 +22,7 @@ import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import { gamesContext } from "../../stores/games.store";
 import { EmptMsg, ExistErrorStatus, HideStyle } from "../../tools/GlobalVarbs";
+import { fadeMsgContext } from "../../stores/fadeMsg.store";
 
 class AddGame extends Component {
   constructor(props) {
@@ -206,6 +207,7 @@ class AddGame extends Component {
       this.props.games.addGame(response.data);
       // }
       this.props.history.goBack(); // after saving go back
+      this.props.fadeMsg.setFadeMsg("משחק נשמר בהצלחה")
     } catch (error) {
       this.setState({ savingInfo: false });
       if (error.status === ExistErrorStatus) {
@@ -518,6 +520,7 @@ class AddGame extends Component {
 const mapContextToProps = {
   errorMsg: errorMsgContext,
   games: gamesContext,
+  fadeMsg: fadeMsgContext,
 };
 
 export default withContext(mapContextToProps)(

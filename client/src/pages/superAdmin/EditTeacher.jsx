@@ -21,6 +21,7 @@ import {
 } from "../../tools/ValidationFunctions.js";
 import { schoolsContext } from "../../stores/schools.store.js";
 import { Axios, Delete, EmptMsg, HideStyle, ShowStyle } from "../../tools/GlobalVarbs.js";
+import { fadeMsgContext } from "../../stores/fadeMsg.store.js";
 
 class EditTeacher extends React.Component {
   constructor() {
@@ -351,6 +352,7 @@ class EditTeacher extends React.Component {
           });
           this.closePassChange();
           this.props.history.goBack(); // after saving go back
+          this.props.fadeMsg.setFadeMsg("מורה עודכן בהצלחה")
         } else {
           this.props.errorMsg.setErrorMsg(
             "שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר."
@@ -370,6 +372,7 @@ class EditTeacher extends React.Component {
     let success = this.props.teachers.deleteTeacher();
     if (success) {
       this.props.history.goBack();
+      this.props.fadeMsg.setFadeMsg("מורה נמחק בהצלחה")
     } else {
       this.props.errorMsg.setErrorMsg(
         "הייתה שגיאה בשרת, לא היה ניתן למחוק את המורה."
@@ -612,6 +615,7 @@ const mapContextToProps = {
   schools: schoolsContext,
   teachers: teachersContext,
   errorMsg: errorMsgContext,
+  fadeMsg: fadeMsgContext,
 };
 
 export default withContext(mapContextToProps)(

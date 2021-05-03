@@ -21,6 +21,7 @@ import {
 import { withFiles } from "@hilma/fileshandler-client";
 import { gamesContext } from "../../stores/games.store.js";
 import { Axios, EmptMsg, ExistErrorStatus, GetInfoErrorMsg, HideStyle } from "../../tools/GlobalVarbs.js";
+import { fadeMsgContext } from "../../stores/fadeMsg.store.js";
 
 class EditGame extends Component {
   constructor(props) {
@@ -284,6 +285,7 @@ class EditGame extends Component {
         this.props.games.editGame(response.data);
       }
       this.props.history.goBack(); // after saving go back
+      this.props.fadeMsg.setFadeMsg("משחק עודכן בהצלחה")
     } catch (error) {
       this.setState({ savingInfo: false });
       if (error.status === ExistErrorStatus) {
@@ -614,6 +616,7 @@ const mapContextToProps = {
   games: gamesContext,
   errorMsg: errorMsgContext,
   chosenGameEditContext: chosenGameEditContext,
+  fadeMsg: fadeMsgContext,
 };
 
 export default withContext(mapContextToProps)(withFiles(withRouter(observer(EditGame))));

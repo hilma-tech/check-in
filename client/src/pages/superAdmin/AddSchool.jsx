@@ -13,6 +13,7 @@ import { observer } from "mobx-react";
 import { schoolsContext } from "../../stores/schools.store.js";
 import { errorMsgContext } from "../../stores/error.store.js";
 import { Axios, EmptMsg, HideStyle, ShowStyle } from "../../tools/GlobalVarbs.js";
+import { fadeMsgContext } from "../../stores/fadeMsg.store.js";
 
 class AddSchool extends React.Component {
   constructor() {
@@ -221,6 +222,7 @@ class AddSchool extends React.Component {
             teachers: data.teachers
           })
       this.props.history.goBack(); // after saving go back
+      this.props.fadeMsg.setFadeMsg("בית ספר נשמר בהצלחה")
     }
   } catch (err) {
     this.props.errorMsg.setErrorMsg('שגיאה בשרת, בית הספר לא נשמר, נסו שוב.');
@@ -317,6 +319,7 @@ class AddSchool extends React.Component {
 const mapContextToProps = {
   schools: schoolsContext,
   errorMsg: errorMsgContext,
+  fadeMsg: fadeMsgContext,
 };
 
 export default withContext(mapContextToProps)(observer(withRouter(AddSchool)));

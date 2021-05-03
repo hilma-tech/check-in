@@ -20,6 +20,7 @@ import { observer } from "mobx-react";
 import { studentsContext } from "../../stores/students.store";
 import EditIcon from "@material-ui/icons/Edit";
 import { Axios, Delete, EmptMsg, HideStyle } from "../../tools/GlobalVarbs";
+import { fadeMsgContext } from "../../stores/fadeMsg.store";
 
 class EditStudent extends React.Component {
   constructor() {
@@ -299,6 +300,7 @@ class EditStudent extends React.Component {
                   : [],
             });
             this.props.history.goBack(); // after saving go back
+            this.props.fadeMsg.setFadeMsg("תלמיד עודכן בהצלחה")
           } else {
             this.props.errorMsg.setErrorMsg(
               "שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר."
@@ -319,6 +321,7 @@ class EditStudent extends React.Component {
     let success = this.props.students.deleteStudent();
     if (success) {
       this.props.history.goBack();
+      this.props.fadeMsg.setFadeMsg("תלמיד נמחק בהצלחה")
     } else {
       this.props.errorMsg.setErrorMsg(
         "הייתה שגיאה בשרת, לא היה ניתן למחוק את התלמיד."
@@ -520,6 +523,7 @@ const mapContextToProps = {
   schools: schoolsContext,
   students: studentsContext,
   errorMsg: errorMsgContext,
+  fadeMsg: fadeMsgContext,
 };
 
 export default withContext(mapContextToProps)(

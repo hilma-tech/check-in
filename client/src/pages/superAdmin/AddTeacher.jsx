@@ -20,6 +20,7 @@ import { schoolsContext } from "../../stores/schools.store";
 import data from "@iconify/icons-ion/ios-arrow-back";
 import { teachersContext } from "../../stores/teachers.store";
 import { Axios, EmptMsg, ExistErrorStatus, HideStyle, ShowStyle } from "../../tools/GlobalVarbs";
+import { fadeMsgContext } from "../../stores/fadeMsg.store";
 
 class AddTeacher extends Component {
   constructor() {
@@ -256,6 +257,7 @@ class AddTeacher extends Component {
       }
       // this.props.games.addGame(response.data);
       this.props.history.goBack();
+      this.props.fadeMsg.setFadeMsg("מורה נשמר בהצלחה")
     } catch (error) {
       this.setState({ savingInfo: false });
       if (error.status === ExistErrorStatus) {
@@ -457,6 +459,7 @@ const mapContextToProps = {
   schools: schoolsContext,
   teachers: teachersContext,
   errorMsg: errorMsgContext,
+  fadeMsg: fadeMsgContext,
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(AddTeacher)));

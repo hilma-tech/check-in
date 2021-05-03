@@ -26,6 +26,8 @@ import IconsPage from "./pages/IconsPage";
 import InitialPage from "./pages/InitialPage";
 import ChangePass from "./pages/changePass";
 import MakeNewPassword from "./pages/MakeNewPassword";
+import FadeMsg from "./component/FadeMsg";
+import { fadeMsgProvider } from "./stores/fadeMsg.store";
 
 function App() {
   let isAuthenticated = useIsAuthenticated();
@@ -44,6 +46,7 @@ function App() {
   return (
     <div className="App">
       <PopUpError />
+      <FadeMsg />
       <Router>
         <Switch>
           <Route path="/" exact>
@@ -100,5 +103,6 @@ export default provide(
   [teachersProvider, {}],
   [schoolsProvider, {}],
   [chosenClassProvider, {}],
+  [fadeMsgProvider, {}],
   [AuthProvider, { accessTokenCookie: "klool", logoutOnUnauthorized: true }]
 )(App);

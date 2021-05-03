@@ -14,6 +14,7 @@ import {
   classNameValidation,
 } from "../../tools/ValidationFunctions";
 import { Axios, Delete, EmptMsg, ExistErrorStatus, HideStyle, ShowStyle } from "../../tools/GlobalVarbs.js";
+import { fadeMsgContext } from "../../stores/fadeMsg.store.js";
 
 class EditSchool extends Component {
   constructor() {
@@ -53,6 +54,7 @@ class EditSchool extends Component {
     if (success) {
       // this.props.history.replace('https://www.youtube.com/watch?v=4G6QDNC4jPs');
       this.props.history.goBack();
+      this.props.fadeMsg.setFadeMsg("בית ספר נמחק בהצלחה")
     } else {
       this.props.errorMsg.setErrorMsg('הייתה שגיאה בשרת, לא היה ניתן למחוק את בית הספר.')
     }
@@ -263,6 +265,7 @@ class EditSchool extends Component {
             data.city,
           )
         this.props.history.goBack(); // after saving go back
+        this.props.fadeMsg.setFadeMsg("בית ספר עודכן בהצלחה")
         }
       } catch (err) {
         this.props.errorMsg.setErrorMsg('שגיאה בשרת, בית הספר לא נשמר, נסו שוב.');
@@ -374,6 +377,7 @@ class EditSchool extends Component {
 const mapContextToProps = {
   schools: schoolsContext,
   errorMsg: errorMsgContext,
+  fadeMsg: fadeMsgContext,
 };
 
 export default withContext(mapContextToProps)(observer(withRouter(EditSchool)));
