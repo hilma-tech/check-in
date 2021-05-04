@@ -273,7 +273,7 @@ class EditTeacher extends React.Component {
     }
     // ----------school name validation-------------------
     let nameSchoolMess = mustInputValidation(this.state.schoolName);
-    if (this.state.schoolName.length !== 0) {
+    if (this.state.schoolName.length === 0) {
       this.setState((prevState) => {
         prevState.schoolNameError.toShow = ShowStyle;
         prevState.schoolNameError.mess = nameSchoolMess;

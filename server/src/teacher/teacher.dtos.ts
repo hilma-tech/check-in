@@ -6,6 +6,7 @@ import {
   isNumber,
   IsNumber,
   IsNumberString,
+  IsOptional,
   IsString,
   IsUUID,
   Length,
@@ -128,9 +129,8 @@ export class EditTeacherDto {
   @IsString()
   @IsEmail()
   username: string;
-  @IsDefined()
+  @IsOptional()
   @IsString()
-  @Length(8, 15)
   password: string;
   @IsDefined()
   @IsString()

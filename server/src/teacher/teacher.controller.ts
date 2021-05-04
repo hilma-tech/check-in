@@ -76,27 +76,6 @@ export class TeacherController {
   @Post('/register')
   async register(@Body() req: TeacherRegisterDto) {
     return await this.teacherService.addTeacher(req);
-    // let username = req.email;
-    // let password = req.password;
-    // let user: Partial<Teacher> = new Teacher({ username, password });
-    // user.first_name = req.first_name
-    // user.last_name = req.last_name
-    // // [ { id: 0, value: "ה'2", classId: 3 } ]
-    // if (req.fields_data !== undefined || req.fields_data.length !== 0) {
-    //   user.classroomTeacher = req.fields_data.map((classroom) => {
-    //     if (!this.classroomService.isClassroomInSchool(classroom.classId, req.school_id)) {
-    //       throw new Error()
-    //     }
-    //     let classroomTeacher = new Classroom()
-    //     classroomTeacher.id = classroom.classId
-    //     return classroomTeacher
-    //   })
-    // }
-    // user.school = req.school_id
-    // let userRole = new Role();
-    // userRole.id = req.rakaz === "true" ? 2 : 3; //you set the role id.
-    // user.roles = [userRole];
-    // return await this.userService.createUser<Teacher>(user);
   }
 
   // @UserExist()@UseJwtAuth('superAdmin')
@@ -109,6 +88,7 @@ export class TeacherController {
   @UseJwtAuth('superAdmin')
   @Post('/editTeacher')
   async editTeacher(@Body() req: EditTeacherDto) {
+    console.log('req: ', req);
     try {
       if (req.password.length !== 0) {
         await this.teacherService.changeTeacherPassword(
