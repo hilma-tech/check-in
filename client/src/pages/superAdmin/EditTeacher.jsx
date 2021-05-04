@@ -248,6 +248,7 @@ class EditTeacher extends React.Component {
     // ----------teacher first name validation-------------------
     let nameTeacherMess = nameValidation(this.state.teacherFirstName);
     if (nameTeacherMess.length !== 0) {
+      console.log("AAA");
       this.setState((prevState) => {
         prevState.teacherNameError.toShow = ShowStyle;
         prevState.teacherNameError.mess = nameTeacherMess;
@@ -255,8 +256,8 @@ class EditTeacher extends React.Component {
       });
       allOk = false;
     } else {
+      console.log("BBB");
       this.setState({ teacherNameError: { toShow: HideStyle, mess: EmptMsg } });
-      allOk = true;
     }
     // ----------teacher last name validation-------------------
     let lastNameTeacherMess = nameValidation(this.state.lastName);
@@ -269,7 +270,6 @@ class EditTeacher extends React.Component {
       allOk = false;
     } else {
       this.setState({ teacherLastNameError: { toShow: HideStyle, mess: EmptMsg } });
-      allOk = true;
     }
     // ----------school name validation-------------------
     let nameSchoolMess = mustInputValidation(this.state.schoolName);
@@ -282,7 +282,6 @@ class EditTeacher extends React.Component {
       allOk = false;
     } else {
       this.setState({ schoolNameError: { toShow: HideStyle, mess: EmptMsg } });
-      allOk = true;
     }
     //------------email validation---------------
     let emailMess = emailValidation(this.state.email);
@@ -295,7 +294,6 @@ class EditTeacher extends React.Component {
       allOk = false;
     } else {
       this.setState({ emailNameError: { toShow: HideStyle, mess: EmptMsg } });
-      allOk = true;
     }
     // ----------password validation-------------------
     if (this.state.showPassChanger) {
@@ -307,8 +305,10 @@ class EditTeacher extends React.Component {
         allOk = false;
       } else {
         this.setState({ passErr: EmptMsg });
+
       }
     }
+    console.log('allOk: ', allOk);
     //after all the validation we need to send the data to sql
     if (allOk) {
       try {
@@ -331,12 +331,12 @@ class EditTeacher extends React.Component {
           return classroom.name !== "שייך לכיתה";
         });
         if (data) {
-          this.props.teachers.updateTeacher({
+          await this.props.teachers.updateTeacher({
             first_name: this.state.teacherFirstName,
             last_name: this.state.lastName,
             name: this.state.teacherFirstName + " " + this.state.lastName,
             username: this.state.email,
-            schoolName: this.state.schoolName,
+            schoolName: this.state.school,
             school: { id: this.state.schoolId, name: this.state.schoolName },
             id: this.props.teachers.chosenTeacher.id,
             classroomTeacher: classroomTeacher,
@@ -347,9 +347,9 @@ class EditTeacher extends React.Component {
                 })
                 : [],
           });
-          this.closePassChange();
-          this.props.history.goBack(); // after saving go back
+          await this.closePassChange();
           this.props.fadeMsg.setFadeMsg("מורה עודכן בהצלחה")
+          this.props.history.goBack(); // after saving go back
         } else {
           this.props.errorMsg.setErrorMsg(
             "שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר."
