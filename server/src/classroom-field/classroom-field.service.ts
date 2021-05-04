@@ -1,8 +1,9 @@
 import { FilesType, ImageService } from '@hilma/fileshandler-typeorm';
-import { Body, Injectable, UploadedFiles } from '@nestjs/common';
+import { Body, forwardRef, Inject, Injectable, UploadedFiles } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClassroomGameDto } from 'src/classroom/classroom.dtos';
 import { FieldService } from 'src/field/field.service';
+import { GameService } from 'src/game/game.service';
 import { Repository } from 'typeorm';
 import { getCGFDto, GetClassGameFieldsDto, removeFFromCDto } from './classroom-field.dtos';
 import { ClassroomField } from './classroom-field.entity';
@@ -14,6 +15,8 @@ export class ClassroomFieldService {
     @InjectRepository(ClassroomField)
     private classFieldRepository: Repository<ClassroomField>,
     private fieldService: FieldService,
+    @Inject(forwardRef(() => GameService))
+    private gameService: GameService,
     private readonly imageService: ImageService,
   ) { }
 
@@ -50,6 +53,7 @@ export class ClassroomFieldService {
   //when the teacher choose a game
 
   async addGameFieldsToClass(@UploadedFiles() files: FilesType, @Body() req: ClassroomGameDto) {
+    let isGameId = await this.gameService.isGameId(req.gameId)
     let reqFields = req.fieldsData.map((field) => { return field.id })
     reqFields.sort(function (a, b) {
       return a - b;
@@ -59,7 +63,7 @@ export class ClassroomFieldService {
     gameFields.sort(function (a, b) {
       return a - b;
     })
-    if (JSON.stringify(reqFields) === JSON.stringify(gameFields)) {
+    if (JSON.stringify(reqFields) === JSON.stringify(gameFields) && isGameId !== undefined) {
       let Inp = null;
 
       req.fieldsData.forEach(async (field) => {

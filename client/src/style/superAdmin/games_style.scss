@@ -143,7 +143,6 @@ $gameimgwidth: 20vw;
 }
 
 .searchIconGames {
-  // display: inline-block;
   display: hidden;
   height: 3vh;
 }
@@ -170,7 +169,6 @@ $gameimgwidth: 20vw;
 }
 
 img {
-  // @include imgCover(true);
   height: 11.5vw;
   width: 20vw;
 }

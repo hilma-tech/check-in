@@ -48,16 +48,6 @@ class SignIn extends Component {
     this.setState({ password: props.target.value });
   };
 
-  //!
-  // teacherForgotPass = async () => {
-  //   try {
-  //     await axios.post("/api/teacher/sendNewPassEmail",{email:this.state.username});
-  //   } catch (error) {
-  //     this.props.errorMsg.setErrorMsg('מייל לא תקין')
-  //   }
-  //    this.props.errorMsg.setErrorMsg('נשלח לך אימייל לשינוי הסיסמה')
-  // }
-
 moveToForgotPage = async () => {
   this.props.history.push("/makeNewPassword");
 }

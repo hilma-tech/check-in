@@ -227,7 +227,7 @@ class AddStudent extends React.Component {
             username: data.username,
             schoolName: this.state.school,
             id: data.id,
-            school: {id: data.school, name: this.state.school},
+            school: {id: this.state.schoolId, name: this.state.school},
             classroomStudent: data.classroomStudent,
             classes: data.classroomStudent !== undefined ? data.classroomStudent.map((classInfo) => {
               return classInfo.name
@@ -243,8 +243,10 @@ class AddStudent extends React.Component {
       }
     }
   };
-
+  
   render() {
+    console.log('this.state.chosenClasses: ', this.state.chosenClasses);
+    console.log('this.state.school: ', this.state.school);
     return (
       <div className='withMenu'>
         <ArrowNavBar />
@@ -328,7 +330,7 @@ class AddStudent extends React.Component {
             placeholder="שייך לבית ספר"
           />
 
-          {this.state.school.length === 0 ? <></> :
+          {this.state.chosenClasses.length === 0 ? <></> :
             <>
               <label className="labelFields">כיתה:</label>
               {

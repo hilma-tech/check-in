@@ -2,7 +2,6 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import Select from "react-select";
 import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx";
-// import ClassSelection from "../../component/superAdmin/ClassSelection.jsx";
 import "../../style/superAdmin/form_style.scss";
 import "../../style/superAdmin/add_game_style.scss";
 import SelectStyle from "../../style/superAdmin/select_style";
@@ -12,7 +11,6 @@ import { teachersContext } from "../../stores/teachers.store";
 import { errorMsgContext } from "../../stores/error.store";
 import EditIcon from "@material-ui/icons/Edit";
 import addicon from "../../img/addicon.svg";
-
 import {
   emailValidation,
   mustInputValidation,
@@ -180,11 +178,6 @@ class EditTeacher extends React.Component {
     this.setState({ email: myprops.value });
   };
 
-  // savePassword = (props) => {
-  //   let myprops = props.target;
-  //   this.setState({ password: myprops.value });
-  // };
-
   removeClass = (classIndex) => {
     this.setState((prevState) => {
       let tempData = [...prevState.chosenClasses];
@@ -280,7 +273,7 @@ class EditTeacher extends React.Component {
     }
     // ----------school name validation-------------------
     let nameSchoolMess = mustInputValidation(this.state.schoolName);
-    if (this.state.schoolName.length !== 0) {
+    if (this.state.schoolName.length === 0) {
       this.setState((prevState) => {
         prevState.schoolNameError.toShow = ShowStyle;
         prevState.schoolNameError.mess = nameSchoolMess;
