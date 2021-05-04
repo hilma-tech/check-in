@@ -88,7 +88,7 @@ class EditTeacher extends React.Component {
             school: this.props.teachers.chosenTeacher.schoolName,
             chosenClasses: this.props.teachers.chosenTeacher.classroomTeacher,
             allSchools: this.props.schools.schoolsNames.map((school) => {
-              return school.name;
+              return {name: school.name, id: school.id};
             }),
           });
         } catch (err) {
@@ -104,12 +104,13 @@ class EditTeacher extends React.Component {
 
   makeSchoolOption = (indexSelect) => {
     let options = [];
-    this.state.allSchools.map((nameSchool) => {
-      if (nameSchool !== this.state.schoolName) {
+    this.state.allSchools.map((school) => {
+      if (school.id !== this.state.schoolId) {
         options.push({
-          value: nameSchool,
-          label: nameSchool,
+          value: school.name,
+          label: school.name,
           SchoolIndex: indexSelect,
+          schoolId: school.id
         });
       }
     });
@@ -148,16 +149,13 @@ class EditTeacher extends React.Component {
 
   saveSchoolName = async (e) => {
     try{
-      let chosenSchoolId = this.props.schools.schoolsNames.filter((school) => {
-        return school.name === e.value;
-      })[0];
       const { data } = await Axios.get("/api/classroom/getSchoolClasses", {
-        params: { schoolId: chosenSchoolId.id },
+        params: { schoolId: e.schoolId },
       });
       this.setState({
         school: e.value,
         allClasses: data,
-        schoolId: chosenSchoolId.id,
+        schoolId: e.schoolId,
         chosenClasses: [],
       });
     } catch(err){

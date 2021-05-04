@@ -39,6 +39,7 @@ class AddTeacher extends Component {
       email: "",
       password: "",
       rakaz: "false",
+      schoolId: 0,
       teacherFirstNameError: { toShow: HideStyle, mess: EmptMsg },
       teacherLastNameError: { toShow: HideStyle, mess: EmptMsg },
       schoolNameError: { toShow: HideStyle, mess: EmptMsg },
@@ -56,7 +57,7 @@ class AddTeacher extends Component {
       );
     } else {
       let schools = this.props.schools.schoolsNames.map((school) => {
-        return { value: school.name, label: school.name };
+        return { name: school.name, id: school.id };
       });
       this.setState({ schoolOptions: schools });
     }
@@ -73,11 +74,8 @@ class AddTeacher extends Component {
 
   saveSchoolName = async (props) => {
     try {
-      let chosenScoolId = this.props.schools.schoolsNames.filter((school) => {
-        return school.name === props.value;
-      })[0];
       const { data } = await Axios.get("/api/classroom/getSchoolClasses", {
-        params: { schoolId: chosenScoolId.id },
+        params: { schoolId: props.schoolId },
       });
       let classroomOption = data.map((classroom) => {
         return { value: classroom.name, label: classroom.name, id: classroom.id };
@@ -89,6 +87,7 @@ class AddTeacher extends Component {
           schoolName: prevSchool,
           classOptions: classroomOption,
           fieldsData: [],
+          schoolId: props.schoolId
         };
       });
     } catch (err) {
@@ -302,6 +301,20 @@ class AddTeacher extends Component {
     });
   };
 
+  makeSchoolOption = () => {
+    let options = [];
+    this.state.schoolOptions.map((school) => {
+      if (school.id !== this.state.schoolId) {
+        options.push({
+          value: school.name,
+          label: school.name,
+          schoolId: school.id
+        });
+      }
+    });
+    return options;
+  };
+
   render() {
 
     return (
@@ -349,7 +362,7 @@ class AddTeacher extends Component {
               <Select
                 className="selectStyle"
                 onChange={this.saveSchoolName}
-                options={this.state.schoolOptions}
+                options={this.makeSchoolOption()}
                 styles={SelectStyle()}
                 defaultValue={{ value: "default", label: "שייך לבית ספר" }}
               />
