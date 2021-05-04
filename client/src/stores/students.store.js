@@ -31,6 +31,7 @@ class Students {
             searchStudentsReplace: action,
             deleteStudent: action,
             updateStudent: action,
+            removeDeletedStudet: action
         })
     }
 
@@ -122,6 +123,12 @@ class Students {
             } else {
                 return student
             }
+        })
+    }
+
+    removeDeletedStudet = (schoolId) => {
+        this.listDataStudents = this.listDataStudents.filter((student) => {
+            return student.school.id !== schoolId
         })
     }
 }

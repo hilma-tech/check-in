@@ -15,6 +15,7 @@ import {
 } from "../../tools/ValidationFunctions";
 import { Axios, Delete, EmptMsg, ExistErrorStatus, HideStyle, ShowStyle } from "../../tools/GlobalVarbs.js";
 import { fadeMsgContext } from "../../stores/fadeMsg.store.js";
+import { studentsContext } from "../../stores/students.store.js";
 
 class EditSchool extends Component {
   constructor() {
@@ -52,6 +53,7 @@ class EditSchool extends Component {
     e.preventDefault();
     let success = this.props.schools.deleteSchool()
     if (success) {
+      this.props.students.removeDeletedStudet(this.props.schools.chosenSchool.id)
       this.props.history.goBack();
       this.props.fadeMsg.setFadeMsg("בית ספר נמחק בהצלחה")
     } else {
@@ -351,6 +353,7 @@ const mapContextToProps = {
   schools: schoolsContext,
   errorMsg: errorMsgContext,
   fadeMsg: fadeMsgContext,
+  students: studentsContext
 };
 
 export default withContext(mapContextToProps)(observer(withRouter(EditSchool)));
