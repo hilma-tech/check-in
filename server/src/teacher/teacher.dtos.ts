@@ -20,6 +20,12 @@ export class EmailDto {
   email: string
 }
 
+export class StringDto {
+  @IsDefined()
+  @IsString()
+  token: string
+}
+
 export class GetTeacherSkip {
   @IsDefined()
   @IsString()
@@ -144,3 +150,4 @@ export class EditTeacherDto {
   @IsNumber()
   schoolId: number;
 }
+
