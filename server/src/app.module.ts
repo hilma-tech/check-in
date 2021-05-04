@@ -20,9 +20,29 @@ import { PermissionModule } from './permission/permission.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      load: [configuration],
+      isGlobal: true,
+      envFilePath: ['.env', `.env.${process.env.NODE_ENV || 'development'}`]
+    }),
     GameModule,
-    TypeOrmModule.forRoot(),
-    ConfigModule.forRoot({ load: [configuration], isGlobal: true }),
+    TypeOrmModule.forRoot({
+      "type": "mysql",
+      "host": process.env.DB_HOST,
+      "port": 3306,
+      "username": process.env.DB_USER,
+      "password": process.env.DB_PWD,
+      "database": (console.log(process.env.DB_NAME, process.env.NODE_ENV), process.env.DB_NAME),
+      "entities": [
+        "node_modules/@hilma/auth-nest/dist/**/*.entity{.ts,.js}",
+        "dist/**/*.entity{.ts,.js}",
+        "node_modules/@hilma/fileshandler-typeorm/**/*.entity.{ts,js}",
+      ],
+      "synchronize": true,
+      "ssl": true
+      // "logging": true
+    
+    }),
     FieldModule,
     FilesHandlerModule.register({
       folder: '../../filesHandlerUploads',
