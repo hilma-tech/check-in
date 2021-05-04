@@ -25,6 +25,8 @@ import {
   TeacherRegisterDto,
   EmailDto,
   PassAndTokenDto,
+  EditTeacherDto,
+  StringDto,
 } from './teacher.dtos';
 import { ClassroomService } from 'src/classroom/classroom.service';
 import { env } from 'process';
@@ -106,7 +108,7 @@ export class TeacherController {
   @UserExist()
   @UseJwtAuth('superAdmin')
   @Post('/editTeacher')
-  async editTeacher(@Body() req: any) {
+  async editTeacher(@Body() req: EditTeacherDto) {
     try {
       if (req.password.length !== 0) {
         await this.teacherService.changeTeacherPassword(
@@ -137,12 +139,13 @@ export class TeacherController {
   @UserExist()
   @UseJwtAuth('superAdmin')
   @Post('/isTeacherExist')
-  isTeacherExist(@Body() username) {
+  isTeacherExist(@Body() username: EmailDto) {
+    console.log('username: ', username);
     return this.teacherService.isTeacherExist(username.email);
   }
 
   @Get('/Verify')
-  async MakeLogInAvailable(@Query() Token: any, @Res() res: any) {
+  async MakeLogInAvailable(@Query() Token: StringDto, @Res() res: any) {
     await this.teacherService.verifyEmailByToken(Token.token);
     var redirectTo = `${env.HOST}/initialPage`;
     res.redirect(redirectTo);
@@ -172,7 +175,7 @@ export class TeacherController {
   }
 
   @Get('/changePassword')
-  async changePassword(@Query() Token: any, @Res() res: any) {
+  async changePassword(@Query() Token: StringDto, @Res() res: any) {
     var redirectTo = `${env.HOST}/changePass/${Token.token}`;
     res.redirect(redirectTo);
   }
