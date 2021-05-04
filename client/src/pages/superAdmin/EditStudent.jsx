@@ -139,18 +139,22 @@ class EditStudent extends React.Component {
   };
 
   chooseSchool = async (e) => {
-    let chosenScoolId = this.props.schools.schoolsNames.filter((school) => {
-      return school.name === e.value;
-    })[0];
-    const { data } = await Axios.get("/api/classroom/getSchoolClasses", {
-      params: { schoolId: chosenScoolId.id },
-    });
-    this.setState({
-      school: e.value,
-      allClasses: data,
-      schoolId: chosenScoolId.id,
-      chosenClasses: [],
-    });
+    try{
+      let chosenScoolId = this.props.schools.schoolsNames.filter((school) => {
+        return school.name === e.value;
+      })[0];
+      const { data } = await Axios.get("/api/classroom/getSchoolClasses", {
+        params: { schoolId: chosenScoolId.id },
+      });
+      this.setState({
+        school: e.value,
+        allClasses: data,
+        schoolId: chosenScoolId.id,
+        chosenClasses: [],
+      });
+    } catch(err){
+      this.props.errorMsg.setErrorMsg("שגיאה בשרת, לא ניתן לקבל כיתות.");
+    }
   };
 
   //saves changes in entered data to the state

@@ -130,28 +130,32 @@ class Permissions extends Component {
   }
 
   sendDelete = async (start, end, index, classId, day) => {
-    if (!this.state.disableButtons) {
-      await this.setState({ disableButtons: true })
-      await Axios.post(`/api/permission/deletePermission`, { start_time: start, end_time: end, classroom_id: classId, day: day })
-      if (index !== null) {
-        var arrForChange = this.state.extraTimes
-        arrForChange.splice(index, 1);
-        this.setState({
-          extraTimes: arrForChange,
-        })
-        await this.setState({ disableButtons: false })
-
-      }
-      else {
-        this.dayPermissions(this.state.selectedDay)
-        if (this.props.chosenClass.classPermissions.length === 0) {
+    try{
+      if (!this.state.disableButtons) {
+        await this.setState({ disableButtons: true })
+        await Axios.post(`/api/permission/deletePermission`, { start_time: start, end_time: end, classroom_id: classId, day: day })
+        if (index !== null) {
+          var arrForChange = this.state.extraTimes
+          arrForChange.splice(index, 1);
           this.setState({
-            selectedStartTime: '',
-            selectedEndTime: ''
+            extraTimes: arrForChange,
           })
+          await this.setState({ disableButtons: false })
+  
         }
-        await this.setState({ disableButtons: false })
+        else {
+          this.dayPermissions(this.state.selectedDay)
+          if (this.props.chosenClass.classPermissions.length === 0) {
+            this.setState({
+              selectedStartTime: '',
+              selectedEndTime: ''
+            })
+          }
+          await this.setState({ disableButtons: false })
+        }
       }
+    }catch(err){
+      this.props.errorMsg.setErrorMsg('תקלה בשרת, נסו למחוק שנית')
     }
   }
   deletePermission = async (start, end, index) => {

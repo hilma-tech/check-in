@@ -69,19 +69,23 @@ class Teachers {
   };
 
   searchTeachers = async (val) => {
-    let Teachers = await Axios.get(
-      `/api/teacher/searchTeacherSuperadmin/?val=${val}`
-    );
-    if (Teachers.data[0] != null) {
-      let newTeachersSearch = Teachers.data.map((teacher) => {
-        teacher.name = teacher.first_name + " " + teacher.last_name;
-        teacher.schoolName = teacher.school.name;
-        teacher.classes = teacher.classroomTeacher.map((classroom) => {
-          return classroom.name;
+    try{
+      let Teachers = await Axios.get(
+        `/api/teacher/searchTeacherSuperadmin/?val=${val}`
+      );
+      if (Teachers.data[0] != null) {
+        let newTeachersSearch = Teachers.data.map((teacher) => {
+          teacher.name = teacher.first_name + " " + teacher.last_name;
+          teacher.schoolName = teacher.school.name;
+          teacher.classes = teacher.classroomTeacher.map((classroom) => {
+            return classroom.name;
+          });
+          return teacher;
         });
-        return teacher;
-      });
-      this.searchedTeachers = [...newTeachersSearch];
+        this.searchedTeachers = [...newTeachersSearch];
+      }
+    } catch(err){
+      console.log('err: ', err);
     }
   };
 
