@@ -281,7 +281,7 @@ class EditGame extends Component {
             existField: existFieldsData
           })
         );
-        this.props.games.editGame(response.data);
+        this.props.games.editGame(currGameInfo);
       }
       this.props.history.goBack(); // after saving go back
       this.props.fadeMsg.setFadeMsg("משחק עודכן בהצלחה")
