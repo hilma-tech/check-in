@@ -149,18 +149,22 @@ class EditTeacher extends React.Component {
   };
 
   saveSchoolName = async (e) => {
-    let chosenSchoolId = this.props.schools.schoolsNames.filter((school) => {
-      return school.name === e.value;
-    })[0];
-    const { data } = await Axios.get("/api/classroom/getSchoolClasses", {
-      params: { schoolId: chosenSchoolId.id },
-    });
-    this.setState({
-      school: e.value,
-      allClasses: data,
-      schoolId: chosenSchoolId.id,
-      chosenClasses: [],
-    });
+    try{
+      let chosenSchoolId = this.props.schools.schoolsNames.filter((school) => {
+        return school.name === e.value;
+      })[0];
+      const { data } = await Axios.get("/api/classroom/getSchoolClasses", {
+        params: { schoolId: chosenSchoolId.id },
+      });
+      this.setState({
+        school: e.value,
+        allClasses: data,
+        schoolId: chosenSchoolId.id,
+        chosenClasses: [],
+      });
+    } catch(err){
+      this.props.errorMsg.setErrorMsg("שגיאה בשרת, לא ניתן לקבל כיתות.");
+    }
   };
 
   saveValue = (newValue, id) => {

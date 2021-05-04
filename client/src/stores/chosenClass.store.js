@@ -64,10 +64,14 @@ class ChosenClass {
   };
 
   searchStudentsInClass = async (val, classId) => {
-    let Students = await Axios.get(`/api/student/searchStudentInTeacher`, {
-      params: { classId: classId, value: val },
-    });
-    this.searchedStudents = [...Students.data]
+    try{
+      let Students = await Axios.get(`/api/student/searchStudentInTeacher`, {
+        params: { classId: classId, value: val },
+      });
+      this.searchedStudents = [...Students.data]
+    }catch(err){
+      console.log('err: ', err);
+    }
   }
 
   searchStudentsReplace = () => {
@@ -109,16 +113,20 @@ class ChosenClass {
   }
 
   getClassPermissions = async (day) => {
-    this.classPermissions = []
-    let classroom = this.classId
-    let { data } = await Axios.get("/api/permission/dayPermissions", {
-      params: { classId: classroom, day: day },
-    });
-    if (data.length > 0) {
-      this.classPermissions.push(...data)
-      return true
+    try{
+      this.classPermissions = []
+      let classroom = this.classId
+      let { data } = await Axios.get("/api/permission/dayPermissions", {
+        params: { classId: classroom, day: day },
+      });
+      if (data.length > 0) {
+        this.classPermissions.push(...data)
+        return true
+      }
+      else { return false }
+    } catch(err){
+      console.log('err: ', err);
     }
-    else { return false }
   }
 }
 
