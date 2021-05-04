@@ -20,11 +20,8 @@ import {
   GameEditReq,
 } from './game.dtos';
 import { UseFilesHandler, FilesType } from '@hilma/fileshandler-typeorm';
-import { RequestUser, UseJwtAuth } from '@hilma/auth-nest';
-import { FieldService } from 'src/field/field.service';
+import { UseJwtAuth } from '@hilma/auth-nest';
 import { ValDto } from 'src/student/student.dtos';
-import { EditSchoolInfoDto } from 'src/school/school.dtos';
-import { TeacherService } from 'src/teacher/teacher.service';
 import { UserExist } from 'src/user-exist/user-exist.decorator';
 const { mustValid } = require('../serverTools/ServerValid');
 
@@ -32,8 +29,6 @@ const { mustValid } = require('../serverTools/ServerValid');
 export class GameController {
   constructor(
     private gameService: GameService,
-    private fieldService: FieldService,
-    private teacherService: TeacherService,
   ) {}
 
   //! IS FOR DANIEL

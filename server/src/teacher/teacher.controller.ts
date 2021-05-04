@@ -55,13 +55,15 @@ export class TeacherController {
   getTeacherInfo(@Query() req: TeacherIdDto) {
     return this.teacherService.getTeacherInfo(req);
   }
+
   @UseLocalAuth()
   @Post('/login')
   login(@RequestUser() userInfo, @Res() res) {
     let body = this.userService.login(userInfo, res);
     res.send(body);
   }
-  // @UserExist()@UseJwtAuth('superAdmin')
+  // @UserExist
+  //()@UseJwtAuth('superAdmin')
   // @Post('/addTeacher')
   // addTeacher(@Body() req: any) {
   //   return this.teacherService.addTeacherInfo(req)
