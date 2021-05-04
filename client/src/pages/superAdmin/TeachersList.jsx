@@ -26,7 +26,7 @@ class TeachersList extends React.Component {
       searched: false
     };
   }
-
+  
   componentDidMount = async () => {
     this.getTeachers();
   };

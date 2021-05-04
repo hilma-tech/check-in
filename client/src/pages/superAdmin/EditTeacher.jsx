@@ -331,12 +331,12 @@ class EditTeacher extends React.Component {
           return classroom.name !== "שייך לכיתה";
         });
         if (data) {
-          this.props.teachers.updateTeacher({
+          await this.props.teachers.updateTeacher({
             first_name: this.state.teacherFirstName,
             last_name: this.state.lastName,
             name: this.state.teacherFirstName + " " + this.state.lastName,
             username: this.state.email,
-            schoolName: this.state.schoolName,
+            schoolName: this.state.school,
             school: { id: this.state.schoolId, name: this.state.schoolName },
             id: this.props.teachers.chosenTeacher.id,
             classroomTeacher: classroomTeacher,
@@ -347,9 +347,9 @@ class EditTeacher extends React.Component {
                 })
                 : [],
           });
-          this.closePassChange();
-          this.props.history.goBack(); // after saving go back
+          await this.closePassChange();
           this.props.fadeMsg.setFadeMsg("מורה עודכן בהצלחה")
+          this.props.history.goBack(); // after saving go back
         } else {
           this.props.errorMsg.setErrorMsg(
             "שם משתמש כבר קיים. אנא נסה להכניס שם משתמש אחר."
