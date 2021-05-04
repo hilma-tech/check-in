@@ -101,19 +101,12 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  // height: 4vw
 }
 
 .removeTeachersClass {
   @include mouse(point);
-  margin-right: 1vw;
-  height: 15px;
+  width: 15px;
+  height: 2vh;
   padding-top: 10px;
-  // margin-top: 0.01vw;
-  // margin-bottom: 0.5;
+  margin-right: 1.25vw;
 }
-
-
-// img {
-//   @include imgCover(false);
-// }
