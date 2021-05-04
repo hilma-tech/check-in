@@ -334,18 +334,7 @@ class EditGame extends Component {
         });
       }
     });
-    // if (!this.state.image.value) {
-    //   allOK = false;
-    //   this.setState({
-    //     imageErrorMessages: {
-    //       toShow: "block",
-    //       mess: "** חייב להכניס שדה זה **",
-    //     },
-    //   });
-    // } else {
-    //   this.setState({ imageErrorMessages: { toShow: HideStyle, mess: "" } });
-    // }
-
+  
     //validates the fields
     fieldOK = this.validateFields();
     //after all the validetion we need to send the data to sql
