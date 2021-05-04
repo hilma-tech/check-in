@@ -2,7 +2,6 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import Select from "react-select";
 import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx";
-// import ClassSelection from "../../component/superAdmin/ClassSelection.jsx";
 import "../../style/superAdmin/form_style.scss";
 import "../../style/superAdmin/add_game_style.scss";
 import SelectStyle from "../../style/superAdmin/select_style";
@@ -12,7 +11,6 @@ import { teachersContext } from "../../stores/teachers.store";
 import { errorMsgContext } from "../../stores/error.store";
 import EditIcon from "@material-ui/icons/Edit";
 import addicon from "../../img/addicon.svg";
-
 import {
   emailValidation,
   mustInputValidation,
@@ -179,11 +177,6 @@ class EditTeacher extends React.Component {
     let myprops = props.target;
     this.setState({ email: myprops.value });
   };
-
-  // savePassword = (props) => {
-  //   let myprops = props.target;
-  //   this.setState({ password: myprops.value });
-  // };
 
   removeClass = (classIndex) => {
     this.setState((prevState) => {

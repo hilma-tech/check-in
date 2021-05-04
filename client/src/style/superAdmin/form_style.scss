@@ -3,7 +3,6 @@
 
 .formData {
     @include form-container;
-    // margin-bottom: 5vh;
 
 }
 
@@ -59,10 +58,6 @@
     cursor: pointer;
     @include blue-button-style;
 }
-
-// .saveButton:active{
-//     pointer-events: none;
-//   }
 
 .addSomethingNew{
     padding-right: 0.5vw;

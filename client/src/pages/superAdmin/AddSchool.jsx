@@ -51,21 +51,7 @@ class AddSchool extends React.Component {
       return { classes: tempData };
     });
   };
-
-  //Need to change and update the class name.
-  //It's called when the user change the value.
-  // chooseTeacher = (e) => {
-  //   let index = e.name;
-  //   let value = e.value;
-  //   let selectKey = e.selectKey;
-  //   let id = e.id;
-  //   this.setState((prevState) => {
-  //     let tempData = [...prevState.classes];
-  //     tempData[index].existChosenTeachers[selectKey] = { id: id, name: value };
-  //     return { classes: tempData };
-  //   });
-  // };
-
+  
   //Get the element and set the schoolName by the user type.
   handleChange = (e) => {
     if (e.target.name === "schoolName" || e.target.name === "schoolCity") {
@@ -284,12 +270,9 @@ class AddSchool extends React.Component {
                   classDataLength={this.state.classes.length}
                   handleChange={this.handleChange}
                   removeClass={this.removeClass}
-                  // canAddExistTeacher={false}
                   addNewTeacherToClass={this.addNewTeacherToClass}
                   removeTeacherFromClass={this.removeTeacherFromClass}
                   addExistTeacherToClass={this.addExistTeacherToClass}
-                  // removeExistTeacherFromClass={this.removeExistTeacherFromClass}
-                  // chooseTeacher={this.chooseTeacher}
                   existTeachers={this.state.existTeachers}
                 />
               );
