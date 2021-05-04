@@ -18,17 +18,18 @@ export class SuperAdminController {
     return userInfo.type;
   }
 
-  @Post('/register')
-  register(@Body() req: any) {
-    let username = req.username;
-    let password = req.password;
-    let user: Partial<SuperAdmin> = new SuperAdmin({ username, password });
-    let userRole = new Role();
-    userRole.id = 1; //you set the role id.
-    user.roles = [userRole];
+  // @Post('/register')
+  // register(@Body() req: any) {
+  //   let username = req.username;
+  //   let password = req.password;
+  //   let user: Partial<SuperAdmin> = new SuperAdmin({ username, password });
+  //   let userRole = new Role();
+  //   userRole.id = 1; //you set the role id.
+  //   user.roles = [userRole];
 
-    this.userService.createUser<SuperAdmin>(user);
-  }
+  //   this.userService.createUser<SuperAdmin>(user);
+  // }
+
   @UseLocalAuth()
   @Post('/login')
   login(@RequestUser() userInfo, @Res() res) {

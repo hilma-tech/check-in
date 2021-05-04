@@ -202,3 +202,13 @@ export class UserEditDto {
   @Type(() => ClassForSaveDto)
   classrooms: ClassForSaveDto[];
 }
+
+
+export class StudentSearchDto {
+  @IsDefined()
+  @IsString()
+  value: string;
+
+  @IsDefined()
+  classId: SearchValDto;
+}

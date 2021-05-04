@@ -12,29 +12,23 @@ import {
   ExcelUserRegisterDto,
   ValDto,
   UserEditDto,
+  StudentSearchDto,
 } from './student.dtos';
 import { ClassroomService } from 'src/classroom/classroom.service';
-import { GameModule } from 'src/game/game.module';
 import { GameService } from 'src/game/game.service';
-import { Classroom } from 'src/classroom/classroom.entity';
 import { SchoolService } from 'src/school/school.service';
-import { FieldService } from 'src/field/field.service';
 import { PermissionService } from 'src/permission/permission.service';
 import { UserExist } from 'src/user-exist/user-exist.decorator';
 
 @Controller('api/student')
 export class StudentController {
   constructor(
-    private readonly userService: UserService,
     private studentService: StudentService,
     private schoolService: SchoolService,
     private classroomService: ClassroomService,
     private gameService: GameService,
-    private fieldService: FieldService,
     private permissionService: PermissionService
-  ) {
-    // this.register({username: 'student2@gmail.com', password: 'student11', name: 'בת-ציון רוז'})
-  }
+  ) {}
 
   @UserExist()
   @UseJwtAuth('superAdmin')
@@ -182,7 +176,7 @@ export class StudentController {
   @UserExist()
   @UseJwtAuth('teacher')
   @Get('/searchStudentInTeacher')
-  async searchStudentInChosenClass(@Query() info: any) {
+  async searchStudentInChosenClass(@Query() info: StudentSearchDto) {
     return await this.studentService.searchStudents(info.value, info.classId)
   }
 
