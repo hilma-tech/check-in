@@ -54,7 +54,7 @@ export class Classroom {
   @ManyToMany(
     type => Student,
     student => student.classroomStudent,
-    { eager: true, onDelete: 'CASCADE' },
+    { eager: true },
   )
   @JoinTable({
     name: 'student_classroom',
@@ -72,7 +72,7 @@ export class Classroom {
   @ManyToMany(
     type => Teacher,
     teacher => teacher.classroomTeacher,
-    { eager: true, onDelete: 'CASCADE' },
+    { eager: true },
   )
   @JoinTable({
     name: 'teacher_classroom',
