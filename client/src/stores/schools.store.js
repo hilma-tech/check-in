@@ -38,8 +38,6 @@ class Schools {
 
   addSchool = async (schoolInfo) => {
     this.listDataSchools = [schoolInfo, ...this.listDataSchools]
-    // this.listDataStudents = [...this.listDataStudents]
-
   }
 
   getAllSchoolsNames = async () => {
