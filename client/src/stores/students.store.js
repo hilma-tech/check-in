@@ -72,17 +72,21 @@ class Students {
     }
 
     searchStudents = async (val) => {
-        let Students = await Axios.get(`/api/student/searchStudentSuperadmin/?val=${val}`);
-        if (Students.data[0] != null) {
-            let newStudentsSearch = Students.data.map((student) => {
-                student.name = student.first_name + " " + student.last_name;
-                student.schoolName = student.school.name
-                student.classes = student.classroomStudent.map((classroom) => {
-                    return classroom.name
+        try{
+            let Students = await Axios.get(`/api/student/searchStudentSuperadmin/?val=${val}`);
+            if (Students.data[0] != null) {
+                let newStudentsSearch = Students.data.map((student) => {
+                    student.name = student.first_name + " " + student.last_name;
+                    student.schoolName = student.school.name
+                    student.classes = student.classroomStudent.map((classroom) => {
+                        return classroom.name
+                    })
+                    return student
                 })
-                return student
-            })
-            this.searchedStudents = [...newStudentsSearch]
+                this.searchedStudents = [...newStudentsSearch]
+            }
+        } catch(err){
+            console.log('err: ', err);
         }
     }
 

@@ -72,24 +72,28 @@ class AddTeacher extends Component {
   };
 
   saveSchoolName = async (props) => {
-    let chosenScoolId = this.props.schools.schoolsNames.filter((school) => {
-      return school.name === props.value;
-    })[0];
-    const { data } = await Axios.get("/api/classroom/getSchoolClasses", {
-      params: { schoolId: chosenScoolId.id },
-    });
-    let classroomOption = data.map((classroom) => {
-      return { value: classroom.name, label: classroom.name, id: classroom.id };
-    });
-    this.setState((prevState) => {
-      let prevSchool = prevState.schoolName;
-      prevSchool = props.value;
-      return {
-        schoolName: prevSchool,
-        classOptions: classroomOption,
-        fieldsData: [],
-      };
-    });
+    try {
+      let chosenScoolId = this.props.schools.schoolsNames.filter((school) => {
+        return school.name === props.value;
+      })[0];
+      const { data } = await Axios.get("/api/classroom/getSchoolClasses", {
+        params: { schoolId: chosenScoolId.id },
+      });
+      let classroomOption = data.map((classroom) => {
+        return { value: classroom.name, label: classroom.name, id: classroom.id };
+      });
+      this.setState((prevState) => {
+        let prevSchool = prevState.schoolName;
+        prevSchool = props.value;
+        return {
+          schoolName: prevSchool,
+          classOptions: classroomOption,
+          fieldsData: [],
+        };
+      });
+    } catch (err) {
+      this.props.errorMsg.setErrorMsg("שגיאה בשרת, לא ניתן לקבל כיתות.");
+    }
   };
 
   saveRole = (props) => {
@@ -368,49 +372,49 @@ class AddTeacher extends Component {
               {this.state.schoolName.length === 0 ? (
                 <></>
               ) : (
-                <>
-                  <label className="labelFields">כיתות:</label>
-                  <div>
-                    {this.state.fieldsData.map((fieldObj, i) => {
-                      return (
-                        
-                        <div className="teacherFlexClass" key={fieldObj.id}>
-                          <ClassSelection
-                            key={fieldObj.id}
-                            id={fieldObj.id}
-                            removal={this.triggerRemoval}
-                            saveValue={this.saveChosenClassValue}
-                            options={this.makeClassesOption(i)}
-                            onChange={this.saveChange}
-                          />
-                          <img
-                            alt="remove class button"
-                            className="removeTeachersClass"
-                            onClick={() => this.removeClass(i)}
+                  <>
+                    <label className="labelFields">כיתות:</label>
+                    <div>
+                      {this.state.fieldsData.map((fieldObj, i) => {
+                        return (
 
-                            src="/icons/delete.svg"
+                          <div className="teacherFlexClass" key={fieldObj.id}>
+                            <ClassSelection
+                              key={fieldObj.id}
+                              id={fieldObj.id}
+                              removal={this.triggerRemoval}
+                              saveValue={this.saveChosenClassValue}
+                              options={this.makeClassesOption(i)}
+                              onChange={this.saveChange}
+                            />
+                            <img
+                              alt="remove class button"
+                              className="removeTeachersClass"
+                              onClick={() => this.removeClass(i)}
+
+                              src="/icons/delete.svg"
                             // style={{ height: "20px", marginTop: "15px" }}
-                          />
+                            />
                           </div>
-                      );
-                    })}
-                  </div>
-                </>
-              )}
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
             </form>
             {/* הוספת כיתה */}
             {this.state.classOptions.length === this.state.fieldsData.length ? (
               <></>
             ) : (
-              <div
-                style={{ marginRight: "9vw" }}
-                className="addSomethingNew"
-                onClick={this.addNewFieldData}
-              >
-                <img className="addIcon" src={addicon} alt="addIcon"></img>
-                <p className="addTitle">הוסף כיתה</p>
-              </div>
-            )}
+                <div
+                  style={{ marginRight: "9vw" }}
+                  className="addSomethingNew"
+                  onClick={this.addNewFieldData}
+                >
+                  <img className="addIcon" src={addicon} alt="addIcon"></img>
+                  <p className="addTitle">הוסף כיתה</p>
+                </div>
+              )}
             <form className="formData" style={{ marginTop: "0" }}>
               {/* אימייל */}
               <label className="labelFields">* אימייל:</label>

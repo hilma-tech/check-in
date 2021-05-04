@@ -15,8 +15,7 @@ import {
   stringValidation,
 } from "../tools/ValidationFunctions";
 import PopUpError from "../component/popUpError";
-import axios from "axios";
-import { EmptMsg, HideStyle } from "../tools/GlobalVarbs";
+import { Axios, EmptMsg, HideStyle } from "../tools/GlobalVarbs";
 
 class ChangePass extends Component {
   constructor(props) {
@@ -63,12 +62,17 @@ class ChangePass extends Component {
   sendNewPass = async () => {
     let validInfo = this.validateInputFields();
     if (validInfo) {
-      await axios.post("/api/teacher/SaveNewPassword", {
-        password: this.state.newPassword,
-        token: this.state.token,
-      });
-      this.props.errorMsg.setErrorMsg("סיסמה שונתה בהצלחה!");
-      this.setState({ goback: true });
+      try{
+        await Axios.post("/api/teacher/SaveNewPassword", {
+          password: this.state.newPassword,
+          token: this.state.token,
+        });
+        this.props.errorMsg.setErrorMsg("סיסמה שונתה בהצלחה!");
+        this.setState({ goback: true });
+      } catch(err){
+        this.props.errorMsg.setErrorMsg("שגיאה בשרת, הסיסמה לא שונתה.");
+        this.setState({ goback: true });
+      }
     } else {
       return;
     }
