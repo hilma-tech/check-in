@@ -59,7 +59,7 @@ export class GameService {
       .addSelect('Game.game_name')
       .where('Game.id = :id', { id: Number(req.game.id) })
       .getOne();
-    let res = await this.gameRepository.update({id: req.game.id},req.game);
+    let res = await this.gameRepository.update({ id: req.game.id }, req.game);
     await this.classroomFieldService.editGameDeleteClassField(req.game.id, req.deletedField)
     for (let i = 0; i < req.field.length; i++) {
       let isExist = -1
@@ -147,12 +147,12 @@ export class GameService {
         }
       }
     }
-    if(gameInfo !== undefined){
+    if (gameInfo !== undefined) {
       this.teacherService.getTeacherByClassId(gameInfo.classrooms, req.game)
     }
     return res;
   }
-  
+
   //!IS FOR DANIEL
   async returnGames(skip: number, amount: number) {
     return await this.gameRepository.find({
@@ -421,5 +421,12 @@ export class GameService {
       where: [{ game_name: Like("%" + fixString(val.val.toLowerCase()) + "%") }]
     });
     return searchresult
+  }
+
+  async isGameId(gameId) {
+    let searchresult = await this.gameRepository.findOne({
+      where: [{ id: gameId }]
+    });
+    return await searchresult
   }
 }
