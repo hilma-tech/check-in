@@ -26,7 +26,7 @@ pipeline
 		CI=false
 		PORT=8250
 		CARMEL_SUBDOMAIN = 'checkin-t'
-		RUN-NODENV = 'development'
+		RUN_NODENV = 'development'
 		
 	}
     stages
