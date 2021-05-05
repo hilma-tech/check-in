@@ -19,6 +19,9 @@
 .rowData p {
   font-size: 1.1vw;
   color: black;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 a {
@@ -55,6 +58,7 @@ a {
 .classes {
   display: flex;
 }
+
 .classes p {
   margin-right: 0.75vw;
 }

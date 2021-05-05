@@ -55,6 +55,9 @@ class EditGame extends Component {
       }
       this.setState({
         fieldsData: data.fields.map((field) => {
+          if(field.type === "choice" || field.type === "multi-choice"){
+            field.value = field.value.filter((val) => val.value.length !== 0)
+          }
           field.errorMessage = { mess: "" };
           return field;
         }),
@@ -124,6 +127,7 @@ class EditGame extends Component {
   sendImageFieldValue = (value) => {
     this.saveFieldValue(value.value, value.fieldI, null, value.link, value.id);
   };
+
   //כשמו כן הוא
   saveFieldValue = (fieldValue, fieldI, inputId, inputImage, imgId) => {
     //only relevant to choice/multi-choice
@@ -239,7 +243,6 @@ class EditGame extends Component {
                         ) : (
                             <div className="mobileChangingInputGrid">
                               {field.value.map((value, index) => {
-                                if (value.value.length !== 0) {
                                   return (
                                     <input
                                       key={i}
@@ -256,9 +259,6 @@ class EditGame extends Component {
                                       className="mobileChangingInputChoice"
                                     />
                                   );
-                                } else {
-                                  return <></>;
-                                }
                               })}
                             </div>
                           )

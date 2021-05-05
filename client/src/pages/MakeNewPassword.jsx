@@ -50,6 +50,7 @@ class MakeNewPassword extends Component {
       if (valid.data.validateEmail === true) {
         if(valid.data.verifiedEmail){
           this.props.errorMsg.setErrorMsg("נשלח לך אימייל לשינוי הסיסמה");
+          return;
         }
         this.props.errorMsg.setErrorMsg("עליך לאמת את האיימל לפני שינוי הסיסמה");
       } else {

@@ -31,6 +31,7 @@ class Teachers {
       addTeacher: action,
       searchTeachersReplace: action,
       searchTeachers: action,
+      updateTeacher: action,
     });
   }
 
@@ -90,7 +91,7 @@ class Teachers {
   };
 
   updateTeacher = (newTeacherInfo) => {
-    let teacherId = this.chosenTeacher.id
+    let teacherId = newTeacherInfo.id
     this.listDataTeachers = this.listDataTeachers.map((teacher) => {
       if (teacher.id === teacherId) {
         return newTeacherInfo
@@ -133,6 +134,12 @@ class Teachers {
       this.successGettingTeachers = false;
     }
   };
+
+  removeDeletedTeacher = (schoolId) => {
+    this.listDataTeachers = this.listDataTeachers.filter((teacher) => {
+        return teacher.school.id !== schoolId
+    })
+}
 }
 
 const teachers = new Teachers();

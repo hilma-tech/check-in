@@ -337,6 +337,7 @@ class EditTeacher extends React.Component {
           return classroom.name !== "שייך לכיתה";
         });
         if (data) {
+          
           this.props.teachers.updateTeacher({
             first_name: this.state.teacherFirstName,
             last_name: this.state.lastName,
