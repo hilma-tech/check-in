@@ -14,7 +14,12 @@ import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { chosenClassContext } from "../../stores/chosenClass.store.js";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { GetInfoErrorMsg, HideStyle, ShowStyle, TeacherDeletedMsg } from "../../tools/GlobalVarbs.js";
+import {
+  GetInfoErrorMsg,
+  HideStyle,
+  ShowStyle,
+  TeacherDeletedMsg,
+} from "../../tools/GlobalVarbs.js";
 import { userNameContext } from "../../stores/userName.store.js";
 
 class Games extends React.Component {
@@ -27,36 +32,38 @@ class Games extends React.Component {
     };
     this.gameId = 0;
     this.gameIndex = 0;
+    this.scroll = 0;
   }
 
   //retrieves the games to be shown for this class
   async componentDidMount() {
     if (this.props.chosenClass.classId === 0) {
-      if(this.props.location.state === undefined){
+      if (this.props.location.state === undefined) {
         this.props.history.push("/teacher/classes");
         return;
       }
-      
+
       await this.props.name.getTeacherInfo();
       if (!this.props.name.successGettingClasses) {
         if (this.props.name.needToLogOut) {
-          this.props.errorMsg.setErrorMsg(
-            TeacherDeletedMsg
-          );
+          this.props.errorMsg.setErrorMsg(TeacherDeletedMsg);
           await this.props.logout();
         } else {
-          this.props.errorMsg.setErrorMsg(
-            GetInfoErrorMsg
-          );
+          this.props.errorMsg.setErrorMsg(GetInfoErrorMsg);
         }
       }
 
-      let className = await this.props.name.getClassById(this.props.location.state.data)
-      if(className.length === 0){
+      let className = await this.props.name.getClassById(
+        this.props.location.state.data
+      );
+      if (className.length === 0) {
         this.props.history.push("/teacher/classes");
         return;
       }
-      this.props.chosenClass.setClassId(this.props.location.state.data, className);
+      this.props.chosenClass.setClassId(
+        this.props.location.state.data,
+        className
+      );
     }
     this.getClassGames();
   }
@@ -64,15 +71,11 @@ class Games extends React.Component {
   getClassGames = async () => {
     await this.props.games.getClassroomGames(this.props.chosenClass.classId);
     if (!this.props.games.successGettingGames) {
-      if(this.props.games.needToLogOut){
-        this.props.errorMsg.setErrorMsg(
-          TeacherDeletedMsg
-        );
+      if (this.props.games.needToLogOut) {
+        this.props.errorMsg.setErrorMsg(TeacherDeletedMsg);
         await this.props.logout();
       } else {
-        this.props.errorMsg.setErrorMsg(
-          GetInfoErrorMsg
-        );
+        this.props.errorMsg.setErrorMsg(GetInfoErrorMsg);
       }
     }
   };
@@ -81,18 +84,18 @@ class Games extends React.Component {
   limitedAddition = async (index) => {
     if (this.props.games.chosenGameList.length < 6) {
       //smaller than six
-       return await this.addGameToClass(index);
+      return await this.addGameToClass(index);
     } else {
       // equal to six
       await this.props.chosenGame.setgameId(
         this.props.games.gamesList[index].id,
         index
       );
-      this.props.games.whatData("old")
+      this.props.games.whatData("old");
       this.props.errorMsg.setErrorMsg("לכל כיתה יכול להיות עד שישה משחקים.");
       this.props.history.push({
         pathname: "/teacher/classes/showGame",
-        state: { data: this.props.chosenClass.classId }
+        state: { data: this.props.chosenClass.classId },
       });
     }
   };
@@ -111,12 +114,12 @@ class Games extends React.Component {
   //allows the user to add game to the current classroom
   addGameToClass = async (index) => {
     await this.props.chosenGame.setgameId(
-     this.props.games.gamesList[index].id,
-     index
-     );
+      this.props.games.gamesList[index].id,
+      index
+    );
     this.props.history.push({
       pathname: "/teacher/classes/editGame",
-      state: { data: this.props.chosenClass.classId }
+      state: { data: this.props.chosenClass.classId },
     });
   };
 
@@ -128,7 +131,7 @@ class Games extends React.Component {
       this.gameId
     );
     if (!isremoved) {
-      this.props.errorMsg.setErrorMsg('משחק לא הוסר עקב תקלה בשרת')
+      this.props.errorMsg.setErrorMsg("משחק לא הוסר עקב תקלה בשרת");
     }
   };
 
@@ -138,7 +141,8 @@ class Games extends React.Component {
     this.gameId = id;
     this.props.errorMsg.setQuestion(
       "האם הנך בטוח שברצונך להסיר משחק זה מכיתה זו?",
-      this.removeGameFromClass, 'הסר'
+      this.removeGameFromClass,
+      "הסר"
     );
   };
 
@@ -146,6 +150,33 @@ class Games extends React.Component {
     this.setState((prevState) => {
       return { openPopUp: !prevState.openPopUp };
     });
+  };
+
+  scrollBarToLeft = () => {
+    var obj = document.getElementById("scroller");
+    if (this.scroll === 0) {
+      obj.scrollLeft = -300;
+      this.scroll = 300;
+    } else if (this.scroll === 900) {
+      return;
+    } else {
+      obj.scrollLeft = -900;
+      this.scroll = 900;
+    }
+  };
+
+  scrollBarToRight = () => {
+    var obj = document.getElementById("scroller");
+    // obj.scrollLeft = 300;
+    if (this.scroll === 0) {
+      return;
+    } else if (this.scroll === 300) {
+      obj.scrollLeft = 900;
+      this.scroll = 0;
+    } else {
+      obj.scrollLeft = -300;
+      this.scroll = 300;
+    }
   };
 
   render() {
@@ -160,7 +191,15 @@ class Games extends React.Component {
         />
         <div className="smallAlign" id="smallAlignClassGames">
           <div className="chosenGamesForClass">
-            <div className="scrollChosenGames">
+            <img
+              onClick={() => {
+                this.scrollBarToRight();
+              }}
+              alt=""
+              className="teacherNextIcon right"
+              src="/icons/next.svg"
+            />
+            <div className="scrollChosenGames" id="scroller">
               {this.props.games.chosenGameList.map((gameData, i) => {
                 return (
                   <ClassGames
@@ -176,47 +215,55 @@ class Games extends React.Component {
                 );
               })}
             </div>
+            <img
+              onClick={() => {
+                this.scrollBarToLeft();
+              }}
+              alt=""
+              className="teacherNextIcon left"
+              src="/icons/left-arrow.svg"
+            />
           </div>
           <p className="gameListTitle">משחקים שניתן להוסיף לכיתה זו:</p>
           {/*add search option */}
           {!this.props.games.haveMoreGames &&
-            this.props.games.gamesList.length === 0 ? (
-              <p className="gameListTitle" style={{ fontStyle: "italic" }}>
-                אין עוד משחקים שניתן להוסיף
-              </p>
-            ) : (
-              <div className="listGamesForClass">
-                {this.props.games.gamesList.map((image, index) => {
-                  return (
-                    <ClassGames
-                      changeGameStatus={this.limitedAddition}
-                      chosen={false}
-                      name={image.game_name}
-                      image={image.image}
-                      index={index}
-                      key={index}
-                    />
-                  );
-                })}
-              </div>
-            )}
+          this.props.games.gamesList.length === 0 ? (
+            <p className="gameListTitle" style={{ fontStyle: "italic" }}>
+              אין עוד משחקים שניתן להוסיף
+            </p>
+          ) : (
+            <div className="listGamesForClass">
+              {this.props.games.gamesList.map((image, index) => {
+                return (
+                  <ClassGames
+                    changeGameStatus={this.limitedAddition}
+                    chosen={false}
+                    name={image.game_name}
+                    image={image.image}
+                    index={index}
+                    key={index}
+                  />
+                );
+              })}
+            </div>
+          )}
           <div style={{ textAlign: "center" }}>
             {this.props.games.startGetGames ? (
               <CircularProgress size="1.5rem" />
             ) : (
-                <button
-                  className="showMoreGamesB"
-                  onClick={this.getClassGames}
-                  style={{
-                    marginTop: "1vh",
-                    display: this.props.games.haveMoreGames
-                      ? ShowStyle
-                      : HideStyle,
-                  }}
-                >
-                  הצג עוד
-                </button>
-              )}
+              <button
+                className="showMoreGamesB"
+                onClick={this.getClassGames}
+                style={{
+                  marginTop: "1vh",
+                  display: this.props.games.haveMoreGames
+                    ? ShowStyle
+                    : HideStyle,
+                }}
+              >
+                הצג עוד
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -26,7 +26,7 @@
   }
   &::-webkit-scrollbar-thumb {
     background-color: darkgrey;
-    outline: 1px solid slategrey;
+    // outline: 1px solid slategrey;
   }
 
   .gameContainer, .chosenGameForClassContainer {
@@ -142,7 +142,34 @@
   border: 1px solid rgba(4, 49, 99, 0.5);
 }
 
+.teacherNextIcon {
+  height: 4vh;
+  width: 5vh;
+  &.right {
+    right: 0.2vh;
+  }
+  &.left {
+    left: 0.4vh
+  }
+}
+
+.chosenGamesForClass{
+  display: flex;
+  align-items: center;
+}
+
 @media only screen and (min-width: 500px) {
+
+  .teacherNextIcon {
+    height: 3vw;
+    top: 20vh;
+    .right {
+      right: 3vw;
+    }
+    .left {
+      left: 5vw;
+    }
+  }
   .classGameTitleBackground {
     /* background and border */
     border-radius: 0px 0px 1vw 1vw;
@@ -155,9 +182,10 @@
   }
 
   .scrollChosenGames {
-    margin-right: 7vw;
-    margin-top: 9vw;
-    width: 60vw;
+    margin-right: 2vw;
+    margin-left: 2vw;
+    margin-top: 4vw;
+    width: 70vw;
   }
 
   .classGameTitle {
