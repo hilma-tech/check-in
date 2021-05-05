@@ -134,6 +134,12 @@ class Teachers {
       this.successGettingTeachers = false;
     }
   };
+
+  removeDeletedTeacher = (schoolId) => {
+    this.listDataTeachers = this.listDataTeachers.filter((teacher) => {
+        return teacher.school.id !== schoolId
+    })
+}
 }
 
 const teachers = new Teachers();
