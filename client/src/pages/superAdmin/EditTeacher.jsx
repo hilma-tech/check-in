@@ -147,7 +147,7 @@ class EditTeacher extends React.Component {
   };
 
   saveSchoolName = async (e) => {
-    try{
+    try {
       let chosenSchoolId = this.props.schools.schoolsNames.filter((school) => {
         return school.name === e.value;
       })[0];
@@ -160,7 +160,7 @@ class EditTeacher extends React.Component {
         schoolId: chosenSchoolId.id,
         chosenClasses: [],
       });
-    } catch(err){
+    } catch (err) {
       this.props.errorMsg.setErrorMsg("שגיאה בשרת, לא ניתן לקבל כיתות.");
     }
   };
@@ -243,6 +243,7 @@ class EditTeacher extends React.Component {
   };
 
   validateInputFields = async (e) => {
+    this.setState({ disableSave: true })
     e.preventDefault();
     let allOk = true;
     // ----------teacher first name validation-------------------
@@ -254,6 +255,7 @@ class EditTeacher extends React.Component {
         return { teacherNameError: prevState.teacherNameError };
       });
       allOk = false;
+      this.setState({ disableSave: false })
     } else {
       this.setState({ teacherNameError: { toShow: HideStyle, mess: EmptMsg } });
       allOk = true;
@@ -267,6 +269,7 @@ class EditTeacher extends React.Component {
         return { teacherLastNameError: prevState.teacherLastNameError };
       });
       allOk = false;
+      this.setState({ disableSave: false })
     } else {
       this.setState({ teacherLastNameError: { toShow: HideStyle, mess: EmptMsg } });
       allOk = true;
@@ -280,6 +283,7 @@ class EditTeacher extends React.Component {
         return { schoolNameError: prevState.schoolNameError };
       });
       allOk = false;
+      this.setState({ disableSave: false })
     } else {
       this.setState({ schoolNameError: { toShow: HideStyle, mess: EmptMsg } });
       allOk = true;
@@ -293,6 +297,7 @@ class EditTeacher extends React.Component {
         return { emailNameError: prevState.emailNameError };
       });
       allOk = false;
+      this.setState({ disableSave: false })
     } else {
       this.setState({ emailNameError: { toShow: HideStyle, mess: EmptMsg } });
       allOk = true;
@@ -305,6 +310,7 @@ class EditTeacher extends React.Component {
           passErr: passwordErrorMess,
         });
         allOk = false;
+        this.setState({ disableSave: false })
       } else {
         this.setState({ passErr: EmptMsg });
       }
@@ -347,6 +353,7 @@ class EditTeacher extends React.Component {
                 })
                 : [],
           });
+          this.setState({ disableSave: false })
           this.closePassChange();
           this.props.history.goBack(); // after saving go back
           this.props.fadeMsg.setFadeMsg("מורה עודכן בהצלחה")
@@ -453,30 +460,30 @@ class EditTeacher extends React.Component {
                   <></>
                 ) : (
                     <>
-                    <label className="labelFields">כיתות:</label>
-                    {this.state.allClasses.length === 0 ? <p>אין כיתות לבית ספר זה</p> : <></>}
-                    {this.state.chosenClasses.map((val, i) => {
+                      <label className="labelFields">כיתות:</label>
+                      {this.state.allClasses.length === 0 ? <p>אין כיתות לבית ספר זה</p> : <></>}
+                      {this.state.chosenClasses.map((val, i) => {
 
-                      return (
-                        <div key={val.id} className="classSelection">
-                          <Select
-                            className="classSelectionInAddTecher"
-                            styles={SelectStyle()}
-                            options={this.makeClassesOption(i)}
-                            onChange={this.chooseClass}
-                            defaultValue={{
-                              value: val.name,
-                              label: val.name,
-                            }}
-                          />
-                          <img
-                            className="removeFieldIcon"
-                            onClick={() => this.removeClass(i)}
-                            src="/icons/delete.svg"
-                          />
-                        </div>
-                      );
-                    })}
+                        return (
+                          <div key={val.id} className="classSelection">
+                            <Select
+                              className="classSelectionInAddTecher"
+                              styles={SelectStyle()}
+                              options={this.makeClassesOption(i)}
+                              onChange={this.chooseClass}
+                              defaultValue={{
+                                value: val.name,
+                                label: val.name,
+                              }}
+                            />
+                            <img
+                              className="removeFieldIcon"
+                              onClick={() => this.removeClass(i)}
+                              src="/icons/delete.svg"
+                            />
+                          </div>
+                        );
+                      })}
 
                       {this.state.allClasses.length ===
                         this.state.chosenClasses.length ? (
@@ -597,7 +604,7 @@ class EditTeacher extends React.Component {
               }}>
                 מחק מורה
               </button>
-              <button className="saveButton" onClick={this.validateInputFields}>
+              <button className="saveButton" onClick={!this.state.disableSave ? this.validateInputFields : () => {  }}>
                 שמור
               </button>
             </div>
