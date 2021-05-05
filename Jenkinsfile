@@ -114,7 +114,7 @@ pipeline
 //starting node server
 		script{
 		sh '''
-		if [ -f server/.env.${RUN-NODENV} ]; then
+		if [ -f server/.env.${RUN_NODENV} ]; then
 		 sed -i "s/^PORT = .*$/PORT = ${PORT}/g" server/.env.production
 		fi
 		'''
