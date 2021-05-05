@@ -330,7 +330,7 @@ class AddStudent extends React.Component {
             placeholder="שייך לבית ספר"
           />
 
-          {this.state.school.length === 0 ? <></> :
+          {this.state.school.length === 0 || this.state.allClasses.length === 0 ? <></> :
             <>
               <label className="labelFields">כיתה:</label>
               {
