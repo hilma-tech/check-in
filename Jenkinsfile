@@ -26,7 +26,7 @@ pipeline
 		CI=false
 		PORT=8250
 		CARMEL_SUBDOMAIN = 'checkin-t'
-		RUN_NODENV = 'development'
+		RUN_NODENV = 'staging'
 		
 	}
     stages
@@ -114,7 +114,7 @@ pipeline
 //starting node server
 		script{
 		sh '''
-		if [ -f server/.env.${RUN-NODENV} ]; then
+		if [ -f server/.env.${RUN_NODENV} ]; then
 		 sed -i "s/^PORT = .*$/PORT = ${PORT}/g" server/.env.production
 		fi
 		'''
@@ -156,7 +156,7 @@ done
 				sh "pm2 status | grep \" ${PM2_NAME} \""
 				sh "pm2 restart ${PM2_NAME}"
 			} catch (err) {
-				sh "export NODE_ENV=RUN-NODENV; cd server; pm2 start dist/main.js --name ${PM2_name}"
+				sh "export NODE_ENV=${RUN_NODENV}; cd server; pm2 start dist/main.js --name ${PM2_name}"
 			}
 		}
 		}
