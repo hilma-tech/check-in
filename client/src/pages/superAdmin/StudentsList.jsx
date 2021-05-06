@@ -115,7 +115,7 @@ class StudentsList extends React.Component {
 
         <GeneralTable
           allData={this.state.searched ? this.props.students.searchedStudents : this.props.students.listDataStudents}
-          search={this.state.displaySearch}
+          search={this.state.searched}
           categors={this.state.categors}
           enCategor={this.state.enCategor}
           loadMore={this.getStudents}
