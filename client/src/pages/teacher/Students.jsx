@@ -131,7 +131,7 @@ class Students extends Component {
                 {this.state.searched && this.state.searchVal ?
                   <div>
                     {this.props.chosenClass.searchedStudents.length === 0 && this.state.searched ?
-                      (<p> אין תלמידים בשם זה בכיתה זו</p>) :
+                      (<p> אין תלמידים שמתאימים לחיפושך בכיתה זו</p>) :
                       (<div>
                         {this.props.chosenClass.searchedStudents.map((student, index) => {
                           return (
