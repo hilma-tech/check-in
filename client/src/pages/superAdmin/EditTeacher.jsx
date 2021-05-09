@@ -556,9 +556,10 @@ class EditTeacher extends React.Component {
                       style={{
                         border: HideStyle,
                         backgroundColor: "rgba(188, 188, 203, 0)",
-                        fontWeight: "600",
+                        fontWeight: "400",
                         width: "90%",
                         fontFamily: "Assistant",
+                        marginRight: "0.5vw"
                       }}
                       className="passInputTeacher"
                       placeholder="הכנס סיסמא חדשה"
@@ -582,8 +583,8 @@ class EditTeacher extends React.Component {
                     <h3
                       style={{
                         fontWeight: "lighter",
-                        paddingLeft: "3vw",
-                        paddingRight: "3vw",
+                        paddingLeft: "1vw",
+                        paddingRight: "1vw",
                       }}
                       className="changePasstext"
                     >
