@@ -36,7 +36,7 @@ class ErrorMsg {
     try {
       this.approveFunction = () => { };
     } catch (error) {
-      console.log(error);
+     return(error);
     }
   };
 

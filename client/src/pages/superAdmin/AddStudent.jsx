@@ -245,8 +245,6 @@ class AddStudent extends React.Component {
   };
   
   render() {
-    console.log('this.state.chosenClasses: ', this.state.chosenClasses);
-    console.log('this.state.school: ', this.state.school);
     return (
       <div className='withMenu'>
         <ArrowNavBar />

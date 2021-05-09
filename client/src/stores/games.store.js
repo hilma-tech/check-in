@@ -104,7 +104,7 @@ class Games {
         this.startGetGames = false;
       });
     } catch (error) {
-      if(error.response.status === OnUnauthorizedError){
+      if (error.response.status === OnUnauthorizedError) {
         this.needToLogOut = true
       }
       this.successGettingGames = false;
@@ -198,7 +198,7 @@ class Games {
         this.searchedGames = [...Games.data]
       }
     } catch (err) {
-      console.log("search game err:", err);
+      return err
     }
   }
 

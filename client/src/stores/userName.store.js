@@ -40,7 +40,7 @@ class UserName {
       this.haveMoreClasses = data.haveMoreClasses;
       this.startGetClasses = false;
     } catch (err) {
-      if(err.response.status === OnUnauthorizedError){
+      if (err.response.status === OnUnauthorizedError) {
         this.needToLogOut = true
       }
       this.startGetClasses = false;
@@ -77,12 +77,12 @@ class UserName {
 
   getClassById = (classId) => {
     let chooseClass = []
-    chooseClass = this.teacherClasses.filter((classroom)=> classroom.id === classId)
-    while(chooseClass.length === 0 && this.haveMoreClasses){
+    chooseClass = this.teacherClasses.filter((classroom) => classroom.id === classId)
+    while (chooseClass.length === 0 && this.haveMoreClasses) {
       this.getMoreClasses()
-      chooseClass = this.teacherClasses.filter((classroom)=> classroom.id === classId)
+      chooseClass = this.teacherClasses.filter((classroom) => classroom.id === classId)
     }
-    if(chooseClass.length !== 0){
+    if (chooseClass.length !== 0) {
       return chooseClass[0].name
     }
     return ""
