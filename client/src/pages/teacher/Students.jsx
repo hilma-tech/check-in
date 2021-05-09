@@ -13,6 +13,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { LogoutContext } from "@hilma/auth";
 import { GetInfoErrorMsg, HideStyle, ShowStyle, TeacherDeletedMsg } from "../../tools/GlobalVarbs.js";
 import { userNameContext } from "../../stores/userName.store.js";
+import { errorMsgContext } from "../../stores/error.store.js";
 
 let delayTime = null
 
@@ -131,7 +132,7 @@ class Students extends Component {
                 {this.state.searched && this.state.searchVal ?
                   <div>
                     {this.props.chosenClass.searchedStudents.length === 0 && this.state.searched ?
-                      (<p> אין תלמידים בשם זה בכיתה זו</p>) :
+                      (<p> אין תלמידים שמתאימים לחיפושך בכיתה זו</p>) :
                       (<div>
                         {this.props.chosenClass.searchedStudents.map((student, index) => {
                           return (
@@ -215,6 +216,7 @@ const mapContextToProps = {
   logout: LogoutContext,
   chosenClass: chosenClassContext,
   name: userNameContext,
+  errorMsg: errorMsgContext
 };
 
 export default withContext(mapContextToProps)(withRouter(observer(Students)));

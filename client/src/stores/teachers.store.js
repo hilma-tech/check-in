@@ -86,8 +86,7 @@ class Teachers {
         this.searchedTeachers = [...newTeachersSearch];
       }
     } catch(err){
-      console.log('err: ', err);
-    }
+return err    }
   };
 
   updateTeacher = (newTeacherInfo) => {

@@ -64,14 +64,15 @@ class ChosenClass {
   };
 
   searchStudentsInClass = async (val, classId) => {
-    try{
+    try {
       let Students = await Axios.get(`/api/student/searchStudentInTeacher`, {
         params: { classId: classId, value: val },
       });
       this.searchedStudents = [...Students.data]
-    }catch(err){
-      console.log('err: ', err);
+    } catch (err) {
+      return err
     }
+
   }
 
   searchStudentsReplace = () => {
@@ -89,7 +90,7 @@ class ChosenClass {
       this.haveMoreStudents = data.haveMoreStudents;
       this.startGetInfo = false;
     } catch (err) {
-      if(err.response.status === OnUnauthorizedError){
+      if (err.response.status === OnUnauthorizedError) {
         this.needToLogOut = true
       }
       this.successGetInfo = false;
@@ -113,7 +114,7 @@ class ChosenClass {
   }
 
   getClassPermissions = async (day) => {
-    try{
+    try {
       this.classPermissions = []
       let classroom = this.classId
       let { data } = await Axios.get("/api/permission/dayPermissions", {
@@ -124,8 +125,8 @@ class ChosenClass {
         return true
       }
       else { return false }
-    } catch(err){
-      console.log('err: ', err);
+    } catch (err) {
+      return err
     }
   }
 }
