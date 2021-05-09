@@ -40,7 +40,7 @@ class UserName {
       this.haveMoreClasses = data.haveMoreClasses;
       this.startGetClasses = false;
     } catch (err) {
-      if (err.response.status === OnUnauthorizedError) {
+      if (err.response?.status === OnUnauthorizedError) {
         this.needToLogOut = true
       }
       this.startGetClasses = false;
