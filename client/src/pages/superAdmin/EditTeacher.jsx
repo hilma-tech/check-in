@@ -457,7 +457,7 @@ class EditTeacher extends React.Component {
               />
               {/* כיתה */}
               <div>
-                {this.state.schoolName.length === 0 ? (
+                {this.state.allClasses.length === 0 ? (
                   <></>
                 ) : (
                     <>

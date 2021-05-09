@@ -452,7 +452,7 @@ class EditStudent extends React.Component {
             placeholder={this.state.school}
           />
 
-          {this.state.school.length === 0 ? (
+          {this.state.allClasses.length === 0 ? (
             <></>
           ) : (
               <>

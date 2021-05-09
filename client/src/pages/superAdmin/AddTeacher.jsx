@@ -382,7 +382,7 @@ class AddTeacher extends Component {
                 defaultValue={{ value: "default", label: "לא" }}
               /> */}
               {/* כיתה */}
-              {this.state.schoolName.length === 0 ? (
+              {this.state.classOptions.length === 0 ? (
                 <></>
               ) : (
                   <>
