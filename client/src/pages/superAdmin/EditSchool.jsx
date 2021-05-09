@@ -26,7 +26,7 @@ class EditSchool extends Component {
       schoolName: "",
       schoolCityError: { toShow: HideStyle, mess: EmptMsg },
       schoolCity: "",
-      addedClass:false,
+      addedClass: false,
       //List of all the classes in the school. The numTeachers represent the number of teachers in the class.
       classes: [],
       removedClasses: [],
@@ -69,7 +69,7 @@ class EditSchool extends Component {
     */
   addClassToSchool = (e) => {
     e.preventDefault();
-    this.setState({addedClass:true})
+    this.setState({ addedClass: true })
     this.setState((prevState) => {
       let tempData = [
         ...prevState.classes,
@@ -104,8 +104,8 @@ class EditSchool extends Component {
   };
 
   addNewTeacherToClass = async (classIndex, teacherInfo) => {
-    try{
-      let {data} = await Axios.post("/api/teacher/register", {
+    try {
+      let { data } = await Axios.post("/api/teacher/register", {
         first_name: teacherInfo.first_name,
         last_name: teacherInfo.last_name,
         school_id: this.props.schools.chosenSchool.id,
@@ -122,7 +122,7 @@ class EditSchool extends Component {
         return { classes: tempData, existTeachers: prevState.existTeachers };
       });
       return ""
-    } catch(err){
+    } catch (err) {
       this.setState({ savingInfo: false });
       if (err.status === ExistErrorStatus) {
         return "** כתובת אימל כבר קיימת, אנא נסה כתובת אחרת **"
@@ -133,8 +133,8 @@ class EditSchool extends Component {
     }
   };
 
-   //כשמו כן הוא
-   addExistTeacherToClass = (classIndex, teacherInfo) => {
+  //כשמו כן הוא
+  addExistTeacherToClass = (classIndex, teacherInfo) => {
     this.setState((prevState) => {
       let tempData = [...prevState.classes];
       tempData[classIndex].chosenTeachers.push(teacherInfo);
@@ -154,13 +154,13 @@ class EditSchool extends Component {
     this.setState((prevState) => {
       let tempData = [...prevState.classes]
       let removedClassroom = tempData.splice(classIndex, 1);
-      let newExistClasses = prevState.existClasses.filter((classroom)=>{
+      let newExistClasses = prevState.existClasses.filter((classroom) => {
         return classroom.id !== removedClassroom[0].id
       })
-      if(newExistClasses.length !== prevState.existClasses.length){
+      if (newExistClasses.length !== prevState.existClasses.length) {
         prevState.removedClasses.push(removedClassroom[0])
       }
-      return { classes: tempData, removedClasses: prevState.removedClasses, existClasses: newExistClasses}
+      return { classes: tempData, removedClasses: prevState.removedClasses, existClasses: newExistClasses }
     })
   };
 
@@ -205,8 +205,8 @@ class EditSchool extends Component {
         });
         allOk = false;
       } else {
-        for(let z=0; z<i;z++){
-          if(this.state.classes[i].name === this.state.classes[z].name){
+        for (let z = 0; z < i; z++) {
+          if (this.state.classes[i].name === this.state.classes[z].name) {
             nameClassMess = "** שם כיתה זה כבר קיים. אנא נסה שם אחר. **"
           }
         }
@@ -217,7 +217,7 @@ class EditSchool extends Component {
             return { classes: prevState.classes };
           });
           allOk = false;
-        } else{
+        } else {
           this.setState((prevState) => {
             prevState.classes[i].classNameError.toShow = HideStyle;
             prevState.classes[i].classNameError.mess = EmptMsg;
@@ -231,12 +231,12 @@ class EditSchool extends Component {
     if (allOk) {
       try {
         let { data } = await Axios.post("/api/school/editSchool", {
-            id: this.props.schools.chosenSchool.id,
-            schoolName: this.state.schoolName,
-            schoolCity: this.state.schoolCity,
-            classes: this.state.classes,
-            removedClasses: this.state.removedClasses,
-            existClasses: this.state.existClasses
+          id: this.props.schools.chosenSchool.id,
+          schoolName: this.state.schoolName,
+          schoolCity: this.state.schoolCity,
+          classes: this.state.classes,
+          removedClasses: this.state.removedClasses,
+          existClasses: this.state.existClasses
         });
         if (data) {
           this.props.schools.editSchool(
@@ -244,8 +244,8 @@ class EditSchool extends Component {
             data.name,
             data.city,
           )
-        this.props.history.goBack(); // after saving go back
-        this.props.fadeMsg.setFadeMsg("בית ספר עודכן בהצלחה")
+          this.props.history.goBack(); // after saving go back
+          this.props.fadeMsg.setFadeMsg("בית ספר עודכן בהצלחה")
         }
       } catch (err) {
         this.props.errorMsg.setErrorMsg('שגיאה בשרת, בית הספר לא נשמר, נסו שוב.');
@@ -315,7 +315,7 @@ class EditSchool extends Component {
                       removeTeacherFromClass={this.removeTeacherFromClass}
                       addExistTeacherToClass={this.addExistTeacherToClass}
                       existTeachers={this.state.existTeachers}
-    
+
                     />
                   );
                 })
@@ -328,24 +328,26 @@ class EditSchool extends Component {
           >
             הוסף כיתה
             </button>
+        </form>
+        <div className="formData">
           <div className="spacerFromSaveButton"></div>
           <div className="saveButtonBackground additionPage">
-            <button 
-            className="deletButton" 
-            onClick={(e) => {
-              e.preventDefault()
-              this.props.errorMsg.setQuestion(
-                "האם אתה בטוח שברצונך למחוק בית ספר זה ואת כל המורים ותלמידים השייכים לו?",
-                ()=>{this.deleteSchool(e)},
-                Delete
-              );
-            }}
+            <button
+              className="deletButton"
+              onClick={(e) => {
+                e.preventDefault()
+                this.props.errorMsg.setQuestion(
+                  "האם אתה בטוח שברצונך למחוק בית ספר זה ואת כל המורים ותלמידים השייכים לו?",
+                  () => { this.deleteSchool(e) },
+                  Delete
+                );
+              }}
             >מחק בית ספר</button>
             <button className="saveButton" onClick={this.saveData}>
               שמור
             </button>
           </div>
-        </form>
+        </div>
       </div>
     );
   }
