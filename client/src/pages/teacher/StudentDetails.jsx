@@ -12,6 +12,7 @@ import { studentPasswordValidation } from "../../tools/ValidationFunctions";
 import axios from "axios";
 import PopUpError from "../../component/popUpError";
 import { errorMsgContext } from "../../stores/error.store";
+import { fadeMsgContext } from "../../stores/fadeMsg.store.js";
 import { HideStyle, OnUnauthorizedError, ShowStyle, TeacherDeletedMsg } from "../../tools/GlobalVarbs";
 
 class StudentDetails extends Component {
@@ -59,9 +60,10 @@ class StudentDetails extends Component {
           });
         this.closePassChange(true)
         this.setState({ passDisplay: '' })
-        this.props.errorMsg.setErrorMsg(" הסיסמה שונתה בהצלחה! ");
+        this.props.fadeMsg.setFadeMsg(" הסיסמה שונתה בהצלחה! ")
+
       } catch (err) {
-        if(err.status === OnUnauthorizedError){
+        if (err.status === OnUnauthorizedError) {
           this.props.errorMsg.setErrorMsg(
             TeacherDeletedMsg
           );
@@ -86,16 +88,16 @@ class StudentDetails extends Component {
 
     return (
       <>
-          <PopUpError />
-          <SmallMenuBar />
-          <PageTitle
-            title="תלמידים"
-            titleTwo={"כיתה " + this.props.chosenClass.classroomName}
-          />
-          <ArrowBar
-            page="studentInfo"
-            chosenClass={this.props.chosenClass.classroomName}
-          />
+        <PopUpError />
+        <SmallMenuBar />
+        <PageTitle
+          title="תלמידים"
+          titleTwo={"כיתה " + this.props.chosenClass.classroomName}
+        />
+        <ArrowBar
+          page="studentInfo"
+          chosenClass={this.props.chosenClass.classroomName}
+        />
         <div className="smallPage">
           {/* <PageTitle title="כיתה א'1"/> */}
           {/* <img
@@ -145,7 +147,7 @@ class StudentDetails extends Component {
             <div className="passchange" onClick={() => {
               this.setState({
                 showPassChanger: !this.state.showPassChanger,
-                passDisplay:'',
+                passDisplay: '',
                 passErr: ''
               });
             }} >
@@ -162,7 +164,7 @@ class StudentDetails extends Component {
             <div style={{ display: this.state.showPassChanger ? "block" : HideStyle }}>
               <h4 className='inputError'>{this.state.passErr}</h4>
               <div style={this.state.passErr ? { marginTop: '5vh' } : {}}>
-                <div className="studentDeets box" style={{ marginTop: '2.5vh'}} >
+                <div className="studentDeets box" style={{ marginTop: '2.5vh' }} >
                   <input
                     style={{
                       border: HideStyle,
@@ -182,7 +184,7 @@ class StudentDetails extends Component {
                 <div className='passchange' onClick={() => {
                   this.setState({
                     showPassChanger: !this.state.showPassChanger,
-                    passDisplay:'',
+                    passDisplay: '',
                     passErr: ''
                   })
                 }}>
@@ -208,7 +210,8 @@ class StudentDetails extends Component {
 
 const mapContextToProps = {
   chosenClass: chosenClassContext,
-  errorMsg: errorMsgContext
+  errorMsg: errorMsgContext,
+  fadeMsg: fadeMsgContext,
 };
 
 export default withContext(mapContextToProps)(
