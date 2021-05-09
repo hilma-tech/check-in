@@ -6,7 +6,6 @@ import addicon from "../../img/addicon.svg";
 import ArrowNavBar from "../../component/superAdmin/ArrowNavBar.jsx";
 import { withRouter } from "react-router-dom";
 import {
-  emailValidation,
   nameValidation,
   userNameValidation,
   studentPasswordValidation,
@@ -70,7 +69,8 @@ class AddStudent extends React.Component {
           classIndex: indexSelect,
           id: classData.id,
         });
-      }
+      } 
+      return null
     });
     return options;
   };
@@ -111,6 +111,7 @@ class AddStudent extends React.Component {
           SchoolIndex: indexSelect,
         });
       }
+      return null
     });
     return options;
   };
@@ -323,7 +324,6 @@ class AddStudent extends React.Component {
           </p>
           <Select
             className="selectStyle"
-            placeholder="בחר..."
             styles={SelectStyle()}
             options={this.makeSchoolOption()}
             onChange={this.chooseSchool}
@@ -347,6 +347,7 @@ class AddStudent extends React.Component {
                       }}
                     />
                     <img
+                    alt="remove field icon"
                       className="removeFieldIcon"
                       onClick={() => this.removeClass(i)}
                       src="/icons/delete.svg"

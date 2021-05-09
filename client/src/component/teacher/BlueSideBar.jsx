@@ -10,9 +10,6 @@ import { chosenClassContext } from "../../stores/chosenClass.store";
 //gives teacher the ability to switch between pages
 //is a pop up in mobile, sidebar in web
 class BlueSideBar extends React.Component {
-  constructor() {
-    super();
-  }
 
   render() {
     return (

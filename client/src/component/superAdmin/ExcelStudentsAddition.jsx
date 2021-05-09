@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import { FileInput, withFiles } from '@hilma/fileshandler-client';
+import { withFiles } from '@hilma/fileshandler-client';
 import { withContext } from '@hilma/tools';
 import React from 'react';
 import { withRouter } from 'react-router-dom';

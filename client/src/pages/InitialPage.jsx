@@ -20,7 +20,7 @@ class InitialPage extends Component {
       let kl = atob(this.props.AuthContext.kls.kl);
       kl = kl.replace('["', "");
       kl = kl.replace('"]', "");
-      if (kl == "mlkdsef98uxmwieau89" || kl == "mxdired9432udxjdoi8e") {
+      if (kl === "mlkdsef98uxmwieau89" || kl === "mxdired9432udxjdoi8e") {
         this.props.history.push("/teacher/classes");
       } else {
         this.props.history.push("/superAdmin/games");
@@ -40,7 +40,7 @@ class InitialPage extends Component {
     return (
       <div className="background">
         <div className="centeredPage">
-          <img className="webName initial" src="/icons/blueCheckIn.svg"></img>
+          <img className="webName initial" alt="webname CheckIn" src="/icons/blueCheckIn.svg"></img>
           <button className="goButton teacherGo" onClick={() => { this.goToLogin("teacher") }}>
             התחבר כמורה
           </button>

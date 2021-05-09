@@ -30,21 +30,22 @@ class Menu extends React.Component {
                 return !this.props.location.pathname.includes(
                   this.state[pageName]
                 ) ? (
-                  <a
-                    className="menuBluePages"
-                    key={index}
-                    onClick={()=>{this.props.history.push("/superAdmin/" + this.state[pageName]);}}
+                  <h6
+                  className="menuBluePages thin"
+                  key={index}
+                  onClick={()=>{this.props.history.push("/superAdmin/" + this.state[pageName]);}}
+                  href={null}
                   >
                     {pageName}
-                  </a>
+                  </h6>
                 ) : (
-                  <a
+                  <h3
                     key={index}
                     onClick={()=>{this.props.history.push("/superAdmin/" + this.state[pageName]);}}
                     className="optionBold menuBluePages"
                   >
                     {pageName}
-                  </a>
+                  </h3>
                 );
               })
             }

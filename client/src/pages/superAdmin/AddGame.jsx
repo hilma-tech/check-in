@@ -177,6 +177,7 @@ class AddGame extends Component {
         order: obj.order,
       };
       currFieldData.push(newField);
+      return null
     });
     return currFieldData;
   };
@@ -321,6 +322,7 @@ class AddGame extends Component {
                 return { fieldsData: prevState.fieldsData };
               });
             }
+            return null
           });
           if (
             fields.selection === "choice" ||
@@ -376,6 +378,7 @@ class AddGame extends Component {
           }
         }
       }
+      return null
     });
     return isOk;
   };

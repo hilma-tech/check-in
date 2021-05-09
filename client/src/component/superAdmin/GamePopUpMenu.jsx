@@ -1,15 +1,11 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import "../../style/superAdmin/pop_up_style.scss";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import { errorMsgContext } from "../../stores/error.store";
 import PopUpError from "../popUpError";
 
 //component that gives options for actions to perform on a game
 class GamePopUpMenu extends Component {
-  constructor() {
-    super();
-  }
   render() {
     return (
       <div className="popUp">

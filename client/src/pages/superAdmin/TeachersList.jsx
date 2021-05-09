@@ -6,7 +6,6 @@ import { withContext } from "@hilma/tools";
 import { teachersContext } from "../../stores/teachers.store.js";
 import { errorMsgContext } from "../../stores/error.store.js";
 import { Fade } from "@material-ui/core";
-import OutsideClickHandler from "react-outside-click-handler";
 
 let delayTime = null
 

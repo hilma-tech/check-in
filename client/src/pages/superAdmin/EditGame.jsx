@@ -20,7 +20,13 @@ import {
 } from "../../tools/ValidationFunctions";
 import { withFiles } from "@hilma/fileshandler-client";
 import { gamesContext } from "../../stores/games.store.js";
-import { Axios, EmptMsg, ExistErrorStatus, GetInfoErrorMsg, HideStyle } from "../../tools/GlobalVarbs.js";
+import {
+  Axios,
+  EmptMsg,
+  ExistErrorStatus,
+  GetInfoErrorMsg,
+  HideStyle,
+} from "../../tools/GlobalVarbs.js";
 import { fadeMsgContext } from "../../stores/fadeMsg.store.js";
 
 class EditGame extends Component {
@@ -33,12 +39,13 @@ class EditGame extends Component {
       gameRequirementsErrorMessages: { toShow: HideStyle, mess: EmptMsg },
       gameLinkErrorMessages: { toShow: HideStyle, mess: EmptMsg },
       fieldsData: [],
-      image: "https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg",
+      image:
+        "https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg",
       gameName: "",
       gameId: 0,
       existFieldsData: [],
       deletedFieldsData: [],
-      originalGameInfo: {}
+      originalGameInfo: {},
     };
     this.imageUploader = props.filesUploader;
     this.infoNotReady = true;
@@ -54,10 +61,13 @@ class EditGame extends Component {
       if (data.game_name === null || data.game_name === undefined) {
         this.props.history.push("/superAdmin/games");
       }
-      let fields = data.fields
+      let fields = data.fields;
       this.setState({
         fieldsData: fields.map((field) => {
-          return { ...field, errorMessage: { toShow: HideStyle, mess: EmptMsg } }
+          return {
+            ...field,
+            errorMessage: { toShow: HideStyle, mess: EmptMsg },
+          };
         }),
         gameName: data.game_name,
         gameDescription: data.description,
@@ -65,22 +75,22 @@ class EditGame extends Component {
         gameLink: data.video_link,
         gameId: data.id,
         existFieldsData: fields,
-        newKey: data.fields.length === 0 ? 1 : data.fields[data.fields.length - 1].id + 1,
+        newKey:
+          data.fields.length === 0
+            ? 1
+            : data.fields[data.fields.length - 1].id + 1,
         originalGameInfo: {
           gameName: data.game_name,
           gameDescription: data.description,
           gameRequirements: data.requirements,
           gameLink: data.video_link,
           fields: fields,
-        }
+        },
       });
     } catch (error) {
-      this.props.errorMsg.setErrorMsg(
-        GetInfoErrorMsg
-      );
+      this.props.errorMsg.setErrorMsg(GetInfoErrorMsg);
     }
   };
-
 
   //כשמו כן הוא
   saveFieldName = (fieldName, fieldI) => {
@@ -142,8 +152,7 @@ class EditGame extends Component {
         return { fieldsData: prevState.fieldsData };
       });
     }
-  }
-
+  };
 
   //adds another field to the form
   addNewFieldData = () => {
@@ -171,16 +180,22 @@ class EditGame extends Component {
     this.setState((prevState) => {
       let oldFieldArray = prevState.fieldsData;
       let removedField = prevState.existFieldsData.filter((field) => {
-        return field.id === fieldId
-      })
+        return field.id === fieldId;
+      });
       if (removedField.length !== 0) {
-        prevState.deletedFieldsData.push(removedField[0])
-        prevState.existFieldsData = prevState.existFieldsData.filter((field) => {
-          return field.id !== fieldId
-        })
+        prevState.deletedFieldsData.push(removedField[0]);
+        prevState.existFieldsData = prevState.existFieldsData.filter(
+          (field) => {
+            return field.id !== fieldId;
+          }
+        );
       }
       let newArray = oldFieldArray.filter((field) => field.id !== fieldId);
-      return { fieldsData: newArray, deletedFieldsData: prevState.deletedFieldsData, existFieldsData: prevState.existFieldsData };
+      return {
+        fieldsData: newArray,
+        deletedFieldsData: prevState.deletedFieldsData,
+        existFieldsData: prevState.existFieldsData,
+      };
     });
   };
 
@@ -202,9 +217,10 @@ class EditGame extends Component {
         selection: obj.selection,
         value: obj.value,
         order: i + 1,
-        id: obj.id
+        id: obj.id,
       };
       currFieldData.push(newField);
+      return null;
     });
     return currFieldData;
   };
@@ -221,70 +237,94 @@ class EditGame extends Component {
       suspended: false,
     };
     const fieldData = this.setUpValues();
-    const deletedFieldsData = this.state.deletedFieldsData.map((field) => field.id)
+    const deletedFieldsData = this.state.deletedFieldsData.map(
+      (field) => field.id
+    );
     const existFieldsData = this.state.existFieldsData.map((existField) => {
-      let existValue = []
+      let existValue = [];
       if (existField.selection === "image" || existField.selection === "text") {
-        existValue.push({ id: 0, value: existField.default_value })
+        existValue.push({ id: 0, value: existField.default_value });
       } else {
         existValue = JSON.parse(existField.default_value).map((value, i) => {
-          return { id: i, value: value }
-        })
+          return { id: i, value: value };
+        });
       }
       return {
         id: existField.id,
         selection: existField.selection,
-        value: existValue
-      }
-    })
+        value: existValue,
+      };
+    });
     try {
-      let isChange = false
-      if (this.state.gameName === this.state.originalGameInfo.gameName &&
+      let isChange = false;
+      if (
+        this.state.gameName === this.state.originalGameInfo.gameName &&
         this.state.gameLink === this.state.originalGameInfo.gameLink &&
-        this.state.gameDescription === this.state.originalGameInfo.gameDescription &&
-        this.state.gameRequirements === this.state.originalGameInfo.gameRequirements &&
-        this.state.fieldsData.length === this.state.originalGameInfo.fields.length) {
+        this.state.gameDescription ===
+          this.state.originalGameInfo.gameDescription &&
+        this.state.gameRequirements ===
+          this.state.originalGameInfo.gameRequirements &&
+        this.state.fieldsData.length ===
+          this.state.originalGameInfo.fields.length
+      ) {
         for (let i = 0; i < this.state.fieldsData.length; i++) {
-          if (this.state.fieldsData[i].id !== this.state.originalGameInfo.fields[i].id) {
-            isChange = true
-          } else if (this.state.fieldsData[i].selection !== this.state.originalGameInfo.fields[i].selection) {
-            isChange = true
-          } else if (this.state.fieldsData[i].value.length !== this.state.originalGameInfo.fields[i].value.length) {
-            isChange = true
+          if (
+            this.state.fieldsData[i].id !==
+            this.state.originalGameInfo.fields[i].id
+          ) {
+            isChange = true;
+          } else if (
+            this.state.fieldsData[i].selection !==
+            this.state.originalGameInfo.fields[i].selection
+          ) {
+            isChange = true;
+          } else if (
+            this.state.fieldsData[i].value.length !==
+            this.state.originalGameInfo.fields[i].value.length
+          ) {
+            isChange = true;
           } else {
-            let default_value = []
-            if (this.state.fieldsData[i].selection === "choice" || this.state.fieldsData[i].selection === "multi-choice") { 
-              default_value = JSON.parse(this.state.originalGameInfo.fields[i].default_value)
+            let default_value = [];
+            if (
+              this.state.fieldsData[i].selection === "choice" ||
+              this.state.fieldsData[i].selection === "multi-choice"
+            ) {
+              default_value = JSON.parse(
+                this.state.originalGameInfo.fields[i].default_value
+              );
             } else {
-              default_value[0] = this.state.originalGameInfo.fields[i].default_value
+              default_value[0] = this.state.originalGameInfo.fields[
+                i
+              ].default_value;
             }
             for (let z = 0; z < this.state.fieldsData[i].value.length; z++) {
-              if (this.state.fieldsData[i].value[z].value !== default_value[z]) {
-                isChange = true
+              if (
+                this.state.fieldsData[i].value[z].value !== default_value[z]
+              ) {
+                isChange = true;
               }
             }
           }
         }
       } else {
-        isChange = true
+        isChange = true;
       }
 
       if (isChange) {
         this.setState({ savingInfo: true });
-
-        const response = await this.imageUploader.post(
+        await this.imageUploader.post(
           "/api/game/editGame",
           JSON.stringify({
             game: currGameInfo,
             field: fieldData,
             deletedField: deletedFieldsData,
-            existField: existFieldsData
+            existField: existFieldsData,
           })
         );
         this.props.games.editGame(currGameInfo);
       }
       this.props.history.goBack(); // after saving go back
-      this.props.fadeMsg.setFadeMsg("משחק עודכן בהצלחה")
+      this.props.fadeMsg.setFadeMsg("משחק עודכן בהצלחה");
     } catch (error) {
       this.setState({ savingInfo: false });
       if (error.status === ExistErrorStatus) {
@@ -302,9 +342,12 @@ class EditGame extends Component {
     let ValidationFunctions = [
       { name: "gameName", func: nameValidation, errMsg: EmptMsg },
       { name: "gameDescription", func: descriptionValidation, errMsg: EmptMsg },
-      { name: "gameRequirements", func: requirementValidation, errMsg: EmptMsg },
+      {
+        name: "gameRequirements",
+        func: requirementValidation,
+        errMsg: EmptMsg,
+      },
       { name: "gameLink", func: linkValidation, errMsg: EmptMsg },
-
     ];
 
     //validates the basic information
@@ -334,7 +377,7 @@ class EditGame extends Component {
         });
       }
     });
-  
+
     //validates the fields
     fieldOK = this.validateFields();
     //after all the validetion we need to send the data to sql
@@ -387,6 +430,7 @@ class EditGame extends Component {
                 return { fieldsData: prevState.fieldsData };
               });
             }
+            return null
           });
           if (
             fields.selection === "choice" ||
@@ -442,10 +486,10 @@ class EditGame extends Component {
           }
         }
       }
+      return null
     });
     return isOk;
   };
-
 
   render() {
     return (
@@ -548,27 +592,27 @@ class EditGame extends Component {
               {this.state.fieldsData.length === 0 ? (
                 <p style={{ marginTop: "0" }}>אין שדות למשחק זה</p>
               ) : (
-                  this.state.fieldsData.map((fieldObj, ind) => {
-                    return (
-                      <GameFieldSelection
-                        key={fieldObj.id}
-                        fieldId={fieldObj.id}
-                        fieldI={ind}
-                        name={this.saveFieldName}
-                        selection={this.saveSelection}
-                        fieldValue={this.saveFieldValue}
-                        removal={this.triggerRemoval}
-                        changeInputType={fieldObj.selection}
-                        originalName={fieldObj.name}
-                        originalValue={fieldObj.value}
-                        errorMessage={fieldObj.errorMessage}
-                        imagePath={this.state.fieldsData[0].value[0].value}
-                        ourImageUploader={this.imageUploader}
-                        reading={false}
-                      />
-                    );
-                  })
-                )}
+                this.state.fieldsData.map((fieldObj, ind) => {
+                  return (
+                    <GameFieldSelection
+                      key={fieldObj.id}
+                      fieldId={fieldObj.id}
+                      fieldI={ind}
+                      name={this.saveFieldName}
+                      selection={this.saveSelection}
+                      fieldValue={this.saveFieldValue}
+                      removal={this.triggerRemoval}
+                      changeInputType={fieldObj.selection}
+                      originalName={fieldObj.name}
+                      originalValue={fieldObj.value}
+                      errorMessage={fieldObj.errorMessage}
+                      imagePath={this.state.fieldsData[0].value[0].value}
+                      ourImageUploader={this.imageUploader}
+                      reading={false}
+                    />
+                  );
+                })
+              )}
               {this.infoNotReady ? (
                 <div className="infoNotReadyCont">
                   <img
@@ -578,11 +622,11 @@ class EditGame extends Component {
                   ></img>
                 </div>
               ) : (
-                  <span></span>
-                )}
+                <span></span>
+              )}
               {/* add fields */}
               <div className="addSomethingNew" onClick={this.addNewFieldData}>
-                <img className="addIcon" src={addicon}></img>
+                <img className="addIcon" src={addicon} alt="add icon"></img>
                 <p className="addTitle">הוסף שדה</p>
               </div>
             </form>
@@ -607,4 +651,6 @@ const mapContextToProps = {
   fadeMsg: fadeMsgContext,
 };
 
-export default withContext(mapContextToProps)(withFiles(withRouter(observer(EditGame))));
+export default withContext(mapContextToProps)(
+  withFiles(withRouter(observer(EditGame)))
+);

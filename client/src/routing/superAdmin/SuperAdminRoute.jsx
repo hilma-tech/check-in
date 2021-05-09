@@ -8,7 +8,6 @@ import AddGame from "../../pages/superAdmin/AddGame.jsx";
 import EditSchool from "../../pages/superAdmin/EditSchool.jsx";
 import Menu from "../../component/superAdmin/Menu.jsx";
 import EditGame from "../../pages/superAdmin/EditGame.jsx";
-import SignIn from "../../pages/SignIn.jsx";
 import { PrivateRoute } from "@hilma/auth";
 import ErrorPage from "../../pages/404Page.jsx";
 import "../../style/superAdmin/disp.scss";

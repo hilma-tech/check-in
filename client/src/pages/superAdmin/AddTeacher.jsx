@@ -17,7 +17,6 @@ import { errorMsgContext } from "../../stores/error.store";
 import { observer } from "mobx-react";
 import { withContext } from "@hilma/tools";
 import { schoolsContext } from "../../stores/schools.store";
-import data from "@iconify/icons-ion/ios-arrow-back";
 import { teachersContext } from "../../stores/teachers.store";
 import { Axios, EmptMsg, ExistErrorStatus, HideStyle, ShowStyle } from "../../tools/GlobalVarbs";
 import { fadeMsgContext } from "../../stores/fadeMsg.store";
@@ -289,6 +288,7 @@ class AddTeacher extends Component {
           id: classData.id,
         });
       }
+      return null
     });
     return options;
   };
@@ -311,6 +311,7 @@ class AddTeacher extends Component {
           schoolId: school.id
         });
       }
+      return null
     });
     return options;
   };

@@ -1,4 +1,3 @@
-import { FileInput, withFiles } from '@hilma/fileshandler-client';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import "../../style/superAdmin/add_student_pop_up_style.scss"

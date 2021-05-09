@@ -193,7 +193,7 @@ class Games extends Component {
                                       src="https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg"
                                     />
                                   </div>
-                                  <h2 className="gameTitleBackground"></h2>
+                                  <h2 className="gameTitleBackground">{null}</h2>
                                   <h1 className="gameTitle">{image.game_name}</h1>
                                   <OutsideClickHandler
                                     onOutsideClick={() =>
@@ -221,7 +221,7 @@ class Games extends Component {
                       <div onClick={this.onClickAddGame}>
                         <div className="imageContainer item3 pointyboi">
                           <img className="addImg" src={addicon} alt="" />
-                          <h2 className="gameTitleBackground"></h2>
+                          <h2 className="gameTitleBackground">{null}</h2>
                           <h1 className="gameTitle">הוסף משחק</h1>
                         </div>
                       </div>
@@ -253,7 +253,7 @@ class Games extends Component {
                                   src="https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg"
                                 />
                               </div>
-                              <h2 className="gameTitleBackground"></h2>
+                              <h2 className="gameTitleBackground">{null}</h2>
                               <h1 className="gameTitle">{image.game_name}</h1>
                               <OutsideClickHandler
                                 onOutsideClick={() =>

@@ -10,7 +10,7 @@ class LoadingPage extends React.Component {
         {arr.map((num) => {
           return (
             <div key={num} className="imageContainerLoading loading item3">
-              <h2 className="gameTitleBackgroundLoading"></h2>
+              <h2 className="gameTitleBackgroundLoading">{null}</h2>
               <img
                 className="optionIcon"
                 alt=""

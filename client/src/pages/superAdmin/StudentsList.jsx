@@ -6,7 +6,6 @@ import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";
 import { errorMsgContext } from "../../stores/error.store.js";
 import { Fade } from "@material-ui/core";
-import OutsideClickHandler from "react-outside-click-handler";
 
 let delayTime = null
 

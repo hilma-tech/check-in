@@ -2,7 +2,6 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import React, { Component } from "react";
 import Games from "../../pages/teacher/Games.jsx";
 import Students from "../../pages/teacher/Students.jsx";
-import SignIn from "../../pages/SignIn.jsx";
 import { PrivateRoute } from "@hilma/auth";
 import EditGame from "../../pages/teacher/EditGame.jsx";
 import StudentDetails from "../../pages/teacher/StudentDetails.jsx";

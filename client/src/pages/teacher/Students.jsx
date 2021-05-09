@@ -14,8 +14,6 @@ import { LogoutContext } from "@hilma/auth";
 import { GetInfoErrorMsg, HideStyle, ShowStyle, TeacherDeletedMsg } from "../../tools/GlobalVarbs.js";
 import { userNameContext } from "../../stores/userName.store.js";
 
-let delayTime = null
-
 class Students extends Component {
   constructor() {
     super();

@@ -14,7 +14,6 @@ import { gamesContext } from "../../stores/games.store";
 import { FileInput, withFiles } from "@hilma/fileshandler-client";
 import {
   fieldInputValidation,
-  fieldNameValidation,
 } from "../../tools/ValidationFunctions";
 import { Axios, GetInfoErrorMsg, HideStyle, OnUnauthorizedError, TeacherDeletedMsg } from "../../tools/GlobalVarbs";
 
@@ -80,20 +79,22 @@ class EditGame extends Component {
     }
   };
   validateGame = () => {
-    this.state.ErrorsPerField = [];
+    this.setState({ErrorsPerField: []})
     var errors = [];
     this.state.fieldsData.map((fields) => {
       if (fields.selection !== "image") {
         fields.value.map((field) => {
           let errMess = fieldInputValidation(field.value);
-          if (errMess != "") {
+          if (errMess !== "") {
             errors.push({
               fieldId: fields.id,
               err: errMess,
             });
           }
+          return null
         });
       }
+      return null
     });
     this.setState({ ErrorsPerField: errors });
 
@@ -176,13 +177,13 @@ class EditGame extends Component {
                 alt=""
                 src="https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg"
               />
-              <h2 className="mobileClassGameTitleBackground"></h2>
+              <h2 className="mobileClassGameTitleBackground">{null}</h2>
               <h1 className="mobileClassGameTitle">{this.state.gameName}</h1>
             </div>
             {this.state.gameLink ?
               <>
                 <h3 className="mobileGameLink">סרטון הסבר למשחק</h3>
-                <a className="mobileGameL" target="_blank" href={this.state.gameLink}>{this.state.gameLink}</a>
+                <a className="mobileGameL" rel="noopener noreferrer" target="_blank" href={this.state.gameLink}>{this.state.gameLink}</a>
               </> : <></>}
             <h3 className="mobileGameDesc">תיאור המשחק</h3>
             <p className="mobileGameDP">
@@ -202,6 +203,7 @@ class EditGame extends Component {
             ) : (
                 this.state.fieldsData.map((field, i) => {
                   let Errs = this.state.ErrorsPerField.filter(err => err.fieldId === field.id);
+                  console.log('Errs: ', Errs);
                   if (Errs.length > 0) {
                     Errs = Errs[0].err
                   }
@@ -217,12 +219,6 @@ class EditGame extends Component {
                     >
                       <p className="error">{Errs}</p>
                     </div>
-
-                      <div
-                        style={Errs[0] ? { display: "block" } : { display: "none" }}
-                      >
-                        <p className="error">{Errs}</p>
-                      </div>
 
                       {field.selection !== "image" ? (
                         field.selection === "text" ? (

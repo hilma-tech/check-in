@@ -12,7 +12,6 @@ import {
   passwordValidation,
   emailValidation,
 } from "../tools/ValidationFunctions";
-import axios from "axios";
 import { EmptMsg, HideStyle, OnUnauthorizedError } from "../tools/GlobalVarbs";
 
 class SignIn extends Component {
@@ -112,7 +111,7 @@ moveToForgotPage = async () => {
           onClick={this.moveToInitialPage}
         />
         <div className="centeredPage">
-          <img className="webName" src="/icons/blueCheckIn.svg"></img>
+          <img className="webName" alt="webname checkin" src="/icons/blueCheckIn.svg"></img>
           <p
             className="error"
             style={{ display: this.state.errorMessages[0].toShow }}

@@ -48,7 +48,7 @@ class ClassGames extends React.Component {
         <h2
         className="classGameTitleBackground"
           onClick={this.showGameInfo}
-        ></h2>
+        >{null}</h2>
         <h1 className="classGameTitle" onClick={this.showGameInfo}>
           {this.props.name}
         </h1>

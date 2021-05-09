@@ -6,7 +6,7 @@ import Menu from "../component/superAdmin/Menu";
 class ErrorPage extends Component {
   render() {
     let dispo = true;
-    if (window.location.pathname == "/superAdmin/:smth") {
+    if (window.location.pathname === "/superAdmin/:smth") {
       dispo = false;
     } else if (!window.location.pathname.includes("superAdmin")) {
       dispo = false;
@@ -19,7 +19,7 @@ class ErrorPage extends Component {
         <div dir="ltr" className="ErrorBackground ErrorWithMenu">
           <h1 className="ErrorNum">4 0 4</h1>
           <h3 className="ErrorExplanation">Page not found.</h3>
-          <img className="hilmalogo" src={hilmaicon} />
+          <img className="hilmalogo" src={hilmaicon} alt="hilma icon" />
         </div>
       </>
     );

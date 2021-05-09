@@ -112,6 +112,7 @@ class EditTeacher extends React.Component {
           SchoolIndex: indexSelect,
         });
       }
+      return null
     });
     return options;
   };
@@ -142,6 +143,7 @@ class EditTeacher extends React.Component {
           id: classData.id,
         });
       }
+      return null
     });
     return options;
   };
@@ -478,6 +480,7 @@ class EditTeacher extends React.Component {
                               }}
                             />
                             <img
+                            alt="remove field icon"
                               className="removeFieldIcon"
                               onClick={() => this.removeClass(i)}
                               src="/icons/delete.svg"

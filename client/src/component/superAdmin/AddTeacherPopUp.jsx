@@ -1,11 +1,5 @@
-import React, { Component } from "react";
-import Select from "react-select";
-import addicon from "../../img/addicon.svg";
-import WhiteBar from "../../component/superAdmin/ArrowNavBar.jsx";
-import ClassSelection from "../../component/superAdmin/ClassSelection.jsx";
-import "../../style/superAdmin/form_style.scss";
+import React, { Component } from "react";import "../../style/superAdmin/form_style.scss";
 import "../../style/superAdmin/add_game_style.scss";
-import SelectStyle from "../../style/superAdmin/select_style";
 import {
     nameValidation,
     mustInputValidation,

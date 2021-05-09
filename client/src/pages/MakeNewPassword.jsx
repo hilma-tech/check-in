@@ -27,7 +27,7 @@ class MakeNewPassword extends Component {
       let kl = atob(this.props.AuthContext.kls.kl);
       kl = kl.replace('["', "");
       kl = kl.replace('"]', "");
-      if (kl == "mlkdsef98uxmwieau89" || kl == "mxdired9432udxjdoi8e") {
+      if (kl === "mlkdsef98uxmwieau89" || kl === "mxdired9432udxjdoi8e") {
         this.props.history.push("/teacher/classes");
       } else {
         this.props.history.push("/superAdmin/games");

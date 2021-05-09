@@ -2,8 +2,6 @@ import React from "react";
 import RowData from "./RowData.jsx";
 import { withRouter } from "react-router-dom";
 import LoadingTable from "./LoadingTable.jsx";
-import Tooltip from '@material-ui/core/Tooltip';
-import { Slide } from "@material-ui/core";
 import AddStudentPopUp from "./AddStudentPopUp.jsx";
 import { HideStyle, ShowStyle } from "../../tools/GlobalVarbs.js";
 

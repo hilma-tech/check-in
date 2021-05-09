@@ -4,7 +4,6 @@ import "../../style/teacher/classes.scss";
 import SmallMenuBar from "../../component/teacher/SmallMenuBar.jsx";
 import PageTitle from "../../component/teacher/PageTitle";
 import { withRouter } from "react-router-dom";
-import BlueSideBar from "../../component/teacher/BlueSideBar";
 import { chosenClassContext } from "../../stores/chosenClass.store";
 import { withContext } from "@hilma/tools";
 import { observer } from "mobx-react";

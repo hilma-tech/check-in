@@ -86,13 +86,13 @@ class ShowGame extends Component {
                 alt=""
                 src="https://t3.ftcdn.net/jpg/03/88/80/98/240_F_388809884_QkITxFdPCb4j9hIjA0U3tk7RmI390DeH.jpg"
                 />
-              <h2 className="mobileClassGameTitleBackground"></h2>
+              <h2 className="mobileClassGameTitleBackground">{null}</h2>
               <h1 className="mobileClassGameTitle">{this.state.gameName}</h1>
             </div>
             {this.state.gameLink ?
             <>
             <h3 className="mobileGameLink">סרטון הסבר למשחק</h3>
-            <a className="mobileGameL" target="_blank" href={this.state.gameLink}>{this.state.gameLink}</a>
+            <a className="mobileGameL" target="_blank" rel="noopener noreferrer" href={this.state.gameLink}>{this.state.gameLink}</a>
               </> : <></>}
             <h3 className="mobileGameDesc">תיאור המשחק</h3>
             <p className="mobileGameDP">{this.state.gameDescription ? this.state.gameDescription : "אין תיאור משחק"}</p>

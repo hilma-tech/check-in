@@ -9,8 +9,6 @@ import { errorMsgContext } from "../stores/error.store";
 import { observer } from "mobx-react";
 import { IsAuthenticatedContext, LoginContext, AuthContext } from "@hilma/auth";
 import {
-  passwordValidation,
-  emailValidation,
   teacherPasswordValidation,
   stringValidation,
 } from "../tools/ValidationFunctions";
@@ -18,7 +16,7 @@ import PopUpError from "../component/popUpError";
 import { Axios, EmptMsg, HideStyle } from "../tools/GlobalVarbs";
 
 class ChangePass extends Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       token: "",
@@ -86,7 +84,7 @@ class ChangePass extends Component {
       <div className="background">
         <PopUpError />
         <div className="centeredPage">
-          <img className="webName" src="/icons/blueCheckIn.svg"></img>
+          <img className="webName" alt="webname icon" src="/icons/blueCheckIn.svg"></img>
           <p
             className="error"
             style={{ display: this.state.errorMessages[1].toShow }}

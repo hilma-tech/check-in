@@ -22,7 +22,7 @@ import { studentsProvider } from "./stores/students.store";
 import { teachersProvider } from "./stores/teachers.store";
 import { schoolsProvider } from "./stores/schools.store";
 import { chosenClassProvider } from "./stores/chosenClass.store";
-import IconsPage from "./pages/IconsPage";
+
 import InitialPage from "./pages/InitialPage";
 import ChangePass from "./pages/changePass";
 import MakeNewPassword from "./pages/MakeNewPassword";
@@ -55,9 +55,6 @@ function App() {
           <Route path="/initialPage" exact>
             <InitialPage/>
           </Route>
-          {/* <Route path="/iconsPage" exact>
-            <IconsPage/>
-          </Route> */}
           <Route path="/signin" exact>
             <SignIn />
           </Route>

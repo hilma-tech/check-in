@@ -26,7 +26,7 @@ class SmallNavBar extends Component {
     }
     this.props.history.push({
       pathname: newPath.join("/"),
-      state: { data: this.props.chosenClass.classId }
+      state: { data: this.props.chosenClass.classId },
     });
   };
 
@@ -65,7 +65,9 @@ class SmallNavBar extends Component {
               תלמידים
             </h2>
             <h2
-              onClick={this.state.active === "permissions" ? null : this.movePageFunc}
+              onClick={
+                this.state.active === "permissions" ? null : this.movePageFunc
+              }
               className="smallNavName"
               id="permissions"
             >

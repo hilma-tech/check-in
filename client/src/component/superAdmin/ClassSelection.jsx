@@ -7,9 +7,7 @@ import "../../style/superAdmin/class_selection_style.css";
 
 //component that allows user to choose which classes to give a user
 class ClassSelection extends Component {
-  constructor() {
-    super();
-  }
+ 
 
   //sends the id and name of chosen class
   sendValue = (props) => {

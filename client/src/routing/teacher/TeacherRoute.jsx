@@ -1,10 +1,9 @@
 import { PrivateRoute } from "@hilma/auth";
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Redirect } from "react-router-dom";
 import SignIn from "../../pages/SignIn.jsx";
 import SmallNavRouter from "./SmallNavRouter.jsx";
 import Classes from "../../pages/teacher/Classes.jsx";
-import ErrorPage from "../../pages/404Page.jsx";
 
 class TeacherRoute extends React.Component {
   render() {

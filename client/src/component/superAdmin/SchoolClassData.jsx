@@ -1,7 +1,5 @@
 import React from "react";
-import Select from "react-select";
 import Fade from "@material-ui/core/Fade";
-import SelectStyle from "../../style/superAdmin/select_style";
 import { Dialog } from "@material-ui/core";
 import AddTeacherPopUp from "./AddTeacherPopUp";
 import ChooseExistTeacherPopUp from "./ChooseExistTeacherPopUp";
@@ -63,28 +61,13 @@ class SchoolClassData extends React.Component {
       return <p>לכיתה זו אין מורים</p>;
     }
     for (let i = 0; i < numTeachers; i++) {
-      let teacerDefaultValue = this.props.classData.chosenTeachers[i].name;
       teachersSelections.push(
         <div
           className="TeachersSelect"
           key={this.props.classData.chosenTeachers[i].id}
         >
-          {/* <Select
-            className="editSchoolClassTeacherSelect"
-            styles={SelectStyle()}
-            options={selectOptions}
-            selectKey={i}
-            // defaultValue={{
-            //   value: teacerDefaultValue,
-            //   label: teacerDefaultValue,
-            // }}
-            placeholder={teacerDefaultValue}
-            onChange={this.props.chooseTeacher}
-            isDisabled={true}
-          /> */}
           <input
             defaultValue={this.props.classData.chosenTeachers[i].first_name + " " + this.props.classData.chosenTeachers[i].last_name}
-            // onBlur={this.props.handleChange}
             name="teacher"
             className="editSchoolClassTeacherSelect inputFields"
             readOnly={true}

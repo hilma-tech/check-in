@@ -10,9 +10,6 @@ import "../style/pop_up_error_style.scss";
 
 //generic component for all popup errors
 class PopUpError extends React.Component {
-  constructor() {
-    super();
-  }
 
   //approval button that activates the function it is sent,
   //otherwise it moves the user to the correct route

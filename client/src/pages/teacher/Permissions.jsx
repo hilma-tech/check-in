@@ -223,6 +223,7 @@ class Permissions extends Component {
   }
 
   render() {
+    var found = null
     return (
       <>
         <SmallMenuBar />
@@ -238,10 +239,10 @@ class Permissions extends Component {
               <div className="days">
                 {this.weekDays.map((day, index) => {
                   if (this.state.selectedDay === day) {
-                    var found = true
+                    found = true
                   }
                   else {
-                    var found = false
+                    found = false
                   }
                   return (
                     <div

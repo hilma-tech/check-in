@@ -94,6 +94,7 @@ class EditStudent extends React.Component {
           id: classData.id,
         });
       }
+      return null
     });
     return options;
   };
@@ -134,6 +135,7 @@ class EditStudent extends React.Component {
           SchoolIndex: indexSelect,
         });
       }
+      return null
     });
     return options;
   };
@@ -445,11 +447,10 @@ class EditStudent extends React.Component {
           </p>
           <Select
             className="selectStyle"
-            placeholder="בחר..."
             styles={SelectStyle()}
             options={this.makeSchoolOption()}
             onChange={this.chooseSchool}
-            placeholder={this.state.school}
+            placeholder={this.state.school ? this.state.school : "בחר..."}
           />
 
           {this.state.school.length === 0 ? (
@@ -476,6 +477,7 @@ class EditStudent extends React.Component {
                         }}
                       />
                       <img
+                      alt= "remove field icon"
                         className="removeFieldIcon"
                         onClick={() => this.removeClass(i)}
                         src="/icons/delete.svg"
