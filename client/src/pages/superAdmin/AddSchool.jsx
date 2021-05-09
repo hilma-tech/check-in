@@ -286,13 +286,13 @@ class AddSchool extends React.Component {
             הוסף כיתה
           </button>
 
+        </form>
           <div className="spacerFromSaveButton"></div>
           <div className="saveButtonBackground additionPage">
             <button className="saveButton" onClick={this.validateData}>
               שמור
             </button>
           </div>
-        </form>
       </div>
     );
   }}
