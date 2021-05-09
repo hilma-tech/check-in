@@ -161,7 +161,7 @@ class Games extends Component {
                 {this.state.searched && this.state.searchVal ? (
                   <div>
                     {this.props.games.searchedGames.length === 0 ? (
-                      <p>לא נמצאו משחקים בשם זה</p>
+                      <p>לא נמצאו משחקים שמתאימים לחיפוש שלך</p>
                     ) : (
                         <div className="grid">
                           {this.props.games.searchedGames.map((image, index) => {

@@ -97,7 +97,7 @@ class Schools {
           return {
             id: teacher.id,
             name: teacher.first_name + " " + teacher.last_name,
-            first_name: teacher.first_name, 
+            first_name: teacher.first_name,
             last_name: teacher.last_name,
             email: teacher.email
           };
@@ -131,7 +131,7 @@ class Schools {
         this.searchedSchools = [...Schools.data]
       }
     } catch (err) {
-      console.log("search school err:", err);
+      return err
     }
   }
 
@@ -140,8 +140,8 @@ class Schools {
   }
 
   editSchool = (schoolId, schoolName, schoolCity) => {
-    for(let i = 0; i<this.listDataSchools.length; i++){
-      if(this.listDataSchools[i].id === schoolId){
+    for (let i = 0; i < this.listDataSchools.length; i++) {
+      if (this.listDataSchools[i].id === schoolId) {
         this.listDataSchools[i].name = schoolName
         this.listDataSchools[i].city = schoolCity
       }

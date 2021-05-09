@@ -88,7 +88,6 @@ export class TeacherController {
   @UseJwtAuth('superAdmin')
   @Post('/editTeacher')
   async editTeacher(@Body() req: EditTeacherDto) {
-    console.log('req: ', req);
     try {
       if (req.password.length !== 0) {
         await this.teacherService.changeTeacherPassword(
@@ -120,7 +119,6 @@ export class TeacherController {
   @UseJwtAuth('superAdmin')
   @Post('/isTeacherExist')
   isTeacherExist(@Body() username: EmailDto) {
-    console.log('username: ', username);
     return this.teacherService.isTeacherExist(username.email);
   }
 

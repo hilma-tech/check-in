@@ -14,7 +14,7 @@ class FadeMsg extends React.Component {
     render() { 
         return ( 
             <Fade in={this.props.fadeMsgContext.showMsg} mountOnEnter unmountOnExit>
-                 <p className="FadeText">{this.props.fadeMsgContext.fadeMsg}</p>
+                 <p className="FadeText">✓ {this.props.fadeMsgContext.fadeMsg}</p>
                 
             </Fade>
          );
