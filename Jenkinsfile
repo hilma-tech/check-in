@@ -19,14 +19,14 @@ pipeline
 
 	environment {
 		//setup properly the variables below that will be used in this script
-		DEPLOY_SERVER = 'Minnie'
-		PM2_NAME = 'checkin-t'
-		DOMAIN_NAME = 'checkin-t.carmel6000.com'
+		DEPLOY_SERVER = 'carmelbot'
+		PM2_NAME = 'checkin'
+		DOMAIN_NAME = 'checkin.carmel6000.com'
 		NODE_ENV = ''
 		CI=false
 		PORT=8250
-		CARMEL_SUBDOMAIN = 'checkin-t'
-		RUN_NODENV = 'staging'
+		CARMEL_SUBDOMAIN = 'checkin'
+		RUN_NODENV = 'production'
 		
 	}
     stages
