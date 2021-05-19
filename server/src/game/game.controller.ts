@@ -23,6 +23,7 @@ import { UseFilesHandler, FilesType } from '@hilma/fileshandler-typeorm';
 import { UseJwtAuth } from '@hilma/auth-nest';
 import { ValDto } from 'src/student/student.dtos';
 import { UserExist } from 'src/user-exist/user-exist.decorator';
+import { IsDaniel } from 'src/is-daniel/is-daniel.decorator';
 const { mustValid } = require('../serverTools/ServerValid');
 
 @Controller('api/game')
@@ -32,6 +33,7 @@ export class GameController {
   ) {}
 
   //! IS FOR DANIEL
+  @IsDaniel()
   @Get('/gameToFields')
   async getGameFields(@Req() req: GetGameDto) {
     return await this.gameService.returnGames(req.skipON, req.numOfGames);
