@@ -19,6 +19,7 @@ import { GameService } from 'src/game/game.service';
 import { SchoolService } from 'src/school/school.service';
 import { PermissionService } from 'src/permission/permission.service';
 import { UserExist } from 'src/user-exist/user-exist.decorator';
+import { IsDaniel } from 'src/is-daniel/is-daniel.decorator';
 
 @Controller('api/student')
 export class StudentController {
@@ -115,6 +116,7 @@ export class StudentController {
   }
 
   //!FOR DANIEL
+  @IsDaniel()
   @Get('/gamesAndStudentInfo')
   async getGamesForClass(@Query() info: GamesForClassDto) {
     let getStudentInfo = await this.studentService.CheckUserInfoAndGetClassId(info.username, info.password);
