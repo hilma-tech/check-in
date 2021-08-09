@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.23, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.26, for Linux (x86_64)
 --
 -- Host: localhost    Database: checkin
 -- ------------------------------------------------------
--- Server version	8.0.23-0ubuntu0.20.04.1
+-- Server version	8.0.26-0ubuntu0.20.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -416,7 +416,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('0e13f3ed-0915-4646-8492-0090cda6a631','bond@gmail.com','$2b$10$b7W.16dilw60SOCx7nylT.Bd9oKlb5FoIWI1s4l9mdv7v60sMT4dq','2021-04-19 11:55:01.770198','2021-04-19 11:55:01.000000','Teacher',44,0,'022a020a16643b3d9005bad9e72a4e931fdfa775f207643b05a12cd4eb6c0116349a65c81e5c49fb48cbb29e4896e3bc6ba4','Savannah','Parent'),('2de835a7-3dc6-4e5e-a36f-45892dbbf758','batzy@gmail.com','$2b$10$dFWFLq0Vl/7OiyoGQIPMauPkHrJv3DdD2cSDFhbB5qdXzzsFtnG2W','2021-04-05 15:35:46.543909','2021-05-02 11:23:55.000000','Teacher',44,1,'','בתצי','רוזננננtrs'),('70df752c-744b-4ee2-ace4-e56da048b23e','superadmin@gmail.com','$2b$10$Th1aiBam/B9kQqGcJX/fM.E32DH1mB3TxB/yirmrhCC58uBiBdGqe','2021-01-03 12:30:56.415866','2021-01-03 12:30:56.415866','SuperAdmin',NULL,0,NULL,NULL,NULL),('b780a80c-760f-4052-b88e-f3eafe5050b9','cnkjs63@gmail.com','$2b$10$DWX1P5N0ETT4TdD9SP9GMerAJo3kLno9ShpPBIFw4pITLVGt//mtS','2021-04-11 10:55:09.406201','2021-04-14 11:47:12.000000','Teacher',44,0,'be875c6245f37969eaa59050ebb1d6898b48e83e5a4f469032a9b42ddfcb7b11d9365585982d37c7626ad3a4ea0998e1170d','הרברט','שמופסי'),('e83eb568-051b-4af6-80df-ccdb4e779a9d','batzionrr@gmail.com','$2b$10$6BVU77xVXm9utwzPjoyS/OaQsFW.Uk7sBYIai5kbGAHj26mt/s73y','2021-04-27 11:42:24.216709','2021-05-02 12:07:45.000000','Teacher',44,0,NULL,'hfkvhs','cbd kjnkjds'),('ec317ddb-fb49-4ed6-bcf9-13bae607fc1d','a.ds@cs.co','$2b$10$UNuczAelFg/mUdPVb0Fdveq9U5Jw4Ov96YixXQfohSnvAzar.HFh2','2021-04-12 11:41:43.621298','2021-04-14 11:46:04.000000','Teacher',44,0,'4b87923c4d2f4ec6e1c2d518a5dfc3a4ae4ebd3235ef7bebe2603e902a2b73c0fbb8227dc20d6e97c55d2d7098241e9361a2','sand','castle'),('f6079b34-2aef-418c-8462-7af1158d427d','userrrnem','$2b$10$tTRausILx3egegldkqNSZ.LmnTcHM1hXMX.4xbkbkz5arpiSipRXO','2021-04-12 11:28:12.384604','2021-04-12 11:28:12.384604','Student',50,0,NULL,'אושי','כבהן');
+INSERT INTO `user` VALUES ('0e13f3ed-0915-4646-8492-0090cda6a631','bond@gmail.com','$2b$10$b7W.16dilw60SOCx7nylT.Bd9oKlb5FoIWI1s4l9mdv7v60sMT4dq','2021-04-19 11:55:01.770198','2021-04-19 11:55:01.000000','Teacher',44,0,'022a020a16643b3d9005bad9e72a4e931fdfa775f207643b05a12cd4eb6c0116349a65c81e5c49fb48cbb29e4896e3bc6ba4','Savannah','Parent'),('2de835a7-3dc6-4e5e-a36f-45892dbbf758','batzy@gmail.com','$2b$10$/.7ETGnKTmw358vaFrUhGOuNNAkLaSJr3RwfI58N3DtYSP91uekrK','2021-04-05 15:35:46.543909','2021-08-09 10:18:51.000000','Teacher',44,1,'','בתצי','רוזננננtrs'),('70df752c-744b-4ee2-ace4-e56da048b23e','superadmin@gmail.com','$2b$10$Th1aiBam/B9kQqGcJX/fM.E32DH1mB3TxB/yirmrhCC58uBiBdGqe','2021-01-03 12:30:56.415866','2021-01-03 12:30:56.415866','SuperAdmin',NULL,0,NULL,NULL,NULL),('b780a80c-760f-4052-b88e-f3eafe5050b9','cnkjs63@gmail.com','$2b$10$DWX1P5N0ETT4TdD9SP9GMerAJo3kLno9ShpPBIFw4pITLVGt//mtS','2021-04-11 10:55:09.406201','2021-04-14 11:47:12.000000','Teacher',44,0,'be875c6245f37969eaa59050ebb1d6898b48e83e5a4f469032a9b42ddfcb7b11d9365585982d37c7626ad3a4ea0998e1170d','הרברט','שמופסי'),('e83eb568-051b-4af6-80df-ccdb4e779a9d','batzionrr@gmail.com','$2b$10$6BVU77xVXm9utwzPjoyS/OaQsFW.Uk7sBYIai5kbGAHj26mt/s73y','2021-04-27 11:42:24.216709','2021-05-02 12:07:45.000000','Teacher',44,0,NULL,'hfkvhs','cbd kjnkjds'),('ec317ddb-fb49-4ed6-bcf9-13bae607fc1d','a.ds@cs.co','$2b$10$UNuczAelFg/mUdPVb0Fdveq9U5Jw4Ov96YixXQfohSnvAzar.HFh2','2021-04-12 11:41:43.621298','2021-04-14 11:46:04.000000','Teacher',44,0,'4b87923c4d2f4ec6e1c2d518a5dfc3a4ae4ebd3235ef7bebe2603e902a2b73c0fbb8227dc20d6e97c55d2d7098241e9361a2','sand','castle'),('f6079b34-2aef-418c-8462-7af1158d427d','userrrnem','$2b$10$tTRausILx3egegldkqNSZ.LmnTcHM1hXMX.4xbkbkz5arpiSipRXO','2021-04-12 11:28:12.384604','2021-04-12 11:28:12.384604','Student',50,0,NULL,'אושי','כבהן');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -483,4 +483,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-04  9:27:54
+-- Dump completed on 2021-08-09 10:21:25
