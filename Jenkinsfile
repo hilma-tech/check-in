@@ -19,7 +19,7 @@ pipeline
 
 	environment {
 		//setup properly the variables below that will be used in this script
-		DEPLOY_SERVER = 'carmelbot'
+		DEPLOY_SERVER = 'Minnie'
 		PM2_NAME = 'checkin'
 		DOMAIN_NAME = 'checkin.carmel6000.com'
 		NODE_ENV = ''
