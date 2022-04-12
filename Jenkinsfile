@@ -24,7 +24,7 @@ pipeline
 		DOMAIN_NAME = 'checkin.carmel6000.com'
 		NODE_ENV = ''
 		CI=false
-		PORT=8250
+		PORT=8251
 		CARMEL_SUBDOMAIN = 'checkin'
 		RUN_NODENV = 'production'
 		
