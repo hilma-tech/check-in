@@ -20,16 +20,16 @@ pipeline
 	environment {
 		//setup properly the variables below that will be used in this script
 		DEPLOY_SERVER = 'donald'
-		PM2_NAME = 'checkin'
-		DOMAIN_NAME = 'checkin.carmel6000.com'
+		PM2_NAME = 'checkin-t'
+		DOMAIN_NAME = 'checkin-t.carmel6000.com'
 		NODE_ENV = ''
 		CI=false
-		PORT=8251
-		CARMEL_SUBDOMAIN = 'checkin'
+		PORT=8250
+		CARMEL_SUBDOMAIN = 'checkin-t'
 		RUN_NODENV = 'production'
 		APACHE_LOG_DIR = '/var/log/apache2'
 		START_CMD='dist/main.js'
-		SERVER_ENV_FILE = '.env.donald'			
+		SERVER_ENV_FILE = '.env.staging'			
 		APACHE_CONF = 'apache/conf'			
 	}
     stages
@@ -73,7 +73,7 @@ pipeline
 		   echo IP ARE EQUAL
 		   else
 		        echo ERROR: Please check domain name and/or deployment server.
-  #                      exit 1 # terminate and indicate error
+                        exit 1 # terminate and indicate error
 		   fi
 		'''
 //configure APACHE
