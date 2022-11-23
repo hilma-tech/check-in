@@ -27,7 +27,7 @@ pipeline
 		PORT=8250
 		CARMEL_SUBDOMAIN = 'checkin-t'
 		RUN_NODENV = 'staging'
-		
+	
 	}
     stages
     {
@@ -68,7 +68,7 @@ pipeline
 		   echo IP ARE EQUAL
 		   else
 		        echo ERROR: Please check domain name and/or deployment server.
-                        exit 1 # terminate and indicate error
+                       # exit 1 # terminate and indicate error
 		   fi
 		'''
 //configure APACHE
