@@ -9,7 +9,7 @@ void setBuildStatus(String message, String state, String gitUrl) {
 }
 
 
- 
+
 pipeline
 {
 	agent {label "Minnie"} 
