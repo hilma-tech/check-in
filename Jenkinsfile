@@ -1,7 +1,7 @@
-void setBuildStatus(String message, String state, String gitUrl) {
+void setBuildStatus(String message, String state) {
     step([
         $class: "GitHubCommitStatusSetter",
-        reposSource: [$class: "ManuallyEnteredRepositorySource", url: gitUrl],
+        //: [$class: "ManuallyEnteredRepositorySource", url: gitUrl],
         contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
         errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
         statusResultSource: [$class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]]]
@@ -175,14 +175,14 @@ done
     post {
         success {
 		script {
-		def s = checkout scm;
-   		setBuildStatus("Build succeeded", "SUCCESS", s.GIT_URL);
+		// checkout scm;
+   		setBuildStatus("Build succeeded", "SUCCESS");
 		}
         }
         failure {
                 script {
-                def s = checkout scm;
-            	setBuildStatus("Build failed", "FAILURE", s.GIT_URL);
+                // checkout scm;
+            	setBuildStatus("Build failed", "FAILURE");
                 }
         }
     }
