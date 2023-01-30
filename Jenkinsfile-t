@@ -163,7 +163,14 @@ done
 			'''
 		try {
 				sh "pm2 status | grep \" ${PM2_NAME} \""
-				sh "export NODE_ENV=${RUN_NODENV}; pm2 restart ${PM2_NAME} --update-env; pm2 save"
+sh ''' 
+ pm2 stop ${PM2_NAME} 
+if [ 0 -eq 0 ]; then
+echo "STOPPED properly"
+fi
+"export NODE_ENV=${RUN_NODENV}; pm2 start ${PM2_NAME} --update-env; pm2 save"
+'''
+ 
 			} catch (err) {
 				sh "export NODE_ENV=${RUN_NODENV}; cd server; pm2 start ${START_CMD} --name ${PM2_NAME} --exp-backoff-restart-delay=100 --time; pm2 save"
 			}
