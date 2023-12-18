@@ -167,8 +167,8 @@ sh '''
  pm2 stop ${PM2_NAME} 
 if [ 0 -eq 0 ]; then
 echo "STOPPED properly"
+export NODE_ENV=${RUN_NODENV}; pm2 start ${PM2_NAME} --update-env; pm2 save
 fi
-"export NODE_ENV=${RUN_NODENV}; pm2 start ${PM2_NAME} --update-env; pm2 save"
 '''
  
 			} catch (err) {
